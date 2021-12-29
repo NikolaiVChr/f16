@@ -3073,12 +3073,9 @@ var AIM = {
 						# target has released a new chaff, lets check if it blinds us
 						me.chaffLast = me.chaffNumber;
 						me.chaffTime = getprop("sim/time/elapsed-sec");
-						#me.aspectNorm = math.abs(geo.normdeg180(me.aspectToExhaust() * 2))/180;# 0 = viewing engine or front, 1 = viewing side, belly or top.
+						me.aspectDeg = me.aspectToExhaust(me.coord, me.Tgt) / 180;# 0 = viewing engine, 1 = front
 						
-						# chance to lock on chaff when viewing engine or nose, less if viewing other aspects
-						#me.chaffLock = rand() > (me.chaffResistance + (1-me.chaffResistance) * 0.5 * me.aspectNorm);
-
-						me.chaffLock = rand() > me.chaffResistance;
+						me.chaffLock = rand() < (1-me.chaffResistance - ((1-me.chaffResistance) * 0.5 * me.aspectDeg));# 50% less chance to be fooled if front aspect
 
 						if (me.chaffLock == TRUE) {
 							me.printStats(me.type~": Missile locked on chaff from "~me.callsign);
