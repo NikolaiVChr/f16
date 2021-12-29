@@ -101,11 +101,11 @@
 
 <model>
   <name>Station4_MK82AIR</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/MK-82AIR/trirack-4.xml</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/MK-82AIR/ter-9a-4.xml</path>
   <offsets>
-    <x-m>0.1</x-m>
+    <x-m>-0.286</x-m>
     <y-m>-1.63</y-m>
-    <z-m>-0.39</z-m>
+    <z-m>-0.438</z-m>
     <pitch-deg>-4.5</pitch-deg>
   </offsets>
 </model>
@@ -273,11 +273,11 @@
 
  <model>
   <name>Station6_MK82AIR</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/MK-82AIR/trirack-6.xml</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/MK-82AIR/ter-9a-6.xml</path>
   <offsets>
-    <x-m>0.1</x-m>
+    <x-m>-0.286</x-m>
     <y-m>1.63</y-m>
-    <z-m>-0.39</z-m>
+    <z-m>-0.438</z-m>
     <pitch-deg>-4.5</pitch-deg>
   </offsets>
 </model>

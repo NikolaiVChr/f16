@@ -51,9 +51,9 @@
   <name>Station3_3xGBU12</name>
   <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/ter-9a-3.xml</path>
   <offsets>
-    <x-m>0.295</x-m>
+    <x-m>0.29</x-m>
     <y-m>-2.879</y-m>
-    <z-m>-0.439</z-m>
+    <z-m>-0.44</z-m>
     <pitch-deg>-4.5</pitch-deg>
   </offsets>
 </model>
@@ -73,9 +73,9 @@
   <name>Station3_MK82</name>
   <path>Aircraft/f16/Models/Armament/Weapons/MK-82/ter-9a-3.xml</path>
   <offsets>
-    <x-m>0.295</x-m>
+    <x-m>0.29</x-m>
     <y-m>-2.879</y-m>
-    <z-m>-0.439</z-m>
+    <z-m>-0.44</z-m>
     <pitch-deg>-4.5</pitch-deg>
   </offsets>
 </model>
@@ -84,9 +84,9 @@
   <name>Station3_MK82AIR</name>
   <path>Aircraft/f16/Models/Armament/Weapons/MK-82AIR/ter-9a-3.xml</path>
   <offsets>
-    <x-m>0.295</x-m>
+    <x-m>0.29</x-m>
     <y-m>-2.879</y-m>
-    <z-m>-0.439</z-m>
+    <z-m>-0.44</z-m>
     <pitch-deg>-4.5</pitch-deg>
   </offsets>
 </model>
@@ -162,9 +162,9 @@
   <name>Station3_3xAGM-65B</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AGM-65B/ter-9a-3.xml</path>
   <offsets>
-    <x-m>0.295</x-m>
+    <x-m>0.29</x-m>
     <y-m>-2.879</y-m>
-    <z-m>-0.439</z-m>
+    <z-m>-0.44</z-m>
     <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>
@@ -364,9 +364,9 @@
   <name>Station7_3xGBU12</name>
   <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/ter-9a-7.xml</path>
   <offsets>
-    <x-m>0.295</x-m>
-    <y-m>2.879</y-m>
-    <z-m>-0.439</z-m>
+    <x-m>0.29</x-m>
+    <y-m>-2.879</y-m>
+    <z-m>-0.44</z-m>
     <pitch-deg>-4.5</pitch-deg>
   </offsets>
 </model>
@@ -386,9 +386,9 @@
   <name>Station7_MK82</name>
   <path>Aircraft/f16/Models/Armament/Weapons/MK-82/ter-9a-7.xml</path>
   <offsets>
-    <x-m>0.295</x-m>
+    <x-m>0.29</x-m>
     <y-m>2.879</y-m>
-    <z-m>-0.439</z-m>
+    <z-m>-0.44</z-m>
     <pitch-deg>-4.5</pitch-deg>
   </offsets>
 </model>
@@ -397,9 +397,9 @@
   <name>Station7_MK82AIR</name>
   <path>Aircraft/f16/Models/Armament/Weapons/MK-82AIR/ter-9a-7.xml</path>
   <offsets>
-    <x-m>0.295</x-m>
+    <x-m>0.29</x-m>
     <y-m>2.879</y-m>
-    <z-m>-0.439</z-m>
+    <z-m>-0.44</z-m>
     <pitch-deg>-4.5</pitch-deg>
   </offsets>
 </model>
@@ -474,9 +474,9 @@
   <name>Station7_3xAGM-65B</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AGM-65B/ter-9a-7.xml</path>
   <offsets>
-    <x-m>0.295</x-m>
-    <y-m>2.879</y-m>
-    <z-m>-0.439</z-m>
+    <x-m>0.29</x-m>
+    <y-m>-2.879</y-m>
+    <z-m>-0.44</z-m>
     <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>
