@@ -2,7 +2,7 @@
   
 <PropertyList> 
 
-    <path>Aircraft/f16/Models/Armament/Racks/TER-9A.xml</path>
+    <path>Aircraft/f16/Models/Armament/Racks/TER-9A/TER-9A.xml</path>
 
     <offsets>
       <x-m>0</x-m>
