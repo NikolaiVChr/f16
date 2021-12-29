@@ -206,8 +206,9 @@ var enable = 1;
 var camera_movement_speed_lock = 75;#Higher number means slower
 var camera_movement_speed_free =  5;
 
-var list = func () {
+var list = func (node) {
     var button = getprop("controls/MFD[2]/button-pressed");
+    
     if (button == 20) {#BACK
         setprop("sim/current-view/view-number",0);
         #setprop("/aircraft/flir/target/auto-track", 0);
@@ -221,7 +222,10 @@ var list = func () {
     }
     if (!enable) return;
     
-    
+    if (button == 0 and node.getName() == "button-pressed") {
+        setprop("controls/displays/cursor-slew-x", 0);
+        setprop("controls/displays/cursor-slew-y", 0);
+    }
     
     if (button == 1 or (getprop("controls/displays/cursor-click") and getprop("/sim/current-view/name") == "TGP")) {#LOCK
         gps = 0;
@@ -327,6 +331,8 @@ var list = func () {
     } elsif (button == 11) {#UP
         if (lock_tgp) return;
         gps = 0;
+        setprop("controls/displays/cursor-slew-y", -1);
+        return;
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetP += fov/camera_movement_speed_lock;
@@ -336,6 +342,8 @@ var list = func () {
     } elsif (button == 12) {#DOWN
         if (lock_tgp) return;
         gps = 0;
+        setprop("controls/displays/cursor-slew-y", 1);
+        return;
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetP -= fov/camera_movement_speed_lock;
@@ -345,6 +353,8 @@ var list = func () {
     } elsif (button == 14) {#LEFT
         if (lock_tgp) return;
         gps = 0;
+        setprop("controls/displays/cursor-slew-x", -1);
+        return;
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetH -= fov/camera_movement_speed_lock;
@@ -354,6 +364,8 @@ var list = func () {
     } elsif (button == 15) {#RGHT
         if (lock_tgp) return;
         gps = 0;
+        setprop("controls/displays/cursor-slew-x", 1);
+        return;
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetH += fov/camera_movement_speed_lock;

@@ -269,7 +269,7 @@
           </view>
         -->
         <view n="0">
-            <internal>true</internal>
+            <internal type="bool">true</internal>
             <enabled>true</enabled>
             <config>
                 <pitch-offset-deg>-13.75</pitch-offset-deg>
@@ -307,7 +307,7 @@
             <enabled>true</enabled>
             <heading-offset-deg>0</heading-offset-deg>
             <pitch-offset-deg>0</pitch-offset-deg>
-            <internal>true</internal>
+            <internal type="bool">true</internal>
             <config>
                 <pitch-offset-deg>-13.55</pitch-offset-deg>
                 <heading-offset-deg>-3</heading-offset-deg>
@@ -327,7 +327,7 @@
             <enabled>true</enabled>
             <heading-offset-deg>0</heading-offset-deg>
             <pitch-offset-deg>0</pitch-offset-deg>
-            <internal>true</internal>
+            <internal type="bool">true</internal>
             <config>
                 <pitch-offset-deg>-6.25</pitch-offset-deg>
                 <heading-offset-deg>-218</heading-offset-deg>
@@ -347,7 +347,7 @@
             <enabled>true</enabled>
             <heading-offset-deg>0</heading-offset-deg>
             <pitch-offset-deg>0</pitch-offset-deg>
-            <internal>true</internal>
+            <internal type="bool">true</internal>
             <config>
                 <pitch-offset-deg>-9.0</pitch-offset-deg>
                 <heading-offset-deg>-181.5</heading-offset-deg>
@@ -364,7 +364,7 @@
         <view n="105"><!-- if change this number, also change it in tgp.nas and mfd.nas -->
             <name>TGP</name>
             <enabled>false</enabled>
-            <internal>true</internal>
+            <internal type="bool">true</internal>
             <pitch-offset-deg type="double">-30</pitch-offset-deg>
             <heading-offset-deg type="double">0</heading-offset-deg>
             <config>
