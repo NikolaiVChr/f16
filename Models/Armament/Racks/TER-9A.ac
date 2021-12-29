@@ -1,5 +1,5 @@
 AC3Db
-MATERIAL "Material" rgb 0.8 0.8 0.8  amb 1 1 1  emis 0 0 0  spec 1 1 1  shi 64  trans 0
+MATERIAL "fuselage" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.735 0.815 0.835  shi 60 trans 0.000
 OBJECT world
 kids 5
 OBJECT poly
