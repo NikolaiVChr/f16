@@ -10,11 +10,11 @@
    </livery>
    
    <livery-logo>
-    <texture>Liveries/standard.logos.png</texture>
+    <texture>Liveries/Block50/greek.logo.png</texture>
    </livery-logo>
 
    <livery-patch>
-      <texture>Liveries/Block30/patch.Hellas.png</texture>
+      <texture>Liveries/Block50/patch.greece.png</texture>
    </livery-patch>
 
   <livery-pod>
