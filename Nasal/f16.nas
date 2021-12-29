@@ -671,13 +671,22 @@ var laser = func {
 }
 
 var autopilot_inhibit = {
+# Ref (up to block 40): 1F-16A-1 page 1-133
+# Ref (block 40 and up): GR1F-16CJ-1 page 1-135
   init: func {
     setlistener("/systems/refuel/serviceable", me.evaluate, 0, 0);
     setlistener("/controls/flight/flaps", me.evaluate, 0, 0);
     setlistener("/controls/gear/gear-down", me.evaluate, 0, 0);
     setlistener("/fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains", me.evaluate, 0, 0);
     setlistener("/f16/avionics/trim-ap-disc-switch", me.evaluate, 0, 0);
-
+    if (getprop("/sim/variant-id") >= 4) {
+      # TODO: A/P FAIL PFL occurs
+      setlistener("/f16/fcs/autopilot-aoa-limit-exceed", me.evaluate, 0, 0);
+      # TODO: DBU engaged
+      setlistener("/f16/avionics/low-speed-warning-tone-a", me.evaluate, 0, 0);
+      setlistener("/f16/avionics/low-speed-warning-tone-b", me.evaluate, 0, 0);
+      setlistener("/fdm/jsbsim/fcs/fbw-override", me.evaluate, 0, 0);
+    }
     me.evaluate();
   },
 
@@ -687,7 +696,18 @@ var autopilot_inhibit = {
       (getprop("/controls/flight/flaps")) or
       (getprop("/controls/gear/gear-down")) or
       (getprop("/fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains")) or
-      (getprop("/f16/avionics/trim-ap-disc-switch"))
+      (getprop("/f16/avionics/trim-ap-disc-switch")) or
+      (
+        (getprop("/sim/variant-id") >= 4) and
+        (
+          # TODO: A/P FAIL PFL occurs
+          (getprop("/f16/fcs/autopilot-aoa-limit-exceed")) or
+          # TODO: DBU engaged
+          (getprop("/f16/avionics/low-speed-warning-tone-a")) or
+          (getprop("/f16/avionics/low-speed-warning-tone-b")) or
+          (getprop("/fdm/jsbsim/fcs/fbw-override"))
+        )
+      )
     )
     {
       setprop("/f16/fcs/autopilot-inhibit", 1);

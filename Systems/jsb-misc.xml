@@ -1286,5 +1286,15 @@
       </fcs_function>
 
   </channel>
-    
+
+  <channel name="AOA_limits" execrate="8">
+      <switch name="/f16/fcs/autopilot-aoa-limit-exceed">
+            <description>GR1F-16CJ-1 page 1-135</description>
+            <default value="0"/>
+            <test value="1">
+                /orientation/alpha-deg gt 15
+            </test>
+        </switch>
+  </channel>
+
 </system>
