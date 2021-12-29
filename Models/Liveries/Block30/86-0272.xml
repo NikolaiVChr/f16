@@ -21,8 +21,8 @@
     </livery-pod>
       
     <f16>
-            <dragchute type="bool">false</dragchute>
-        </f16>
+        <dragchute type="bool">false</dragchute>
+    </f16>
   </model>
  </sim>
 </PropertyList>
