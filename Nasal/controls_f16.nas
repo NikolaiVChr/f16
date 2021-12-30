@@ -34,9 +34,9 @@ var dogfight = func {
     setprop("f16/avionics/dgft", dg);
     if (dg) {
         var prio = radar_system.apg68Radar.getPriorityTarget();
-        setprop("instrumentation/radar/radar-standby-std", getprop("instrumentation/radar/radar-standby"));
+        setprop("instrumentation/radar/radar-enable-std", getprop("instrumentation/radar/radar-enable"));
         if (prio == nil) {
-            setprop("instrumentation/radar/radar-standby", 1);
+            setprop("instrumentation/radar/radar-enable", 0);
         }
         pylons.fcs.selectWeapon("20mm Cannon");
         ded.dataEntryDisplay.page = ded.pEWS;
@@ -52,7 +52,7 @@ var dogfight = func {
         f16.rdrModeGM = 0;
     } else {
         radar_system.apg68Radar.setRootMode(0, radar_system.apg68Radar.getPriorityTarget());
-        setprop("instrumentation/radar/radar-standby", getprop("instrumentation/radar/radar-standby") and getprop("instrumentation/radar/radar-standby-std"));
+        setprop("instrumentation/radar/radar-enable", getprop("instrumentation/radar/radar-enable") and getprop("instrumentation/radar/radar-enable-std"));
     }
     setprop("f16/avionics/dgft", dg); # extra invocation on purpose
 }
@@ -68,7 +68,7 @@ var replay = func {
 }
 
 var radar_standby = func {
-	screen.log.write("Radar "~(getprop("instrumentation/radar/radar-standby")==1?"SILENT":"ACTIVE"), 0.5, 0.5, 1);
+	screen.log.write("Radar "~(getprop("instrumentation/radar/radar-enable")==1?"SILENT":"ACTIVE"), 0.5, 0.5, 1);
 }
 
 var masterarm = func {

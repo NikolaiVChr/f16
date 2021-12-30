@@ -1500,8 +1500,8 @@
                 <value>ACTIVE</value>
                 <condition>
                     <equals>
-                        <property>instrumentation/radar/radar-standby</property>
-                        <value>0</value>
+                        <property>instrumentation/radar/radar-enable</property>
+                        <value>1</value>
                     </equals>
                 </condition>
                 <marker>
@@ -1512,8 +1512,8 @@
                 </marker>
                 <binding>
                     <command>property-assign</command>
-                    <property>instrumentation/radar/radar-standby</property>
-                    <value>0</value>
+                    <property>instrumentation/radar/radar-enable</property>
+                    <value>1</value>
                 </binding>
             </item>
             <item>

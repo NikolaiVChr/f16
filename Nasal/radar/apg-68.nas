@@ -73,7 +73,7 @@ var RWR = {
             me.cs = me.threatDB[7];
             me.rn = me.threatDB[6];
             me.lnk16 = me.cs==nil?nil:datalink.get_data(me.cs);
-            if ((me.lnk16 != nil and me.lnk16.on_link() == 1) or me.rn > 150) {
+            if ((me.lnk16 != nil and me.lnk16.on_link() == 1 and !me.threatDB[10]) or me.rn > 150) {
                 continue;
             }
             me.bearing = me.threatDB[0];
@@ -96,7 +96,7 @@ var RWR = {
                 if (me.u.getModel() != "missile_frigate" and me.u.getModel() != "S-75" and me.u.getModel() != "buk-m2" and me.u.getModel() != "MIM104D" and me.u.getModel() != "s-300" and me.u.getModel() != "fleet" and me.u.getModel() != "ZSU-23-4M") {
                     me.threat += ((180-me.dev)/180)*0.30;# most threat if I am in front of his nose
                     me.spd = (60-me.threatDB[8])/60;
-                    me.threat -= me.spd>0?me.spd:0;# if his speed is lower than 60kt then give him minus threat else positive
+                    #me.threat -= me.spd>0?me.spd:0;# if his speed is lower than 60kt then give him minus threat else positive
                 } elsif (me.u.getModel == "missile_frigate" or me.u.getModel() == "fleet") {
                     me.threat += 0.30;
                 } else {
@@ -112,12 +112,14 @@ var RWR = {
                 } elsif (me.u.getModel() == "ZSU-23-4M") {
                     me.danger = 7.5;
                 }
+                if (me.threatDB[10]) me.threat += 0.30;# has me locked
                 me.threat += ((me.danger-me.rn)/me.danger)>0?((me.danger-me.rn)/me.danger)*0.60:0;# if inside danger zone then add threat, the closer the more.
                 me.threat += me.threatDB[9]>0?(me.threatDB[9]/500)*0.10:0;# more closing speed means more threat.
                 if (me.threat > me.closestThreat) me.closestThreat = me.threat;
+                #printf("A %s threat:%.2f range:%d dev:%d", me.u.get_Callsign(),me.threat,me.u.get_range(),me.deviation);
                 if (me.threat > 1) me.threat = 1;
                 if (me.threat <= 0) continue;
-#                printf("%s threat:%.2f range:%d dev:%d", me.u.get_Callsign(),me.threat,me.u.get_range(),me.deviation);
+                #printf("B %s threat:%.2f range:%d dev:%d", me.u.get_Callsign(),me.threat,me.u.get_range(),me.deviation);
                 append(me.vector_aicontacts_threats,[me.u,me.threat, me.threatDB[5]]);
             } else {
 #                printf("%s ----", me.u.get_Callsign());
@@ -129,7 +131,8 @@ var RWR = {
         me.spike = getprop("payload/armament/spike")*(getprop("ai/submodels/submodel[0]/count")>15);
         me.autoFlare = me.spike?math.max(me.closestThreat*0.25,0.05):0;
 
-        #print("spike: ",me.spike,"  incoming: ",me.incoming, "  launch: ",me.launchClose,"  spikeResult:", me.autoFlare,"  aggresive:",me.launchClose * 0.85 + me.incoming * 0.85,"  total:",me.launchClose * 0.85 + me.incoming * 0.85+me.autoFlare);
+        if (getprop("f16/avionics/ew-mode-knob") == 2)
+        	print("wow: ", getprop("gear/gear[0]/wow"),"  spiked: ",me.spike,"  incoming: ",me.incoming, "  launch: ",me.launchClose,"  spikeResult:", me.autoFlare,"  aggresive:",me.launchClose * 0.85 + me.incoming * 0.85,"  total:",me.launchClose * 0.85 + me.incoming * 0.85+me.autoFlare);
 
         me.autoFlare += me.launchClose * 0.85 + me.incoming * 0.85;
 
@@ -501,7 +504,8 @@ var APG68 = {
 		#print("On sky: ",me.eulerDir[1], "  disc: ",me.posElDeg);
 	},
 	loop: func {
-		me.enabled = getprop("/f16/avionics/power-fcr-bit") == 2 and !getprop("instrumentation/radar/radar-standby");
+		me.enabled = getprop("/f16/avionics/power-fcr-bit") == 2 and !getprop("gear/gear[0]/wow") and getprop("instrumentation/radar/radar-enable");
+		setprop("instrumentation/radar/radar-standby", !me.enabled);
 		if (me.enabled) {
 			me.elapsed = elapsedProp.getValue();
 			me.dt = me.elapsed - me.lastElapsed;

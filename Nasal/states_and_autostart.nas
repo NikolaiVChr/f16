@@ -240,7 +240,7 @@ var autostartengine = func {
   
   setprop("controls/test/test-panel/oxy-test", 0);
 
-  setprop("instrumentation/radar/radar-standby", 0);
+  setprop("instrumentation/radar/radar-enable", 1);
   setprop("instrumentation/comm[0]/volume",1);
   setprop("instrumentation/comm[1]/volume",1);
 
@@ -318,7 +318,7 @@ var coldndark = func {
   setprop("controls/lighting/lighting-panel/flood-inst-pnl-knob", 0.0);
   setprop("controls/lighting/lighting-panel/console-primary-knob", 0.0);
   setprop("controls/lighting/lighting-panel/data-entry-display", 0.0);
-  setprop("instrumentation/radar/radar-standby", 1);
+  setprop("instrumentation/radar/radar-enable", 1);
   setprop("instrumentation/comm[0]/volume",0);
   setprop("instrumentation/comm[1]/volume",0);
   setprop("controls/seat/ejection-safety-lever",0);

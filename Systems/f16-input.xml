@@ -493,7 +493,7 @@
             <desc>Toggle radar standby mode</desc>
             <binding>
                 <command>property-toggle</command>
-                <property>instrumentation/radar/radar-standby</property>
+                <property>instrumentation/radar/radar-enable</property>
             </binding>
             <binding>
                 <command>nasal</command>

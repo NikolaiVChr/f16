@@ -89,7 +89,7 @@
         </f16>
         <instrumentation>
             <radar>
-                <radar-standby type="bool">false</radar-standby>
+                <radar-enable type="bool">true</radar-enable>
             </radar>
             <comm n="0">
                 <volume type="double">1</volume>

@@ -575,6 +575,7 @@ AIContact = {
     	me.wBody   = me.vel.getNode("wBody-fps");
     	me.tp      = me.prop.getNode("instrumentation/transponder/transmitted-id");
     	me.rdr     = me.prop.getNode("sim/multiplay/generic/int[2]");
+    	me.str6    = me.prop.getNode("sim/multiplay/generic/string[6]");
     	call(func {me.dlinkNode = me.prop.getNode(datalink.mp_path)},nil,nil,var err = []);# call method because radar might be used in aircraft without datalink
 
 	    me.type    = me.determineType(me.prop.getName(), me.miss, me.getCoord().alt()*M2FT, me.model, me.speed==nil?nil:me.speed.getValue());
@@ -800,6 +801,13 @@ AIContact = {
 
 	isRadarEnable: func {
 		if (me.rdr == nil or me.rdr.getValue() != 1) {
+			return 1;
+		}
+		return 0;
+	},
+
+	isSpikingMe: func {
+		if (me.str6 != nil and me.str6.getValue() != nil and me.str6.getValue() != "" and size(""~me.str6.getValue())==4 and left(md5(self.getCallsign()),4) == me.str6.getValue()) {
 			return 1;
 		}
 		return 0;
@@ -1423,8 +1431,9 @@ OmniRadar = {
 			me.test = me.ber+180-me.head;
 			me.tp = contact.isTransponderEnable();
 			me.radar = contact.isRadarEnable();
-            if ((math.abs(geo.normdeg180(me.test)) < getRadarFieldRadius(contact.getModel()) or (me.tp and contact.getRangeDirect()*M2NM < me.tp_dist_nm)) and contact.getRangeDirect()*M2NM < me.max_dist_nm) {
-            	contact.storeThreat([me.ber,me.head,contact.getCoord(),me.tp,me.radar,contact.getDeviationHeading(),contact.getRangeDirect()*M2NM, contact.getCallsign(), contact.getSpeed(), contact.getClosureRate()]);
+			me.spiking = contact.isSpikingMe();
+            if ((me.radar and math.abs(geo.normdeg180(me.test)) < getRadarFieldRadius(contact.getModel()) or (me.tp and contact.getRangeDirect()*M2NM < me.tp_dist_nm) or me.spiking) and contact.getRangeDirect()*M2NM < me.max_dist_nm) {
+            	contact.storeThreat([me.ber,me.head,contact.getCoord(),me.tp,me.radar,contact.getDeviationHeading(),contact.getRangeDirect()*M2NM, contact.getCallsign(), contact.getSpeed(), contact.getClosureRate(), me.spiking]);
 				append(me.vector_aicontacts_for, contact);
 				#printf("In omni Field: %s %d", contact.getModel(), contact.getRange()*M2NM);
 			}

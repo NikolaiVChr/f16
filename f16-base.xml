@@ -986,7 +986,8 @@
             <radar2-range type="int">40</radar2-range><!-- default range -->
             <radar2-range-std type="int">40</radar2-range-std>
             <radar-standby type="bool">true</radar-standby>
-            <radar-standby-std type="bool">true</radar-standby-std>
+            <radar-enable type="bool">false</radar-enable>
+            <radar-enable-std type="bool">false</radar-enable-std>
             <symbols-enabled type="bool">true</symbols-enabled>
             <debug-mode type="bool">true</debug-mode>
             <serviceable type="bool">true</serviceable>
