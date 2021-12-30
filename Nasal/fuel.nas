@@ -1,5 +1,13 @@
 # FUEL ==============================================================
 
+var FUEL_QTY_TEST = 0;
+var FUEL_QTY_NORM = 1;
+var FUEL_QTY_RESV = 2;
+var FUEL_QTY_WING = 3;
+var FUEL_QTY_EXT_WING = 4;
+var FUEL_QTY_EXT_CENT = 5;
+
+# Notes: Engine in Block 60 can probably consume more than 20 pps.
 
 var fuelqty = func {
   var sel = getprop("controls/fuel/qty-selector");
@@ -8,7 +16,7 @@ var fuelqty = func {
   var aftFuel = getprop("consumables/fuel/tank[3]/level-lbs") + getprop("consumables/fuel/tank[5]/level-lbs");
 
   # Bingo fuel determination
-  if (fuel<getprop("f16/settings/bingo") or (sel == 1 and (fwdFuel+aftFuel)<getprop("f16/settings/bingo"))) {
+  if (fuel<getprop("f16/settings/bingo") or (sel == FUEL_QTY_NORM and (fwdFuel+aftFuel)<getprop("f16/settings/bingo"))) {
     if (getprop("f16/avionics/bingo") == 0) {
       setprop("f16/avionics/bingo", 1);
     }
@@ -30,7 +38,7 @@ var fuelqty = func {
   # - This does not take into consideration any unusable fuel, but does try to prevent
   #   'ghost fuel' from being created.
   # - Transfer rate is unknown. The assumed value fits flight idle to AB burn rates.
-  if (getprop("fdm/jsbsim/elec/bus/emergency-dc-2") > 20 and sel == 1 and fwdFuel < 2800) {
+  if (getprop("fdm/jsbsim/elec/bus/emergency-dc-2") > 20 and sel == FUEL_QTY_NORM and (fwdFuel+aftFuel) < 2800) {
     if (fwdFuel - aftFuel < 300 and
       getprop("consumables/fuel/tank[0]/level-norm") < 0.99 and
       getprop("consumables/fuel/tank[3]/level-norm") > 0.01) {
@@ -56,28 +64,28 @@ var fuelqty = func {
   }
 
   # Fuel quantity indication
-  if (sel == 0) {
+  if (sel == FUEL_QTY_TEST) {
     # test
     setprop("f16/fuel/hand-fwd", 2000);
     setprop("f16/fuel/hand-aft", 2000);
     fuel = 6000;
-  } elsif (sel == 1) {
+  } elsif (sel == FUEL_QTY_NORM) {
     #norm
     setprop("f16/fuel/hand-fwd", fwdFuel);
     setprop("f16/fuel/hand-aft", aftFuel);
-  } elsif (sel == 2) {
+  } elsif (sel == FUEL_QTY_RESV) {
     #reservoir tanks
     setprop("f16/fuel/hand-fwd", getprop("consumables/fuel/tank[4]/level-lbs"));
     setprop("f16/fuel/hand-aft", getprop("consumables/fuel/tank[5]/level-lbs"));
-  } elsif (sel == 3) {
+  } elsif (sel == FUEL_QTY_WING) {
     # int wing
     setprop("f16/fuel/hand-fwd", getprop("consumables/fuel/tank[2]/level-lbs")); # right
     setprop("f16/fuel/hand-aft", getprop("consumables/fuel/tank[1]/level-lbs")); # left
-  } elsif (sel == 4) {
+  } elsif (sel == FUEL_QTY_EXT_WING) {
     # ext wing
     setprop("f16/fuel/hand-fwd", getprop("consumables/fuel/tank[7]/level-lbs")); 
     setprop("f16/fuel/hand-aft", getprop("consumables/fuel/tank[6]/level-lbs"));
-  } elsif (sel == 5) {
+  } elsif (sel == FUEL_QTY_EXT_CENT) {
     # ext center
     var lvlcft = getprop("consumables/fuel/tank[9]/level-lbs");
     setprop("f16/fuel/hand-fwd", getprop("consumables/fuel/tank[8]/level-lbs")+(lvlcft!=nil?lvlcft:0));
