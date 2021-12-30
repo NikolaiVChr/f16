@@ -41,6 +41,8 @@ var max_int_wing_lbm = 550;
   var ext_center_to_wing_right = 0;
   var ext_left_to_wing_left = 0;
   var ext_right_to_wing_right = 0;
+  var cft_to_wing_left = 0;
+  var cft_to_wing_right = 0;
 
 
 var fuelqty = func {# 0.5 Hz loop
@@ -102,6 +104,8 @@ var fuelqty = func {# 0.5 Hz loop
     ext_center_to_wing_left = 0;
     ext_left_to_wing_left = 0;
     ext_right_to_wing_right = 0;
+    cft_to_wing_left = 0;
+    cft_to_wing_right = 0;
 
     if ((airsrc == AIR_SOURCE_NORM or airsrc == AIR_SOURCE_DUMP) and !refuel_door and (hydA.getValue() >= 2000 or hydB.getValue() >= 2000)) {#TODO: find proper hyd/elec requirements
         if (transfer == FUEL_TRANS_NORM) {
@@ -134,6 +138,13 @@ var fuelqty = func {# 0.5 Hz loop
             }
         }
     }
+    if (   getprop("/consumables/fuel/tank[9]/selected") == 1 and getprop("consumables/fuel/tank[9]/level-norm") > 0.01
+           and getprop("consumables/fuel/tank[1]/level-lbs") < 525 and getprop("consumables/fuel/tank[2]/level-lbs") < 525
+           and ext_center_to_wing_left == 0 and ext_center_to_wing_right == 0 and ext_right_to_wing_right == 0 and ext_left_to_wing_left == 0
+           and getprop("sim/variant-id")>=5 and getprop("fdm/jsbsim/accelerations/a_n") > 0.75) {# gravity powered
+        cft_to_wing_left = 20;
+        cft_to_wing_right = 20;
+    }
 
     
 
@@ -145,15 +156,17 @@ var fuelqty = func {# 0.5 Hz loop
     # execute the actual transfers
     setprop("/fdm/jsbsim/propulsion/tank[3]/external-flow-rate-pps", -aft_to_fwd);  # from aft
     setprop("/fdm/jsbsim/propulsion/tank[0]/external-flow-rate-pps", aft_to_fwd);   # to fwd
-    setprop("/fdm/jsbsim/propulsion/tank[1]/external-flow-rate-pps", ext_center_to_wing_left + ext_left_to_wing_left);  # wing left
-    setprop("/fdm/jsbsim/propulsion/tank[2]/external-flow-rate-pps", ext_center_to_wing_right + ext_right_to_wing_right);   # wing right
+    setprop("/fdm/jsbsim/propulsion/tank[1]/external-flow-rate-pps", ext_center_to_wing_left + ext_left_to_wing_left+ cft_to_wing_left);  # wing left
+    setprop("/fdm/jsbsim/propulsion/tank[2]/external-flow-rate-pps", ext_center_to_wing_right + ext_right_to_wing_right + cft_to_wing_right);   # wing right
     # for the ext tanks important not to write to these properties if not mounted: (as pylon system will set flow rate)
     if (getprop("/consumables/fuel/tank[6]/selected") == 1)
         setprop("/fdm/jsbsim/propulsion/tank[6]/external-flow-rate-pps", -ext_left_to_wing_left);   # left ext
     if (getprop("/consumables/fuel/tank[7]/selected") == 1)
         setprop("/fdm/jsbsim/propulsion/tank[7]/external-flow-rate-pps", -ext_right_to_wing_right);   # right ext
     if (getprop("/consumables/fuel/tank[8]/selected") == 1)
-        setprop("/fdm/jsbsim/propulsion/tank[8]/external-flow-rate-pps", -ext_center_to_wing_right -ext_center_to_wing_left);   # center ext    
+        setprop("/fdm/jsbsim/propulsion/tank[8]/external-flow-rate-pps", -ext_center_to_wing_right -ext_center_to_wing_left);   # center ext
+    if (getprop("sim/variant-id")>=5 and getprop("/consumables/fuel/tank[9]/selected") == 1)
+        setprop("/fdm/jsbsim/propulsion/tank[9]/external-flow-rate-pps", -cft_to_wing_left -cft_to_wing_right);   # center ext
 
     #################################################################################
     #################################################################################
@@ -246,8 +259,8 @@ setlistener("f16/engine/feed", func(feedNode) {
     }
 
     if (master) {
-        setprop("/fdm/jsbsim/propulsion/tank[0]/priority", tank_priority[0]);
-        setprop("/fdm/jsbsim/propulsion/tank[3]/priority", tank_priority[3]);
+        setprop("/fdm/jsbsim/propulsion/tank[0]/priority", tank_priority[TANK_FWD]);
+        setprop("/fdm/jsbsim/propulsion/tank[3]/priority", tank_priority[TANK_AFT]);
     }
 }, 1, 0);
 
@@ -283,17 +296,17 @@ var set_ext_tank_prio = func {
     }
 }
 
-set_ext_tank_prio();
+#set_ext_tank_prio();
 
 # Fuel transfer switch
-setlistener("controls/fuel/external-transfer", func {
-    set_ext_tank_prio();
-}, 0, 0);
+#setlistener("controls/fuel/external-transfer", func {
+#    set_ext_tank_prio();
+#}, 0, 0);
 
 # Fuel tank pressurization
-setlistener("controls/ventilation/airconditioning-source", func {
-    set_ext_tank_prio();
-}, 0, 0);
+#setlistener("controls/ventilation/airconditioning-source", func {
+#    set_ext_tank_prio();
+#}, 0, 0);
 
 var fuelDigits = func {
   for (var i=0;i<=maxtank;i+=1) {

@@ -21,7 +21,7 @@
    <!--feed>6</feed>
    <feed>7</feed>
    <feed>8</feed-->
-   <feed>9</feed>
+   <!--feed>9</feed-->
    <thruster file="direct">
     <location unit="M">
      <x> 4.2077 </x>
