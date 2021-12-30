@@ -18,9 +18,9 @@
    <feed>3</feed>
    <feed>4</feed>
    <feed>5</feed>
-   <feed>6</feed>
+   <!--feed>6</feed>
    <feed>7</feed>
-   <feed>8</feed>
+   <feed>8</feed-->
    <feed>9</feed>
    <thruster file="direct">
     <location unit="M">
