@@ -3,9 +3,9 @@
 <PropertyList>
  <sim>
   <model>
-   <livery> 
-    <name type="string">HAF 343 Mira, #527</name>
-    <texture>Liveries/Block50/99-1527.png</texture>
+   <livery>
+    <name type="string">HAF 337 Mira, #524</name>
+    <texture>Liveries/Block50/99-1524.png</texture>
     <owner type="string">HAF</owner>
    </livery>
 
@@ -14,17 +14,17 @@
    </livery-logo>
 
    <livery-patch>
-      <texture>Liveries/Block30/patch.Hellas.png</texture>
+      <texture>Liveries/Block50/patch.greece.png</texture>
    </livery-patch>
 
   <livery-pod>
         <texture>Liveries/Block10/pod.white.png</texture>
-    </livery-pod>
+  </livery-pod>
 
-  <f16>
-    <dragchute type="bool">true</dragchute>
-    <cft type="bool">false</cft>
-  </f16>
+    <f16>
+        <dragchute type="bool">true</dragchute>
+        <cft type="bool">true</cft>
+    </f16>
   </model>
  </sim>
 </PropertyList>
