@@ -33,16 +33,16 @@ var TANK_EXT_RIGHT = 7;
 var TANK_EXT_CENTER = 8;
 var TANK_EXT_CFT = 9;
 
-# Notes: Engine in Block 60 can probably consume more than 20 pps.
+# Notes: Engine in Block 60 can probably consume more than 13 pps.
 var max_int_wing_lbm = 550;
 
-  var aft_to_fwd = 0;
-  var ext_center_to_wing_left = 0;
-  var ext_center_to_wing_right = 0;
-  var ext_left_to_wing_left = 0;
-  var ext_right_to_wing_right = 0;
-  var cft_to_wing_left = 0;
-  var cft_to_wing_right = 0;
+var aft_to_fwd = 0;
+var ext_center_to_wing_left = 0;
+var ext_center_to_wing_right = 0;
+var ext_left_to_wing_left = 0;
+var ext_right_to_wing_right = 0;
+var cft_to_wing_left = 0;
+var cft_to_wing_right = 0;
 
 
 var fuelqty = func {# 0.5 Hz loop
@@ -110,31 +110,31 @@ var fuelqty = func {# 0.5 Hz loop
     if ((airsrc == AIR_SOURCE_NORM or airsrc == AIR_SOURCE_DUMP) and !refuel_door and (hydA.getValue() >= 2000 or hydB.getValue() >= 2000)) {#TODO: find proper hyd/elec requirements
         if (transfer == FUEL_TRANS_NORM) {
             if (getprop("/consumables/fuel/tank[8]/selected") == 1 and getprop("consumables/fuel/tank[8]/level-norm") > 0.01 and getprop("consumables/fuel/tank[1]/level-lbs") < 525 and getprop("consumables/fuel/tank[2]/level-lbs") < 525) {
-                ext_center_to_wing_right = 10;
-                ext_center_to_wing_left = 10;
+                ext_center_to_wing_right = 7.5;
+                ext_center_to_wing_left = 7.5;
             } elsif (getprop("consumables/fuel/tank[8]/level-norm") < 0.02) {
                 # Not transfering from center, and center approx empty
                 if (getprop("/consumables/fuel/tank[6]/selected") == 1 and getprop("consumables/fuel/tank[6]/level-norm") > 0.01 and getprop("consumables/fuel/tank[1]/level-lbs") < 525) {
                   # left side
-                  ext_left_to_wing_left = 10;
+                  ext_left_to_wing_left = 7.5;
                 }
                 if (getprop("/consumables/fuel/tank[7]/selected") == 1 and getprop("consumables/fuel/tank[7]/level-norm") > 0.01 and getprop("consumables/fuel/tank[2]/level-lbs") < 525) {
                   # right side
-                  ext_right_to_wing_right = 10;
+                  ext_right_to_wing_right = 7.5;
                 }
             }
         } elsif (transfer == FUEL_TRANS_WING) {
             if (getprop("consumables/fuel/tank[6]/level-norm") > 0.01 and getprop("consumables/fuel/tank[1]/level-lbs") < 525) {
               # left side
-              ext_left_to_wing_left = 10;
+              ext_left_to_wing_left = 7.5;
             }
             if (getprop("consumables/fuel/tank[7]/level-norm") > 0.01 and getprop("consumables/fuel/tank[2]/level-lbs") < 525) {
               # right side
-              ext_right_to_wing_right = 10;
+              ext_right_to_wing_right = 7.5;
             }
             if (ext_left_to_wing_left == 0 and ext_right_to_wing_right == 0 and getprop("consumables/fuel/tank[8]/level-norm") > 0.01 and getprop("consumables/fuel/tank[1]/level-lbs") < 525 and getprop("consumables/fuel/tank[2]/level-lbs") < 525) {
-                ext_center_to_wing_right = 10;
-                ext_center_to_wing_left = 10;
+                ext_center_to_wing_right = 7.5;
+                ext_center_to_wing_left = 7.5;
             }
         }
     }
@@ -142,8 +142,8 @@ var fuelqty = func {# 0.5 Hz loop
            and getprop("consumables/fuel/tank[1]/level-lbs") < 525 and getprop("consumables/fuel/tank[2]/level-lbs") < 525
            and ext_center_to_wing_left == 0 and ext_center_to_wing_right == 0 and ext_right_to_wing_right == 0 and ext_left_to_wing_left == 0
            and getprop("sim/variant-id")>=5 and getprop("fdm/jsbsim/accelerations/a_n") > 0.75) {# gravity powered
-        cft_to_wing_left  = 8;
-        cft_to_wing_right = 8;
+        cft_to_wing_left  = 7.5;
+        cft_to_wing_right = 7.5;
     }
 
     
@@ -156,7 +156,7 @@ var fuelqty = func {# 0.5 Hz loop
     # execute the actual transfers
     setprop("/fdm/jsbsim/propulsion/tank[3]/external-flow-rate-pps", -aft_to_fwd);  # from aft
     setprop("/fdm/jsbsim/propulsion/tank[0]/external-flow-rate-pps", aft_to_fwd);   # to fwd
-    setprop("/fdm/jsbsim/propulsion/tank[1]/external-flow-rate-pps", ext_center_to_wing_left + ext_left_to_wing_left+ cft_to_wing_left);  # wing left
+    setprop("/fdm/jsbsim/propulsion/tank[1]/external-flow-rate-pps", ext_center_to_wing_left  + ext_left_to_wing_left   + cft_to_wing_left);  # wing left
     setprop("/fdm/jsbsim/propulsion/tank[2]/external-flow-rate-pps", ext_center_to_wing_right + ext_right_to_wing_right + cft_to_wing_right);   # wing right
     # for the ext tanks important not to write to these properties if not mounted: (as pylon system will set flow rate)
     if (getprop("/consumables/fuel/tank[6]/selected") == 1)
@@ -308,7 +308,7 @@ var set_ext_tank_prio = func {
 #    set_ext_tank_prio();
 #}, 0, 0);
 
-var fuelDigits = func {
+var fuelDigits = func {# this method is not in use
   for (var i=0;i<=maxtank;i+=1) {
     var fuel = getprop("consumables/fuel/tank["~i~"]/level-lbs"); 
     fuel = roundabout(fuel);
