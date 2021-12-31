@@ -110,31 +110,31 @@ var fuelqty = func {# 0.5 Hz loop
     if ((airsrc == AIR_SOURCE_NORM or airsrc == AIR_SOURCE_DUMP) and !refuel_door and (hydA.getValue() >= 2000 or hydB.getValue() >= 2000)) {#TODO: find proper hyd/elec requirements
         if (transfer == FUEL_TRANS_NORM) {
             if (getprop("/consumables/fuel/tank[8]/selected") == 1 and getprop("consumables/fuel/tank[8]/level-norm") > 0.01 and getprop("consumables/fuel/tank[1]/level-lbs") < 525 and getprop("consumables/fuel/tank[2]/level-lbs") < 525) {
-                ext_center_to_wing_right = 20;
-                ext_center_to_wing_left = 20;
+                ext_center_to_wing_right = 10;
+                ext_center_to_wing_left = 10;
             } elsif (getprop("consumables/fuel/tank[8]/level-norm") < 0.02) {
                 # Not transfering from center, and center approx empty
                 if (getprop("/consumables/fuel/tank[6]/selected") == 1 and getprop("consumables/fuel/tank[6]/level-norm") > 0.01 and getprop("consumables/fuel/tank[1]/level-lbs") < 525) {
                   # left side
-                  ext_left_to_wing_left = 20;
+                  ext_left_to_wing_left = 10;
                 }
                 if (getprop("/consumables/fuel/tank[7]/selected") == 1 and getprop("consumables/fuel/tank[7]/level-norm") > 0.01 and getprop("consumables/fuel/tank[2]/level-lbs") < 525) {
                   # right side
-                  ext_right_to_wing_right = 20;
+                  ext_right_to_wing_right = 10;
                 }
             }
         } elsif (transfer == FUEL_TRANS_WING) {
             if (getprop("consumables/fuel/tank[6]/level-norm") > 0.01 and getprop("consumables/fuel/tank[1]/level-lbs") < 525) {
               # left side
-              ext_left_to_wing_left = 20;
+              ext_left_to_wing_left = 10;
             }
             if (getprop("consumables/fuel/tank[7]/level-norm") > 0.01 and getprop("consumables/fuel/tank[2]/level-lbs") < 525) {
               # right side
-              ext_right_to_wing_right = 20;
+              ext_right_to_wing_right = 10;
             }
             if (ext_left_to_wing_left == 0 and ext_right_to_wing_right == 0 and getprop("consumables/fuel/tank[8]/level-norm") > 0.01 and getprop("consumables/fuel/tank[1]/level-lbs") < 525 and getprop("consumables/fuel/tank[2]/level-lbs") < 525) {
-                ext_center_to_wing_right = 20;
-                ext_center_to_wing_left = 20;
+                ext_center_to_wing_right = 10;
+                ext_center_to_wing_left = 10;
             }
         }
     }
@@ -142,8 +142,8 @@ var fuelqty = func {# 0.5 Hz loop
            and getprop("consumables/fuel/tank[1]/level-lbs") < 525 and getprop("consumables/fuel/tank[2]/level-lbs") < 525
            and ext_center_to_wing_left == 0 and ext_center_to_wing_right == 0 and ext_right_to_wing_right == 0 and ext_left_to_wing_left == 0
            and getprop("sim/variant-id")>=5 and getprop("fdm/jsbsim/accelerations/a_n") > 0.75) {# gravity powered
-        cft_to_wing_left = 20;
-        cft_to_wing_right = 20;
+        cft_to_wing_left  = 8;
+        cft_to_wing_right = 8;
     }
 
     
