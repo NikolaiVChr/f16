@@ -11,25 +11,25 @@
       <pitch-deg>0</pitch-deg>
     </offsets>
 
-    <model>
+    <!--model>
       <name>Station7_GBU12_left</name>
       <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/GBU-12.xml</path>
       <offsets>
-        <x-m>-0.35</x-m>
-        <y-m>-0.250</y-m>
-        <z-m>-0.050</z-m>
+        <x-m>-0.55</x-m>
+        <y-m>-0.267</y-m>
+        <z-m>-0.067</z-m>
         <pitch-deg>0</pitch-deg>
         <roll-deg>00</roll-deg>
       </offsets>
-    </model>
+    </model-->
 
     <model>
       <name>Station7_GBU12_center</name>
       <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/GBU-12.xml</path>
       <offsets>
-        <x-m>-0.35</x-m>
+        <x-m>-0.55</x-m>
         <y-m>0</y-m>
-        <z-m>-0.350</z-m>
+        <z-m>-0.367</z-m>
         <pitch-deg>0</pitch-deg>
       </offsets>
     </model>
@@ -38,30 +38,30 @@
       <name>Station7_GBU12_right</name>
       <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/GBU-12.xml</path>
       <offsets>
-        <x-m>-0.35</x-m>
-        <y-m>0.250</y-m>
-        <z-m>-0.050</z-m>
+        <x-m>-0.55</x-m>
+        <y-m>0.267</y-m>
+        <z-m>-0.067</z-m>
         <pitch-deg>0</pitch-deg>
         <roll-deg>00</roll-deg>
       </offsets>
     </model>
 
-    <animation>
+    <!--animation>
         <type>rotate</type>
         <object-name>Station7_GBU12_left</object-name>
         <factor>0</factor>
         <offset-deg>-50</offset-deg>
         <center>
-          <x-m>-0.35</x-m>
-          <y-m>-0.250</y-m>
-          <z-m>-0.050</z-m>
+          <x-m>-0.55</x-m>
+          <y-m>-0.267</y-m>
+          <z-m>-0.067</z-m>
         </center>
         <axis>
           <x>1</x>
           <y>0</y>
           <z>0</z>
         </axis>
-    </animation>
+    </animation-->
 
     <animation>
         <type>rotate</type>
@@ -69,9 +69,9 @@
         <factor>0</factor>
         <offset-deg>50</offset-deg>
         <center>
-          <x-m>-0.35</x-m>
-          <y-m>0.250</y-m>
-          <z-m>-0.050</z-m>
+          <x-m>-0.55</x-m>
+          <y-m>0.267</y-m>
+          <z-m>-0.067</z-m>
         </center>
         <axis>
           <x>1</x>
@@ -80,7 +80,7 @@
         </axis>
     </animation>
 
-    <animation>
+    <!--animation>
       <type>select</type>
       <object-name>Station7_GBU12_left</object-name>
       <condition><and>
@@ -93,7 +93,7 @@
           <value>0</value>
         </greater-than></and>
       </condition>
-     </animation>
+     </animation-->
 
      <animation>
       <type>select</type>
@@ -106,7 +106,7 @@
         </equals>
         <greater-than>
           <property>payload/armament/station/id-6-count</property>
-          <value>1</value>
+          <value>0</value>
         </greater-than>
       </and>
       </condition>
@@ -122,7 +122,7 @@
         </equals>
         <greater-than>
           <property>payload/armament/station/id-6-count</property>
-          <value>2</value>
+          <value>1</value>
         </greater-than></and>
       </condition>
      </animation>

@@ -48,7 +48,7 @@
  </model>
  
 <model>
-  <name>Station3_3xGBU12</name>
+  <name>Station3_2xGBU12</name>
   <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/ter-9a-3.xml</path>
   <offsets>
     <x-m>0.29</x-m>
@@ -361,11 +361,11 @@
  </model>
  
   <model>
-  <name>Station7_3xGBU12</name>
+  <name>Station7_2xGBU12</name>
   <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/ter-9a-7.xml</path>
   <offsets>
     <x-m>0.29</x-m>
-    <y-m>-2.879</y-m>
+    <y-m>2.879</y-m>
     <z-m>-0.44</z-m>
     <pitch-deg>-4.5</pitch-deg>
   </offsets>

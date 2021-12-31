@@ -12,7 +12,7 @@
     </offsets>
 
     <model>
-      <name>Station3_GBU12_left</name>
+      <name>Station4_GBU12_left</name>
       <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/GBU-12.xml</path>
       <offsets>
         <x-m>-0.55</x-m>
@@ -24,7 +24,7 @@
     </model>
 
     <model>
-      <name>Station3_GBU12_center</name>
+      <name>Station4_GBU12_center</name>
       <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/GBU-12.xml</path>
       <offsets>
         <x-m>-0.55</x-m>
@@ -34,8 +34,8 @@
       </offsets>
     </model>
 
-    <!--model>
-      <name>Station3_GBU12_right</name>
+    <model>
+      <name>Station4_GBU12_right</name>
       <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/GBU-12.xml</path>
       <offsets>
         <x-m>-0.55</x-m>
@@ -44,11 +44,11 @@
         <pitch-deg>0</pitch-deg>
         <roll-deg>00</roll-deg>
       </offsets>
-    </model-->
+    </model>
 
     <animation>
         <type>rotate</type>
-        <object-name>Station3_GBU12_left</object-name>
+        <object-name>Station4_GBU12_left</object-name>
         <factor>0</factor>
         <offset-deg>-50</offset-deg>
         <center>
@@ -63,9 +63,9 @@
         </axis>
     </animation>
 
-    <!--animation>
+    <animation>
         <type>rotate</type>
-        <object-name>Station3_GBU12_right</object-name>
+        <object-name>Station4_GBU12_right</object-name>
         <factor>0</factor>
         <offset-deg>50</offset-deg>
         <center>
@@ -78,51 +78,51 @@
           <y>0</y>
           <z>0</z>
         </axis>
-    </animation-->
+    </animation>
 
     <animation>
       <type>select</type>
-      <object-name>Station3_GBU12_left</object-name>
+      <object-name>Station4_GBU12_left</object-name>
       <condition><and>
         <equals>
-          <property>payload/armament/station/id-2-type</property>
+          <property>payload/armament/station/id-3-type</property>
           <value>GBU-12</value>
         </equals>
         <greater-than>
-          <property>payload/armament/station/id-2-count</property>
+          <property>payload/armament/station/id-3-count</property>
           <value>0</value>
         </greater-than></and>
       </condition>
      </animation>
 
-     <!--animation>
+     <animation>
       <type>select</type>
-      <object-name>Station3_GBU12_right</object-name>
+      <object-name>Station4_GBU12_right</object-name>
       <condition>
         <and>
         <equals>
-          <property>payload/armament/station/id-2-type</property>
+          <property>payload/armament/station/id-3-type</property>
           <value>GBU-12</value>
         </equals>
         <greater-than>
-          <property>payload/armament/station/id-2-count</property>
+          <property>payload/armament/station/id-3-count</property>
           <value>1</value>
         </greater-than>
       </and>
       </condition>
-     </animation-->
+     </animation>
 
      <animation>
       <type>select</type>
-      <object-name>Station3_GBU12_center</object-name>
+      <object-name>Station4_GBU12_center</object-name>
       <condition><and>
         <equals>
-          <property>payload/armament/station/id-2-type</property>
+          <property>payload/armament/station/id-3-type</property>
           <value>GBU-12</value>
         </equals>
         <greater-than>
-          <property>payload/armament/station/id-2-count</property>
-          <value>1</value>
+          <property>payload/armament/station/id-3-count</property>
+          <value>2</value>
         </greater-than></and>
       </condition>
      </animation>

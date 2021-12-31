@@ -41,14 +41,14 @@
       		<object-name>GBU-12_Wing.003</object-name>
       		<object-name>GBU-12_Wing.004</object-name>
 		<condition>
-			<property>payload/armament/gbu-12/flags/msl-id-602</property>
+			<property>payload/armament/gbu-12/flags/msl-id-502</property>
 		</condition>
 	</animation>
 
 	 <animation>
   <type>rotate</type>
   <object-name>GBU-12_Wing.001</object-name>
-  <property>payload/armament/gbu-12/flags/deploy-id-602</property>
+  <property>payload/armament/gbu-12/flags/deploy-id-502</property>
   <factor>-75</factor>
   <axis>
    <x1-m>0.96767</x1-m>
@@ -63,7 +63,7 @@
  <animation>
   <type>rotate</type>
   <object-name>GBU-12_Wing.002</object-name>
-  <property>payload/armament/gbu-12/flags/deploy-id-602</property>
+  <property>payload/armament/gbu-12/flags/deploy-id-502</property>
   <factor>75</factor>
   <axis>
    <x1-m>0.96767</x1-m>
@@ -78,7 +78,7 @@
  <animation>
   <type>rotate</type>
   <object-name>GBU-12_Wing.003</object-name>
-  <property>payload/armament/gbu-12/flags/deploy-id-602</property>
+  <property>payload/armament/gbu-12/flags/deploy-id-502</property>
   <factor>75</factor>
   <axis>
    <x1-m>0.96767</x1-m>
@@ -93,7 +93,7 @@
  <animation>
   <type>rotate</type>
   <object-name>GBU-12_Wing.004</object-name>
-  <property>payload/armament/gbu-12/flags/deploy-id-602</property>
+  <property>payload/armament/gbu-12/flags/deploy-id-502</property>
   <factor>-75</factor>
   <axis>
    <x1-m>0.96767</x1-m>
@@ -113,7 +113,7 @@
          <lighting type="bool">false</lighting>
 
          <condition>
-               <property>payload/armament/gbu-12/flags/explode-id-602</property>
+               <property>payload/armament/gbu-12/flags/explode-id-502</property>
          </condition>
 
          <attach>world</attach>
@@ -199,7 +199,7 @@
          <lighting type="bool">false</lighting>
 
          <condition>
-               <property>payload/armament/gbu-12/flags/explode-id-602</property>
+               <property>payload/armament/gbu-12/flags/explode-id-502</property>
          </condition>
 
          <attach>world</attach>
@@ -286,9 +286,9 @@
 
          <condition>
              <and>
-               <property>payload/armament/gbu-12/flags/explode-smoke-id-602</property>
+               <property>payload/armament/gbu-12/flags/explode-smoke-id-502</property>
              <not>
-                <property>payload/armament/gbu-12/flags/explode-water-id-602</property>
+                <property>payload/armament/gbu-12/flags/explode-water-id-502</property>
              </not>
              </and>
          </condition>
@@ -380,9 +380,9 @@
 
          <condition>
              <and>
-               <property>payload/armament/gbu-12/flags/explode-smoke-id-602</property>
+               <property>payload/armament/gbu-12/flags/explode-smoke-id-502</property>
              <not>
-                <property>payload/armament/gbu-12/flags/explode-water-id-602</property>
+                <property>payload/armament/gbu-12/flags/explode-water-id-502</property>
              </not>
              </and>
          </condition>
@@ -471,9 +471,9 @@
 
          <condition>
           <and>
-             <property>payload/armament/gbu-12/flags/explode-id-602</property>
+             <property>payload/armament/gbu-12/flags/explode-id-502</property>
           <not>
-             <property>payload/armament/gbu-12/flags/explode-water-id-602</property>
+             <property>payload/armament/gbu-12/flags/explode-water-id-502</property>
            </not>
           </and>
          </condition>
@@ -563,8 +563,8 @@
 
          <condition>
           <and>
-             <property>payload/armament/gbu-12/flags/explode-id-602</property>
-             <property>payload/armament/gbu-12/flags/explode-water-id-602</property>
+             <property>payload/armament/gbu-12/flags/explode-id-502</property>
+             <property>payload/armament/gbu-12/flags/explode-water-id-502</property>
           </and>
          </condition>
 
@@ -653,8 +653,8 @@
 
          <condition>
           <and>
-             <property>payload/armament/gbu-12/flags/explode-smoke-id-602</property>
-             <property>payload/armament/gbu-12/flags/explode-water-id-602</property>
+             <property>payload/armament/gbu-12/flags/explode-smoke-id-502</property>
+             <property>payload/armament/gbu-12/flags/explode-water-id-502</property>
           </and>
          </condition>
 
