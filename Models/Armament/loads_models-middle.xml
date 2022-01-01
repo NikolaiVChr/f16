@@ -93,11 +93,11 @@
 
 <model>
   <name>Station3_GBU54</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/GBU-54/duorack-3.xml</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-54/bru-57-3.xml</path>
   <offsets>
-   <x-m>0.7</x-m>
+    <x-m>0.13</x-m>
     <y-m>-2.879</y-m>
-    <z-m>-0.386</z-m>
+    <z-m>-0.258</z-m>
     <pitch-deg>-4.5</pitch-deg>
     <pitch-deg>0</pitch-deg>
   </offsets>
@@ -406,11 +406,11 @@
 
 <model>
   <name>Station7_GBU54</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/GBU-54/duorack-7.xml</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-54/bru-57-7.xml</path>
   <offsets>
-    <x-m>0.7</x-m>
+    <x-m>0.13</x-m>
     <y-m>2.879</y-m>
-    <z-m>-0.386</z-m>
+    <z-m>-0.258</z-m>
     <pitch-deg>-4.5</pitch-deg>
   </offsets>
 </model>
