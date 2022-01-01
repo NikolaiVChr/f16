@@ -3489,7 +3489,7 @@ var MFD_Device =
             .setStrokeLineWidth(3)
             .set("z-index",2)
             .hide()
-            .setColor(colorCircle3);
+            .setColor(colorCircle2);
         svg.c5 = svg.p_HSDc.createChild("path")
             .moveTo(-50,0)
             .arcSmallCW(50,50, 0,  50*2, 0)
@@ -3497,7 +3497,7 @@ var MFD_Device =
             .setStrokeLineWidth(3)
             .set("z-index",2)
             .hide()
-            .setColor(colorCircle2);
+            .setColor(colorCircle3);
         svg.c6 = svg.p_HSDc.createChild("path")
             .moveTo(-50,0)
             .arcSmallCW(50,50, 0,  50*2, 0)
@@ -3524,12 +3524,12 @@ var MFD_Device =
                 .setFontSize(15, 1.0);
         svg.ct4 = svg.p_HSDc.createChild("text")
                 .setAlignment("center-center")
-                .setColor(colorCircle3)
+                .setColor(colorCircle2)
                 .set("z-index",2)
                 .setFontSize(15, 1.0);        
         svg.ct5 = svg.p_HSDc.createChild("text")
                 .setAlignment("center-center")
-                .setColor(colorCircle2)
+                .setColor(colorCircle3)
                 .set("z-index",2)
                 .setFontSize(15, 1.0);
         svg.ct6 = svg.p_HSDc.createChild("text")
@@ -3990,7 +3990,7 @@ var MFD_Device =
                         me.root.mark[mi].show();
                     }
                 }
-                
+                #print("");print("");print("");
                 for (var l = 0; l<6;l+=1) {
                     # threat circles
                     if (l==0) {
@@ -4017,6 +4017,7 @@ var MFD_Device =
                     if (me.cnu == nil) {
                         me.ci.hide();
                         me.cit.hide();
+                        #print("Ignoring ", 300+l);
                         continue;
                     }
                     me.la = me.cnu.lat;
@@ -4024,7 +4025,7 @@ var MFD_Device =
                     me.ra = me.cnu.radius;
                     me.ty = me.cnu.type;
                     me.co = me.cnu.color == 0?colorCircle1:(me.cnu.color == 1?colorCircle2:colorCircle3);
-                    
+                    #print("Painting ", 300+l," in ", me.cnu.color == 0?"red":(me.cnu.color == 1?"yellow":"green"));
                     if (me.la != nil and me.lo != nil and me.ra != nil and me.ra > 0) {
                         me.wpC = geo.Coord.new();
                         me.wpC.set_latlon(me.la,me.lo);

@@ -5,7 +5,7 @@
   	<layout>vbox</layout>
   	<draggable>true</draggable>
     <resizable>false</resizable>
-    <width>600</width>
+    <width>700</width>
     <!--<height>250</height>-->
     
     <nasal>
@@ -15,47 +15,53 @@
 				setprop("f16/avionics/pilot-aid/bulls-eye-lat", s.lat);
 				setprop("f16/avionics/pilot-aid/bulls-eye-lon", s.lon);
 			}
-			s = steerpoints.getNumber(300);
+			s = steerpoints.getNumber(300);# 
 			if (s != nil) {
 				setprop("f16/avionics/pilot-aid/c1-lat", s.lat);
 				setprop("f16/avionics/pilot-aid/c1-lon", s.lon);
 				setprop("f16/avionics/pilot-aid/c1-rad", s.radius);
 				setprop("f16/avionics/pilot-aid/c1-typ", s.type);
+				setprop("f16/avionics/pilot-aid/c1-col", s.color==0?"RED":(s.color==1?"YEL":"GRN"));
 			}
-			s = steerpoints.getNumber(301);
+			s = steerpoints.getNumber(301);# 
 			if (s != nil) {
 				setprop("f16/avionics/pilot-aid/c2-lat", s.lat);
 				setprop("f16/avionics/pilot-aid/c2-lon", s.lon);
 				setprop("f16/avionics/pilot-aid/c2-rad", s.radius);
 				setprop("f16/avionics/pilot-aid/c2-typ", s.type);
+				setprop("f16/avionics/pilot-aid/c2-col", s.color==0?"RED":(s.color==1?"YEL":"GRN"));
 			}
-			s = steerpoints.getNumber(302);
+			s = steerpoints.getNumber(302);# 
 			if (s != nil) {
 				setprop("f16/avionics/pilot-aid/c3-lat", s.lat);
 				setprop("f16/avionics/pilot-aid/c3-lon", s.lon);
 				setprop("f16/avionics/pilot-aid/c3-rad", s.radius);
 				setprop("f16/avionics/pilot-aid/c3-typ", s.type);
+				setprop("f16/avionics/pilot-aid/c3-col", s.color==0?"RED":(s.color==1?"YEL":"GRN"));
 			}
-			s = steerpoints.getNumber(303);
+			s = steerpoints.getNumber(303);# 
 			if (s != nil) {
 				setprop("f16/avionics/pilot-aid/c4-lat", s.lat);
 				setprop("f16/avionics/pilot-aid/c4-lon", s.lon);
 				setprop("f16/avionics/pilot-aid/c4-rad", s.radius);
 				setprop("f16/avionics/pilot-aid/c4-typ", s.type);
+				setprop("f16/avionics/pilot-aid/c4-col", s.color==0?"RED":(s.color==1?"YEL":"GRN"));
 			}
-			s = steerpoints.getNumber(304);
+			s = steerpoints.getNumber(304);# 
 			if (s != nil) {
 				setprop("f16/avionics/pilot-aid/c5-lat", s.lat);
 				setprop("f16/avionics/pilot-aid/c5-lon", s.lon);
 				setprop("f16/avionics/pilot-aid/c5-rad", s.radius);
 				setprop("f16/avionics/pilot-aid/c5-typ", s.type);
+				setprop("f16/avionics/pilot-aid/c5-col", s.color==0?"RED":(s.color==1?"YEL":"GRN"));
 			}
-			s = steerpoints.getNumber(305);
+			s = steerpoints.getNumber(305);# 
 			if (s != nil) {
 				setprop("f16/avionics/pilot-aid/c6-lat", s.lat);
 				setprop("f16/avionics/pilot-aid/c6-lon", s.lon);
 				setprop("f16/avionics/pilot-aid/c6-rad", s.radius);
 				setprop("f16/avionics/pilot-aid/c6-typ", s.type);
+				setprop("f16/avionics/pilot-aid/c6-col", s.color==0?"RED":(s.color==1?"YEL":"GRN"));
 			}
 			
             var load_line1 = func(path) {
@@ -164,7 +170,7 @@
 		<layout>hbox</layout>
 
 		<input>
-		  	<width>150</width>
+		  	<pref-width>75</pref-width>
 		  	<height>25</height>
 		  	<label>Lat</label>
 		  	<property>f16/avionics/pilot-aid/c1-lat</property>
@@ -174,13 +180,13 @@
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>1.0</red>
+	      		<red>0.5</red>
 	      		<green>0.5</green>
 	      		<blue>0.5</blue>
 	      	</color>
 		</input>
 		<input>
-		  	<width>150</width>
+		  	<pref-width>75</pref-width>
 		  	<height>25</height>
 		  	<label>Lon</label>
 		  	<property>f16/avionics/pilot-aid/c1-lon</property>
@@ -190,13 +196,13 @@
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>1.0</red>
+	      		<red>0.5</red>
 	      		<green>0.5</green>
 	      		<blue>0.5</blue>
 	      	</color>
 		</input>
 		<input>
-		  	<width>100</width>
+		  	<pref-width>70</pref-width>
 		  	<height>25</height>
 		  	<label>Radius</label>
 		  	<property>f16/avionics/pilot-aid/c1-rad</property>
@@ -206,16 +212,17 @@
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>1.0</red>
+	      		<red>0.5</red>
 	      		<green>0.5</green>
 	      		<blue>0.5</blue>
 	      	</color>
 		</input>
+		<empty><stretch>0.0</stretch></empty>
 		<combo>
             <halign>left</halign>
             <name>typ1</name>
-            <label>Type</label>
-            <pref-width>60</pref-width>
+            <label></label>
+            <pref-width>80</pref-width>
             <property>f16/avionics/pilot-aid/c1-typ</property>
             <value type="string">   </value>
             <value type="string"> 2 </value>
@@ -229,7 +236,26 @@
                 <object-name>typ1</object-name>
             </binding>
             <color>
-	      		<red>1.0</red>
+	      		<red>0.5</red>
+	      		<green>0.5</green>
+	      		<blue>0.5</blue>
+	      	</color>
+        </combo>
+        <combo>
+            <halign>left</halign>
+            <name>col1</name>
+            <label></label>
+            <pref-width>80</pref-width>
+            <property>f16/avionics/pilot-aid/c1-col</property>
+            <value type="string">RED</value>
+            <value type="string">YEL</value>
+            <value type="string">GRN</value>
+            <binding>
+                <command>dialog-apply</command>
+                <object-name>col1</object-name>
+            </binding>
+            <color>
+	      		<red>0.5</red>
 	      		<green>0.5</green>
 	      		<blue>0.5</blue>
 	      	</color>
@@ -244,7 +270,7 @@
 					s.lon = getprop("f16/avionics/pilot-aid/c1-lon");
 					s.radius = getprop("f16/avionics/pilot-aid/c1-rad");
 					s.type= getprop("f16/avionics/pilot-aid/c1-typ");
-					s.color=0;
+					s.color= getprop("f16/avionics/pilot-aid/c1-col")=="RED"?0:(getprop("f16/avionics/pilot-aid/c1-col")=="YEL"?1:2);
 					steerpoints.setNumber(300,s);
 				]]></script>
 			</binding>
@@ -255,7 +281,7 @@
 		<layout>hbox</layout>
 
 		<input>
-		  	<width>150</width>
+		  	<pref-width>75</pref-width>
 		  	<height>25</height>
 		  	<label>Lat</label>
 		  	<property>f16/avionics/pilot-aid/c2-lat</property>
@@ -265,13 +291,13 @@
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>1.0</red>
+	      		<red>0.5</red>
 	      		<green>0.5</green>
 	      		<blue>0.5</blue>
 	      	</color>
 		</input>
 		<input>
-		  	<width>150</width>
+		  	<pref-width>75</pref-width>
 		  	<height>25</height>
 		  	<label>Lon</label>
 		  	<property>f16/avionics/pilot-aid/c2-lon</property>
@@ -281,13 +307,13 @@
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>1.0</red>
+	      		<red>0.5</red>
 	      		<green>0.5</green>
 	      		<blue>0.5</blue>
 	      	</color>
 		</input>
 		<input>
-		  	<width>100</width>
+		  	<pref-width>70</pref-width>
 		  	<height>25</height>
 		  	<label>Radius</label>
 		  	<property>f16/avionics/pilot-aid/c2-rad</property>
@@ -297,16 +323,17 @@
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>1.0</red>
+	      		<red>0.5</red>
 	      		<green>0.5</green>
 	      		<blue>0.5</blue>
 	      	</color>
 		</input>
+		<empty><stretch>0.0</stretch></empty>
 		<combo>
             <halign>left</halign>
             <name>typ2</name>
-            <label>Type</label>
-            <pref-width>60</pref-width>
+            <label></label>
+            <pref-width>80</pref-width>
             <property>f16/avionics/pilot-aid/c2-typ</property>
             <value type="string">   </value>
             <value type="string"> 2 </value>
@@ -320,7 +347,26 @@
                 <object-name>typ2</object-name>
             </binding>
             <color>
-	      		<red>1.0</red>
+	      		<red>0.5</red>
+	      		<green>0.5</green>
+	      		<blue>0.5</blue>
+	      	</color>
+        </combo>
+        <combo>
+            <halign>left</halign>
+            <name>col2</name>
+            <label></label>
+            <pref-width>80</pref-width>
+            <property>f16/avionics/pilot-aid/c2-col</property>
+            <value type="string">RED</value>
+            <value type="string">YEL</value>
+            <value type="string">GRN</value>
+            <binding>
+                <command>dialog-apply</command>
+                <object-name>col2</object-name>
+            </binding>
+            <color>
+	      		<red>0.5</red>
 	      		<green>0.5</green>
 	      		<blue>0.5</blue>
 	      	</color>
@@ -335,7 +381,7 @@
 					s.lon = getprop("f16/avionics/pilot-aid/c2-lon");
 					s.radius = getprop("f16/avionics/pilot-aid/c2-rad");
 					s.type= getprop("f16/avionics/pilot-aid/c2-typ");
-					s.color=0;
+					s.color= getprop("f16/avionics/pilot-aid/c2-col")=="RED"?0:(getprop("f16/avionics/pilot-aid/c2-col")=="YEL"?1:2);
 					steerpoints.setNumber(301,s);
 				]]></script>
 			</binding>
@@ -347,7 +393,7 @@
 		<layout>hbox</layout>
 
 		<input>
-		  	<width>150</width>
+		  	<pref-width>75</pref-width>
 		  	<height>25</height>
 		  	<label>Lat</label>
 		  	<property>f16/avionics/pilot-aid/c3-lat</property>
@@ -357,13 +403,13 @@
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>1</red>
-      			<green>1</green>
+	      		<red>0.5</red>
+      			<green>0.5</green>
       			<blue>0.5</blue>
 	      	</color>
 		</input>
 		<input>
-		  	<width>150</width>
+		  	<pref-width>75</pref-width>
 		  	<height>25</height>
 		  	<label>Lon</label>
 		  	<property>f16/avionics/pilot-aid/c3-lon</property>
@@ -373,13 +419,13 @@
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>1</red>
-      			<green>1</green>
+	      		<red>0.5</red>
+      			<green>0.5</green>
       			<blue>0.5</blue>
 	      	</color>
 		</input>
 		<input>
-		  	<width>100</width>
+		  	<pref-width>70</pref-width>
 		  	<height>25</height>
 		  	<label>Radius</label>
 		  	<property>f16/avionics/pilot-aid/c3-rad</property>
@@ -389,16 +435,17 @@
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>1</red>
-      			<green>1</green>
+	      		<red>0.5</red>
+      			<green>0.5</green>
       			<blue>0.5</blue>
 	      	</color>
 		</input>
+		<empty><stretch>0.0</stretch></empty>
 		<combo>
             <halign>left</halign>
             <name>typ3</name>
-            <label>Type</label>
-            <pref-width>60</pref-width>
+            <label></label>
+            <pref-width>80</pref-width>
             <property>f16/avionics/pilot-aid/c3-typ</property>
             <value type="string">   </value>
             <value type="string"> 2 </value>
@@ -412,9 +459,28 @@
                 <object-name>typ3</object-name>
             </binding>
             <color>
-	      		<red>1</red>
-      			<green>1</green>
+	      		<red>0.5</red>
+      			<green>0.5</green>
       			<blue>0.5</blue>
+	      	</color>
+        </combo>
+        <combo>
+            <halign>left</halign>
+            <name>col3</name>
+            <label></label>
+            <pref-width>80</pref-width>
+            <property>f16/avionics/pilot-aid/c3-col</property>
+            <value type="string">RED</value>
+            <value type="string">YEL</value>
+            <value type="string">GRN</value>
+            <binding>
+                <command>dialog-apply</command>
+                <object-name>col3</object-name>
+            </binding>
+            <color>
+	      		<red>0.5</red>
+	      		<green>0.5</green>
+	      		<blue>0.5</blue>
 	      	</color>
         </combo>
 		<button>
@@ -427,7 +493,7 @@
 					s.lon = getprop("f16/avionics/pilot-aid/c3-lon");
 					s.radius = getprop("f16/avionics/pilot-aid/c3-rad");
 					s.type= getprop("f16/avionics/pilot-aid/c3-typ");
-					s.color=1;
+					s.color= getprop("f16/avionics/pilot-aid/c3-col")=="RED"?0:(getprop("f16/avionics/pilot-aid/c3-col")=="YEL"?1:2);
 					steerpoints.setNumber(302,s);
 				]]></script>
 			</binding>
@@ -439,99 +505,7 @@
 		<layout>hbox</layout>
 
 		<input>
-		  	<width>150</width>
-		  	<height>25</height>
-		  	<label>Lat</label>
-		  	<property>f16/avionics/pilot-aid/c5-lat</property>
-		  	<live>true</live>
-		  	<halign>left</halign>
-	        <binding>
-	            <command>dialog-apply</command>
-	      	</binding>
-	      	<color>
-	      		<red>1</red>
-      			<green>1</green>
-      			<blue>0.5</blue>
-	      	</color>
-		</input>
-		<input>
-		  	<width>150</width>
-		  	<height>25</height>
-		  	<label>Lon</label>
-		  	<property>f16/avionics/pilot-aid/c5-lon</property>
-		  	<live>true</live>
-		  	<halign>left</halign>
-	        <binding>
-	            <command>dialog-apply</command>
-	      	</binding>
-	      	<color>
-	      		<red>1</red>
-      			<green>1</green>
-      			<blue>0.5</blue>
-	      	</color>
-		</input>
-		<input>
-		  	<width>100</width>
-		  	<height>25</height>
-		  	<label>Radius</label>
-		  	<property>f16/avionics/pilot-aid/c5-rad</property>
-		  	<live>true</live>
-		  	<halign>left</halign>
-	        <binding>
-	            <command>dialog-apply</command>
-	      	</binding>
-	      	<color>
-	      		<red>1</red>
-      			<green>1</green>
-      			<blue>0.5</blue>
-	      	</color>
-		</input>
-		<combo>
-            <halign>left</halign>
-            <name>typ5</name>
-            <label>Type</label>
-            <pref-width>60</pref-width>
-            <property>f16/avionics/pilot-aid/c5-typ</property>
-            <value type="string">   </value>
-            <value type="string"> 2 </value>
-            <value type="string"> 11</value>
-            <value type="string"> 20</value>
-            <value type="string">AAA</value>
-            <value type="string"> P </value>
-            <value type="string"> SH</value>
-            <binding>
-                <command>dialog-apply</command>
-                <object-name>typ5</object-name>
-            </binding>
-            <color>
-	      		<red>1</red>
-      			<green>1</green>
-      			<blue>0.5</blue>
-	      	</color>
-        </combo>
-				<button>
-			<legend>Apply</legend>
-			<binding>
-				<command>nasal</command>
-				<script><![CDATA[
-					var s = steerpoints.STPT.new();
-					s.lat = getprop("f16/avionics/pilot-aid/c4-lat");
-					s.lon = getprop("f16/avionics/pilot-aid/c4-lon");
-					s.radius = getprop("f16/avionics/pilot-aid/c4-rad");
-					s.type= getprop("f16/avionics/pilot-aid/c4-typ");
-					s.color=2;
-					steerpoints.setNumber(303,s);
-				]]></script>
-			</binding>
-		</button>
-
-	</group>
-	
-	<group>
-		<layout>hbox</layout>
-
-		<input>
-		  	<width>150</width>
+		  	<pref-width>75</pref-width>
 		  	<height>25</height>
 		  	<label>Lat</label>
 		  	<property>f16/avionics/pilot-aid/c4-lat</property>
@@ -541,13 +515,13 @@
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>0.4</red>
-      			<green>0.95</green>
-      			<blue>0.4</blue>
+	      		<red>0.5</red>
+      			<green>0.5</green>
+      			<blue>0.5</blue>
 	      	</color>
 		</input>
 		<input>
-		  	<width>150</width>
+		  	<pref-width>75</pref-width>
 		  	<height>25</height>
 		  	<label>Lon</label>
 		  	<property>f16/avionics/pilot-aid/c4-lon</property>
@@ -557,13 +531,13 @@
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>0.4</red>
-      			<green>0.95</green>
-      			<blue>0.4</blue>
+	      		<red>0.5</red>
+      			<green>0.5</green>
+      			<blue>0.5</blue>
 	      	</color>
 		</input>
 		<input>
-		  	<width>100</width>
+		  	<pref-width>70</pref-width>
 		  	<height>25</height>
 		  	<label>Radius</label>
 		  	<property>f16/avionics/pilot-aid/c4-rad</property>
@@ -573,16 +547,17 @@
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>0.4</red>
-      			<green>0.95</green>
-      			<blue>0.4</blue>
+	      		<red>0.5</red>
+      			<green>0.5</green>
+      			<blue>0.5</blue>
 	      	</color>
 		</input>
+		<empty><stretch>0.0</stretch></empty>
 		<combo>
             <halign>left</halign>
             <name>typ4</name>
-            <label>Type</label>
-            <pref-width>60</pref-width>
+            <label></label>
+            <pref-width>80</pref-width>
             <property>f16/avionics/pilot-aid/c4-typ</property>
             <value type="string">   </value>
             <value type="string"> 2 </value>
@@ -596,9 +571,140 @@
                 <object-name>typ4</object-name>
             </binding>
             <color>
+	      		<red>0.5</red>
+      			<green>0.5</green>
+      			<blue>0.5</blue>
+	      	</color>
+        </combo>
+        <combo>
+            <halign>left</halign>
+            <name>col4</name>
+            <label></label>
+            <pref-width>80</pref-width>
+            <property>f16/avionics/pilot-aid/c4-col</property>
+            <value type="string">RED</value>
+            <value type="string">YEL</value>
+            <value type="string">GRN</value>
+            <binding>
+                <command>dialog-apply</command>
+                <object-name>col4</object-name>
+            </binding>
+            <color>
+	      		<red>0.5</red>
+	      		<green>0.5</green>
+	      		<blue>0.5</blue>
+	      	</color>
+        </combo>
+		<button>
+			<legend>Apply</legend>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					var s = steerpoints.STPT.new();
+					s.lat = getprop("f16/avionics/pilot-aid/c4-lat");
+					s.lon = getprop("f16/avionics/pilot-aid/c4-lon");
+					s.radius = getprop("f16/avionics/pilot-aid/c4-rad");
+					s.type= getprop("f16/avionics/pilot-aid/c4-typ");
+					s.color= getprop("f16/avionics/pilot-aid/c4-col")=="RED"?0:(getprop("f16/avionics/pilot-aid/c4-col")=="YEL"?1:2);
+					steerpoints.setNumber(303,s);
+				]]></script>
+			</binding>
+		</button>
+
+	</group>
+	
+	<group>
+		<layout>hbox</layout>
+
+		<input>
+		  	<pref-width>75</pref-width>
+		  	<height>25</height>
+		  	<label>Lat</label>
+		  	<property>f16/avionics/pilot-aid/c5-lat</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<color>
 	      		<red>0.4</red>
-      			<green>0.95</green>
+      			<green>0.4</green>
       			<blue>0.4</blue>
+	      	</color>
+		</input>
+		<input>
+		  	<pref-width>75</pref-width>
+		  	<height>25</height>
+		  	<label>Lon</label>
+		  	<property>f16/avionics/pilot-aid/c5-lon</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<color>
+	      		<red>0.4</red>
+      			<green>0.4</green>
+      			<blue>0.4</blue>
+	      	</color>
+		</input>
+		<input>
+		  	<pref-width>70</pref-width>
+		  	<height>25</height>
+		  	<label>Radius</label>
+		  	<property>f16/avionics/pilot-aid/c5-rad</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<color>
+	      		<red>0.4</red>
+      			<green>0.4</green>
+      			<blue>0.4</blue>
+	      	</color>
+		</input>
+		<empty><stretch>0.0</stretch></empty>
+		<combo>
+            <halign>left</halign>
+            <name>typ5</name>
+            <label></label>
+            <pref-width>80</pref-width>
+            <property>f16/avionics/pilot-aid/c5-typ</property>
+            <value type="string">   </value>
+            <value type="string"> 2 </value>
+            <value type="string"> 11</value>
+            <value type="string"> 20</value>
+            <value type="string">AAA</value>
+            <value type="string"> P </value>
+            <value type="string"> SH</value>
+            <binding>
+                <command>dialog-apply</command>
+                <object-name>typ5</object-name>
+            </binding>
+            <color>
+	      		<red>0.4</red>
+      			<green>0.4</green>
+      			<blue>0.4</blue>
+	      	</color>
+        </combo>
+        <combo>
+            <halign>left</halign>
+            <name>col5</name>
+            <label></label>
+            <pref-width>80</pref-width>
+            <property>f16/avionics/pilot-aid/c5-col</property>
+            <value type="string">RED</value>
+            <value type="string">YEL</value>
+            <value type="string">GRN</value>
+            <binding>
+                <command>dialog-apply</command>
+                <object-name>col5</object-name>
+            </binding>
+            <color>
+	      		<red>0.5</red>
+	      		<green>0.5</green>
+	      		<blue>0.5</blue>
 	      	</color>
         </combo>
 				<button>
@@ -611,7 +717,7 @@
 					s.lon = getprop("f16/avionics/pilot-aid/c5-lon");
 					s.radius = getprop("f16/avionics/pilot-aid/c5-rad");
 					s.type= getprop("f16/avionics/pilot-aid/c5-typ");
-					s.color=1;
+					s.color= getprop("f16/avionics/pilot-aid/c5-col")=="RED"?0:(getprop("f16/avionics/pilot-aid/c5-col")=="YEL"?1:2);
 					steerpoints.setNumber(304,s);
 				]]></script>
 			</binding>
@@ -623,7 +729,7 @@
 		<layout>hbox</layout>
 
 		<input>
-		  	<width>150</width>
+		  	<pref-width>75</pref-width>
 		  	<height>25</height>
 		  	<label>Lat</label>
 		  	<property>f16/avionics/pilot-aid/c6-lat</property>
@@ -634,12 +740,12 @@
 	      	</binding>
 	      	<color>
 	      		<red>0.4</red>
-      			<green>0.95</green>
+      			<green>0.4</green>
       			<blue>0.4</blue>
 	      	</color>
 		</input>
 		<input>
-		  	<width>150</width>
+		  	<pref-width>75</pref-width>
 		  	<height>25</height>
 		  	<label>Lon</label>
 		  	<property>f16/avionics/pilot-aid/c6-lon</property>
@@ -650,12 +756,12 @@
 	      	</binding>
 	      	<color>
 	      		<red>0.4</red>
-      			<green>0.95</green>
+      			<green>0.4</green>
       			<blue>0.4</blue>
 	      	</color>
 		</input>
 		<input>
-		  	<width>100</width>
+		  	<pref-width>70</pref-width>
 		  	<height>25</height>
 		  	<label>Radius</label>
 		  	<property>f16/avionics/pilot-aid/c6-rad</property>
@@ -666,15 +772,16 @@
 	      	</binding>
 	      	<color>
 	      		<red>0.4</red>
-      			<green>0.95</green>
+      			<green>0.4</green>
       			<blue>0.4</blue>
 	      	</color>
 		</input>
+		<empty><stretch>0.0</stretch></empty>
 		<combo>
             <halign>left</halign>
             <name>typ6</name>
-            <label>Type</label>
-            <pref-width>60</pref-width>
+            <label></label>
+            <pref-width>80</pref-width>
             <property>f16/avionics/pilot-aid/c6-typ</property>
             <value type="string">   </value>
             <value type="string"> 2 </value>
@@ -689,8 +796,27 @@
             </binding>
             <color>
 	      		<red>0.4</red>
-      			<green>0.95</green>
+      			<green>0.4</green>
       			<blue>0.4</blue>
+	      	</color>
+        </combo>
+        <combo>
+            <halign>left</halign>
+            <name>col6</name>
+            <label></label>
+            <pref-width>80</pref-width>
+            <property>f16/avionics/pilot-aid/c6-col</property>
+            <value type="string">RED</value>
+            <value type="string">YEL</value>
+            <value type="string">GRN</value>
+            <binding>
+                <command>dialog-apply</command>
+                <object-name>col6</object-name>
+            </binding>
+            <color>
+	      		<red>0.5</red>
+	      		<green>0.5</green>
+	      		<blue>0.5</blue>
 	      	</color>
         </combo>
 		<button>
@@ -703,7 +829,7 @@
 					s.lon = getprop("f16/avionics/pilot-aid/c6-lon");
 					s.radius = getprop("f16/avionics/pilot-aid/c6-rad");
 					s.type= getprop("f16/avionics/pilot-aid/c6-typ");
-					s.color=2;
+					s.color= getprop("f16/avionics/pilot-aid/c6-col")=="RED"?0:(getprop("f16/avionics/pilot-aid/c6-col")=="YEL"?1:2);
 					steerpoints.setNumber(305,s);
 				]]></script>
 			</binding>
