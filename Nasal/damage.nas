@@ -1339,6 +1339,7 @@ var re_init = func (node) {
   foreach(var failure_mode_id; mode_list) {
     FailureMgr.set_failure_level(failure_mode_id, 0);
   }
+  stopLaunch();
   damageLog.push("Aircraft was repaired due to re-init.");
 }
 
