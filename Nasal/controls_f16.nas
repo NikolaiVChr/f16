@@ -68,7 +68,7 @@ var replay = func {
 }
 
 var radar_standby = func {
-	screen.log.write("Radar "~(getprop("instrumentation/radar/radar-enable")==1?"SILENT":"ACTIVE"), 0.5, 0.5, 1);
+	screen.log.write("Radar "~(getprop("instrumentation/radar/radar-enable")==0?"SILENT":"ACTIVE"), 0.5, 0.5, 1);
 }
 
 var masterarm = func {
