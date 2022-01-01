@@ -102,7 +102,7 @@ var pylonSets = {
     b617: {name: "1 x B61-7", pylon: "1 MAU", rack: nil, content: ["B61-7"], fireOrder: [0], launcherDragArea: 0, launcherMass: 70, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     b6112: {name: "1 x B61-12", pylon: "1 MAU", rack: nil, content: ["B61-12"], fireOrder: [0], launcherDragArea: 0, launcherMass: 70, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     g54: {name: "2 x GBU-54", pylon: "1 MAU", rack: "1 BR57", content: ["GBU-54","GBU-54"], fireOrder: [0,1], launcherDragArea: 0.005, launcherMass: 320, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
-    g54x1:  {name: "1 x GBU-54", pylon: "1 MAU", rack: nil, content: ["GBU-54"], fireOrder: [0], launcherDragArea: 0.005, launcherMass: 70, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0, category: 3},
+    g54x1:  {name: "1 x GBU-54", pylon: "1 MAU", rack: nil, content: ["GBU-54"], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 70, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0, category: 3},
     g31: {name: "1 x GBU-31", pylon: "1 MAU", rack: nil, content: ["GBU-31"], fireOrder: [0], launcherDragArea: 0, launcherMass: 70, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     g24: {name: "1 x GBU-24", pylon: "1 MAU", rack: nil, content: ["GBU-24"], fireOrder: [0], launcherDragArea: 0, launcherMass: 70, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     g12x3:  {name: "3 x GBU-12", pylon: "1 MAU", rack: "1 TER", content: ["GBU-12","GBU-12", "GBU-12"], fireOrder: [0,1,2], launcherDragArea: 0.005, launcherMass: 163, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0, category: 3},
