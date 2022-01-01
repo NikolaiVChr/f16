@@ -317,11 +317,11 @@ var APG68 = {
 		rdr.ActiveDiscRadarRecipient.Receive = func(notification) {
 	        if (notification.NotificationType == "FORNotification") {
 	        	#printf("DiscRadar recv: %s", notification.NotificationType);
-	            if (rdr.enabled == 1) {
+	            #if (rdr.enabled == 1) { lets keep this part running, so we have fresh data when its re-enabled
 	    		    rdr.vector_aicontacts_for = notification.vector;
 	    		    rdr.purgeBleps();
 	    		    #print("size(rdr.vector_aicontacts_for)=",size(rdr.vector_aicontacts_for));
-	    	    }
+	    	    #}
 	            return emesary.Transmitter.ReceiptStatus_OK;
 	        }
 	        return emesary.Transmitter.ReceiptStatus_NotProcessed;
