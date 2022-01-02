@@ -506,6 +506,7 @@ var APG68 = {
 	loop: func {
 		me.enabled = getprop("/f16/avionics/power-fcr-bit") == 2 and !getprop("gear/gear[0]/wow") and getprop("instrumentation/radar/radar-enable");
 		setprop("instrumentation/radar/radar-standby", !me.enabled);
+		# calc dt here, so we don't get a massive dt when going from disabled to enabled:
 		me.elapsed = elapsedProp.getValue();
 		me.dt = me.elapsed - me.lastElapsed;
 		me.lastElapsed = me.elapsed;
@@ -520,6 +521,7 @@ var APG68 = {
 				me.scanFOV();
 			}
 		} else {
+			# So that when radar is restarted there is not old bleps.
 			me.purgeAllBleps();
 		}
 	},

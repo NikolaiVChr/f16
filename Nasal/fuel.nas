@@ -39,11 +39,11 @@ var TANK_EXT_CENTER = 8;
 var TANK_EXT_CFT = 9;
 
 # Notes: Engine in Block 60 can probably consume more than 13 pps.
-var max_int_wing_lbm = 550;
-var max_int_fwd_rsv_lbm = 460;
-var max_int_aft_rsv_lbm = 460;
-var max_int_fwd_lbm = 2550;
-var max_int_aft_lbm = 2550;
+var max_int_wing_lbm = getprop("consumables/fuel/tank[1]/capacity-m3")*getprop("consumables/fuel/tank[1]/density-kgpm3")*KG2LB;
+var max_int_fwd_rsv_lbm = getprop("consumables/fuel/tank[4]/capacity-m3")*getprop("consumables/fuel/tank[4]/density-kgpm3")*KG2LB;
+var max_int_aft_rsv_lbm = getprop("consumables/fuel/tank[5]/capacity-m3")*getprop("consumables/fuel/tank[5]/density-kgpm3")*KG2LB;
+var max_int_fwd_lbm = getprop("consumables/fuel/tank[0]/capacity-m3")*getprop("consumables/fuel/tank[0]/density-kgpm3")*KG2LB;
+var max_int_aft_lbm = getprop("consumables/fuel/tank[3]/capacity-m3")*getprop("consumables/fuel/tank[3]/density-kgpm3")*KG2LB;
 
 var aft_to_fwd = 0;
 var ext_center_to_wing_left = 0;
@@ -127,37 +127,37 @@ var fuelqty = func {# 0.5 Hz loop
 
     if ((airsrc == AIR_SOURCE_NORM or airsrc == AIR_SOURCE_DUMP) and !refuel_door and hydA.getValue() >= 2000) {
         if (transfer == FUEL_TRANS_NORM) {
-            if (getprop("/consumables/fuel/tank[8]/selected") == 1 and getprop("consumables/fuel/tank[8]/level-norm") > 0.001 and getprop("consumables/fuel/tank[1]/level-lbs") < 525 and getprop("consumables/fuel/tank[2]/level-lbs") < 525) {
+            if (getprop("/consumables/fuel/tank[8]/selected") == 1 and getprop("consumables/fuel/tank[8]/level-norm") > 0.001 and getprop("consumables/fuel/tank[1]/level-lbs") < max_int_wing_lbm-4 and getprop("consumables/fuel/tank[2]/level-lbs") < max_int_wing_lbm-4) {
                 ext_center_to_wing_right = 7.5;
                 ext_center_to_wing_left = 7.5;
             } elsif (getprop("consumables/fuel/tank[8]/level-norm") < 0.002) {
                 # Not transfering from center, and center approx empty
-                if (getprop("/consumables/fuel/tank[6]/selected") == 1 and getprop("consumables/fuel/tank[6]/level-norm") > 0.001 and getprop("consumables/fuel/tank[1]/level-lbs") < 525) {
+                if (getprop("/consumables/fuel/tank[6]/selected") == 1 and getprop("consumables/fuel/tank[6]/level-norm") > 0.001 and getprop("consumables/fuel/tank[1]/level-lbs") < max_int_wing_lbm-4) {
                   # left side
                   ext_left_to_wing_left = 7.5;
                 }
-                if (getprop("/consumables/fuel/tank[7]/selected") == 1 and getprop("consumables/fuel/tank[7]/level-norm") > 0.001 and getprop("consumables/fuel/tank[2]/level-lbs") < 525) {
+                if (getprop("/consumables/fuel/tank[7]/selected") == 1 and getprop("consumables/fuel/tank[7]/level-norm") > 0.001 and getprop("consumables/fuel/tank[2]/level-lbs") < max_int_wing_lbm-4) {
                   # right side
                   ext_right_to_wing_right = 7.5;
                 }
             }
         } elsif (transfer == FUEL_TRANS_WING) {
-            if (getprop("consumables/fuel/tank[6]/level-norm") > 0.001 and getprop("consumables/fuel/tank[1]/level-lbs") < 525) {
+            if (getprop("consumables/fuel/tank[6]/level-norm") > 0.001 and getprop("consumables/fuel/tank[1]/level-lbs") < max_int_wing_lbm-4) {
               # left side
               ext_left_to_wing_left = 7.5;
             }
-            if (getprop("consumables/fuel/tank[7]/level-norm") > 0.001 and getprop("consumables/fuel/tank[2]/level-lbs") < 525) {
+            if (getprop("consumables/fuel/tank[7]/level-norm") > 0.001 and getprop("consumables/fuel/tank[2]/level-lbs") < max_int_wing_lbm-4) {
               # right side
               ext_right_to_wing_right = 7.5;
             }
-            if (ext_left_to_wing_left == 0 and ext_right_to_wing_right == 0 and getprop("consumables/fuel/tank[8]/level-norm") > 0.001 and getprop("consumables/fuel/tank[1]/level-lbs") < 525 and getprop("consumables/fuel/tank[2]/level-lbs") < 525) {
+            if (ext_left_to_wing_left == 0 and ext_right_to_wing_right == 0 and getprop("consumables/fuel/tank[8]/level-norm") > 0.001 and getprop("consumables/fuel/tank[1]/level-lbs") < 525 and getprop("consumables/fuel/tank[2]/level-lbs") < max_int_wing_lbm-4) {
                 ext_center_to_wing_right = 7.5;
                 ext_center_to_wing_left = 7.5;
             }
         }
     }
     if (   getprop("/consumables/fuel/tank[9]/selected") == 1 and getprop("consumables/fuel/tank[9]/level-norm") > 0.001
-           and getprop("consumables/fuel/tank[1]/level-lbs") < 525 and getprop("consumables/fuel/tank[2]/level-lbs") < 525
+           and getprop("consumables/fuel/tank[1]/level-lbs") < max_int_wing_lbm-4 and getprop("consumables/fuel/tank[2]/level-lbs") < max_int_wing_lbm-4
            and ext_center_to_wing_left == 0 and ext_center_to_wing_right == 0 and ext_right_to_wing_right == 0 and ext_left_to_wing_left == 0
            and getprop("sim/variant-id")>=5 and getprop("fdm/jsbsim/accelerations/a_n") > 0.75) {# gravity powered
         cft_to_wing_left  = 7.5;
