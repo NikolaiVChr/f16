@@ -506,10 +506,10 @@ var APG68 = {
 	loop: func {
 		me.enabled = getprop("/f16/avionics/power-fcr-bit") == 2 and !getprop("gear/gear[0]/wow") and getprop("instrumentation/radar/radar-enable");
 		setprop("instrumentation/radar/radar-standby", !me.enabled);
-		if (me.enabled) {
-			me.elapsed = elapsedProp.getValue();
-			me.dt = me.elapsed - me.lastElapsed;
-			me.lastElapsed = me.elapsed;
+		me.elapsed = elapsedProp.getValue();
+		me.dt = me.elapsed - me.lastElapsed;
+		me.lastElapsed = me.elapsed;
+		if (me.enabled) {			
 			if (!me.tiltOverride) {
 				me.tilt = antennae_knob_prop.getValue()*60;
 			}
@@ -519,6 +519,8 @@ var APG68 = {
 				# we then step to the new position, and scan for each step
 				me.scanFOV();
 			}
+		} else {
+			me.purgeAllBleps();
 		}
 	},
 	loopMedium: func {
