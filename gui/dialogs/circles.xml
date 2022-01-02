@@ -179,11 +179,6 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<color>
-	      		<red>0.5</red>
-	      		<green>0.5</green>
-	      		<blue>0.5</blue>
-	      	</color>
 		</input>
 		<input>
 		  	<pref-width>75</pref-width>
@@ -195,11 +190,6 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<color>
-	      		<red>0.5</red>
-	      		<green>0.5</green>
-	      		<blue>0.5</blue>
-	      	</color>
 		</input>
 		<input>
 		  	<pref-width>70</pref-width>
@@ -211,11 +201,6 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<color>
-	      		<red>0.5</red>
-	      		<green>0.5</green>
-	      		<blue>0.5</blue>
-	      	</color>
 		</input>
 		<empty><stretch>0.0</stretch></empty>
 		<combo>
@@ -228,18 +213,13 @@
             <value type="string"> 2 </value>
             <value type="string"> 11</value>
             <value type="string"> 20</value>
-            <value type="string">AAA</value>
+            <value type="string">AA</value>
             <value type="string"> P </value>
             <value type="string"> SH</value>
             <binding>
                 <command>dialog-apply</command>
                 <object-name>typ1</object-name>
             </binding>
-            <color>
-	      		<red>0.5</red>
-	      		<green>0.5</green>
-	      		<blue>0.5</blue>
-	      	</color>
         </combo>
         <combo>
             <halign>left</halign>
@@ -254,11 +234,6 @@
                 <command>dialog-apply</command>
                 <object-name>col1</object-name>
             </binding>
-            <color>
-	      		<red>0.5</red>
-	      		<green>0.5</green>
-	      		<blue>0.5</blue>
-	      	</color>
         </combo>
 		<button>
 			<legend>Apply</legend>
@@ -290,11 +265,6 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<color>
-	      		<red>0.5</red>
-	      		<green>0.5</green>
-	      		<blue>0.5</blue>
-	      	</color>
 		</input>
 		<input>
 		  	<pref-width>75</pref-width>
@@ -306,11 +276,6 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<color>
-	      		<red>0.5</red>
-	      		<green>0.5</green>
-	      		<blue>0.5</blue>
-	      	</color>
 		</input>
 		<input>
 		  	<pref-width>70</pref-width>
@@ -322,11 +287,6 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<color>
-	      		<red>0.5</red>
-	      		<green>0.5</green>
-	      		<blue>0.5</blue>
-	      	</color>
 		</input>
 		<empty><stretch>0.0</stretch></empty>
 		<combo>
@@ -339,18 +299,13 @@
             <value type="string"> 2 </value>
             <value type="string"> 11</value>
             <value type="string"> 20</value>
-            <value type="string">AAA</value>
+            <value type="string">AA</value>
             <value type="string"> P </value>
             <value type="string"> SH</value>
             <binding>
                 <command>dialog-apply</command>
                 <object-name>typ2</object-name>
             </binding>
-            <color>
-	      		<red>0.5</red>
-	      		<green>0.5</green>
-	      		<blue>0.5</blue>
-	      	</color>
         </combo>
         <combo>
             <halign>left</halign>
@@ -365,11 +320,6 @@
                 <command>dialog-apply</command>
                 <object-name>col2</object-name>
             </binding>
-            <color>
-	      		<red>0.5</red>
-	      		<green>0.5</green>
-	      		<blue>0.5</blue>
-	      	</color>
         </combo>
 				<button>
 			<legend>Apply</legend>
@@ -402,11 +352,6 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<color>
-	      		<red>0.5</red>
-      			<green>0.5</green>
-      			<blue>0.5</blue>
-	      	</color>
 		</input>
 		<input>
 		  	<pref-width>75</pref-width>
@@ -418,11 +363,6 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<color>
-	      		<red>0.5</red>
-      			<green>0.5</green>
-      			<blue>0.5</blue>
-	      	</color>
 		</input>
 		<input>
 		  	<pref-width>70</pref-width>
@@ -434,11 +374,6 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<color>
-	      		<red>0.5</red>
-      			<green>0.5</green>
-      			<blue>0.5</blue>
-	      	</color>
 		</input>
 		<empty><stretch>0.0</stretch></empty>
 		<combo>
@@ -451,18 +386,13 @@
             <value type="string"> 2 </value>
             <value type="string"> 11</value>
             <value type="string"> 20</value>
-            <value type="string">AAA</value>
+            <value type="string">AA</value>
             <value type="string"> P </value>
             <value type="string"> SH</value>
             <binding>
                 <command>dialog-apply</command>
                 <object-name>typ3</object-name>
             </binding>
-            <color>
-	      		<red>0.5</red>
-      			<green>0.5</green>
-      			<blue>0.5</blue>
-	      	</color>
         </combo>
         <combo>
             <halign>left</halign>
@@ -477,11 +407,6 @@
                 <command>dialog-apply</command>
                 <object-name>col3</object-name>
             </binding>
-            <color>
-	      		<red>0.5</red>
-	      		<green>0.5</green>
-	      		<blue>0.5</blue>
-	      	</color>
         </combo>
 		<button>
 			<legend>Apply</legend>
@@ -514,11 +439,6 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<color>
-	      		<red>0.5</red>
-      			<green>0.5</green>
-      			<blue>0.5</blue>
-	      	</color>
 		</input>
 		<input>
 		  	<pref-width>75</pref-width>
@@ -530,11 +450,6 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<color>
-	      		<red>0.5</red>
-      			<green>0.5</green>
-      			<blue>0.5</blue>
-	      	</color>
 		</input>
 		<input>
 		  	<pref-width>70</pref-width>
@@ -546,11 +461,6 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<color>
-	      		<red>0.5</red>
-      			<green>0.5</green>
-      			<blue>0.5</blue>
-	      	</color>
 		</input>
 		<empty><stretch>0.0</stretch></empty>
 		<combo>
@@ -563,18 +473,13 @@
             <value type="string"> 2 </value>
             <value type="string"> 11</value>
             <value type="string"> 20</value>
-            <value type="string">AAA</value>
+            <value type="string">AA</value>
             <value type="string"> P </value>
             <value type="string"> SH</value>
             <binding>
                 <command>dialog-apply</command>
                 <object-name>typ4</object-name>
             </binding>
-            <color>
-	      		<red>0.5</red>
-      			<green>0.5</green>
-      			<blue>0.5</blue>
-	      	</color>
         </combo>
         <combo>
             <halign>left</halign>
@@ -589,11 +494,6 @@
                 <command>dialog-apply</command>
                 <object-name>col4</object-name>
             </binding>
-            <color>
-	      		<red>0.5</red>
-	      		<green>0.5</green>
-	      		<blue>0.5</blue>
-	      	</color>
         </combo>
 		<button>
 			<legend>Apply</legend>
@@ -626,11 +526,6 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<color>
-	      		<red>0.4</red>
-      			<green>0.4</green>
-      			<blue>0.4</blue>
-	      	</color>
 		</input>
 		<input>
 		  	<pref-width>75</pref-width>
@@ -642,11 +537,6 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<color>
-	      		<red>0.4</red>
-      			<green>0.4</green>
-      			<blue>0.4</blue>
-	      	</color>
 		</input>
 		<input>
 		  	<pref-width>70</pref-width>
@@ -658,11 +548,6 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<color>
-	      		<red>0.4</red>
-      			<green>0.4</green>
-      			<blue>0.4</blue>
-	      	</color>
 		</input>
 		<empty><stretch>0.0</stretch></empty>
 		<combo>
@@ -675,18 +560,13 @@
             <value type="string"> 2 </value>
             <value type="string"> 11</value>
             <value type="string"> 20</value>
-            <value type="string">AAA</value>
+            <value type="string">AA</value>
             <value type="string"> P </value>
             <value type="string"> SH</value>
             <binding>
                 <command>dialog-apply</command>
                 <object-name>typ5</object-name>
             </binding>
-            <color>
-	      		<red>0.4</red>
-      			<green>0.4</green>
-      			<blue>0.4</blue>
-	      	</color>
         </combo>
         <combo>
             <halign>left</halign>
@@ -701,11 +581,6 @@
                 <command>dialog-apply</command>
                 <object-name>col5</object-name>
             </binding>
-            <color>
-	      		<red>0.5</red>
-	      		<green>0.5</green>
-	      		<blue>0.5</blue>
-	      	</color>
         </combo>
 				<button>
 			<legend>Apply</legend>
@@ -738,11 +613,6 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<color>
-	      		<red>0.4</red>
-      			<green>0.4</green>
-      			<blue>0.4</blue>
-	      	</color>
 		</input>
 		<input>
 		  	<pref-width>75</pref-width>
@@ -754,11 +624,6 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<color>
-	      		<red>0.4</red>
-      			<green>0.4</green>
-      			<blue>0.4</blue>
-	      	</color>
 		</input>
 		<input>
 		  	<pref-width>70</pref-width>
@@ -770,11 +635,6 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<color>
-	      		<red>0.4</red>
-      			<green>0.4</green>
-      			<blue>0.4</blue>
-	      	</color>
 		</input>
 		<empty><stretch>0.0</stretch></empty>
 		<combo>
@@ -787,18 +647,13 @@
             <value type="string"> 2 </value>
             <value type="string"> 11</value>
             <value type="string"> 20</value>
-            <value type="string">AAA</value>
+            <value type="string">AA</value>
             <value type="string"> P </value>
             <value type="string"> SH</value>
             <binding>
                 <command>dialog-apply</command>
                 <object-name>typ6</object-name>
             </binding>
-            <color>
-	      		<red>0.4</red>
-      			<green>0.4</green>
-      			<blue>0.4</blue>
-	      	</color>
         </combo>
         <combo>
             <halign>left</halign>
@@ -813,11 +668,6 @@
                 <command>dialog-apply</command>
                 <object-name>col6</object-name>
             </binding>
-            <color>
-	      		<red>0.5</red>
-	      		<green>0.5</green>
-	      		<blue>0.5</blue>
-	      	</color>
         </combo>
 		<button>
 			<legend>Apply</legend>
