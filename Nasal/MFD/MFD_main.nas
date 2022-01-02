@@ -966,7 +966,7 @@ var MFD_Device =
                 } elsif (eventi == 15) {
                     swap();
                 } elsif (eventi == 19) {
-                    if(getprop("f16/stores/tgp-mounted") and !getprop("gear/gear/wow")) {
+                    if(getprop("f16/stores/tgp-mounted") and !getprop("/fdm/jsbsim/gear/unit[0]/WOW")) {
                         screen.log.write("Click BACK to get back to cockpit view",1,1,1);
                         switchTGP();
                     }
@@ -2095,7 +2095,7 @@ var MFD_Device =
                     me.selectionBox.show();
                     me.setSelection(nil, me.ppp.buttons[10], 10);
                 } elsif (eventi == 1) {
-                    if(getprop("f16/stores/tgp-mounted") and !getprop("gear/gear/wow")) {
+                    if(getprop("f16/stores/tgp-mounted") and !getprop("/fdm/jsbsim/gear/unit[0]/WOW")) {
                         screen.log.write("Click BACK to get back to cockpit view",1,1,1);
                         switchTGP();
                     }
@@ -2702,7 +2702,7 @@ var MFD_Device =
                 } elsif (eventi == 15) {
                     swap();
                 } elsif (eventi == 19) {
-                    if(getprop("f16/stores/tgp-mounted") and !getprop("gear/gear/wow")) {
+                    if(getprop("f16/stores/tgp-mounted") and !getprop("/fdm/jsbsim/gear/unit[0]/WOW")) {
                         screen.log.write("Click BACK to get back to cockpit view",1,1,1);
                         switchTGP();
                     }
@@ -3080,7 +3080,7 @@ var MFD_Device =
                 } elsif (eventi == 15) {
                     swap();
                 } elsif (eventi == 19) {
-                    if(getprop("f16/stores/tgp-mounted") and !getprop("gear/gear/wow")) {
+                    if(getprop("f16/stores/tgp-mounted") and !getprop("/fdm/jsbsim/gear/unit[0]/WOW")) {
                         screen.log.write("Click BACK to get back to cockpit view",1,1,1);
                         switchTGP();
                     }
@@ -3718,7 +3718,7 @@ var MFD_Device =
                 } elsif (eventi == 15) {
                     swap();
                 } elsif (eventi == 19) {
-                    if(getprop("f16/stores/tgp-mounted") and !getprop("gear/gear/wow")) {
+                    if(getprop("f16/stores/tgp-mounted") and !getprop("/fdm/jsbsim/gear/unit[0]/WOW")) {
                         screen.log.write("Click BACK to get back to cockpit view",1,1,1);
                         switchTGP();
                     }

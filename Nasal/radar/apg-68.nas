@@ -132,11 +132,11 @@ var RWR = {
         me.autoFlare = me.spike?math.max(me.closestThreat*0.25,0.05):0;
 
         if (getprop("f16/avionics/ew-mode-knob") == 2)
-        	print("wow: ", getprop("gear/gear[0]/wow"),"  spiked: ",me.spike,"  incoming: ",me.incoming, "  launch: ",me.launchClose,"  spikeResult:", me.autoFlare,"  aggresive:",me.launchClose * 0.85 + me.incoming * 0.85,"  total:",me.launchClose * 0.85 + me.incoming * 0.85+me.autoFlare);
+        	print("wow: ", getprop("/fdm/jsbsim/gear/unit[0]/WOW"),"  spiked: ",me.spike,"  incoming: ",me.incoming, "  launch: ",me.launchClose,"  spikeResult:", me.autoFlare,"  aggresive:",me.launchClose * 0.85 + me.incoming * 0.85,"  total:",me.launchClose * 0.85 + me.incoming * 0.85+me.autoFlare);
 
         me.autoFlare += me.launchClose * 0.85 + me.incoming * 0.85;
 
-        me.autoFlare *= 0.1 * 2.5 * !getprop("gear/gear[0]/wow");#0.1 being the update rate for flare dropping code.
+        me.autoFlare *= 0.1 * 2.5 * !getprop("/fdm/jsbsim/gear/unit[0]/WOW");#0.1 being the update rate for flare dropping code.
 
         setprop("ai/submodels/submodel[0]/flare-auto-release-cmd", me.autoFlare * (getprop("ai/submodels/submodel[0]/count")>0));
         if (me.autoFlare > 0.80 and rand()>0.99 and getprop("ai/submodels/submodel[0]/count") < 1) {
@@ -504,7 +504,7 @@ var APG68 = {
 		#print("On sky: ",me.eulerDir[1], "  disc: ",me.posElDeg);
 	},
 	loop: func {
-		me.enabled = getprop("/f16/avionics/power-fcr-bit") == 2 and !getprop("gear/gear[0]/wow") and getprop("instrumentation/radar/radar-enable");
+		me.enabled = getprop("/f16/avionics/power-fcr-bit") == 2 and !getprop("/fdm/jsbsim/gear/unit[0]/WOW") and getprop("instrumentation/radar/radar-enable");
 		setprop("instrumentation/radar/radar-standby", !me.enabled);
 		# calc dt here, so we don't get a massive dt when going from disabled to enabled:
 		me.elapsed = elapsedProp.getValue();

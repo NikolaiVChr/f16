@@ -391,7 +391,7 @@ var flyupVis = 0;
 var fast_loop = func {
   var viewName = getprop("/sim/current-view/name"); 
 
-    if (viewName == "TGP" and (getprop("gear/gear/wow") or !getprop("f16/stores/tgp-mounted"))) {
+    if (viewName == "TGP" and (getprop("/fdm/jsbsim/gear/unit[0]/WOW") or !getprop("f16/stores/tgp-mounted"))) {
         # deselect view back to pilot default
         masterMode = STBY;
         setprop("sim/current-view/view-number",0);
