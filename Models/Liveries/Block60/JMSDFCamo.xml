@@ -4,7 +4,7 @@
     <sim>
         <model> 
             <livery>
-                <name type="string">Niall's JMSDF Camo (Fictional)</name>
+                <name type="string">JMSDF Camo "Salmon" (Fictional)</name>
                 <texture type="string">Liveries/Block60/JMSDFcamo.png</texture>
                 <owner type="string">Salmon</owner>
             </livery>

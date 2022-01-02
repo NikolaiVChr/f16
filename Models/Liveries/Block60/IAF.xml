@@ -4,7 +4,7 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">IAF F-21, "Rico" (fictional)</name>
+    <name type="string">IAF F-21, "Rico" (Fictional)</name>
     <texture>Liveries/Block60/IAF.png</texture>
     <owner type="string">IAF</owner>
    </livery>

@@ -4,7 +4,7 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">HRZ #140, "Kokos" (fictional)</name>
+    <name type="string">HRZ #140, "Kokos" (Fictional)</name>
     <texture>Liveries/Block60/HRZ.png</texture>
     <owner type="string">HRZ</owner>
    </livery>

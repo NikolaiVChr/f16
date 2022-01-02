@@ -4,8 +4,8 @@
  <sim>
   <model>
    <livery>
-    <name type="string">HAF 340 Mira, #535</name>
-    <texture>Liveries/Block50/01-8531.png</texture>
+    <name type="string">HAF 336 Mira, #008</name>
+    <texture>Liveries/Block50/06-0008.png</texture>
     <owner type="string">HAF</owner>
    </livery>
    
