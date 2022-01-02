@@ -658,11 +658,11 @@ AIContact = {
 		# Dont remember why the TGP prefers a virtual target when it IR LOCK a target (which it will follow). But it does.
 		if (me.virtTGP != nil) return me.virtTGP;
 		me.virtTGP = {parents: [me]};
-		me.virtTGP.getCoord = func {
-			me.parents[0].getCoord();
-			me.coord.set_alt(me.coord.alt()+0.0);
-			return me.coord;
-		};
+		#me.virtTGP.getCoord = func {
+		#	me.parents[0].getCoord();
+			#me.coord.set_alt(me.coord.alt()+0.0);
+			#return me.coord;
+		#};
 		me.virtTGP.isVirtual = func {
 			return 1;
 		};

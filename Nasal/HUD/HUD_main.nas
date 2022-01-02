@@ -1725,7 +1725,7 @@ append(obj.total, obj.speed_curr);
                                                      obj.stby.setText("MKPT"~sprintf("%03d",hdp.data));
                                                      obj.stby.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud+7+75);
                                                      obj.stby.show();
-                                                 } elsif (hdp.standby) {
+                                                 } elsif (hdp.standby and !hdp.wow0) {
                                                      obj.stby.setText("NO RAD");
                                                      obj.stby.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud+7);
                                                      obj.stby.show();
