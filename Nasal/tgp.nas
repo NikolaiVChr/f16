@@ -696,17 +696,17 @@ var fast_loop = func {
         var cy = -getprop("/controls/displays/cursor-slew-y-delta");
         setprop("/controls/displays/cursor-slew-x-delta",0);
         setprop("/controls/displays/cursor-slew-y-delta",0);
-
+        var modifier = getprop("/controls/displays/tgp-movement-modifier");
         if (!lock_tgp and (cy != 0 or cx != 0)) {
             gps = 0;
             var fov = getprop("sim/current-view/field-of-view");
             #var tme = dt - dt_old;
             if (getprop("/aircraft/flir/target/auto-track")) {
-                flir_updater.offsetP += cy*fov/camera_movement_speed_lock;
-                flir_updater.offsetH -= cx*fov/camera_movement_speed_lock;
+                flir_updater.offsetP += modifier*cy*fov/camera_movement_speed_lock;
+                flir_updater.offsetH -= modifier*cx*fov/camera_movement_speed_lock;
             } else {
-                setprop("sim/current-view/pitch-offset-deg",getprop("sim/current-view/pitch-offset-deg")+cy*fov/camera_movement_speed_free);
-                setprop("sim/current-view/heading-offset-deg",getprop("sim/current-view/heading-offset-deg")+cx*fov/camera_movement_speed_free);
+                setprop("sim/current-view/pitch-offset-deg",getprop("sim/current-view/pitch-offset-deg")+modifier*cy*fov/camera_movement_speed_free);
+                setprop("sim/current-view/heading-offset-deg",getprop("sim/current-view/heading-offset-deg")+modifier*cx*fov/camera_movement_speed_free);
             }
         }
     }

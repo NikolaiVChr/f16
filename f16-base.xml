@@ -618,6 +618,7 @@
         <displays>
             <cursor-slew-x type="float">0</cursor-slew-x><!-- These 3 names cannot be changed, they are shared with other aircraft types so people have same stick binding -->
             <cursor-slew-y type="float">0</cursor-slew-y>
+            <tgp-movement-modifier type="float">1.0</tgp-movement-modifier>
             <cursor-click type="bool">false</cursor-click>
             <display-management-switch-x type="float">0</display-management-switch-x>
             <display-management-switch-y type="float">0</display-management-switch-y>
