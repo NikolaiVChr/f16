@@ -20,7 +20,7 @@ var apLoop = maketimer(1, func {
 			var strg = roll * (getprop("fdm/jsbsim/autoflight/switch-roll") == -1);
 			var turn_dist_nm = delta_angle*delta_angle*0.0005*(strg?8:1)*gnds_kt/400;
 
-			if (getprop("/gear/gear[0]/wow") == 1 and turn_dist_nm < 1) {
+			if (getprop("/fdm/jsbsim/gear/unit[0]/WOW") == 1 and turn_dist_nm < 1) {
 				turn_dist_nm = 1;
 			}
 			if (turn_dist_nm < 0.25) {

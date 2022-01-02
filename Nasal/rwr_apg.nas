@@ -157,7 +157,7 @@ var SubSystem_RWR_APG = {
 
             me.autoFlare += me.launchClose * 0.85 + me.incoming * 0.85;
 
-            me.autoFlare *= 0.1 * 2.5 * !getprop("gear/gear[0]/wow");#0.1 being the update rate for flare dropping code.
+            me.autoFlare *= 0.1 * 2.5 * !getprop("/fdm/jsbsim/gear/unit[0]/WOW");#0.1 being the update rate for flare dropping code.
 
             setprop("ai/submodels/submodel[0]/flare-auto-release-cmd", me.autoFlare * (getprop("ai/submodels/submodel[0]/count")>0));
             if (me.autoFlare > 0.80 and rand()>0.99 and getprop("ai/submodels/submodel[0]/count") < 1) {
