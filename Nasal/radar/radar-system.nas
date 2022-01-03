@@ -75,11 +75,16 @@ var SliceNotification = {
     new: func() {
         var new_class = emesary.Notification.new("SliceNotification", rand());
         new_class.slice = func (elev, yaw, elev_radius, yaw_radius, dist_m, fa, fg, fs) {
+        	# Direction the aircraft is pointing
 	    	me.elev = elev;
 	    	me.yaw = yaw;
+
+	    	# Radius and depth of the slice (its round)
 	    	me.elev_radius = elev_radius;
 	    	me.yaw_radius = yaw_radius;
 	    	me.dist_m = dist_m;
+
+	    	# Filter air/ground/sea contacts
 	    	me.fa = fa;
 	    	me.fg = fg;
 	    	me.fs = fs;
@@ -126,7 +131,12 @@ AIToNasal = {
 	},
 
 	callReadTree: func {
-		if(!me.enabled) return;
+		#
+		# This method is called when contacts come into or out of existence.
+		# If a scan of /ai/models is in progress it is started again from start.
+		# If no scan is in progress, one is started.
+		#
+		if(!me.enabled) return;# TODO: If disabled it is going to miss out on new contacts, maybe do force scan when enabled again?
 		#print("NR: listenr called");
 		if (!me.scanInProgress) {
 			me.scanInProgress = 1;
@@ -137,6 +147,11 @@ AIToNasal = {
 	},
 	
 	readTree: func {
+		#
+		# Reset knowledge of contacts.
+		# Start scanning of first contact in property tree.
+		# If no contacts, then send out empty vector notifications to subscribers.
+		#
 		#print("NR: readtree called");
 		#me.lookupCallsignRaw = {};
 		me.lookupCallsignNew = {};
@@ -153,7 +168,10 @@ AIToNasal = {
 	},
 
 	readTreeFrame: func {
-		# called once per frame until scan is finished.
+		#
+		# Scan a single contact from property tree.
+		# Called once per frame until scan is finished.
+		#
 		if (me.startOver) {
 			me.readTree();
 			return;
@@ -190,6 +208,7 @@ AIToNasal = {
 	    	me.lat = me.pos.getNode("latitude-deg");
 	    	me.lon = me.pos.getNode("longitude-deg");	
 	    	if(me.alt == nil or me.lat == nil or me.lon == nil) {
+	    		# No valid position data found, giving up.
 		      	me.nextReadTreeFrame();
 		      	return;
 			}
@@ -246,13 +265,7 @@ AIToNasal = {
         me.aicontact = AIContact.new(me.prop_ai, me.model, me.callsign, me.pos_type, me.id, me.ainame, me.subid, me.aitype, me.sign);
 
         me.usign = sprintf("%s%04d",me.callsign,me.id);
-        #me.signLookup = me.lookupCallsignRaw[me.sign];
-        #if (me.signLookup == nil) {
-        	me.usignLookup = [me.aicontact];
-        #} else {
-        #	append(me.signLookup, me.aicontact);
-        #}
-        #me.lookupCallsignRaw[me.sign] = me.signLookup;
+        me.usignLookup = [me.aicontact];
         
         me.updateVectorFrame(me.usign,me.usignLookup);
         
@@ -260,6 +273,10 @@ AIToNasal = {
 	},
 	
 	nextReadTreeFrame: func {
+		#
+		# Schedule to read next contact from property tree.
+		# If no one left to schedule, then send out all found to subscribers.
+		#
 		me.vector_raw_index += 1;
         if (me.vector_raw_index < size(me.vector_raw)) {
         	var mt = maketimer(0,func me.readTreeFrame());
@@ -269,20 +286,25 @@ AIToNasal = {
         	me.updateVector();
         	me.scanInProgress = 0;
         }
-    },
-	
-	
+    },	
 
 	remove_suffix: func(s, x) {
-	      me.len = size(x);
-	      if (substr(s, -me.len) == x)
-	          return substr(s, 0, size(s) - me.len);
-	      return s;
+		#
+		# Remove suffix 'x' from string 's' if present.
+		#
+		me.len = size(x);
+		if (substr(s, -me.len) == x)
+			return substr(s, 0, size(s) - me.len);
+		return s;
 	},
 	
 	updateVectorFrame: func (callsignKey, callsignsRaw) {
 		me.callsigns    = me.lookupCallsign[callsignKey];
 		if (me.callsigns != nil) {
+			# Seems like a previous scan knew about contacts with this lookup key.
+			# Lets go through these new contacts, and for those we knew about we update
+			# the old contact with the new info just in case it has changed.
+			# Then we call init() on all of them.
 			foreach(me.newContact; callsignsRaw) {
 				me.oldContact = me.containsVectorContact(me.callsigns, me.newContact);
 				if (me.oldContact != nil) {
@@ -307,12 +329,20 @@ AIToNasal = {
 	},
 
 	updateVector: func {
+		#
+		# We finished a scan of property tree contacts.
+		# Lets notify our subscribers about them.
+		#
 		me.lookupCallsign = me.lookupCallsignNew;
 		#print("NR: update called "~size(me.vector_aicontacts));
 		emesary.GlobalTransmitter.NotifyAll(me.AINotification.updateV(me.vector_aicontacts));
 	},
 
 	containsVectorContact: func (vec, item) {
+		#
+		# Test if a contact 'item' exist in vector 'vec',
+		# if yes then return the existing contact.
+		#
 		foreach(test; vec) {
 			if (test.equals(item)) {
 				return test;
@@ -320,7 +350,11 @@ AIToNasal = {
 		}
 		return nil;
 	},
+
 	del: func {
+		#
+		# Shut this class down neatly.
+		#
 		call(func removelistener(me.l1),nil,nil,var err = []);
 		call(func removelistener(me.l2),nil,nil,var err = []);
 	},
@@ -334,7 +368,7 @@ AIToNasal = {
 
 
 Contact = {
-# Attributes:
+	# Attributes:
 	getCoord: func {
 	   	return geo.Coord.new();
 	},
@@ -1177,17 +1211,16 @@ AIContact = {
 		if (me.getType() == POINT) return 1;
 		return me.isPainted();
 	},
-	isRadiating: func {
-		me.rn = me.get_range();
+	isRadiating: func (coord) {
+		me.rn = coord.direct_distance_to(me.get_Coord()) * M2NM;
         if (!isOmniRadiating()) {
-            me.bearingR = coord.course_to(me.get_Coord());
+            me.bearingR = me.coord.course_to(coord);
             me.headingR = me.get_heading();
-            me.inv_bearingR =  me.bearingR+180;
-            me.deviationRd = me.inv_bearingR - me.headingR;
+            me.deviationRd = me.bearingR - me.headingR;
         } else {
             me.deviationRd = 0;
         }
-        if (me.rn < getRadarRange(nil) and ((me.rdr != nil and me.rdr.getValue()!=1) or me.rdr == nil) and math.abs(geo.normdeg180(me.deviationRd)) < getRadarFieldRadius(nil)) {
+        if (me.rn < getRadarRange(me.model) and ((me.rdr != nil and me.rdr.getValue()!=1) or me.rdr == nil) and math.abs(geo.normdeg180(me.deviationRd)) < getRadarFieldRadius(me.model)) {
             # our radar is active and pointed at coord.
             return 1;
         }
@@ -1364,6 +1397,7 @@ NoseRadar = {
 	scanSingleContact: func (contact) {# TODO: rework this method (If its even needed anymore)
 		if (!me.enabled) return;
 		# called on demand
+		# not used atm.
 		me.vector_aicontacts_for = [];
 		me.dev = contact.getDeviation();
 		me.rng = contact.getRangeDirect();
@@ -1661,7 +1695,8 @@ var enable_tacobject = 1;
 
 var isOmniRadiating = func {
 	# Override this method in your aircraft to do this in another way
-	return me.getModel() == "gci" or me.getModel() == "S-75" or me.getModel() == "buk-m2" or me.getModel() == "MIM104D" or me.getModel() == "missile_frigate" or me.getModel() == "s-300" or me.getModel() == "ZSU-23-4M" or me.get_type()!=MARINE;
+	# Return 1 if this contacts radar is not constricted to a cone.
+	return me.getModel() == "gci" or me.getModel() == "S-75" or me.getModel() == "buk-m2" or me.getModel() == "MIM104D" or me.getModel() == "missile_frigate" or me.getModel() == "fleet" or me.getModel() == "s-300" or me.getModel() == "ZSU-23-4M";
 }
 
 var getRadarFieldRadius = func (model) {
@@ -1671,7 +1706,7 @@ var getRadarFieldRadius = func (model) {
 
 var getRadarRange = func (model) {
 	# Override this method in your aircraft to do this in another way
-	# Distance that antiradiation weapons can home in on the the radiation.
+	# Distance in nm that antiradiation weapons can home in on the the radiation.
 	return 70;
 }
 

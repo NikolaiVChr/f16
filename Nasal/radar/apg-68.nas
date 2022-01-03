@@ -520,7 +520,7 @@ var APG68 = {
 				# we then step to the new position, and scan for each step
 				me.scanFOV();
 			}
-		} else {
+		} elsif (size(me.vector_aicontacts_bleps)) {
 			# So that when radar is restarted there is not old bleps.
 			me.purgeAllBleps();
 		}
@@ -551,7 +551,6 @@ var APG68 = {
 	        }
 		}
 	},
-
 	loopSlow: func {
 		if (me.enabled) {
 			# 1.414 = cos(45 degs)
@@ -1920,7 +1919,7 @@ var F16STTMode = {
 		return me.superMode.getAz();
 	},
 	preStep: func {
-		if (me.priorityTarget != nil) {
+		if (me.priorityTarget != nil and size(me.priorityTarget.getBleps())) {
 			me.lastBlep = me.priorityTarget.getLastBlep();
 			if (me.lastBlep != nil) {
 				me.azimuthTilt = me.lastBlep.getAZDeviation();
@@ -1949,6 +1948,7 @@ var F16STTMode = {
 				me._increaseRange();
 			}
 		} else {
+			me.priorityTarget = nil;
 			me.radar.tiltOverride = 0;
 			me.undesignate();
 		}
