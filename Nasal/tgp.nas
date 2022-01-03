@@ -950,13 +950,12 @@ var callInit = func {
             .setStrokeLineWidth(1)
             .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"));
 
-    pullup_cue_3 = canvasMFDext.createGroup().set("z-index", 20000);
+    pullup_cue_3 = canvasMFDext.createGroup().set("z-index", 9000).hide();
     pullup_cue_3.createChild("path")
                .moveTo(0, 0)
                .lineTo(256, 256)
                .moveTo(0, 256)
                .lineTo(256, 0)
                .setStrokeLineWidth(3)
-               .hide()
                .setColor([getprop("/sim/model/MFD-color/circle1/red"), getprop("/sim/model/MFD-color/circle1/green"), getprop("/sim/model/MFD-color/circle1/blue")]);
 };
