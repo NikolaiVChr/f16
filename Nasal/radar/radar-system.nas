@@ -668,12 +668,18 @@ AIContact = {
 	getNearbyVirtualContact: func (spheric_dist_m) {
 		# This is for inaccurate radar locking of surface targets with TGP.
 		if (me.virt != nil) return me.virt;
-		me.virt = {parents: [me]};
+		me.virt = {parents: [me, AIContact, Contact]};
 		me.getCoord();
 		me.coord.set_xyz(me.coord.x()+rand()*spheric_dist_m*2-spheric_dist_m,me.coord.y()+rand()*spheric_dist_m*2-spheric_dist_m,me.coord.z()+rand()*spheric_dist_m*2-spheric_dist_m);
 		me.virt.elevpick = geo.elevation(me.coord.lat(),me.coord.lon());
 		if (spheric_dist_m != 0 and me.virt.elevpick != nil) me.coord.set_alt(me.virt.elevpick+1);# TODO: Not convinced this is the place for the 1m offset since both missiles and radar subtract 1m from targetdistance, but for slanted picking with undulations its still good idea to not place it at the base.
 		me.virt.coord = me.coord;
+		me.virt.getNearbyVirtualTGPContact = func {
+			return me.parents[0].getNearbyVirtualTGPContact();
+		};
+		me.virt.getNearbyVirtualContact = func (d) {
+			return me.parents[0].getNearbyVirtualContact(d);
+		};
 		me.virt.getCoord = func {
 			return me.coord;
 		};
@@ -690,12 +696,18 @@ AIContact = {
 	getNearbyVirtualTGPContact: func () {
 		# Dont remember why the TGP prefers a virtual target when it IR LOCK a target (which it will follow). But it does.
 		if (me.virtTGP != nil) return me.virtTGP;
-		me.virtTGP = {parents: [me]};
+		me.virtTGP = {parents: [me, AIContact, Contact]};
 		#me.virtTGP.getCoord = func {
 		#	me.parents[0].getCoord();
-			#me.coord.set_alt(me.coord.alt()+0.0);
-			#return me.coord;
+		#	me.coord.set_alt(me.coord.alt()+0.0);
+		#	return me.coord;
 		#};
+		me.virtTGP.getNearbyVirtualTGPContact = func {
+			return me.parents[0].getNearbyVirtualTGPContact();
+		};
+		me.virtTGP.getNearbyVirtualContact = func (d) {
+			return me.parents[0].getNearbyVirtualContact(d);
+		};
 		me.virtTGP.isVirtual = func {
 			return 1;
 		};
@@ -1148,7 +1160,7 @@ AIContact = {
 		me.getRange()*M2NM;
 	},
 	get_Coord: func {
-		me.getCoord();
+		return me.getCoord();
 	},
 	get_Pitch: func {
 		me.getPitch();

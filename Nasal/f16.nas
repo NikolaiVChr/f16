@@ -1598,6 +1598,8 @@ var epu_pin_listener = setlistener("engines/engine[0]/running", func(runningNode
     }
 }, 0, 0);
 
+var flooptimer = nil;
+
 var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
   if (getprop("sim/signals/fdm-initialized") == 1) {
     removelistener(main_init_listener);
@@ -1618,8 +1620,8 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     fast.loop();
     ehsi.init();
     tgp.callInit();
-    tgp.flooptimer = maketimer(0,func tgp.fast_loop());
-    tgp.flooptimer.start();
+    flooptimer = maketimer(0,func tgp.fast_loop());
+    flooptimer.start();
     ded.dataEntryDisplay.init();
     ded.dataEntryDisplay.update();
     pfd.callInit();

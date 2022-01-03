@@ -22,7 +22,7 @@ var coords_cam = [
     getprop("/sim/view[105]/config/y-offset-m")
 ];
 io.include("Aircraft/Generic/updateloop.nas");
-#io.load_nasal(getprop("/sim/fg-root") ~ "/Aircraft/c172p/Nasal/generic/math_ext.nas","math_ext");
+#io.load_nasal(getprop("/sim/fg-root") ~ "/Aircraft/c172p/Nasal/generic/math_ext2.nas","math_ext2");
 var FLIRCameraUpdater = {
 
     new: func {
@@ -163,7 +163,7 @@ var FLIRCameraUpdater = {
 
     _get_flir_auto_updater: func (offset) {
         return func (roll_deg, pitch_deg, yaw, pitch) {
-            (yaw, pitch) = math_ext.get_yaw_pitch_body(roll_deg, pitch_deg, yaw, pitch, offset);
+            (yaw, pitch) = math_ext2.get_yaw_pitch_body(roll_deg, pitch_deg, yaw, pitch, offset);
 
             setprop("/aircraft/flir/target/yaw-deg", yaw);
             setprop("/aircraft/flir/target/pitch-deg", pitch);
@@ -178,15 +178,16 @@ var FLIRCameraUpdater = {
 
     _get_flir_computer: func (roll_deg, pitch_deg, heading) {
         return func (coords, target) {
-            var (position_2d, position) = math_ext.get_point(coords[0], coords[1], coords[2], roll_deg, pitch_deg, heading);
-            return math_ext.get_yaw_pitch_distance_inert(position_2d, position, target, heading);
+            var (position_2d, position) = math_ext2.get_point(coords[0], coords[1], coords[2], roll_deg, pitch_deg, heading);
+            return get_yaw_pitch_distance_inert(position_2d, position, target, heading);
         }
     }
 
 };
 
-math_ext.get_yaw_pitch_distance_inert = func (position_2d, position, target_position, heading, f=nil) {
+get_yaw_pitch_distance_inert = func (position_2d, position, target_position, heading, f=nil) {
     # Does the same as Onox's version, except takes curvature of Earth into account.
+    printf("%.5f,%.5f,%.5f",target_position.lat(),target_position.lon(),target_position.alt());
     var heading_deg = positioned.courseAndDistance(position_2d, target_position)[0] - heading;
     var pitch_deg   = vector.Math.getPitch(position, target_position);
     var distance_m  = position.direct_distance_to(target_position);
