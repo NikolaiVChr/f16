@@ -1213,7 +1213,7 @@ AIContact = {
 	},
 	isRadiating: func (coord) {
 		me.rn = coord.direct_distance_to(me.get_Coord()) * M2NM;
-        if (!isOmniRadiating()) {
+        if (!isOmniRadiating(me.model)) {
             me.bearingR = me.coord.course_to(coord);
             me.headingR = me.get_heading();
             me.deviationRd = me.bearingR - me.headingR;
@@ -1693,10 +1693,10 @@ var stbySend = props.globals.getNode("sim/multiplay/generic/int[2]", 1);
 var elapsedProp = props.globals.getNode("sim/time/elapsed-sec", 0);
 var enable_tacobject = 1;
 
-var isOmniRadiating = func {
+var isOmniRadiating = func (model) {
 	# Override this method in your aircraft to do this in another way
 	# Return 1 if this contacts radar is not constricted to a cone.
-	return me.getModel() == "gci" or me.getModel() == "S-75" or me.getModel() == "buk-m2" or me.getModel() == "MIM104D" or me.getModel() == "missile_frigate" or me.getModel() == "fleet" or me.getModel() == "s-300" or me.getModel() == "ZSU-23-4M";
+	return model == "gci" or model == "S-75" or model == "buk-m2" or model == "MIM104D" or model == "missile_frigate" or model == "fleet" or model == "s-300" or model == "ZSU-23-4M";
 }
 
 var getRadarFieldRadius = func (model) {
