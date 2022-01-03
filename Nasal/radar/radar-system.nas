@@ -654,7 +654,6 @@ AIContact = {
 	getCoord: func {
 		if (me.pos_type == ECEF) {
 	    	me.coord = geo.Coord.new().set_xyz(me.x.getValue(), me.y.getValue(), me.z.getValue());
-	    	return me.coord;
 	    } else {
 	    	if(me.alt == nil or me.lat == nil or me.lon == nil) {
 		      	me.coord = emptyCoord;
@@ -662,8 +661,8 @@ AIContact = {
 		      	return me.coord;
 		    }
 		    me.coord = geo.Coord.new().set_latlon(me.lat.getValue(), me.lon.getValue(), me.alt.getValue()*FT2M);
-		    return me.coord;
-	    }	
+	    }
+	    return me.coord;
 	},
 
 	getNearbyVirtualContact: func (spheric_dist_m) {
