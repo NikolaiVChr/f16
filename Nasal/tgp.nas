@@ -187,7 +187,7 @@ var FLIRCameraUpdater = {
 
 get_yaw_pitch_distance_inert = func (position_2d, position, target_position, heading, f=nil) {
     # Does the same as Onox's version, except takes curvature of Earth into account.
-    printf("%.5f,%.5f,%.5f",target_position.lat(),target_position.lon(),target_position.alt());
+    #printf("%.5f,%.5f,%.5f",target_position.lat(),target_position.lon(),target_position.alt());
     var heading_deg = positioned.courseAndDistance(position_2d, target_position)[0] - heading;
     var pitch_deg   = vector.Math.getPitch(position, target_position);
     var distance_m  = position.direct_distance_to(target_position);
