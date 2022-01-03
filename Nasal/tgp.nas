@@ -119,10 +119,14 @@ var FLIRCameraUpdater = {
         var computer = me._get_flir_computer(roll_deg, pitch_deg, heading);
 
         if (getprop("/aircraft/flir/target/auto-track") and me.click_coord_cam != nil) {
+
             var (yaw, pitch, distance) = computer(coords_cam, me.click_coord_cam);
+            #printf("C %.5f,%.5f,%.5f",me.click_coord_cam.lat(),me.click_coord_cam.lon(),me.click_coord_cam.alt());
             if (lock_tgp) {
+                #print("L");
                 me.update_cam(roll_deg, pitch_deg, yaw, pitch);
             } else {
+                #print("NO      LLLLLLLLLLL");
                 me.update_cam(roll_deg, pitch_deg, yaw+me.offsetH, pitch+me.offsetP);
             }
         }
@@ -139,6 +143,8 @@ var FLIRCameraUpdater = {
         var computer = me._get_flir_computer(roll_deg, pitch_deg, heading);
 
         if (getprop("/sim/current-view/name") == "TGP" and me.click_coord_cam != nil) {
+            #printf("B %.5f,%.5f,%.5f",me.click_coord_cam.lat(),me.click_coord_cam.lon(),me.click_coord_cam.alt());
+            me.click_coord_cam.lat();
             var (yaw, pitch, distance) = computer(coords_cam, me.click_coord_cam);
             me.update_cam(roll_deg, pitch_deg, yaw, pitch);
         }
@@ -171,8 +177,8 @@ var FLIRCameraUpdater = {
                 setprop("/sim/current-view/goal-heading-offset-deg", -yaw);
                 setprop("/sim/current-view/goal-pitch-offset-deg", pitch);
             }
-            setprop("sim/view[105]/heading-offset-deg", yaw);
-            setprop("sim/view[105]/pitch-offset-deg", pitch);
+            setprop("sim/view[105]/config/heading-offset-deg", -yaw);
+            setprop("sim/view[105]/config/pitch-offset-deg", pitch);
         };
     },
 
@@ -187,7 +193,8 @@ var FLIRCameraUpdater = {
 
 get_yaw_pitch_distance_inert = func (position_2d, position, target_position, heading, f=nil) {
     # Does the same as Onox's version, except takes curvature of Earth into account.
-    #printf("%.5f,%.5f,%.5f",target_position.lat(),target_position.lon(),target_position.alt());
+    #printf("A %.5f,%.5f,%.5f",target_position.lat(),target_position.lon(),target_position.alt());
+    target_position.lat();
     var heading_deg = positioned.courseAndDistance(position_2d, target_position)[0] - heading;
     var pitch_deg   = vector.Math.getPitch(position, target_position);
     var distance_m  = position.direct_distance_to(target_position);
