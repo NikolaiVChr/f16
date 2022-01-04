@@ -177,8 +177,8 @@ var FLIRCameraUpdater = {
                 setprop("/sim/current-view/goal-heading-offset-deg", -yaw);
                 setprop("/sim/current-view/goal-pitch-offset-deg", pitch);
             }
-            setprop("sim/view[105]/config/heading-offset-deg", -yaw);
-            setprop("sim/view[105]/config/pitch-offset-deg", pitch);
+            setprop("sim/view[105]/heading-offset-deg", yaw);
+            setprop("sim/view[105]/pitch-offset-deg", pitch);
         };
     },
 

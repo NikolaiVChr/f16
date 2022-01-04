@@ -2656,8 +2656,21 @@ append(obj.total, obj.speed_curr);
                 #var y = me.clamp(-p*me.texelPerDegreeY+me.sy-me.texels_up_into_hud,me.sy*0.05,me.sy*0.95);
                 #var x = me.clamp(b*me.texelPerDegreeX+me.sx*0.5,me.sx*0.025,me.sx*0.975);
                 if (y != xy[1] or x != xy[0]) {
-                    me.tgpPointC.setTranslation(x,y);
-                    me.tgpPointC.show();
+                    if (xy[0] != 0 and xy[1] != 0) {
+                        var x_scale = me.sx*0.40/math.abs(xy[0]);
+                        var y_scale = me.sy*0.45/math.abs(xy[1]);
+                        if (x_scale < y_scale) {
+                            x = xy[0] * x_scale;
+                            y = xy[1] * x_scale;
+                        } else {
+                            x = xy[0] * y_scale;
+                            y = xy[1] * y_scale;
+                        }
+                        me.tgpPointC.setTranslation(x,y);
+                        me.tgpPointC.show();
+                    } else {
+                        me.tgpPointC.hide();
+                    }
                 } else {
                     me.tgpPointC.hide();
                 }
@@ -2672,8 +2685,21 @@ append(obj.total, obj.speed_curr);
                 #var y = me.clamp(-p*me.texelPerDegreeY+me.sy-me.texels_up_into_hud,me.sy*0.05,me.sy*0.95);
                 #var x = me.clamp(b*me.texelPerDegreeX+me.sx*0.5,me.sx*0.025,me.sx*0.975);
                 if (y != xy[1] or x != xy[0]) {
-                    me.tgpPointC.setTranslation(x,y);
-                    me.tgpPointC.show();
+                    if (xy[0] != 0 and xy[1] != 0) {
+                        var x_scale = me.sx*0.40/math.abs(xy[0]);
+                        var y_scale = me.sy*0.45/math.abs(xy[1]);
+                        if (x_scale < y_scale) {
+                            x = xy[0] * x_scale;
+                            y = xy[1] * x_scale;
+                        } else {
+                            x = xy[0] * y_scale;
+                            y = xy[1] * y_scale;
+                        }
+                        me.tgpPointC.setTranslation(x,y);
+                        me.tgpPointC.show();
+                    } else {
+                        me.tgpPointC.hide();
+                    }
                 } else {
                     me.tgpPointC.hide();
                 }
