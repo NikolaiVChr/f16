@@ -1600,6 +1600,7 @@ var AIM = {
 			me.sun_enabled = TRUE;
 			me.sun = geo.Coord.new();
 			me.sun.set_xyz(me.ac_init.x()+sun_x*2000000, me.ac_init.y()+sun_y*2000000, me.ac_init.z()+sun_z*2000000);#heat seeking missiles don't fly far, so setting it 2000Km away is fine.
+			me.sun.alt();# TODO: once fixed in FG this line is no longer needed.
 		} else {
 			# old FG versions does not supply location of sun. So this feature gets disabled.
 			me.sun_enabled = FALSE;
@@ -3581,8 +3582,8 @@ var AIM = {
 				me.raw_steer_signal_head = me.curr_deviation_h;
 				if (me.cruise_or_loft == FALSE) {
 					me.raw_steer_signal_elev = me.curr_deviation_e;
-					me.attitudePN = math.atan2(-(me.speed_down_fps+g_fps * me.dt), me.speed_horizontal_fps ) * R2D;
-		            me.gravComp = me.pitch - me.attitudePN;
+					me.attitudePN = (math.atan2(-(me.speed_down_fps+g_fps * me.dt), me.speed_horizontal_fps ) - math.atan2(-me.speed_down_fps, me.speed_horizontal_fps )) * R2D;
+		            me.gravComp = - me.attitudePN;
 		            #printf("Gravity compensation %0.2f degs", me.gravComp);
 		            me.raw_steer_signal_elev += me.gravComp;
 				}
@@ -3733,8 +3734,8 @@ var AIM = {
 		        }
 		        if (me.fixed_aim != nil and me.life_time < me.fixed_aim_time) {
 		        	me.raw_steer_signal_elev = me.curr_deviation_e+me.fixed_aim;
-					me.attitudePN = math.atan2(-(me.speed_down_fps+g_fps * me.dt), me.speed_horizontal_fps ) * R2D;
-		            me.gravComp = me.pitch - me.attitudePN;
+					me.attitudePN = (math.atan2(-(me.speed_down_fps+g_fps * me.dt), me.speed_horizontal_fps ) - math.atan2(-me.speed_down_fps, me.speed_horizontal_fps )) * R2D;
+		            me.gravComp = - me.attitudePN;
 		            #printf("Gravity compensation %0.2f degs", me.gravComp);
 		            me.raw_steer_signal_elev += me.gravComp;
 				} else {
@@ -3792,8 +3793,8 @@ var AIM = {
 					}
 
 					# now compensate for the predicted gravity drop of attitude:				
-		            me.attitudePN = math.atan2(-(me.speed_down_fps+g_fps * me.dt), me.speed_horizontal_fps ) * R2D;
-		            me.gravComp = me.pitch - me.attitudePN;
+		            me.attitudePN = (math.atan2(-(me.speed_down_fps+g_fps * me.dt), me.speed_horizontal_fps ) - math.atan2(-me.speed_down_fps, me.speed_horizontal_fps )) * R2D;
+		            me.gravComp = -me.attitudePN;
 		            #printf("Gravity compensation %0.2f degs", me.gravComp);
 		            me.raw_steer_signal_elev += me.gravComp;
 
@@ -3964,6 +3965,7 @@ var AIM = {
 		me.crc_closestRange = me.myMath.magnitudeVector(me.myMath.minus(targetCoord, missileCoord));
 		me.crc_missileCoord = geo.Coord.new();
 		me.crc_missileCoord.set_xyz(missileCoord[0], missileCoord[1], missileCoord[2]);
+		me.crc_missileCoord.alt();# TODO: once fixed in FG this line is no longer needed.
 	},
 	
 	log: func (str) {

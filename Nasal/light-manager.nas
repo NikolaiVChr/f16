@@ -369,6 +369,7 @@ SelfContact = {
     # this is much faster than calling geo.aircraft_position().
       me.light = aircraftToCart({x:3.13064, y:0.307693, z:1.15951});
       me.accoord = geo.Coord.new().set_xyz(me.light.x,me.light.y,me.light.z);
+      me.accoord.alt();# TODO: once fixed in FG this line is no longer needed.
       return me.accoord;
   },
   

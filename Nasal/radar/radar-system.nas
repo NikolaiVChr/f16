@@ -217,6 +217,7 @@ AIToNasal = {
 	    } else {
 	    	me.pos_type = ECEF;
 	    	me.aircraftPos = geo.Coord.new().set_xyz(me.x.getValue(), me.y.getValue(), me.z.getValue());
+	    	me.aircraftPos.alt();# TODO: once fixed in FG this line is no longer needed.
 	    }
 	    
 	    
@@ -654,6 +655,7 @@ AIContact = {
 	getCoord: func {
 		if (me.pos_type == ECEF) {
 	    	me.coord = geo.Coord.new().set_xyz(me.x.getValue(), me.y.getValue(), me.z.getValue());
+	    	me.coord.alt();# TODO: once fixed in FG this line is no longer needed.
 	    } else {
 	    	if(me.alt == nil or me.lat == nil or me.lon == nil) {
 		      	me.coord = emptyCoord;

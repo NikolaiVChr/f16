@@ -248,6 +248,7 @@ var list = func (node) {
         var pos = aircraftToCart({x:-x, y:y, z: -z});
         var coordA = geo.Coord.new();
         coordA.set_xyz(pos.x, pos.y, pos.z);
+        coordA.alt();# TODO: once fixed in FG this line is no longer needed.
         var matrixMath = 0;
         if (matrixMath) {
             var dirCoord = geo.Coord.new(coordA);
