@@ -174,10 +174,8 @@ DatalinkRadar = {
 		dlnk.DatalinkRadarRecipient.Receive = func(notification) {
 	        if (notification.NotificationType == "AINotification") {
 	        	#printf("NoseRadar recv: %s", notification.NotificationType);
-	            if (me.radar.enabled == 1) {
-	    		    me.radar.vector_aicontacts = notification.vector;
-	    		    me.radar.index = 0;
-	    	    }
+    		    me.radar.vector_aicontacts = notification.vector;
+    		    me.radar.index = 0;
 	            return emesary.Transmitter.ReceiptStatus_OK;
 	        }
 	        return emesary.Transmitter.ReceiptStatus_NotProcessed;
@@ -200,12 +198,14 @@ DatalinkRadar = {
 		}
 		me.contact = me.vector_aicontacts[me.index];
 		me.wasBlue = me.contact["blue"];
+		me.cs = me.contact.get_Callsign();
 		if (me.wasBlue == nil) me.wasBlue = 0;
 
 		if (!me.contact.isValid()) {
 			me.contact.blue = 0;
 			
 			if (me.wasBlue > 0) {
+				#print(me.cs," is invalid and purged from Datalink");
 				me.new_vector_aicontacts_for = [];
 				foreach (me.c ; me.vector_aicontacts_for) {
 					if (!me.c.equals(me.contact) and !me.c.equalsFast(me.contact)) {
@@ -218,7 +218,7 @@ DatalinkRadar = {
 			
 
 			if (me.contact.getRangeDirect()*M2NM > me.max_dist_nm) {me.index += 1;return;}
-			me.cs = me.contact.get_Callsign();
+			
 
 	        me.lnk = datalink.get_data(me.cs);
 	        if (!me.contact.isValid()) {
