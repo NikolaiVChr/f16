@@ -368,7 +368,7 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>22</row>
             <col>2</col>
-            <legend>A/G Strategic (Unguided, 2 bags XL)</legend>
+            <legend>A/G Strategic (Unguided, 2 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.a2g_strat();</script>

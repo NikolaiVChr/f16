@@ -956,22 +956,17 @@ var a2s_antiship = func {
 # A/G Strategic Unguided Strike (B61-7)
 var a2g_strat = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
-        pylon1.loadSet(pylonSets.aim120WT);
-        pylon2.loadSet(pylonSets.aim120);
+        pylon1.loadSet(pylonSets.dumb3WT);
+        pylon2.loadSet(pylonSets.dumb1);
         pylon3.loadSet(pylonSets.b617);
-        pylon4.loadSet(pylonSets.fuel60L);
+        pylon4.loadSet(pylonSets.fuel37L);
         pylon5.loadSet(pylonSets.podEcm131);
-        pylon6.loadSet(pylonSets.fuel60R);
+        pylon6.loadSet(pylonSets.fuel37R);
         pylon7.loadSet(pylonSets.b617);
-        pylon8.loadSet(pylonSets.aim120);
-        pylon9.loadSet(pylonSets.aim120WT);
-        if (block == 6) {
-        	pylon10.loadSet(pylonSets.empty);
-        	pylon11.loadSet(pylonSets.podSAtp);
-        } else {
-        	pylon10.loadSet(pylonSets.podLTgp);
-            pylon11.loadSet(pylonSets.podLNav);
-        }
+        pylon8.loadSet(pylonSets.dumb1);
+        pylon9.loadSet(pylonSets.dumb3WT);
+        pylon10.loadSet(pylonSets.podLTgp);
+        pylon11.loadSet(pylonSets.podLNav);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
