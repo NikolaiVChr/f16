@@ -63,15 +63,7 @@ var Button = {
 			foreach (var router; me.routerVec) {
 				if (router.run() != -1) {
 					if (size(dataEntryDisplay.page.vector) != 0) {
-						if (dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()]["lastText2"] == nil) {
-							# LAT / LON edit fields
-							dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].reset();
-						} elsif (dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 != "") {
-							dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].recallStatus = 0;
-							dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].text = dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2;
-							dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText1 = "";
-							dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 = "";
-						}
+						dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].reset();
 					}
 					return;
 				}
@@ -104,9 +96,20 @@ var Action = {
 	},
 };
 
+var StandardField = {
+	reset: func {
+		if (me.lastText2 != "") {
+			me.recallStatus = 0;
+			me.text = me.lastText2;
+			me.lastText1 = "";
+			me.lastText2 = "";
+		}
+	},
+};
+
 var EditableField = {
 	new: func(prop, stringFormat, maxSize, checkValue = nil) {
-		var editableField = {parents: [EditableField]};
+		var editableField = {parents: [EditableField,StandardField]};
 		editableField.text = getprop(prop);
 		editableField.prop = prop;
 		editableField.maxSize = maxSize;
@@ -117,6 +120,7 @@ var EditableField = {
 		editableField.selected = 0;
 		editableField.listener = nil;
 		editableField.checkValue = checkValue;
+		editableField.skipMe = 0;
 		editableField.init();
 		return editableField;
 	},
@@ -194,7 +198,7 @@ var EditableField = {
 
 var toggleableField = {
 	new: func(valuesVector, prop) {
-		var tF = {parents: [toggleableField]};
+		var tF = {parents: [toggleableField,StandardField]};
 		tF.valuesVector = valuesVector;
 		tF.value = "";
 		tF.index = 0;
@@ -205,6 +209,7 @@ var toggleableField = {
 		tF.lastText2 = "";
 		tF.recallStatus = 0;
 		tF.listener = nil;
+		tF.skipMe = 0;
 		tF.init();
 		return tF;
 	},
@@ -274,20 +279,28 @@ var EditableFieldPage = {
 	getNext: func() {
 		if (size(me.vector) < 2) { return; }
 		me.vector[me.index].selected = 0;
-		me.index += 1;
-		if (me.index == size(me.vector)) {
-			me.index = 0;
+		while(me.vector[me.index].selected == 0) {
+			me.index += 1;
+			if (me.index == size(me.vector)) {
+				me.index = 0;
+			}
+			if (!me.vector[me.index].skipMe) {
+				me.vector[me.index].selected = 1;
+			}
 		}
-		me.vector[me.index].selected = 1;
 	},
 	getPrev: func() {
 		if (size(me.vector) < 2) { return; }
 		me.vector[me.index].selected = 0;
-		me.index -= 1;
-		if (me.index == -1) {
-			me.index = size(me.vector) - 1;
+		while(me.vector[me.index].selected == 0) {
+			me.index -= 1;
+			if (me.index == -1) {
+				me.index = size(me.vector) - 1;
+			}
+			if (!me.vector[me.index].skipMe) {
+				me.vector[me.index].selected = 1;
+			}
 		}
-		me.vector[me.index].selected = 1;
 	},
 	append: func(letter) {
 		if (size(me.vector) == 0) { return; }
@@ -374,7 +387,7 @@ var toggleTACANMode = func() {
 
 var toggleableTransponder = {
 	new: func(valuesVector, prop) {
-		var tF = {parents: [toggleableTransponder]};
+		var tF = {parents: [toggleableTransponder,StandardField]};
 		tF.valuesVector = valuesVector;
 		tF.value = "";
 		tF.index = 0;
@@ -385,6 +398,7 @@ var toggleableTransponder = {
 		tF.lastText2 = "";
 		tF.recallStatus = 0;
 		tF.listener = nil;
+		tF.skipMe = 0;
 		tF.init();
 		return tF;
 	},
@@ -442,7 +456,7 @@ var toggleableTransponder = {
 
 var toggleableIff = {
 	new: func(valuesVector, prop) {
-		var tF = {parents: [toggleableIff]};
+		var tF = {parents: [toggleableIff,StandardField]};
 		tF.valuesVector = valuesVector;
 		tF.value = "";
 		tF.index = 0;
@@ -453,6 +467,7 @@ var toggleableIff = {
 		tF.lastText2 = "";
 		tF.recallStatus = 0;
 		tF.listener = nil;
+		tF.skipMe = 0;
 		tF.init();
 		return tF;
 	},
@@ -513,6 +528,7 @@ var EditableLAT = {
 		editableField.maxDigits = 8;
 		editableField.editing = 0;
 		editableField.init();
+		editableField.skipMe = 0;
 		return editableField;
 	},
 	init: func() {
@@ -686,6 +702,7 @@ var EditableLON = {
 		editableField.listener = nil;   # listen to the prop
 		editableField.maxDigits = 9;
 		editableField.editing = 0;
+		editableField.skipMe = 0;
 		editableField.init();
 		return editableField;
 	},

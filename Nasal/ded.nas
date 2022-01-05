@@ -274,7 +274,19 @@ var dataEntryDisplay = {
 					TOS = steerpoints.getNumberTOS(wp_num);
 				}
 				wp_num_curr = wp_num;
+				pSTPT.vector[1].skipMe = 0;#lat
+				pSTPT.vector[2].skipMe = 0;#lon
+				pSTPT.vector[3].skipMe = 1;#radius
+				pSTPT.vector[4].skipMe = 0;#alt
+				pSTPT.vector[5].skipMe = 1;#type
+				pSTPT.vector[6].skipMe = 1;#color
 			} else {
+				pSTPT.vector[1].skipMe = 1;
+				pSTPT.vector[2].skipMe = 1;
+				pSTPT.vector[3].skipMe = 1;
+				pSTPT.vector[4].skipMe = 1;
+				pSTPT.vector[5].skipMe = 1;
+				pSTPT.vector[6].skipMe = 1;
 				wp_num_curr = 0;
 			}
 			me.text[4] = sprintf("      TOS  %s",TOS);
@@ -313,6 +325,12 @@ var dataEntryDisplay = {
 				} else {
 					stpt.type = getprop("f16/ded/stpt-type"); 
 				}
+				pSTPT.vector[1].skipMe = 0;#lat
+				pSTPT.vector[2].skipMe = 0;#lon
+				pSTPT.vector[3].skipMe = 0;#radius
+				pSTPT.vector[4].skipMe = 1;#alt
+				pSTPT.vector[5].skipMe = 0;#type
+				pSTPT.vector[6].skipMe = 0;#color
 			} elsif (stpt == nil and (getprop("f16/ded/lat") != 0 or getprop("f16/ded/lon") != 0 or getprop("f16/ded/stpt-rad") != 10 or getprop("f16/ded/stpt-type") != "   " or getprop("f16/ded/stpt-color") != 0)) {
 				stpt = steerpoints.STPT.new();
 				stpt.lat = getprop("f16/ded/lat");
@@ -322,6 +340,12 @@ var dataEntryDisplay = {
 				stpt.color = getprop("f16/ded/stpt-color")=="RED"?0:(getprop("f16/ded/stpt-color")=="YEL"?1:2);
 				steerpoints.setNumber(wp_num, stpt);
 				wp_num_curr = wp_num;
+				pSTPT.vector[1].skipMe = 0;#lat
+				pSTPT.vector[2].skipMe = 0;#lon
+				pSTPT.vector[3].skipMe = 0;#radius
+				pSTPT.vector[4].skipMe = 1;#alt
+				pSTPT.vector[5].skipMe = 0;#type
+				pSTPT.vector[6].skipMe = 0;#color
 			} else {
 				setprop("f16/ded/lat", 0);
 				setprop("f16/ded/lon", 0);
@@ -329,6 +353,12 @@ var dataEntryDisplay = {
 				setprop("f16/ded/stpt-type", "   ");
 				setprop("f16/ded/stpt-color", "RED");
 				wp_num_curr = 0;
+				pSTPT.vector[1].skipMe = 0;#lat
+				pSTPT.vector[2].skipMe = 0;#lon
+				pSTPT.vector[3].skipMe = 0;#radius
+				pSTPT.vector[4].skipMe = 1;#alt
+				pSTPT.vector[5].skipMe = 0;#type
+				pSTPT.vector[6].skipMe = 0;#color
 			}
 				
 			me.text[1] = sprintf("      LAT  %s", pSTPT.vector[1].getText());
@@ -372,6 +402,12 @@ var dataEntryDisplay = {
 				} else {
 					stpt.alt = getprop("f16/ded/alt"); 
 				}
+				pSTPT.vector[1].skipMe = 0;#lat
+				pSTPT.vector[2].skipMe = 0;#lon
+				pSTPT.vector[3].skipMe = 1;#radius
+				pSTPT.vector[4].skipMe = 0;#alt
+				pSTPT.vector[5].skipMe = 1;#type
+				pSTPT.vector[6].skipMe = 1;#color
 			} elsif (stpt == nil and (getprop("f16/ded/alt")!=0 or getprop("f16/ded/lat") != 0 or getprop("f16/ded/lon") != 0)) {
 				stpt = steerpoints.STPT.new();
 				stpt.lat = getprop("f16/ded/lat");
@@ -379,11 +415,23 @@ var dataEntryDisplay = {
 				stpt.alt = getprop("f16/ded/alt");
 				steerpoints.setNumber(wp_num, stpt);
 				wp_num_curr = wp_num;
+				pSTPT.vector[1].skipMe = 0;#lat
+				pSTPT.vector[2].skipMe = 0;#lon
+				pSTPT.vector[3].skipMe = 1;#radius
+				pSTPT.vector[4].skipMe = 0;#alt
+				pSTPT.vector[5].skipMe = 1;#type
+				pSTPT.vector[6].skipMe = 1;#color
 			} else {
 				setprop("f16/ded/lat", 0);
 				setprop("f16/ded/lon", 0);
 				setprop("f16/ded/alt", 0);
 				wp_num_curr = 0;
+				pSTPT.vector[1].skipMe = 0;#lat
+				pSTPT.vector[2].skipMe = 0;#lon
+				pSTPT.vector[3].skipMe = 1;#radius
+				pSTPT.vector[4].skipMe = 0;#alt
+				pSTPT.vector[5].skipMe = 1;#type
+				pSTPT.vector[6].skipMe = 1;#color
 			}
 				
 			me.text[1] = sprintf("      LAT  %s", pSTPT.vector[1].getText());
@@ -415,6 +463,12 @@ var dataEntryDisplay = {
 			me.text[1] = sprintf("      LAT  %s", lat);
 			me.text[2] = sprintf("      LNG  %s", lon);
 			wp_num_curr = 0;
+			pSTPT.vector[1].skipMe = 1;#lat
+			pSTPT.vector[2].skipMe = 1;#lon
+			pSTPT.vector[3].skipMe = 1;#radius
+			pSTPT.vector[4].skipMe = 1;#alt
+			pSTPT.vector[5].skipMe = 1;#type
+			pSTPT.vector[6].skipMe = 1;#color
 		}
 		me.text[0] = sprintf("      STPT %s  AUTO %s", pSTPT.vector[0].getText(), me.no);		
 	},
@@ -1018,14 +1072,7 @@ var Buttons = {
 setlistener("f16/avionics/rtn-seq", func() {
 	if (getprop("f16/avionics/rtn-seq") == -1) {
 		if (size(dataEntryDisplay.page.vector) != 0) {
-			if (dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].parents[0] == EditableLAT or dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].parents[0] == EditableLON) {
-				dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].reset();
-			} elsif (dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 != "") {
-				dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].recallStatus = 0;
-				dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].text = dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2;
-				dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText1 = "";
-				dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 = "";
-			}
+			dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].reset();
 		}
 		dataEntryDisplay.page = pCNI;
 	} elsif (getprop("f16/avionics/rtn-seq") == 1) {
@@ -1089,14 +1136,7 @@ setlistener("f16/avionics/rtn-seq", func() {
 
 setlistener("f16/avionics/ded-up-down", func() {
 	if (size(dataEntryDisplay.page.vector) != 0) {
-		if (dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].parents[0] == EditableLAT or dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].parents[0] == EditableLON) {
-			dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].reset();
-		} elsif (dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 != "") {
-			dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].recallStatus = 0;
-			dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].text = dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2;
-			dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText1 = "";
-			dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 = "";
-		}
+		dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].reset();
 	}
 	
 	if (getprop("f16/avionics/ded-up-down") == -1) {
