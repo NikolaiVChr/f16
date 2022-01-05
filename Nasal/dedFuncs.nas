@@ -63,7 +63,7 @@ var Button = {
 			foreach (var router; me.routerVec) {
 				if (router.run() != -1) {
 					if (size(dataEntryDisplay.page.vector) != 0) {
-						if (dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 != "") {
+						if (dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()]["lastText2"] != nil and dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 != "") {
 							dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].recallStatus = 0;
 							dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].text = dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2;
 							dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText1 = "";
