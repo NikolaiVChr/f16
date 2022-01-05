@@ -202,49 +202,64 @@ DatalinkRadar = {
 		me.wasBlue = me.contact["blue"];
 		if (me.wasBlue == nil) me.wasBlue = 0;
 
-		if (me.contact.getRangeDirect()*M2NM > me.max_dist_nm) {me.index += 1;return;}
-		me.cs = me.contact.get_Callsign();
-
-        me.lnk = datalink.get_data(me.cs);
-        if (!me.contact.isValid()) {
-        	me.lnk = nil;
-        }
-        if (me.lnk != nil and me.lnk.on_link() == 1) {
-            me.blue = 1;
-            me.blueIndex = me.lnk.index()+1;
-        } elsif (me.cs == getprop("link16/wingman-4")) {
-            me.blue = 1;
-            me.blueIndex = 2;
-        } else {
-        	me.blue = 0;
-            me.blueIndex = -1;
-        }
-        if (!me.blue and me.lnk != nil and me.lnk.tracked() == 1) {
-            me.blue = 2;
-            me.blueIndex = me.lnk.tracked_by_index()+1;
-        }
-
-        me.contact.blue = me.blue;
-        if (me.blue > 0) {
-        	me.contact.blueIndex = me.blueIndex;
-			if (!apg68Radar.containsVectorContact(me.vector_aicontacts_for, me.contact)) {
-				append(me.vector_aicontacts_for, me.contact);
-				emesary.GlobalTransmitter.NotifyAll(me.DatalinkNotification.updateV(me.vector_aicontacts_for));
-			}
-		} elsif (me.wasBlue > 0) {
-			me.new_vector_aicontacts_for = [];
-			foreach (me.c ; me.vector_aicontacts_for) {
-				if (!me.c.equals(me.contact) and !me.c.equalsFast(me.contact)) {
-					append(me.new_vector_aicontacts_for, me.contact);
+		if (!me.contact.isValid()) {
+			me.contact.blue = 0;
+			
+			if (me.wasBlue > 0) {
+				me.new_vector_aicontacts_for = [];
+				foreach (me.c ; me.vector_aicontacts_for) {
+					if (!me.c.equals(me.contact) and !me.c.equalsFast(me.contact)) {
+						append(me.new_vector_aicontacts_for, me.contact);
+					}
 				}
+				me.vector_aicontacts_for = me.new_vector_aicontacts_for;
 			}
-			me.vector_aicontacts_for = me.new_vector_aicontacts_for;
+		} else {
+			
+
+			if (me.contact.getRangeDirect()*M2NM > me.max_dist_nm) {me.index += 1;return;}
+			me.cs = me.contact.get_Callsign();
+
+	        me.lnk = datalink.get_data(me.cs);
+	        if (!me.contact.isValid()) {
+	        	me.lnk = nil;
+	        }
+	        if (me.lnk != nil and me.lnk.on_link() == 1) {
+	            me.blue = 1;
+	            me.blueIndex = me.lnk.index()+1;
+	        } elsif (me.cs == getprop("link16/wingman-4")) {
+	            me.blue = 1;
+	            me.blueIndex = 2;
+	        } else {
+	        	me.blue = 0;
+	            me.blueIndex = -1;
+	        }
+	        if (!me.blue and me.lnk != nil and me.lnk.tracked() == 1) {
+	            me.blue = 2;
+	            me.blueIndex = me.lnk.tracked_by_index()+1;
+	        }
+
+	        me.contact.blue = me.blue;
+	        if (me.blue > 0) {
+	        	me.contact.blueIndex = me.blueIndex;
+				if (!apg68Radar.containsVectorContact(me.vector_aicontacts_for, me.contact)) {
+					append(me.vector_aicontacts_for, me.contact);
+					emesary.GlobalTransmitter.NotifyAll(me.DatalinkNotification.updateV(me.vector_aicontacts_for));
+				}
+			} elsif (me.wasBlue > 0) {
+				me.new_vector_aicontacts_for = [];
+				foreach (me.c ; me.vector_aicontacts_for) {
+					if (!me.c.equals(me.contact) and !me.c.equalsFast(me.contact)) {
+						append(me.new_vector_aicontacts_for, me.contact);
+					}
+				}
+				me.vector_aicontacts_for = me.new_vector_aicontacts_for;
+			}
 		}
 		me.index += 1;
         if (me.index > size(me.vector_aicontacts)-1) {
         	me.index = 0;
         	emesary.GlobalTransmitter.NotifyAll(me.DatalinkNotification.updateV(me.vector_aicontacts_for));
-        } else {
         }
 	},
 	del: func {
