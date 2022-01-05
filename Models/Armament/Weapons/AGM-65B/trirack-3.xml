@@ -5,7 +5,7 @@
     <path>Aircraft/f16/Models/Armament/Racks/trirack_small.xml</path>
 
     <model>
-      <name>Station3_3xAGM-65B_left</name>
+      <name>Station3_AGM-65B_left</name>
       <path>Aircraft/f16/Models/Armament/Weapons/AGM-65B/AGM-65B.xml</path>
       <offsets>
         <x-m>-0.335</x-m>
@@ -17,7 +17,7 @@
     </model>
 
     <model>
-      <name>Station3_3xAGM-65B_center</name>
+      <name>Station3_AGM-65B_center</name>
       <path>Aircraft/f16/Models/Armament/Weapons/AGM-65B/AGM-65B.xml</path>
       <offsets>
         <x-m>-0.335</x-m>
@@ -28,7 +28,7 @@
     </model>
 
     <model>
-      <name>Station3_3xAGM-65B_right</name>
+      <name>Station3_AGM-65B_right</name>
       <path>Aircraft/f16/Models/Armament/Weapons/AGM-65B/AGM-65B.xml</path>
       <offsets>
         <x-m>-0.335</x-m>
@@ -41,7 +41,7 @@
 
     <animation>
       <type>select</type>
-      <object-name>Station3_3xAGM-65B_left</object-name>
+      <object-name>Station3_AGM-65B_left</object-name>
       <condition><and>
         <equals>
           <property>payload/armament/station/id-2-type</property>
@@ -56,7 +56,7 @@
 
      <animation>
       <type>select</type>
-      <object-name>Station3_3xAGM-65B_right</object-name>
+      <object-name>Station3_AGM-65B_right</object-name>
       <condition>
         <and>
         <equals>
@@ -73,7 +73,7 @@
 
      <animation>
       <type>select</type>
-      <object-name>Station3_3xAGM-65B_center</object-name>
+      <object-name>Station3_AGM-65B_center</object-name>
       <condition><and>
         <equals>
           <property>payload/armament/station/id-2-type</property>
