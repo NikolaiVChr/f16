@@ -1114,7 +1114,7 @@ AIContact = {
 
 	getClosureRate: func {
 		# used in RWR. TODO: rework so this doesn't have to be called.		
-		me.velocityOfContact = me.myMath.getCartesianVelocity(me.get_heading(), me.get_Pitch(), me.get_Roll(), me.get_uBody(), me.get_vBody(), me.get_wBody());
+		me.velocityOfContact = vector.Math.getCartesianVelocity(me.get_heading(), me.get_Pitch(), me.get_Roll(), me.get_uBody(), me.get_vBody(), me.get_wBody());
 		me.vectorToContact = vector.Math.eulerToCartesian3X(-me.getBearing(), me.getDeviationPitch(), 0);
 
 		me.velocityOfOwnship = self.getSpeedVector();
@@ -1593,7 +1593,8 @@ TerrainChecker = {
 		# If it moves faster than me.doppler_speed_kt seen from the angle of the nose radar, then a doppler radar can see it. Else it just looks like clutter.
 		#
 		# Get contact velocity vector in relation to terrain
-		me.vectorOfTargetSpeedRelativeToClutter = me.myMath.getCartesianVelocity(contact.get_heading(), contact.get_Pitch(), contact.get_Roll(), contact.get_uBody(), contact.get_vBody(), contact.get_wBody());
+		me.vectorOfTargetSpeedRelativeToClutter = vector.Math.getCartesianVelocity(contact.get_heading(), contact.get_Pitch(), contact.get_Roll(), contact.get_uBody(), contact.get_vBody(), contact.get_wBody());
+
 		# Seen from the contact the clutter is not factored in
 		# In other words, we ignore our own speed, pretend the clutter is still seen from us, and thus the contacts velocity in relation to clutter is just
 		# the contacts velocity vector.
