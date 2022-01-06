@@ -1114,10 +1114,13 @@ AIContact = {
 
 	getClosureRate: func {
 		# used in RWR. TODO: rework so this doesn't have to be called.		
-		me.velocityOfContact = vector.Math.getCartesianVelocity(me.get_heading(), me.get_Pitch(), me.get_Roll(), me.get_uBody(), me.get_vBody(), me.get_wBody());
-		me.vectorToContact = vector.Math.eulerToCartesian3X(-me.getBearing(), me.getDeviationPitch(), 0);
 
-		me.velocityOfOwnship = self.getSpeedVector();
+		# Get contact velocity and direction to contact in geo centered coordinate system, so we get earth curvature factored in  (This can mean some tens of knots difference at 100+ nm, is this really needed?)
+		me.velocityOfContact = vector.Math.vectorToGeoVector(vector.Math.getCartesianVelocity(me.get_heading(), me.get_Pitch(), me.get_Roll(), me.get_uBody(), me.get_vBody(), me.get_wBody()), self.getCoord()).vector;
+		me.vectorToContact = vector.Math.vectorToGeoVector(vector.Math.eulerToCartesian3X(-me.getBearing(), vector.Math.getPitch(self.getCoord(), me.getCoord()), 0), self.getCoord()).vector;
+
+		# Get ownship velocity and direction to ownship in geo centered coordinate system
+		me.velocityOfOwnship = vector.Math.vectorToGeoVector(self.getSpeedVector(), self.getCoord()).vector;
 		me.vectorToOwnship = vector.Math.product(-1, me.vectorToContact);
 
 		me.contactVelocityTowardsOwnship = vector.Math.projVectorOnVector(me.velocityOfContact, me.vectorToOwnship);
@@ -1595,12 +1598,19 @@ TerrainChecker = {
 		# Get contact velocity vector in relation to terrain
 		me.vectorOfTargetSpeedRelativeToClutter = vector.Math.getCartesianVelocity(contact.get_heading(), contact.get_Pitch(), contact.get_Roll(), contact.get_uBody(), contact.get_vBody(), contact.get_wBody());
 
+		# Convert it to earth centered coordinate system, so we get proper earth curvature into effect
+		me.vectorOfTargetSpeedRelativeToClutter = vector.Math.vectorToGeoVector(me.vectorOfTargetSpeedRelativeToClutter, me.getCoord()).vector;
+
 		# Seen from the contact the clutter is not factored in
 		# In other words, we ignore our own speed, pretend the clutter is still seen from us, and thus the contacts velocity in relation to clutter is just
 		# the contacts velocity vector.
 
 		# Vector from aircraft to contact
-		me.vectorToTarget       = vector.Math.eulerToCartesian3X(-contact.getBearing(), contact.getDeviationPitch(), 0);
+		me.vectorToTarget = vector.Math.eulerToCartesian3X(-contact.getBearing(), vector.Math.getPitch(self.getCoord(), me.coord), 0);
+
+		# Convert it to earth centered coordinate system
+		me.vectorToTarget = vector.Math.vectorToGeoVector(me.vectorToTarget, self.getCoord()).vector;
+
 		# Now lets look at the resulting vector and see how it looks from the radars point of view, as in how much velocity is pointed towards us.
 		me.vectorOfTargetSpeedRelativeToClutterSeenFromRadar = vector.Math.projVectorOnVector(me.vectorOfTargetSpeedRelativeToClutter, me.vectorToTarget);
 		# Doppler radars only dicern velocity as in closing rate of contact compared to closing rate of terrain, so we see how much velocity contact has towards us in relation to the clutter.

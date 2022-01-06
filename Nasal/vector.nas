@@ -2,7 +2,7 @@ var Math = {
     #
     # Authors: Nikolai V. Chr, Axel Paccalin.
     #
-    # Version 1.97
+    # Version 1.98
     #
     # When doing euler coords. to cartesian: +x = forw, +y = left,  +z = up.
     # FG struct. coords:                     +x = back, +y = right, +z = up.
@@ -40,7 +40,7 @@ var Math = {
         }
         me.tgt_coord.set_alt(coord.alt()+me.upamount);
         
-        return {"x":me.tgt_coord.x()-coord.x(),  "y":me.tgt_coord.y()-coord.y(), "z":me.tgt_coord.z()-coord.z()};
+        return {"x":me.tgt_coord.x()-coord.x(),  "y":me.tgt_coord.y()-coord.y(), "z":me.tgt_coord.z()-coord.z(), "vector": [me.tgt_coord.x()-coord.x(),me.tgt_coord.y()-coord.y(),me.tgt_coord.z()-coord.z()]};
     },
     
     # When observing another MP aircraft the groundspeed velocity info is in body frame, this method will convert it to cartesian vector.
