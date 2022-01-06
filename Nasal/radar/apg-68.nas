@@ -300,7 +300,7 @@ var APG68 = {
 	tilt: 0,
 	tiltOverride: 0,# when enabled by a mode: the mode can set the tilt, and it will not be read from property (TODO)
 	maxTilt: 60,#TODO: Lower this a bit
-	positionEuler: [0,0,0,0],# euler direction
+	#positionEuler: [0,0,0,0],# euler direction
 	positionDirection: [1,0,0],# vector direction
 	positionCart: [0,0,0,0],
 	horizonStabilized: 1, # When true antennae ignore roll (and pitch until its high)
@@ -509,14 +509,31 @@ var APG68 = {
 	},
 	setAntennae: func (local_dir) {
 		# remember to set horizonStabilized when calling this.
+
+		# convert from coordinates to polar
 		me.eulerDir = vector.Math.cartesianToEuler(local_dir);
+
+		# Make sure if pitch is 90 or -90 that heading gets set to something sensible
 		me.eulerX = me.eulerDir[0]==nil?0:geo.normdeg180(me.eulerDir[0]);
-		me.positionEuler = [me.eulerX,me.eulerDir[1],me.eulerX/me.fieldOfRegardMaxAz,me.eulerDir[1]/me.fieldOfRegardMaxElev];
+
+		# Make array: [heading_degs, pitch_degs, heading_norm, pitch_norm], for convinience, not used atm.
+		#me.positionEuler = [me.eulerX,me.eulerDir[1],me.eulerX/me.fieldOfRegardMaxAz,me.eulerDir[1]/me.fieldOfRegardMaxElev];
+
+		# Make the antennae direction-vector be length 1.0
 		me.positionDirection = vector.Math.normalize(local_dir);
+
+		# Decompose the antennae direction-vector into seperate angles for Azimuth and Elevation
 		me.posAZDeg = -90+R2D*math.acos(vector.Math.normalize(vector.Math.projVectorOnPlane([0,0,1],me.positionDirection))[1]);
 		me.posElDeg = R2D*math.asin(vector.Math.normalize(vector.Math.projVectorOnPlane([0,1,0],me.positionDirection))[2]);
+
+		# Make an array that holds: [azimuth_norm, elevation_norm, azimuth_deg, elevation_deg]
 		me.positionCart = [me.posAZDeg/me.fieldOfRegardMaxAz, me.posElDeg/me.fieldOfRegardMaxElev,me.posAZDeg,me.posElDeg];
-		#print("On sky: ",me.eulerDir[1], "  disc: ",me.posElDeg);
+		
+		# Note: that all these numbers can be either relative to aircraft or relative to scenery.
+		# Its the modes responsibility to call this method with antennae local_dir that is either relative to
+		# aircraft, or to landscape so that they match how scanFOV compares the antennae direction to target positions.
+		#
+		# Make sure that scanFOV() knows what coord system you are operating in. By setting me.horizonStabilized.
 	},
 	loop: func {
 		me.enabled = getprop("/f16/avionics/power-fcr-bit") == 2 and !getprop("/fdm/jsbsim/gear/unit[0]/WOW") and getprop("instrumentation/radar/radar-enable");
@@ -527,11 +544,13 @@ var APG68 = {
 		me.lastElapsed = me.elapsed;
 		if (me.enabled) {			
 			if (!me.tiltOverride) {
+				# Tilt is not force set by the mode, so we read the antennae tilt knob property.
 				me.tilt = antennae_knob_prop.getValue()*60;
 			}
 			while (me.dt > 0.001) {
 				# mode tells us how to move disc and to scan
 				me.dt = me.currentMode.step(me.dt, me.tilt);# mode already knows where in pattern we are and AZ and bars.
+
 				# we then step to the new position, and scan for each step
 				me.scanFOV();
 			}
@@ -541,6 +560,11 @@ var APG68 = {
 		}
 	},
 	loopMedium: func {
+		#
+		# It send out what target we are Single-target-track locked onto if any so the target get RWR warning.
+		# It also sends out on datalink what we are STT/SAM/TWS locked onto.
+		# In addition it notifies the weapons what we have targeted.
+		# Plus it sets the MP property for radar standby so others can see us on RWR.
 		if (me.enabled) {
 			me.focus = me.getPriorityTarget();
 			if (me.focus != nil and me.focus.callsign != "") {
@@ -567,12 +591,19 @@ var APG68 = {
 		}
 	},
 	loopSlow: func {
+		#
+		# Here we ask the NoseRadar for a slice of the sky once in a while.
+		#
 		if (me.enabled) {
 			# 1.414 = cos(45 degs)
 			emesary.GlobalTransmitter.NotifyAll(me.SliceNotification.slice(self.getPitch(), self.getHeading(), me.fieldOfRegardMaxElev*1.414, me.fieldOfRegardMaxAz*1.414, me.getRange()*NM2M, !me.currentMode.detectAIR, !me.currentMode.detectSURFACE, !me.currentMode.detectMARINE));
 		}
 	},
 	scanFOV: func {
+		#
+		# Here we test for IFF and test the radar beam against targets to see if the radar picks them up.
+		#
+		# Note that this can happen in aircraft coords (ACM modes) or in landscape coords (the other modes).
 		me.doIFF = getprop("instrumentation/radar/iff");
     	setprop("instrumentation/radar/iff",0);
     	if (me.doIFF) iff.last_interogate = systime();
@@ -591,14 +622,22 @@ var APG68 = {
 			#print("Bearing ",me.dev[7],", Pitch ",me.dev[8]);
 			if (me.horizonStabilized) {
 				# ignore roll (and ignore pitch for now too, TODO)
+
+				# Vector that points from aircraft to target in XYZ geo centered coords.
 				me.globalToTarget = vector.Math.eulerToCartesian3X(-me.dev[7],me.dev[8],0);
+
+				# Vector that points to target in aircraft coordinates as if it was not rolled or pitched.
 				me.localToTarget = vector.Math.rollPitchYawVector(0,0,self.getHeading(), me.globalToTarget);
 			} else {
+				# Vector that points to target in local aircraft coordinates.
 				me.localToTarget = vector.Math.eulerToCartesian3X(-me.dev[0],me.dev[1],0);
 			}
 			#print("ANT head ",me.positionX,", ANT elev ",me.positionY,", ANT tilt ", me.tilt);
 			#print(vector.Math.format(me.localToTarget));
+
+			# Degrees from center of radar beam to target, note that positionDirection must match the coord system defined by horizonStabilized.
 			me.beamDeviation = vector.Math.angleBetweenVectors(me.positionDirection, me.localToTarget);
+
 			#print("me.beamDeviation ", me.beamDeviation);
 			if (me.beamDeviation < me.instantFoVradius) {
 				me.registerBlep(contact, me.dev, me.currentMode.painter);
@@ -651,7 +690,7 @@ var APG68 = {
 		me.vector_aicontacts_bleps = me.vector_aicontacts_bleps_tmp;
 	},
 	purgeAllBleps: func {
-		#ok, lets clean up old bleps:
+		#ok, lets delete all bleps:
 		foreach(contact ; me.vector_aicontacts_bleps) {
 			contact.setBleps([]);
 		}
@@ -865,7 +904,7 @@ var RadarMode = {
 		return me["priorityTarget"];
 	},
 	step: func (dt, tilt) {
-		me.radar.horizonStabilized = 1;
+		me.radar.horizonStabilized = 1;# Might be unset inside preStep()
 		me.preStep();
 		
 		# figure out if we reach the gimbal limit, and if so, keep all bars within it:
