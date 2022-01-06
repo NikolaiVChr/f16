@@ -1113,12 +1113,17 @@ AIContact = {
 	},
 
 	getClosureRate: func {
-		# used in RWR. TODO: reowrk so this doesn't have to be called.
-		var rbearing = me.getBearing()+180;
-		var bearing = me.getBearing();
-		var ownship_spd = self.getSpeed() * math.cos( -(bearing - self.getHeading()) * D2R);
-        var target_spd  = me.getSpeed()   * math.cos( -(rbearing - me.getHeading()) * D2R);
-		return ownship_spd + target_spd;
+		# used in RWR. TODO: rework so this doesn't have to be called.		
+		me.velocityOfContact = me.myMath.getCartesianVelocity(me.get_heading(), me.get_Pitch(), me.get_Roll(), me.get_uBody(), me.get_vBody(), me.get_wBody());
+		me.vectorToContact = vector.Math.eulerToCartesian3X(-me.getBearing(), me.getDeviationPitch(), 0);
+
+		me.velocityOfOwnship = self.getSpeedVector();
+		me.vectorToOwnship = vector.Math.product(-1, me.vectorToContact);
+
+		me.contactVelocityTowardsOwnship = vector.Math.projVectorOnVector(me.velocityOfContact, me.vectorToOwnship);
+		me.ownshipVelocityTowardsContact = vector.Math.projVectorOnVector(me.velocityOfOwnship, me.vectorToContact);
+
+		return MPS2KT*(vector.Math.magnitudeVector(me.contactVelocityTowardsOwnship)+vector.Math.magnitudeVector(me.ownshipVelocityTowardsContact));
 	},
 
 
@@ -1243,7 +1248,7 @@ AIContact = {
 		return 0;
 	},
 	get_closure_rate: func {
-		me.getLastClosureRate();
+		me.getClosureRate();
 	},
 };
 
@@ -1471,6 +1476,7 @@ OmniRadar = {
 		me.vector_aicontacts_for = [];
 		foreach(contact ; me.vector_aicontacts) {
 			if (!contact.isVisible()) {
+				# This is expensive as hell, so don't run OmniRadar with too high rate.
 				continue;
 			}
 			me.ber = contact.getBearing();
@@ -1510,6 +1516,9 @@ OmniRadar = {
 #                                                        
 #                                                        
 TerrainChecker = {
+	#
+	# Everything here is CPU expensive.
+	#
 	new: func (rate, use_doppler, doppler_speed_kt=50) {
 		var tc = {parents: [TerrainChecker]};
 
@@ -1577,12 +1586,23 @@ TerrainChecker = {
 	},
 		
 	getTargetSpeedRelativeToClutter: func (contact) {
-		me.vectorOwnshipSpeed   = self.getSpeedVector();
-		me.vectorTargetSpeed    = vector.Math.product(contact.getSpeed()*KT2MPS, vector.Math.normalize(vector.Math.eulerToCartesian3X(-contact.getHeading(), contact.getPitch(), contact.getRoll())));
-		me.vectorClutterSpeed   = vector.Math.product(-1, me.vectorOwnshipSpeed);
-		me.vectorOfTargetSpeedRelativeToClutter = vector.Math.minus(me.vectorTargetSpeed, me.vectorClutterSpeed);
+		#
+		# Seen from aircraft the terrain clutter is moving with a certain velocity vector depending on aircraft position, attitude and speed.
+		# Same with any contact.
+		# Here we see how the velocity of the contact moves in relation to the velocity of the terrain.
+		# If it moves faster than me.doppler_speed_kt seen from the angle of the nose radar, then a doppler radar can see it. Else it just looks like clutter.
+		#
+		# Get contact velocity vector in relation to terrain
+		me.vectorOfTargetSpeedRelativeToClutter = me.myMath.getCartesianVelocity(contact.get_heading(), contact.get_Pitch(), contact.get_Roll(), contact.get_uBody(), contact.get_vBody(), contact.get_wBody());
+		# Seen from the contact the clutter is not factored in
+		# In other words, we ignore our own speed, pretend the clutter is still seen from us, and thus the contacts velocity in relation to clutter is just
+		# the contacts velocity vector.
+
+		# Vector from aircraft to contact
 		me.vectorToTarget       = vector.Math.eulerToCartesian3X(-contact.getBearing(), contact.getDeviationPitch(), 0);
+		# Now lets look at the resulting vector and see how it looks from the radars point of view, as in how much velocity is pointed towards us.
 		me.vectorOfTargetSpeedRelativeToClutterSeenFromRadar = vector.Math.projVectorOnVector(me.vectorOfTargetSpeedRelativeToClutter, me.vectorToTarget);
+		# Doppler radars only dicern velocity as in closing rate of contact compared to closing rate of terrain, so we see how much velocity contact has towards us in relation to the clutter.
 		return vector.Math.magnitudeVector(me.vectorOfTargetSpeedRelativeToClutterSeenFromRadar)*MPS2KT;
 	},
 	
