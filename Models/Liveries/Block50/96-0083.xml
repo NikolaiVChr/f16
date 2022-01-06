@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery>
+    <name type="string">USAF 52FW, 480FS SP HGV #083</name>
+    <texture>Liveries/Block50/96-0083.png</texture>
+    <owner type="string">USAF</owner>
+   </livery>
+
+   <livery-logo>
+    <texture>Liveries/standard.white.logos.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block50/patch.warhawks.png</texture>
+   </livery-patch>
+
+  <livery-pod>
+        <texture>Liveries/Block50/pod.warhawks.png</texture>
+  </livery-pod>
+
+        <f16>
+            <dragchute type="bool">false</dragchute>
+            <cft type="bool">false</cft>
+        </f16>
+  </model>
+ </sim>
+</PropertyList>
