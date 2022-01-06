@@ -1599,14 +1599,14 @@ TerrainChecker = {
 		me.vectorOfTargetSpeedRelativeToClutter = vector.Math.getCartesianVelocity(contact.get_heading(), contact.get_Pitch(), contact.get_Roll(), contact.get_uBody(), contact.get_vBody(), contact.get_wBody());
 
 		# Convert it to earth centered coordinate system, so we get proper earth curvature into effect
-		me.vectorOfTargetSpeedRelativeToClutter = vector.Math.vectorToGeoVector(me.vectorOfTargetSpeedRelativeToClutter, me.getCoord()).vector;
+		me.vectorOfTargetSpeedRelativeToClutter = vector.Math.vectorToGeoVector(me.vectorOfTargetSpeedRelativeToClutter, contact.getCoord()).vector;
 
 		# Seen from the contact the clutter is not factored in
 		# In other words, we ignore our own speed, pretend the clutter is still seen from us, and thus the contacts velocity in relation to clutter is just
 		# the contacts velocity vector.
 
 		# Vector from aircraft to contact
-		me.vectorToTarget = vector.Math.eulerToCartesian3X(-contact.getBearing(), vector.Math.getPitch(self.getCoord(), me.coord), 0);
+		me.vectorToTarget = vector.Math.eulerToCartesian3X(-contact.getBearing(), vector.Math.getPitch(self.getCoord(), contact.coord), 0);
 
 		# Convert it to earth centered coordinate system
 		me.vectorToTarget = vector.Math.vectorToGeoVector(me.vectorToTarget, self.getCoord()).vector;
