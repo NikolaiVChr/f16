@@ -2206,10 +2206,10 @@ var ContactTGP = {
 
 	getElevation: func() {
 		#var e = 0;
-		var self = geo.aircraft_position();
+		var selfPos = geo.aircraft_position();
 		#var angleInv = ja37.clamp(self.distance_to(me.coord)/self.direct_distance_to(me.coord), -1, 1);
 		#e = (self.alt()>me.coord.alt()?-1:1)*math.acos(angleInv)*R2D;
-		return vector.Math.getPitch(self, me.coord);
+		return vector.Math.getPitch(selfPos, me.coord);
 	},
 
 	getFlareNode: func () {
@@ -2220,7 +2220,7 @@ var ContactTGP = {
 		return nil;
 	},
 
-	get_Coord: func(inaccurate = 1){
+	get_Coord: func() {
 		return me.coord;
 	},
 

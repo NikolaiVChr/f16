@@ -24,7 +24,7 @@
         <modelsUpperCase type="bool">true</modelsUpperCase>
         <msg type="bool">false</msg>
         <tacview type="bool">true</tacview>
-        <tgp-inacc-system type="bool">true</tgp-inacc-system>        
+        <tgp-inacc-system type="bool">false</tgp-inacc-system> <!-- With the new radar this must not be turned on, this system gets deprecated -->
         <enable-craters type="bool">true</enable-craters>
         <pylon-offset type="int">0</pylon-offset>
         <pylon-stations>payload</pylon-stations>
