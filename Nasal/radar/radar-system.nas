@@ -1693,19 +1693,20 @@ TerrainChecker = {
 	
 	checkClutter: func (contact) {
 		contact.setInClutter(me.inClutter);
-		me.tas = contact.prop.getNode("velocities/true-airspeed-kt");
-		me.rang = contact.prop.getNode("radar/range-nm");
-		if (!me.use_doppler or 
-	        (me.tas != nil and me.tas.getValue() != nil
-	         and me.rang != nil and me.rang.getValue() != nil
-	         and math.atan2(me.tas.getValue(), me.rang.getValue()*1000) > 0.025)# if aircraft traverse speed seen from me is high
-	        ) {
-	      	contact.setHiddenFromDoppler(0);
-	      	return;
-	    }
+		#me.tas = contact.prop.getNode("velocities/true-airspeed-kt");
+		#me.rang = contact.prop.getNode("radar/range-nm");
+		#if (!me.use_doppler or 
+	    #    (me.tas != nil and me.tas.getValue() != nil
+	    #     and me.rang != nil and me.rang.getValue() != nil
+	    #     and math.atan2(me.tas.getValue(), me.rang.getValue()*1000) > 0.025)# if aircraft traverse speed seen from me is high
+	    #    ) {
+	    #  	contact.setHiddenFromDoppler(0);
+	    #  	return;
+	    #}
 	    
 		me.dopplerCanDetect = 0;
-	    if(!me.inClutter) {
+	    if(me.getType() != AIR and !me.inClutter) {
+	    	# Either no clutter behind or is not an air target so ground/sea radar needs to be able to see it.
 	        me.dopplerCanDetect = 1;
 	    } elsif (me.getTargetSpeedRelativeToClutter(contact) > me.doppler_speed_kt) {
 	        me.dopplerCanDetect = 1;
