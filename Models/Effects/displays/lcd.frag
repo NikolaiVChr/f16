@@ -81,7 +81,7 @@ void main (void) {
     color.rgb = ((color.rgb - 0.5) * contrast) + 0.5;
 
     color = pow(color, gammaInv);
-    color = color * gl_FrontMaterial.emission.rgb;
+    
 
     float phong = 0.0;
     vec3 Lphong = normalize(gl_LightSource[0].position.xyz);
@@ -100,7 +100,8 @@ void main (void) {
     nDotVP = max(0.0, nDotVP);
     vec3 diffuse = gl_FrontMaterial.diffuse.rgb * gl_LightSource[0].diffuse.rgb * nDotVP;
 
-    color = clamp(color+specular.rgb+ambient+diffuse, 0.0, 1.0);
+    color = color * gl_FrontMaterial.emission.rgb;
+    color = clamp(color+specular.rgb+ambient, 0.0, 1.0);//+diffuse (broken on AMD)
 
     vec4 dustTexel = texture2D(dust_texture, gl_TexCoord[0].st);
     dustTexel.rgb *= gl_LightSource[0].diffuse.rgb * nDotVP;
