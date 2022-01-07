@@ -886,7 +886,7 @@ AIContact = {
 	},
 	
 	isHiddenFromDoppler: func {
-		return me.hiddenFromDoppler;
+		return me.getType() == AIR and me.hiddenFromDoppler;
 	},
 
 	setHiddenFromDoppler: func (dopp) {
