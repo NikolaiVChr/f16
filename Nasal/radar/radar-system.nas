@@ -25,6 +25,7 @@
 # v7.1 June 10th 2021 - Added more modes and rootMode vs mainModes (still plus submodes)
 # v7.2 June 12th 2021 - Added support for multibleps per contact, and enabled terrain and type checks in APG68.
 #                       Added ANSI art to be able to quicker navigate this file.
+# v9.1 Jan 6th 2022 - Many kinks ironed out.
 #
 # RCS check done in ActiveDiscRadar at detection time, so about every 5-10 seconds per contact.
 #      Faster for locks since its important to lose lock if it turns nose to us suddenly and can no longer be seen.
@@ -90,6 +91,14 @@ var SliceNotification = {
 	    	me.fs = fs;
 	    	return me;
 	    };
+        return new_class;
+    },
+};
+
+var RequestFullNotification = {
+    new: func() {
+        var new_class = emesary.Notification.new("RequestFullNotification", rand());
+
         return new_class;
     },
 };
@@ -1433,6 +1442,122 @@ NoseRadar = {
     },
 };
 
+
+
+#  ██████   ██████   ██████      ██████   █████  ██████   █████  ██████  
+#       ██ ██       ██  ████     ██   ██ ██   ██ ██   ██ ██   ██ ██   ██ 
+#   █████  ███████  ██ ██ ██     ██████  ███████ ██   ██ ███████ ██████  
+#       ██ ██    ██ ████  ██     ██   ██ ██   ██ ██   ██ ██   ██ ██   ██ 
+#  ██████   ██████   ██████      ██   ██ ██   ██ ██████  ██   ██ ██   ██ 
+#                                                                        
+#                                                                        
+FullRadar = {
+	# 360 degree coverage air radar
+	new: func () {
+		var nr = {parents: [FullRadar, Radar]};
+
+		nr.vector_aicontacts = [];
+		nr.vector_aicontacts_for = [];
+
+		nr.FullRadarRecipient = emesary.Recipient.new("FullRadarRecipient");
+		nr.FullRadarRecipient.radar = nr;
+		nr.FullRadarRecipient.Receive = func(notification) {
+	        if (notification.NotificationType == "AINotification") {
+	        	#printf("NoseRadar recv: %s", notification.NotificationType);
+	            if (me.radar.enabled == 1) {
+	    		    me.radar.vector_aicontacts = notification.vector;
+	    	    }
+	            return emesary.Transmitter.ReceiptStatus_OK;
+	        } elsif (notification.NotificationType == "RequestFullNotification") {
+	        	#printf("NoseRadar recv: %s", notification.NotificationType);
+	            if (me.radar.enabled == 1) {
+	    		    me.radar.scanFOR();
+	    	    }
+	            return emesary.Transmitter.ReceiptStatus_OK;
+	        } elsif (notification.NotificationType == "ContactNotification") {
+	        	#printf("FullRadar recv: %s", notification.NotificationType);
+	            if (me.radar.enabled == 1) {
+	    		    me.radar.scanSingleContact(notification.vector[0]);
+	    	    }
+	            return emesary.Transmitter.ReceiptStatus_OK;
+	        }
+	        return emesary.Transmitter.ReceiptStatus_NotProcessed;
+	    };
+		emesary.GlobalTransmitter.Register(nr.FullRadarRecipient);
+		nr.FORNotification = VectorNotification.new("FORNotification");
+		nr.FullNotification = VectorNotification.new("FullNotification");
+		nr.FullNotification.updateV(nr.vector_aicontacts_for);
+		#nr.timer.start();
+		return nr;
+	},
+
+	scanFOR: func () {
+		if (!me.enabled) return;
+		#iterate:
+		# check direct distance
+		# check field of regard
+		# sort in bearing?
+		# called on demand
+		# TODO: vectorized field instead
+
+		me.vector_aicontacts_for = [];
+		foreach(contact ; me.vector_aicontacts) {
+			var theType = contact.getType();
+
+			if (theType == SURFACE) continue;
+			if (theType == MARINE) continue;
+			if (theType == TERRASUNK) continue;
+			if (theType == ORDNANCE) continue;
+
+			if (!contact.isVisible()) {  # moved to nose radar. TODO: WHy double it in discradar? hmm, dont matter so much, its lightning fast
+				continue;
+			}
+
+			me.dev = contact.getDeviation();
+			me.rng = contact.getRangeDirect();
+
+			me.crd = contact.getCoord();
+
+			# TODO: clean this up. Only what is needed for testing against instant FoV and RCS should be in here:
+			#                       localdev, localpitch, range_m, coord, heading, pitch, roll, bearing, elevation, frustum_norm_y, frustum_norm_z, alt_ft, speed
+			contact.storeDeviation([me.dev[0],me.dev[1],me.rng,contact.getCoord(),contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation(), 0, 0, me.crd.alt()*M2FT, contact.getSpeed()]);
+			append(me.vector_aicontacts_for, contact);
+		}		
+		emesary.GlobalTransmitter.NotifyAll(me.FullNotification.updateV(me.vector_aicontacts_for));
+		#print("In Field of Regard: "~size(me.vector_aicontacts_for));
+	},
+
+	scanSingleContact: func (contact) {# TODO: rework this method (If its even needed anymore)
+		if (!me.enabled) return;
+		# called on demand
+		# not used atm.
+		var theType = contact.getType();
+
+		if (theType == SURFACE or theType == MARINE or theType == TERRASUNK or theType == ORDNANCE) {
+			emesary.GlobalTransmitter.NotifyAll(me.FORNotification.updateV([]));
+			return;
+		}
+
+		if (!contact.isVisible()) {  # moved to nose radar. TODO: WHy double it in discradar? hmm, dont matter so much, its lightning fast
+			print("Track No vis");
+			emesary.GlobalTransmitter.NotifyAll(me.FORNotification.updateV([]));
+			return;
+		}
+
+		me.vector_aicontacts_for = [];
+		me.dev = contact.getDeviation();
+		me.rng = contact.getRangeDirect();
+		contact.storeDeviation([me.dev[0],me.dev[1],me.rng,contact.getCoord(),contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation(), 0, 0, me.crd.alt()*M2FT, contact.getSpeed()]);
+		append(me.vector_aicontacts_for, contact);
+
+		emesary.GlobalTransmitter.NotifyAll(me.FORNotification.updateV(me.vector_aicontacts_for));
+		#print("In Field of Regard: "~size(me.vector_aicontacts_for));
+	},
+
+	del: func {
+        emesary.GlobalTransmitter.DeRegister(me.FullRadarRecipient);
+    },
+};
 
 
 

@@ -928,7 +928,7 @@ var RadarMode = {
 				me.azimuthTiltIntern = me.lastBlep.getAZDeviation();
 				me.radar.tiltOverride = 1;
 				me.radar.tilt = me.lastBlep.getElev();
-				me.localDir = vector.Math.yawPitchVector(-me.azimuthTiltIntern, me.radar.tilt, [1,0,0]);
+				me.localDir = vector.Math.pitchYawVector(me.radar.tilt, -me.azimuthTiltIntern, [1,0,0]);
 			} else {
 				me.priorityTarget = nil;
 				me.radar.tiltOverride = 0;
@@ -941,7 +941,8 @@ var RadarMode = {
 			# (re)calculate pattern as vectors.
 			me.currentPattern = [];
 			foreach (me.eulerNorm ; me.barPattern[me.bars-1]) {
-				me.localDir = vector.Math.yawPitchVector(-me.eulerNorm[0]*me.az-me.azimuthTiltIntern, me.eulerNorm[1]*me.radar.instantFoVradius*me.barHeight+tilt+me.gimbalTiltOffset, [1,0,0]);
+				#me.localDir = vector.Math.yawPitchVector(-me.eulerNorm[0]*me.az-me.azimuthTiltIntern, me.eulerNorm[1]*me.radar.instantFoVradius*me.barHeight+tilt+me.gimbalTiltOffset, [1,0,0]);
+				me.localDir = vector.Math.pitchYawVector(me.eulerNorm[1]*me.radar.instantFoVradius*me.barHeight+tilt+me.gimbalTiltOffset, -me.eulerNorm[0]*me.az-me.azimuthTiltIntern, [1,0,0]);
 				#print("Step sweep: ", -me.eulerNorm[0]*me.az-me.azimuthTilt);
 				append(me.currentPattern, me.localDir);
 			}
