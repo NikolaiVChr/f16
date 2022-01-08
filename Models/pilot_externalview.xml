@@ -15,7 +15,7 @@
         <texture>Liveries/patch.default.png</texture>
     </animation>
     
-    <!--effect>
+    <effect>
       <inherits-from>Effects/model-combined-transparent</inherits-from>
       <parameters>
 			<rain-enabled type="int">0</rain-enabled>
@@ -49,9 +49,9 @@
 			</render-bin>
       </parameters>
       <object-name>L-visor</object-name>
- </effect-->
+ </effect>
  
- 	<!--effect>
+ 	<effect>
       	<inherits-from>Effects/model-combined-deferred</inherits-from>
       	<parameters>
 			<rain-enabled type="int">0</rain-enabled>
@@ -101,7 +101,7 @@
 		<object-name>bag</object-name>
 		<object-name>life-jacket</object-name>
 		<object-name>disk</object-name>
-		<object-name>L-face-mask</object-name-->
+		<object-name>L-face-mask</object-name>
 		<!--object-name>pilot</object-name-->        
 		<!--object-name>LL-arm</object-name-->
 		<!--object-name>LL-glove</object-name-->
@@ -111,6 +111,6 @@
 		<!--object-name>LR-hand</object-name-->
 		<!--object-name>LR-glove</object-name-->		
 		<!--object-name>LR-leg</object-name-->
-    <!--/effect-->
+    </effect>
 
 </PropertyList>
