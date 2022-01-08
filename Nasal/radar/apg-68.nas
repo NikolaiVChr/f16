@@ -1961,6 +1961,9 @@ var F16STTMode = {
 	showAZ: func {
 		return 0;
 	},
+	showAZinHSD: func {
+		return 0;
+	},
 	showBars: func {
 		return me.superMode.showBars();
 	},
@@ -1971,6 +1974,7 @@ var F16STTMode = {
 		return me.superMode.getBars();
 	},
 	getAz: func {
+		# TODO: Figure out why we use the supermode AZ here!?!?
 		return me.superMode.getAz();
 	},
 	preStep: func {
