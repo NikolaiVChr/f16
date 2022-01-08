@@ -1705,7 +1705,7 @@ TerrainChecker = {
 	    #}
 	    
 		me.dopplerCanDetect = 0;
-	    if(me.getType() != AIR and !me.inClutter) {
+	    if(contact.getType() != AIR and !me.inClutter) {
 	    	# Either no clutter behind or is not an air target so ground/sea radar needs to be able to see it.
 	        me.dopplerCanDetect = 1;
 	    } elsif (me.getTargetSpeedRelativeToClutter(contact) > me.doppler_speed_kt) {
