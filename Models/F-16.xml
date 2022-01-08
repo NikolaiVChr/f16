@@ -410,8 +410,8 @@
         <y-factor>1.0</y-factor>
         <z-factor>1.0</z-factor-->
         <x-offset>1.0</x-offset>
-        <y-offset>0.8</y-offset>
-        <z-offset>0.8</z-offset>
+        <y-offset>0.82</y-offset>
+        <z-offset>0.82</z-offset>
         <center>
            <x-m> 4.61285  </x-m>
            <y-m> 0   </y-m>
