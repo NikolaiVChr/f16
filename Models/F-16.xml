@@ -387,7 +387,7 @@
   <object-name>PW_nozzle</object-name>
   <condition>
       <equals>
-          <property>sim/variant-engine</property>
+          <property>sim/multiplay/generic/int[10]</property>
           <value>2</value>
       </equals>
   </condition>
@@ -459,7 +459,7 @@
   <object-name>GE_nozzle</object-name>
   <condition>
       <equals>
-          <property>sim/variant-engine</property>
+          <property>sim/multiplay/generic/int[10]</property>
           <value>0</value>
       </equals>
   </condition>

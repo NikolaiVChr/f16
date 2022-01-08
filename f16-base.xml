@@ -518,6 +518,7 @@
                 <bool n="52" type="bool" alias="/instrumentation/gci/cutoff"/>
                 <int n="2" type="int">0</int><!-- radar-standby -->
                 <int n="9" type="int" alias="/sim/variant-id"/>
+                <int n="10" type="int" alias="/sim/variant-engine"/>
                 <float n="0" type="double" alias="/engines/engine[0]/nozzle-pos-norm"/>
                 <float n="2" type="double" alias="/engines/engine[0]/augmentation1"/>
                 <float n="3" type="double" alias="/velocities/airspeed-kt"/>
