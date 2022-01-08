@@ -1208,11 +1208,15 @@ AIContact = {
 	},
 	get_vBody: func {
 		if (me.vBody == nil) return 0;
-		me.vBody.getValue();
+		me.vB = me.vBody.getValue();
+		if (me.vB == nil) return 0;
+		return me.vB;
 	},
 	get_wBody: func {
 		if (me.wBody == nil) return 0;
-		me.wBody.getValue();
+		me.wB = me.wBody.getValue();
+		if (me.wB == nil) return 0;
+		return me.wB;
 	},
 	getFlareNode: func {
 		if (me["flareProp"] == nil) {
