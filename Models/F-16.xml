@@ -373,7 +373,7 @@
  </model>-->
 
  <model>
-  <name>new_nozzle</name>
+  <name>PW_nozzle</name>
   <path>Aircraft/f16/Models/nozzle.xml</path>
   <offsets>
    <x-m>4.617</x-m>
@@ -381,6 +381,89 @@
    <z-m>0.0</z-m>
   </offsets>
  </model>
+
+ <animation>
+  <type>select</type>
+  <object-name>PW_nozzle</object-name>
+  <condition>
+      <equals>
+          <property>sim/variant-engine</property>
+          <value>2</value>
+      </equals>
+  </condition>
+ </animation>
+
+ <model>
+  <name>GE_nozzle</name>
+  <path>Aircraft/f16/Models/nozzle-GE.xml</path>
+  <offsets>
+   <x-m>4.61285</x-m>
+   <!--y-m>-0.015</y-m>
+   <z-m>0.015</z-m-->
+  </offsets>
+ </model>
+
+ <animation>
+        <type>scale</type>
+        <object-name>GE_nozzle</object-name>
+        <!--x-factor>0.0</x-factor>
+        <y-factor>1.0</y-factor>
+        <z-factor>1.0</z-factor-->
+        <x-offset>1.0</x-offset>
+        <y-offset>0.8</y-offset>
+        <z-offset>0.8</z-offset>
+        <center>
+           <x-m> 4.61285  </x-m>
+           <y-m> 0   </y-m>
+           <z-m> 0   </z-m>
+        </center>
+    </animation>
+
+ <animation>
+        <type>translate</type>
+        <object-name>GE_nozzle</object-name>
+        <factor>0.0</factor>
+        <offset-m>-7.74</offset-m>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>GE_nozzle</object-name>
+        <factor>0.0</factor>
+        <offset-m>-1.4827</offset-m>
+        <axis>
+            <x>0</x>
+            <y>1</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>GE_nozzle</object-name>
+        <factor>0.0</factor>
+        <offset-m>1.25336</offset-m>
+        <axis>
+            <x>0</x>
+            <y>0</y>
+            <z>1</z>
+        </axis>
+    </animation>
+    
+
+ <animation>
+  <type>select</type>
+  <object-name>GE_nozzle</object-name>
+  <condition>
+      <equals>
+          <property>sim/variant-engine</property>
+          <value>0</value>
+      </equals>
+  </condition>
+ </animation>
 
 
 <effect>

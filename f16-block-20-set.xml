@@ -20,6 +20,7 @@
   <flight-model>jsb</flight-model>
   <aero>f16b20</aero>
   <variant-id type="int">2</variant-id>
+  <variant-engine type="int">2</variant-engine>
   <variant-of>f16-block-52</variant-of>
   <tags>
       <tag>fighter</tag>
