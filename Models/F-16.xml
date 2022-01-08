@@ -1539,10 +1539,10 @@
  </animation>
 
  <model>
-  <name>AB_Flame</name>
-  <path>Aircraft/f16/Models/Effects/afterburner.xml</path>
+  <name>AB_FlamePW</name>
+  <path>Aircraft/f16/Models/Effects/afterburner-pw.xml</path>
   <offsets>
-   <x-m>5.44</x-m>
+   <x-m>5.43</x-m>
    <y-m>0.0</y-m>
    <z-m>0.0</z-m>
   </offsets>
@@ -1550,9 +1550,35 @@
  
  <animation>
   <type>select</type>
-  <object-name>AB_Flame</object-name>
+  <object-name>AB_FlamePW</object-name>
   <condition>
    <property>sim/multiplay/generic/bool[39]</property>
+   <equals>
+   <property>sim/multiplay/generic/int[10]</property>
+   <value>2</value>
+   </equals>
+  </condition>
+ </animation>
+
+  <model>
+  <name>AB_FlameGE</name>
+  <path>Aircraft/f16/Models/Effects/afterburner-ge.xml</path>
+  <offsets>
+   <x-m>5.36</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.0</z-m>
+  </offsets>
+ </model>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>AB_FlameGE</object-name>
+  <condition>
+   <property>sim/multiplay/generic/bool[39]</property>
+   <equals>
+   <property>sim/multiplay/generic/int[10]</property>
+   <value>0</value>
+   </equals>
   </condition>
  </animation>
 

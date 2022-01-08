@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<PropertyList>
+
+ <path>Aircraft/Generic/Effects/Thruster/thrust_flame.ac</path>
+ <nopreview/>
+
+ <animation>
+  <type>scale</type>
+  <object-name>Bounding_box</object-name>
+  <property>sim/multiplay/generic/float[19]</property><!-- throttle pos -->
+  <x-factor>1.9</x-factor>
+  <y-factor>0.66</y-factor>
+  <z-factor>0.66</z-factor>
+ </animation>
+
+ <effect>
+  <inherits-from>Aircraft/f16/Models/Effects/afterburner</inherits-from>
+  <object-name>Bounding_box</object-name>
+ </effect>
+ 
+ <animation>
+    <type>noshadow</type>
+    <object-name>Bounding_box</object-name>
+  </animation>
+
+</PropertyList>
+
+
