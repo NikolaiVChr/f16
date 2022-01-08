@@ -666,6 +666,7 @@
             <test-panel>
                 <fire-ovht-test type="bool">false</fire-ovht-test>
                 <mal-ind-lts type="bool">false</mal-ind-lts>
+                <mal-ind-lts-btn type="bool">false</mal-ind-lts-btn>
                 <oxy-test type="bool">false</oxy-test>
                 <epu-test type="bool">false</epu-test>
                 <pbg-test type="bool">false</pbg-test>
