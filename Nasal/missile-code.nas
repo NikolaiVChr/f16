@@ -252,14 +252,10 @@ var AIM = {
         if (m.SwSoundVol.getValue() == nil) {
         	m.SwSoundVol.setDoubleValue(0);
         }
-        m.inacc                 = getprop("payload/armament/tgp-inacc-system");# set to false, unless using the f16
         m.tacview_support       = getprop("payload/armament/tacview");# set to false, unless using an aircraft that has tacview
         m.gnd_launch            = getprop("payload/armament/gnd-launch");#true to be a SAM or ship
         if (m.gnd_launch == nil) {
         	m.gnd_launch = 0;
-        }
-        if (m.inacc == nil) {
-        	m.inacc = 0;
         }
         if (m.tacview_support == nil) {
         	m.tacview_support = 0;
@@ -1453,15 +1449,8 @@ var AIM = {
 		me.coord = geo.Coord.new(init_coord);
 		# Get target position.
 		if (me.Tgt != nil) {
-			if (me.inacc) {
-				if (!me.target_pnt) {
-					me.Tgt.inac_x = 0;
-	        		me.Tgt.inac_y = 0;
-	        		me.Tgt.inac_z = 0;
-				}
-				if (me.Tgt == contactPoint) {
-					me.usingTGPPoint = 1;
-				}
+			if (me.Tgt == contactPoint) {
+				me.usingTGPPoint = 1;
 			}
 			me.t_coord = me.Tgt.get_Coord();
 			me.maddog = FALSE;
@@ -1920,13 +1909,6 @@ var AIM = {
 		me.semiLostLock = FALSE;
 		me.heatLostLock = FALSE;
 		me.hasGuided = FALSE;
-		if (me.inacc) {
-			if (!me.target_pnt and tagt!=nil) {
-				me.Tgt.inac_x = 0;
-	    		me.Tgt.inac_y = 0;
-	    		me.Tgt.inac_z = 0;
-			}
-		}
 	},
 
 	flight: func {
@@ -2016,7 +1998,7 @@ var AIM = {
 				me.callsign = "Unknown";
 				me.newTargetAssigned = FALSE;
 			}
-		} elsif (me.inacc and me.Tgt != nil and me.Tgt.get_type() == POINT and me.guidance == "laser" and me.usingTGPPoint and contactPoint == nil) {
+		} elsif (me.Tgt != nil and me.Tgt.get_type() == POINT and me.guidance == "laser" and me.usingTGPPoint and contactPoint == nil) {
 			# if laser illuminated lock is lost on a targetpod target:
 			if (!(me.canSwitch and me.reaquire)) {
 				me.Tgt = nil;
@@ -2027,7 +2009,7 @@ var AIM = {
 				me.callsign = "Unknown";
 				me.newTargetAssigned = FALSE;
 			}
-		} elsif (me.inacc and me.Tgt == nil and me.guidance == "laser" and me.usingTGPPoint and contactPoint != nil) {
+		} elsif (me.Tgt == nil and me.guidance == "laser" and me.usingTGPPoint and contactPoint != nil) {
 			# see if we can regain lock on new laser spot:
 			if (me.newLock(contactPoint)) {
 				me.setNewTargetInFlight(contactPoint);
@@ -3868,7 +3850,7 @@ var AIM = {
 			# (use xyz coord to avoid the strange behaviour of comparing geo coordinates).
 			for (var i=me.crc_frames_look_back; i >= 0; i-=1){
 				me.crc_coord[i]   = (i != 0) ? me.crc_coord[i-1]   : me.coord.xyz();
-				me.crc_t_coord[i] = (i != 0) ? me.crc_t_coord[i-1] : (me.inacc?me.Tgt.get_Coord(0).xyz():me.t_coord.xyz());
+				me.crc_t_coord[i] = (i != 0) ? me.crc_t_coord[i-1] : me.t_coord.xyz();
 				me.crc_range[i]   = (i != 0) ? me.crc_range[i-1]   : me.myMath.magnitudeVector(
 																		 me.myMath.minus(me.crc_coord[0], 
 																						 me.crc_t_coord[0]));
@@ -4076,7 +4058,7 @@ var AIM = {
 				me.printStats("%s  time %.1f", phrase, me.life_time);
 				if(getprop("payload/armament/msg") and hitPrimaryTarget and wh_mass > 0){
 					thread.lock(mutexTimer);
-					append(AIM.timerQueue, [AIM, AIM.notifyHit, [coordinates.alt() - (me.inacc?me.Tgt.get_Coord(0).alt():me.t_coord.alt()),range,me.callsign,coordinates.course_to(me.inacc?me.Tgt.get_Coord(0):me.t_coord),reason,me.typeID, me.typeLong, 0], -1]);
+					append(AIM.timerQueue, [AIM, AIM.notifyHit, [coordinates.alt() - me.t_coord.alt(),range,me.callsign,coordinates.course_to(me.t_coord),reason,me.typeID, me.typeLong, 0], -1]);
 					thread.unlock(mutexTimer);
                 } else {
 	                thread.lock(mutexTimer);
@@ -4112,9 +4094,7 @@ var AIM = {
 				continue;
 			}
 			var min_distance = me.testMe.get_Coord().direct_distance_to(explode_coord);
-			if (me.inacc) {
-				min_distance = me.testMe.get_Coord(0).direct_distance_to(explode_coord);
-			}
+			
 			if (min_distance < me.reportDist and (me.Tgt == nil or me.testMe.getUnique() != me.Tgt.getUnique())) {
 				var phrase = sprintf("%s %s: %.1f meters from: %s", me.type,event, min_distance, me.testMe.get_Callsign());
 				me.printStats(phrase);
@@ -4190,7 +4170,7 @@ var AIM = {
 		if (me.noCommonTarget) {
 			return nil;
 		}
-		if (me.inacc and me.target_pnt and contactPoint != nil) {
+		if (me.target_pnt and contactPoint != nil) {
 			return contactPoint;
 		} else {
 			return contact;
