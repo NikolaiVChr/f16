@@ -17,7 +17,7 @@ var STPTlonFE = EditableLON.new("f16/ded/lon", convertDegreeToStringLon);
 var STPTnumFE = EditableField.new("f16/ded/stpt-edit", "%3d", 3);
 var STPTradFE = EditableField.new("f16/ded/stpt-rad", "%2d", 2);
 var STPTaltFE = EditableField.new("f16/ded/alt", "%5d", 5);
-var STPTtypeTF = toggleableField.new(["   ", " 2 ", " 11", " 20", " SH", " P ", "AAA"], "f16/ded/stpt-type");
+var STPTtypeTF = toggleableField.new(["   ", " 2 ", " 11", " 20", " SH", " P ", " AA"], "f16/ded/stpt-type");
 var STPTcolorTF = toggleableField.new(["RED", "YEL", "GRN"], "f16/ded/stpt-color");
 var dlinkEF   = EditableField.new("instrumentation/datalink/channel", "%4d", 4);
 
