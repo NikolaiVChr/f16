@@ -239,7 +239,7 @@ var list = func (node) {
         gps = 0;
         if (lock_tgp) {
             lock_tgp = 0;
-            armament.contactPoint = nil;
+            armament.contactPoint = nil;print("Second click with TGP lock unlocks!");
             return;
         }
         var x = -2.5856;
@@ -545,6 +545,7 @@ var fast_loop = func {
     steerlock = 0;
     var follow = 0;
     if (armament.contactPoint !=nil and armament.contactPoint.get_range()>35 and armament.contactPoint.get_Callsign() != "GPS-Spot") {
+        print("TGP attempted lock at 35+ nm: ",armament.contactPoint.get_range());
         armament.contactPoint = nil;
     }
     var gpps = 0;
@@ -630,7 +631,7 @@ var fast_loop = func {
             flir_updater.offsetP = 0;
             flir_updater.offsetH = 0;
             lock_tgp = 0;
-            armament.contactPoint = nil;
+            armament.contactPoint = nil;print("No vis on TGP lock");
             hiddenMode = AG;
         } else {
             lock_tgp = 1;
@@ -711,8 +712,13 @@ var fast_loop = func {
             var fov = getprop("sim/current-view/field-of-view");
             #var tme = dt - dt_old;
             if (getprop("/aircraft/flir/target/auto-track")) {
-                flir_updater.offsetP += modifier*cy*fov/camera_movement_speed_lock;
-                flir_updater.offsetH -= modifier*cx*fov/camera_movement_speed_lock;
+                var dist_modi = 1.0;
+                if (flir_updater.click_coord_cam != nil) {
+                    # 5nm is 5.0, 50 nm is 1.0
+                    dist_modi = 5 + ((flir_updater.click_coord_cam.direct_distance_to(radar_system.self.getCoord())*M2NM - 5) / (50 - 5)) * (1 - 5); 
+                }
+                flir_updater.offsetP += dist_modi*modifier*cy*fov/camera_movement_speed_lock;
+                flir_updater.offsetH -= dist_modi*modifier*cx*fov/camera_movement_speed_lock;
             } else {
                 setprop("sim/current-view/pitch-offset-deg",getprop("sim/current-view/pitch-offset-deg")+modifier*cy*fov/camera_movement_speed_free);
                 setprop("sim/current-view/heading-offset-deg",getprop("sim/current-view/heading-offset-deg")+modifier*cx*fov/camera_movement_speed_free);
