@@ -164,5 +164,8 @@ Elon Musk
 
 Pilot2938
 - Polish AF livery pack
+- Greek AF livery pack
+- Turkish AF livery pack
 - AF Thunderbirds #1, 111FS, Zeus Demo liveries
 - CFT 3D model
+- Tail rudder UVmap rework
