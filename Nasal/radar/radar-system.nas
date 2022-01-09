@@ -96,6 +96,7 @@ var SliceNotification = {
 };
 
 var RequestFullNotification = {
+	max_range: 40,
     new: func() {
         var new_class = emesary.Notification.new("RequestFullNotification", rand());
 
@@ -1475,7 +1476,7 @@ FullRadar = {
 	        } elsif (notification.NotificationType == "RequestFullNotification") {
 	        	#printf("NoseRadar recv: %s", notification.NotificationType);
 	            if (me.radar.enabled == 1) {
-	    		    me.radar.scanFOR();
+	    		    me.radar.scanFOR(notification.max_range);
 	    	    }
 	            return emesary.Transmitter.ReceiptStatus_OK;
 	        } elsif (notification.NotificationType == "ContactNotification") {
@@ -1495,7 +1496,7 @@ FullRadar = {
 		return nr;
 	},
 
-	scanFOR: func () {
+	scanFOR: func (max_range) {
 		if (!me.enabled) return;
 		#iterate:
 		# check direct distance
@@ -1513,12 +1514,18 @@ FullRadar = {
 			if (theType == TERRASUNK) continue;
 			if (theType == ORDNANCE) continue;
 
+			me.rng = contact.getRangeDirect();
+
+			if (me.rng * M2NM > max_range) {
+				continue;
+			}
+
 			if (!contact.isVisible()) {  # moved to nose radar. TODO: WHy double it in discradar? hmm, dont matter so much, its lightning fast
 				continue;
 			}
 
 			me.dev = contact.getDeviation();
-			me.rng = contact.getRangeDirect();
+			
 
 			me.crd = contact.getCoord();
 
