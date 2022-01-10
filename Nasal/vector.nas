@@ -2,7 +2,7 @@ var Math = {
     #
     # Authors: Nikolai V. Chr, Axel Paccalin.
     #
-    # Version 1.98
+    # Version 1.99
     #
     # When doing euler coords. to cartesian: +x = forw, +y = left,  +z = up.
     # FG struct. coords:                     +x = back, +y = right, +z = up.
@@ -185,6 +185,39 @@ var Math = {
             me.hdg = nil;
         }
         return [me.hdg, me.pitch];
+    },
+
+    # vector to pitch
+    cartesianToEulerPitch: func (vector) {
+        me.horz  = math.sqrt(vector[0]*vector[0]+vector[1]*vector[1]);
+        if (me.horz != 0) {
+            me.pitch = math.atan2(vector[2],me.horz)*R2D;
+        } else {
+            me.pitch = vector[2]>=0?90:-90;
+        }
+        return me.pitch;
+    },
+
+    # vector to heading
+    cartesianToEulerHeading: func (vector) {
+        me.horz  = math.sqrt(vector[0]*vector[0]+vector[1]*vector[1]);
+        if (me.horz != 0) {
+            me.div = math.clamp(-vector[1]/me.horz, -1, 1);
+            me.hdg = math.asin(me.div)*R2D;
+
+            if (vector[0] < 0) {
+                # south
+                if (me.hdg >= 0) {
+                    me.hdg = 180-me.hdg;
+                } else {
+                    me.hdg = -180-me.hdg;
+                }
+            }
+            me.hdg = geo.normdeg(me.hdg);
+        } else {
+            me.hdg = 0;
+        }
+        return me.hdg;
     },
 
     # gives an vector that points up from fuselage
@@ -398,3 +431,28 @@ var Math = {
 #
 
 };
+
+
+var unitTest = {
+    start: func {
+        # 1: Simple test of rotation matrices and getting the input back in another way.
+        var localDir = Math.pitchYawVector(-40, -75, [1,0,0]);
+        me.eulerDir = Math.cartesianToEuler(localDir);
+        me.eulerDir[0] = me.eulerDir[0]==nil?0:geo.normdeg(me.eulerDir[0]);
+        printf("Looking out of aircraft window at heading 75 and 40 degs down: %.4f heading %.4f pitch.",me.eulerDir[0],me.eulerDir[1]);
+        # 2: Revert part of test #1
+        var forwardDir = Math.yawPitchVector(75, 0, localDir);
+        me.eulerDir = Math.cartesianToEuler(forwardDir);
+        me.eulerDir[0] = me.eulerDir[0]==nil?0:geo.normdeg(me.eulerDir[0]);
+        printf("Looking out of aircraft window at heading 0 and 40 degs down: %.4f heading %.4f pitch.",me.eulerDir[0],me.eulerDir[1]);
+        # 3: Tougher test, try it different places on earth since earth is not sphere. At KXTA runway it gives 0.03% error in pitch.
+        var someDir = Math.eulerToCartesian3X(-75, -40, 20);
+        var myCoord = geo.aircraft_position();
+        me.thousandVectorGeo = Math.vectorToGeoVector(someDir, myCoord).vector;# does not return magnitude with meaning, only its direction matters.
+        me.thousandVectorGeo = Math.normalize(me.thousandVectorGeo);
+        me.thousandVectorGeo = Math.product(100000, me.thousandVectorGeo);
+        me.lookAt = geo.Coord.new().set_xyz(myCoord.x()+me.thousandVectorGeo[0], myCoord.y()+me.thousandVectorGeo[1], myCoord.z()+me.thousandVectorGeo[2]);
+        printf("Looking out of aircraft window 100000m away heading 75 and 40 degs down: %.4f heading %.4f pitch %.4f meter.", myCoord.course_to(me.lookAt), Math.getPitch(myCoord, me.lookAt), myCoord.direct_distance_to(me.lookAt));
+    },
+};
+#unitTest.start();

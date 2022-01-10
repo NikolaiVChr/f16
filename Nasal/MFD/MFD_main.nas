@@ -1155,9 +1155,11 @@ var MFD_Device =
             }
             if (radar_system.apg68Radar.enabled) {
                 if (1) {
+                    # radar carets
                     if ((rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA)) {
-                        me.root.ant_bottom.setTranslation(me.wdt*0.5+radar_system.apg68Radar.positionCart[0]*me.wdt*0.5,0);
-                        me.root.ant_side.setTranslation(0,-radar_system.apg68Radar.positionCart[1]*482*0.5);
+                        me.caretPosition = radar_system.apg68Radar.getCaretPosition();
+                        me.root.ant_bottom.setTranslation(me.wdt*0.5+me.caretPosition[0]*me.wdt*0.5,0);
+                        me.root.ant_side.setTranslation(0,-me.caretPosition[1]*482*0.5);
                     } else {
                         me.root.ant_bottom.setTranslation(-256+(me.gmLine+1)*(me.rdrModeHDGM?4:8)+276*0.795,0);
                     }

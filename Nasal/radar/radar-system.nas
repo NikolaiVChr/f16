@@ -461,6 +461,10 @@ SelfContact = {
 	getSpeed: func {
 		return me.acgns.getValue();
 	},
+
+	getAltitude: func {
+		return me.acalt.getValue();
+	},
 };
 
 var self = SelfContact.new();
@@ -1500,8 +1504,6 @@ FullRadar = {
 		if (!me.enabled) return;
 		#iterate:
 		# check direct distance
-		# check field of regard
-		# sort in bearing?
 		# called on demand
 		# TODO: vectorized field instead
 
@@ -1520,7 +1522,7 @@ FullRadar = {
 				continue;
 			}
 
-			if (!contact.isVisible()) {  # moved to nose radar. TODO: WHy double it in discradar? hmm, dont matter so much, its lightning fast
+			if (!contact.isVisible()) {
 				continue;
 			}
 
@@ -1541,7 +1543,6 @@ FullRadar = {
 	scanSingleContact: func (contact) {# TODO: rework this method (If its even needed anymore)
 		if (!me.enabled) return;
 		# called on demand
-		# not used atm.
 		var theType = contact.getType();
 
 		if (theType == SURFACE or theType == MARINE or theType == TERRASUNK or theType == ORDNANCE) {

@@ -507,14 +507,25 @@ var APG68 = {
 	getRange: func {
 		return me.currentMode.getRange();
 	},
+	getCaretPosition: func {
+		if (me["eulerX"] == nil or me["eulerY"] == nil) {
+			return [0,0];
+		} elsif (me.horizonStabilized) {
+			return [me.eulerX/me.fieldOfRegardMaxAz,me.eulerY/me.fieldOfRegardMaxElev];
+		} else {
+			return [me.eulerX/me.fieldOfRegardMaxAz,me.eulerY/me.fieldOfRegardMaxElev];
+		}
+	},
 	setAntennae: func (local_dir) {
 		# remember to set horizonStabilized when calling this.
 
 		# convert from coordinates to polar
 		me.eulerDir = vector.Math.cartesianToEuler(local_dir);
+#		me.discDirforGM = local_dir;
 
 		# Make sure if pitch is 90 or -90 that heading gets set to something sensible
 		me.eulerX = me.eulerDir[0]==nil?0:geo.normdeg180(me.eulerDir[0]);
+		me.eulerY = me.eulerDir[1];
 
 		# Make array: [heading_degs, pitch_degs, heading_norm, pitch_norm], for convinience, not used atm.
 		#me.positionEuler = [me.eulerX,me.eulerDir[1],me.eulerX/me.fieldOfRegardMaxAz,me.eulerDir[1]/me.fieldOfRegardMaxElev];
@@ -547,6 +558,7 @@ var APG68 = {
 				# Tilt is not force set by the mode, so we read the antennae tilt knob property.
 				me.tilt = antennae_knob_prop.getValue()*60;
 			}
+#			me.dirty = 0;
 			while (me.dt > 0.001) {
 				# mode tells us how to move disc and to scan
 				me.dt = me.currentMode.step(me.dt, me.tilt);# mode already knows where in pattern we are and AZ and bars.
@@ -554,6 +566,7 @@ var APG68 = {
 				# we then step to the new position, and scan for each step
 				me.scanFOV();
 			}
+#			if (me["gmPic"] != nil and me.dirty) {me.gmPic.dirtyPixels();}
 		} elsif (size(me.vector_aicontacts_bleps)) {
 			# So that when radar is restarted there is not old bleps.
 			me.purgeAllBleps();
@@ -607,6 +620,7 @@ var APG68 = {
 		me.doIFF = getprop("instrumentation/radar/iff");
     	setprop("instrumentation/radar/iff",0);
     	if (me.doIFF) iff.last_interogate = systime();
+#    	me.scanGM();
 		foreach(contact ; me.vector_aicontacts_for) {
 			if (me.doIFF == 1) {
 	            me.iffr = iff.interrogate(contact.prop);
@@ -623,13 +637,13 @@ var APG68 = {
 			if (me.horizonStabilized) {
 				# ignore roll (and ignore pitch for now too, TODO)
 
-				# Vector that points from aircraft to target in XYZ geo centered coords.
+				# Vector that points to target in radar coordinates as if aircraft it was not rolled or pitched.
 				me.globalToTarget = vector.Math.eulerToCartesian3X(-me.dev[7],me.dev[8],0);
 
-				# Vector that points to target in aircraft coordinates as if it was not rolled or pitched.
+				# Vector that points to target in radar coordinates as if aircraft it was not yawed, rolled or pitched.
 				me.localToTarget = vector.Math.rollPitchYawVector(0,0,self.getHeading(), me.globalToTarget);
 			} else {
-				# Vector that points to target in local aircraft coordinates.
+				# Vector that points to target in local radar coordinates.
 				me.localToTarget = vector.Math.eulerToCartesian3X(-me.dev[0],me.dev[1],0);
 			}
 			#print("ANT head ",me.positionX,", ANT elev ",me.positionY,", ANT tilt ", me.tilt);
@@ -648,6 +662,7 @@ var APG68 = {
 			}
 		}
 	},
+	
 	registerBlep: func (contact, dev, stt, doppler_check = 1) {
 		if (!contact.isVisible()) return 0;
 		if (doppler_check and contact.isHiddenFromDoppler()) return 0;
@@ -754,9 +769,11 @@ var APG68 = {
 
 
 
-
-
-
+var RIGHT = 0;
+var LEFT = 1;
+var UP = 2;
+var DOWN = 3;
+var DIRECT = -1;
 
 
 
@@ -779,14 +796,17 @@ var RadarMode = {
 	lastAz: nil,
 	lastAzimuthTilt: nil,
 	barHeight: 0.95,# multiple of instantFoVradius
-	barPattern:  [ [[-1,0],[1,0]],
-	               [[-1,-1],[1,-1],[1,1],[-1,1]],
-	               [[-1,0],[1,0],[1,2],[-1,2],[-1,0],[1,0],[1,-2],[-1,-2]],
-	               [[1,-3],[1,3],[-1,3],[-1,1],[1,1],[1,-1],[-1,-1],[-1,-3]] ],
+	barPattern:  [ [[-1,0,LEFT],[1,0,RIGHT]],                    # These are multitudes of instantFoVradius, the 3rd number is which axis to rotate around, -1 for shortest.
+	               [[-1,-1,DOWN],[1,-1,RIGHT],[1,1,UP],[-1,1,LEFT]],
+	               [[-1,0,UP],[1,0,RIGHT],[1,2,UP],[-1,2,LEFT],[-1,0,DOWN],[1,0,RIGHT],[1,-2,DOWN],[-1,-2,LEFT]],
+	               [[1,-3,RIGHT],[1,3,UP],[-1,3,LEFT],[-1,1,DOWN],[1,1,RIGHT],[1,-1,DOWN],[-1,-1,LEFT],[-1,-3,DOWN]] ],	               
 	currentPattern: [],
+	barPatternRotations: [[0,0,-1],[0,0,1],[0,-1,0],[0,1,0]],# we normally don't want to shortest distance from bar start to bar end. We want to turn the disc around an axis. These are the axes.
 	barPatternMin: [0,-1, -2, -3],
 	barPatternMax: [0, 1,  2,  3],
 	nextPatternNode: 0,
+	discDirect: 1,
+	newPitch: 0,
 	scanPriorityEveryFrame: 0,
 	timeToKeepBleps: 13,
 	rootName: "CRM",
@@ -907,17 +927,23 @@ var RadarMode = {
 		me.radar.horizonStabilized = 1;# Might be unset inside preStep()
 		me.preStep();
 		
-		# figure out if we reach the gimbal limit, and if so, keep all bars within it:
+
 		me.min = me.barPatternMin[me.bars-1]*me.barHeight*me.radar.instantFoVradius+tilt;# This is the min/max we desire.
 		me.max = me.barPatternMax[me.bars-1]*me.barHeight*me.radar.instantFoVradius+tilt;
- 		me.actualMin = self.getPitch()-me.radar.fieldOfRegardMaxElev;
- 		me.actualMax = self.getPitch()+me.radar.fieldOfRegardMaxElev;
- 		if (me.min < me.actualMin) {
- 			me.gimbalTiltOffset = me.actualMin-me.min;
- 			#printf("offset %d  actualMin %d  desire %d  pitch %d  tilt %d",me.gimbalTiltOffset, me.actualMin,me.min,self.getPitch(),tilt);
- 		} elsif (me.max > me.actualMax) {
- 			me.gimbalTiltOffset = me.actualMax-me.max;
- 			#printf("offset %d  actualMax %d  desire %d  pitch %d  tilt %d",me.gimbalTiltOffset, me.actualMax,me.max,self.getPitch(),tilt);
+
+		if (me.radar.horizonStabilized) {
+			# figure out if we reach the gimbal limit, and if so, keep all bars within it:			
+	 		me.actualMin = self.getPitch()-me.radar.fieldOfRegardMaxElev;
+	 		me.actualMax = self.getPitch()+me.radar.fieldOfRegardMaxElev;
+	 		if (me.min < me.actualMin) {
+	 			me.gimbalTiltOffset = me.actualMin-me.min;
+	 			#printf("offset %d  actualMin %d  desire %d  pitch %d  tilt %d",me.gimbalTiltOffset, me.actualMin,me.min,self.getPitch(),tilt);
+	 		} elsif (me.max > me.actualMax) {
+	 			me.gimbalTiltOffset = me.actualMax-me.max;
+	 			#printf("offset %d  actualMax %d  desire %d  pitch %d  tilt %d",me.gimbalTiltOffset, me.actualMax,me.max,self.getPitch(),tilt);
+	 		} else {
+	 			me.gimbalTiltOffset = 0;
+	 		}
  		} else {
  			me.gimbalTiltOffset = 0;
  		}
@@ -934,18 +960,31 @@ var RadarMode = {
 				me.radar.tiltOverride = 0;
 				me.undesignate();
 				me.nextPatternNode == 0;
-			}			
+			}
+			me.discDirect = 1;
 		} elsif (me.nextPatternNode == -1) {
 			me.nextPatternNode == 0;
+			me.discDirect = 1;
 		} elsif (tilt != me.lastTilt or me.bars != me.lastBars or me.az != me.lastAz or me.azimuthTiltIntern != me.lastAzimuthTilt or me.gimbalTiltOffset != 0) {
 			# (re)calculate pattern as vectors.
 			me.currentPattern = [];
+			me.localDirOld = vector.Math.pitchYawVector(me.barPattern[me.bars-1][size(me.barPattern[me.bars-1])-1][1]*me.radar.instantFoVradius*me.barHeight+tilt+me.gimbalTiltOffset, -me.barPattern[me.bars-1][size(me.barPattern[me.bars-1])-1][0]*me.az-me.azimuthTiltIntern, [1,0,0]);
 			foreach (me.eulerNorm ; me.barPattern[me.bars-1]) {
 				#me.localDir = vector.Math.yawPitchVector(-me.eulerNorm[0]*me.az-me.azimuthTiltIntern, me.eulerNorm[1]*me.radar.instantFoVradius*me.barHeight+tilt+me.gimbalTiltOffset, [1,0,0]);
 				me.localDir = vector.Math.pitchYawVector(me.eulerNorm[1]*me.radar.instantFoVradius*me.barHeight+tilt+me.gimbalTiltOffset, -me.eulerNorm[0]*me.az-me.azimuthTiltIntern, [1,0,0]);
 				#print("Step sweep: ", -me.eulerNorm[0]*me.az-me.azimuthTilt);
+				append(me.localDir, me.eulerNorm[2]);#3 direction
+				append(me.localDir, geo.normdeg180(vector.Math.cartesianToEulerHeading(me.localDir)));#4
+				append(me.localDir, vector.Math.cartesianToEulerPitch(me.localDir));#5 NOT USED
+				append(me.localDir, vector.Math.cartesianToEulerPitch(me.localDirOld));#6
 				append(me.currentPattern, me.localDir);
+				me.localDirOld = me.localDir;
 			}
+			
+			#TODO: when node is -1
+			#TODO: test angle between target vec and current vec to see if reached
+
+			me.discDirect = 1;
 			me.upperAngle = me.max+me.gimbalTiltOffset;
 			me.lowerAngle = me.min+me.gimbalTiltOffset;
 			me.lastTilt = tilt;
@@ -955,20 +994,61 @@ var RadarMode = {
 		}
 		me.maxMove = math.min(me.radar.instantFoVradius*1.25, me.discSpeed_dps*dt);# 1.25 is because the FoV is round so we overlap em a bit
 		me.currentPos = me.radar.positionDirection;
+
 		me.angleToNextNode = vector.Math.angleBetweenVectors(me.currentPos, me.nextPatternNode == -1?me.localDir:me.currentPattern[me.nextPatternNode]);
-		if (me.angleToNextNode < me.maxMove) {
+
+		
+		
+		if (me.angleToNextNode < me.radar.instantFoVradius) {
+			#print("reaching");
 			#print("resultpitch2 ",vector.Math.cartesianToEuler(me.currentPattern[me.nextPatternNode])[1]);
+			me.discDirect = me.nextPatternNode == -1?1:0;
 			me.radar.setAntennae(me.nextPatternNode == -1?me.localDir:me.currentPattern[me.nextPatternNode]);
 			me.nextPatternNode += 1;
 			if (me.nextPatternNode >= size(me.currentPattern)) {
 				me.nextPatternNode = (me.scanPriorityEveryFrame and me.priorityTarget!=nil)?-1:0;
 				me.frameCompleted();
 			}
+			if (me.discDirect or me.currentPattern[me.nextPatternNode][3] == DIRECT) {
+				me.discDirect = 1;
+				#print("direct ",me.angleToNextNode);
+			} elsif (me.currentPattern[me.nextPatternNode][3] == UP) {
+				#print("up ", me.nextPatternNode);
+				me.newPitch = me.currentPattern[me.nextPatternNode][6];
+				#print("newPitch = ",me.newPitch);
+			} elsif (me.currentPattern[me.nextPatternNode][3] == DOWN) {
+				#print("down ", me.nextPatternNode);
+				me.newPitch = me.currentPattern[me.nextPatternNode][6];
+				#print("newPitch = ",me.newPitch);
+				#print("targetPitch = ",me.currentPattern[me.nextPatternNode][5]);
+			} elsif (me.currentPattern[me.nextPatternNode][3] == RIGHT) {
+				#print("right ", me.nextPatternNode);
+			} elsif (me.currentPattern[me.nextPatternNode][3] == LEFT) {
+				#print("left ", me.nextPatternNode);
+			} else print ("oops");
 			return dt-me.angleToNextNode/me.discSpeed_dps;
+		} elsif (me.angleToNextNode > 140) {
+			me.discDirect = 1;
+			print("Backup mode 1");
+		} elsif (math.abs(me.newPitch) > 90) {
+			me.discDirect = 1;
+			print("Backup mode 2");
 		}
-		me.newPos = vector.Math.rotateVectorTowardsVector(me.currentPos, me.nextPatternNode == -1?me.localDir:me.currentPattern[me.nextPatternNode], me.maxMove);
+		if (me.discDirect) {
+			me.newPos = vector.Math.rotateVectorTowardsVector(me.currentPos, me.nextPatternNode == -1?me.localDir:me.currentPattern[me.nextPatternNode], me.maxMove);
+		} elsif (me.currentPattern[me.nextPatternNode][3] == UP) {
+			me.newPitch = me.newPitch+me.maxMove;
+			#print("newPitch == ", me.newPitch, "  angle = ", me.angleToNextNode);
+			me.newPos = vector.Math.pitchYawVector(me.newPitch, -me.currentPattern[me.nextPatternNode][4], [1,0,0]);
+		} elsif (me.currentPattern[me.nextPatternNode][3] == DOWN) {
+			me.newPitch = me.newPitch-me.maxMove;
+			#print("newPitch == ", me.newPitch, "  angle = ", me.angleToNextNode,"  heading = ",me.currentPattern[me.nextPatternNode][4]);
+			me.newPos = vector.Math.pitchYawVector(me.newPitch, -me.currentPattern[me.nextPatternNode][4], [1,0,0]);
+		} else {
+			me.newPos = vector.Math.rotateVectorAroundVector(me.currentPos, me.barPatternRotations[me.currentPattern[me.nextPatternNode][3]], me.maxMove);
+		}
 		me.radar.setAntennae(me.newPos);
-		return dt-me.maxMove/me.discSpeed_dps;# The 0.001 is for presicion errors.
+		return dt-me.maxMove/me.discSpeed_dps;# The 0.001 is for precision errors.
 	},
 	frameCompleted: func {
 		#print("frame ",me.radar.elapsed-me.lastFrameStart);
@@ -985,6 +1065,7 @@ var RadarMode = {
 	},
 	enterMode: func {
 		# Warning: This gets called BEFORE previous mode's leaveMode()
+		me.discDirect = 1;
 	},
 	designatePriority: func (contact) {},
 	cycleDesignate: func {},
@@ -1102,7 +1183,7 @@ var F16SeaMode = {
 	rootName: "SEA",
 	shortName: "MAN",
 	longName: "Sea Navigation Mode",
-	discSpeed_dps: 55,
+	discSpeed_dps: 55,# was 55
 	maxRange: 80,
 	range: 20,
 	bars: 4,
@@ -1110,11 +1191,11 @@ var F16SeaMode = {
 	detectAIR: 0,
 	detectSURFACE: 0,
 	detectMARINE: 1,
-	barPattern:  [ [[-1,-1],[1,-1]], # The SURFACE/SEA pattern is centered so pattern is almost entirely under horizon
-	               [[-1,-3],[1,-3],[1,-1],[-1,-1]],
-	               [[-1,-3],[1,-3],[1,-1],[-1,-1],[-1,-3],[1,-3],[1,-5],[-1,-5]],
-	               [[1,-7],[1,-1],[-1,-1],[-1,-3],[1,-3],[1,-5],[-1,-5],[-1,-7]] ],
-	barPatternMin: [-1, -3, -5, -7],
+	barPattern:  [ [[-1,-1,LEFT],[1,-1,RIGHT]], # The SURFACE/SEA pattern is centered so pattern is almost entirely under horizon
+	               [[-1,-3,DOWN],[1,-3,RIGHT],[1,-1,UP],[-1,-1,LEFT]],
+	               [[-1,-3,UP],[1,-3,RIGHT],[1,-1,UP],[-1,-1,LEFT],[-1,-3,DOWN],[1,-3,RIGHT],[1,-5,DOWN],[-1,-5,LEFT]],
+	               [[1,-7,RIGHT],[1,-1,UP],[-1,-1,LEFT],[-1,-3,DOWN],[1,-3,RIGHT],[1,-5,DOWN],[-1,-5,LEFT],[-1,-7,DOWN]] ],
+	barPatternMin: [-1, -3, -5, -7], # about down to -15 degs coverage from horizon with 4 bars
 	barPatternMax: [-1, -1, -1, -1],
 	EXPsupport: 1,
 	EXPfixedAim: 1,
@@ -1184,6 +1265,7 @@ var F16SeaMode = {
 	designatePriority: func (contact) {
 	},
 	enterMode: func {
+		me.discDirect = 1;
 		me.radar.purgeAllBleps();
 	},
 };
@@ -1461,6 +1543,7 @@ var F16TWSMode = {
 		me.lastFrameStart = me.radar.elapsed;
 	},
 	enterMode: func {
+		me.discDirect = 1;
 		me.currentTracked = [];
 		foreach(c;me.radar.vector_aicontacts_bleps) {
 			c.ignoreTrackInfo();# Kind of a hack to make it give out false info. Bypasses hadTrackInfo() but not hasTrackInfo().
@@ -1799,7 +1882,8 @@ var F16ACM20Mode = {
 	discSpeed_dps: 84.6,
 	rcsFactor: 0.9,
 	timeToKeepBleps: 1,# TODO
-	bars: 4,
+	bars: 1,
+	barPattern: [ [[1,-6,RIGHT],[1,3,UP],[-1,3,LEFT],[-1,1,DOWN],[1,1,RIGHT],[1,-1,DOWN],[-1,-1,LEFT],[-1,-3,DOWN],[1,-3,RIGHT],[1,-5,DOWN],[-1,-5,LEFT],[-1,-6,DOWN]] ],
 	az: 15,
 	new: func (subMode, radar = nil) {
 		var mode = {parents: [F16ACM20Mode, RadarMode]};
@@ -1873,7 +1957,7 @@ var F16ACM60Mode = {
 	bars: 1,
 	barHeight: 1.0/APG68.instantFoVradius,# multiple of instantFoV (in this case 1 deg)
 	az: 5,
-	barPattern:  [ [[-0.6,-5],[0.0,-5],[0.0, 51],[0.6,51],[0.6,-5],[0.0,-5],[0.0,51],[-0.6,51]], ],
+	barPattern:  [ [[-0.6,-5,DOWN],[0.0,-5,RIGHT],[0.0, 51,UP],[0.6,51,RIGHT],[0.6,-5,DOWN],[0.0,-5,LEFT],[0.0,51,UP],[-0.6,51,LEFT]], ],
 	new: func (subMode, radar = nil) {
 		var mode = {parents: [F16ACM60Mode, F16ACM20Mode, RadarMode]};
 		mode.radar = radar;
@@ -1974,7 +2058,7 @@ var F16STTMode = {
 		return me.superMode.getBars();
 	},
 	getAz: func {
-		# TODO: Figure out why we use the supermode AZ here!?!?
+		# We return the parents mode AZ and bars in this class, so they are shown in radar display as B4 A4 etc etc.
 		return me.superMode.getAz();
 	},
 	preStep: func {
