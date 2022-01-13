@@ -514,6 +514,12 @@ Blep = {
 		return me.blepPitch;
 	},
 
+	getRangeNow: func {
+		# Meters
+		me.blepRange = self.getCoord().distance_to(me.getCoord());
+		return me.blepRange;
+	},
+
 	getHeading: func {
 		return me.values[3];
 	},

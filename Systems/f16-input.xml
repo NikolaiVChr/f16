@@ -635,14 +635,14 @@
             <binding>
                 <command>property-adjust</command>
                 <property>controls/radar/antennae-knob</property>
-                <step>0.05</step>
+                <step>0.025</step>
                 <min>-1</min>
                 <max>1</max>
                 <wrap>false</wrap>
             </binding>
             <binding>
                 <command>nasal</command>
-                <script>screen.log.write(sprintf("Antennae knob at %+d degrees",getprop("controls/radar/antennae-knob")*60));</script>
+                <script>screen.log.write(sprintf("Antennae knob at %+.1f degrees",getprop("controls/radar/antennae-knob")*60));</script>
             </binding>
         </key>
         <key n="73">
@@ -651,14 +651,14 @@
             <binding>
                 <command>property-adjust</command>
                 <property>controls/radar/antennae-knob</property>
-                <step>-0.05</step>
+                <step>-0.025</step>
                 <min>-1</min>
                 <max>1</max>
                 <wrap>false</wrap>
             </binding>
             <binding>
                 <command>nasal</command>
-                <script>screen.log.write(sprintf("Antennae knob at %+d degrees",getprop("controls/radar/antennae-knob")*60));</script>
+                <script>screen.log.write(sprintf("Antennae knob at %+.1f degrees",getprop("controls/radar/antennae-knob")*60));</script>
             </binding>
         </key>
         <key n="25">

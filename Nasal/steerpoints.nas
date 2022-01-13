@@ -172,6 +172,16 @@ var getCurrentRange = func {
 	return s.distance_to(geo.aircraft_position())*M2NM;
 }
 
+var getCurrentGroundPitch = func {
+	#if (getCurrentNumber() != 0) {
+		var gCoord = getCurrentGroundCoord();
+		if (gCoord != nil) {
+			return vector.Math.getPitch(geo.aircraft_position(), gCoord);
+		}
+	#}
+	return nil;
+}
+
 var getCurrentSlantRange = func {
 	# Return slant range in nm to current steerpoint.
 	if (getCurrentNumber() == 0) return nil;
@@ -196,6 +206,24 @@ var getCurrentCoord = func {
 	var s = getNumber(getCurrentNumber());
 	if (s == nil) return nil;
 	return stpt2coord(s);
+}
+
+var getCurrentGroundCoord = func {
+	# returns current steerpoint as geo.Coord
+	var s = getNumber(getCurrentNumber());
+	if (s == nil) return nil;
+	var elev = geo.elevation(s.lat, s.lon);
+	if (elev == nil) {
+		if (s.alt != nil) {
+			elev = s.alt * FT2M;
+		} else {
+			return nil;
+		}
+	}
+	var p = geo.Coord.new();
+    p.set_latlon(s.lat, s.lon, elev);
+	
+	return p;
 }
 
 var setCurrentNumber = func (number) {

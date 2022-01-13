@@ -453,6 +453,46 @@ var unitTest = {
         me.thousandVectorGeo = Math.product(100000, me.thousandVectorGeo);
         me.lookAt = geo.Coord.new().set_xyz(myCoord.x()+me.thousandVectorGeo[0], myCoord.y()+me.thousandVectorGeo[1], myCoord.z()+me.thousandVectorGeo[2]);
         printf("Looking out of aircraft window 100000m away heading 75 and 40 degs down: %.4f heading %.4f pitch %.4f meter.", myCoord.course_to(me.lookAt), Math.getPitch(myCoord, me.lookAt), myCoord.direct_distance_to(me.lookAt));
+        # 4: debug test for radar. Scenery must be loaded close to the f16 coord for it to work.
+        var f16 = geo.Coord.new().set_xyz(-2221506.332649736, -4628853.303172908, 3789620.646061851);
+        var heading = 151.81;
+        var altitude = 35613;
+        var lookdown = -9;
+        me.discDirforGMTop = vector.Math.pitchYawVector(lookdown+2.25,-(0+heading),[1,0,0]);
+        me.discDirforGMBot = vector.Math.pitchYawVector(lookdown-2.25,-(0+heading),[1,0,0]);
+        me.radarBeamGeoVectorBot = vector.Math.vectorToGeoVector(me.discDirforGMBot, f16);
+        me.radarBeamGeoVectorTop = vector.Math.vectorToGeoVector(me.discDirforGMTop, f16);
+        me.xyzSelf = {"x":f16.x(), "y":f16.y(), "z":f16.z()};
+        me.terrainGeodBot = get_cart_ground_intersection(me.xyzSelf, me.radarBeamGeoVectorBot);
+        me.terrainGeodTop = get_cart_ground_intersection(me.xyzSelf, me.radarBeamGeoVectorTop);
+        if (me.terrainGeodBot != nil and me.terrainGeodTop != nil) {
+            me.terrainCoordBot = geo.Coord.new().set_latlon(me.terrainGeodBot.lat, me.terrainGeodBot.lon, me.terrainGeodBot.elevation);
+            me.terrainCoordTop = geo.Coord.new().set_latlon(me.terrainGeodTop.lat, me.terrainGeodTop.lon, me.terrainGeodTop.elevation);
+            print("Heading 151");
+            printf("-05 degs pitch = %.2f",Math.getPitch(f16, me.terrainCoordTop));
+            printf("-10 degs pitch = %.2f",Math.getPitch(f16, me.terrainCoordBot));
+            printf("Distance nm between bottom and top = %.2f", me.terrainCoordBot.distance_to(me.terrainCoordTop)*M2NM);
+        } else {
+            print("Terrasunk south ",me.terrainGeodBot != nil,me.terrainGeodTop != nil);
+        }
+        heading = 0;
+        me.discDirforGMTop = vector.Math.pitchYawVector(lookdown+2.25,-(0+heading),[1,0,0]);
+        me.discDirforGMBot = vector.Math.pitchYawVector(lookdown-2.25,-(0+heading),[1,0,0]);
+        me.radarBeamGeoVectorBot = vector.Math.vectorToGeoVector(me.discDirforGMBot, f16);
+        me.radarBeamGeoVectorTop = vector.Math.vectorToGeoVector(me.discDirforGMTop, f16);
+        me.xyzSelf = {"x":f16.x(), "y":f16.y(), "z":f16.z()};
+        me.terrainGeodBot = get_cart_ground_intersection(me.xyzSelf, me.radarBeamGeoVectorBot);
+        me.terrainGeodTop = get_cart_ground_intersection(me.xyzSelf, me.radarBeamGeoVectorTop);
+        if (me.terrainGeodBot != nil and me.terrainGeodTop != nil) {
+            me.terrainCoordBot = geo.Coord.new().set_latlon(me.terrainGeodBot.lat, me.terrainGeodBot.lon, me.terrainGeodBot.elevation);
+            me.terrainCoordTop = geo.Coord.new().set_latlon(me.terrainGeodTop.lat, me.terrainGeodTop.lon, me.terrainGeodTop.elevation);
+            print("Heading 0");
+            printf("-05 degs pitch = %.2f",Math.getPitch(f16, me.terrainCoordTop));
+            printf("-10 degs pitch = %.2f",Math.getPitch(f16, me.terrainCoordBot));
+            printf("Distance nm between bottom and top = %.2f", me.terrainCoordBot.distance_to(me.terrainCoordTop)*M2NM);
+        } else {
+            print("Terrasunk north ",me.terrainGeodBot != nil,me.terrainGeodTop != nil);
+        }
     },
 };
 #unitTest.start();

@@ -62,8 +62,8 @@
                 <property>f16/avionics/mfd-l-gain</property>
                 <factor>1</factor>
                 <step>-0.1</step>
-                <min>0.2</min>
-                <max>2.2</max>
+                <min>1.0</min>
+                <max>2.5</max>
                 <wrap>false</wrap>
             </binding>
         </increase>
@@ -73,8 +73,8 @@
                 <property>f16/avionics/mfd-l-gain</property>
                 <factor>1</factor>
                 <step>0.1</step>
-                <min>0.2</min>
-                <max>2.2</max>
+                <min>1.0</min>
+                <max>2.5</max>
                 <wrap>false</wrap>
             </binding>
         </decrease>
