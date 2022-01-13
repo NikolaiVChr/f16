@@ -67,6 +67,7 @@
           }
         }
       }
+      setprop("rendering/scene/diffuse/red-unbound", getprop("rendering/scene/diffuse/red"));
       if (looping) settimer(loop, 0.10);
     }
     
