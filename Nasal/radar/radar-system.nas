@@ -1082,6 +1082,13 @@ AIContact = {
 		return nil;
 	},
 
+	getLastElev: func {
+		if (size(me.bleps)) {
+			return me.bleps[size(me.bleps)-1].getElev();
+		}
+		return nil;
+	},
+
 	getLastRangeDirect: func {
 		if (size(me.bleps)) {
 			#if (me.bleps[size(me.bleps)-1][4] != nil) {
@@ -1439,19 +1446,25 @@ NoseRadar = {
 		#print("In Field of Regard: "~size(me.vector_aicontacts_for));
 	},
 
-	scanSingleContact: func (contact) {# TODO: rework this method (If its even needed anymore)
-		if (!me.enabled) return;
+	scanSingleContact: func (contact) {
+		if (!me.enabled or contact == nil) return;
 		# called on demand
-		# not used atm.
+		
+		if (!contact.isVisible()) {  # moved to nose radar. TODO: WHy double it in discradar? hmm, dont matter so much, its lightning fast
+			emesary.GlobalTransmitter.NotifyAll(me.FORNotification.updateV([]));
+			return;
+		}
+
 		me.vector_aicontacts_for = [];
 		me.dev = contact.getDeviation();
 		me.rng = contact.getRangeDirect();
-		contact.storeDeviation([me.dev[0],me.dev[1],me.rng,contact.getCoord(),contact.getHeading(), contact.getPitch(), contact.getRoll()]);#TODO: store approach velocity also
+		contact.storeDeviation([me.dev[0],me.dev[1],me.rng,contact.getCoord(),contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation(), 0, 0, 0, contact.getSpeed()]);
 		append(me.vector_aicontacts_for, contact);
 
 		emesary.GlobalTransmitter.NotifyAll(me.FORNotification.updateV(me.vector_aicontacts_for));
 		#print("In Field of Regard: "~size(me.vector_aicontacts_for));
 	},
+
 	del: func {
         emesary.GlobalTransmitter.DeRegister(me.NoseRadarRecipient);
     },

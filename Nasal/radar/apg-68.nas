@@ -569,7 +569,12 @@ var APG68 = {
 		me.elapsed = elapsedProp.getValue();
 		me.dt = me.elapsed - me.lastElapsed;
 		me.lastElapsed = me.elapsed;
-		if (me.enabled) {			
+		if (me.enabled) {
+			if (me.currentMode.painter and me.currentMode.detectAIR) {
+				# We need faster updates to not lose track of oblique flying locks close by when in STT.
+				me.ContactNotification.vector = [me.getPriorityTarget()];
+				emesary.GlobalTransmitter.NotifyAll(me.ContactNotification);
+			}
 			if (!me.tiltOverride) {
 				# Tilt is not force set by the mode, so we read the antennae tilt knob property.
 				me.tilt = antennae_knob_prop.getValue()*60;
@@ -617,6 +622,7 @@ var APG68 = {
 	            datalink.clear_data();
 	        }
 		}
+		
 		me.debug = getprop("debug-radar/debug-main");
 	},
 	loopSlow: func {
@@ -2548,10 +2554,10 @@ var F16STTMode = {
 	rcsFactor: 1,
 	maxRange: 160,
 	priorityTarget: nil,
-	az: APG68.instantFoVradius,
+	az: APG68.instantFoVradius*1.5,
 	bars: 2,
-	minimumTimePerReturn: 0.10,
-	timeToKeepBleps: 7,
+	minimumTimePerReturn: 0.07,
+	timeToKeepBleps: 5, # Need to have time to move disc to the selction from wherever it was before entering STT.
 	painter: 1,
 	new: func (radar = nil) {
 		var mode = {parents: [F16STTMode, RadarMode]};
@@ -2634,13 +2640,14 @@ var F16STTMode = {
 	frameCompleted: func {
 		if (me.lastFrameStart != -1) {
 			me.lastFrameDuration = me.radar.elapsed - me.lastFrameStart;
+			me.timeToKeepBleps = math.max(1, me.radar.targetHistory*me.lastFrameDuration);
 		}
 		me.lastFrameStart = me.radar.elapsed;
 	},
 	leaveMode: func {
 		me.priorityTarget = nil;
 		me.lastFrameStart = -1;
-		me.timeToKeepBleps = 7;# TODO: Why ?
+		me.timeToKeepBleps = 5;# Reset to 5, since frameCompleted might have lowered it.
 	},
 	getSearchInfo: func (contact) {
 		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
