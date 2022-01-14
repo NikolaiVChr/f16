@@ -42,7 +42,7 @@
     <animation>
         <type>knob</type>
         <object-name>MFDButtonGain</object-name>
-        <property>f16/avionics/mfd-r-gain</property>
+        <property>f16/avionics/mfd-l-gain</property>
         <factor>0</factor>
         <offset-deg>0</offset-deg>
         <center>
@@ -58,7 +58,7 @@
         <increase>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/mfd-r-gain</property>
+                <property>f16/avionics/mfd-l-gain</property>
                 <factor>1</factor>
                 <step>-0.1</step>
                 <min>1.0</min>
@@ -69,7 +69,7 @@
         <decrease>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/mfd-r-gain</property>
+                <property>f16/avionics/mfd-l-gain</property>
                 <factor>1</factor>
                 <step>0.1</step>
                 <min>1.0</min>
