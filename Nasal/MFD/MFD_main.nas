@@ -1509,7 +1509,7 @@ var MFD_Device =
                         #.setScale(8,8)
                         .set("z-index",0);#TODO: lower than GM text background
                     var vari = getprop("sim/variant-id");
-                    me.mono = !(vari<2 or vari ==3);
+                    me.mono = (vari<2 or vari ==3)?0.4:1;
                     me.gainNode = me.model_index?props.globals.getNode("f16/avionics/mfd-l-gain",0):props.globals.getNode("f16/avionics/mfd-l-gain",0);
                     radar_system.mapper.setImage(me.gmImage,31,0,64,me.mono, me.gainNode);
                 }
