@@ -6,7 +6,14 @@
 # ---------------------------
 # Richard Harrison (rjh@zaretto.com) 2016-07-01  - based on F-15 HUD
 # ---------------------------
-
+#setprop("a-alt",-10);#13 
+#setprop("a-spd",  0);#5  
+#setprop("a-rll",  0);#16
+var skew_alt = 0;
+var skew_spd = 0;
+var skew_rll = 0;
+var skew_hdg = 0;
+#setprop("a-mask",1.32);
 var flirImageReso = 16;
 var transfer_dist = "";
 var transfer_mode = "";
@@ -16,12 +23,9 @@ var transfer_stpt = "";
 
 var ht_debug = 0;
 
-var pitch_offset = 12;
-var pitch_factor = 14.85;#19.8;
-var pitch_factor_2 = pitch_factor * 180.0 / math.pi;
 var alt_range_factor = (9317-191) / 100000; # alt tape size and max value.
 var ias_range_factor = (694-191) / 1100;
-var use_war_hud = 1;
+var use_war_hud = 0;
 var uv_x1 = 0;
 var uv_x2 = 0;
 var semi_width = 0.0;
@@ -61,13 +65,18 @@ var F16_HUD = {
         #
         # F16A: Total Field of View of the F-16 A/B PDU is 20deg but the Instantaneous FoV is only 9deg in elevation and 13.38deg in azimuth
         
-        if (use_war_hud and getprop("sim/variant-id") == 4) {
-            HudMath.init([-4.54553+0.013,-0.04674,0.84791+0.010], [-4.54553+0.013,0.04674,0.71547+0.010], [sx,sy], [0,1.0], [0.695633,0.0], 0);
+        if (getprop("sim/variant-id") == 4) {
+            setprop("sim/current-view/z-offset-m", -4.075);
+            setprop("sim/current-view/pitch-offset-deg", -15.5);
+            setprop("sim/view[0]/z-offset-m", -4.075);
+            setprop("sim/view[0]/pitch-offset-deg", -15.5);
+            HudMath.init([-4.54553+0.013,-0.057863,0.84791+0.010], [-4.56837+0.013, 0.057863,0.71547+0.010], [sx,sy], [0,1.0], [0.788878,0.0], 0);
             uv_x1 = 0;
-            uv_x2 = 0.695633;
-            semi_width = 0.04674;
+            uv_x2 = 0.788878;
+            semi_width = 0.05302;# meters
             uv_used = uv_x2-uv_x1;
             tran_x = 0;
+            use_war_hud = 1;
             #print(me.map(0,-0.092742, 0.347811, -0.05921, 0));
             # -0.05921   x  0
             # -0.092742  0  0.347811
@@ -79,6 +88,10 @@ var F16_HUD = {
             uv_used = uv_x2-uv_x1;
             tran_x = 0;
         }
+        skew_alt = use_war_hud?13:-10; 
+        skew_spd = use_war_hud?5:0;
+        skew_rll = use_war_hud?16:0;
+        skew_hdg = use_war_hud?16:0;
 
         obj.sy = sy;                        
         obj.sx = sx*uv_used;
@@ -86,14 +99,12 @@ var F16_HUD = {
         obj.canvas.addPlacement({"node": canvas_item});
         obj.canvas.setColorBackground(0.30, 1, 0.3, 0.00);
 
-# Create a group for the parsed elements
+        # Create a group for the parsed elements
         obj.svg = obj.canvas.createGroup().hide();
         obj.main_mask = obj.canvas.createGroup().set("z-index",20000);
  
-# Parse an SVG file and add the parsed elements to the given group
-        #print("HUD Parse SVG ",
-            canvas.parsesvg(obj.svg, svgname);
-            #);
+        # Parse an SVG file and add the parsed elements to the given group
+        canvas.parsesvg(obj.svg, svgname);
 
         obj.hydra = 0;
 
@@ -107,12 +118,7 @@ var F16_HUD = {
 
         obj.svg.setTranslation (tran_x,tran_y);
 
-        obj.ladder = obj.get_element("ladder");
-
-        var cent = obj.ladder.getCenter();
-        obj.ladder_center = cent;
-
-        obj.VV = obj.get_element("VelocityVector");
+        #obj.VV = obj.get_element("VelocityVector");
 
         obj.heading_tape = obj.get_element("heading-scale");
         obj.heading_tape_pointer = obj.get_element("path3419");
@@ -122,9 +128,7 @@ var F16_HUD = {
 
         obj.alt_range = obj.get_element("alt_range");
         obj.ias_range = obj.get_element("ias_range");
-        obj.oldBore = obj.get_element("path4530-6");
-        obj.target_locked = obj.get_element("target_locked");
-        obj.target_locked.setVisible(0);
+
         obj.alt_line = obj.get_element("alt_tick_vert_line");
         obj.alt_line.hide();
         obj.vel_line = obj.get_element("ias_tick_vert_line");
@@ -194,7 +198,6 @@ var F16_HUD = {
         append(obj.total, obj.roll_lines);
         append(obj.total, obj.alt_range);
         append(obj.total, obj.ias_range);
-        #append(obj.total, obj.target_locked);
         append(obj.total, obj.alt_line);
         append(obj.total, obj.vel_ind);
         append(obj.total, obj.vel_line);
@@ -228,7 +231,7 @@ var F16_HUD = {
 
         obj.flirPicHD = obj.svg.createChild("image")
                 .set("src", "Aircraft/f16/Nasal/HUD/flir"~flirImageReso~".png")
-                .setScale(256/flirImageReso,256/flirImageReso)
+                .setScale(256/flirImageReso,256/flirImageReso)#340,260
                 .set("z-index",10001);
         obj.scanY = 0;
         obj.scans = flirImageReso/(getprop("f16/avionics/hud-flir-optimum")?4:2);
@@ -239,39 +242,7 @@ var F16_HUD = {
         obj.max_symbols = 10;
         obj.tgt_symbols =  setsize([],obj.max_symbols);
 
-        for (var i = 0; i < obj.max_symbols; i += 1)
-        {
-            var name = "target_"~i;
-            var tgt = obj.svg.getElementById(name);
-            if (tgt != nil)
-            {
-                obj.tgt_symbols[i] = tgt;
-                tgt.updateCenter();
-                tgt.setVisible(0);
-                append(obj.total, tgt);
-#                print("HUD: loaded ",name);
-            }
-            else
-                print("HUD: could not locate ",name);
-        }
-        obj.custom = obj.canvas.createGroup();
-        obj.flyup = obj.svg.createChild("text")
-                .setText("FLYUP")
-                .setTranslation(sx*0.5*uv_used,sy*0.30)
-                .setAlignment("center-center")
-                .setColor(0,1,0,1)
-                .setFont(HUD_FONT)
-                .setFontSize(13, 1.4);
-        append(obj.total, obj.flyup);
-        obj.stby = obj.svg.createChild("text")
-                .setText("NO RAD")
-                .setTranslation(sx*0.5*uv_used,sy*0.15)                
-                .setAlignment("center-top")
-                .setColor(0,1,0,1)
-                .setFont(HUD_FONT)
-                .setFontSize(11, 1.1);
-
-          append(obj.total, obj.stby);
+        
 #        obj.raltR = obj.svg.createChild("text")
 #                .setText("R")
 #                .setTranslation(sx*1*0.675633-5,sy*0.45)
@@ -339,8 +310,9 @@ var F16_HUD = {
                 .set("blend-destination-alpha","one-minus-src-alpha")
                 #.set("blend-destination","zero")
                 .set("src", "Aircraft/f16/Nasal/HUD/main_mask.png");
-        if (use_war_hud and getprop("sim/variant-id") == 4) {
-            obj.super_mask.hide();
+        if (use_war_hud) {
+            #obj.super_mask.hide();
+            obj.super_mask.setScale(1.132,1);
         }
         obj.speed_mask = obj.svg.createChild("image")
                 .setTranslation(-27+0.21*sx*uv_used,sy*0.245-6)
@@ -569,7 +541,6 @@ append(obj.total, obj.speed_curr);
             .setTranslation(sx*0.5*uv_used,sy*0.25);
             append(obj.total, obj.ASEC120Aspect);
         
-        obj.VV.hide();
         mr = mr*1.5;#incorrect, but else in FG it will seem too small.
 
         obj.initUpdate =1;
@@ -617,15 +588,33 @@ append(obj.total, obj.speed_curr);
                             .moveTo(0,0)
                             .lineTo(-50,50)
                             .setStrokeLineWidth(1)
-                            .setColor(0,1,0);
+                            .setColor(0,1,0)
+                            .hide();
         obj.flyupRight  = obj.centerOrigin.createChild("path")
                             .lineTo(50,-50)
                             .moveTo(0,0)
                             .lineTo(50,50)
                             .setStrokeLineWidth(1)
-                            .setColor(0,1,0);
+                            .setColor(0,1,0)
+                            .hide();
         append(obj.total, obj.flyupRight);
         append(obj.total, obj.flyupLeft);
+        obj.flyup = obj.centerOrigin.createChild("text")
+                .setText("FLYUP")
+                .setTranslation(0,-50)
+                .setAlignment("center-center")
+                .setColor(0,1,0,1)
+                .setFont(HUD_FONT)
+                .setFontSize(13, 1.4);
+        append(obj.total, obj.flyup);
+        obj.stby = obj.centerOrigin.createChild("text")
+                .setText("NO RAD")
+                .setTranslation(0,0)                
+                .setAlignment("center-top")
+                .setColor(0,1,0,1)
+                .setFont(HUD_FONT)
+                .setFontSize(11, 1.1);
+          append(obj.total, obj.stby);
         
                             
         obj.greatCircleSteeringCue = obj.centerOrigin.createChild("path")# nickname: tadpole
@@ -718,7 +707,6 @@ append(obj.total, obj.speed_curr);
             .setStrokeLineWidth(1)
             .setColor(0,1,0);
         append(obj.total, obj.irCross);
-        obj.target_locked.hide();
         obj.target_locked = obj.centerOrigin.createChild("path")
             .moveTo(-boxRadius,-boxRadius)
             .vert(boxRadius*2)
@@ -908,7 +896,7 @@ append(obj.total, obj.speed_curr);
         obj.h_rot   = obj.horizon_group.createTransform();
 
         # pitch lines
-        var pixelPerDegreeY = HudMath.getPixelPerDegreeAvg(5.0);#15.43724802231049;
+        var pixelPerDegreeY = HudMath.getPixelPerDegreeAvg(5.0);
         var pixelPerDegreeX = 16.70527172464148;
         var distance = pixelPerDegreeY * 5;
         var minuss = 0.125*sx*uv_used;
@@ -1331,12 +1319,9 @@ append(obj.total, obj.speed_curr);
                                                      obj.boreSymbol.hide();
                                                  } else {
                                                      obj.boreSymbol.setTranslation(HudMath.getBorePos());
-                                                     #obj.eegsGroup.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud);
-                                                     #printf("bore %d,%d",obj.sx/2,obj.sy-obj.texels_up_into_hud);
                                                      obj.locatorAngle.setTranslation(HudMath.getBorePos()[0]-10, HudMath.getBorePos()[1]);
                                                      obj.boreSymbol.show();
                                                  }
-                                                 obj.oldBore.hide();
                                       }),
             props.UpdateManager.FromHashList(["gear_down"], 0.5, func(val)
                                              {
@@ -1349,7 +1334,6 @@ append(obj.total, obj.speed_curr);
             props.UpdateManager.FromHashList(["texUp","VV_x","VV_y","fpm"], 0.001, func(hdp)
                                       {
                                         if (hdp.fpm > 0 and (!obj.showmeCCIP or !isDropping or math.mod(int(8*(systime()-int(systime()))),2)>0)) {
-                                            #obj.VV.setTranslation (obj.sx*0.5+hdp.VV_x * obj.texelPerDegreeX, obj.sy-obj.texels_up_into_hud+hdp.VV_y * obj.texelPerDegreeY);
                                             obj.VV.setTranslation (hdp.VV_x, hdp.VV_y);
                                             obj.VV.show();
                                             obj.VV.update();
@@ -1414,13 +1398,14 @@ append(obj.total, obj.speed_curr);
                                       {
                                         if (hdp.gear_down and !hdp.wow) {
                                           obj.bracket.setTranslation (hdp.VV_x, HudMath.getCenterPosFromDegs(0,-11)[1]);
-                                          #obj.bracket.setTranslation (obj.sx/2+hdp.VV_x * obj.texelPerDegreeX, obj.sy-obj.texels_up_into_hud+13 * obj.texelPerDegreeY);
                                           obj.bracket.show();
                                           obj.roll_lines.hide();
                                           obj.roll_pointer.hide();
                                         } else {
                                           obj.bracket.hide();
                                           if (hdp.fpm==2 and hdp.ded == 0 and !hdp.dgft) {
+                                              obj.roll_lines.setTranslation(skew_rll, 0);
+                                              obj.roll_pointer.setTranslation(skew_rll, 0);
                                               obj.roll_lines.show();
                                               obj.roll_pointer.show();
                                           } else {
@@ -1431,7 +1416,6 @@ append(obj.total, obj.speed_curr);
                                       }),
             props.UpdateManager.FromHashList(["texUp","pitch","roll","fpm","VV_x","VV_y","gear_down", "dgft", "drift"], 0.001, func(hdp)
                                       {
-                                          obj.ladder.hide();
                                           if (hdp.servTurn) {
                                             obj.roll_pointer.setRotation (hdp.roll_rad);
                                           }
@@ -1439,11 +1423,6 @@ append(obj.total, obj.speed_curr);
                                             obj.ladder_group.hide();
                                             return;
                                           }
-                                            #obj.ladder.setTranslation (0.0, hdp.pitch * pitch_factor+pitch_offset);                                           
-                                            #obj.ladder.setCenter (obj.ladder_center[0], obj.ladder_center[1] - hdp.pitch * pitch_factor);
-                                            #obj.ladder.setRotation (hdp.roll_rad);
-                                            
-                                            #obj.ladder.show();
                                         
                                         var result = HudMath.getDynamicHorizon(5,0.5,0.5,0.7,0.5,hdp.drift < 2,-0.25);
                                         if (hdp.servTurn) {
@@ -1459,57 +1438,8 @@ append(obj.total, obj.speed_curr);
                                         obj.ladder_group.update();
                                         obj.horizon_group.update();
                                         return;
-                                        #############################
-                                        # start new ladder:
-                                        #############################
-                                        obj.fpi_x = hdp.VV_x;
-                                        obj.fpi_y = hdp.VV_y;
-                                        #obj.fpi_x = hdp.VV_x * obj.texelPerDegreeX;
-                                        #obj.fpi_y = hdp.VV_y * obj.texelPerDegreeY;
-                                        obj.rot = -hdp.roll * D2R;
                                         
-                                        obj.pos_y_rel = obj.fpi_y;#position from bore
-                                        obj.fpi_polar = obj.clamp(math.sqrt(obj.fpi_x*obj.fpi_x+obj.pos_y_rel*obj.pos_y_rel),0.0001,10000);
-                                        obj.inv_angle = obj.clamp(-obj.pos_y_rel/obj.fpi_polar,-1,1);
-                                        obj.fpi_angle = math.acos(obj.inv_angle);
-                                        if (obj.fpi_x < 0) {
-                                          obj.fpi_angle *= -1;
-                                        }
-                                        obj.fpi_pos_rel_x    = math.sin(obj.fpi_angle-obj.rot)*obj.fpi_polar;
-
-                                        obj.rot_deg = geo.normdeg(-hdp.roll);
-                                        obj.default_lateral_pitchnumbers = obj.sx*0.40;
-                                        var centerOffset = -obj.texels_up_into_hud+0.5*obj.sy;
-                                        var frac = 1;
-                                        if (obj.rot_deg >= 0 and obj.rot_deg < 90) {
-                                          obj.max_lateral_pitchnumbers   = obj.extrapolate(obj.rot_deg,0,90,obj.default_lateral_pitchnumbers,obj.default_lateral_pitchnumbers+centerOffset);
-                                          obj.max_lateral_pitchnumbers_p = obj.extrapolate(obj.rot_deg,0,90,obj.default_lateral_pitchnumbers*frac,obj.default_lateral_pitchnumbers*frac-centerOffset);
-                                        } elsif (obj.rot_deg >= 90 and obj.rot_deg < 180) {
-                                          obj.max_lateral_pitchnumbers   = obj.extrapolate(obj.rot_deg,90,180,obj.default_lateral_pitchnumbers+centerOffset,obj.default_lateral_pitchnumbers);
-                                          obj.max_lateral_pitchnumbers_p = obj.extrapolate(obj.rot_deg,90,180,obj.default_lateral_pitchnumbers*frac-centerOffset,obj.default_lateral_pitchnumbers*frac);
-                                        } elsif (obj.rot_deg >= 180 and obj.rot_deg < 270) {
-                                          obj.max_lateral_pitchnumbers   = obj.extrapolate(obj.rot_deg,180,270,obj.default_lateral_pitchnumbers,obj.default_lateral_pitchnumbers-centerOffset);
-                                          obj.max_lateral_pitchnumbers_p = obj.extrapolate(obj.rot_deg,180,270,obj.default_lateral_pitchnumbers*frac,obj.default_lateral_pitchnumbers*frac+centerOffset);
-                                        } else {
-                                          obj.max_lateral_pitchnumbers   = obj.extrapolate(obj.rot_deg,270,360,obj.default_lateral_pitchnumbers-centerOffset,obj.default_lateral_pitchnumbers);
-                                          obj.max_lateral_pitchnumbers_p = obj.extrapolate(obj.rot_deg,270,360,obj.default_lateral_pitchnumbers*frac+centerOffset,obj.default_lateral_pitchnumbers*frac);
-                                        }
-                                        obj.horizon_lateral  = obj.clamp(obj.fpi_pos_rel_x,-obj.max_lateral_pitchnumbers,obj.max_lateral_pitchnumbers_p);
-
-
-
-
-                                        #obj.horizon_vertical = clamp(-math.cos(obj.fpi_angle-obj.rot)*obj.fpi_polar, -obj.sy*0, obj.sy*0.75);
-                                        obj.h_rot.setRotation(result[1]);
-                                        obj.horizon_group.setTranslation(result[0]);#place it on bore
-                                        obj.ladder_group.setTranslation(result[2]);
-                                        obj.ladder_group.show();
-                                        obj.ladder_group.update();
-                                        obj.horizon_group.update();
                                       }),
-#            props.UpdateManager.FromHashValue("roll_rad", 1.0, func(roll_rad)
-#                                      {
-#                                      }),
             props.UpdateManager.FromHashList(["altitude_agl_ft","cara","measured_altitude","altSwitch","alow","dgft"], 1.0, func(hdp)
                                       {
                                           obj.agl=hdp.altitude_agl_ft;
@@ -1579,7 +1509,7 @@ append(obj.total, obj.speed_curr);
                                           } elsif (obj.altScaleMode == 1) {
                                             #print("radar");
                                             # radar scale
-                                            obj.alt_range.setTranslation(-10, obj.agl * alt_range_factor);
+                                            obj.alt_range.setTranslation(skew_alt, obj.agl * alt_range_factor);
                                             obj.alt_curr.setText(obj.getAltTxt(obj.agl));
                                             obj.alt_type.setText("R");
                                             obj.ralt.hide();
@@ -1595,7 +1525,7 @@ append(obj.total, obj.speed_curr);
                                           } else {
                                             #print("baro");
                                             # baro scale
-                                            obj.alt_range.setTranslation(-10, hdp.measured_altitude * alt_range_factor);
+                                            obj.alt_range.setTranslation(skew_alt, hdp.measured_altitude * alt_range_factor);
                                             obj.alt_curr.setText(obj.getAltTxt(hdp.measured_altitude));
                                             obj.alt_type.setText("");
                                             obj.ralt.show();
@@ -1632,19 +1562,19 @@ append(obj.total, obj.speed_curr);
                                           var pitot = hdp.servPitot and hdp.servStatic;
                                           if (hdp.HUD_VEL == 1 or hdp.gear_down) {
                                             if (hdp.servSpeed) {
-                                                obj.ias_range.setTranslation(0, hdp.calibrated * ias_range_factor * pitot);
+                                                obj.ias_range.setTranslation(skew_spd, hdp.calibrated * ias_range_factor * pitot);
                                                 obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.calibrated));
                                             }
                                             obj.speed_type.setText("C");
                                           } elsif (hdp.HUD_VEL == 0) {
                                             if (hdp.servSpeed) {
-                                                obj.ias_range.setTranslation(0, hdp.TAS * ias_range_factor * pitot);
+                                                obj.ias_range.setTranslation(skew_spd, hdp.TAS * ias_range_factor * pitot);
                                                 obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.TAS));
                                             }
                                             obj.speed_type.setText("T");
                                           } else {
                                             if (hdp.servSpeed) {
-                                                obj.ias_range.setTranslation(0, hdp.GND_SPD * ias_range_factor * pitot);                                            
+                                                obj.ias_range.setTranslation(skew_spd, hdp.GND_SPD * ias_range_factor * pitot);                                            
                                                 obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.GND_SPD));
                                             }
                                             obj.speed_type.setText("G");
@@ -1663,9 +1593,9 @@ append(obj.total, obj.speed_curr);
                                           var head = geo.normdeg(hdp.useMag?hdp.headingMag:hdp.heading);
                                           
                                           if (head < 180)
-                                            obj.heading_tape_position = -head*54/10;
+                                            obj.heading_tape_position = -head*54/10+skew_hdg;
                                           else
-                                            obj.heading_tape_position = (360-head)*54/10;
+                                            obj.heading_tape_position = (360-head)*54/10+skew_hdg;
                                           if (hdp.gear_down) {
                                               obj.heading_tape_positionY = -10;
                                               obj.head_curr.setTranslation(0.5*sx*uv_used,sy*0.1-12);
@@ -1687,9 +1617,9 @@ append(obj.total, obj.speed_curr);
             props.UpdateManager.FromHashList(["time_until_crash","vne","warn", "elapsed", "data"], 0.05, func(hdp)
                                              {
                                                  obj.ttc = hdp.time_until_crash;
+                                                 #obj.flyup.setTranslation(0, 0);
                                                  if (obj.ttc != nil and obj.ttc>0 and obj.ttc<8) {
                                                      obj.flyup.setText("FLYUP");
-                                                     #obj.flyup.setColor(1,0,0,1);
                                                      obj.flyup.show();
                                                  } elsif (hdp.vne) {
                                                          obj.flyup.setText("LIMIT");
@@ -1723,11 +1653,11 @@ append(obj.total, obj.speed_curr);
                                              {
                                                  if (hdp.data != 0) {
                                                      obj.stby.setText("MKPT"~sprintf("%03d",hdp.data));
-                                                     obj.stby.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud+7+75);
+                                                     obj.stby.setTranslation(0,HudMath.getBorePos()[1]+7+75);
                                                      obj.stby.show();
                                                  } elsif (hdp.standby and !hdp.wow0) {
                                                      obj.stby.setText("NO RAD");
-                                                     obj.stby.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud+7);
+                                                     obj.stby.setTranslation(0,HudMath.getBorePos()[1]+7);
                                                      obj.stby.show();
                                                  } else {
                                                      obj.stby.hide();
@@ -1901,12 +1831,7 @@ append(obj.total, obj.speed_curr);
             me.NzMax = 1.0;
             setprop("f16/avionics/n-reset",0);
         }
-#
-# short cut the whole thing if the display is turned off
-#        if (!hdp.hud_display or !hdp.hud_serviceable) {
-#            me.svg.setColor(0.3,1,0.3,0);
-#            return;
-#        }
+
         # part 1. update data items
         hdp.roll_rad = -hdp.roll*D2R;
         if (me.initUpdate) {
@@ -1924,48 +1849,22 @@ append(obj.total, obj.speed_curr);
             hdp.window12_txt = "12";
         }
 
-        if (hdp.FrameCount == 2 or me.initUpdate == 1) {
-            # calc of pitch_offset (compensates for AC3D model translated and rotated when loaded. Also semi compensates for HUD being at an angle.)
-            me.Hz_b =    0.66213+0.010;#0.676226;#0.663711;#0.801701;# HUD position inside ac model after it is loaded, translated (0.08m) and rotated (0.7d).
-            me.Hz_t =    0.85796+0.010;#0.86608;#0.841082;#0.976668;
-            me.Hx_m =   (-4.7148+0.013-4.53759+0.013)*0.5;#-4.62737;#-4.65453;#-4.6429;# HUD median X pos
-            me.Vz   =    hdp.current_view_y_offset_m; # view Z position (0.94 meter per default)
-            me.Vx   =    hdp.current_view_z_offset_m; # view X position (0.94 meter per default)
-            
-
-            me.bore_over_bottom = me.Vz - me.Hz_b;
-            me.Hz_height        = me.Hz_t-me.Hz_b;
-            me.hozizon_line_offset_from_middle_in_svg = 0.1346; #horizline and radar echoes fraction up from middle
-            me.frac_up_the_hud = me.bore_over_bottom / me.Hz_height;
-            me.texels_up_into_hud = me.frac_up_the_hud * me.sy;#sy default is 260
-            me.texels_over_middle = me.texels_up_into_hud - me.sy/2;
-            pitch_offset = -me.texels_over_middle + me.hozizon_line_offset_from_middle_in_svg*me.sy;
-            setprop("f16/hud/texels-up",me.texels_up_into_hud);
-        }
+        me.Vz   =    hdp.current_view_y_offset_m; # view Z position (0.94 meter per default)
+        me.Vx   =    hdp.current_view_z_offset_m; # view X position (0.94 meter per default)
+        setprop("f16/hud/texels-up", HudMath.getBorePos()[1]);
         
         me.Vy   =    hdp.current_view_x_offset_m;
-            
-        me.pixelPerMeterX = (340*uv_used)/(semi_width*2);
-        me.pixelPerMeterY = 260/(me.Hz_t-me.Hz_b);
         
-        me.pixelside = me.pixelPerMeterX*me.Vy*(!(use_war_hud and getprop("sim/variant-id") == 4));
+        me.pixelPerMeterX = HudMath.pixelPerMeterX;
+        me.pixelPerMeterY = HudMath.pixelPerMeterY;
         
-        me.svg.setTranslation(me.pixelside+tran_x, 0);
-        me.custom.setTranslation(me.pixelside, 0);
+        me.pixelside = me.pixelPerMeterX*me.Vy;#*!(use_war_hud);# slide whole hud sideways when pilot moves head sideways
+        
+        me.svg.setTranslation(me.pixelside+tran_x, tran_y);
         me.centerOrigin.setTranslation(HudMath.getCenterOrigin()[0]+me.pixelside, HudMath.getCenterOrigin()[1]);
-        me.custom.update();
         me.centerOrigin.update();
         me.svg.update();
         
-
-
-        
-
-
-
-# velocity vector
-        #340,260
-        # semi_width*2 = width of HUD  = 0.15627m
         
         me.submode = 0;
         
@@ -2002,17 +1901,12 @@ append(obj.total, obj.speed_curr);
         
 
         # UV mapped to x: uv_x1 to uv_x2
-        me.averageDegX = math.atan2(semi_width*1.0, me.Vx-me.Hx_m)*R2D;
-        me.averageDegY = math.atan2((me.Hz_t-me.Hz_b)*0.5, me.Vx-me.Hx_m)*R2D;
-        me.texelPerDegreeX = me.pixelPerMeterX*(((me.Vx-me.Hx_m)*math.tan(me.averageDegX*D2R))/me.averageDegX);
-        me.texelPerDegreeY = me.pixelPerMeterY*(((me.Vx-me.Hx_m)*math.tan(me.averageDegY*D2R))/me.averageDegY);
-
-
-
+        me.texelPerDegreeX = HudMath.getPixelPerDegreeXAvg(5);
+        me.texelPerDegreeY = HudMath.getPixelPerDegreeYAvg(5);
         
         
         me.xBore = int(me.sx*0.5/(256/flirImageReso));
-        me.yBore = flirImageReso-1-int((me.sy-me.texels_up_into_hud)/(256/flirImageReso));
+        me.yBore = flirImageReso-1-int((HudMath.getCenterOrigin()[1]+HudMath.getBorePos()[1])/(256/flirImageReso));
         me.distMin = hdp.groundspeed_kt*getprop("f16/avionics/hud-flir-distance-min");
         me.distMax = hdp.groundspeed_kt*getprop("f16/avionics/hud-flir-distance-max");
         me.gain = 1+getprop("f16/avionics/hud-cont")*2.5;
@@ -2041,7 +1935,7 @@ append(obj.total, obj.speed_curr);
                 }
             }
             me.scanY+=me.scans;if (me.scanY>flirImageReso-me.scans) me.scanY=0;
-            #me.flirPicHD.setPixel(int(me.sx*0.5/(256/flirImageReso)), flirImageReso-1-int((me.sy-me.texels_up_into_hud)/(256/flirImageReso)), [0,0,1,1]); blue dot at bore
+            #me.flirPicHD.setPixel(me.xBore, me.yBore, [0,0,1,1]);# blue dot at bore
             me.flirPicHD.dirtyPixels();
             me.flirPicHD.show();
         } else {
@@ -2075,10 +1969,11 @@ append(obj.total, obj.speed_curr);
             hdp.window11_txt = "";
             hdp.window12_txt = "";
 
-            me.ASEC262.hide();
-            me.ASEC100.hide();
-            me.ASEC120.hide();
-            me.ASEC65.hide();
+            
+            me.asec262 = 0;
+            me.asec120 = 0;
+            me.asec100 = 0;
+            me.asec65  = 0;
             var eegsShow = 0;
             var currASEC = nil;
             
@@ -2098,10 +1993,10 @@ append(obj.total, obj.speed_curr);
                         hdp.window9_txt = sprintf("%d SRM", pylons.fcs.getAmmo());#short range missile
                         if (hdp.weapn != nil) {
                             if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
-                                me.ASEC65.show();
+                                me.asec65 = 1;
                                 currASEC = nil;#[me.sx*0.5,me.sy*0.25];
                             } elsif (!hdp.standby) {
-                                me.ASEC100.show();
+                                me.asec100 = 1;
                                 currASEC = nil;#[me.sx*0.5,me.sy*0.25];
                             }
                         }
@@ -2110,10 +2005,10 @@ append(obj.total, obj.speed_curr);
                         hdp.window9_txt = sprintf("%d ASM", pylons.fcs.getAmmo());#short range missile
                         if (hdp.weapn != nil) {
                             if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
-                                me.ASEC65.show();
+                                me.asec65 = 1;
                                 currASEC = nil;#[me.sx*0.5,me.sy*0.25];
                             } elsif (!hdp.standby) {
-                                me.ASEC100.show();
+                                me.asec100 = 1;
                                 currASEC = nil;#[me.sx*0.5,me.sy*0.25];
                             }
                         }
@@ -2122,10 +2017,10 @@ append(obj.total, obj.speed_curr);
                         hdp.window9_txt = sprintf("%d AMM", pylons.fcs.getAmmo());#adv. medium range missile
                         if (hdp.weapn != nil) {
                             if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
-                                me.ASEC120.show();
+                                me.asec120 = 1;
                                 currASEC = [me.sx*0.5,me.sy*0.25];
                             } elsif (!hdp.standby) {
-                                me.ASEC262.show();
+                                me.asec262 = 1;
                                 currASEC = [me.sx*0.5,me.sy*0.25+262*mr*0.5];
                             }
                         }
@@ -2134,10 +2029,10 @@ append(obj.total, obj.speed_curr);
                         hdp.window9_txt = sprintf("%d MRM", pylons.fcs.getAmmo());#medium range missile
                         if (hdp.weapn != nil) {
                             if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
-                                me.ASEC120.show();
+                                me.asec120 = 1;
                                 currASEC = [me.sx*0.5,me.sy*0.25];
                             } elsif (!hdp.standby) {
-                                me.ASEC262.show();
+                                me.asec262 = 1;
                                 currASEC = [me.sx*0.5,me.sy*0.25+262*mr*0.5];
                             }
                         }
@@ -2310,6 +2205,10 @@ append(obj.total, obj.speed_curr);
                 
                 hdp.window3_txt = slant;
             }
+            me.ASEC262.setVisible(me.asec262);
+            me.ASEC100.setVisible(me.asec100);
+            me.ASEC120.setVisible(me.asec120);
+            me.ASEC65.setVisible(me.asec65);
             me.eegsGroup.setVisible(eegsShow);
             if (eegsShow and !me.eegsLoop.isRunning) {
                 me.eegsLoop.start();
@@ -2437,9 +2336,14 @@ append(obj.total, obj.speed_curr);
                             me.tgt.setVisible(1);
                         }
                         me.clamped = HudMath.isCenterPosClamped(me.echoPos[0],me.echoPos[1]);
+                        if (me.clamped) {
+                            # b50: Clamped:  120, -86  Canvas Y is 0 to 260  Canvas X is 0 to 236
+                            # b40: Clamped: -118,-116  Canvas Y is 0 to 260  Canvas X is 0 to 236
+                            #printf("Clamped: %d,%d  Canvas Y is %d to %d  Canvas X is %d to %d",me.echoPos[0],me.echoPos[1],HudMath.originCanvas[1], HudMath.originCanvas[1]+HudMath.canvasHeight,HudMath.originCanvas[0], HudMath.originCanvas[0]+HudMath.canvasWidth);
+                        }
                         me.ulrd = me.u.getLastRangeDirect();
                         if (me.ulrd != nil) me.designatedDistanceFT = me.ulrd*M2FT;
-                        me.target_locked.setVisible(1);
+                        me.target_locked.setVisible(!me.clamped);
                         if (me.tgt != nil) {
                             me.tgt.hide();
                         }
@@ -2491,9 +2395,7 @@ append(obj.total, obj.speed_curr);
                         if (me.clamped and me.dr != nil and me.drE != nil and math.sqrt(me.dr*me.dr+me.drE*me.drE) < 80) {
                             me.locatorLine.setTranslation(HudMath.getBorePos());
                             me.locatorLine.setRotation(HudMath.getPolarFromCenterPos(me.echoPos[0],me.echoPos[1])[0]);
-                            me.dev_h_d = me.dr;
-                            me.dev_e_d = me.drE;
-                            me.locatorAngle.setText(sprintf("%d", math.sqrt(me.dev_h_d*me.dev_h_d+me.dev_e_d*me.dev_e_d)));
+                            me.locatorAngle.setText(sprintf("%d", vector.Math.angleBetweenVectors([1,0,0], vector.Math.pitchYawVector(me.drE,-me.dr, [1,0,0]))));
                             me.locatorLineShow = 1;
                         }
                         if (me.tgt != nil) {
@@ -2682,8 +2584,6 @@ append(obj.total, obj.speed_curr);
                 var xy = HudMath.getCenterPosFromDegs(b,p);
                 var y = me.clamp(xy[1],-me.sy*0.40,me.sy*0.40);
                 var x = me.clamp(xy[0],-me.sx*0.45,me.sx*0.45);
-                #var y = me.clamp(-p*me.texelPerDegreeY+me.sy-me.texels_up_into_hud,me.sy*0.05,me.sy*0.95);
-                #var x = me.clamp(b*me.texelPerDegreeX+me.sx*0.5,me.sx*0.025,me.sx*0.975);
                 if (y != xy[1] or x != xy[0]) {
                     if (xy[0] != 0 and xy[1] != 0) {
                         var x_scale = me.sx*0.40/math.abs(xy[0]);
@@ -2847,42 +2747,7 @@ append(obj.total, obj.speed_curr);
         return me.txtRAlt; # always return 6 char string
     },
 
-    develev_to_devroll : func(notification, dev_rad, elev_rad)
-    {
-        var eye_hud_m          = me.Vx-me.Hx_m;
-        var hud_position       = 4.65453;#4.6429;#4.61428;#4.65415;#5.66824; # really -5.6 but avoiding more complex equations by being optimal with the signs.
-        var hud_radius_m       = 0.08429;
-        var clamped = 0;
-
-        eye_hud_m = hud_position + notification.current_view_z_offset_m; # optimised for signs so we get a positive distance.
-# Deviation length on the HUD (at level flight),
-        var h_dev = eye_hud_m / ( math.sin(dev_rad) / math.cos(dev_rad) );
-        var v_dev = eye_hud_m / ( math.sin(elev_rad) / math.cos(elev_rad) );
-# Angle between HUD center/top <-> HUD center/symbol position.
-        # -90° left, 0° up, 90° right, +/- 180° down. 
-        var dev_deg =  math.atan2( h_dev, v_dev ) * R2D;
-# Correction with own a/c roll.
-        var combined_dev_deg = dev_deg - notification.roll;
-# Lenght HUD center <-> symbol pos on the HUD:
-        var combined_dev_length = math.sqrt((h_dev*h_dev)+(v_dev*v_dev));
-
-# clamping
-        var abs_combined_dev_deg = math.abs( combined_dev_deg );
-        var clmp = hud_radius_m;
-
-# squeeze the top of the display area for egg shaped HUD limits.
-#   if ( abs_combined_dev_deg >= 0 and abs_combined_dev_deg < 90 ) {
-#       var coef = ( 90 - abs_combined_dev_deg ) * 0.00075;
-#       if ( coef > 0.050 ) { coef = 0.050 }
-#       clamp -= coef; 
-        #   }
-        if ( combined_dev_length > clmp ) {
-            #combined_dev_length = clamp;
-            clamped = 1;
-        }
-        var v = [combined_dev_deg, combined_dev_length, clamped];
-        return(v);
-    },
+    
 #
 #
 # Get an element from the SVG; handle errors; and apply clip rectangle
@@ -2898,8 +2763,17 @@ append(obj.total, obj.speed_curr);
         var clip_el = me.svg.getElementById(id ~ "_clip");
         if (clip_el != nil)
         {
-            clip_el.setVisible(0);
+            
             var tran_rect = clip_el.getTransformedBounds();
+
+            if (use_war_hud and id == "heading-scale") {
+                #obj.heading_tape_clip.createChild("path").square(-500,-500,1000).setColorFill(0,0,1);
+                tran_rect[2] = tran_rect[2]+7;#left
+                tran_rect[0] = tran_rect[0]+7;
+                clip_el.setTranslation(7,0);
+            }# else {
+                clip_el.setVisible(0);
+            #}
 
             var clip_rect = sprintf("rect(%d,%d, %d,%d)", 
                                    tran_rect[1], # 0 ys
@@ -3030,7 +2904,7 @@ append(obj.total, obj.speed_curr);
 
                         if(me.showme == TRUE) {
                             me.pipperLine.removeAllChildren();
-                            me.bPos = [hdp.VV_x,hdp.VV_y]; #HudMath.getBorePosSlanted(); 
+                            me.bPos = [hdp.VV_x,hdp.VV_y];
                             me.llx  = me.pos_x-me.bPos[0];
                             me.lly  = me.pos_y-me.bPos[1];
                             me.ll = math.sqrt(me.llx*me.llx+me.lly*me.lly);
@@ -3149,18 +3023,6 @@ append(obj.total, obj.speed_curr);
                     } else {
                         var ac  = me.gunPos[l][l][1];
                         pos     = me.gunPos[l][l][0];
-                        #if (l==0) {
-                        #    #printf("prev %.2f alt %.2f our-pitch %.2f our-alt %.2f",math.atan2(pos.alt()-me.eegsMe.ac.alt(),pos.distance_to(me.eegsMe.ac))*R2D-me.eegsMe.pitch,pos.alt(),me.eegsMe.pitch, me.eegsMe.ac.alt());
-                        #    printf("seen bearing %.2f from heading %.2f", me.eegsMe.ac.course_to(pos[0]), me.eegsMe.hdg);
-                        #    printf("realdist=%d",pos[0].distance_to(me.eegsMe.ac));
-                            #pos.dump();
-                        #    print();
-                        #}
-                        #me.eegsMe.devs = me.develev_to_devroll(hdp, me.eegsMe.u_dev_rad, me.eegsMe.u_elev_rad);
-                        #me.eegsMe.combined_dev_deg    =  me.eegsMe.devs[0];
-                        #me.eegsMe.combined_dev_length =  me.eegsMe.devs[1];
-                        #me.eegsMe.xcS = me.sx/2                     + (me.pixelPerMeterX * me.eegsMe.combined_dev_length * math.sin(me.eegsMe.combined_dev_deg*D2R));
-                        #me.eegsMe.ycS = me.sy-me.texels_up_into_hud - (me.pixelPerMeterY * me.eegsMe.combined_dev_length * math.cos(me.eegsMe.combined_dev_deg*D2R));
                         me.eegsMe.posTemp = HudMath.getPosFromCoord(pos,ac);
                         me.eegsMe.shellPosDist[l] = ac.direct_distance_to(pos)*M2FT;
                         me.eegsMe.shellPosX[l] = me.eegsMe.posTemp[0];#me.eegsMe.xcS;
