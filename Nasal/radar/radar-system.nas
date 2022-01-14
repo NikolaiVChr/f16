@@ -1447,14 +1447,14 @@ NoseRadar = {
 	},
 
 	scanSingleContact: func (contact) {
-		if (!me.enabled or contact == nil) return;
+		if (!me.enabled) return;
+		if (contact == nil) {return;}
 		# called on demand
 		
 		if (!contact.isVisible()) {  # moved to nose radar. TODO: WHy double it in discradar? hmm, dont matter so much, its lightning fast
 			emesary.GlobalTransmitter.NotifyAll(me.FORNotification.updateV([]));
 			return;
 		}
-
 		me.vector_aicontacts_for = [];
 		me.dev = contact.getDeviation();
 		me.rng = contact.getRangeDirect();
@@ -1736,7 +1736,7 @@ TerrainChecker = {
 	    #}
 	    
 		me.dopplerCanDetect = 0;
-	    if(contact.getType() != AIR and !me.inClutter) {
+	    if(contact.getType() != AIR or !me.inClutter) {
 	    	# Either no clutter behind or is not an air target so ground/sea radar needs to be able to see it.
 	        me.dopplerCanDetect = 1;
 	    } elsif (me.getTargetSpeedRelativeToClutter(contact) > me.doppler_speed_kt) {
