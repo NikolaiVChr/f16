@@ -1648,7 +1648,7 @@ append(obj.total, obj.speed_curr);
                                                 }
                                              }
                                             ),
-            props.UpdateManager.FromHashList(["standby", "data"], 0.5, func(hdp)
+            props.UpdateManager.FromHashList(["wow0","standby", "data"], 0.5, func(hdp)
                                              {
                                                  if (hdp.data != 0) {
                                                      obj.stby.setText("MKPT"~sprintf("%03d",hdp.data));
