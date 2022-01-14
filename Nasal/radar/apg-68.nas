@@ -131,7 +131,7 @@ var RWR = {
         me.spike = getprop("payload/armament/spike")*(getprop("ai/submodels/submodel[0]/count")>15);
         me.autoFlare = me.spike?math.max(me.closestThreat*0.25,0.05):0;
 
-        if (getprop("f16/avionics/ew-mode-knob") == 2)
+        if (0 and getprop("f16/avionics/ew-mode-knob") == 2)
         	print("wow: ", getprop("/fdm/jsbsim/gear/unit[0]/WOW"),"  spiked: ",me.spike,"  incoming: ",me.incoming, "  launch: ",me.launchClose,"  spikeResult:", me.autoFlare,"  aggresive:",me.launchClose * 0.85 + me.incoming * 0.85,"  total:",me.launchClose * 0.85 + me.incoming * 0.85+me.autoFlare);
 
         me.autoFlare += me.launchClose * 0.85 + me.incoming * 0.85;
@@ -629,7 +629,7 @@ var APG68 = {
 		#
 		# Here we ask the NoseRadar for a slice of the sky once in a while.
 		#
-		if (me.enabled) {
+		if (me.enabled and !(me.currentMode.painter and me.currentMode.detectAIR)) {
 			# 1.414 = cos(45 degs)
 			emesary.GlobalTransmitter.NotifyAll(me.SliceNotification.slice(self.getPitch(), self.getHeading(), me.fieldOfRegardMaxElev*1.414, me.fieldOfRegardMaxAz*1.414, me.getRange()*NM2M, !me.currentMode.detectAIR, !me.currentMode.detectSURFACE, !me.currentMode.detectMARINE));
 		}
