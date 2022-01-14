@@ -219,7 +219,6 @@ var F16_HUD = {
         
         obj.color = [0,1,0];
 
-        #obj.VV.set("z-index", 11000);# hmm, its inside layer1, so will still be below the heading readout.
         obj.layer1 = obj.get_element("layer1");#main svg layer.
 
         
@@ -236,9 +235,9 @@ var F16_HUD = {
         obj.scanY = 0;
         obj.scans = flirImageReso/(getprop("f16/avionics/hud-flir-optimum")?4:2);
 
-#
-#
-# Load the target symbosl.
+        #
+        #
+        # Load the target symbosl.
         obj.max_symbols = 10;
         obj.tgt_symbols =  setsize([],obj.max_symbols);
 
@@ -601,7 +600,7 @@ append(obj.total, obj.speed_curr);
         append(obj.total, obj.flyupLeft);
         obj.flyup = obj.centerOrigin.createChild("text")
                 .setText("FLYUP")
-                .setTranslation(0,-50)
+                .setTranslation(0,-75)
                 .setAlignment("center-center")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
