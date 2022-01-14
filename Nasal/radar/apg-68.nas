@@ -2554,9 +2554,10 @@ var F16STTMode = {
 	rcsFactor: 1,
 	maxRange: 160,
 	priorityTarget: nil,
-	az: APG68.instantFoVradius*1.5,
+	az: APG68.instantFoVradius*0.8,
+	barHeight: 0.90,# multiple of instantFoVradius
 	bars: 2,
-	minimumTimePerReturn: 0.07,
+	minimumTimePerReturn: 0.10,
 	timeToKeepBleps: 5, # Need to have time to move disc to the selction from wherever it was before entering STT.
 	painter: 1,
 	new: func (radar = nil) {
