@@ -4243,9 +4243,9 @@ var AIM = {
 			}
 			me.cooling_last_time = me.cool_elapsed;
 			me.detect_range_curr_nm = me.extrapolate(me.warm, 0, 1, me.cold_detect_range_nm, me.warm_detect_range_nm);
-			#me.detect_range_curr_nm *= me.seam_scan?0.5:1; # source for this is not credible.
+			me.detect_range_curr_nm *= me.seam_scan?0.65:1;#GR1F-16CJ-34-1-1 page 1-402
 		} else {
-			#me.detect_range_curr_nm = (me.seam_scan?0.5:1)*me.max_fire_range_nm; # no credible source for this
+			me.detect_range_curr_nm = (me.seam_scan?0.65:1)*me.max_fire_range_nm;#GR1F-16CJ-34-1-1 page 1-402
 		}
 	},
 
