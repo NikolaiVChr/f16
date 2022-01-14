@@ -1678,7 +1678,7 @@ TerrainChecker = {
 	#
 	# Everything here is CPU expensive.
 	#
-	new: func (rate, use_doppler, doppler_speed_kt=50) {
+	new: func (rate, use_doppler, doppler_speed_kt=30) {
 		var tc = {parents: [TerrainChecker]};
 
 		tc.use_doppler = use_doppler;

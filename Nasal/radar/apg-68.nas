@@ -645,6 +645,7 @@ var APG68 = {
     	if (me["gmapper"] != nil) me.gmapper.scanGM(me.eulerX, me.eulerY, me.instantVertFoVradius,
     		 me.currentMode.bars == 1 or (me.currentMode.bars == 4 and me.currentMode["nextPatternNode"] == 0) or (me.currentMode.bars == 3 and me.currentMode["nextPatternNode"] == 7) or (me.currentMode.bars == 2 and me.currentMode["nextPatternNode"] == 1),
     		 me.currentMode.bars == 1 or (me.currentMode.bars == 4 and me.currentMode["nextPatternNode"] == 2) or (me.currentMode.bars == 3 and me.currentMode["nextPatternNode"] == 3) or (me.currentMode.bars == 2 and me.currentMode["nextPatternNode"] == 3));# The last two parameter is hack
+    	me.testedPrio = 0;
 		foreach(contact ; me.vector_aicontacts_for) {
 			if (me.doIFF == 1) {
 	            me.iffr = iff.interrogate(contact.prop);
@@ -676,7 +677,10 @@ var APG68 = {
 			# Degrees from center of radar beam to target, note that positionDirection must match the coord system defined by horizonStabilized.
 			me.beamDeviation = vector.Math.angleBetweenVectors(me.positionDirection, me.localToTarget);
 
-			#print("me.beamDeviation ", me.beamDeviation);
+			if(me.debug > 1 and me.currentMode.painter and contact == me.getPriorityTarget()) {
+				setprop("debug-radar/main-beam-deviation", me.beamDeviation);
+				me.testedPrio = 1;
+			}
 			if (me.beamDeviation < me.instantFoVradius) {
 				me.registerBlep(contact, me.dev, me.currentMode.painter);
 				#print("REGISTER BLEP");
@@ -684,6 +688,9 @@ var APG68 = {
 				# Return here, so that each instant FoV max gets 1 target:
 				return;
 			}
+		}
+		if(me.debug > 1 and me.currentMode.painter and !me.testedPrio) {
+			setprop("debug-radar/main-beam-deviation", "--unseen--");
 		}
 	},
 	registerBlep: func (contact, dev, stt, doppler_check = 1) {
@@ -2559,6 +2566,7 @@ var F16STTMode = {
 	bars: 2,
 	minimumTimePerReturn: 0.10,
 	timeToKeepBleps: 5, # Need to have time to move disc to the selction from wherever it was before entering STT.
+	debug: 1,
 	painter: 1,
 	new: func (radar = nil) {
 		var mode = {parents: [F16STTMode, RadarMode]};
@@ -2970,7 +2978,7 @@ var antennae_knob_prop = props.globals.getNode("controls/radar/antennae-knob",0)
 var baser = AIToNasal.new();
 var partitioner = NoseRadar.new();
 var omni = OmniRadar.new(1.0, 150, 55);
-var terrain = TerrainChecker.new(0.10, 1, 60);# 0.05 or 0.10 is fine here
+var terrain = TerrainChecker.new(0.10, 1, 30);# 0.05 or 0.10 is fine here
 var dlnkRadar = DatalinkRadar.new(0.03, 90);# 3 seconds because cannot be too slow for DLINK targets
 
 # start specific radar system
