@@ -263,6 +263,7 @@ var HudMath = {
 	},
 	
 	getPolarFromCenterPos: func (x,y) {
+		# only works well when not too far from bore.
 		y -= me.centerOffset;
 		return me.getPolarFromBorePos(x,y);
 	},

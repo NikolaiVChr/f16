@@ -2391,9 +2391,11 @@ append(obj.total, obj.speed_curr);
                         }
                         me.dr = me.u.getLastAZDeviation();
                         me.drE = me.u.getLastElevDeviation();
-                        if (me.clamped and me.dr != nil and me.drE != nil and math.sqrt(me.dr*me.dr+me.drE*me.drE) < 80) {
+                        if (me.clamped and me.dr != nil and me.drE != nil and math.abs(me.dr) < 90) {
                             me.locatorLine.setTranslation(HudMath.getBorePos());
-                            me.locatorLine.setRotation(HudMath.getPolarFromCenterPos(me.echoPos[0],me.echoPos[1])[0]);
+                            me.veccy = vector.Math.pitchYawVector(me.u.getLastElev(),-me.dr, [1,0,0]);# There is probably simpler ways to do this, but at least I know this works well at great angles.
+                            me.veccy = vector.Math.rollPitchYawVector(-hdp.roll, -hdp.pitch, 0, me.veccy);
+                            me.locatorLine.setRotation(math.atan2(-me.veccy[1],me.veccy[2]));
                             me.locatorAngle.setText(sprintf("%d", vector.Math.angleBetweenVectors([1,0,0], vector.Math.pitchYawVector(me.drE,-me.dr, [1,0,0]))));
                             me.locatorLineShow = 1;
                         }
