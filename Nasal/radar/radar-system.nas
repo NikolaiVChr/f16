@@ -1444,7 +1444,7 @@ NoseRadar = {
 		me.vector_aicontacts_for = [];
 		me.dev = contact.getDeviation();
 		me.rng = contact.getRangeDirect();
-		me.crd = contact.getCoord()
+		me.crd = contact.getCoord();
 		contact.storeDeviation([me.dev[0],me.dev[1],me.rng,me.crd,contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation(), 0, 0, me.crd.alt()*M2FT, contact.getSpeed()]);
 		append(me.vector_aicontacts_for, contact);
 
