@@ -694,7 +694,7 @@ var APG68 = {
 	registerBlep: func (contact, dev, stt, doppler_check = 1) {
 		if (!contact.isVisible()) return 0;
 		if (doppler_check and contact.isHiddenFromDoppler()) {
-			if (me.currentMode.painter) print("notched");
+			#if (me.currentMode.painter) print("db-notched");
 			return 0;
 		}
 		me.maxDistVisible = me.currentMode.rcsFactor * me.targetRCSSignal(self.getCoord(), dev[3], contact.model, dev[4], dev[5], dev[6],me.rcsRefDistance*NM2M,me.rcsRefValue);
@@ -711,7 +711,7 @@ var APG68 = {
 			}
 			return 1;
 		}
-		if (me.currentMode.painter) print("RCS problem");
+		#if (me.currentMode.painter) print("db-RCS problem");
 		return 0;
 	},
 	purgeBleps: func {
