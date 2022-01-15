@@ -694,7 +694,7 @@ AIContact = {
 		me.getCoord();
 		me.coord.set_xyz(me.coord.x()+rand()*spheric_dist_m*2-spheric_dist_m,me.coord.y()+rand()*spheric_dist_m*2-spheric_dist_m,me.coord.z()+rand()*spheric_dist_m*2-spheric_dist_m);
 		me.virt.elevpick = geo.elevation(me.coord.lat(),me.coord.lon());
-		if (spheric_dist_m != 0 and me.virt.elevpick != nil) me.coord.set_alt(me.virt.elevpick+1);# TODO: Not convinced this is the place for the 1m offset since both missiles and radar subtract 1m from targetdistance, but for slanted picking with undulations its still good idea to not place it at the base.
+		if (spheric_dist_m != 0 and me.virt.elevpick != nil) me.coord.set_alt(me.virt.elevpick);# TODO: Not convinced this is the place for the 1m offset since both missiles and radar subtract 1m from targetdistance, but for slanted picking with undulations its still good idea to not place it at the base.
 		me.virt.coord = me.coord;
 		me.virt.getNearbyVirtualTGPContact = func {
 			return me.parents[0].getNearbyVirtualTGPContact();
@@ -851,7 +851,7 @@ AIContact = {
 	},
 
 	getDeviation: func {
-		# optimized method that return both heading and pitch deviation, to limit property calls
+		# optimized method that return both heading and pitch deviation as seen from pilot, to limit property calls
 		# returns [bearingDev, elevationDev, distDirect, coord]
 		me.getCoord();
 		me.acCoord = self.getCoord();
@@ -923,17 +923,17 @@ AIContact = {
 		var value = 0;
 		me.getCoord();
 		var ownship = self.getCoord();
-		append(newArray, time);#0
+		append(newArray, time);#0 time this blep was detected
 		append(newArray, strength);#1
 		if (searchInfo[0]) {
 			value = ownship.direct_distance_to(me.coord);
-			append(newArray, value);#2
+			append(newArray, value);#2 dist in m
 		} else {
 			append(newArray, nil);#2
 		}
 		if (searchInfo[1]) {
 			value = me.getHeading();
-			append(newArray, value);#3
+			append(newArray, value);#3 heading
 			me.lastRegisterWasTrack = 1;
 		} else {
 			append(newArray, nil);#3
@@ -941,34 +941,34 @@ AIContact = {
 		}
 		if (searchInfo[2]) {
 			value = [me.getDeviationHeading(), me.getDeviationPitch(), me.getBearing(), me.getElevation()];
-			append(newArray, value);#4
+			append(newArray, value);#4 deviations and absolutes
 		} else {
 			append(newArray, nil);#4
 		}
 		if (searchInfo[3]) {
 			value = me.getSpeed();#kt
-			append(newArray, value);#5
+			append(newArray, value);#5 speed kt
 		} else {
 			append(newArray, nil);#5
 		}
 		if (searchInfo[4]) {
-			var bearing = ownship.course_to(me.coord);
-			var rbearing = bearing+180;
-			var ownship_spd = self.getSpeed() * math.cos( -(bearing - self.getHeading()) * D2R);
-            var target_spd  = me.getSpeed()   * math.cos( -(rbearing - me.getHeading()) * D2R);
-			value = ownship_spd + target_spd;
-			append(newArray, value);#6
+			#var bearing = ownship.course_to(me.coord);
+			#var rbearing = bearing+180;
+			#var ownship_spd = self.getSpeed() * math.cos( -(bearing - self.getHeading()) * D2R);
+            #var target_spd  = me.getSpeed()   * math.cos( -(rbearing - me.getHeading()) * D2R);
+			#value = ownship_spd + target_spd;
+			append(newArray, me.getClosureRate());#6 closure-rate
 		} else {
 			append(newArray, nil);#6
 		}
 		if (searchInfo[5]) {
 			value = me.coord.alt()*M2FT;
-			append(newArray, value);#7
+			append(newArray, value);#7 alt in ft
 		} else {
 			append(newArray, nil);#7
 		}
-		append(newArray, me.coord);#8
-		append(newArray, stt);#9
+		append(newArray, me.coord);#8 coord
+		append(newArray, stt);#9 if was detected in a STT or FTT mode.
 		append(me.bleps, Blep.new(newArray));
 	},
 
@@ -980,7 +980,7 @@ AIContact = {
 
 	getLastBlep: func {
 		# get the frozen info needed for displays
-		# TODO: check this is safe always where used
+		#
 		if (!size(me.bleps)) return nil;
 		return me.bleps[size(me.bleps)-1];
 	},
@@ -1025,7 +1025,7 @@ AIContact = {
 	},
 	
 	getDeviationStored: func {
-		# get the frozen info needed for noseradar/radar
+		# get the frozen info needed for main radar
 		return me.devStored;
 	},
 
@@ -1061,9 +1061,7 @@ AIContact = {
 	getLastDirection: func {
 		# Should not be used
 		if (size(me.bleps)) {
-			#if (me.bleps[size(me.bleps)-1][4] != nil) {
 				return me.bleps[size(me.bleps)-1].getDirection();
-			#}
 		}
 		return nil;
 	},
@@ -1091,18 +1089,14 @@ AIContact = {
 
 	getLastRangeDirect: func {
 		if (size(me.bleps)) {
-			#if (me.bleps[size(me.bleps)-1][4] != nil) {
 				return me.bleps[size(me.bleps)-1].getRangeDirect();
-			#}
 		}
 		return nil;
 	},
 
 	getLastAltitude: func {
 		if (size(me.bleps)) {
-			#if (me.bleps[size(me.bleps)-1][4] != nil) {
 				return me.bleps[size(me.bleps)-1].getAltitude();
-			#}
 		}
 		return nil;
 	},
@@ -1116,28 +1110,20 @@ AIContact = {
 
 	getLastBlepTime: func {
 		if (size(me.bleps)) {
-			#if (me.bleps[size(me.bleps)-1][4] != nil) {
 				return me.bleps[size(me.bleps)-1].getBlepTime();
-			#}
 		}
 		return -1000;
 	},
 
 	getLastClosureRate: func {
 		if (size(me.bleps)) {
-			#if (me.bleps[size(me.bleps)-1][4] != nil) {
 				me.clr = me.bleps[size(me.bleps)-1].getClosureRate();
 				return me.clr==nil?0:me.clr;
-			#}
 		}
 		return 0;
 	},
 
 	# The following remaining methods is being deprecated:
-	
-	getCartesianInFoRFrozen: func {# TODO: this is broken, fix it or stop using this method..
-		return [me.devStored[9], me.devStored[10]];
-	},
 
 	getClosureRate: func {
 		# used in RWR. TODO: rework so this doesn't have to be called.		
@@ -1438,7 +1424,7 @@ NoseRadar = {
 				continue;
 			}
 			# TODO: clean this up. Only what is needed for testing against instant FoV and RCS should be in here:
-			#                       localdev, localpitch, range_m, coord, heading, pitch, roll, bearing, elevation, frustum_norm_y, frustum_norm_z, alt_ft, speed
+			#                       localdev, localpitch, range_m, coord, heading, pitch, roll, bearing, elevation, frustum_norm_y, frustum_norm_z, alt_ft, speed  (the frustums are no longer used)
 			contact.storeDeviation([me.dev[0],me.dev[1],me.rng,contact.getCoord(),contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation(), -me.pc_y/(me.w/2), me.pc_z/(me.h/2), me.crd.alt()*M2FT, contact.getSpeed()]);
 			append(me.vector_aicontacts_for, contact);
 		}		
@@ -1458,7 +1444,8 @@ NoseRadar = {
 		me.vector_aicontacts_for = [];
 		me.dev = contact.getDeviation();
 		me.rng = contact.getRangeDirect();
-		contact.storeDeviation([me.dev[0],me.dev[1],me.rng,contact.getCoord(),contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation(), 0, 0, 0, contact.getSpeed()]);
+		me.crd = contact.getCoord()
+		contact.storeDeviation([me.dev[0],me.dev[1],me.rng,me.crd,contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation(), 0, 0, me.crd.alt()*M2FT, contact.getSpeed()]);
 		append(me.vector_aicontacts_for, contact);
 
 		emesary.GlobalTransmitter.NotifyAll(me.FORNotification.updateV(me.vector_aicontacts_for));
@@ -1502,7 +1489,7 @@ FullRadar = {
 	    		    me.radar.scanFOR(notification.max_range);
 	    	    }
 	            return emesary.Transmitter.ReceiptStatus_OK;
-	        } elsif (notification.NotificationType == "ContactNotification") {
+	        } elsif (notification.NotificationType == "Contact360Notification") {
 	        	#printf("FullRadar recv: %s", notification.NotificationType);
 	            if (me.radar.enabled == 1) {
 	    		    me.radar.scanSingleContact(notification.vector[0]);
@@ -1570,7 +1557,6 @@ FullRadar = {
 		}
 
 		if (!contact.isVisible()) {  # moved to nose radar. TODO: WHy double it in discradar? hmm, dont matter so much, its lightning fast
-			print("Track No vis");
 			emesary.GlobalTransmitter.NotifyAll(me.FORNotification.updateV([]));
 			return;
 		}
@@ -1578,7 +1564,8 @@ FullRadar = {
 		me.vector_aicontacts_for = [];
 		me.dev = contact.getDeviation();
 		me.rng = contact.getRangeDirect();
-		contact.storeDeviation([me.dev[0],me.dev[1],me.rng,contact.getCoord(),contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation(), 0, 0, me.crd.alt()*M2FT, contact.getSpeed()]);
+		me.crd = contact.getCoord();
+		contact.storeDeviation([me.dev[0],me.dev[1],me.rng,me.crd,contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation(), 0, 0, me.crd.alt()*M2FT, contact.getSpeed()]);
 		append(me.vector_aicontacts_for, contact);
 
 		emesary.GlobalTransmitter.NotifyAll(me.FORNotification.updateV(me.vector_aicontacts_for));
@@ -1976,7 +1963,6 @@ var knownHelis = {
 
 # BUGS:
 #
-# apg68Radar.positionCart vs. contact.getCartesianInFoRFrozen()  At least one is not correct for the display of ACM60
 #
 # IMPROVEMENTS:
 #
@@ -1989,7 +1975,6 @@ var knownHelis = {
 #
 # Cloud/rain/snow interference. (for clouds will only really work with 3D clouds, as their positions is in property-tree, then can give them radius depending on type and do intersect test.)
 # Use geodinfo to check clutter amount for GM radar. If static no need to check again.
-# Tacview attr. in contact
 #
 # STEAL:
 #

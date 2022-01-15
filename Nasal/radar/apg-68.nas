@@ -68,7 +68,7 @@ var RWR = {
         me.closestThreat = 0;
         me.elapsed = elapsedProp.getValue();
         foreach(me.u ; me.vector_aicontacts) {
-        	#contact.storeThreat([me.ber,me.head,contact.getCoord(),me.tp,me.radar,contact.getDeviationHeading(),contact.getRangeDirect()*M2NM, contact.getCallsign()]);
+        	# [me.ber,me.head,contact.getCoord(),me.tp,me.radar,contact.getDeviationHeading(),contact.getRangeDirect()*M2NM, contact.getCallsign()]
         	me.threatDB = me.u.getThreatStored();
             me.cs = me.threatDB[7];
             me.rn = me.threatDB[6];
@@ -656,7 +656,7 @@ var APG68 = {
 			}
 
 			me.dev = contact.getDeviationStored();
-			#print("Bearing ",me.dev[7],", Pitch ",me.dev[8]);
+
 			if (me.horizonStabilized) {
 				# ignore roll (and ignore pitch for now too, TODO)
 
@@ -668,9 +668,7 @@ var APG68 = {
 			} else {
 				# Vector that points to target in local radar coordinates.
 				me.localToTarget = vector.Math.eulerToCartesian3X(-me.dev[0],me.dev[1],0);
-			}
-			#print("ANT head ",me.positionX,", ANT elev ",me.positionY,", ANT tilt ", me.tilt);
-			#print(vector.Math.format(me.localToTarget));
+			}			
 
 			# Degrees from center of radar beam to target, note that positionDirection must match the coord system defined by horizonStabilized.
 			me.beamDeviation = vector.Math.angleBetweenVectors(me.positionDirection, me.localToTarget);
@@ -1415,7 +1413,7 @@ var RadarMode = {
 		me.min = me.barPatternMin[me.bars-1]*me.barHeight*me.radar.instantFoVradius;
 		me.max = me.barPatternMax[me.bars-1]*me.barHeight*me.radar.instantFoVradius;
 
-		# We check if radar gimbal mount can turn enough. TODO: Move this after tilt and add tilt to the calc
+		# We check if radar gimbal mount can turn enough.
 		me.gimbalInBounds = 1;
 		if (me.radar.horizonStabilized) {
 			# figure out if we reach the gimbal limit
