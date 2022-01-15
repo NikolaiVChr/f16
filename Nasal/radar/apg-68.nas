@@ -300,11 +300,12 @@ var APG68 = {
 	rcsRefValue: 3.2,
 	targetHistory: 3,# Not used in TWS
 	tilt: 0,
-	tiltOverride: 0,# when enabled by a mode: the mode can set the tilt, and it will not be read from property (TODO)
 	maxTilt: 60,#TODO: Lower this a bit
 	#positionEuler: [0,0,0,0],# euler direction
 	positionDirection: [1,0,0],# vector direction
 	positionCart: [0,0,0,0],
+	eulerX: 0,
+	eulerY: 0,
 	horizonStabilized: 1, # When true antennae ignore roll (and pitch until its high)
 	vector_aicontacts_for: [],# vector of contacts found in field of regard
 	vector_aicontacts_bleps: [],# vector of not timed out bleps
@@ -353,7 +354,7 @@ var APG68 = {
 		rdr.timer.start();
     	return rdr;
 	},
-	getTilt: func {# TODO: rename to tiltKnob
+	getTiltKnob: func {
 		me.theKnob = antennae_knob_prop.getValue();
 		if (math.abs(me.theKnob) < 0.01) {
 			antennae_knob_prop.setValue(0);
@@ -459,12 +460,6 @@ var APG68 = {
 	cycleBars: func {
 		me.currentMode.cycleBars();
 		me.clearShowScan();
-	},
-	setDeviation: func (dev_tilt_deg) {
-		if (me.getAzimuthRadius() == me.fieldOfRegardMaxAz) {
-			dev_tilt_deg = 0;
-		}
-		me.currentMode.setDeviation(dev_tilt_deg);
 	},
 	getDeviation: func {
 		return me.currentMode.getDeviation();
@@ -575,18 +570,16 @@ var APG68 = {
 				me.ContactNotification.vector = [me.getPriorityTarget()];
 				emesary.GlobalTransmitter.NotifyAll(me.ContactNotification);
 			}
-			if (!me.tiltOverride) {
-				# Tilt is not force set by the mode, so we read the antennae tilt knob property.
-				me.tilt = antennae_knob_prop.getValue()*60;
-			}
+
 			while (me.dt > 0.001) {
 				# mode tells us how to move disc and to scan
-				me.dt = me.currentMode.step(me.dt, me.tilt);# mode already knows where in pattern we are and AZ and bars.
+				me.dt = me.currentMode.step(me.dt);# mode already knows where in pattern we are and AZ and bars.
 
 				# we then step to the new position, and scan for each step
 				me.scanFOV();
 				me.showScan();
 			}
+
 		} elsif (size(me.vector_aicontacts_bleps)) {
 			# So that when radar is restarted there is not old bleps.
 			me.purgeAllBleps();
@@ -655,7 +648,12 @@ var APG68 = {
 	                contact.iff = -me.elapsed;
 	            }
 	        }
-			if (me.elapsed - contact.getLastBlepTime() < me.currentMode.minimumTimePerReturn) continue;# To prevent double detecting in overlapping beams
+			if (me.elapsed - contact.getLastBlepTime() < me.currentMode.minimumTimePerReturn) {
+				if(me.debug > 1 and me.currentMode.painter and contact == me.getPriorityTarget()) {
+					me.testedPrio = 1;
+				}
+				continue;# To prevent double detecting in overlapping beams
+			}
 
 			me.dev = contact.getDeviationStored();
 			#print("Bearing ",me.dev[7],", Pitch ",me.dev[8]);
@@ -690,12 +688,15 @@ var APG68 = {
 			}
 		}
 		if(me.debug > 1 and me.currentMode.painter and !me.testedPrio) {
-			setprop("debug-radar/main-beam-deviation", "--unseen--");
+			setprop("debug-radar/main-beam-deviation", "--unseen-lock--");
 		}
 	},
 	registerBlep: func (contact, dev, stt, doppler_check = 1) {
 		if (!contact.isVisible()) return 0;
-		if (doppler_check and contact.isHiddenFromDoppler()) return 0;
+		if (doppler_check and contact.isHiddenFromDoppler()) {
+			if (me.currentMode.painter) print("notched");
+			return 0;
+		}
 		me.maxDistVisible = me.currentMode.rcsFactor * me.targetRCSSignal(self.getCoord(), dev[3], contact.model, dev[4], dev[5], dev[6],me.rcsRefDistance*NM2M,me.rcsRefValue);
 
 		if (me.maxDistVisible > dev[2]) {
@@ -710,6 +711,7 @@ var APG68 = {
 			}
 			return 1;
 		}
+		if (me.currentMode.painter) print("RCS problem");
 		return 0;
 	},
 	purgeBleps: func {
@@ -782,7 +784,7 @@ var APG68 = {
 		}
 	},
 	clearShowScan: func {
-		if (me["canvas2"] == nil) return;
+		if (me["canvas2"] == nil or me.debug < 1) return;
 		me.canvas_root2.removeAllChildren();
 		if (me.horizonStabilized) {
 			me.canvas_root2.createChild("path")
@@ -1227,6 +1229,7 @@ var LEFT = 1;
 var UP = 2;
 var DOWN = 3;
 var DIRECT = -1;
+var SPOT_SCAN = -1;
 
 
 
@@ -1244,10 +1247,8 @@ var RadarMode = {
 	minRange: 5, # MLU T1 .. should we make this 10 for block 10/30/YF? TODO
 	az: 60,
 	bars: 4,
-	lastTilt: 0,
-	lastBars: nil,
-	lastAz: nil,
-	lastAzimuthTilt: nil,
+	azimuthTilt: 0,# modes set these depending on where they want the pattern to be centered.
+	elevationTilt: 0,
 	barHeight: 0.95,# multiple of instantFoVradius
 	barPattern:  [ [[-1,0,LEFT],[1,0,RIGHT]],                    # These are multitudes of instantFoVradius, the 3rd number is which axis to rotate around, -1 for shortest.
 	               [[-1,-1,DOWN],[1,-1,RIGHT],[1,1,UP],[-1,1,LEFT]],
@@ -1258,15 +1259,13 @@ var RadarMode = {
 	barPatternMin: [0,-1, -2, -3],
 	barPatternMax: [0, 1,  2,  3],
 	nextPatternNode: 0,
-	discDirect: 1,
-	newPitch: 0,
-	scanPriorityEveryFrame: 0,
+	scanPriorityEveryFrame: 0,# Related to SPOT_SCAN.
 	timeToKeepBleps: 13,
 	rootName: "CRM",
 	shortName: "",
 	longName: "",
 	superMode: nil,
-	minimumTimePerReturn: 1.25,
+	minimumTimePerReturn: 0.5,
 	rcsFactor: 0.9,
 	lastFrameStart: -1,
 	lastFrameDuration: 5,
@@ -1282,6 +1281,7 @@ var RadarMode = {
 	EXPfixedAim: 0,# If map underneath should move instead of cursor when slewing
 	painter: 0,
 	mapper: 0,
+	discSpeed_dps: 1,# current disc speed. Must never be zero.
 	showAZ: func {
 		return me.az != 60; # hmm, does the blue lines at edge of b-scope look messy? If this return false, then they are also not shown in PPI.
 	},
@@ -1304,6 +1304,8 @@ var RadarMode = {
 		me.cursorNm = nm;
 	},
 	getCursorAltitudeLimits: func {
+		# Used in F-16 with two numbers next to cursor that indicates min/max for radar pattern in altitude above sealevel.
+		# It needs: me.lowerAngle, me.upperAngle and me.cursorNm
 		me.vectorToDist = [math.cos(me.upperAngle*D2R), 0, math.sin(me.upperAngle*D2R)];
 		me.selfC = self.getCoord();
 		me.geo = vector.Math.vectorToGeoVector(me.vectorToDist, me.selfC);
@@ -1345,18 +1347,8 @@ var RadarMode = {
 		}
 		return 1;
 	},
-	setDeviation: func (dev_tilt_deg) {
-		if (me.az == 60) {
-			dev_tilt_deg = 0;
-		}
-		me.azimuthTilt = dev_tilt_deg;
-		if (me.azimuthTilt > me.radar.fieldOfRegardMaxAz-me.az) {
-			me.azimuthTilt = me.radar.fieldOfRegardMaxAz-me.az;
-		} elsif (me.azimuthTilt < -me.radar.fieldOfRegardMaxAz+me.az) {
-			me.azimuthTilt = -me.radar.fieldOfRegardMaxAz+me.az;
-		}
-	},
 	getDeviation: func {
+		# how much the pattern is deviated from straight ahead in azimuth
 		return me.azimuthTilt;
 	},
 	getBars: func {
@@ -1365,8 +1357,9 @@ var RadarMode = {
 	getAz: func {
 		return me.az;
 	},
-	constrainAzimuth: func () {
-		if (me.az == 60) {
+	constrainAz: func () {
+		# Convinience method that the modes can use.
+		if (me.az == me.radar.fieldOfRegardMaxAz) {
 			me.azimuthTilt = 0;
 		} elsif (me.azimuthTilt > me.radar.fieldOfRegardMaxAz-me.az) {
 			me.azimuthTilt = me.radar.fieldOfRegardMaxAz-me.az;
@@ -1377,146 +1370,141 @@ var RadarMode = {
 	getPriority: func {
 		return me["priorityTarget"];
 	},
-	step: func (dt, tilt) {
+	computePattern: func {
+		# Translate the normalized pattern nodes into degrees. Since me.az or maybe me.bars have tendency to change rapidly
+		# We do this every step. Its fast anyway.
+		me.currentPattern = [];
+		foreach (me.eulerNorm ; me.barPattern[me.bars-1]) {
+			me.patternNode = [me.eulerNorm[0]*me.az, me.eulerNorm[1]*me.radar.instantFoVradius*me.barHeight];
+			append(me.currentPattern, me.patternNode);
+		}
+		return me.currentPattern;
+	},
+	step: func (dt) {
 		me.radar.horizonStabilized = 1;# Might be unset inside preStep()
+
+		# Individual modes override this method and get ready for the step.
+		# Inside this they typically set 'azimuthTilt' and 'elevationTilt' for moving the pattern around.
 		me.preStep();
 		
-
-		me.min = me.barPatternMin[me.bars-1]*me.barHeight*me.radar.instantFoVradius+tilt;# This is the min/max we desire.
-		me.max = me.barPatternMax[me.bars-1]*me.barHeight*me.radar.instantFoVradius+tilt;
-
-		if (me.radar.horizonStabilized) {
-			# figure out if we reach the gimbal limit, and if so, keep all bars within it:			
-	 		me.actualMin = self.getPitch()-me.radar.fieldOfRegardMaxElev;
-	 		me.actualMax = self.getPitch()+me.radar.fieldOfRegardMaxElev;
-	 		if (me.min < me.actualMin) {
-	 			me.gimbalTiltOffset = me.actualMin-me.min;
-	 			#printf("offset %d  actualMin %d  desire %d  pitch %d  tilt %d",me.gimbalTiltOffset, me.actualMin,me.min,self.getPitch(),tilt);
-	 		} elsif (me.max > me.actualMax) {
-	 			me.gimbalTiltOffset = me.actualMax-me.max;
-	 			#printf("offset %d  actualMax %d  desire %d  pitch %d  tilt %d",me.gimbalTiltOffset, me.actualMax,me.max,self.getPitch(),tilt);
-	 		} else {
-	 			me.gimbalTiltOffset = 0;
-	 		}
- 		} else {
- 			me.gimbalTiltOffset = 0;
- 		}
- 		if (me.gimbalTiltOffset != 0) {
- 			me.radar.setAntennae(me.radar.positionDirection);
-	 		return 0;# Disabled this system, as there is no real use for it.
-	 	}
- 		me.azimuthTiltIntern = me.azimuthTilt;
- 		me.tiltAdjust = 0;
- 		me.minuteTiltChange = 0;
-		if (me.nextPatternNode == -1 and me.priorityTarget != nil) {
+		# Lets figure out the desired antennae tilts
+	 	me.azimuthTiltIntern = me.azimuthTilt;
+	 	me.elevationTiltIntern = me.elevationTilt;
+		if (me.nextPatternNode == SPOT_SCAN and me.priorityTarget != nil) {
+			# We never do spot scans in ACM modes so no check for horizonStabilized here.
 			me.lastBlep = me.priorityTarget.getLastBlep();
 			if (me.lastBlep != nil) {
 				me.azimuthTiltIntern = me.lastBlep.getAZDeviation();
-				me.radar.tiltOverride = 1;
-				me.radar.tilt = me.lastBlep.getElev();
-				me.localDir = vector.Math.pitchYawVector(me.radar.tilt, -me.azimuthTiltIntern, [1,0,0]);
+				me.elevationTiltIntern = me.lastBlep.getElev();
 			} else {
 				me.priorityTarget = nil;
-				me.radar.tiltOverride = 0;
 				me.undesignate();
 				me.nextPatternNode == 0;
 			}
-			me.discDirect = 1;
-		} elsif (me.nextPatternNode == -1) {
-			me.nextPatternNode == 0;
-			me.discDirect = 1;
-		} elsif (tilt != me.lastTilt or me.bars != me.lastBars or me.az != me.lastAz or me.azimuthTiltIntern != me.lastAzimuthTilt or me.gimbalTiltOffset != 0) {
-			# (re)calculate pattern as vectors.
-			me.currentPattern = [];
-			me.localDirOld = vector.Math.pitchYawVector(me.barPattern[me.bars-1][size(me.barPattern[me.bars-1])-1][1]*me.radar.instantFoVradius*me.barHeight+tilt+me.gimbalTiltOffset, -me.barPattern[me.bars-1][size(me.barPattern[me.bars-1])-1][0]*me.az-me.azimuthTiltIntern, [1,0,0]);
-			foreach (me.eulerNorm ; me.barPattern[me.bars-1]) {
-				#me.localDir = vector.Math.yawPitchVector(-me.eulerNorm[0]*me.az-me.azimuthTiltIntern, me.eulerNorm[1]*me.radar.instantFoVradius*me.barHeight+tilt+me.gimbalTiltOffset, [1,0,0]);
-				me.localDir = vector.Math.pitchYawVector(me.eulerNorm[1]*me.radar.instantFoVradius*me.barHeight+tilt+me.gimbalTiltOffset, -me.eulerNorm[0]*me.az-me.azimuthTiltIntern, [1,0,0]);
-				#print("Step sweep: ", -me.eulerNorm[0]*me.az-me.azimuthTilt);
-				append(me.localDir, me.eulerNorm[2]);#3 direction
-				append(me.localDir, geo.normdeg180(vector.Math.cartesianToEulerHeading(me.localDir)));#4
-				append(me.localDir, vector.Math.cartesianToEulerPitch(me.localDir));#5 NOT USED
-				append(me.localDir, vector.Math.cartesianToEulerPitch(me.localDirOld));#6
-				append(me.currentPattern, me.localDir);
-				me.localDirOld = me.localDir;
-			}
-
-			me.minuteTiltChange = math.abs(tilt - me.lastTilt) < 1.0 and !me.discDirect
-								  and !(me.bars != me.lastBars or me.az != me.lastAz or me.azimuthTiltIntern != me.lastAzimuthTilt or me.gimbalTiltOffset != 0);
-			me.discDirect = me.minuteTiltChange?0:1;
-			me.tiltAdjust = me.minuteTiltChange?tilt - me.lastTilt:0;
-			me.upperAngle = me.max+me.gimbalTiltOffset;
-			me.lowerAngle = me.min+me.gimbalTiltOffset;
-			me.lastTilt = tilt;
-			me.lastBars = me.bars;
-			me.lastAz = me.az;
-			me.lastAzimuthTilt = me.azimuthTiltIntern;
+		} elsif (me.nextPatternNode == SPOT_SCAN) {
+			# We cannot do spot scan on stuff we cannot see, reverting back to pattern
+			me.nextPatternNode = 0;
 		}
-		me.maxMove = math.min(me.radar.instantFoVradius*1.25, me.discSpeed_dps*dt);# 1.25 is because the FoV is round so we overlap em a bit
-		me.currentPos = me.radar.positionDirection;
 
-		me.angleToNextNode = vector.Math.angleBetweenVectors(me.currentPos, me.nextPatternNode == -1?me.localDir:me.currentPattern[me.nextPatternNode]);
+		# now lets check where we want to move the disc to
+		me.currentPattern      = me.computePattern();
+		me.targetAzimuthTilt   = me.azimuthTiltIntern+(me.nextPatternNode!=SPOT_SCAN?me.currentPattern[me.nextPatternNode][0]:0);
+		me.targetElevationTilt = me.elevationTiltIntern+(me.nextPatternNode!=SPOT_SCAN?me.currentPattern[me.nextPatternNode][1]:0);
 
+		# The pattern min/max pitch when not tilted.
+		me.min = me.barPatternMin[me.bars-1]*me.barHeight*me.radar.instantFoVradius;
+		me.max = me.barPatternMax[me.bars-1]*me.barHeight*me.radar.instantFoVradius;
+
+		# We check if radar gimbal mount can turn enough. TODO: Move this after tilt and add tilt to the calc
+		me.gimbalInBounds = 1;
+		if (me.radar.horizonStabilized) {
+			# figure out if we reach the gimbal limit
+	 		me.actualMin = self.getPitch()-me.radar.fieldOfRegardMaxElev;
+	 		me.actualMax = self.getPitch()+me.radar.fieldOfRegardMaxElev;
+	 		if (me.targetElevationTilt < me.actualMin) {
+	 			me.gimbalInBounds = 0;
+	 		} elsif (me.targetElevationTilt > me.actualMax) {
+	 			me.gimbalInBounds = 0;
+	 		}
+ 		}
+ 		if (!me.gimbalInBounds) {
+ 			# Don't move the antennae if it cannot reach whats requested.
+ 			# This basically stop the radar from working while still not on standby
+ 			# until better attitude is reached.
+ 			#
+ 			# It used to attempt to scan in edge of FoR but thats not really helpful to a pilot.
+ 			# If need to scan while extreme attitudes then the are specific modes for that (in some aircraft).
+ 			me.radar.setAntennae(me.radar.positionDirection);
+ 			#print("db-Out of gimbal bounds");
+	 		return 0;
+	 	}
+
+	 	# For help with cursor limits we need to compute these
+		if (me.radar.horizonStabilized and me.gimbalInBounds) {
+			me.lowerAngle = me.min+me.elevationTiltIntern;
+			me.upperAngle = me.max+me.elevationTiltIntern;
+		} else {
+			me.lowerAngle = 0;
+			me.upperAngle = 0;
+		}
+
+	 	# Lets get a status for where we are in relation to where we are going
+		me.targetDir = vector.Math.pitchYawVector(me.targetElevationTilt, -me.targetAzimuthTilt, [1,0,0]);# A vector for where we want the disc to go
+		me.angleToNextNode = vector.Math.angleBetweenVectors(me.radar.positionDirection, me.targetDir);# Lets test how far from the target tilts we are.
 		
-		
+		# Move the disc
 		if (me.angleToNextNode < me.radar.instantFoVradius) {
-			#print("reaching");
-			#print("resultpitch2 ",vector.Math.cartesianToEuler(me.currentPattern[me.nextPatternNode])[1]);
-			me.discDirect = me.nextPatternNode == -1?1:0;
-			me.radar.setAntennae(me.nextPatternNode == -1?me.localDir:me.currentPattern[me.nextPatternNode]);
+			# We have reached our target
+			me.radar.setAntennae(me.targetDir);
 			me.nextPatternNode += 1;
 			if (me.nextPatternNode >= size(me.currentPattern)) {
-				me.nextPatternNode = (me.scanPriorityEveryFrame and me.priorityTarget!=nil)?-1:0;
+				me.nextPatternNode = (me.scanPriorityEveryFrame and me.priorityTarget!=nil)?SPOT_SCAN:0;
 				me.frameCompleted();
 			}
-			if (me.discDirect or me.currentPattern[me.nextPatternNode][3] == DIRECT) {
-				me.discDirect = 1;
-				#print("direct ",me.angleToNextNode);
-			} elsif (me.currentPattern[me.nextPatternNode][3] == UP) {
-				#print("up ", me.nextPatternNode);
-				me.newPitch = me.currentPattern[me.nextPatternNode][6];
-				#print("newPitch = ",me.newPitch);
-			} elsif (me.currentPattern[me.nextPatternNode][3] == DOWN) {
-				#print("down ", me.nextPatternNode);
-				me.newPitch = me.currentPattern[me.nextPatternNode][6];
-				#print("newPitch = ",me.newPitch);
-				#print("targetPitch = ",me.currentPattern[me.nextPatternNode][5]);
-			} elsif (me.currentPattern[me.nextPatternNode][3] == RIGHT) {
-				#print("right ", me.nextPatternNode);
-			} elsif (me.currentPattern[me.nextPatternNode][3] == LEFT) {
-				#print("left ", me.nextPatternNode);
-			} else print ("oops");
-			return dt-me.angleToNextNode/me.discSpeed_dps;
-		} elsif (me.angleToNextNode > 140) {
-			me.discDirect = 1;
-			print("Backup mode 1");
-		} elsif (math.abs(me.newPitch) > 90) {
-			me.discDirect = 1;
-			print("Backup mode 2");
+			#print("db-node:", me.nextPatternNode);
+			# Now the antennae has been moved and we return how much leftover dt there is to the main radar.
+			return dt-me.angleToNextNode/me.discSpeed_dps;# Since we move disc seperately in axes, this is not strictly correct, but close enough.
 		}
-		
-		if (me.discDirect) {
-			me.newPos = vector.Math.rotateVectorTowardsVector(me.currentPos, me.nextPatternNode == -1?me.localDir:me.currentPattern[me.nextPatternNode], me.maxMove);
-		} elsif (me.currentPattern[me.nextPatternNode][3] == UP) {
-			me.newPitch = me.newPitch+me.maxMove;
-			#print("newPitch == ", me.newPitch, "  angle = ", me.angleToNextNode);
-			me.newPos = vector.Math.pitchYawVector(me.newPitch, -me.currentPattern[me.nextPatternNode][4], [1,0,0]);
-		} elsif (me.currentPattern[me.nextPatternNode][3] == DOWN) {
-			me.newPitch = me.newPitch-me.maxMove;
-			#print("newPitch == ", me.newPitch, "  angle = ", me.angleToNextNode,"  heading = ",me.currentPattern[me.nextPatternNode][4]);
-			me.newPos = vector.Math.pitchYawVector(me.newPitch, -me.currentPattern[me.nextPatternNode][4], [1,0,0]);
+
+		# Lets move each axis of the radar seperate, as most radars likely has 2 joints anyway.
+		me.maxMove = math.min(me.radar.instantFoVradius*1.75, me.discSpeed_dps*dt);# 1.75 instead of 2 is because the FoV is round so we overlap em a bit
+
+		# Azimuth
+		me.distance_deg = me.targetAzimuthTilt - me.radar.eulerX;
+		if (me.distance_deg >= 0) {
+			me.moveX =  math.min(me.maxMove, me.distance_deg);
 		} else {
-			me.newPos = vector.Math.rotateVectorAroundVector(me.currentPos, me.barPatternRotations[me.currentPattern[me.nextPatternNode][3]], me.maxMove);
+			me.moveX = math.max(-me.maxMove, me.distance_deg);
 		}
-		if (!me.discDirect and me.tiltAdjust != 0) {
-			# This can be a little too fast. TODO: make it smoother.
-			me.newPos = vector.Math.pitchVector(me.tiltAdjust, me.newPos);
+		me.newX = me.radar.eulerX + me.moveX;
+
+		# Elevation
+		me.distance_deg = me.targetElevationTilt - me.radar.eulerY;
+		if (me.distance_deg >= 0) {
+			me.moveY =  math.min(me.maxMove, me.distance_deg);
+		} else {
+			me.moveY =  math.max(-me.maxMove, me.distance_deg);
 		}
+		me.newY = me.radar.eulerY + me.moveY;
+
+		# Convert the angles to a vector and set the new antennae position
+		me.newPos = vector.Math.pitchYawVector(me.newY, -me.newX, [1,0,0]);
 		me.radar.setAntennae(me.newPos);
-		return dt-me.maxMove/me.discSpeed_dps;# The 0.001 is for precision errors.
+
+		# As the two joins move at the same time, we find out which moved the most
+		me.movedMax = math.max(math.abs(me.moveX), math.abs(me.moveY));
+		if (me.movedMax == 0) {
+			# This should really not happen, we return 0 to make sure the while loop don't get infinite.
+			print("me.movedMax == 0");
+			return 0;
+		}
+		if (me.movedMax > me.discSpeed_dps) {
+			print("me.movedMax > me.discSpeed_dps");
+			return 0;
+		}
+		return dt-me.movedMax/me.discSpeed_dps;
 	},
 	frameCompleted: func {
-		#print("frame ",me.radar.elapsed-me.lastFrameStart);
 		if (me.lastFrameStart != -1) {
 			me.lastFrameDuration = me.radar.elapsed - me.lastFrameStart;
 			me.timeToKeepBleps = me.radar.targetHistory*me.lastFrameDuration;
@@ -1530,7 +1518,6 @@ var RadarMode = {
 	},
 	enterMode: func {
 		# Warning: This gets called BEFORE previous mode's leaveMode()
-		me.discDirect = 1;
 	},
 	designatePriority: func (contact) {},
 	cycleDesignate: func {},
@@ -1588,8 +1575,8 @@ var F16RWSMode = {
 		me.designate(contact);
 	},
 	preStep: func {
-		me.radar.tiltOverride = 0;
 		var dev_tilt_deg = me.cursorAz;
+		me.elevationTilt = me.radar.getTiltKnob();
 		if (me.az == 60) {
 			dev_tilt_deg = 0;
 		}
@@ -1677,22 +1664,21 @@ var F16SeaMode = {
 		return mode;
 	},
 	preStep: func {
-		me.radar.tiltOverride = 0;
 		var dev_tilt_deg = me.cursorAz;
 		if (me.az == 60) {
 			dev_tilt_deg = 0;
 		}
 		me.azimuthTilt = dev_tilt_deg;
+		me.elevationTilt = me.radar.getTiltKnob();
 		if (me.azimuthTilt > me.radar.fieldOfRegardMaxAz-me.az) {
 			me.azimuthTilt = me.radar.fieldOfRegardMaxAz-me.az;
 		} elsif (me.azimuthTilt < -me.radar.fieldOfRegardMaxAz+me.az) {
 			me.azimuthTilt = -me.radar.fieldOfRegardMaxAz+me.az;
 		}
-		if (me.radar.getTilt() == 0 and steerpoints.getCurrentNumber() != 0) {
+		if (me.radar.getTiltKnob() == 0 and steerpoints.getCurrentNumber() != 0) {
 			me.groundPitch = steerpoints.getCurrentGroundPitch();
 			if (me.groundPitch != nil and me.groundPitch > -55 and me.groundPitch < 55) {
-				me.radar.tiltOverride = 1;
-				me.radar.tilt = me.groundPitch;
+				me.elevationTilt = me.groundPitch;
 			}
 		}
 	},
@@ -1740,7 +1726,6 @@ var F16SeaMode = {
 	designatePriority: func (contact) {
 	},
 	enterMode: func {
-		me.discDirect = 1;
 		me.radar.purgeAllBleps();
 	},
 };
@@ -1906,7 +1891,7 @@ var F16VSMode = {
 		# NOP
 	},
 	preStep: func {
-		me.radar.tiltOverride = 0;
+		me.elevationTilt = me.radar.getTiltKnob();
 		var dev_tilt_deg = me.cursorAz;
 		if (me.az == 60) {
 			dev_tilt_deg = 0;
@@ -2023,10 +2008,10 @@ var F16TWSMode = {
 	},
 	preStep: func {
 	 	me.azimuthTilt = me.cursorAz;
+	 	me.elevationTilt = me.radar.getTiltKnob();
 		if (me.priorityTarget != nil) {
 			if (!size(me.priorityTarget.getBleps()) or !me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, me.priorityTarget) or me.radar.elapsed - me.priorityTarget.getLastBlepTime() > me.timeToKeepBleps) {
 				me.priorityTarget = nil;
-				me.radar.tiltOverride = 0;
 				me.undesignate();
 				return;
 			}
@@ -2039,12 +2024,9 @@ var F16TWSMode = {
 				} elsif (me.centerTilt < me.azimuthTilt-me.az) {
 					me.azimuthTilt = me.centerTilt+me.az;
 				}
-				me.radar.tiltOverride = 1;
-				me.radar.tilt = me.lastBlep.getElev();
+				me.elevationTilt = me.lastBlep.getElev();
 			} else {
-				
 				me.priorityTarget = nil;
-				me.radar.tiltOverride = 0;
 				me.undesignate();
 				return;
 			}
@@ -2060,10 +2042,9 @@ var F16TWSMode = {
 			me.bars = math.min(3, me.bars);
 			me.az = math.min(25, me.az);
 		} else {
-			me.radar.tiltOverride = 0;
 			me.undesignate();
 		}
-		me.constrainAzimuth();
+		me.constrainAz();
 	},
 	frameCompleted: func {
 		if (me.lastFrameStart != -1) {
@@ -2072,7 +2053,6 @@ var F16TWSMode = {
 		me.lastFrameStart = me.radar.elapsed;
 	},
 	enterMode: func {
-		me.discDirect = 1;
 		me.currentTracked = [];
 		foreach(c;me.radar.vector_aicontacts_bleps) {
 			c.ignoreTrackInfo();# Kind of a hack to make it give out false info. Bypasses hadTrackInfo() but not hasTrackInfo().
@@ -2204,11 +2184,11 @@ var F16RWSSAMMode = {
 	},
 	preStep: func {
 		me.azimuthTilt = me.cursorAz;
+		me.elevationTilt = me.radar.getTiltKnob();
 		if (me.priorityTarget != nil) {
 			# azimuth width is autocalculated in F16 AUTO-SAM:
 			if (!size(me.priorityTarget.getBleps()) or !me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, me.priorityTarget)) {
 				me.priorityTarget = nil;
-				me.radar.tiltOverride = 0;
 				me.undesignate();
 				return;
 			}
@@ -2221,12 +2201,9 @@ var F16RWSSAMMode = {
 				} else {
 					me.scanPriorityEveryFrame = 0;
 				}
-				me.radar.tiltOverride = 1;
-				me.radar.tilt = me.lastBlep.getElev();
+				me.elevationTilt = me.lastBlep.getElev();
 			} else {
-				
 				me.priorityTarget = nil;
-				me.radar.tiltOverride = 0;
 				me.undesignate();
 				return;
 			}
@@ -2239,11 +2216,10 @@ var F16RWSSAMMode = {
 				me.designate(me.priorityTarget);
 			}
 		} else {
-			me.radar.tiltOverride = 0;
 			me.scanPriorityEveryFrame = 0;
 			me.undesignate();
 		}
-		me.constrainAzimuth();
+		me.constrainAz();
 	},
 	undesignate: func {
 		me.priorityTarget = nil;
@@ -2366,8 +2342,6 @@ var F16ACMMode = {#TODO
 	showAZinHSD: func {
 		return 0;
 	},
-	setDeviation: func (dev_tilt_deg) {
-	},
 	cycleAZ: func {	},
 	cycleBars: func { },
 	designate: func (designate_contact) {
@@ -2428,8 +2402,6 @@ var F16ACM20Mode = {
 	showAZinHSD: func {
 		return 0;
 	},
-	setDeviation: func (dev_tilt_deg) {
-	},
 	cycleAZ: func {	},
 	cycleBars: func { },
 	designate: func (designate_contact) {
@@ -2450,8 +2422,7 @@ var F16ACM20Mode = {
 	},
 	preStep: func {
 		me.radar.horizonStabilized = 0;
-		me.radar.tilt = -3;
-		me.radar.tiltOverride = 1;
+		me.elevationTilt = -3;
 	},
 	increaseRange: func {
 		return 0;
@@ -2497,8 +2468,7 @@ var F16ACM60Mode = {
 	},
 	preStep: func {
 		me.radar.horizonStabilized = 0;
-		me.radar.tilt = 0;
-		me.radar.tiltOverride = 1;
+		me.elevationTilt = 0;
 	},
 };
 
@@ -2521,22 +2491,21 @@ var F16ACMBoreMode = {
 	},
 	preStep: func {
 		me.radar.horizonStabilized = 0;
-		me.radar.tilt = 0;
-		me.radar.tiltOverride = 1;
+		me.elevationTilt = 0;
 	},
-	step: func (dt, tilt) {
+	step: func (dt) {
 		me.preStep();
-		# (re)calculate pattern as vectors.
+		# TODO: HMCS should be able to slew this
 		me.localDir = vector.Math.yawPitchVector(0, -me.radar.instantFoVradius, [1,0,0]);
 		me.maxMove = math.min(me.radar.instantFoVradius, me.discSpeed_dps*dt);
-		me.currentPos = me.radar.positionDirection;
-		me.angleToNextNode = vector.Math.angleBetweenVectors(me.currentPos, me.localDir);
+		me.angleToNextNode = vector.Math.angleBetweenVectors(me.radar.positionDirection, me.localDir);
 		if (me.angleToNextNode < me.maxMove) {
 			me.radar.setAntennae(me.localDir);
 			me.lastFrameDuration = 0;
 			return 0;
 		}
-		me.newPos = vector.Math.rotateVectorTowardsVector(me.currentPos, me.localDir, me.maxMove);
+		# Great circle movement to reach the bore spot
+		me.newPos = vector.Math.rotateVectorTowardsVector(me.radar.positionDirection, me.localDir, me.maxMove);
 		me.radar.setAntennae(me.newPos);
 		return 0;
 	},
@@ -2565,9 +2534,10 @@ var F16STTMode = {
 	barHeight: 0.90,# multiple of instantFoVradius
 	bars: 2,
 	minimumTimePerReturn: 0.10,
-	timeToKeepBleps: 5, # Need to have time to move disc to the selction from wherever it was before entering STT.
+	timeToKeepBleps: 5, # Need to have time to move disc to the selection from wherever it was before entering STT. Plus already faded bleps from superMode will get pruned if this is to low.
 	debug: 1,
 	painter: 1,
+	debug: 0,
 	new: func (radar = nil) {
 		var mode = {parents: [F16STTMode, RadarMode]};
 		mode.radar = radar;
@@ -2593,21 +2563,22 @@ var F16STTMode = {
 		return me.superMode.getAz();
 	},
 	preStep: func {
+		me.debug = getprop("debug-radar/debug-stt");
 		if (me.priorityTarget != nil and size(me.priorityTarget.getBleps())) {
 			me.lastBlep = me.priorityTarget.getLastBlep();
+			if (me.debug > 0) {
+				setprop("debug-radar/STT-bleps", size(me.priorityTarget.getBleps()));
+			}
 			if (me.lastBlep != nil) {
 				me.azimuthTilt = me.lastBlep.getAZDeviation();
-				me.radar.tiltOverride = 1;# tilt knob ignored
-				me.radar.tilt = me.lastBlep.getElev(); # tilt here is in relation to horizon
+				me.elevationTilt = me.lastBlep.getElev(); # tilt here is in relation to horizon
 			} else {
 				me.priorityTarget = nil;
-				me.radar.tiltOverride = 0;
 				me.undesignate();
 				return;
 			}
 			if (!size(me.priorityTarget.getBleps()) or !me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, me.priorityTarget)) {
 				me.priorityTarget = nil;
-				me.radar.tiltOverride = 0;
 				me.undesignate();
 				return;
 			} elsif (me.azimuthTilt > me.radar.fieldOfRegardMaxAz-me.az) {
@@ -2621,9 +2592,17 @@ var F16STTMode = {
 			if (me.priorityTarget.getRangeDirect()*M2NM > 0.90 * me.getRange()) {
 				me._increaseRange();
 			}
+			if (me.debug > 0) {
+				setprop("debug-radar/STT-focused", me.priorityTarget.get_Callsign());
+			}
 		} else {
+			if (me.debug > 0) {
+				setprop("debug-radar/STT-focused", "--none--");
+			}
+			if (me.debug > 0) {
+				setprop("debug-radar/STT-bleps", -1);
+			}
 			me.priorityTarget = nil;
-			me.radar.tiltOverride = 0;
 			me.undesignate();
 		}
 	},
@@ -2633,7 +2612,7 @@ var F16STTMode = {
 	undesignate: func {
 		me.radar.setCurrentMode(me.superMode, me.priorityTarget);
 		me.priorityTarget = nil;
-		#var log = caller(1); foreach (l;log) print(l);
+		var log = caller(1); foreach (l;log) print(l);
 	},
 	designate: func {},
 	cycleBars: func {},
@@ -2649,7 +2628,7 @@ var F16STTMode = {
 	frameCompleted: func {
 		if (me.lastFrameStart != -1) {
 			me.lastFrameDuration = me.radar.elapsed - me.lastFrameStart;
-			me.timeToKeepBleps = math.max(1, me.radar.targetHistory*me.lastFrameDuration);
+			#me.timeToKeepBleps = math.max(2, me.radar.targetHistory*me.lastFrameDuration);
 		}
 		me.lastFrameStart = me.radar.elapsed;
 	},
@@ -2978,7 +2957,7 @@ var antennae_knob_prop = props.globals.getNode("controls/radar/antennae-knob",0)
 var baser = AIToNasal.new();
 var partitioner = NoseRadar.new();
 var omni = OmniRadar.new(1.0, 150, 55);
-var terrain = TerrainChecker.new(0.10, 1, 30);# 0.05 or 0.10 is fine here
+var terrain = TerrainChecker.new(0.05, 1, 30);# 0.05 or 0.10 is fine here
 var dlnkRadar = DatalinkRadar.new(0.03, 90);# 3 seconds because cannot be too slow for DLINK targets
 
 # start specific radar system

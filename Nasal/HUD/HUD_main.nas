@@ -2245,9 +2245,9 @@ append(obj.total, obj.speed_curr);
                 me.alow_text = "";
             }
             
-            if (me.ALOW_top and me["altScaleMode"] != 2) {
+            if ((hdp.dgft or me.ALOW_top) and me["altScaleMode"] != 2) {
                 hdp.window1_txt = me.alow_text;
-                hdp.window10_txt = me.TA_text;
+                hdp.window10_txt = me.TA_text;# Since MLU Tape 2
             } else {
                 hdp.window10_txt = me.alow_text;
                 hdp.window1_txt = "";
@@ -2428,7 +2428,7 @@ append(obj.total, obj.speed_curr);
         me.locatorAngle.setVisible(me.locatorLineShow);
 
         if (hdp.dgft) {
-            me.ALOW_top = 1;
+            me.ALOW_top = 1;# thsi line is AFTER the code that needs it
             me.peelDeg = 90-hdp.pitch;
             me.peelRadius = 0.25*me.sx;
             me.peelTickRadius = me.peelRadius+8;

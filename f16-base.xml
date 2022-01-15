@@ -586,6 +586,7 @@
     <debug-radar>
         <debug-mapper type="int">0</debug-mapper>
         <debug-main type="int">0</debug-main>
+        <debug-stt type="int">0</debug-stt>
     </debug-radar>
     <input n="0" include="Systems/f16-input.xml"/>
     <controls>

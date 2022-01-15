@@ -206,7 +206,7 @@ RadarViewPPI = {
 		if (apg68Radar.tiltOverride) {
 			me.text.setText("Antennae elevation knob override");
 		} else {
-			me.text.setText(sprintf("Antennae elevation knob: %d degs", apg68Radar.getTilt()));
+			me.text.setText(sprintf("Antennae elevation knob: %d degs", apg68Radar.getTiltKnob()));
 		}
 		me.md = apg68Radar.currentMode.longName;
 		me.text2.setText(me.md);
