@@ -953,7 +953,7 @@ var F16_HMD = {
             me.target_idx = 0;
             me.designated = 0;
             
-        me.target_locked.setVisible(0);
+        me.target_lock_show = 0;
 
         me.irL = 0;#IR lock
         me.irS = 0;#IR medium circle
@@ -1036,7 +1036,7 @@ var F16_HMD = {
                     
                     if (radar_system.apg68Radar.getPriorityTarget() != nil and radar_system.apg68Radar.getPriorityTarget().get_Callsign() != nil and me.u.get_Callsign() == radar_system.apg68Radar.getPriorityTarget().get_Callsign()) {
                         me.designatedDistanceFT = radar_system.apg68Radar.getPriorityTarget().getLastRangeDirect()*M2FT;
-                        me.target_locked.setVisible(1);
+                        me.target_lock_show = 1;
                         if (me.tgt != nil) {
                             me.tgt.hide();
                         }
@@ -1125,7 +1125,22 @@ var F16_HMD = {
 
         me.locatorLine.setVisible(me.locatorLineShow);
         me.locatorAngle.setVisible(me.locatorLineShow);
+        me.target_locked.setVisible(me.target_lock_show);
 
+        if (!me.target_lock_show and !hdp.standby and radar_system.apg68Radar.currentMode.longName == radar_system.acmBoreMode.longName) {
+            me.echoPos = f16.HudMath.getDevFromHMD(radar_system.apg68Radar.eulerX, radar_system.apg68Radar.eulerY, -hdp.hmdH, hdp.hmdP);
+            me.echoPos[0] = (512/0.025)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512
+            me.echoPos[1] = -(512/0.025)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*0.2;
+            me.clamped = math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]) > 500;
+            if (!me.clamped) {
+                me.rdrBore.setTranslation(me.echoPos);
+                me.rdrBore.show();
+            } else {
+                me.rdrBore.hide();
+            }
+        } else {
+            me.rdrBore.hide();
+        }
         
         me.dlzArray = pylons.getDLZ();
         #me.dlzArray =[10,8,6,2,9];#test

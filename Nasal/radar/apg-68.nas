@@ -2489,23 +2489,27 @@ var F16ACMBoreMode = {
 	},
 	preStep: func {
 		me.radar.horizonStabilized = 0;
-		me.elevationTilt = 0;
+		me.elevationTilt = -me.radar.instantFoVradius;
+		me.azimuthTilt = 0;
+		if (getprop("payload/armament/hmd-active") == 1) {
+			me.azimuthTilt = math.clamp(getprop("payload/armament/hmd-horiz-deg"),-60,60);
+			me.elevationTilt = math.clamp(getprop("payload/armament/hmd-vert-deg"),-60,60);
+		}
 	},
 	step: func (dt) {
 		me.preStep();
-		# TODO: HMCS should be able to slew this
-		me.localDir = vector.Math.yawPitchVector(0, -me.radar.instantFoVradius, [1,0,0]);
-		me.maxMove = math.min(me.radar.instantFoVradius, me.discSpeed_dps*dt);
-		me.angleToNextNode = vector.Math.angleBetweenVectors(me.radar.positionDirection, me.localDir);
-		if (me.angleToNextNode < me.maxMove) {
-			me.radar.setAntennae(me.localDir);
+		me.localDirHMD = vector.Math.pitchYawVector(me.elevationTilt, -me.azimuthTilt, [1,0,0]);
+		me.angleToHMD = vector.Math.angleBetweenVectors(me.radar.positionDirection, me.localDirHMD);
+		me.maxMove = math.min(me.angleToHMD, me.discSpeed_dps*dt);		
+		if (me.angleToHMD < 0.1) {
+			me.radar.setAntennae(me.localDirHMD);
 			me.lastFrameDuration = 0;
 			return 0;
 		}
 		# Great circle movement to reach the bore spot
-		me.newPos = vector.Math.rotateVectorTowardsVector(me.radar.positionDirection, me.localDir, me.maxMove);
+		me.newPos = vector.Math.rotateVectorTowardsVector(me.radar.positionDirection, me.localDirHMD, me.maxMove);
 		me.radar.setAntennae(me.newPos);
-		return 0;
+		return dt-me.maxMove/me.discSpeed_dps;
 	},
 };
 
