@@ -40,6 +40,7 @@ var AirborneRadar = {
 	instantHoriFoVradius: 1.5,# real hori radius (not used)
 	rcsRefDistance: 70,
 	rcsRefValue: 3.2,
+	#closureReject: -1, # The minimum kt closure speed it will pick up, else rejected.
 	maxTilt: 60,
 	#positionEuler: [0,0,0,0],# euler direction
 	positionDirection: [1,0,0],# vector direction
@@ -49,6 +50,8 @@ var AirborneRadar = {
 	horizonStabilized: 1, # When true antennae ignore roll (and pitch until its high)
 	vector_aicontacts_for: [],# vector of contacts found in field of regard
 	vector_aicontacts_bleps: [],# vector of not timed out bleps
+	chaffList: [],
+	chaffSeenList: [],
 	timer: nil,
 	timerMedium: nil,
 	timerSlow: nil,
@@ -81,6 +84,10 @@ var AirborneRadar = {
 	    		    rdr.purgeBleps();
 	    		    #print("size(rdr.vector_aicontacts_for)=",size(rdr.vector_aicontacts_for));
 	    	    #}
+	            return emesary.Transmitter.ReceiptStatus_OK;
+	        }
+	        if (notification.NotificationType == "ChaffReleaseNotification") {
+	    		rdr.chaffList ~= notification.vector;
 	            return emesary.Transmitter.ReceiptStatus_OK;
 	        }
 	        return emesary.Transmitter.ReceiptStatus_NotProcessed;
@@ -252,7 +259,7 @@ var AirborneRadar = {
 		me.gmapper = gmapper;
 	},
 	loop: func {
-		me.enabled = getprop("/f16/avionics/power-fcr-bit") == 2 and !getprop("/fdm/jsbsim/gear/unit[0]/WOW") and getprop("instrumentation/radar/radar-enable");
+		me.enabled = getprop("/f16/avionics/power-fcr-bit") == 2 and getprop("instrumentation/radar/radar-enable") and !getprop("/fdm/jsbsim/gear/unit[0]/WOW"); 
 		setprop("instrumentation/radar/radar-standby", !me.enabled);
 		# calc dt here, so we don't get a massive dt when going from disabled to enabled:
 		me.elapsed = elapsedProp.getValue();
@@ -331,6 +338,36 @@ var AirborneRadar = {
     	if (me["gmapper"] != nil) me.gmapper.scanGM(me.eulerX, me.eulerY, me.instantVertFoVradius,
     		 me.currentMode.bars == 1 or (me.currentMode.bars == 4 and me.currentMode["nextPatternNode"] == 0) or (me.currentMode.bars == 3 and me.currentMode["nextPatternNode"] == 7) or (me.currentMode.bars == 2 and me.currentMode["nextPatternNode"] == 1),
     		 me.currentMode.bars == 1 or (me.currentMode.bars == 4 and me.currentMode["nextPatternNode"] == 2) or (me.currentMode.bars == 3 and me.currentMode["nextPatternNode"] == 3) or (me.currentMode.bars == 2 and me.currentMode["nextPatternNode"] == 3));# The last two parameter is hack
+
+    	# test for passive ECM (chaff)
+		# 
+		me.closestChaff = 1000000;# meters
+		if (size(me.chaffList)) {
+			if (me.horizonStabilized) {
+				me.globalAntennaeDir = vector.Math.rollPitchYawVector(0, 0, -self.getHeading(), me.positionDirection);
+			} else {
+				me.globalAntennaeDir = vector.Math.yawPitchRollVector(-self.getHeading(), self.getPitch(), self.getRoll(), me.positionDirection);
+			}
+			
+			foreach (me.chaff ; me.chaffList) {
+				me.globalToTarget = vector.Math.pitchYawVector(me.chaff.pitch, -me.chaff.bearing, [1,0,0]);
+				
+				# Degrees from center of radar beam to center of chaff cloud
+				me.beamDeviation = vector.Math.angleBetweenVectors(me.globalAntennaeDir, me.globalToTarget);
+
+				if (me.beamDeviation < me.instantFoVradius) {
+					if (me.chaff.meters < me.closestChaff) {
+						me.closestChaff = me.chaff.meters;
+					}
+					me.registerChaff(me.chaff);# for displays
+					#print("REGISTER CHAFF");
+				}# elsif(me.debug > -1) {
+					# This is too detailed for most debugging, remove later
+				#	setprop("debug-radar/main-beam-deviation-chaff", me.beamDeviation);
+				#}
+			}
+		}
+
     	me.testedPrio = 0;
 		foreach(contact ; me.vector_aicontacts_for) {
 			if (me.doIFF == 1) {
@@ -351,7 +388,7 @@ var AirborneRadar = {
 			me.dev = contact.getDeviationStored();
 
 			if (me.horizonStabilized) {
-				# ignore roll (and ignore pitch for now too, TODO)
+				# ignore roll and pitch
 
 				# Vector that points to target in radar coordinates as if aircraft it was not rolled or pitched.
 				me.globalToTarget = vector.Math.eulerToCartesian3X(-me.dev[7],me.dev[8],0);
@@ -361,23 +398,27 @@ var AirborneRadar = {
 			} else {
 				# Vector that points to target in local radar coordinates.
 				me.localToTarget = vector.Math.eulerToCartesian3X(-me.dev[0],me.dev[1],0);
-			}			
+			}
 
 			# Degrees from center of radar beam to target, note that positionDirection must match the coord system defined by horizonStabilized.
 			me.beamDeviation = vector.Math.angleBetweenVectors(me.positionDirection, me.localToTarget);
 
 			if(me.debug > 1 and me.currentMode.painter and contact == me.getPriorityTarget()) {
+				# This is too detailed for most debugging, remove later
 				setprop("debug-radar/main-beam-deviation", me.beamDeviation);
 				me.testedPrio = 1;
 			}
-			if (me.beamDeviation < me.instantFoVradius) {
+			if (me.beamDeviation < me.instantFoVradius and (me.dev[2] < me.closestChaff or rand() > 0.70) ) {#  and (me.closureReject == -1 or me.dev[13] > me.closureReject)
+				# TODO: Refine the chaff conditional (ALOT)
 				me.registerBlep(contact, me.dev, me.currentMode.painter);
 				#print("REGISTER BLEP");
 
 				# Return here, so that each instant FoV max gets 1 target:
-				return;
+				# TODO: refine by testing angle between contacts seen in this FoV
+				break;
 			}
 		}
+
 		if(me.debug > 1 and me.currentMode.painter and !me.testedPrio) {
 			setprop("debug-radar/main-beam-deviation", "--unseen-lock--");
 		}
@@ -403,6 +444,12 @@ var AirborneRadar = {
 		}
 		return 0;
 	},
+	registerChaff: func (chaff) {
+		chaff.seenTime = me.elapsed;
+		if (!me.containsVector(me.chaffSeenList, chaff)) {
+			append(me.chaffSeenList, chaff);
+		}
+	},
 	purgeBleps: func {
 		#ok, lets clean up old bleps:
 		me.vector_aicontacts_bleps_tmp = [];
@@ -424,6 +471,25 @@ var AirborneRadar = {
 		}
 		#print("Purged ", size(me.vector_aicontacts_bleps) - size(me.vector_aicontacts_bleps_tmp), " bleps   remains:",size(me.vector_aicontacts_bleps_tmp), " orig ",size(me.vector_aicontacts_bleps));
 		me.vector_aicontacts_bleps = me.vector_aicontacts_bleps_tmp;
+
+		#lets purge the old chaff also, both seen and unseen
+		me.wind = getprop("environment/wind-speed-kt");
+		me.chaffLifetime = math.max(0, me.wind==0?25:25*(1-me.wind/50));
+		me.chaffList_tmp = [];
+		foreach(me.evilchaff ; me.chaffList) {
+			if (me.elapsed - me.evilchaff.releaseTime < me.chaffLifetime) {
+				append(me.chaffList_tmp, me.evilchaff);
+			}
+		}
+		me.chaffList = me.chaffList_tmp;
+
+		me.chaffSeenList_tmp = [];
+		foreach(me.evilchaff ; me.chaffSeenList) {
+			if (me.elapsed - me.evilchaff.releaseTime < me.chaffLifetime or me.elapsed - me.evilchaff.seenTime < me.currentMode.timeToKeepBleps) {
+				append(me.chaffSeenList_tmp, me.evilchaff);
+			}
+		}
+		me.chaffSeenList = me.chaffSeenList_tmp;
 	},
 	purgeAllBleps: func {
 		#ok, lets delete all bleps:
@@ -431,19 +497,19 @@ var AirborneRadar = {
 			contact.setBleps([]);
 		}
 		me.vector_aicontacts_bleps = [];
+		me.chaffSeenList = [];
 	},
 	targetRCSSignal: func(aircraftCoord, targetCoord, targetModel, targetHeading, targetPitch, targetRoll, myRadarDistance_m = 74000, myRadarStrength_rcs = 3.2) {
 		#
 		# test method. Belongs in rcs.nas.
 		#
-	    #print(targetModel);
 	    me.target_front_rcs = nil;
 	    if ( contains(rcs.rcs_oprf_database,targetModel) ) {
 	        me.target_front_rcs = rcs.rcs_oprf_database[targetModel];
 	    } elsif ( contains(rcs.rcs_database,targetModel) ) {
 	        me.target_front_rcs = rcs.rcs_database[targetModel];
 	    } else {
-	        #return 1;
+	        # GA/Commercial return most likely
 	        me.target_front_rcs = rcs.rcs_oprf_database["default"];
 	    }	    
 	    me.target_rcs = rcs.getRCS(targetCoord, targetHeading, targetPitch, targetRoll, aircraftCoord, me.target_front_rcs);
@@ -453,6 +519,9 @@ var AirborneRadar = {
 	},
 	getActiveBleps: func {
 		return me.vector_aicontacts_bleps;
+	},
+	getActiveChaff: func {
+		return me.chaffSeenList;
 	},
 	showScan: func {
 		if (me.debug > 0) {
@@ -495,10 +564,10 @@ var AirborneRadar = {
 	containsVector: func (vec, item) {
 		foreach(test; vec) {
 			if (test == item) {
-				return TRUE;
+				return 1;
 			}
 		}
-		return FALSE;
+		return 0;
 	},
 
 	containsVectorContact: func (vec, item) {
@@ -3086,6 +3155,7 @@ var partitioner = NoseRadar.new();
 var omni = OmniRadar.new(1.0, 150, 55);
 var terrain = TerrainChecker.new(0.05, 1, 30);# 0.05 or 0.10 is fine here
 var dlnkRadar = DatalinkRadar.new(0.03, 90);# 3 seconds because cannot be too slow for DLINK targets
+var ecm = ECMChecker.new(0.05, 6);
 
 # start specific radar system
 var rwsMode = F16RWSMode.new(F16RWSSAMMode.new(F16MultiSTTMode.new()));

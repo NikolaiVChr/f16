@@ -472,6 +472,28 @@ var self = SelfContact.new();
 
 
 
+#   ██████ ██   ██  █████  ███████ ███████ 
+#  ██      ██   ██ ██   ██ ██      ██      
+#  ██      ███████ ███████ █████   █████   
+#  ██      ██   ██ ██   ██ ██      ██      
+#   ██████ ██   ██ ██   ██ ██      ██      
+#                                          
+#                                          
+var Chaff = {
+	seenTime: 0,
+	releaseTime: 0,
+	meters: 0,
+	bearing: 0,
+	pitch: 0,
+};
+
+
+
+
+
+
+
+
 
 #  ██████  ██      ███████ ██████  
 #  ██   ██ ██      ██      ██   ██ 
@@ -480,7 +502,7 @@ var self = SelfContact.new();
 #  ██████  ███████ ███████ ██      
 #                                  
 #                                  
-Blep = {
+var Blep = {
 	new: func (valueVector) {
 		var b = {parents: [Blep]};
 		b.values = valueVector;
@@ -524,7 +546,7 @@ Blep = {
 	},
 
 	getStrength: func {
-		# RCS
+		# Distance in m where it would have been max detectable due to RCS
 		return me.values[1];
 	},
 
@@ -569,7 +591,7 @@ Blep = {
 #   ██████  ██████  ██   ████    ██    ██   ██  ██████    ██    
 #                                                               
 #                                                               
-AIContact = {
+var AIContact = {
 # Attributes:
 #   replaceNode() [in AI tree]
 	new: func (prop, model, callsign, pos_type, ident, ainame, subid, aitype, sign) {
@@ -1225,18 +1247,12 @@ AIContact = {
 		if (me["flareProp"] == nil) {
 			me.flareProp = me.prop.getNode(flareProp, 0);
 		}
-		#if (me.flareProp != nil) {
-		#	return me.flareProp.getValue();
-		#}
 		return me.flareProp;
 	},
 	getChaffNode: func {
 		if (me["chaffProp"] == nil) {
 			me.chaffProp = me.prop.getNode(chaffProp, 0);
 		}
-		#if (me.chaffProp != nil) {
-		#	return me.chaffProp.getValue();
-		#}
 		return me.chaffProp;
 	},
 	isPainted: func {
@@ -1308,7 +1324,7 @@ AIContact = {
 
 
 
-Radar = {
+var Radar = {
 # root radar class
 #
 # Attributes:
@@ -1324,7 +1340,7 @@ Radar = {
 #  ██      ██   ██ ██   ██    ██    ██    ██    ██  ██████  ██   ████ 
 #                                                                     
 #                                                                     
-NoseRadar = {
+var NoseRadar = {
 	# I partition the sky into the field of regard and preserve the contacts in that field for it to be scanned by ActiveDiscRadar or similar
 	new: func () {
 		var nr = {parents: [NoseRadar, Radar]};
@@ -1423,8 +1439,8 @@ NoseRadar = {
 				continue;
 			}
 			# TODO: clean this up. Only what is needed for testing against instant FoV and RCS should be in here:
-			#                       localdev, localpitch, range_m, coord, heading, pitch, roll, bearing, elevation, frustum_norm_y, frustum_norm_z, alt_ft, speed  (the frustums are no longer used)
-			contact.storeDeviation([me.dev[0],me.dev[1],me.rng,contact.getCoord(),contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation(), -me.pc_y/(me.w/2), me.pc_z/(me.h/2), me.crd.alt()*M2FT, contact.getSpeed()]);
+			#                       localdev, localpitch, range_m, coord, heading, pitch, roll, bearing, elevation, frustum_norm_y, frustum_norm_z, alt_ft, speed, closure  (the frustums are no longer used)
+			contact.storeDeviation([me.dev[0],me.dev[1],me.rng,contact.getCoord(),contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation(), -me.pc_y/(me.w/2), me.pc_z/(me.h/2), me.crd.alt()*M2FT, contact.getSpeed()]);#, contact.getClosureRate()
 			append(me.vector_aicontacts_for, contact);
 		}		
 		emesary.GlobalTransmitter.NotifyAll(me.FORNotification.updateV(me.vector_aicontacts_for));
@@ -1457,7 +1473,7 @@ NoseRadar = {
 };
 
 
-SimplerNoseRadar = {
+var SimplerNoseRadar = {
 	# I partition the sky into the field of regard and preserve the contacts in that field for it to be scanned by ActiveDiscRadar or similar
 	#
 	# Does the same as NoseRadar, but ignore elevations and stuff. Simpler, faster.
@@ -1576,7 +1592,7 @@ SimplerNoseRadar = {
 #  ██████   ██████   ██████      ██   ██ ██   ██ ██████  ██   ██ ██   ██ 
 #                                                                        
 #                                                                        
-FullRadar = {
+var FullRadar = {
 	# 360 degree coverage air radar, for use by SAMs and other surface radars.
 	new: func () {
 		var nr = {parents: [FullRadar, Radar]};
@@ -1696,7 +1712,7 @@ FullRadar = {
 #   ██████  ██      ██ ██   ████ ██ 
 #                                   
 #                                   
-OmniRadar = {
+var OmniRadar = {
 	# I check the sky 360 deg for anything potentially detectable by a passive radar system.
 	new: func (rate, max_dist_nm, tp_dist_nm) {
 		var omni = {parents: [OmniRadar, Radar]};
@@ -1771,7 +1787,7 @@ OmniRadar = {
 #     ██    ███████ ██   ██ ██   ██ ██   ██ ██ ██   ████ 
 #                                                        
 #                                                        
-TerrainChecker = {
+var TerrainChecker = {
 	#
 	# Everything here is CPU expensive.
 	#
@@ -1918,6 +1934,100 @@ TerrainChecker = {
     },
 };
 
+
+
+
+
+
+
+#  ███████  ██████ ███    ███ 
+#  ██      ██      ████  ████ 
+#  █████   ██      ██ ████ ██ 
+#  ██      ██      ██  ██  ██ 
+#  ███████  ██████ ██      ██ 
+#                             
+#                             
+var ECMChecker = {
+	#
+	# Passive ECM only for now.
+	# Does not detect own chaffs
+	#
+	new: func (rate, number_of_contacts_per_update) {
+		var ecm = {parents: [ECMChecker]};
+
+		ecm.maxCheck = number_of_contacts_per_update;
+		ecm.vector_aicontacts = [];
+		ecm.timer          = maketimer(rate, ecm, func ecm.scan());
+
+		ecm.ChaffReleaseNotification = VectorNotification.new("ChaffReleaseNotification");
+		ecm.ECMCheckerRecipient = emesary.Recipient.new("ECMCheckerRecipient");
+		ecm.ECMCheckerRecipient.radar = ecm;
+		ecm.ECMCheckerRecipient.Receive = func(notification) {
+	        if (notification.NotificationType == "AINotification") {
+	        	#printf("ECMRadar recv: %s", notification.NotificationType);
+	    		me.radar.vector_aicontacts = notification.vector;
+	    		me.radar.index = 0;
+	            return emesary.Transmitter.ReceiptStatus_OK;
+	        }
+	        return emesary.Transmitter.ReceiptStatus_NotProcessed;
+	    };
+		emesary.GlobalTransmitter.Register(ecm.ECMCheckerRecipient);
+		ecm.index = 0;
+		ecm.timer.start();
+		return ecm;
+	},
+
+	scan: func {
+		me.myChaffs = [];
+		me.elapsed = elapsedProp.getValue();
+		for (me.i = 0; me.i < 3; me.i+=1) {
+			me.scanOne();
+			if (me.index == 0) break;
+		}
+		if (size(me.myChaffs)) {
+			emesary.GlobalTransmitter.NotifyAll(me.ChaffReleaseNotification.updateV(me.myChaffs));
+		}
+	},
+
+	scanOne: func () {
+		# We only check a couple of aircraft per call
+		if (me.index > size(me.vector_aicontacts)-1) {
+			me.index = 0;
+			return;
+		}
+		me.contact = me.vector_aicontacts[me.index];
+		me.chaff = me.checkChaff(me.contact);
+		if (me.chaff != nil) {
+			append(me.myChaffs, me.chaff);
+		}
+
+        me.index += 1;
+        if (me.index > size(me.vector_aicontacts)-1) {
+        	me.index = 0;
+        }
+	},
+	
+	checkChaff: func (contact) {
+		me.node = contact.getChaffNode();
+		if (me.node != nil and (contact["oldChaffTime"] == nil or me.elapsed - contact.oldChaffTime > 1)) {
+			me.newValue = me.node.getValue();
+			if (me.newValue != 0 and me.newValue != contact["oldChaffValue"]) {
+				me.meters = contact.getRange();
+				me.bearing = contact.getBearing();
+				me.pitch = contact.getElevation();
+				contact.oldChaffTime = me.elapsed;
+				contact.oldChaffValue = me.newValue;
+
+				return {parents: [Chaff], releaseTime: me.elapsed, meters: me.meters, bearing: me.bearing, pitch: me.pitch};
+			}
+		}
+		return nil;
+	},
+	
+	del: func {
+        emesary.GlobalTransmitter.DeRegister(me.ECMCheckerRecipient);
+    },
+};
 
 
 

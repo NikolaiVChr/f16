@@ -1398,6 +1398,13 @@ var MFD_Device =
                     me.paintRdr(contact);
                     contact.randoo = me.randoo;
                 }
+                if (!radar_system.apg68Radar.currentMode.painter) {
+                    me.wind = getprop("environment/wind-speed-kt");
+                    me.chaffLifetime = math.max(0, me.wind==0?25:25*(1-me.wind/50));
+                    foreach(var chaff; radar_system.apg68Radar.getActiveChaff()) {
+                        me.paintChaff(chaff);
+                    }
+                }
             }
             if (radar_system.datalink_power.getBoolValue() and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName and !radar_system.apg68Radar.currentMode.painter) {
                 foreach(contact; vector_aicontacts_links) {
@@ -1798,8 +1805,38 @@ var MFD_Device =
                 }
             }            
         };
-    },
+        me.p_RDR.paintChaff = func (chaff) {
+            if (me.chaffLifetime == 0) return;
+            if (me.i < me.root.maxB and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName) {
+                me.distPixels = chaff.meters*(482/(radar_system.apg68Radar.getRange()*NM2M));
 
+                me.echoPos = me.calcPos(me.wdt, geo.normdeg180(chaff.bearing - radar_system.self.getHeading()), me.distPixels);
+                me.echoPos = me.calcEXPPos(me.echoPos);
+                if (me.echoPos == nil) {
+                    return;
+                }
+                #me.color = math.pow(math.max(0, rand()-(me.elapsed - chaff.seenTime)/me.chaffLifetime), 2.2);
+                me.color = math.pow(math.max(0, 1-(me.elapsed - chaff.seenTime)/me.chaffLifetime), 2.2);
+
+                me.echoPos1 = [me.echoPos[0]+rand()*6-3, me.echoPos[1]-rand()*3];
+                me.root.blep[me.i].setTranslation(me.echoPos1);
+                me.root.blep[me.i].setColor(colorDot2[0]*me.color+colorBackground[0]*(1-me.color), colorDot2[1]*me.color+colorBackground[1]*(1-me.color), colorDot2[2]*me.color+colorBackground[2]*(1-me.color));
+                me.root.blep[me.i].show();
+                me.root.blep[me.i].update();
+                
+                me.i += 1;
+                if (me.i < me.root.maxB) {
+                    me.echoPos2 = [me.echoPos[0]+rand()*6-3, me.echoPos[1]-rand()*3];
+                    me.root.blep[me.i].setTranslation(me.echoPos2);
+                    me.root.blep[me.i].setColor(colorDot2[0]*me.color+colorBackground[0]*(1-me.color), colorDot2[1]*me.color+colorBackground[1]*(1-me.color), colorDot2[2]*me.color+colorBackground[2]*(1-me.color));
+                    me.root.blep[me.i].show();
+                    me.root.blep[me.i].update();
+                    
+                    me.i += 1;
+                }
+            }
+        };
+    },
     setupList: func(svg) {
         svg.p_LIST = me.canvas.createGroup()
             .set("z-index",2)
