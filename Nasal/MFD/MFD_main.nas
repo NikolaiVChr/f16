@@ -937,7 +937,11 @@ var MFD_Device =
                 } elsif (eventi == 12) {
                     me.pressEXP = 1;
                 } elsif (eventi == 11) {
-                    radar_system.apg68Radar.cycleMode();
+                    if (!radar_system.apg68Radar.currentMode.detectAIR) {
+                        radar_system.apg68Radar.currentMode.toggleAuto();
+                    } else {
+                        radar_system.apg68Radar.cycleMode();
+                    }
                 } elsif (eventi == 2) {
                     radar_system.apg68Radar.cycleAZ();
                 } elsif (eventi == 3) {
@@ -998,12 +1002,12 @@ var MFD_Device =
             me.modeSwHD = getprop("instrumentation/radar/mode-hd-switch");            
               
             
-                me.root.acm.setText(radar_system.apg68Radar.currentMode.shortName);
-                me.root.acm.setColor(colorText1);
-                me.root.mod.setText(radar_system.apg68Radar.currentMode.rootName);
-                me.root.mod.setColor(0,0,0);
-                me.root.modBox.hide();
-                me.root.hd.hide();
+            me.root.acm.setText(radar_system.apg68Radar.currentMode.shortName);
+            me.root.acm.setColor(colorText1);
+            me.root.mod.setText(radar_system.apg68Radar.currentMode.rootName);
+            me.root.mod.setColor(0,0,0);
+            me.root.modBox.hide();
+            me.root.hd.hide();
 
             #
             # GM range rings
@@ -1198,6 +1202,7 @@ var MFD_Device =
                 if (radar_system.apg68Radar.setCursorDistance(-cursor_pos[1]/(482/radar_system.apg68Radar.getRange()))) {
                     # the cursor was Y centered due to changing range
                     cursor_pos[1] = -482*0.5;
+                    radar_system.apg68Radar.setCursorDistance(-cursor_pos[1]/(482/radar_system.apg68Radar.getRange()))
                 }
             } else {
                 radar_system.apg68Radar.setCursorDeviation(-math.atan2(-cursor_pos[0]/(482), -cursor_pos[1]/482)*R2D);
@@ -1207,6 +1212,7 @@ var MFD_Device =
                 if (radar_system.apg68Radar.setCursorDistance(-cursor_pos[1]/(482/radar_system.apg68Radar.getRange()))) {
                     # the cursor was Y centered due to changing range
                     cursor_pos[1] = -482*0.5;
+                    radar_system.apg68Radar.setCursorDistance(-cursor_pos[1]/(482/radar_system.apg68Radar.getRange()))
                 }
             }
             me.fixedEXPwidth = nil;

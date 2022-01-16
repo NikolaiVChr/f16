@@ -472,13 +472,7 @@ var APG68 = {
 	},
 	setCursorDistance: func (nm) {
 		# Return if the cursor should be distance zeroed.
-		if (nm < me.getRange()*0.05) {
-			return me.decreaseRange();
-		} elsif (nm > me.getRange()*0.95) {
-			return me.increaseRange();
-		}
-		me.currentMode.setCursorDistance(nm);
-		return 0;
+		return me.currentMode.setCursorDistance(nm);;
 	},
 	getCursorAltitudeLimits: func {
 		if (!me.enabled) return nil;
@@ -1299,7 +1293,14 @@ var RadarMode = {
 		return me.cursorAz;
 	},
 	setCursorDistance: func (nm) {
+		# Return if the cursor should be distance zeroed.
 		me.cursorNm = nm;
+		if (nm < me.radar.getRange()*0.05) {
+			return me.decreaseRange();
+		} elsif (nm > me.radar.getRange()*0.95) {
+			return me.increaseRange();
+		}		
+		return 0;
 	},
 	getCursorAltitudeLimits: func {
 		# Used in F-16 with two numbers next to cursor that indicates min/max for radar pattern in altitude above sealevel.
@@ -1631,7 +1632,7 @@ var F16LRSMode = {
 #                          
 var F16SeaMode = {
 	rootName: "SEA",
-	shortName: "MAN",
+	shortName: "AUT",
 	longName: "Sea Navigation Mode",
 	discSpeed_dps: 55,# was 55
 	maxRange: 80,
@@ -1652,6 +1653,7 @@ var F16SeaMode = {
 	exp: 0,
 	expAz: 0,
 	expDistNm: 10,
+	autoCursor: 1,
 	new: func (subMode, radar = nil) {
 		var mode = {parents: [F16SeaMode, RadarMode]};
 		mode.radar = radar;
@@ -1660,6 +1662,20 @@ var F16SeaMode = {
 		subMode.shortName = mode.shortName;
 		subMode.rootName = mode.rootName;
 		return mode;
+	},
+	toggleAuto: func {
+		me.autoCursor = !me.autoCursor;
+		me.shortName = me.autoCursor?"AUT":"MAN";
+	},
+	setCursorDistance: func (nm) {
+		# Return if the cursor should be distance zeroed.
+		me.cursorNm = nm;
+		if (me.autoCursor and nm < me.radar.getRange()*0.425) {
+			return me.decreaseRange();
+		} elsif (me.autoCursor and nm > me.radar.getRange()*0.95) {
+			return me.increaseRange();
+		}		
+		return 0;
 	},
 	preStep: func {
 		var dev_tilt_deg = me.cursorAz;
@@ -1738,7 +1754,6 @@ var F16SeaMode = {
 #                      
 var F16GMMode = {
 	rootName: "GM",
-	shortName: "MAN",
 	longName: "Ground Map",
 	discSpeed_dps: 55,
 	detectAIR: 0,
@@ -1813,7 +1828,6 @@ var F16GMMode = {
 #                               
 var F16GMTMode = {
 	rootName: "GMT",
-	shortName: "MAN",
 	longName: "Ground Moving Target",
 	discSpeed_dps: 55,
 	maxRange: 40,
