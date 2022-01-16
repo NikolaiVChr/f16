@@ -70,7 +70,7 @@ var APG68 = {
 		rdr.ActiveDiscRadarRecipient.Receive = func(notification) {
 	        if (notification.NotificationType == "FORNotification") {
 	        	#printf("DiscRadar recv: %s", notification.NotificationType);
-	            #if (rdr.enabled == 1) { lets keep this part running, so we have fresh data when its re-enabled
+	            #if (rdr.enabled == 1) { no, lets keep this part running, so we have fresh data when its re-enabled
 	    		    rdr.vector_aicontacts_for = notification.vector;
 	    		    rdr.purgeBleps();
 	    		    #print("size(rdr.vector_aicontacts_for)=",size(rdr.vector_aicontacts_for));
@@ -108,23 +108,9 @@ var APG68 = {
 		me.currentMode.designate(designate_contact);
 	},
 	designateRandom: func {
-		if (size(me.vector_aicontacts_bleps)>0) {
-			if (me.currentMode.shortName != "TWS") {
-				me.designate(me.vector_aicontacts_bleps[size(me.vector_aicontacts_bleps)-1]);
-			} else {
-				if (me.currentMode.priorityTarget != nil) {
-					me.designate(me.currentMode.priorityTarget);
-					return;
-				} else {
-					foreach(c;me.vector_aicontacts_bleps) {
-						if (c.hadTrackInfo() and elapsedProp.getValue()-c.getLastBlepTime() < F16TWSMode.maxScanIntervalForTrack) {
-							me.designate(c);
-							return;
-						}
-					}
-				}
-				me.designate(me.vector_aicontacts_bleps[size(me.vector_aicontacts_bleps)-1]);
-			}
+		# Use this method mostly for testing
+		if (size(me.vector_aicontacts_bleps) > 0) {
+			me.designate(me.vector_aicontacts_bleps[size(me.vector_aicontacts_bleps)-1]);
 		}
 	},
 	undesignate: func {
@@ -570,7 +556,7 @@ var APG68 = {
 
 
 
-var SPOT_SCAN = -1;
+var SPOT_SCAN = -1; # must be -1
 
 
 
@@ -582,24 +568,25 @@ var SPOT_SCAN = -1;
 #                                              
 #                                              
 var RadarMode = {
+	#
+	# Subclass and modify as needed.
+	#
 	radar: nil,
 	range: 40,
-	minRange: 5, # MLU T1 .. should we make this 10 for block 10/30/YF? TODO
+	minRange: 5,
+	maxRange: 160,
 	az: 60,
-	bars: 4,
+	bars: 1,
 	azimuthTilt: 0,# modes set these depending on where they want the pattern to be centered.
 	elevationTilt: 0,
 	barHeight: 0.95,# multiple of instantFoVradius
-	barPattern:  [ [[-1,0],[1,0]],                    # These are multitudes of instantFoVradius, the 3rd number is which axis to rotate around, -1 for shortest.
-	               [[-1,-1],[1,-1],[1,1],[-1,1]],
-	               [[-1,0],[1,0],[1,2],[-1,2],[-1,0],[1,0],[1,-2],[-1,-2]],
-	               [[1,-3],[1,3],[-1,3],[-1,1],[1,1],[1,-1],[-1,-1],[-1,-3]] ],	               
-	barPatternMin: [0,-1, -2, -3],
-	barPatternMax: [0, 1,  2,  3],
+	barPattern:  [ [[-1,0],[1,0]] ],                    # These are multitudes of instantFoVradius, the 3rd number is which axis to rotate around, -1 for shortest.
+	barPatternMin: [0],
+	barPatternMax: [0],
 	nextPatternNode: 0,
 	scanPriorityEveryFrame: 0,# Related to SPOT_SCAN.
 	timeToKeepBleps: 13,
-	rootName: "CRM",
+	rootName: "Base",
 	shortName: "",
 	longName: "",
 	superMode: nil,
@@ -614,24 +601,9 @@ var RadarMode = {
 	cursorNm: 20,
 	upperAngle: 10,
 	lowerAngle: 10,
-	EXPsupport: 0,#if support zoom
-	EXPsearch: 1,# if zoom should include search targets
-	EXPfixedAim: 0,# If map underneath should move instead of cursor when slewing
 	painter: 0, # if the mode when having a priority target will produce a hard lock on target.
 	mapper: 0,
 	discSpeed_dps: 1,# current disc speed. Must never be zero.
-	showAZ: func {
-		return me.az != 60; # hmm, does the blue lines at edge of b-scope look messy? If this return false, then they are also not shown in PPI.
-	},
-	showAZinHSD: func {
-		return 1;
-	},
-	showBars: func {
-		return 1;
-	},
-	showRangeOptions: func {
-		return 1;
-	},
 	setCursorDeviation: func (cursor_az) {
 		me.cursorAz = cursor_az;
 	},
@@ -640,12 +612,6 @@ var RadarMode = {
 	},
 	setCursorDistance: func (nm) {
 		# Return if the cursor should be distance zeroed.
-		me.cursorNm = nm;
-		if (nm < me.radar.getRange()*0.05) {
-			return me.decreaseRange();
-		} elsif (nm > me.radar.getRange()*0.95) {
-			return me.increaseRange();
-		}		
 		return 0;
 	},
 	getCursorAltitudeLimits: func {
@@ -665,8 +631,9 @@ var RadarMode = {
 		return [me.up.alt()*M2FT, me.down.alt()*M2FT];
 	},
 	setRange: func (range) {
-		me.testMulti = 160/range;
-		if (int(me.testMulti) != me.testMulti) {#me.testMulti < 1 or me.testMulti > 32 or 
+		me.testMulti = me.maxRange/range;
+		if (int(me.testMulti) != me.testMulti) {
+			# max range is not dividable by range, so we don't change range
 			return 0;
 		}
 		me.range = math.min(me.maxRange, range);
@@ -852,7 +819,6 @@ var RadarMode = {
 	frameCompleted: func {
 		if (me.lastFrameStart != -1) {
 			me.lastFrameDuration = me.radar.elapsed - me.lastFrameStart;
-			me.timeToKeepBleps = me.radar.targetHistory*me.lastFrameDuration;
 		}
 		me.lastFrameStart = me.radar.elapsed;
 	},
@@ -870,6 +836,72 @@ var RadarMode = {
 	prunedContact: func (c) {
 	},
 };#                                    END Radar Mode class
+
+
+
+
+
+
+
+
+#  ███████        ██  ██████      ███    ███  █████  ██ ███    ██     ███    ███  ██████  ██████  ███████ 
+#  ██            ███ ██           ████  ████ ██   ██ ██ ████   ██     ████  ████ ██    ██ ██   ██ ██      
+#  █████   █████  ██ ███████      ██ ████ ██ ███████ ██ ██ ██  ██     ██ ████ ██ ██    ██ ██   ██ █████   
+#  ██             ██ ██    ██     ██  ██  ██ ██   ██ ██ ██  ██ ██     ██  ██  ██ ██    ██ ██   ██ ██      
+#  ██             ██  ██████      ██      ██ ██   ██ ██ ██   ████     ██      ██  ██████  ██████  ███████ 
+#                                                                                                         
+#                                                                                                         
+var APG68Mode = {
+	minRange: 5, # MLU T1 .. should we make this 10 for block 10/30/YF? TODO
+	maxRange: 160,
+	bars: 4,
+	barPattern:  [ [[-1,0],[1,0]],                    # These are multitudes of instantFoVradius
+	               [[-1,-1],[1,-1],[1,1],[-1,1]],
+	               [[-1,0],[1,0],[1,2],[-1,2],[-1,0],[1,0],[1,-2],[-1,-2]],
+	               [[1,-3],[1,3],[-1,3],[-1,1],[1,1],[1,-1],[-1,-1],[-1,-3]] ],	               
+	barPatternMin: [0,-1, -2, -3],
+	barPatternMax: [0, 1,  2,  3],
+	rootName: "CRM",
+	shortName: "",
+	longName: "",
+	EXPsupport: 0,#if support zoom
+	EXPsearch: 1,# if zoom should include search targets
+	EXPfixedAim: 0,# If map underneath should move instead of cursor when slewing
+	showAZ: func {
+		return me.az != me.radar.fieldOfRegardMaxAz; # If this return false, then they are also not shown in PPI.
+	},
+	showAZinHSD: func {
+		return 1;
+	},
+	showBars: func {
+		return 1;
+	},
+	showRangeOptions: func {
+		return 1;
+	},
+	setCursorDistance: func (nm) {
+		# Return if the cursor should be distance zeroed.
+		me.cursorNm = nm;
+		if (nm < me.radar.getRange()*0.05) {
+			return me.decreaseRange();
+		} elsif (nm > me.radar.getRange()*0.95) {
+			return me.increaseRange();
+		}		
+		return 0;
+	},
+	frameCompleted: func {
+		if (me.lastFrameStart != -1) {
+			me.lastFrameDuration = me.radar.elapsed - me.lastFrameStart;
+			me.timeToKeepBleps = me.radar.targetHistory*me.lastFrameDuration;
+		}
+		me.lastFrameStart = me.radar.elapsed;
+	},
+};#                                    END APG-68 Mode base class
+
+
+
+
+
 
 
 
@@ -892,7 +924,7 @@ var F16RWSMode = {
 	EXPsupport: 1,#if support zoom
 	EXPsearch: 1,# if zoom should include search targets
 	new: func (subMode, radar = nil) {
-		var mode = {parents: [F16RWSMode, RadarMode]};
+		var mode = {parents: [F16RWSMode, APG68Mode, RadarMode]};
 		mode.radar = radar;
 		mode.subMode = subMode;
 		subMode.superMode = mode;
@@ -959,7 +991,7 @@ var F16LRSMode = {
 	discSpeed_dps: 45,
 	rcsFactor: 1,
 	new: func (subMode, radar = nil) {
-		var mode = {parents: [F16LRSMode, F16RWSMode, RadarMode]};
+		var mode = {parents: [F16LRSMode, F16RWSMode, APG68Mode, RadarMode]};
 		mode.radar = radar;
 		mode.subMode = subMode;
 		subMode.superMode = mode;
@@ -1001,7 +1033,7 @@ var F16SeaMode = {
 	expDistNm: 10,
 	autoCursor: 1,
 	new: func (subMode, radar = nil) {
-		var mode = {parents: [F16SeaMode, RadarMode]};
+		var mode = {parents: [F16SeaMode, APG68Mode, RadarMode]};
 		mode.radar = radar;
 		mode.subMode = subMode;
 		subMode.superMode = mode;
@@ -1107,7 +1139,7 @@ var F16GMMode = {
 	detectMARINE: 0,
 	mapper: 1,
 	new: func (subMode, radar = nil) {
-		var mode = {parents: [F16GMMode, F16SeaMode, RadarMode]};
+		var mode = {parents: [F16GMMode, F16SeaMode, APG68Mode, RadarMode]};
 		mode.radar = radar;
 		mode.subMode = subMode;
 		subMode.superMode = mode;
@@ -1182,7 +1214,7 @@ var F16GMTMode = {
 	detectSURFACE: 1,
 	detectMARINE: 0,
 	new: func (subMode, radar = nil) {
-		var mode = {parents: [F16GMTMode, F16SeaMode, RadarMode]};
+		var mode = {parents: [F16GMTMode, F16SeaMode, APG68Mode, RadarMode]};
 		mode.radar = radar;
 		mode.subMode = subMode;
 		subMode.superMode = mode;
@@ -1216,7 +1248,7 @@ var F16VSMode = {
 	maxScanIntervalForVelocity: 12,
 	rcsFactor: 1.15,
 	new: func (subMode, radar = nil) {
-		var mode = {parents: [F16VSMode, F16LRSMode, F16RWSMode, RadarMode]};
+		var mode = {parents: [F16VSMode, F16LRSMode, F16RWSMode, APG68Mode, RadarMode]};
 		mode.radar = radar;
 		mode.subMode = subMode;
 		subMode.superMode = mode;
@@ -1314,7 +1346,7 @@ var F16TWSMode = {
 	EXPsupport: 1,#if support zoom
 	EXPsearch: 0,# if zoom should include search targets
 	new: func (subMode, radar = nil) {
-		var mode = {parents: [F16TWSMode, RadarMode]};
+		var mode = {parents: [F16TWSMode, APG68Mode, RadarMode]};
 		mode.radar = radar;
 		mode.subMode = subMode;
 		subMode.superMode = mode;
@@ -1526,7 +1558,7 @@ var F16RWSSAMMode = {
 	priorityTarget: nil,
 	bars: 2,
 	new: func (subMode = nil, radar = nil) {
-		var mode = {parents: [F16RWSSAMMode, RadarMode]};
+		var mode = {parents: [F16RWSSAMMode, APG68Mode, RadarMode]};
 		mode.radar = radar;
 		mode.subMode = subMode;
 		if (subMode != nil) {
@@ -1644,7 +1676,7 @@ var F16LRSSAMMode = {
 	discSpeed_dps: 45,
 	rcsFactor: 1,
 	new: func (subMode = nil, radar = nil) {
-		var mode = {parents: [F16LRSSAMMode, F16RWSSAMMode, RadarMode]};
+		var mode = {parents: [F16LRSSAMMode, F16RWSSAMMode, APG68Mode, RadarMode]};
 		mode.radar = radar;
 		mode.subMode = subMode;
 		if (subMode != nil) {
@@ -1687,7 +1719,7 @@ var F16ACMMode = {#TODO
 	bars: 1,
 	az: 1,
 	new: func (subMode, radar = nil) {
-		var mode = {parents: [F16ACMMode, RadarMode]};
+		var mode = {parents: [F16ACMMode, APG68Mode, RadarMode]};
 		mode.radar = radar;
 		mode.subMode = subMode;
 		mode.subMode.superMode = mode;
@@ -1747,7 +1779,7 @@ var F16ACM20Mode = {
 	barPattern: [ [[1,-6],[1,3],[-1,3],[-1,1],[1,1],[1,-1],[-1,-1],[-1,-3],[1,-3],[1,-5],[-1,-5],[-1,-6]] ],
 	az: 15,
 	new: func (subMode, radar = nil) {
-		var mode = {parents: [F16ACM20Mode, RadarMode]};
+		var mode = {parents: [F16ACM20Mode, APG68Mode, RadarMode]};
 		mode.radar = radar;
 		mode.subMode = subMode;
 		mode.subMode.superMode = mode;
@@ -1817,7 +1849,7 @@ var F16ACM60Mode = {
 	az: 5,
 	barPattern:  [ [[-0.6,-5],[0.0,-5],[0.0, 51],[0.6,51],[0.6,-5],[0.0,-5],[0.0,51],[-0.6,51]], ],
 	new: func (subMode, radar = nil) {
-		var mode = {parents: [F16ACM60Mode, F16ACM20Mode, RadarMode]};
+		var mode = {parents: [F16ACM60Mode, F16ACM20Mode, APG68Mode, RadarMode]};
 		mode.radar = radar;
 		mode.subMode = subMode;
 		mode.subMode.superMode = mode;
@@ -1840,7 +1872,7 @@ var F16ACMBoreMode = {
 	az: 0,
 	barPattern:  [ [[0.0,-1]], ],
 	new: func (subMode, radar = nil) {
-		var mode = {parents: [F16ACMBoreMode, F16ACM20Mode, RadarMode]};
+		var mode = {parents: [F16ACMBoreMode, F16ACM20Mode, APG68Mode, RadarMode]};
 		mode.radar = radar;
 		mode.subMode = subMode;
 		mode.subMode.superMode = mode;
@@ -1901,7 +1933,7 @@ var F16STTMode = {
 	painter: 1,
 	debug: 0,
 	new: func (radar = nil) {
-		var mode = {parents: [F16STTMode, RadarMode]};
+		var mode = {parents: [F16STTMode, APG68Mode, RadarMode]};
 		mode.radar = radar;
 		return mode;
 	},
@@ -2016,7 +2048,7 @@ var F16ACMSTTMode = {
 	shortName: "STT",
 	longName: "Air Combat Mode - Single Target Track",
 	new: func (radar = nil) {
-		var mode = {parents: [F16ACMSTTMode, F16STTMode, RadarMode]};
+		var mode = {parents: [F16ACMSTTMode, F16STTMode, APG68Mode, RadarMode]};
 		mode.radar = radar;
 		return mode;
 	},
@@ -2036,7 +2068,7 @@ var F16MultiSTTMode = {
 	shortName: "STT",
 	longName: "Multisearch - Single Target Track",
 	new: func (radar = nil) {
-		var mode = {parents: [F16MultiSTTMode, F16STTMode, RadarMode]};
+		var mode = {parents: [F16MultiSTTMode, F16STTMode, APG68Mode, RadarMode]};
 		mode.radar = radar;
 		return mode;
 	},
@@ -2068,7 +2100,7 @@ var F16SEAFTTMode = {
 	detectMARINE: 1,
 	minimumTimePerReturn: 0.20,
 	new: func (radar = nil) {
-		var mode = {parents: [F16SEAFTTMode, F16STTMode, RadarMode]};
+		var mode = {parents: [F16SEAFTTMode, F16STTMode, APG68Mode, RadarMode]};
 		mode.radar = radar;
 		return mode;
 	},
@@ -2080,7 +2112,7 @@ var F16GMFTTMode = {
 	detectMARINE: 0,
 	mapper: 1,
 	new: func (radar = nil) {
-		var mode = {parents: [F16GMFTTMode, F16SEAFTTMode, F16STTMode, RadarMode]};
+		var mode = {parents: [F16GMFTTMode, F16SEAFTTMode, F16STTMode, APG68Mode, RadarMode]};
 		mode.radar = radar;
 		return mode;
 	},
@@ -2098,7 +2130,7 @@ var F16GMTFTTMode = {
 	detectSURFACE: 1,
 	detectMARINE: 0,
 	new: func (radar = nil) {
-		var mode = {parents: [F16GMTFTTMode, F16SEAFTTMode, F16STTMode, RadarMode]};
+		var mode = {parents: [F16GMTFTTMode, F16SEAFTTMode, F16STTMode, APG68Mode, RadarMode]};
 		mode.radar = radar;
 		return mode;
 	},
