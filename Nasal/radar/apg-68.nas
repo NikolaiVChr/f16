@@ -3,7 +3,7 @@
 
 
 
-
+############# BEGIN SOMEWHAT GENERIC CLASSES ###########################################
 
 
 
@@ -12,29 +12,35 @@ var FOR_ROUND  = 0;# TODO: be able to ask noseradar for round field of regard.
 var FOR_SQUARE = 1;
 
 
-#   █████  ██████   ██████         ██████   █████  
-#  ██   ██ ██   ██ ██             ██       ██   ██ 
-#  ███████ ██████  ██   ███ █████ ███████   █████  
-#  ██   ██ ██      ██    ██       ██    ██ ██   ██ 
-#  ██   ██ ██       ██████         ██████   █████  
-#                                                  
-#                                                  
-var APG68 = {
+
+
+#   █████  ██ ██████  ██████   ██████  ██████  ███    ██ ███████     ██████   █████  ██████   █████  ██████  
+#  ██   ██ ██ ██   ██ ██   ██ ██    ██ ██   ██ ████   ██ ██          ██   ██ ██   ██ ██   ██ ██   ██ ██   ██ 
+#  ███████ ██ ██████  ██████  ██    ██ ██████  ██ ██  ██ █████       ██████  ███████ ██   ██ ███████ ██████  
+#  ██   ██ ██ ██   ██ ██   ██ ██    ██ ██   ██ ██  ██ ██ ██          ██   ██ ██   ██ ██   ██ ██   ██ ██   ██ 
+#  ██   ██ ██ ██   ██ ██████   ██████  ██   ██ ██   ████ ███████     ██   ██ ██   ██ ██████  ██   ██ ██   ██ 
+#                                                                                                            
+#                                                                                                            
+var AirborneRadar = {
+	#
+	# This is an base class for an airborne forward looking radar
+	# The class RadarMode uses this. Subclass as needed.
+	#
+	# TODO: Cleaner calls to optional ground mapper
+	#
 	fieldOfRegardType: FOR_SQUARE,
 	fieldOfRegardMaxAz: 60,
 	fieldOfRegardMaxElev: 60,
 	currentMode: nil, # vector of cascading modes ending with current submode
 	currentModeIndex: 0,
-	rootMode: 0,# 0: CRM  1: ACM 2: SEA 3: GM 4: GMT
+	rootMode: 0,
 	mainModes: nil,
-	instantFoVradius: 3.90*0.5,#average of horiz/vert radius
-	instantVertFoVradius: 4.55*0.5,# real vert radius (used by ground mapper)
-	instantHoriFoVradius: 3.25*0.5,# real hori radius (not used)
+	instantFoVradius: 2.0,#average of horiz/vert radius
+	instantVertFoVradius: 2.5,# real vert radius (could be used by ground mapper)
+	instantHoriFoVradius: 1.5,# real hori radius (not used)
 	rcsRefDistance: 70,
 	rcsRefValue: 3.2,
-	targetHistory: 3,# Not used in TWS
-	tilt: 0,
-	maxTilt: 60,#TODO: Lower this a bit
+	maxTilt: 60,
 	#positionEuler: [0,0,0,0],# euler direction
 	positionDirection: [1,0,0],# vector direction
 	positionCart: [0,0,0,0],
@@ -49,8 +55,8 @@ var APG68 = {
 	elapsed: elapsedProp.getValue(),
 	lastElapsed: elapsedProp.getValue(),
 	debug: 0,
-	new: func (mainModes) {
-		var rdr = {parents: [APG68, Radar]};
+	newAirborne: func (mainModes, child) {
+		var rdr = {parents: [child, AirborneRadar, Radar]};
 
 		rdr.mainModes = mainModes;
 		
@@ -134,26 +140,6 @@ var APG68 = {
 		me.setCurrentMode(me.newMode, me.oldMode["priorityTarget"]);
 		me.oldMode.leaveMode();
 	},
-	setAGMode: func {
-		if (me.rootMode != 3) {
-			me.rootMode = 3;
-			me.oldMode = me.currentMode;
-			me.currentModeIndex = 0;
-			me.newMode = me.mainModes[me.rootMode][me.currentModeIndex];
-			me.setCurrentMode(me.newMode, me.oldMode["priorityTarget"]);
-			me.oldMode.leaveMode();
-		}
-	},
-	setAAMode: func {
-		if (me.rootMode != 0) {
-			me.rootMode = 0;
-			me.oldMode = me.currentMode;
-			me.currentModeIndex = 0;
-			me.newMode = me.mainModes[me.rootMode][me.currentModeIndex];
-			me.setCurrentMode(me.newMode, me.oldMode["priorityTarget"]);
-			me.oldMode.leaveMode();
-		}
-	},
 	cycleRootMode: func {
 		me.rootMode += 1;
 		if (me.rootMode >= size(me.mainModes)) {
@@ -170,12 +156,6 @@ var APG68 = {
 		if (me["gmapper"] != nil) me.gmapper.clear();
 		me.clearShowScan();
 		me.currentMode.cycleAZ();
-	},
-	showAZ: func {
-		me.currentMode.showAZ();
-	},
-	showAZinHSD: func {
-		me.currentMode.showAZinHSD();
 	},
 	cycleBars: func {
 		me.currentMode.cycleBars();
@@ -337,7 +317,6 @@ var APG68 = {
 		# Here we ask the NoseRadar for a slice of the sky once in a while.
 		#
 		if (me.enabled and !(me.currentMode.painter and me.currentMode.detectAIR)) {
-			# 1.414 = cos(45 degs)
 			emesary.GlobalTransmitter.NotifyAll(me.SliceNotification.slice(self.getPitch(), self.getHeading(), me.fieldOfRegardMaxElev*1.414, me.fieldOfRegardMaxAz*1.414, me.getRange()*NM2M, !me.currentMode.detectAIR, !me.currentMode.detectSURFACE, !me.currentMode.detectMARINE));
 		}
 	},
@@ -406,7 +385,6 @@ var APG68 = {
 	registerBlep: func (contact, dev, stt, doppler_check = 1) {
 		if (!contact.isVisible()) return 0;
 		if (doppler_check and contact.isHiddenFromDoppler()) {
-			#if (me.currentMode.painter) print("db-notched");
 			return 0;
 		}
 		me.maxDistVisible = me.currentMode.rcsFactor * me.targetRCSSignal(self.getCoord(), dev[3], contact.model, dev[4], dev[5], dev[6],me.rcsRefDistance*NM2M,me.rcsRefValue);
@@ -423,7 +401,6 @@ var APG68 = {
 			}
 			return 1;
 		}
-		#if (me.currentMode.painter) print("db-RCS problem");
 		return 0;
 	},
 	purgeBleps: func {
@@ -556,17 +533,20 @@ var APG68 = {
 
 
 
+
 var SPOT_SCAN = -1; # must be -1
 
 
 
-#  ███    ███  ██████  ██████  ███████ ███████ 
-#  ████  ████ ██    ██ ██   ██ ██      ██      
-#  ██ ████ ██ ██    ██ ██   ██ █████   ███████ 
-#  ██  ██  ██ ██    ██ ██   ██ ██           ██ 
-#  ██      ██  ██████  ██████  ███████ ███████ 
-#                                              
-#                                              
+
+
+#  ██████   █████  ██████   █████  ██████      ███    ███  ██████  ██████  ███████ 
+#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ████  ████ ██    ██ ██   ██ ██      
+#  ██████  ███████ ██   ██ ███████ ██████      ██ ████ ██ ██    ██ ██   ██ █████   
+#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██  ██  ██ ██    ██ ██   ██ ██      
+#  ██   ██ ██   ██ ██████  ██   ██ ██   ██     ██      ██  ██████  ██████  ███████ 
+#                                                                                  
+#                                                                                  
 var RadarMode = {
 	#
 	# Subclass and modify as needed.
@@ -604,32 +584,6 @@ var RadarMode = {
 	painter: 0, # if the mode when having a priority target will produce a hard lock on target.
 	mapper: 0,
 	discSpeed_dps: 1,# current disc speed. Must never be zero.
-	setCursorDeviation: func (cursor_az) {
-		me.cursorAz = cursor_az;
-	},
-	getCursorDeviation: func {
-		return me.cursorAz;
-	},
-	setCursorDistance: func (nm) {
-		# Return if the cursor should be distance zeroed.
-		return 0;
-	},
-	getCursorAltitudeLimits: func {
-		# Used in F-16 with two numbers next to cursor that indicates min/max for radar pattern in altitude above sealevel.
-		# It needs: me.lowerAngle, me.upperAngle and me.cursorNm
-		me.vectorToDist = [math.cos(me.upperAngle*D2R), 0, math.sin(me.upperAngle*D2R)];
-		me.selfC = self.getCoord();
-		me.geo = vector.Math.vectorToGeoVector(me.vectorToDist, me.selfC);
-		me.geo = vector.Math.product(me.cursorNm*NM2M, vector.Math.normalize([me.geo.x,me.geo.y,me.geo.z]));
-		me.up = geo.Coord.new();
-		me.up.set_xyz(me.selfC.x()+me.geo[0],me.selfC.y()+me.geo[1],me.selfC.z()+me.geo[2]);
-		me.vectorToDist = [math.cos(me.lowerAngle*D2R), 0, math.sin(me.lowerAngle*D2R)];
-		me.geo = vector.Math.vectorToGeoVector(me.vectorToDist, me.selfC);
-		me.geo = vector.Math.product(me.cursorNm*NM2M, vector.Math.normalize([me.geo.x,me.geo.y,me.geo.z]));
-		me.down = geo.Coord.new();
-		me.down.set_xyz(me.selfC.x()+me.geo[0],me.selfC.y()+me.geo[1],me.selfC.z()+me.geo[2]);
-		return [me.up.alt()*M2FT, me.down.alt()*M2FT];
-	},
 	setRange: func (range) {
 		me.testMulti = me.maxRange/range;
 		if (int(me.testMulti) != me.testMulti) {
@@ -822,6 +776,32 @@ var RadarMode = {
 		}
 		me.lastFrameStart = me.radar.elapsed;
 	},
+	setCursorDeviation: func (cursor_az) {
+		me.cursorAz = cursor_az;
+	},
+	getCursorDeviation: func {
+		return me.cursorAz;
+	},
+	setCursorDistance: func (nm) {
+		# Return if the cursor should be distance zeroed.
+		return 0;
+	},
+	getCursorAltitudeLimits: func {
+		# Used in F-16 with two numbers next to cursor that indicates min/max for radar pattern in altitude above sealevel.
+		# It needs: me.lowerAngle, me.upperAngle and me.cursorNm
+		me.vectorToDist = [math.cos(me.upperAngle*D2R), 0, math.sin(me.upperAngle*D2R)];
+		me.selfC = self.getCoord();
+		me.geo = vector.Math.vectorToGeoVector(me.vectorToDist, me.selfC);
+		me.geo = vector.Math.product(me.cursorNm*NM2M, vector.Math.normalize([me.geo.x,me.geo.y,me.geo.z]));
+		me.up = geo.Coord.new();
+		me.up.set_xyz(me.selfC.x()+me.geo[0],me.selfC.y()+me.geo[1],me.selfC.z()+me.geo[2]);
+		me.vectorToDist = [math.cos(me.lowerAngle*D2R), 0, math.sin(me.lowerAngle*D2R)];
+		me.geo = vector.Math.vectorToGeoVector(me.vectorToDist, me.selfC);
+		me.geo = vector.Math.product(me.cursorNm*NM2M, vector.Math.normalize([me.geo.x,me.geo.y,me.geo.z]));
+		me.down = geo.Coord.new();
+		me.down.set_xyz(me.selfC.x()+me.geo[0],me.selfC.y()+me.geo[1],me.selfC.z()+me.geo[2]);
+		return [me.up.alt()*M2FT, me.down.alt()*M2FT];
+	},
 	leaveMode: func {
 		# Warning: In this method do not set anything on me.radar only on me.
 		me.lastFrameStart = -1;
@@ -836,6 +816,199 @@ var RadarMode = {
 	prunedContact: func (c) {
 	},
 };#                                    END Radar Mode class
+
+
+
+
+
+
+#  ██████   █████  ████████  █████  ██      ██ ███    ██ ██   ██ 
+#  ██   ██ ██   ██    ██    ██   ██ ██      ██ ████   ██ ██  ██  
+#  ██   ██ ███████    ██    ███████ ██      ██ ██ ██  ██ █████   
+#  ██   ██ ██   ██    ██    ██   ██ ██      ██ ██  ██ ██ ██  ██  
+#  ██████  ██   ██    ██    ██   ██ ███████ ██ ██   ████ ██   ██ 
+#                                                                
+#                                                                
+DatalinkRadar = {
+	# I check the sky 360 deg for anything on datalink
+	# This class is only semi generic!
+	new: func (rate, max_dist_nm) {
+		var dlnk = {parents: [DatalinkRadar, Radar]};
+		
+		dlnk.max_dist_nm = max_dist_nm;
+		dlnk.index = 0;
+		dlnk.vector_aicontacts = [];
+		dlnk.vector_aicontacts_for = [];
+		dlnk.timer          = maketimer(rate, dlnk, func dlnk.scan());
+
+		dlnk.DatalinkRadarRecipient = emesary.Recipient.new("DatalinkRadarRecipient");
+		dlnk.DatalinkRadarRecipient.radar = dlnk;
+		dlnk.DatalinkRadarRecipient.Receive = func(notification) {
+	        if (notification.NotificationType == "AINotification") {
+	        	#printf("NoseRadar recv: %s", notification.NotificationType);
+    		    me.radar.vector_aicontacts = notification.vector;
+    		    me.radar.index = 0;
+	            return emesary.Transmitter.ReceiptStatus_OK;
+	        }
+	        return emesary.Transmitter.ReceiptStatus_NotProcessed;
+	    };
+		emesary.GlobalTransmitter.Register(dlnk.DatalinkRadarRecipient);
+		dlnk.DatalinkNotification = VectorNotification.new("DatalinkNotification");
+		dlnk.DatalinkNotification.updateV(dlnk.vector_aicontacts_for);
+		dlnk.timer.start();
+		return omni;
+	},
+
+	scan: func () {
+		if (!me.enabled) return;
+		
+		#this loop is really fast. But we only check 1 contact per call
+		if (me.index >= size(me.vector_aicontacts)) {
+			# will happen if there is no contacts or if contact(s) went away
+			me.index = 0;
+			return;
+		}
+		me.contact = me.vector_aicontacts[me.index];
+		me.wasBlue = me.contact["blue"];
+		me.cs = me.contact.get_Callsign();
+		if (me.wasBlue == nil) me.wasBlue = 0;
+
+		if (!me.contact.isValid()) {
+			me.contact.blue = 0;
+			
+			if (me.wasBlue > 0) {
+				#print(me.cs," is invalid and purged from Datalink");
+				me.new_vector_aicontacts_for = [];
+				foreach (me.c ; me.vector_aicontacts_for) {
+					if (!me.c.equals(me.contact) and !me.c.equalsFast(me.contact)) {
+						append(me.new_vector_aicontacts_for, me.contact);
+					}
+				}
+				me.vector_aicontacts_for = me.new_vector_aicontacts_for;
+			}
+		} else {
+			
+
+			if (me.contact.getRangeDirect()*M2NM > me.max_dist_nm) {me.index += 1;return;}
+			
+
+	        me.lnk = datalink.get_data(me.cs);
+	        if (!me.contact.isValid()) {
+	        	me.lnk = nil;
+	        }
+	        if (me.lnk != nil and me.lnk.on_link() == 1) {
+	            me.blue = 1;
+	            me.blueIndex = me.lnk.index()+1;
+	        } elsif (me.cs == getprop("link16/wingman-4")) { # Hack that the F16 need. Just ignore it, as nil wont cause expection.
+	            me.blue = 1;
+	            me.blueIndex = 2;
+	        } else {
+	        	me.blue = 0;
+	            me.blueIndex = -1;
+	        }
+	        if (!me.blue and me.lnk != nil and me.lnk.tracked() == 1) {
+	            me.blue = 2;
+	            me.blueIndex = me.lnk.tracked_by_index()+1;
+	        }
+
+	        me.contact.blue = me.blue;
+	        if (me.blue > 0) {
+	        	me.contact.blueIndex = me.blueIndex;
+				if (!AirborneRadar.containsVectorContact(me.vector_aicontacts_for, me.contact)) {
+					append(me.vector_aicontacts_for, me.contact);
+					emesary.GlobalTransmitter.NotifyAll(me.DatalinkNotification.updateV(me.vector_aicontacts_for));
+				}
+			} elsif (me.wasBlue > 0) {
+				me.new_vector_aicontacts_for = [];
+				foreach (me.c ; me.vector_aicontacts_for) {
+					if (!me.c.equals(me.contact) and !me.c.equalsFast(me.contact)) {
+						append(me.new_vector_aicontacts_for, me.contact);
+					}
+				}
+				me.vector_aicontacts_for = me.new_vector_aicontacts_for;
+			}
+		}
+		me.index += 1;
+        if (me.index > size(me.vector_aicontacts)-1) {
+        	me.index = 0;
+        	emesary.GlobalTransmitter.NotifyAll(me.DatalinkNotification.updateV(me.vector_aicontacts_for));
+        }
+	},
+	del: func {
+        emesary.GlobalTransmitter.DeRegister(me.DatalinkRadarRecipient);
+    },
+};
+
+
+
+
+
+
+
+
+
+
+########################### BEGIN NON-GENERIC CLASSES ##########################
+
+
+
+
+
+
+
+#   █████  ██████   ██████         ██████   █████  
+#  ██   ██ ██   ██ ██             ██       ██   ██ 
+#  ███████ ██████  ██   ███ █████ ███████   █████  
+#  ██   ██ ██      ██    ██       ██    ██ ██   ██ 
+#  ██   ██ ██       ██████         ██████   █████  
+#                                                  
+#                                                  
+var APG68 = {
+	#
+	# Root modes is  0: CRM  1: ACM 2: SEA 3: GM 4: GMT
+	#
+	instantFoVradius: 3.90*0.5,#average of horiz/vert radius
+	instantVertFoVradius: 4.55*0.5,# real vert radius (used by ground mapper)
+	instantHoriFoVradius: 3.25*0.5,# real hori radius (not used)
+	rcsRefDistance: 70,
+	rcsRefValue: 3.2,
+	targetHistory: 3,# Not used in TWS
+	maxTilt: 60,#TODO: Lower this a bit
+	setAGMode: func {
+		if (me.rootMode != 3) {
+			me.rootMode = 3;
+			me.oldMode = me.currentMode;
+			me.currentModeIndex = 0;
+			me.newMode = me.mainModes[me.rootMode][me.currentModeIndex];
+			me.setCurrentMode(me.newMode, me.oldMode["priorityTarget"]);
+			me.oldMode.leaveMode();
+		}
+	},
+	setAAMode: func {
+		if (me.rootMode != 0) {
+			me.rootMode = 0;
+			me.oldMode = me.currentMode;
+			me.currentModeIndex = 0;
+			me.newMode = me.mainModes[me.rootMode][me.currentModeIndex];
+			me.setCurrentMode(me.newMode, me.oldMode["priorityTarget"]);
+			me.oldMode.leaveMode();
+		}
+	},
+	showAZ: func {
+		me.currentMode.showAZ();
+	},
+	showAZinHSD: func {
+		me.currentMode.showAZinHSD();
+	},
+};
+
+
+
+
+
+
+
+
 
 
 
@@ -2306,122 +2479,7 @@ var RWR = {
 
 
 
-#  ██████   █████  ████████  █████  ██      ██ ███    ██ ██   ██ 
-#  ██   ██ ██   ██    ██    ██   ██ ██      ██ ████   ██ ██  ██  
-#  ██   ██ ███████    ██    ███████ ██      ██ ██ ██  ██ █████   
-#  ██   ██ ██   ██    ██    ██   ██ ██      ██ ██  ██ ██ ██  ██  
-#  ██████  ██   ██    ██    ██   ██ ███████ ██ ██   ████ ██   ██ 
-#                                                                
-#                                                                
-DatalinkRadar = {
-	# I check the sky 360 deg for anything on datalink
-	# This class is only semi generic!
-	new: func (rate, max_dist_nm) {
-		var dlnk = {parents: [DatalinkRadar, Radar]};
-		
-		dlnk.max_dist_nm = max_dist_nm;
-		dlnk.index = 0;
-		dlnk.vector_aicontacts = [];
-		dlnk.vector_aicontacts_for = [];
-		dlnk.timer          = maketimer(rate, dlnk, func dlnk.scan());
 
-		dlnk.DatalinkRadarRecipient = emesary.Recipient.new("DatalinkRadarRecipient");
-		dlnk.DatalinkRadarRecipient.radar = dlnk;
-		dlnk.DatalinkRadarRecipient.Receive = func(notification) {
-	        if (notification.NotificationType == "AINotification") {
-	        	#printf("NoseRadar recv: %s", notification.NotificationType);
-    		    me.radar.vector_aicontacts = notification.vector;
-    		    me.radar.index = 0;
-	            return emesary.Transmitter.ReceiptStatus_OK;
-	        }
-	        return emesary.Transmitter.ReceiptStatus_NotProcessed;
-	    };
-		emesary.GlobalTransmitter.Register(dlnk.DatalinkRadarRecipient);
-		dlnk.DatalinkNotification = VectorNotification.new("DatalinkNotification");
-		dlnk.DatalinkNotification.updateV(dlnk.vector_aicontacts_for);
-		dlnk.timer.start();
-		return omni;
-	},
-
-	scan: func () {
-		if (!me.enabled) return;
-		
-		#this loop is really fast. But we only check 1 contact per call
-		if (me.index >= size(me.vector_aicontacts)) {
-			# will happen if there is no contacts
-			me.index = 0;
-			return;
-		}
-		me.contact = me.vector_aicontacts[me.index];
-		me.wasBlue = me.contact["blue"];
-		me.cs = me.contact.get_Callsign();
-		if (me.wasBlue == nil) me.wasBlue = 0;
-
-		if (!me.contact.isValid()) {
-			me.contact.blue = 0;
-			
-			if (me.wasBlue > 0) {
-				#print(me.cs," is invalid and purged from Datalink");
-				me.new_vector_aicontacts_for = [];
-				foreach (me.c ; me.vector_aicontacts_for) {
-					if (!me.c.equals(me.contact) and !me.c.equalsFast(me.contact)) {
-						append(me.new_vector_aicontacts_for, me.contact);
-					}
-				}
-				me.vector_aicontacts_for = me.new_vector_aicontacts_for;
-			}
-		} else {
-			
-
-			if (me.contact.getRangeDirect()*M2NM > me.max_dist_nm) {me.index += 1;return;}
-			
-
-	        me.lnk = datalink.get_data(me.cs);
-	        if (!me.contact.isValid()) {
-	        	me.lnk = nil;
-	        }
-	        if (me.lnk != nil and me.lnk.on_link() == 1) {
-	            me.blue = 1;
-	            me.blueIndex = me.lnk.index()+1;
-	        } elsif (me.cs == getprop("link16/wingman-4")) {
-	            me.blue = 1;
-	            me.blueIndex = 2;
-	        } else {
-	        	me.blue = 0;
-	            me.blueIndex = -1;
-	        }
-	        if (!me.blue and me.lnk != nil and me.lnk.tracked() == 1) {
-	            me.blue = 2;
-	            me.blueIndex = me.lnk.tracked_by_index()+1;
-	        }
-
-	        me.contact.blue = me.blue;
-	        if (me.blue > 0) {
-	        	me.contact.blueIndex = me.blueIndex;
-				if (!apg68Radar.containsVectorContact(me.vector_aicontacts_for, me.contact)) {
-					append(me.vector_aicontacts_for, me.contact);
-					emesary.GlobalTransmitter.NotifyAll(me.DatalinkNotification.updateV(me.vector_aicontacts_for));
-				}
-			} elsif (me.wasBlue > 0) {
-				me.new_vector_aicontacts_for = [];
-				foreach (me.c ; me.vector_aicontacts_for) {
-					if (!me.c.equals(me.contact) and !me.c.equalsFast(me.contact)) {
-						append(me.new_vector_aicontacts_for, me.contact);
-					}
-				}
-				me.vector_aicontacts_for = me.new_vector_aicontacts_for;
-			}
-		}
-		me.index += 1;
-        if (me.index > size(me.vector_aicontacts)-1) {
-        	me.index = 0;
-        	emesary.GlobalTransmitter.NotifyAll(me.DatalinkNotification.updateV(me.vector_aicontacts_for));
-        }
-	},
-	del: func {
-        emesary.GlobalTransmitter.DeRegister(me.DatalinkRadarRecipient);
-    },
-};
 
 
 
@@ -3040,7 +3098,7 @@ var acmBoreMode = F16ACMBoreMode.new(F16ACMSTTMode.new());
 var seaMode = F16SeaMode.new(F16SEAFTTMode.new()); 
 var gmMode = F16GMMode.new(F16GMFTTMode.new());
 var gmtMode = F16GMTMode.new(F16GMTFTTMode.new());
-var apg68Radar = APG68.new([[rwsMode,twsMode,lrsMode,vsrMode],[acm20Mode,acm60Mode,acmBoreMode],[seaMode],[gmMode],[gmtMode]]);
+var apg68Radar = AirborneRadar.newAirborne([[rwsMode,twsMode,lrsMode,vsrMode],[acm20Mode,acm60Mode,acmBoreMode],[seaMode],[gmMode],[gmtMode]], APG68);
 var f16_rwr = RWR.new();
 var acmLockSound = props.globals.getNode("f16/sound/acm-lock");
 var mapper = TerrainMapper.new(apg68Radar, 0.10);
