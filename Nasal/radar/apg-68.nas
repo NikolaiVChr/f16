@@ -2250,7 +2250,7 @@ var F16STTMode = {
 	undesignate: func {
 		me.radar.setCurrentMode(me.superMode, me.priorityTarget);
 		me.priorityTarget = nil;
-		var log = caller(1); foreach (l;log) print(l);
+		#var log = caller(1); foreach (l;log) print(l);
 	},
 	designate: func {},
 	cycleBars: func {},

@@ -1816,7 +1816,7 @@ var MFD_Device =
                     return;
                 }
                 #me.color = math.pow(math.max(0, rand()-(me.elapsed - chaff.seenTime)/me.chaffLifetime), 2.2);
-                me.color = math.pow(math.max(0, 1-(me.elapsed - chaff.seenTime)/me.chaffLifetime), 2.2);
+                me.color = math.pow(math.max(0, 0.8-(me.elapsed - chaff.seenTime)/radar_system.apg68Radar.currentMode.timeToKeepBleps), 2.2);
 
                 me.echoPos1 = [me.echoPos[0]+rand()*6-3, me.echoPos[1]-rand()*3];
                 me.root.blep[me.i].setTranslation(me.echoPos1);
