@@ -1458,6 +1458,117 @@ NoseRadar = {
 };
 
 
+SimplerNoseRadar = {
+	# I partition the sky into the field of regard and preserve the contacts in that field for it to be scanned by ActiveDiscRadar or similar
+	#
+	# Does the same as NoseRadar, but ignore elevations and stuff. Simpler, faster.
+	new: func () {
+		var nr = {parents: [SimplerNoseRadar, Radar]};
+
+		nr.vector_aicontacts = [];
+		nr.vector_aicontacts_for = [];
+
+		nr.NoseRadarRecipient = emesary.Recipient.new("SimplerNoseRadarRecipient");
+		nr.NoseRadarRecipient.radar = nr;
+		nr.NoseRadarRecipient.Receive = func(notification) {
+	        if (notification.NotificationType == "AINotification") {
+	        	#printf("NoseRadar recv: %s", notification.NotificationType);
+	            if (me.radar.enabled == 1) {
+	    		    me.radar.vector_aicontacts = notification.vector;
+	    	    }
+	            return emesary.Transmitter.ReceiptStatus_OK;
+	        } elsif (notification.NotificationType == "SliceNotification") {
+	        	#printf("NoseRadar recv: %s", notification.NotificationType);
+	            if (me.radar.enabled == 1) {
+	    		    me.radar.scanFOR(notification.yaw_radius, notification.dist_m, notification.fa, notification.fg, notification.fs);
+	    	    }
+	            return emesary.Transmitter.ReceiptStatus_OK;
+	        } elsif (notification.NotificationType == "ContactNotification") {
+	        	#printf("NoseRadar recv: %s", notification.NotificationType);
+	            if (me.radar.enabled == 1) {
+	    		    me.radar.scanSingleContact(notification.vector[0]);
+	    	    }
+	            return emesary.Transmitter.ReceiptStatus_OK;
+	        }
+	        return emesary.Transmitter.ReceiptStatus_NotProcessed;
+	    };
+		emesary.GlobalTransmitter.Register(nr.NoseRadarRecipient);
+		nr.FORNotification = VectorNotification.new("FORNotification");
+		nr.FORNotification.updateV(nr.vector_aicontacts_for);
+		#nr.timer.start();
+		return nr;
+	},
+
+	scanFOR: func (yaw_radius, dist_m, filter_air, filter_gnd, filter_sea) {
+		if (!me.enabled) return;
+		#iterate:
+		# check direct distance
+		# check field of regard
+		# sort in bearing?
+		# called on demand
+		# TODO: vectorized field instead
+		me.owncrd = geo.aircraft_position();
+
+		me.vector_aicontacts_for = [];
+		foreach(contact ; me.vector_aicontacts) {
+			var theType = contact.getType();
+			if (filter_air and theType == AIR) continue;
+			if (filter_gnd and theType == SURFACE) continue;
+			if (filter_sea and theType == MARINE) continue;
+			if (filter_sea and theType == TERRASUNK) continue;
+			if (theType == ORDNANCE) continue;
+
+			if (!contact.isVisible()) {  # moved to nose radar. TODO: WHy double it in discradar? hmm, dont matter so much, its lightning fast
+				continue;
+			}
+
+			me.rng = contact.getRangeDirect();
+			if (me.rng > dist_m) {
+				continue;
+			}
+			me.crd = contact.getCoord();
+
+			if (math.abs(contact.getDeviationHeading()) > yaw_radius) {
+				continue;
+			}
+
+			me.dev = contact.getDeviation();
+
+			# TODO: clean this up. Only what is needed for testing against instant FoV and RCS should be in here:
+			#                       localdev, localpitch, range_m, coord, heading, pitch, roll, bearing, elevation, frustum_norm_y, frustum_norm_z, alt_ft, speed  (the frustums are no longer used)
+			contact.storeDeviation([me.dev[0],me.dev[1],me.rng,contact.getCoord(),contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation(), 0, 0, me.crd.alt()*M2FT, contact.getSpeed()]);
+			append(me.vector_aicontacts_for, contact);
+		}		
+		emesary.GlobalTransmitter.NotifyAll(me.FORNotification.updateV(me.vector_aicontacts_for));
+		#print("In Field of Regard: "~size(me.vector_aicontacts_for));
+	},
+
+	scanSingleContact: func (contact) {
+		if (!me.enabled) return;
+		if (contact == nil) {return;}
+		# called on demand
+		
+		if (!contact.isVisible()) {  # moved to nose radar. TODO: WHy double it in discradar? hmm, dont matter so much, its lightning fast
+			emesary.GlobalTransmitter.NotifyAll(me.FORNotification.updateV([]));
+			return;
+		}
+		me.vector_aicontacts_for = [];
+		me.dev = contact.getDeviation();
+		me.rng = contact.getRangeDirect();
+		me.crd = contact.getCoord();
+		contact.storeDeviation([me.dev[0],me.dev[1],me.rng,me.crd,contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation(), 0, 0, me.crd.alt()*M2FT, contact.getSpeed()]);
+		append(me.vector_aicontacts_for, contact);
+
+		emesary.GlobalTransmitter.NotifyAll(me.FORNotification.updateV(me.vector_aicontacts_for));
+		#print("In Field of Regard: "~size(me.vector_aicontacts_for));
+	},
+
+	del: func {
+        emesary.GlobalTransmitter.DeRegister(me.NoseRadarRecipient);
+    },
+};
+
+
 
 #  ██████   ██████   ██████      ██████   █████  ██████   █████  ██████  
 #       ██ ██       ██  ████     ██   ██ ██   ██ ██   ██ ██   ██ ██   ██ 
@@ -1467,7 +1578,7 @@ NoseRadar = {
 #                                                                        
 #                                                                        
 FullRadar = {
-	# 360 degree coverage air radar
+	# 360 degree coverage air radar, for use by SAMs and other surface radars.
 	new: func () {
 		var nr = {parents: [FullRadar, Radar]};
 
