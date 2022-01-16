@@ -1,271 +1,5 @@
 
-#  ███████        ██  ██████      ██████  ██     ██ ██████  
-#  ██            ███ ██           ██   ██ ██     ██ ██   ██ 
-#  █████   █████  ██ ███████      ██████  ██  █  ██ ██████  
-#  ██             ██ ██    ██     ██   ██ ██ ███ ██ ██   ██ 
-#  ██             ██  ██████      ██   ██  ███ ███  ██   ██ 
-#                                                           
-#                                                           
-var RWR = {
-	# inherits from Radar
-	# will check radar/transponder and ground occlusion.
-	# will sort according to threat level
-	new: func () {
-		var rr = {parents: [RWR, Radar]};
 
-		rr.vector_aicontacts = [];
-		rr.vector_aicontacts_threats = [];
-		#rr.timer          = maketimer(2, rr, func rr.scan());
-
-		rr.RWRRecipient = emesary.Recipient.new("RWRRecipient");
-		rr.RWRRecipient.radar = rr;
-		rr.RWRRecipient.Receive = func(notification) {
-	        if (notification.NotificationType == "OmniNotification") {
-	        	#printf("RWR recv: %s", notification.NotificationType);
-	            if (me.radar.enabled == 1) {
-	    		    me.radar.vector_aicontacts = notification.vector;
-	    		    me.radar.scan();
-	    	    }
-	            return emesary.Transmitter.ReceiptStatus_OK;
-	        }
-	        return emesary.Transmitter.ReceiptStatus_NotProcessed;
-	    };
-		emesary.GlobalTransmitter.Register(rr.RWRRecipient);
-		#nr.FORNotification = VectorNotification.new("FORNotification");
-		#nr.FORNotification.updateV(nr.vector_aicontacts_for);
-		#rr.timer.start();
-		return rr;
-	},
-	heatDefense: 0,
-	scan: func {
-		# sort in threat?
-		# run by notification
-		# mock up code, ultra simple threat index, is just here cause rwr have special needs:
-		# 1) It has almost no range restriction
-		# 2) Its omnidirectional
-		# 3) It might have to update fast (like 0.25 secs)
-		# 4) To build a proper threat index it needs at least these properties read:
-		#       model type
-		#       class (AIR/SURFACE/MARINE)
-		#       lock on myself
-		#       missile launch
-		#       transponder on/off
-		#       bearing and heading
-		#       IFF info
-		#       ECM
-		#       radar on/off
-		if (!getprop("instrumentation/rwr/serviceable") or getprop("f16/avionics/power-ufc-warm") != 1 or getprop("f16/avionics/ew-rwr-switch") != 1) {
-            setprop("sound/rwr-lck", 0);
-            setprop("ai/submodels/submodel[0]/flare-auto-release-cmd", 0);
-            return;
-        }
-        me.vector_aicontacts_threats = [];
-		me.fct = 10*2.0;
-        me.myCallsign = self.getCallsign();
-        me.myCallsign = size(me.myCallsign) < 8 ? me.myCallsign : left(me.myCallsign,7);
-        me.act_lck = 0;
-        me.autoFlare = 0;
-        me.closestThreat = 0;
-        me.elapsed = elapsedProp.getValue();
-        foreach(me.u ; me.vector_aicontacts) {
-        	# [me.ber,me.head,contact.getCoord(),me.tp,me.radar,contact.getDeviationHeading(),contact.getRangeDirect()*M2NM, contact.getCallsign()]
-        	me.threatDB = me.u.getThreatStored();
-            me.cs = me.threatDB[7];
-            me.rn = me.threatDB[6];
-            me.lnk16 = me.cs==nil?nil:datalink.get_data(me.cs);
-            if ((me.lnk16 != nil and me.lnk16.on_link() == 1 and !me.threatDB[10]) or me.rn > 150) {
-                continue;
-            }
-            me.bearing = me.threatDB[0];
-            me.trAct = me.threatDB[3];
-            me.show = 1;
-            me.heading = me.threatDB[1];
-            me.inv_bearing =  me.bearing+180;#bearing from target to me
-            me.deviation = me.inv_bearing - me.heading;# bearing deviation from target to me
-            me.dev = math.abs(geo.normdeg180(me.deviation));# my degrees from opponents nose
-            
-            if (me.show == 1) {
-                if (me.dev < 30 and me.rn < 7 and me.threatDB[8] > 60) {
-                    # he is in position to fire heatseeker at me
-                    me.heatDefenseNow = me.elapsed + me.rn*1.5;
-                    if (me.heatDefenseNow > me.heatDefense) {
-                        me.heatDefense = me.heatDefenseNow;
-                    }
-                }
-                me.threat = 0;
-                if (me.u.getModel() != "missile_frigate" and me.u.getModel() != "S-75" and me.u.getModel() != "buk-m2" and me.u.getModel() != "MIM104D" and me.u.getModel() != "s-300" and me.u.getModel() != "fleet" and me.u.getModel() != "ZSU-23-4M") {
-                    me.threat += ((180-me.dev)/180)*0.30;# most threat if I am in front of his nose
-                    me.spd = (60-me.threatDB[8])/60;
-                    #me.threat -= me.spd>0?me.spd:0;# if his speed is lower than 60kt then give him minus threat else positive
-                } elsif (me.u.getModel == "missile_frigate" or me.u.getModel() == "fleet") {
-                    me.threat += 0.30;
-                } else {
-                    me.threat += 0.30;
-                }
-                me.danger = 50;# within this range he is most dangerous
-                if (me.u.getModel() == "missile_frigate" or me.u.getModel() == "fleet" or me.u.getModel() == "s-300") {
-                    me.danger = 80;
-                } elsif (me.u.getModel() == "buk-m2" or me.u.getModel() == "S-75") {
-                    me.danger = 35;
-                } elsif (me.u.getModel() == "MIM104D") {
-                    me.danger = 45;
-                } elsif (me.u.getModel() == "ZSU-23-4M") {
-                    me.danger = 7.5;
-                }
-                if (me.threatDB[10]) me.threat += 0.30;# has me locked
-                me.threat += ((me.danger-me.rn)/me.danger)>0?((me.danger-me.rn)/me.danger)*0.60:0;# if inside danger zone then add threat, the closer the more.
-                me.threat += me.threatDB[9]>0?(me.threatDB[9]/500)*0.10:0;# more closing speed means more threat.
-                if (me.threat > me.closestThreat) me.closestThreat = me.threat;
-                #printf("A %s threat:%.2f range:%d dev:%d", me.u.get_Callsign(),me.threat,me.u.get_range(),me.deviation);
-                if (me.threat > 1) me.threat = 1;
-                if (me.threat <= 0) continue;
-                #printf("B %s threat:%.2f range:%d dev:%d", me.u.get_Callsign(),me.threat,me.u.get_range(),me.deviation);
-                append(me.vector_aicontacts_threats,[me.u,me.threat, me.threatDB[5]]);
-            } else {
-#                printf("%s ----", me.u.get_Callsign());
-            }
-        }
-
-        me.launchClose = getprop("payload/armament/MLW-launcher") != "";
-        me.incoming = getprop("payload/armament/MAW-active") or me.heatDefense > me.elapsed;
-        me.spike = getprop("payload/armament/spike")*(getprop("ai/submodels/submodel[0]/count")>15);
-        me.autoFlare = me.spike?math.max(me.closestThreat*0.25,0.05):0;
-
-        if (0 and getprop("f16/avionics/ew-mode-knob") == 2)
-        	print("wow: ", getprop("/fdm/jsbsim/gear/unit[0]/WOW"),"  spiked: ",me.spike,"  incoming: ",me.incoming, "  launch: ",me.launchClose,"  spikeResult:", me.autoFlare,"  aggresive:",me.launchClose * 0.85 + me.incoming * 0.85,"  total:",me.launchClose * 0.85 + me.incoming * 0.85+me.autoFlare);
-
-        me.autoFlare += me.launchClose * 0.85 + me.incoming * 0.85;
-
-        me.autoFlare *= 0.1 * 2.5 * !getprop("/fdm/jsbsim/gear/unit[0]/WOW");#0.1 being the update rate for flare dropping code.
-
-        setprop("ai/submodels/submodel[0]/flare-auto-release-cmd", me.autoFlare * (getprop("ai/submodels/submodel[0]/count")>0));
-        if (me.autoFlare > 0.80 and rand()>0.99 and getprop("ai/submodels/submodel[0]/count") < 1) {
-            setprop("ai/submodels/submodel[0]/flare-release-out-snd", 1);
-        }
-	},
-	del: func {
-        emesary.GlobalTransmitter.DeRegister(me.RWRRecipient);
-    },
-};
-
-
-
-#  ██████   █████  ████████  █████  ██      ██ ███    ██ ██   ██ 
-#  ██   ██ ██   ██    ██    ██   ██ ██      ██ ████   ██ ██  ██  
-#  ██   ██ ███████    ██    ███████ ██      ██ ██ ██  ██ █████   
-#  ██   ██ ██   ██    ██    ██   ██ ██      ██ ██  ██ ██ ██  ██  
-#  ██████  ██   ██    ██    ██   ██ ███████ ██ ██   ████ ██   ██ 
-#                                                                
-#                                                                
-DatalinkRadar = {
-	# I check the sky 360 deg for anything on datalink
-	# This class is only semi generic!
-	new: func (rate, max_dist_nm) {
-		var dlnk = {parents: [DatalinkRadar, Radar]};
-		
-		dlnk.max_dist_nm = max_dist_nm;
-		dlnk.index = 0;
-		dlnk.vector_aicontacts = [];
-		dlnk.vector_aicontacts_for = [];
-		dlnk.timer          = maketimer(rate, dlnk, func dlnk.scan());
-
-		dlnk.DatalinkRadarRecipient = emesary.Recipient.new("DatalinkRadarRecipient");
-		dlnk.DatalinkRadarRecipient.radar = dlnk;
-		dlnk.DatalinkRadarRecipient.Receive = func(notification) {
-	        if (notification.NotificationType == "AINotification") {
-	        	#printf("NoseRadar recv: %s", notification.NotificationType);
-    		    me.radar.vector_aicontacts = notification.vector;
-    		    me.radar.index = 0;
-	            return emesary.Transmitter.ReceiptStatus_OK;
-	        }
-	        return emesary.Transmitter.ReceiptStatus_NotProcessed;
-	    };
-		emesary.GlobalTransmitter.Register(dlnk.DatalinkRadarRecipient);
-		dlnk.DatalinkNotification = VectorNotification.new("DatalinkNotification");
-		dlnk.DatalinkNotification.updateV(dlnk.vector_aicontacts_for);
-		dlnk.timer.start();
-		return omni;
-	},
-
-	scan: func () {
-		if (!me.enabled) return;
-		
-		#this loop is really fast. But we only check 1 contact per call
-		if (me.index >= size(me.vector_aicontacts)) {
-			# will happen if there is no contacts
-			me.index = 0;
-			return;
-		}
-		me.contact = me.vector_aicontacts[me.index];
-		me.wasBlue = me.contact["blue"];
-		me.cs = me.contact.get_Callsign();
-		if (me.wasBlue == nil) me.wasBlue = 0;
-
-		if (!me.contact.isValid()) {
-			me.contact.blue = 0;
-			
-			if (me.wasBlue > 0) {
-				#print(me.cs," is invalid and purged from Datalink");
-				me.new_vector_aicontacts_for = [];
-				foreach (me.c ; me.vector_aicontacts_for) {
-					if (!me.c.equals(me.contact) and !me.c.equalsFast(me.contact)) {
-						append(me.new_vector_aicontacts_for, me.contact);
-					}
-				}
-				me.vector_aicontacts_for = me.new_vector_aicontacts_for;
-			}
-		} else {
-			
-
-			if (me.contact.getRangeDirect()*M2NM > me.max_dist_nm) {me.index += 1;return;}
-			
-
-	        me.lnk = datalink.get_data(me.cs);
-	        if (!me.contact.isValid()) {
-	        	me.lnk = nil;
-	        }
-	        if (me.lnk != nil and me.lnk.on_link() == 1) {
-	            me.blue = 1;
-	            me.blueIndex = me.lnk.index()+1;
-	        } elsif (me.cs == getprop("link16/wingman-4")) {
-	            me.blue = 1;
-	            me.blueIndex = 2;
-	        } else {
-	        	me.blue = 0;
-	            me.blueIndex = -1;
-	        }
-	        if (!me.blue and me.lnk != nil and me.lnk.tracked() == 1) {
-	            me.blue = 2;
-	            me.blueIndex = me.lnk.tracked_by_index()+1;
-	        }
-
-	        me.contact.blue = me.blue;
-	        if (me.blue > 0) {
-	        	me.contact.blueIndex = me.blueIndex;
-				if (!apg68Radar.containsVectorContact(me.vector_aicontacts_for, me.contact)) {
-					append(me.vector_aicontacts_for, me.contact);
-					emesary.GlobalTransmitter.NotifyAll(me.DatalinkNotification.updateV(me.vector_aicontacts_for));
-				}
-			} elsif (me.wasBlue > 0) {
-				me.new_vector_aicontacts_for = [];
-				foreach (me.c ; me.vector_aicontacts_for) {
-					if (!me.c.equals(me.contact) and !me.c.equalsFast(me.contact)) {
-						append(me.new_vector_aicontacts_for, me.contact);
-					}
-				}
-				me.vector_aicontacts_for = me.new_vector_aicontacts_for;
-			}
-		}
-		me.index += 1;
-        if (me.index > size(me.vector_aicontacts)-1) {
-        	me.index = 0;
-        	emesary.GlobalTransmitter.NotifyAll(me.DatalinkNotification.updateV(me.vector_aicontacts_for));
-        }
-	},
-	del: func {
-        emesary.GlobalTransmitter.DeRegister(me.DatalinkRadarRecipient);
-    },
-};
 
 
 
@@ -831,396 +565,11 @@ var APG68 = {
 
 
 
-#   ██████  ██████   ██████  ██    ██ ███    ██ ██████      ███    ███  █████  ██████  ██████  ███████ ██████  
-#  ██       ██   ██ ██    ██ ██    ██ ████   ██ ██   ██     ████  ████ ██   ██ ██   ██ ██   ██ ██      ██   ██ 
-#  ██   ███ ██████  ██    ██ ██    ██ ██ ██  ██ ██   ██     ██ ████ ██ ███████ ██████  ██████  █████   ██████  
-#  ██    ██ ██   ██ ██    ██ ██    ██ ██  ██ ██ ██   ██     ██  ██  ██ ██   ██ ██      ██      ██      ██   ██ 
-#   ██████  ██   ██  ██████   ██████  ██   ████ ██████      ██      ██ ██   ██ ██      ██      ███████ ██   ██ 
-#                                                                                                              
-#                                                                                                              
-var TerrainMapper = {
-	new: func (radar, rate) {
-		var tm = {parents: [TerrainMapper, Radar]};
-		tm.radar = radar;
-		tm.timer = maketimer(rate, tm, func tm.loop());
-		tm.timer.start();
-		radar.installMapper(tm);
-		tm.lowestElev = 0;
-		tm.highestElev = 5000;
-		tm.minElev = 35000;
-		tm.maxElev = 0;
-		tm.cleaned = 0;
-		tm.exp = 0;
-		tm.debug = 0;
-		return tm;
-	},
-	##################################################################################################
-	##################################################################################################
-	#
-	# TODO:
-	#   Remove image painting from this class
-	#   EXP mode
-	#   Optimize
-	#   Find reason for failing Coord._lat
-	#   Pixel rounding error review (fills too few x)
-	#
-	azData: {
-				radius: nil,
-				az: nil,
-				fromDist: nil,
-				toDist: nil,
-				domainNm: nil,
-				domainFwdNm: nil,
-				rangeFwdNm: nil,
-				returns: nil,
-			},
-	scanGM: func (eulerX, eulerY, verticalInstantFoV, bottomBar, topBar) {
-		# GM test code
-
-		if (me.radar.currentMode.mapper and me.enabled and me.radar.horizonStabilized and me["gmPic"] != nil and !me.exp) {
-			me.debug = getprop("debug-radar/debug-mapper");
-			me.mapperHeading = eulerX+self.getHeading();
-			me.discDirforGMTop = vector.Math.pitchYawVector(eulerY+verticalInstantFoV,-me.mapperHeading,[1,0,0]);
-			me.discDirforGMBot = vector.Math.pitchYawVector(eulerY-verticalInstantFoV,-me.mapperHeading,[1,0,0]);
-			if (me.debug) {
-				setprop("debug-radar/mapper-pitch-high", eulerY+verticalInstantFoV);
-				setprop("debug-radar/mapper-pitch", eulerY);
-				setprop("debug-radar/mapper-pitch-low", eulerY-verticalInstantFoV);
-			}
-
-			me.selfCoord = self.getCoord();
-
-			me.radarBeamGeoVectorTop = vector.Math.vectorToGeoVector(me.discDirforGMTop, me.selfCoord);
-			me.radarBeamGeoVectorBot = vector.Math.vectorToGeoVector(me.discDirforGMBot, me.selfCoord);
-
-			me.xyzSelf = {"x":me.selfCoord.x(), "y":me.selfCoord.y(), "z":me.selfCoord.z()};
-
-            # Check for terrain at top and bottom of radar instant FoV
-            me.terrainGeodTop = get_cart_ground_intersection(me.xyzSelf, me.radarBeamGeoVectorTop);
-            me.terrainGeodBot = get_cart_ground_intersection(me.xyzSelf, me.radarBeamGeoVectorBot);
-            
-            me.azData.az = eulerX;
-            me.azData.radius = verticalInstantFoV;
-            me.azData.returns = [];
-            if (me.terrainGeodBot != nil) {
-            	me.terrainCoordBot = geo.Coord.new().set_latlon(me.terrainGeodBot.lat, me.terrainGeodBot.lon, me.terrainGeodBot.elevation);
-            	me.azData.fromDist = me.selfCoord.distance_to(me.terrainCoordBot)*M2NM;
-            	if (!me.testRange(me.azData.fromDist, me.radar.getRange(), me.azData.az)) return;
-            	if (me.terrainGeodTop != nil) {
-            		me.terrainCoordTop = geo.Coord.new().set_latlon(me.terrainGeodTop.lat, me.terrainGeodTop.lon, me.terrainGeodTop.elevation);
-            		if (me.debug) {
-						setprop("debug-radar/mapper-domain-lost-nm", "works");
-					}
-            	} else {
-            		# The upper part of this instantFoV does not hit terrain here. So we manually add a little bit.
-            		me.terrainCoordTop = geo.Coord.new(me.terrainCoordBot);
-            		if (me.azData.domainNm != nil) {
-            			me.topRange = me.azData.domainNm;
-            		} else {
-            			me.topRange = me.radar.getRange() * 1.25 - me.azData.fromDist;
-            		}
-            		me.topRange = math.max(me.topRange, 15);
-            		if (me.debug) {
-						setprop("debug-radar/mapper-domain-lost-nm", me.topRange);
-					}
-            		me.terrainCoordTop.apply_course_distance(me.mapperHeading, me.topRange*NM2M);
-            	}
-            	me.azData.toDist = me.selfCoord.distance_to(me.terrainCoordTop)*M2NM;
-            	me.azData.domainNm = me.azData.toDist-me.azData.fromDist;
-            	me.azCos = math.cos(me.azData.az*D2R);
-            	me.azData.rangeFwdNm = me.azData.fromDist*me.azCos;
-            	me.azData.domainFwdNm = me.azData.domainNm*me.azCos;
-            	me.pixelsBetweenTopAndBot = math.ceil(me.gmPicSize*me.azData.domainFwdNm/me.radar.getRange());
-				me.maskAlt  = 0;
-				me.maskStep = -1;
-
-				# Amount each step changes in altitude meters for center of beam.
-				# Curvature of earth is negliable.
-				# Each steps has different angle in reality, but its minute.
-				me.maskAltPerStep = math.tan(eulerY*D2R)*NM2M*me.azData.domainNm/me.pixelsBetweenTopAndBot;
-
-            	for (var i = 0; i <= me.pixelsBetweenTopAndBot; i += 1) {
-            		me.testCoord = me.interpolateCoords(me.terrainCoordBot, me.terrainCoordTop, i/me.pixelsBetweenTopAndBot);
-            		me.gm_geod = geodinfo(me.testCoord.lat(), me.testCoord.lon(), 10000);
-            		if (debug.isnan(me.testCoord._lat)) {
-            			#print("self ",me.selfCoord._lat);
-            			print("test ",me.testCoord._lat," , ",me.testCoord.lat()," , ",me.testCoord.alt());
-            			#print("bot  ",me.terrainCoordBot._x," , ",me.terrainCoordBot._y," , ",me.terrainCoordBot._z,"  ,  ",me.terrainGeodBot.elevation*M2FT);
-            			#print(i);
-            			append(me.azData.returns, 0);
-            			continue;
-            		}
-            		me.gmReturn = 0;
-            		if (me.gm_geod != nil) {
-            			if (me.gm_geod[0] > me.maskAlt+(i - me.maskStep)*me.maskAltPerStep) {
-            				# Terrain not masked by previous terrain
-            				me.maskAlt = me.gm_geod[0];
-            				me.maskStep = i;
-            				me.gmReturn = me.backScatter(me.gm_geod);
-            			} else {
-            				me.gmReturn = -1;
-            			}
-            		} else {
-            			me.gmReturn = -2;
-            		}
-            		append(me.azData.returns, me.gmReturn);
-            	}
-            	#me.debugOutput();
-            	me.paintImage(me.azData, bottomBar, topBar);
-            }            
-		}
-	},
-	setImage: func (image, origin_x, origin_y, dimension, monochrome, gainNode) {
-		if (me["gmPic"] == nil) {
-			#me.canvas = canvas.Window.new([512,512],"dialog").set('title',"GM").getCanvas(1);
-			#me.canvas_root = me.canvas.createGroup();
-			#me.canvas.setColorBackground(0,0,0,1);
-			me.gainNode = gainNode;
-			me.gmPic = image;
-            me.dirty = 0;
-            me.gmPicSize  = dimension;
-            me.mono = monochrome;
-            me.gm_x_origin = origin_x;
-            me.gm_y_origin = origin_y;
-            #me.gmPic.setPixel(me.gm_x_origin, me.gm_y_origin, [0,0,1,1]);#blue pixel at ownship
-            return 1;
-		} else {
-			return 0;
-		}
-	},
-	paintImage: func (azData, bottomBar, topBar) {
-
-		me.iStart = math.floor(me.gmPicSize*azData.rangeFwdNm/me.radar.getRange());
-		
-		if (me.debug) {
-			setprop("debug-radar/mapper-steps", size(azData.returns));
-			setprop("debug-radar/mapper-domain-fwd-nm", azData.domainFwdNm);
-		}
-
-		# If top or bottom or only 1 bar, pad ahead/behind with nil. This will clear old returns on screen.
-		if (bottomBar and me.iStart > 0) {
-			azData.returns = setsize([], me.iStart) ~ azData.returns;
-			me.iStart = 0;
-		}
-		me.behindPad = (int)((1-me.azData.rangeFwdNm/me.radar.getRange())*me.gmPicSize*1.3);
-		if (topBar and me.behindPad > 0) {
-			azData.returns = azData.returns ~ setsize([], me.behindPad);
-		}
-
-		me.jStart = math.tan((azData.az-azData.radius)*D2R);
-		me.jEnd   = math.tan((azData.az+azData.radius)*D2R);
-		me.jFactor = me.jEnd-me.jStart;
-
-		me.firstY = 0;
-		me.firstX = 0;
-
-		for (var i = 0; i < size(azData.returns); i+=1 ) {
-			me.debugColor = nil;
-			if (me.debug > 2) {
-				if (azData.returns[i] == nil) {
-					me.debugColor = [0,0,1,1];# Blue for not hit by FoV
-				} elsif (azData.returns[i] == -1) {
-					me.debugColor = [1,1,0,1];# Yellow for terrain masked
-				} elsif (azData.returns[i] == -2) {
-					me.debugColor = [1,0,0,1];# Red for terrasunk
-				} else {
-					me.gmColor = math.pow(math.clamp(azData.returns[i],0,1), me.gainNode.getValue());
-				}
-			} else {
-				me.gmColor = azData.returns[i]==nil?0:math.pow(math.clamp(azData.returns[i],0,1), me.gainNode.getValue());
-			}
-			
-			me.gmY  = me.gm_y_origin+me.iStart+i;
-			me.gmX0 = me.gm_x_origin+me.jStart*(i+me.iStart);
-			me.gmXj = math.round(me.gmX0+(i+me.iStart)*me.jFactor);
-			me.gmX0 = math.round(me.gmX0);
-			if (me.firstY == 0) {
-				me.firstY = math.max(me.gmY, 0)-me.gm_y_origin;
-				me.firstX = me.gmXj;
-			}
-			for (var j = me.gmX0; j <= me.gmXj; j += 1) {
-				if (j >= 0 and j <= 63 and me.gmY <= 63) {
-					me.gmPic.setPixel(j, math.max(me.gmY, 0), me.debugColor==nil?[me.gmColor*me.mono,me.gmColor,me.gmColor*me.mono,1]:me.debugColor);
-					me.dirty = 1;
-				}
-			}
-		}
-		#if (bottomBar and me.firstY != 0) {
-		#	# Clear the field below the bottom bar as we might have risen in alitude so its old data shown closer to ownship that can confuse pilot.
-		#	for (var y = me.firstY-1; y >= 0; y-=1 ) {
-		#		#var x = math.clamp(me.gm_x_origin + (y/me.firstY) * me.firstX, 0, 63);
-		#		if (me.firstX > 31)    {me.gmPic.setPixel(me.firstX,   y, [0,0,0,1]);me.gmPic.setPixel(me.firstX-1, y, [0,0,0,1]);me.gmPic.setPixel(me.firstX-2, y, [0,0,0,1]);}				                    
-		#		elsif (me.firstX < 31) {me.gmPic.setPixel(me.firstX+1, y, [0,0,0,1]);me.gmPic.setPixel(me.firstX+2, y, [0,0,0,1]);me.gmPic.setPixel(me.firstX+3, y, [0,0,0,1]);}
-		#		else                    me.gmPic.setPixel(me.firstX,   y, [0,0,0,1]);
-		#	}
-		#}
-	},
-	expChanged: func (exp) {
-		if (me["gmPic"] == nil or exp == me.exp) return;
-		me.exp = exp;
-		if (me.exp) {
-			me.gmPic.fillRect([0,0,me.gmPicSize,me.gmPicSize], [0.0*me.mono,0.0,0.0*me.mono,0]);# why does it allow 64??
-			me.gmPic.dirtyPixels();
-			me.dirty = 0;
-		} else {
-			me.cleanImage();
-		}
-	},
-	cleanImage: func {
-		if (me["gmPic"] == nil) return;
-		me.gmPic.fillRect([0,0,me.gmPicSize,me.gmPicSize], [0,0,0,0]);# why does it allow 64??
-		#me.gmPic.setPixel(me.gm_x_origin, me.gm_y_origin, [0,0,1,1]);#blue pixel at ownship
-		me.dirty = 1;
-	},
-	loop: func {
-		if (me.enabled and me.radar.currentMode.mapper and me["gmPic"] != nil and me.dirty) {
-			me.gmPic.dirtyPixels();
-		}
-		if (!me.radar.enabled and !me.cleaned) {
-			me.cleanImage();
-			me.cleaned = 1;
-		} else {
-			me.cleaned = 0;
-		}
-	},
-	clear: func {
-		#me.lowestElev = 0;
-		#me.highestElev = 1000*math.ceil(getprop("position/ground-elev-ft")*0.001);
-		#me.minElev = 35000;
-		#me.maxElev = 0;
-		me.cleanImage();
-	},
-	testRange: func (range, maxRange, az) {
-		if (range > maxRange) {
-			return 0;
-		}
-		az = math.abs(az)*D2R;
-		if (math.sin(az)*range > maxRange*0.5) {
-			return 0;
-		}
-		return 1;
-	},
-	debugOutput: func {
-		if (me.radar.currentMode.bars == 4 and me.radar.currentMode["nextPatternNode"] != nil) {
-        	if (me.radar.currentMode.nextPatternNode == 0) {
-        		me.barCount = "4th";
-        	} elsif (me.radar.currentMode.nextPatternNode == 1) {
-        		me.barCount = "   ";return;
-        	} elsif (me.radar.currentMode.nextPatternNode == 2) {
-        		me.barCount = "1st";
-        	} elsif (me.radar.currentMode.nextPatternNode == 3) {
-        		me.barCount = "   ";return;
-        	} elsif (me.radar.currentMode.nextPatternNode == 4) {
-        		me.barCount = "2nd";
-        	} elsif (me.radar.currentMode.nextPatternNode == 5) {
-        		me.barCount = "   ";return;
-        	} elsif (me.radar.currentMode.nextPatternNode == 6) {
-        		me.barCount = "3rd";
-        	} elsif (me.radar.currentMode.nextPatternNode == 7) {
-        		me.barCount = "   ";return;
-        	} else {
-        		me.barCount = "Unk";return;
-        	}
-        	printf("AGL %5dft. Bar %s. Distance to bottom %.1fnm. Bottom to top %6.2fnm. Pitch %5.2f to %5.2f degs",getprop("position/altitude-agl-ft"), me.barCount, me.selfCoord.direct_distance_to(me.terrainCoordBot)*M2NM, me.terrainCoordBot.direct_distance_to(me.terrainCoordTop)*M2NM,me.eulerY-me.radar.instantFoVradius,me.radar.eulerY+me.radar.instantFoVradius);
-        }
-	},
-	backScatter: func (gm_geod) {
-		if (gm_geod == nil) {
-			me.reflection = 0;
-		} else {
-			if (gm_geod[1] == nil) {
-				me.reflection = 1;
-			} elsif (!gm_geod[1].solid) {
-				me.reflection = 0.05;
-				if (me.testElev < me.minElev) {
-					me.minElev = me.testElev;
-				}
-			} else {
-				me.retur = me.howReflective(gm_geod[1]);
-				if (me.retur == 0) {
-					me.retur = gm_geod[1].bumpiness;
-				}
-				me.testElev = me.gm_geod[0]*M2FT;
-				if (me.testElev < me.minElev) {
-					me.minElev = me.testElev;
-				}
-				if (me.testElev > me.maxElev) {
-					me.maxElev = me.testElev;
-				}
-				me.reflection = math.min(1, me.extrapolate(me.testElev, me.lowestElev, me.highestElev, 0.15, 0.6)+me.retur*0.4);
-			}
-		}
-		return me.reflection;
-	},
-	frameDone: func {
-		if (me.minElev != 35000 or me.maxElev != 0) {
-			me.highestElev = (me.highestElev*1.5+me.maxElev)/2.5;# a simple lowpass filter to prevent it from changing too abrupt.
-			me.lowestElev = (me.lowestElev*1.5+math.max(0, math.min(me.maxElev-1000, me.minElev)))/2.5;# prevent somewhat flat terrain to show as very undulated.
-		}
-		if (me.debug) setprop("debug-radar/mapper-elevation-min", me.lowestElev);
-		if (me.debug) setprop("debug-radar/mapper-elevation-max", me.highestElev);
-
-		me.minElev = 35000;
-		me.maxElev = 0;
-	},
-	howReflective: func(info) {
-		# from AJS-37
-	    foreach (var name; info.names) {
-	        if (contains(me.urban_names, name)) return 1;
-	    }
-	    foreach (var name; info.names) {
-	        if (contains(me.natural_names, name)) return me.natural_names[name];
-	    }	    
-    	return 0;
-    },
-    urban_names: {
-		# from AJS-37
-	    "Urban": 1,
-	    "BuiltUpCover": 1,
-	    "Construction": 1,
-	    "Industrial": 1,
-	    "Port": 1,
-	    "Town": 1,
-	    "SubUrban": 1,
-	},
-	natural_names: {
-		# TODO: find real data on this.
-	    "Cliffs": 0.8,  # tend to be steep, hence greater return
-	    "Asphalt": 0.7, # very granular hence good backscatter
-	    #"Airport": 0.5, # 
-	    "Rock": 0.6,    # tend to be somewhat steep, hence some solid backscatter
-	},
-	interpolateCoords: func (start, end, fraction) {
-		if (fraction == 0) {
-			return geo.Coord.new(start);
-		}
-		if (fraction == 1) return geo.Coord.new(end);
-		me.xx = (start.x()*(1-fraction)+end.x()*fraction);
-		me.yy = (start.y()*(1-fraction)+end.y()*fraction);
-		me.zz = (start.z()*(1-fraction)+end.z()*fraction);
-
-		me.cc = geo.Coord.new();
-		me.cc.set_xyz(me.xx,me.yy,me.zz);
-
-		return me.cc;
-	},
-	extrapolate: func (x, x1, x2, y1, y2) {
-    	return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
-	},
-	##################################################################################################
-	##################################################################################################
-	##################################################################################################
-	##################################################################################################
-};
 
 
 
 
-var RIGHT = 0;
-var LEFT = 1;
-var UP = 2;
-var DOWN = 3;
-var DIRECT = -1;
+
 var SPOT_SCAN = -1;
 
 
@@ -1233,7 +582,6 @@ var SPOT_SCAN = -1;
 #                                              
 #                                              
 var RadarMode = {
-	azimuthTilt: 0,
 	radar: nil,
 	range: 40,
 	minRange: 5, # MLU T1 .. should we make this 10 for block 10/30/YF? TODO
@@ -1242,12 +590,10 @@ var RadarMode = {
 	azimuthTilt: 0,# modes set these depending on where they want the pattern to be centered.
 	elevationTilt: 0,
 	barHeight: 0.95,# multiple of instantFoVradius
-	barPattern:  [ [[-1,0,LEFT],[1,0,RIGHT]],                    # These are multitudes of instantFoVradius, the 3rd number is which axis to rotate around, -1 for shortest.
-	               [[-1,-1,DOWN],[1,-1,RIGHT],[1,1,UP],[-1,1,LEFT]],
-	               [[-1,0,UP],[1,0,RIGHT],[1,2,UP],[-1,2,LEFT],[-1,0,DOWN],[1,0,RIGHT],[1,-2,DOWN],[-1,-2,LEFT]],
-	               [[1,-3,RIGHT],[1,3,UP],[-1,3,LEFT],[-1,1,DOWN],[1,1,RIGHT],[1,-1,DOWN],[-1,-1,LEFT],[-1,-3,DOWN]] ],	               
-	currentPattern: [],
-	barPatternRotations: [[0,0,-1],[0,0,1],[0,-1,0],[0,1,0]],# we normally don't want to shortest distance from bar start to bar end. We want to turn the disc around an axis. These are the axes.
+	barPattern:  [ [[-1,0],[1,0]],                    # These are multitudes of instantFoVradius, the 3rd number is which axis to rotate around, -1 for shortest.
+	               [[-1,-1],[1,-1],[1,1],[-1,1]],
+	               [[-1,0],[1,0],[1,2],[-1,2],[-1,0],[1,0],[1,-2],[-1,-2]],
+	               [[1,-3],[1,3],[-1,3],[-1,1],[1,1],[1,-1],[-1,-1],[-1,-3]] ],	               
 	barPatternMin: [0,-1, -2, -3],
 	barPatternMax: [0, 1,  2,  3],
 	nextPatternNode: 0,
@@ -1271,7 +617,7 @@ var RadarMode = {
 	EXPsupport: 0,#if support zoom
 	EXPsearch: 1,# if zoom should include search targets
 	EXPfixedAim: 0,# If map underneath should move instead of cursor when slewing
-	painter: 0,
+	painter: 0, # if the mode when having a priority target will produce a hard lock on target.
 	mapper: 0,
 	discSpeed_dps: 1,# current disc speed. Must never be zero.
 	showAZ: func {
@@ -1642,10 +988,10 @@ var F16SeaMode = {
 	detectAIR: 0,
 	detectSURFACE: 0,
 	detectMARINE: 1,
-	#barPattern:  [ [[-1,-3,LEFT],[1,-3,RIGHT]], # The SURFACE/SEA pattern is centered so pattern is almost entirely under horizon
-	#               [[-1,-5,DOWN],[1,-5,RIGHT],[1,-3,UP],[-1,-3,LEFT]],
-	#               [[-1,-5,UP],[1,-5,RIGHT],[1,-3,UP],[-1,-3,LEFT],[-1,-5,DOWN],[1,-5,RIGHT],[1,-7,DOWN],[-1,-7,LEFT]],
-	#               [[1,-7,RIGHT],[1,-1,UP],[-1,-1,LEFT],[-1,-3,DOWN],[1,-3,RIGHT],[1,-5,DOWN],[-1,-5,LEFT],[-1,-7,DOWN]] ],
+	#barPattern:  [ [[-1,-3],[1,-3]], # The SURFACE/SEA pattern is centered so pattern is almost entirely under horizon
+	#               [[-1,-5],[1,-5],[1,-3],[-1,-3]],
+	#               [[-1,-5],[1,-5],[1,-3],[-1,-3],[-1,-5],[1,-5],[1,-7],[-1,-7]],
+	#               [[1,-7],[1,-1],[-1,-1],[-1,-3],[1,-3],[1,-5],[-1,-5],[-1,-7]] ],
 	#barPatternMin: [-3, -5, -7, -7], # about down to -15 degs coverage from horizon with 4 bars
 	#barPatternMax: [-3, -3, -3, -1],
 	EXPsupport: 1,
@@ -2398,7 +1744,7 @@ var F16ACM20Mode = {
 	rcsFactor: 0.9,
 	timeToKeepBleps: 1,# TODO
 	bars: 1,
-	barPattern: [ [[1,-6,RIGHT],[1,3,UP],[-1,3,LEFT],[-1,1,DOWN],[1,1,RIGHT],[1,-1,DOWN],[-1,-1,LEFT],[-1,-3,DOWN],[1,-3,RIGHT],[1,-5,DOWN],[-1,-5,LEFT],[-1,-6,DOWN]] ],
+	barPattern: [ [[1,-6],[1,3],[-1,3],[-1,1],[1,1],[1,-1],[-1,-1],[-1,-3],[1,-3],[1,-5],[-1,-5],[-1,-6]] ],
 	az: 15,
 	new: func (subMode, radar = nil) {
 		var mode = {parents: [F16ACM20Mode, RadarMode]};
@@ -2469,7 +1815,7 @@ var F16ACM60Mode = {
 	bars: 1,
 	barHeight: 1.0/APG68.instantFoVradius,# multiple of instantFoV (in this case 1 deg)
 	az: 5,
-	barPattern:  [ [[-0.6,-5,DOWN],[0.0,-5,RIGHT],[0.0, 51,UP],[0.6,51,RIGHT],[0.6,-5,DOWN],[0.0,-5,LEFT],[0.0,51,UP],[-0.6,51,LEFT]], ],
+	barPattern:  [ [[-0.6,-5],[0.0,-5],[0.0, 51],[0.6,51],[0.6,-5],[0.0,-5],[0.0,51],[-0.6,51]], ],
 	new: func (subMode, radar = nil) {
 		var mode = {parents: [F16ACM60Mode, F16ACM20Mode, RadarMode]};
 		mode.radar = radar;
@@ -2770,6 +2116,681 @@ var F16GMTFTTMode = {
 
 
 
+#  ███████        ██  ██████      ██████  ██     ██ ██████  
+#  ██            ███ ██           ██   ██ ██     ██ ██   ██ 
+#  █████   █████  ██ ███████      ██████  ██  █  ██ ██████  
+#  ██             ██ ██    ██     ██   ██ ██ ███ ██ ██   ██ 
+#  ██             ██  ██████      ██   ██  ███ ███  ██   ██ 
+#                                                           
+#                                                           
+var RWR = {
+	# inherits from Radar
+	# will check radar/transponder and ground occlusion.
+	# will sort according to threat level
+	new: func () {
+		var rr = {parents: [RWR, Radar]};
+
+		rr.vector_aicontacts = [];
+		rr.vector_aicontacts_threats = [];
+		#rr.timer          = maketimer(2, rr, func rr.scan());
+
+		rr.RWRRecipient = emesary.Recipient.new("RWRRecipient");
+		rr.RWRRecipient.radar = rr;
+		rr.RWRRecipient.Receive = func(notification) {
+	        if (notification.NotificationType == "OmniNotification") {
+	        	#printf("RWR recv: %s", notification.NotificationType);
+	            if (me.radar.enabled == 1) {
+	    		    me.radar.vector_aicontacts = notification.vector;
+	    		    me.radar.scan();
+	    	    }
+	            return emesary.Transmitter.ReceiptStatus_OK;
+	        }
+	        return emesary.Transmitter.ReceiptStatus_NotProcessed;
+	    };
+		emesary.GlobalTransmitter.Register(rr.RWRRecipient);
+		#nr.FORNotification = VectorNotification.new("FORNotification");
+		#nr.FORNotification.updateV(nr.vector_aicontacts_for);
+		#rr.timer.start();
+		return rr;
+	},
+	heatDefense: 0,
+	scan: func {
+		# sort in threat?
+		# run by notification
+		# mock up code, ultra simple threat index, is just here cause rwr have special needs:
+		# 1) It has almost no range restriction
+		# 2) Its omnidirectional
+		# 3) It might have to update fast (like 0.25 secs)
+		# 4) To build a proper threat index it needs at least these properties read:
+		#       model type
+		#       class (AIR/SURFACE/MARINE)
+		#       lock on myself
+		#       missile launch
+		#       transponder on/off
+		#       bearing and heading
+		#       IFF info
+		#       ECM
+		#       radar on/off
+		if (!getprop("instrumentation/rwr/serviceable") or getprop("f16/avionics/power-ufc-warm") != 1 or getprop("f16/avionics/ew-rwr-switch") != 1) {
+            setprop("sound/rwr-lck", 0);
+            setprop("ai/submodels/submodel[0]/flare-auto-release-cmd", 0);
+            return;
+        }
+        me.vector_aicontacts_threats = [];
+		me.fct = 10*2.0;
+        me.myCallsign = self.getCallsign();
+        me.myCallsign = size(me.myCallsign) < 8 ? me.myCallsign : left(me.myCallsign,7);
+        me.act_lck = 0;
+        me.autoFlare = 0;
+        me.closestThreat = 0;
+        me.elapsed = elapsedProp.getValue();
+        foreach(me.u ; me.vector_aicontacts) {
+        	# [me.ber,me.head,contact.getCoord(),me.tp,me.radar,contact.getDeviationHeading(),contact.getRangeDirect()*M2NM, contact.getCallsign()]
+        	me.threatDB = me.u.getThreatStored();
+            me.cs = me.threatDB[7];
+            me.rn = me.threatDB[6];
+            me.lnk16 = me.cs==nil?nil:datalink.get_data(me.cs);
+            if ((me.lnk16 != nil and me.lnk16.on_link() == 1 and !me.threatDB[10]) or me.rn > 150) {
+                continue;
+            }
+            me.bearing = me.threatDB[0];
+            me.trAct = me.threatDB[3];
+            me.show = 1;
+            me.heading = me.threatDB[1];
+            me.inv_bearing =  me.bearing+180;#bearing from target to me
+            me.deviation = me.inv_bearing - me.heading;# bearing deviation from target to me
+            me.dev = math.abs(geo.normdeg180(me.deviation));# my degrees from opponents nose
+            
+            if (me.show == 1) {
+                if (me.dev < 30 and me.rn < 7 and me.threatDB[8] > 60) {
+                    # he is in position to fire heatseeker at me
+                    me.heatDefenseNow = me.elapsed + me.rn*1.5;
+                    if (me.heatDefenseNow > me.heatDefense) {
+                        me.heatDefense = me.heatDefenseNow;
+                    }
+                }
+                me.threat = 0;
+                if (me.u.getModel() != "missile_frigate" and me.u.getModel() != "S-75" and me.u.getModel() != "buk-m2" and me.u.getModel() != "MIM104D" and me.u.getModel() != "s-300" and me.u.getModel() != "fleet" and me.u.getModel() != "ZSU-23-4M") {
+                    me.threat += ((180-me.dev)/180)*0.30;# most threat if I am in front of his nose
+                    me.spd = (60-me.threatDB[8])/60;
+                    #me.threat -= me.spd>0?me.spd:0;# if his speed is lower than 60kt then give him minus threat else positive
+                } elsif (me.u.getModel == "missile_frigate" or me.u.getModel() == "fleet") {
+                    me.threat += 0.30;
+                } else {
+                    me.threat += 0.30;
+                }
+                me.danger = 50;# within this range he is most dangerous
+                if (me.u.getModel() == "missile_frigate" or me.u.getModel() == "fleet" or me.u.getModel() == "s-300") {
+                    me.danger = 80;
+                } elsif (me.u.getModel() == "buk-m2" or me.u.getModel() == "S-75") {
+                    me.danger = 35;
+                } elsif (me.u.getModel() == "MIM104D") {
+                    me.danger = 45;
+                } elsif (me.u.getModel() == "ZSU-23-4M") {
+                    me.danger = 7.5;
+                }
+                if (me.threatDB[10]) me.threat += 0.30;# has me locked
+                me.threat += ((me.danger-me.rn)/me.danger)>0?((me.danger-me.rn)/me.danger)*0.60:0;# if inside danger zone then add threat, the closer the more.
+                me.threat += me.threatDB[9]>0?(me.threatDB[9]/500)*0.10:0;# more closing speed means more threat.
+                if (me.threat > me.closestThreat) me.closestThreat = me.threat;
+                #printf("A %s threat:%.2f range:%d dev:%d", me.u.get_Callsign(),me.threat,me.u.get_range(),me.deviation);
+                if (me.threat > 1) me.threat = 1;
+                if (me.threat <= 0) continue;
+                #printf("B %s threat:%.2f range:%d dev:%d", me.u.get_Callsign(),me.threat,me.u.get_range(),me.deviation);
+                append(me.vector_aicontacts_threats,[me.u,me.threat, me.threatDB[5]]);
+            } else {
+#                printf("%s ----", me.u.get_Callsign());
+            }
+        }
+
+        me.launchClose = getprop("payload/armament/MLW-launcher") != "";
+        me.incoming = getprop("payload/armament/MAW-active") or me.heatDefense > me.elapsed;
+        me.spike = getprop("payload/armament/spike")*(getprop("ai/submodels/submodel[0]/count")>15);
+        me.autoFlare = me.spike?math.max(me.closestThreat*0.25,0.05):0;
+
+        if (0 and getprop("f16/avionics/ew-mode-knob") == 2)
+        	print("wow: ", getprop("/fdm/jsbsim/gear/unit[0]/WOW"),"  spiked: ",me.spike,"  incoming: ",me.incoming, "  launch: ",me.launchClose,"  spikeResult:", me.autoFlare,"  aggresive:",me.launchClose * 0.85 + me.incoming * 0.85,"  total:",me.launchClose * 0.85 + me.incoming * 0.85+me.autoFlare);
+
+        me.autoFlare += me.launchClose * 0.85 + me.incoming * 0.85;
+
+        me.autoFlare *= 0.1 * 2.5 * !getprop("/fdm/jsbsim/gear/unit[0]/WOW");#0.1 being the update rate for flare dropping code.
+
+        setprop("ai/submodels/submodel[0]/flare-auto-release-cmd", me.autoFlare * (getprop("ai/submodels/submodel[0]/count")>0));
+        if (me.autoFlare > 0.80 and rand()>0.99 and getprop("ai/submodels/submodel[0]/count") < 1) {
+            setprop("ai/submodels/submodel[0]/flare-release-out-snd", 1);
+        }
+	},
+	del: func {
+        emesary.GlobalTransmitter.DeRegister(me.RWRRecipient);
+    },
+};
+
+
+
+
+
+
+
+
+
+
+#  ██████   █████  ████████  █████  ██      ██ ███    ██ ██   ██ 
+#  ██   ██ ██   ██    ██    ██   ██ ██      ██ ████   ██ ██  ██  
+#  ██   ██ ███████    ██    ███████ ██      ██ ██ ██  ██ █████   
+#  ██   ██ ██   ██    ██    ██   ██ ██      ██ ██  ██ ██ ██  ██  
+#  ██████  ██   ██    ██    ██   ██ ███████ ██ ██   ████ ██   ██ 
+#                                                                
+#                                                                
+DatalinkRadar = {
+	# I check the sky 360 deg for anything on datalink
+	# This class is only semi generic!
+	new: func (rate, max_dist_nm) {
+		var dlnk = {parents: [DatalinkRadar, Radar]};
+		
+		dlnk.max_dist_nm = max_dist_nm;
+		dlnk.index = 0;
+		dlnk.vector_aicontacts = [];
+		dlnk.vector_aicontacts_for = [];
+		dlnk.timer          = maketimer(rate, dlnk, func dlnk.scan());
+
+		dlnk.DatalinkRadarRecipient = emesary.Recipient.new("DatalinkRadarRecipient");
+		dlnk.DatalinkRadarRecipient.radar = dlnk;
+		dlnk.DatalinkRadarRecipient.Receive = func(notification) {
+	        if (notification.NotificationType == "AINotification") {
+	        	#printf("NoseRadar recv: %s", notification.NotificationType);
+    		    me.radar.vector_aicontacts = notification.vector;
+    		    me.radar.index = 0;
+	            return emesary.Transmitter.ReceiptStatus_OK;
+	        }
+	        return emesary.Transmitter.ReceiptStatus_NotProcessed;
+	    };
+		emesary.GlobalTransmitter.Register(dlnk.DatalinkRadarRecipient);
+		dlnk.DatalinkNotification = VectorNotification.new("DatalinkNotification");
+		dlnk.DatalinkNotification.updateV(dlnk.vector_aicontacts_for);
+		dlnk.timer.start();
+		return omni;
+	},
+
+	scan: func () {
+		if (!me.enabled) return;
+		
+		#this loop is really fast. But we only check 1 contact per call
+		if (me.index >= size(me.vector_aicontacts)) {
+			# will happen if there is no contacts
+			me.index = 0;
+			return;
+		}
+		me.contact = me.vector_aicontacts[me.index];
+		me.wasBlue = me.contact["blue"];
+		me.cs = me.contact.get_Callsign();
+		if (me.wasBlue == nil) me.wasBlue = 0;
+
+		if (!me.contact.isValid()) {
+			me.contact.blue = 0;
+			
+			if (me.wasBlue > 0) {
+				#print(me.cs," is invalid and purged from Datalink");
+				me.new_vector_aicontacts_for = [];
+				foreach (me.c ; me.vector_aicontacts_for) {
+					if (!me.c.equals(me.contact) and !me.c.equalsFast(me.contact)) {
+						append(me.new_vector_aicontacts_for, me.contact);
+					}
+				}
+				me.vector_aicontacts_for = me.new_vector_aicontacts_for;
+			}
+		} else {
+			
+
+			if (me.contact.getRangeDirect()*M2NM > me.max_dist_nm) {me.index += 1;return;}
+			
+
+	        me.lnk = datalink.get_data(me.cs);
+	        if (!me.contact.isValid()) {
+	        	me.lnk = nil;
+	        }
+	        if (me.lnk != nil and me.lnk.on_link() == 1) {
+	            me.blue = 1;
+	            me.blueIndex = me.lnk.index()+1;
+	        } elsif (me.cs == getprop("link16/wingman-4")) {
+	            me.blue = 1;
+	            me.blueIndex = 2;
+	        } else {
+	        	me.blue = 0;
+	            me.blueIndex = -1;
+	        }
+	        if (!me.blue and me.lnk != nil and me.lnk.tracked() == 1) {
+	            me.blue = 2;
+	            me.blueIndex = me.lnk.tracked_by_index()+1;
+	        }
+
+	        me.contact.blue = me.blue;
+	        if (me.blue > 0) {
+	        	me.contact.blueIndex = me.blueIndex;
+				if (!apg68Radar.containsVectorContact(me.vector_aicontacts_for, me.contact)) {
+					append(me.vector_aicontacts_for, me.contact);
+					emesary.GlobalTransmitter.NotifyAll(me.DatalinkNotification.updateV(me.vector_aicontacts_for));
+				}
+			} elsif (me.wasBlue > 0) {
+				me.new_vector_aicontacts_for = [];
+				foreach (me.c ; me.vector_aicontacts_for) {
+					if (!me.c.equals(me.contact) and !me.c.equalsFast(me.contact)) {
+						append(me.new_vector_aicontacts_for, me.contact);
+					}
+				}
+				me.vector_aicontacts_for = me.new_vector_aicontacts_for;
+			}
+		}
+		me.index += 1;
+        if (me.index > size(me.vector_aicontacts)-1) {
+        	me.index = 0;
+        	emesary.GlobalTransmitter.NotifyAll(me.DatalinkNotification.updateV(me.vector_aicontacts_for));
+        }
+	},
+	del: func {
+        emesary.GlobalTransmitter.DeRegister(me.DatalinkRadarRecipient);
+    },
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#   ██████  ██████   ██████  ██    ██ ███    ██ ██████      ███    ███  █████  ██████  ██████  ███████ ██████  
+#  ██       ██   ██ ██    ██ ██    ██ ████   ██ ██   ██     ████  ████ ██   ██ ██   ██ ██   ██ ██      ██   ██ 
+#  ██   ███ ██████  ██    ██ ██    ██ ██ ██  ██ ██   ██     ██ ████ ██ ███████ ██████  ██████  █████   ██████  
+#  ██    ██ ██   ██ ██    ██ ██    ██ ██  ██ ██ ██   ██     ██  ██  ██ ██   ██ ██      ██      ██      ██   ██ 
+#   ██████  ██   ██  ██████   ██████  ██   ████ ██████      ██      ██ ██   ██ ██      ██      ███████ ██   ██ 
+#                                                                                                              
+#                                                                                                              
+var TerrainMapper = {
+	new: func (radar, rate) {
+		var tm = {parents: [TerrainMapper, Radar]};
+		tm.radar = radar;
+		tm.timer = maketimer(rate, tm, func tm.loop());
+		tm.timer.start();
+		radar.installMapper(tm);
+		tm.lowestElev = 0;
+		tm.highestElev = 5000;
+		tm.minElev = 35000;
+		tm.maxElev = 0;
+		tm.cleaned = 0;
+		tm.exp = 0;
+		tm.debug = 0;
+		return tm;
+	},
+	##################################################################################################
+	##################################################################################################
+	#
+	# TODO:
+	#   Remove image painting from this class
+	#   EXP mode
+	#   Optimize
+	#   Find reason for failing Coord._lat
+	#   Pixel rounding error review (fills too few x)
+	#
+	azData: {
+				radius: nil,
+				az: nil,
+				fromDist: nil,
+				toDist: nil,
+				domainNm: nil,
+				domainFwdNm: nil,
+				rangeFwdNm: nil,
+				returns: nil,
+			},
+	scanGM: func (eulerX, eulerY, verticalInstantFoV, bottomBar, topBar) {
+		# GM test code
+
+		if (me.radar.currentMode.mapper and me.enabled and me.radar.horizonStabilized and me["gmPic"] != nil and !me.exp) {
+			me.debug = getprop("debug-radar/debug-mapper");
+			me.mapperHeading = eulerX+self.getHeading();
+			me.discDirforGMTop = vector.Math.pitchYawVector(eulerY+verticalInstantFoV,-me.mapperHeading,[1,0,0]);
+			me.discDirforGMBot = vector.Math.pitchYawVector(eulerY-verticalInstantFoV,-me.mapperHeading,[1,0,0]);
+			if (me.debug) {
+				setprop("debug-radar/mapper-pitch-high", eulerY+verticalInstantFoV);
+				setprop("debug-radar/mapper-pitch", eulerY);
+				setprop("debug-radar/mapper-pitch-low", eulerY-verticalInstantFoV);
+			}
+
+			me.selfCoord = self.getCoord();
+
+			me.radarBeamGeoVectorTop = vector.Math.vectorToGeoVector(me.discDirforGMTop, me.selfCoord);
+			me.radarBeamGeoVectorBot = vector.Math.vectorToGeoVector(me.discDirforGMBot, me.selfCoord);
+
+			me.xyzSelf = {"x":me.selfCoord.x(), "y":me.selfCoord.y(), "z":me.selfCoord.z()};
+
+            # Check for terrain at top and bottom of radar instant FoV
+            me.terrainGeodTop = get_cart_ground_intersection(me.xyzSelf, me.radarBeamGeoVectorTop);
+            me.terrainGeodBot = get_cart_ground_intersection(me.xyzSelf, me.radarBeamGeoVectorBot);
+            
+            me.azData.az = eulerX;
+            me.azData.radius = verticalInstantFoV;
+            me.azData.returns = [];
+            if (me.terrainGeodBot != nil) {
+            	me.terrainCoordBot = geo.Coord.new().set_latlon(me.terrainGeodBot.lat, me.terrainGeodBot.lon, me.terrainGeodBot.elevation);
+            	me.azData.fromDist = me.selfCoord.distance_to(me.terrainCoordBot)*M2NM;
+            	if (!me.testRange(me.azData.fromDist, me.radar.getRange(), me.azData.az)) return;
+            	if (me.terrainGeodTop != nil) {
+            		me.terrainCoordTop = geo.Coord.new().set_latlon(me.terrainGeodTop.lat, me.terrainGeodTop.lon, me.terrainGeodTop.elevation);
+            		if (me.debug) {
+						setprop("debug-radar/mapper-domain-lost-nm", "works");
+					}
+            	} else {
+            		# The upper part of this instantFoV does not hit terrain here. So we manually add a little bit.
+            		me.terrainCoordTop = geo.Coord.new(me.terrainCoordBot);
+            		if (me.azData.domainNm != nil) {
+            			me.topRange = me.azData.domainNm;
+            		} else {
+            			me.topRange = me.radar.getRange() * 1.25 - me.azData.fromDist;
+            		}
+            		me.topRange = math.max(me.topRange, 15);
+            		if (me.debug) {
+						setprop("debug-radar/mapper-domain-lost-nm", me.topRange);
+					}
+            		me.terrainCoordTop.apply_course_distance(me.mapperHeading, me.topRange*NM2M);
+            	}
+            	me.azData.toDist = me.selfCoord.distance_to(me.terrainCoordTop)*M2NM;
+            	me.azData.domainNm = me.azData.toDist-me.azData.fromDist;
+            	me.azCos = math.cos(me.azData.az*D2R);
+            	me.azData.rangeFwdNm = me.azData.fromDist*me.azCos;
+            	me.azData.domainFwdNm = me.azData.domainNm*me.azCos;
+            	me.pixelsBetweenTopAndBot = math.ceil(me.gmPicSize*me.azData.domainFwdNm/me.radar.getRange());
+				me.maskAlt  = 0;
+				me.maskStep = -1;
+
+				# Amount each step changes in altitude meters for center of beam.
+				# Curvature of earth is negliable.
+				# Each steps has different angle in reality, but its minute.
+				me.maskAltPerStep = math.tan(eulerY*D2R)*NM2M*me.azData.domainNm/me.pixelsBetweenTopAndBot;
+
+            	for (var i = 0; i <= me.pixelsBetweenTopAndBot; i += 1) {
+            		me.testCoord = me.interpolateCoords(me.terrainCoordBot, me.terrainCoordTop, i/me.pixelsBetweenTopAndBot);
+            		me.gm_geod = geodinfo(me.testCoord.lat(), me.testCoord.lon(), 10000);
+            		if (debug.isnan(me.testCoord._lat)) {
+            			#print("self ",me.selfCoord._lat);
+            			print("test ",me.testCoord._lat," , ",me.testCoord.lat()," , ",me.testCoord.alt());
+            			#print("bot  ",me.terrainCoordBot._x," , ",me.terrainCoordBot._y," , ",me.terrainCoordBot._z,"  ,  ",me.terrainGeodBot.elevation*M2FT);
+            			#print(i);
+            			append(me.azData.returns, 0);
+            			continue;
+            		}
+            		me.gmReturn = 0;
+            		if (me.gm_geod != nil) {
+            			if (me.gm_geod[0] > me.maskAlt+(i - me.maskStep)*me.maskAltPerStep) {
+            				# Terrain not masked by previous terrain
+            				me.maskAlt = me.gm_geod[0];
+            				me.maskStep = i;
+            				me.gmReturn = me.backScatter(me.gm_geod);
+            			} else {
+            				me.gmReturn = -1;
+            			}
+            		} else {
+            			me.gmReturn = -2;
+            		}
+            		append(me.azData.returns, me.gmReturn);
+            	}
+            	#me.debugOutput();
+            	me.paintImage(me.azData, bottomBar, topBar);
+            }            
+		}
+	},
+	setImage: func (image, origin_x, origin_y, dimension, monochrome, gainNode) {
+		if (me["gmPic"] == nil) {
+			#me.canvas = canvas.Window.new([512,512],"dialog").set('title',"GM").getCanvas(1);
+			#me.canvas_root = me.canvas.createGroup();
+			#me.canvas.setColorBackground(0,0,0,1);
+			me.gainNode = gainNode;
+			me.gmPic = image;
+            me.dirty = 0;
+            me.gmPicSize  = dimension;
+            me.mono = monochrome;
+            me.gm_x_origin = origin_x;
+            me.gm_y_origin = origin_y;
+            #me.gmPic.setPixel(me.gm_x_origin, me.gm_y_origin, [0,0,1,1]);#blue pixel at ownship
+            return 1;
+		} else {
+			return 0;
+		}
+	},
+	paintImage: func (azData, bottomBar, topBar) {
+
+		me.iStart = math.floor(me.gmPicSize*azData.rangeFwdNm/me.radar.getRange());
+		
+		if (me.debug) {
+			setprop("debug-radar/mapper-steps", size(azData.returns));
+			setprop("debug-radar/mapper-domain-fwd-nm", azData.domainFwdNm);
+		}
+
+		# If top or bottom or only 1 bar, pad ahead/behind with nil. This will clear old returns on screen.
+		if (bottomBar and me.iStart > 0) {
+			azData.returns = setsize([], me.iStart) ~ azData.returns;
+			me.iStart = 0;
+		}
+		me.behindPad = (int)((1-me.azData.rangeFwdNm/me.radar.getRange())*me.gmPicSize*1.3);
+		if (topBar and me.behindPad > 0) {
+			azData.returns = azData.returns ~ setsize([], me.behindPad);
+		}
+
+		me.jStart = math.tan((azData.az-azData.radius)*D2R);
+		me.jEnd   = math.tan((azData.az+azData.radius)*D2R);
+		me.jFactor = me.jEnd-me.jStart;
+
+		me.firstY = 0;
+		me.firstX = 0;
+
+		for (var i = 0; i < size(azData.returns); i+=1 ) {
+			me.debugColor = nil;
+			if (me.debug > 2) {
+				if (azData.returns[i] == nil) {
+					me.debugColor = [0,0,1,1];# Blue for not hit by FoV
+				} elsif (azData.returns[i] == -1) {
+					me.debugColor = [1,1,0,1];# Yellow for terrain masked
+				} elsif (azData.returns[i] == -2) {
+					me.debugColor = [1,0,0,1];# Red for terrasunk
+				} else {
+					me.gmColor = math.pow(math.clamp(azData.returns[i],0,1), me.gainNode.getValue());
+				}
+			} else {
+				me.gmColor = azData.returns[i]==nil?0:math.pow(math.clamp(azData.returns[i],0,1), me.gainNode.getValue());
+			}
+			
+			me.gmY  = me.gm_y_origin+me.iStart+i;
+			me.gmX0 = me.gm_x_origin+me.jStart*(i+me.iStart);
+			me.gmXj = math.round(me.gmX0+(i+me.iStart)*me.jFactor);
+			me.gmX0 = math.round(me.gmX0);
+			if (me.firstY == 0) {
+				me.firstY = math.max(me.gmY, 0)-me.gm_y_origin;
+				me.firstX = me.gmXj;
+			}
+			for (var j = me.gmX0; j <= me.gmXj; j += 1) {
+				if (j >= 0 and j <= 63 and me.gmY <= 63) {
+					me.gmPic.setPixel(j, math.max(me.gmY, 0), me.debugColor==nil?[me.gmColor*me.mono,me.gmColor,me.gmColor*me.mono,1]:me.debugColor);
+					me.dirty = 1;
+				}
+			}
+		}
+		#if (bottomBar and me.firstY != 0) {
+		#	# Clear the field below the bottom bar as we might have risen in alitude so its old data shown closer to ownship that can confuse pilot.
+		#	for (var y = me.firstY-1; y >= 0; y-=1 ) {
+		#		#var x = math.clamp(me.gm_x_origin + (y/me.firstY) * me.firstX, 0, 63);
+		#		if (me.firstX > 31)    {me.gmPic.setPixel(me.firstX,   y, [0,0,0,1]);me.gmPic.setPixel(me.firstX-1, y, [0,0,0,1]);me.gmPic.setPixel(me.firstX-2, y, [0,0,0,1]);}				                    
+		#		elsif (me.firstX < 31) {me.gmPic.setPixel(me.firstX+1, y, [0,0,0,1]);me.gmPic.setPixel(me.firstX+2, y, [0,0,0,1]);me.gmPic.setPixel(me.firstX+3, y, [0,0,0,1]);}
+		#		else                    me.gmPic.setPixel(me.firstX,   y, [0,0,0,1]);
+		#	}
+		#}
+	},
+	expChanged: func (exp) {
+		if (me["gmPic"] == nil or exp == me.exp) return;
+		me.exp = exp;
+		if (me.exp) {
+			me.gmPic.fillRect([0,0,me.gmPicSize,me.gmPicSize], [0.0*me.mono,0.0,0.0*me.mono,0]);# why does it allow 64??
+			me.gmPic.dirtyPixels();
+			me.dirty = 0;
+		} else {
+			me.cleanImage();
+		}
+	},
+	cleanImage: func {
+		if (me["gmPic"] == nil) return;
+		me.gmPic.fillRect([0,0,me.gmPicSize,me.gmPicSize], [0,0,0,0]);# why does it allow 64??
+		#me.gmPic.setPixel(me.gm_x_origin, me.gm_y_origin, [0,0,1,1]);#blue pixel at ownship
+		me.dirty = 1;
+	},
+	loop: func {
+		if (me.enabled and me.radar.currentMode.mapper and me["gmPic"] != nil and me.dirty) {
+			me.gmPic.dirtyPixels();
+		}
+		if (!me.radar.enabled and !me.cleaned) {
+			me.cleanImage();
+			me.cleaned = 1;
+		} else {
+			me.cleaned = 0;
+		}
+	},
+	clear: func {
+		#me.lowestElev = 0;
+		#me.highestElev = 1000*math.ceil(getprop("position/ground-elev-ft")*0.001);
+		#me.minElev = 35000;
+		#me.maxElev = 0;
+		me.cleanImage();
+	},
+	testRange: func (range, maxRange, az) {
+		if (range > maxRange) {
+			return 0;
+		}
+		az = math.abs(az)*D2R;
+		if (math.sin(az)*range > maxRange*0.5) {
+			return 0;
+		}
+		return 1;
+	},
+	debugOutput: func {
+		if (me.radar.currentMode.bars == 4 and me.radar.currentMode["nextPatternNode"] != nil) {
+        	if (me.radar.currentMode.nextPatternNode == 0) {
+        		me.barCount = "4th";
+        	} elsif (me.radar.currentMode.nextPatternNode == 1) {
+        		me.barCount = "   ";return;
+        	} elsif (me.radar.currentMode.nextPatternNode == 2) {
+        		me.barCount = "1st";
+        	} elsif (me.radar.currentMode.nextPatternNode == 3) {
+        		me.barCount = "   ";return;
+        	} elsif (me.radar.currentMode.nextPatternNode == 4) {
+        		me.barCount = "2nd";
+        	} elsif (me.radar.currentMode.nextPatternNode == 5) {
+        		me.barCount = "   ";return;
+        	} elsif (me.radar.currentMode.nextPatternNode == 6) {
+        		me.barCount = "3rd";
+        	} elsif (me.radar.currentMode.nextPatternNode == 7) {
+        		me.barCount = "   ";return;
+        	} else {
+        		me.barCount = "Unk";return;
+        	}
+        	printf("AGL %5dft. Bar %s. Distance to bottom %.1fnm. Bottom to top %6.2fnm. Pitch %5.2f to %5.2f degs",getprop("position/altitude-agl-ft"), me.barCount, me.selfCoord.direct_distance_to(me.terrainCoordBot)*M2NM, me.terrainCoordBot.direct_distance_to(me.terrainCoordTop)*M2NM,me.eulerY-me.radar.instantFoVradius,me.radar.eulerY+me.radar.instantFoVradius);
+        }
+	},
+	backScatter: func (gm_geod) {
+		if (gm_geod == nil) {
+			me.reflection = 0;
+		} else {
+			if (gm_geod[1] == nil) {
+				me.reflection = 1;
+			} elsif (!gm_geod[1].solid) {
+				me.reflection = 0.05;
+				if (me.testElev < me.minElev) {
+					me.minElev = me.testElev;
+				}
+			} else {
+				me.retur = me.howReflective(gm_geod[1]);
+				if (me.retur == 0) {
+					me.retur = gm_geod[1].bumpiness;
+				}
+				me.testElev = me.gm_geod[0]*M2FT;
+				if (me.testElev < me.minElev) {
+					me.minElev = me.testElev;
+				}
+				if (me.testElev > me.maxElev) {
+					me.maxElev = me.testElev;
+				}
+				me.reflection = math.min(1, me.extrapolate(me.testElev, me.lowestElev, me.highestElev, 0.15, 0.6)+me.retur*0.4);
+			}
+		}
+		return me.reflection;
+	},
+	frameDone: func {
+		if (me.minElev != 35000 or me.maxElev != 0) {
+			me.highestElev = (me.highestElev*1.5+me.maxElev)/2.5;# a simple lowpass filter to prevent it from changing too abrupt.
+			me.lowestElev = (me.lowestElev*1.5+math.max(0, math.min(me.maxElev-1000, me.minElev)))/2.5;# prevent somewhat flat terrain to show as very undulated.
+		}
+		if (me.debug) setprop("debug-radar/mapper-elevation-min", me.lowestElev);
+		if (me.debug) setprop("debug-radar/mapper-elevation-max", me.highestElev);
+
+		me.minElev = 35000;
+		me.maxElev = 0;
+	},
+	howReflective: func(info) {
+		# from AJS-37
+	    foreach (var name; info.names) {
+	        if (contains(me.urban_names, name)) return 1;
+	    }
+	    foreach (var name; info.names) {
+	        if (contains(me.natural_names, name)) return me.natural_names[name];
+	    }	    
+    	return 0;
+    },
+    urban_names: {
+		# from AJS-37
+	    "Urban": 1,
+	    "BuiltUpCover": 1,
+	    "Construction": 1,
+	    "Industrial": 1,
+	    "Port": 1,
+	    "Town": 1,
+	    "SubUrban": 1,
+	},
+	natural_names: {
+		# TODO: find real data on this.
+	    "Cliffs": 0.8,  # tend to be steep, hence greater return
+	    "Asphalt": 0.7, # very granular hence good backscatter
+	    #"Airport": 0.5, # 
+	    "Rock": 0.6,    # tend to be somewhat steep, hence some solid backscatter
+	},
+	interpolateCoords: func (start, end, fraction) {
+		if (fraction == 0) {
+			return geo.Coord.new(start);
+		}
+		if (fraction == 1) return geo.Coord.new(end);
+		me.xx = (start.x()*(1-fraction)+end.x()*fraction);
+		me.yy = (start.y()*(1-fraction)+end.y()*fraction);
+		me.zz = (start.z()*(1-fraction)+end.z()*fraction);
+
+		me.cc = geo.Coord.new();
+		me.cc.set_xyz(me.xx,me.yy,me.zz);
+
+		return me.cc;
+	},
+	extrapolate: func (x, x1, x2, y1, y2) {
+    	return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
+	},
+	##################################################################################################
+	##################################################################################################
+	##################################################################################################
+	##################################################################################################
+};
+
+
+
+
+
+
 
 
 
@@ -2995,7 +3016,7 @@ var mapper = TerrainMapper.new(apg68Radar, 0.10);
 
 
 var getCompleteList = func {
-	return partitioner.vector_aicontacts;# Important not to use parser data here, as that one gets rebuilt from time to time. Hence we use partitioner instead.
+	return baser.vector_aicontacts_last;
 }
 
 

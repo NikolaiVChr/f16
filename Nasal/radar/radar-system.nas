@@ -54,9 +54,6 @@ var TERRASUNK = 5; # Terrain not loaded underneath this, most likely a MARINE, b
 var ECEF = 0;
 var GPS = 1;
 
-var FALSE = 0;
-var TRUE = 1;
-
 
 var emptyCoord = geo.Coord.new().set_xyz(0,0,0);
 
@@ -126,6 +123,7 @@ AIToNasal = {
 	new: func {
 		me.prop_AIModels = props.globals.getNode("ai/models");
 		me.vector_aicontacts = [];
+		me.vector_aicontacts_last = [];
 		me.scanInProgress = 0;
 		me.startOver = 0;
 		me.lookupCallsign = {};
@@ -347,6 +345,7 @@ AIToNasal = {
 		me.lookupCallsign = me.lookupCallsignNew;
 		#print("NR: update called "~size(me.vector_aicontacts));
 		emesary.GlobalTransmitter.NotifyAll(me.AINotification.updateV(me.vector_aicontacts));
+		me.vector_aicontacts_last = me.vector_aicontacts;
 	},
 
 	containsVectorContact: func (vec, item) {
@@ -1314,7 +1313,7 @@ Radar = {
 #
 # Attributes:
 #   on/off
-	enabled: TRUE,
+	enabled: 1,
 };
 
 
