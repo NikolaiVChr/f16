@@ -52,6 +52,7 @@ var AirborneRadar = {
 	vector_aicontacts_bleps: [],# vector of not timed out bleps
 	chaffList: [],
 	chaffSeenList: [],
+	chaffFilter: 0.60,# 1=filters all chaff, 0=sees all chaff all the time
 	timer: nil,
 	timerMedium: nil,
 	timerSlow: nil,
@@ -350,6 +351,7 @@ var AirborneRadar = {
 			}
 			
 			foreach (me.chaff ; me.chaffList) {
+				if (rand() < me.chaffFilter) continue;# some chaff are filtered out.
 				me.globalToTarget = vector.Math.pitchYawVector(me.chaff.pitch, -me.chaff.bearing, [1,0,0]);
 				
 				# Degrees from center of radar beam to center of chaff cloud
