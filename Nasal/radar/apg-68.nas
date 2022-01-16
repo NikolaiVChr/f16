@@ -1632,7 +1632,7 @@ var F16LRSMode = {
 #                          
 var F16SeaMode = {
 	rootName: "SEA",
-	shortName: "AUT",
+	shortName: "AUTO",
 	longName: "Sea Navigation Mode",
 	discSpeed_dps: 55,# was 55
 	maxRange: 80,
@@ -1665,7 +1665,7 @@ var F16SeaMode = {
 	},
 	toggleAuto: func {
 		me.autoCursor = !me.autoCursor;
-		me.shortName = me.autoCursor?"AUT":"MAN";
+		me.shortName = me.autoCursor?"AUTO":"MAN";
 	},
 	setCursorDistance: func (nm) {
 		# Return if the cursor should be distance zeroed.
