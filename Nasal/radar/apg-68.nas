@@ -890,7 +890,7 @@ var RadarMode = {
 	cycleDesignate: func {},
 	testContact: func (contact) {},
 	prunedContact: func (c) {
-		if (c.equalsFast(me["priorityTarget"]) {
+		if (c.equalsFast(me["priorityTarget"])) {
 			me.priorityTarget = nil;
 		}
 	},
