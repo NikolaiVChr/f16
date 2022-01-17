@@ -1477,7 +1477,7 @@ var F16GMTMode = {
 	getSearchInfo: func (contact) {
 		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
 		me.devGMT = contact.getDeviationStored();
-		if (me.devGMT[12] < 10) return nil;# A gain knob decide this. (should it be radial speed instead?)
+		if (me.devGMT.speed_kt < 10) return nil;# A gain knob decide this. (should it be radial speed instead?)
 		return [1,0,1,1,0,1];
 	},
 };

@@ -520,7 +520,7 @@ var Deviation = {
 	#frustum_norm_y: 0,
 	#frustum_norm_z: 0,
 	#alt_ft: 0,
-	#speed_kt: 0,
+	speed_kt: 0,
 	#closureSpeed: 0,
 };
 
@@ -987,7 +987,7 @@ var AIContact = {
 	},
 	
 	isHiddenFromDoppler: func (dopplerRadar = 1) {
-		return me.getType() == AIR and dopplerRadar?me.hiddenFromDoppler:me.hiddenFromMono;
+		return me.getType() == AIR and (dopplerRadar?me.hiddenFromDoppler:me.hiddenFromMono);
 	},
 
 	setHiddenFromDoppler: func (dopp, mono) {
@@ -1524,7 +1524,7 @@ var NoseRadar = {
 				#frustum_norm_y: -me.pc_y/(me.w/2),
 				#frustum_norm_z: me.pc_z/(me.h/2),
 				#alt_ft: me.crd.alt()*M2FT,
-				#speed_kt: contact.getSpeed(),
+				speed_kt: contact.getSpeed(),
 				#closureSpeed: contact.getClosureRate(),
 			};
 			contact.storeDeviation(me.contactDev);
@@ -1561,7 +1561,7 @@ var NoseRadar = {
 			#frustum_norm_y: 0,
 			#frustum_norm_z: 0,
 			#alt_ft: me.crd.alt()*M2FT,
-			#speed_kt: contact.getSpeed(),
+			speed_kt: contact.getSpeed(),
 			#closureSpeed: contact.getClosureRate(),
 		};
 		contact.storeDeviation(me.contactDev);
@@ -1668,7 +1668,7 @@ var SimplerNoseRadar = {
 				#frustum_norm_y: 0,
 				#frustum_norm_z: 0,
 				#alt_ft: me.crd.alt()*M2FT,
-				#speed_kt: contact.getSpeed(),
+				speed_kt: contact.getSpeed(),
 				#closureSpeed: contact.getClosureRate(),
 			};
 			contact.storeDeviation(me.contactDev);
@@ -1705,7 +1705,7 @@ var SimplerNoseRadar = {
 			#frustum_norm_y: 0,
 			#frustum_norm_z: 0,
 			#alt_ft: me.crd.alt()*M2FT,
-			#speed_kt: contact.getSpeed(),
+			speed_kt: contact.getSpeed(),
 			#closureSpeed: contact.getClosureRate(),
 		};
 		contact.storeDeviation(me.contactDev);
@@ -1815,7 +1815,7 @@ var FullRadar = {
 				#frustum_norm_y: 0,
 				#frustum_norm_z: 0,
 				#alt_ft: me.crd.alt()*M2FT,
-				#speed_kt: contact.getSpeed(),
+				speed_kt: contact.getSpeed(),
 				#closureSpeed: contact.getClosureRate(),
 			};
 			contact.storeDeviation(me.contactDev);
@@ -1858,7 +1858,7 @@ var FullRadar = {
 			#frustum_norm_y: 0,
 			#frustum_norm_z: 0,
 			#alt_ft: me.crd.alt()*M2FT,
-			#speed_kt: contact.getSpeed(),
+			speed_kt: contact.getSpeed(),
 			#closureSpeed: contact.getClosureRate(),
 		};
 		contact.storeDeviation(me.contactDev);
