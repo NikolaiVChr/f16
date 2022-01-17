@@ -1996,9 +1996,11 @@ var ECMChecker = {
 			return;
 		}
 		me.contact = me.vector_aicontacts[me.index];
-		me.chaff = me.checkChaff(me.contact);
-		if (me.chaff != nil) {
-			append(me.myChaffs, me.chaff);
+		if (me.contact.isVisible()) {
+			me.chaff = me.checkChaff(me.contact);
+			if (me.chaff != nil) {
+				append(me.myChaffs, me.chaff);
+			}
 		}
 
         me.index += 1;

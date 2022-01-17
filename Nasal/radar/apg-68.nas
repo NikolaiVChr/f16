@@ -351,7 +351,7 @@ var AirborneRadar = {
 			}
 			
 			foreach (me.chaff ; me.chaffList) {
-				if (rand() < me.chaffFilter) continue;# some chaff are filtered out.
+				if (rand() < me.chaffFilter or me.chaff.meters < 10000+10000*rand()) continue;# some chaff are filtered out.
 				me.globalToTarget = vector.Math.pitchYawVector(me.chaff.pitch, -me.chaff.bearing, [1,0,0]);
 				
 				# Degrees from center of radar beam to center of chaff cloud
@@ -475,8 +475,8 @@ var AirborneRadar = {
 		me.vector_aicontacts_bleps = me.vector_aicontacts_bleps_tmp;
 
 		#lets purge the old chaff also, both seen and unseen
-		me.wind = getprop("environment/wind-speed-kt");
-		me.chaffLifetime = math.max(0, me.wind==0?25:25*(1-me.wind/50));
+		me.wnd = wndprop.getValue();
+		me.chaffLifetime = math.max(0, me.wnd==0?25:25*(1-me.wnd/50));
 		me.chaffList_tmp = [];
 		foreach(me.evilchaff ; me.chaffList) {
 			if (me.elapsed - me.evilchaff.releaseTime < me.chaffLifetime) {
@@ -3149,6 +3149,7 @@ laserOn = props.globals.getNode("controls/armament/laser-arm-dmd",1);#don't put 
 var datalink_power = props.globals.getNode("instrumentation/datalink/power",0);
 enable_tacobject = 1;
 var antennae_knob_prop = props.globals.getNode("controls/radar/antennae-knob",0);
+var wndprop = props.globals.getNode("environment/wind-speed-kt",0);
 
 
 # start generic radar system
