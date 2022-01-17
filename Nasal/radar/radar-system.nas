@@ -987,7 +987,7 @@ var AIContact = {
 	},
 	
 	isHiddenFromDoppler: func (dopplerRadar = 1) {
-		return me.getType() == AIR and dopplerRadar?me.hiddenFromDoppler:me.isHiddenFromMono;
+		return me.getType() == AIR and dopplerRadar?me.hiddenFromDoppler:me.hiddenFromMono;
 	},
 
 	setHiddenFromDoppler: func (dopp, mono) {
