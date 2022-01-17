@@ -27,8 +27,6 @@
     </nasal>
 
 	<group>
-		<row>0</row>
-		<col>0</col>
 		<layout>hbox</layout>
 		<text>
 			<halign>left</halign>
@@ -38,7 +36,6 @@
 		
 		<group>
 			<layout>table</layout>
-			
 			<button>
 				<row>0</row>
 				<col>0</col>
