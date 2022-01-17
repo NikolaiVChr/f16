@@ -393,13 +393,13 @@ var AirborneRadar = {
 				# ignore roll and pitch
 
 				# Vector that points to target in radar coordinates as if aircraft it was not rolled or pitched.
-				me.globalToTarget = vector.Math.eulerToCartesian3X(-me.dev[7],me.dev[8],0);
+				me.globalToTarget = vector.Math.eulerToCartesian3X(-me.dev.bearing,me.dev.elevationGlobal,0);
 
 				# Vector that points to target in radar coordinates as if aircraft it was not yawed, rolled or pitched.
 				me.localToTarget = vector.Math.rollPitchYawVector(0,0,self.getHeading(), me.globalToTarget);
 			} else {
 				# Vector that points to target in local radar coordinates.
-				me.localToTarget = vector.Math.eulerToCartesian3X(-me.dev[0],me.dev[1],0);
+				me.localToTarget = vector.Math.eulerToCartesian3X(-me.dev.azimuthLocal,me.dev.elevationLocal,0);
 			}
 
 			# Degrees from center of radar beam to target, note that positionDirection must match the coord system defined by horizonStabilized.
@@ -410,7 +410,7 @@ var AirborneRadar = {
 				setprop("debug-radar/main-beam-deviation", me.beamDeviation);
 				me.testedPrio = 1;
 			}
-			if (me.beamDeviation < me.instantFoVradius and (me.dev[2] < me.closestChaff or rand() < me.chaffFilter) ) {#  and (me.closureReject == -1 or me.dev[13] > me.closureReject)
+			if (me.beamDeviation < me.instantFoVradius and (me.dev.rangeDirect_m < me.closestChaff or rand() < me.chaffFilter) ) {#  and (me.closureReject == -1 or me.dev.closureSpeed > me.closureReject)
 				# TODO: Refine the chaff conditional (ALOT)
 				me.registerBlep(contact, me.dev, me.currentMode.painter);
 				#print("REGISTER BLEP");
@@ -430,9 +430,10 @@ var AirborneRadar = {
 		if (doppler_check and contact.isHiddenFromDoppler()) {
 			return 0;
 		}
-		me.maxDistVisible = me.currentMode.rcsFactor * me.targetRCSSignal(self.getCoord(), dev[3], contact.model, dev[4], dev[5], dev[6],me.rcsRefDistance*NM2M,me.rcsRefValue);
 
-		if (me.maxDistVisible > dev[2]) {
+		me.maxDistVisible = me.currentMode.rcsFactor * me.targetRCSSignal(self.getCoord(), dev.coord, contact.model, dev.heading, dev.pitch, dev.roll,me.rcsRefDistance*NM2M,me.rcsRefValue);
+
+		if (me.maxDistVisible > dev.rangeDirect_m) {
 			me.extInfo = me.currentMode.getSearchInfo(contact);# if the scan gives heading info etc..
 
 			if (me.extInfo == nil) {

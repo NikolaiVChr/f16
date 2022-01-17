@@ -494,6 +494,33 @@ var Chaff = {
 
 
 
+#  ██████  ███████ ██    ██ ██  █████  ████████ ██  ██████  ███    ██ 
+#  ██   ██ ██      ██    ██ ██ ██   ██    ██    ██ ██    ██ ████   ██ 
+#  ██   ██ █████   ██    ██ ██ ███████    ██    ██ ██    ██ ██ ██  ██ 
+#  ██   ██ ██       ██  ██  ██ ██   ██    ██    ██ ██    ██ ██  ██ ██ 
+#  ██████  ███████   ████   ██ ██   ██    ██    ██  ██████  ██   ████ 
+#                                                                     
+#                                                                     
+var Deviation = {
+	azimuthLocal: 0,   # Used for radar beam when not horizon stabilized
+	elevationLocal: 0, # Used for radar beam when not horizon stabilized
+	rangeDirect_m: 0,  # Used for RCS and chaff
+	coord: nil,        # Used for RCS
+	heading: 0,        # Used for RCS
+	pitch: 0,          # Used for RCS
+	roll: 0,           # Used for RCS
+	bearing: 0,        # Used for radar beam
+	elevationGlobal: 0,# Used for radar beam
+	#frustum_norm_y: 0,
+	#frustum_norm_z: 0,
+	#alt_ft: 0,
+	#speed_kt: 0,
+	#closureSpeed: 0,
+};
+
+
+
+
 
 #  ██████  ██      ███████ ██████  
 #  ██   ██ ██      ██      ██   ██ 
@@ -1439,8 +1466,24 @@ var NoseRadar = {
 				continue;
 			}
 			# TODO: clean this up. Only what is needed for testing against instant FoV and RCS should be in here:
-			#                       localdev, localpitch, range_m, coord, heading, pitch, roll, bearing, elevation, frustum_norm_y, frustum_norm_z, alt_ft, speed, closure  (the frustums are no longer used)
-			contact.storeDeviation([me.dev[0],me.dev[1],me.rng,contact.getCoord(),contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation(), -me.pc_y/(me.w/2), me.pc_z/(me.h/2), me.crd.alt()*M2FT, contact.getSpeed()]);#, contact.getClosureRate()
+			me.contactDev = {
+				parents: [Deviation],
+				azimuthLocal: me.dev[0],
+				elevationLocal: me.dev[1],
+				rangeDirect_m: me.rng,
+				coord: contact.getCoord(),
+				heading: contact.getHeading(),
+				pitch: contact.getPitch(),
+				roll: contact.getRoll(),
+				bearing: contact.getBearing(),
+				elevationGlobal: contact.getElevation(),
+				#frustum_norm_y: -me.pc_y/(me.w/2),
+				#frustum_norm_z: me.pc_z/(me.h/2),
+				#alt_ft: me.crd.alt()*M2FT,
+				#speed_kt: contact.getSpeed(),
+				#closureSpeed: contact.getClosureRate(),
+			};
+			contact.storeDeviation(me.contactDev);
 			append(me.vector_aicontacts_for, contact);
 		}		
 		emesary.GlobalTransmitter.NotifyAll(me.FORNotification.updateV(me.vector_aicontacts_for));
@@ -1460,7 +1503,24 @@ var NoseRadar = {
 		me.dev = contact.getDeviation();
 		me.rng = contact.getRangeDirect();
 		me.crd = contact.getCoord();
-		contact.storeDeviation([me.dev[0],me.dev[1],me.rng,me.crd,contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation(), 0, 0, me.crd.alt()*M2FT, contact.getSpeed()]);
+		me.contactDev = {
+			parents: [Deviation],
+			azimuthLocal: me.dev[0],
+			elevationLocal: me.dev[1],
+			rangeDirect_m: me.rng,
+			coord: me.crd,
+			heading: contact.getHeading(),
+			pitch: contact.getPitch(),
+			roll: contact.getRoll(),
+			bearing: contact.getBearing(),
+			elevationGlobal: contact.getElevation(),
+			#frustum_norm_y: 0,
+			#frustum_norm_z: 0,
+			#alt_ft: me.crd.alt()*M2FT,
+			#speed_kt: contact.getSpeed(),
+			#closureSpeed: contact.getClosureRate(),
+		};
+		contact.storeDeviation(me.contactDev);
 		append(me.vector_aicontacts_for, contact);
 
 		emesary.GlobalTransmitter.NotifyAll(me.FORNotification.updateV(me.vector_aicontacts_for));
@@ -1550,8 +1610,24 @@ var SimplerNoseRadar = {
 			me.dev = contact.getDeviation();
 
 			# TODO: clean this up. Only what is needed for testing against instant FoV and RCS should be in here:
-			#                       localdev, localpitch, range_m, coord, heading, pitch, roll, bearing, elevation, frustum_norm_y, frustum_norm_z, alt_ft, speed  (the frustums are no longer used)
-			contact.storeDeviation([me.dev[0],me.dev[1],me.rng,contact.getCoord(),contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation(), 0, 0, me.crd.alt()*M2FT, contact.getSpeed()]);
+			me.contactDev = {
+				parents: [Deviation],
+				azimuthLocal: me.dev[0],
+				elevationLocal: me.dev[1],
+				rangeDirect_m: me.rng,
+				coord: me.crd,
+				heading: contact.getHeading(),
+				pitch: contact.getPitch(),
+				roll: contact.getRoll(),
+				bearing: contact.getBearing(),
+				elevationGlobal: contact.getElevation(),
+				#frustum_norm_y: 0,
+				#frustum_norm_z: 0,
+				#alt_ft: me.crd.alt()*M2FT,
+				#speed_kt: contact.getSpeed(),
+				#closureSpeed: contact.getClosureRate(),
+			};
+			contact.storeDeviation(me.contactDev);
 			append(me.vector_aicontacts_for, contact);
 		}		
 		emesary.GlobalTransmitter.NotifyAll(me.FORNotification.updateV(me.vector_aicontacts_for));
@@ -1571,7 +1647,24 @@ var SimplerNoseRadar = {
 		me.dev = contact.getDeviation();
 		me.rng = contact.getRangeDirect();
 		me.crd = contact.getCoord();
-		contact.storeDeviation([me.dev[0],me.dev[1],me.rng,me.crd,contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation(), 0, 0, me.crd.alt()*M2FT, contact.getSpeed()]);
+		me.contactDev = {
+			parents: [Deviation],
+			azimuthLocal: me.dev[0],
+			elevationLocal: me.dev[1],
+			rangeDirect_m: me.rng,
+			coord: me.crd,
+			heading: contact.getHeading(),
+			pitch: contact.getPitch(),
+			roll: contact.getRoll(),
+			bearing: contact.getBearing(),
+			elevationGlobal: contact.getElevation(),
+			#frustum_norm_y: 0,
+			#frustum_norm_z: 0,
+			#alt_ft: me.crd.alt()*M2FT,
+			#speed_kt: contact.getSpeed(),
+			#closureSpeed: contact.getClosureRate(),
+		};
+		contact.storeDeviation(me.contactDev);
 		append(me.vector_aicontacts_for, contact);
 
 		emesary.GlobalTransmitter.NotifyAll(me.FORNotification.updateV(me.vector_aicontacts_for));
@@ -1664,8 +1757,24 @@ var FullRadar = {
 			me.crd = contact.getCoord();
 
 			# TODO: clean this up. Only what is needed for testing against instant FoV and RCS should be in here:
-			#                       localdev, localpitch, range_m, coord, heading, pitch, roll, bearing, elevation, frustum_norm_y, frustum_norm_z, alt_ft, speed
-			contact.storeDeviation([me.dev[0],me.dev[1],me.rng,contact.getCoord(),contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation(), 0, 0, me.crd.alt()*M2FT, contact.getSpeed()]);
+			me.contactDev = {
+				parents: [Deviation],
+				azimuthLocal: me.dev[0],
+				elevationLocal: me.dev[1],
+				rangeDirect_m: me.rng,
+				coord: me.crd,
+				heading: contact.getHeading(),
+				pitch: contact.getPitch(),
+				roll: contact.getRoll(),
+				bearing: contact.getBearing(),
+				elevationGlobal: contact.getElevation(),
+				#frustum_norm_y: 0,
+				#frustum_norm_z: 0,
+				#alt_ft: me.crd.alt()*M2FT,
+				#speed_kt: contact.getSpeed(),
+				#closureSpeed: contact.getClosureRate(),
+			};
+			contact.storeDeviation(me.contactDev);
 			append(me.vector_aicontacts_for, contact);
 		}		
 		emesary.GlobalTransmitter.NotifyAll(me.FullNotification.updateV(me.vector_aicontacts_for));
@@ -1691,7 +1800,24 @@ var FullRadar = {
 		me.dev = contact.getDeviation();
 		me.rng = contact.getRangeDirect();
 		me.crd = contact.getCoord();
-		contact.storeDeviation([me.dev[0],me.dev[1],me.rng,me.crd,contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation(), 0, 0, me.crd.alt()*M2FT, contact.getSpeed()]);
+		me.contactDev = {
+			parents: [Deviation],
+			azimuthLocal: me.dev[0],
+			elevationLocal: me.dev[1],
+			rangeDirect_m: me.rng,
+			coord: me.crd,
+			heading: contact.getHeading(),
+			pitch: contact.getPitch(),
+			roll: contact.getRoll(),
+			bearing: contact.getBearing(),
+			elevationGlobal: contact.getElevation(),
+			#frustum_norm_y: 0,
+			#frustum_norm_z: 0,
+			#alt_ft: me.crd.alt()*M2FT,
+			#speed_kt: contact.getSpeed(),
+			#closureSpeed: contact.getClosureRate(),
+		};
+		contact.storeDeviation(me.contactDev);
 		append(me.vector_aicontacts_for, contact);
 
 		emesary.GlobalTransmitter.NotifyAll(me.FORNotification.updateV(me.vector_aicontacts_for));
