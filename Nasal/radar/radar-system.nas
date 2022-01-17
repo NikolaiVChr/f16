@@ -536,6 +536,9 @@ var Deviation = {
 #                                  
 #                                  
 var Blep = {
+	#
+	# Methods might return nil if the radar mode that found it does not support detection of that property.
+	#
 	new: func (valueVector) {
 		var b = {parents: [Blep]};
 		b.values = valueVector;
@@ -551,24 +554,28 @@ var Blep = {
 	},
 
 	getAZDeviation: func {
+		# Get azimuth deviation to the blep from my current position/orientation
 		me.blepCoord = me.getCoord();
 		me.blepHeading = self.getCoord().course_to(me.blepCoord);
 		return geo.normdeg180(me.blepHeading-self.getHeading());
 	},
 
 	getElevDeviation: func {
+		# Get elevation deviation to the blep from my current position/orientation
 		me.blepCoord = me.getCoord();
 		me.blepPitch = vector.Math.getPitch(self.getCoord(), me.blepCoord);
 		return me.blepPitch - self.getPitch();
 	},
 
 	getElev: func {
+		# Get elevation to the blep from my current position/orientation
 		me.blepCoord = me.getCoord();
 		me.blepPitch = vector.Math.getPitch(self.getCoord(), me.blepCoord);
 		return me.blepPitch;
 	},
 
 	getRangeNow: func {
+		# Get range to the blep from my current position
 		# Meters
 		me.blepRange = self.getCoord().distance_to(me.getCoord());
 		return me.blepRange;
@@ -588,11 +595,12 @@ var Blep = {
 	},	
 
 	getDirection: func {
-		# Should not be used
+		# Deprecated
 		return me.values[4];
 	},
 
 	getRangeDirect: func {
+		# Get range to the blep from detection position
 		# Meters
 		return me.values[2];
 	},
@@ -728,6 +736,48 @@ var AIContact = {
 		return 0;
 	},
 
+	determineCarrier: func (prop_name, model) {
+		if (prop_name == "carrier") {
+			return 1;
+		}
+		if (contains(knownCarriers, model)) {
+			return 1;
+		}
+		return 0;
+	},
+
+	determineType: func (prop_name, ordnance, alt_ft, model, speed_kt) {
+		# determine type. Only done at init. getType() will check if AIR has landed or taken off and will change it accordingly.
+	    # 
+        if (prop_name == "carrier") {
+        	return MARINE;
+        } elsif (prop_name == "aircraft" or prop_name == "Mig-28") {
+        	return AIR;
+        } elsif (ordnance != nil) {
+        	return ORDNANCE;
+        } elsif (prop_name == "groundvehicle") {
+        	return SURFACE;
+        } elsif (model != nil and isKnownSurface(model)) {
+			return SURFACE;
+		} elsif (model != nil and isKnownShip(model)) {
+			return MARINE;
+		} elsif (model != nil and isKnownHeli(model) and speed_kt != nil and speed_kt > 10) {
+			return AIR;
+        } elsif (speed_kt != nil and speed_kt > 60) {
+        	return AIR;# can later switch from AIR to SURFACE or opposite
+        }
+        if(alt_ft < 5.0) {
+	        me.getCoord();
+	        me.geod = geodinfo(me.coord.lat(),me.coord.lon());
+        	if (me.geod == nil) {
+        		return TERRASUNK;
+        	} elsif (me.geod[1] != nil and !me.geod[1].solid) {# if geod[1] is nil, its a building.
+        		return MARINE;
+        	}
+        }
+        return SURFACE;
+	},
+
 	getCoord: func {
 		if (me.pos_type == ECEF) {
 	    	me.coord = geo.Coord.new().set_xyz(me.x.getValue(), me.y.getValue(), me.z.getValue());
@@ -796,48 +846,6 @@ var AIContact = {
 		return me.virtTGP;
 	},
 
-	determineCarrier: func (prop_name, model) {
-		if (prop_name == "carrier") {
-			return 1;
-		}
-		if (contains(knownCarriers, model)) {
-			return 1;
-		}
-		return 0;
-	},
-
-	determineType: func (prop_name, ordnance, alt_ft, model, speed_kt) {
-		# determine type. Only done at init. getType() will check if AIR has landed or taken off and will change it accordingly.
-	    # 
-        if (prop_name == "carrier") {
-        	return MARINE;
-        } elsif (prop_name == "aircraft" or prop_name == "Mig-28") {
-        	return AIR;
-        } elsif (ordnance != nil) {
-        	return ORDNANCE;
-        } elsif (prop_name == "groundvehicle") {
-        	return SURFACE;
-        } elsif (model != nil and isKnownSurface(model)) {
-			return SURFACE;
-		} elsif (model != nil and isKnownShip(model)) {
-			return MARINE;
-		} elsif (model != nil and isKnownHeli(model) and speed_kt != nil and speed_kt > 10) {
-			return AIR;
-        } elsif (speed_kt != nil and speed_kt > 60) {
-        	return AIR;# can later switch from AIR to SURFACE or opposite
-        }
-        if(alt_ft < 5.0) {
-	        me.getCoord();
-	        me.geod = geodinfo(me.coord.lat(),me.coord.lon());
-        	if (me.geod == nil) {
-        		return TERRASUNK;
-        	} elsif (me.geod[1] != nil and !me.geod[1].solid) {# if geod[1] is nil, its a building.
-        		return MARINE;
-        	}
-        }
-        return SURFACE;
-	},
-
 	getType: func {
 		if(me.type == TERRASUNK) {
 			me.type = me.determineType(me.prop.getName(), me.miss, me.getCoord().alt()*M2FT, me.model, me.speed==nil?nil:me.speed.getValue());
@@ -857,27 +865,32 @@ var AIContact = {
 	},
 
 	getDeviationPitch: func {
+		# This is an instant perfect result, so don't call this outside the radar system.
 		me.getCoord();
 		me.pitched = vector.Math.getPitch(self.getCoord(), me.coord);
 		return me.pitched - self.getPitch();
 	},
 
 	getDeviationHeading: func {
+		# This is an instant perfect result, so don't call this outside the radar system.
 		me.getCoord();
 		return geo.normdeg180(self.getCoord().course_to(me.coord)-self.getHeading());
 	},
 
 	getRangeDirect: func {# meters
+		# This is an instant perfect result, so don't call this outside the radar system.
 		me.getCoord();
 		return self.getCoord().direct_distance_to(me.coord);
 	},
 	
 	getRange: func {# meters
+		# This is an instant perfect result, so don't call this outside the radar system.
 		me.getCoord();
 		return self.getCoord().distance_to(me.coord);
 	},
 
 	getPitch: func {
+		# This is an instant perfect result, so don't call this outside the radar system.
 		if (me.pitch == nil) {
 			return 0;
 		}
@@ -885,6 +898,7 @@ var AIContact = {
 	},
 
 	getRoll: func {
+		# This is an instant perfect result, so don't call this outside the radar system.
 		if (me.roll == nil) {
 			return 0;
 		}
@@ -892,6 +906,7 @@ var AIContact = {
 	},
 
 	getAltitude: func {
+		# This is an instant perfect result, so don't call this outside the radar system.
 		if (me.alt == nil) {
 			return 0;
 		}
@@ -899,6 +914,7 @@ var AIContact = {
 	},
 
 	getHeading: func {
+		# This is an instant perfect result, so don't call this outside the radar system.
 		if (me.heading == nil) {
 			return 0;
 		}
@@ -906,6 +922,7 @@ var AIContact = {
 	},
 
 	getSpeed: func {
+		# This is an instant perfect result, so don't call this outside the radar system.
 		if (me.speed == nil) {
 			return 0;
 		}
@@ -913,14 +930,17 @@ var AIContact = {
 	},
 
 	getBearing: func {
+		# This is an instant perfect result, so don't call this outside the radar system.
 		return self.getCoord().course_to(me.getCoord());
 	},
 
 	getElevation: func {
+		# This is an instant perfect result, so don't call this outside the radar system.
 		return vector.Math.getPitch(self.getCoord(), me.getCoord());
 	},
 
 	getDeviation: func {
+		# This is an instant perfect result, so don't call this outside the radar system.
 		# optimized method that return both heading and pitch deviation as seen from pilot, to limit property calls
 		# returns [bearingDev, elevationDev, distDirect, coord]
 		me.getCoord();
@@ -988,6 +1008,7 @@ var AIContact = {
 	#
 
 	blep: func (time, searchInfo, strength, stt) {
+		# Don't call this outside the radar system.
 		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
 		# blep: time, rcs_strength, dist, heading, deviations vector, speed, closing-rate, altitude, coord, stt
 		var newArray = [];
@@ -1130,9 +1151,9 @@ var AIContact = {
 	},	
 
 	getLastDirection: func {
-		# Should not be used
+		# Deprecated
 		if (size(me.bleps)) {
-				return me.bleps[size(me.bleps)-1].getDirection();
+			return me.bleps[size(me.bleps)-1].getDirection();
 		}
 		return nil;
 	},
@@ -1194,14 +1215,14 @@ var AIContact = {
 		return 0;
 	},
 
-	# The following remaining methods is being deprecated:
-
 	getClosureRate: func {
+		# This is an instant perfect result, so don't call this outside the radar system.
 		# used in RWR. TODO: rework so this doesn't have to be called.		
+		me.selfCo = self.getCoord();
 
 		# Get contact velocity and direction to contact in geo centered coordinate system, so we get earth curvature factored in  (This can mean some tens of knots difference at 100+ nm, is this really needed?)
-		me.velocityOfContact = vector.Math.vectorToGeoVector(vector.Math.getCartesianVelocity(me.get_heading(), me.get_Pitch(), me.get_Roll(), me.get_uBody(), me.get_vBody(), me.get_wBody()), self.getCoord()).vector;
-		me.vectorToContact = vector.Math.vectorToGeoVector(vector.Math.eulerToCartesian3X(-me.getBearing(), vector.Math.getPitch(self.getCoord(), me.getCoord()), 0), self.getCoord()).vector;
+		me.velocityOfContact = vector.Math.vectorToGeoVector(vector.Math.getCartesianVelocity(me.get_heading(), me.get_Pitch(), me.get_Roll(), me.get_uBody(), me.get_vBody(), me.get_wBody()), me.selfCo).vector;
+		me.vectorToContact   = [me.selfCo.x - me.getCoord().x, me.selfCo.y - me.coord.y, me.selfCo.z - me.coord.z];
 
 		# Get ownship velocity and direction to ownship in geo centered coordinate system
 		me.velocityOfOwnship = vector.Math.vectorToGeoVector(self.getSpeedVector(), self.getCoord()).vector;
