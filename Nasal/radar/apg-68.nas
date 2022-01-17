@@ -1492,8 +1492,8 @@ var F16VSMode = {
 	longName: "Velocity Search",
 	range: 160,
 	discSpeed_dps: 45,
-	discSpeed_alert_dps: 45,
-	discSpeed_confirm_dps: 100,
+	discSpeed_alert_dps: 45,    # From manual
+	discSpeed_confirm_dps: 100, # From manual
 	maxScanIntervalForVelocity: 12,
 	rcsFactor: 1.15,
 	new: func (subMode, radar = nil) {
@@ -1962,7 +1962,7 @@ var F16ACMMode = {#TODO
 	subMode: nil,
 	range: 10,
 	maxRange: 10,
-	discSpeed_dps: 84.6,
+	discSpeed_dps: 84.6,# have reliable source for this.
 	rcsFactor: 0.9,
 	timeToKeepBleps: 1,
 	bars: 1,
