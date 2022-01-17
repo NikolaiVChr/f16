@@ -1,10 +1,11 @@
 #
-# Prototype to test Richard and radar-mafia's radar designs.
+# Flightgear radar system using Richard's and OPRF radar-mafia's radar designs.
 #
 # In Richards design, the class called RadarSystem is being represented as AIToNasal, NoseRadar, OmniRadar & TerrainChecker classes.
 #                     the class called AircraftRadar is represented as ActiveDiscRadar & RWR.
-#                     the class called AIContact does allow for direct reading of properties, but this is forbidden outside RadarSystem. Except for Missile-code.
+#                     the class called AIContact does allow for direct reading of contact properties, but this is forbidden outside RadarSystem. Except for Missile-code.
 #
+# Development changelog:
 # v1: 7 Nov. 2017 - Modular
 # v2: 8 Nov 2017 - Decoupled via emesary
 # v3: 10 Nov 2017 - NoseRadar now finds everything inside an elevation bar on demand,
@@ -26,20 +27,25 @@
 # v7.2 June 12th 2021 - Added support for multibleps per contact, and enabled terrain and type checks in APG68.
 #                       Added ANSI art to be able to quicker navigate this file.
 # v9.1 Jan 6th 2022 - Many kinks ironed out.
+# v10.0 Jan 17th 2022 - Chaff handling. Re-coded antennae movement code. Code cleanup.
 #
-# RCS check done in ActiveDiscRadar at detection time, so about every 5-10 seconds per contact.
-#      Faster for locks since its important to lose lock if it turns nose to us suddenly and can no longer be seen.
-# Terrain check done in TerrainChecker, 10 contacts per second. All contacts being evaluated due to rwr needs that.
 # 
 # Properties is only being read in the modules that represent RadarSystem.
 #
 #
+# People that have contributed to this:
+#   Alexis Bory
+#   Richard Harrison
+#   Fabien Barber
+#   Nikolai V. Chr
+#   Justin Nicholson
+#   Colin Geniet
 #
 #
-# Notice that everything below test code line, is not decoupled, nor optimized in any way.
 # Also notice that most comments at start of classes are old and not updated.
 #
-# Needs rcs.nas and vector.nas. Nothing else. When run, it will display a couple of example canvas dialogs on screen.
+# Needs rcs.nas, missile-code.nas and vector.nas.
+# Optionally datalink.nas and iff.nas
 #
 # GPL 2.0
 
@@ -49,7 +55,7 @@ var MARINE = 1;
 var SURFACE = 2;
 var ORDNANCE = 3;
 var POINT    = 4;
-var TERRASUNK = 5; # Terrain not loaded underneath this, most likely a MARINE, but might be a SURFACE.
+var TERRASUNK = 5; # Terrain not loaded underneath this (low altitude), most likely a MARINE, but might be a SURFACE.
 
 var ECEF = 0;
 var GPS = 1;
@@ -633,6 +639,7 @@ var AIContact = {
 		c.visible  = 1;
 		c.inClutter = 0;
 		c.hiddenFromDoppler = 0;
+		c.hiddenFromMono = 0;
 		c.id = ident;
 		c.ainame = ainame;
 		c.subid = subid;
@@ -944,12 +951,13 @@ var AIContact = {
 		me.inClutter = clut;
 	},
 	
-	isHiddenFromDoppler: func {
-		return me.getType() == AIR and me.hiddenFromDoppler;
+	isHiddenFromDoppler: func (dopplerRadar = 1) {
+		return me.getType() == AIR and dopplerRadar?me.hiddenFromDoppler:me.isHiddenFromMono;
 	},
 
-	setHiddenFromDoppler: func (dopp) {
+	setHiddenFromDoppler: func (dopp, mono) {
 		me.hiddenFromDoppler = dopp;
+		me.hiddenFromMono = mono;
 	},
 
 	getModel: func {
@@ -1917,10 +1925,9 @@ var TerrainChecker = {
 	#
 	# Everything here is CPU expensive.
 	#
-	new: func (rate, use_doppler, doppler_speed_kt=30) {
+	new: func (rate, doppler_speed_kt=30) {
 		var tc = {parents: [TerrainChecker]};
 
-		tc.use_doppler = use_doppler;
 		tc.doppler_speed_kt = doppler_speed_kt;
 		tc.inClutter = 0;
 		tc.vector_aicontacts = [];
@@ -1963,16 +1970,6 @@ var TerrainChecker = {
 	
 	checkClutter: func (contact) {
 		contact.setInClutter(me.inClutter);
-		#me.tas = contact.prop.getNode("velocities/true-airspeed-kt");
-		#me.rang = contact.prop.getNode("radar/range-nm");
-		#if (!me.use_doppler or 
-	    #    (me.tas != nil and me.tas.getValue() != nil
-	    #     and me.rang != nil and me.rang.getValue() != nil
-	    #     and math.atan2(me.tas.getValue(), me.rang.getValue()*1000) > 0.025)# if aircraft traverse speed seen from me is high
-	    #    ) {
-	    #  	contact.setHiddenFromDoppler(0);
-	    #  	return;
-	    #}
 	    
 		me.dopplerCanDetect = 0;
 	    if(contact.getType() != AIR or !me.inClutter) {
@@ -1981,7 +1978,7 @@ var TerrainChecker = {
 	    } elsif (me.getTargetSpeedRelativeToClutter(contact) > me.doppler_speed_kt) {
 	        me.dopplerCanDetect = 1;
 	    }
-	    contact.setHiddenFromDoppler(!me.dopplerCanDetect);
+	    contact.setHiddenFromDoppler(!me.dopplerCanDetect, me.inClutter);
 	},
 		
 	getTargetSpeedRelativeToClutter: func (contact) {

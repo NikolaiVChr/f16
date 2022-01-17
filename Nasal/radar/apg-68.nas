@@ -7,10 +7,13 @@
 
 
 
-
+# Field of regard requests
 var FOR_ROUND  = 0;# TODO: be able to ask noseradar for round field of regard.
 var FOR_SQUARE = 1;
-
+#Pulses
+var DOPPLER = 1;
+var MONO = 0;
+#var CONICAL = -1;
 
 
 
@@ -54,6 +57,7 @@ var AirborneRadar = {
 	chaffSeenList: [],
 	chaffFilter: 0.60,# 1=filters all chaff, 0=sees all chaff all the time
 	timer: nil,
+	pulse: DOPPLER, # MONO or DOPPLER
 	timerMedium: nil,
 	timerSlow: nil,
 	elapsed: elapsedProp.getValue(),
@@ -412,7 +416,7 @@ var AirborneRadar = {
 			}
 			if (me.beamDeviation < me.instantFoVradius and (me.dev.rangeDirect_m < me.closestChaff or rand() < me.chaffFilter) ) {#  and (me.closureReject == -1 or me.dev.closureSpeed > me.closureReject)
 				# TODO: Refine the chaff conditional (ALOT)
-				me.registerBlep(contact, me.dev, me.currentMode.painter);
+				me.registerBlep(contact, me.dev, me.currentMode.painter, me.pulse);
 				#print("REGISTER BLEP");
 
 				# Return here, so that each instant FoV max gets 1 target:
@@ -425,9 +429,9 @@ var AirborneRadar = {
 			setprop("debug-radar/main-beam-deviation", "--unseen-lock--");
 		}
 	},
-	registerBlep: func (contact, dev, stt, doppler_check = 1) {
+	registerBlep: func (contact, dev, stt, pulse = 1) {
 		if (!contact.isVisible()) return 0;
-		if (doppler_check and contact.isHiddenFromDoppler()) {
+		if (contact.isHiddenFromDoppler(pulse)) {
 			return 0;
 		}
 
