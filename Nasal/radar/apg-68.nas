@@ -2874,8 +2874,11 @@ var TerrainMapper = {
 				me.reflection = 1;
 			} elsif (!gm_geod[1].solid) {
 				me.reflection = 0.05;
-				if (me.testElev < me.minElev) {
-					me.minElev = me.testElev;
+				if (me.gm_geod[0] != nil) {
+					me.testElev = me.gm_geod[0]*M2FT;
+					if (me.testElev < me.minElev) {
+						me.minElev = me.testElev;
+					}
 				}
 			} else {
 				me.retur = me.howReflective(gm_geod[1]);
