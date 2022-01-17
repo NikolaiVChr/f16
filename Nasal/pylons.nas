@@ -88,7 +88,7 @@ var crgpd = stations.Dummy.new("MXU-648 Cargopod", "TRVL");
 #
 var pylonSets = {
 	empty: {name: "Empty", pylon: nil, rack: nil, content: [], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
-	mau: {name: "", pylon: "1 MAU", rack: nil, content: [], fireOrder: [], launcherDragArea: 0.0, launcherMass: 70, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
+	mau: {name: "--------", pylon: "1 MAU", rack: nil, content: [], fireOrder: [], launcherDragArea: 0.0, launcherMass: 70, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
 	mm20:  {name: "20mm Cannon", content: [cannon], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 	hyd70h3:  {name: "2 x M151", pylon: "1 MAU", rack: "2 L68", content: [hyd70lh3,hyd70rh3], fireOrder: [0,1], launcherDragArea: 0.007, launcherMass: 475.0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
 	hyd70h7:  {name: "2 x M151", pylon: "1 MAU", rack: "2 L68", content: [hyd70lh7,hyd70rh7], fireOrder: [0,1], launcherDragArea: 0.007, launcherMass: 475.0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
