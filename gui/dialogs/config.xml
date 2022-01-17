@@ -20,18 +20,13 @@
     </empty>
     
     <button>
-      <pref-width>16</pref-width>
-      <pref-height>16</pref-height>
-      <legend></legend>
-      
-      <default>1</default>
-      <keynum>27</keynum>
-      <border>2</border>
+      <halign>right</halign>
+      <pref-width>20</pref-width>
+      <pref-height>20</pref-height>
+      <legend>X</legend>
+      <key>Esc</key>
       <binding>
         <command>dialog-close</command>
-      </binding>
-      <binding>
-        <command>dialog-apply</command>
       </binding>
     </button>
   </group>

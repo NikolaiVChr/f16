@@ -115,20 +115,34 @@
 
 		<empty><stretch>1</stretch></empty>
 
-		<button>
-			<pref-width>16</pref-width>
-			<pref-height>16</pref-height>
-			<legend></legend>
-			<default>1</default>
-			<keynum>27</keynum>
-			<border>2</border>
-			<binding>
-				<command>dialog-close</command>
-			</binding>
-			<binding>
-				<command>dialog-apply</command>
-			</binding>
-		</button>
+		<group>
+			<layout>table</layout>
+			
+			<button>
+				<row>0</row>
+				<col>0</col>
+				<halign>right</halign>
+				<pref-width>20</pref-width>
+				<pref-height>20</pref-height>
+				<legend>?</legend>
+				<binding>
+					<command>dialog-show</command>
+					<dialog-name>stpt-help</dialog-name>
+				</binding>
+			</button>
+			<button>
+				<row>0</row>
+				<col>1</col>
+				<halign>right</halign>
+				<pref-width>20</pref-width>
+				<pref-height>20</pref-height>
+				<legend>X</legend>
+				<key>Esc</key>
+				<binding>
+					<command>dialog-close</command>
+				</binding>
+			</button>
+		</group>
 	</group>
 
 	<hrule/>
@@ -161,9 +175,47 @@
 
 	<empty><stretch>1</stretch></empty>
 	<hrule/>
+	<empty><stretch>1</stretch></empty>
 
-	<text><halign>left</halign><label>Input coordinates (Lat, Lon and Radius in NM) to display threat or friendly circled areas on HSD page.</label></text>
-	<text><halign>left</halign><label>Stored as STPT #300 to #305</label></text>
+	    <group>
+		<layout>hbox</layout>
+		 <input>
+			  	<width>250</width>
+			  	<height>25</height>
+			  	<label>From STPT</label>
+			  	<property>f16/avionics/stpt-from</property>
+			  	<live>true</live>
+			  	<halign>left</halign>
+		        <binding>
+		            <command>dialog-apply</command>
+		      	</binding>
+			</input>
+			<input>
+			  	<width>250</width>
+			  	<height>25</height>
+			  	<label>To STPT</label>
+			  	<property>f16/avionics/stpt-to</property>
+			  	<live>true</live>
+			  	<halign>left</halign>
+		        <binding>
+		            <command>dialog-apply</command>
+		      	</binding>
+			</input>
+			<button>
+				<legend>Copy STPT over</legend>
+				<binding>
+					<command>nasal</command>
+					<script><![CDATA[
+						steerpoints.copy(getprop("f16/avionics/stpt-from"),getprop("f16/avionics/stpt-to"));
+					]]></script>
+				</binding>
+			</button>
+	</group>
+
+	<empty><stretch>1</stretch></empty>
+	<hrule/>
+
+	<text><halign>left</halign><label>Input coordinates (Lat, Lon and Rad in NM) to display threat or friendly circled areas on HSD page, STPT #300 to #305.</label></text>
 	<empty><stretch>1</stretch></empty>
 
   	<group>
@@ -843,8 +895,8 @@
 	    </button>
     </group>
     <empty><stretch>1</stretch></empty>
-    <text><label>Load .fgfp or .gpx route file to enable lines on HSD page.</label></text>
-    <text><label>Lines 1 is solid. Lines 2 is dashed.</label></text>
+    <text><label>Load .fgfp or .gpx route file to enable lines on HSD page. (Lines 1 solid, Lines 2 dashed).</label></text>
+    <empty><stretch>1</stretch></empty>
     
     <hrule/>
 
@@ -852,45 +904,48 @@
     
     <group>
 		<layout>hbox</layout>
-    	<button>
-			<legend>Load Left MDC</legend>
-			<binding>
-				<command>nasal</command>
-				<script><![CDATA[
-					knee.get_knee_file_gui_l();
-				]]></script>
-			</binding>
-		</button>
-		<checkbox>
-			<label>Visible</label>
-			<halign>center</halign>
-			<live>true</live>
-			<property>f16/cockpit/kneeboard-left-visible</property>
-			<binding>
-				<command>dialog-apply</command>
-			</binding>
-		</checkbox>
-	</group>
-	<group>
-		<layout>hbox</layout>
-		<button>
-			<legend>Load Right MDC</legend>
-			<binding>
-				<command>nasal</command>
-				<script><![CDATA[
-					knee.get_knee_file_gui_r();
-				]]></script>
-			</binding>
-		</button>
-		<checkbox>
-			<label>Visible</label>
-			<halign>center</halign>
-			<live>true</live>
-			<property>f16/cockpit/kneeboard-right-visible</property>
-			<binding>
-				<command>dialog-apply</command>
-			</binding>
-		</checkbox>
+	    <group>
+			<layout>hbox</layout>
+	    	<button>
+				<legend>Load Left MDC</legend>
+				<binding>
+					<command>nasal</command>
+					<script><![CDATA[
+						knee.get_knee_file_gui_l();
+					]]></script>
+				</binding>
+			</button>
+			<checkbox>
+				<label>Visible</label>
+				<halign>center</halign>
+				<live>true</live>
+				<property>f16/cockpit/kneeboard-left-visible</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+			</checkbox>
+		</group>
+		<group>
+			<layout>hbox</layout>
+			<button>
+				<legend>Load Right MDC</legend>
+				<binding>
+					<command>nasal</command>
+					<script><![CDATA[
+						knee.get_knee_file_gui_r();
+					]]></script>
+				</binding>
+			</button>
+			<checkbox>
+				<label>Visible</label>
+				<halign>center</halign>
+				<live>true</live>
+				<property>f16/cockpit/kneeboard-right-visible</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+			</checkbox>
+		</group>
 	</group>
 
 	<empty><stretch>1</stretch></empty>

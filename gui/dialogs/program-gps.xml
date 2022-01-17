@@ -26,69 +26,88 @@
         ]]></close>
     </nasal>
 
-    <group>
+	<group>
+		<row>0</row>
+		<col>0</col>
 		<layout>hbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>Program GPS target</label>
+		</text>
 		<empty><stretch>1</stretch></empty>
-
-		<text><label>Program GPS target</label></text>
-
-		<empty><stretch>1</stretch></empty>
-
-		<button>
-			<pref-width>16</pref-width>
-			<pref-height>16</pref-height>
-			<legend></legend>
-			<default>1</default>
-			<keynum>27</keynum>
-			<border>2</border>
-			<binding>
-				<command>dialog-close</command>
-			</binding>
-			<binding>
-				<command>dialog-apply</command>
-			</binding>
-		</button>
+		
+		<group>
+			<layout>table</layout>
+			
+			<button>
+				<row>0</row>
+				<col>0</col>
+				<halign>right</halign>
+				<pref-width>20</pref-width>
+				<pref-height>20</pref-height>
+				<legend>?</legend>
+				<binding>
+					<command>dialog-show</command>
+					<dialog-name>stpt-help</dialog-name>
+				</binding>
+			</button>
+			<button>
+				<row>0</row>
+				<col>1</col>
+				<halign>right</halign>
+				<pref-width>20</pref-width>
+				<pref-height>20</pref-height>
+				<legend>X</legend>
+				<key>Esc</key>
+				<binding>
+					<command>dialog-close</command>
+				</binding>
+			</button>
+		</group>
 	</group>
 
 	<hrule/>
 
   	<text>
-	    <label>STPT #500 for standoff GPS-guided munitions (JSOW, JASSM)</label>
+	    <label>STPT #500 for standoff GPS-guided munitions (JSOW, JASSM).</label>
 	    <height>25</height>
 	</text>
+	<group>
+		<layout>hbox</layout>
+		<input>
+		  	<width>250</width>
+		  	<height>25</height>
+		  	<label>Latitude</label>
+		  	<property>f16/avionics/gps-lat</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<!--<color>
+	      		<red>0.5</red>
+	      		<green>1</green>
+	      		<blue>0.5</blue>
+	      	</color>-->
+		</input>
+		<input>
+		  	<width>250</width>
+		  	<height>25</height>
+		  	<label>Longitude</label>
+		  	<property>f16/avionics/gps-lon</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<!--<color>
+	      		<red>0.5</red>
+	      		<green>1</green>
+	      		<blue>0.5</blue>
+	      	</color>-->
+		</input>
+	</group>
 
-	<input>
-	  	<width>250</width>
-	  	<height>25</height>
-	  	<label>Latitude</label>
-	  	<property>f16/avionics/gps-lat</property>
-	  	<live>true</live>
-	  	<halign>left</halign>
-        <binding>
-            <command>dialog-apply</command>
-      	</binding>
-      	<!--<color>
-      		<red>0.5</red>
-      		<green>1</green>
-      		<blue>0.5</blue>
-      	</color>-->
-	</input>
-	<input>
-	  	<width>250</width>
-	  	<height>25</height>
-	  	<label>Longitude</label>
-	  	<property>f16/avionics/gps-lon</property>
-	  	<live>true</live>
-	  	<halign>left</halign>
-        <binding>
-            <command>dialog-apply</command>
-      	</binding>
-      	<!--<color>
-      		<red>0.5</red>
-      		<green>1</green>
-      		<blue>0.5</blue>
-      	</color>-->
-	</input>
 	<input>
 	  	<width>250</width>
 	  	<height>25</height>
@@ -164,62 +183,5 @@
  </group>
 
  <empty><stretch>1</stretch></empty>
-
- <hrule/>
-
- <input>
-	  	<width>250</width>
-	  	<height>25</height>
-	  	<label>From STPT</label>
-	  	<property>f16/avionics/stpt-from</property>
-	  	<live>true</live>
-	  	<halign>left</halign>
-        <binding>
-            <command>dialog-apply</command>
-      	</binding>
-	</input>
-	<input>
-	  	<width>250</width>
-	  	<height>25</height>
-	  	<label>to STPT</label>
-	  	<property>f16/avionics/stpt-to</property>
-	  	<live>true</live>
-	  	<halign>left</halign>
-        <binding>
-            <command>dialog-apply</command>
-      	</binding>
-	</input>
-	<button>
-		<legend>Copy STPT</legend>
-		<binding>
-			<command>nasal</command>
-			<script><![CDATA[
-				steerpoints.copy(getprop("f16/avionics/stpt-from"),getprop("f16/avionics/stpt-to"));
-			]]></script>
-		</binding>
-	</button>
-
-	<text>
-	    <label>#000 to #099 is route (read-only).</label>
-	    <height>25</height>
-	</text>
-	<text>
-	    <label>#100 to #199 is HSD lines 1 (read-only). #200 to #299 is HSD lines 2 (read-only).</label>
-	    <height>25</height>
-	</text>
-	<text>
-	    <label>#300 to 305 is threat circles. #350 to #359 is for pilot mnemonics.</label>
-	    <height>25</height>
-	</text>
-	<text>
-	    <label>#400 to #404 is own OFLY/TGP marks. #450 to 454 is DLNK marks.</label>
-	    <height>25</height>
-	</text>
-	<text>
-	    <label>#500 is WPN program GPS coords. #555 is bulls-eye.</label>
-	    <height>25</height>
-	</text>
-
-	<empty><stretch>1</stretch></empty>
 
 </PropertyList>
