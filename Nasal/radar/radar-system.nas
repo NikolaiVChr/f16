@@ -1222,7 +1222,7 @@ var AIContact = {
 
 		# Get contact velocity and direction to contact in geo centered coordinate system, so we get earth curvature factored in  (This can mean some tens of knots difference at 100+ nm, is this really needed?)
 		me.velocityOfContact = vector.Math.vectorToGeoVector(vector.Math.getCartesianVelocity(me.get_heading(), me.get_Pitch(), me.get_Roll(), me.get_uBody(), me.get_vBody(), me.get_wBody()), me.selfCo).vector;
-		me.vectorToContact   = [me.selfCo.x - me.getCoord().x, me.selfCo.y - me.coord.y, me.selfCo.z - me.coord.z];
+		me.vectorToContact   = [me.selfCo.x() - me.getCoord().x(), me.selfCo.y() - me.coord.y(), me.selfCo.z() - me.coord.z()];
 
 		# Get ownship velocity and direction to ownship in geo centered coordinate system
 		me.velocityOfOwnship = vector.Math.vectorToGeoVector(self.getSpeedVector(), self.getCoord()).vector;
