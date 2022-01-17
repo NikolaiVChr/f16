@@ -410,7 +410,7 @@ var AirborneRadar = {
 				setprop("debug-radar/main-beam-deviation", me.beamDeviation);
 				me.testedPrio = 1;
 			}
-			if (me.beamDeviation < me.instantFoVradius and (me.dev[2] < me.closestChaff or rand() > 0.70) ) {#  and (me.closureReject == -1 or me.dev[13] > me.closureReject)
+			if (me.beamDeviation < me.instantFoVradius and (me.dev[2] < me.closestChaff or rand() < me.chaffFilter) ) {#  and (me.closureReject == -1 or me.dev[13] > me.closureReject)
 				# TODO: Refine the chaff conditional (ALOT)
 				me.registerBlep(contact, me.dev, me.currentMode.painter);
 				#print("REGISTER BLEP");
