@@ -689,6 +689,7 @@ var AIContact = {
     	call(func {me.dlinkNode = me.prop.getNode(datalink.mp_path)},nil,nil,var err = []);# call method because radar might be used in aircraft without datalink
 
 	    me.type    = me.determineType(me.prop.getName(), me.miss, me.getCoord().alt()*M2FT, me.model, me.speed==nil?nil:me.speed.getValue());
+	    me.carrier = me.determineCarrier(me.prop.getName(), me.model);
 
 	    #print((me.getCoord().alt()*M2FT)~": "~me.get_Callsign()~" / "~me.model~" is type "~me.type);
 
@@ -795,6 +796,16 @@ var AIContact = {
 		return me.virtTGP;
 	},
 
+	determineCarrier: func (prop_name, model) {
+		if (prop_name == "carrier") {
+			return 1;
+		}
+		if (contains(knownCarriers, model)) {
+			return 1;
+		}
+		return 0;
+	},
+
 	determineType: func (prop_name, ordnance, alt_ft, model, speed_kt) {
 		# determine type. Only done at init. getType() will check if AIR has landed or taken off and will change it accordingly.
 	    # 
@@ -835,6 +846,10 @@ var AIContact = {
 		elsif (me.type != ORDNANCE and me.getSpeed() > 60) me.type = AIR;
 		elsif (me.type == SURFACE and me.get_Speed() > 10 and isKnownHeli(me.model)) me.type = AIR;
 		return me.type;
+	},
+
+	isCarrier: func {
+		return me.carrier;
 	},
 	
 	getCallsign: func {
@@ -2224,7 +2239,7 @@ var laserOn = nil;# set this to a prop
 var sttSend = props.globals.getNode("sim/multiplay/generic/string[6]", 1);
 var stbySend = props.globals.getNode("sim/multiplay/generic/int[2]", 1);
 var elapsedProp = props.globals.getNode("sim/time/elapsed-sec", 0);
-var enable_tacobject = 1;
+var enable_tacobject = 0;
 
 var isOmniRadiating = func (model) {
 	# Override this method in your aircraft to do this in another way
@@ -2254,6 +2269,13 @@ var isKnownSurface = func (model) {
 var isKnownHeli = func (model) {
 	contains(knownHelis, model);
 }
+
+var knownCarriers = {
+	"mp-clemenceau": nil,
+	"mp-eisenhower": nil,
+	"mp-nimitz": nil,
+	"mp-vinson": nil,
+};
 
 var knownShips = {
     "missile_frigate":       nil,
