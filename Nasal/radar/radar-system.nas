@@ -520,7 +520,7 @@ var Deviation = {
 	#frustum_norm_y: 0,
 	#frustum_norm_z: 0,
 	#alt_ft: 0,
-	speed_kt: 0,
+	speed_kt: 0,       # Used by GMT mode
 	#closureSpeed: 0,
 };
 

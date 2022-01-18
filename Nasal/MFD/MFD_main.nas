@@ -1818,7 +1818,13 @@ var MFD_Device =
                 #me.color = math.pow(math.max(0, rand()-(me.elapsed - chaff.seenTime)/me.chaffLifetime), 2.2);
                 me.color = math.pow(math.max(0, 0.8-(me.elapsed - chaff.seenTime)/radar_system.apg68Radar.currentMode.timeToKeepBleps), 2.2);
 
-                me.echoPos1 = [me.echoPos[0]+rand()*6-3, me.echoPos[1]-rand()*3];
+                if (chaff["rand1"] == nil) {
+                    chaff.rand1 = rand();
+                    chaff.rand2 = rand();
+                    chaff.rand3 = rand();
+                    chaff.rand4 = rand();
+                }
+                me.echoPos1 = [me.echoPos[0]+chaff.rand1*6-3, me.echoPos[1]-chaff.rand2*3];
                 me.root.blep[me.i].setTranslation(me.echoPos1);
                 me.root.blep[me.i].setColor(colorDot2[0]*me.color+colorBackground[0]*(1-me.color), colorDot2[1]*me.color+colorBackground[1]*(1-me.color), colorDot2[2]*me.color+colorBackground[2]*(1-me.color));
                 me.root.blep[me.i].show();
@@ -1826,7 +1832,7 @@ var MFD_Device =
                 
                 me.i += 1;
                 if (me.i < me.root.maxB) {
-                    me.echoPos2 = [me.echoPos[0]+rand()*6-3, me.echoPos[1]-rand()*3];
+                    me.echoPos2 = [me.echoPos[0]+chaff.rand3*6-3, me.echoPos[1]-chaff.rand4*3];
                     me.root.blep[me.i].setTranslation(me.echoPos2);
                     me.root.blep[me.i].setColor(colorDot2[0]*me.color+colorBackground[0]*(1-me.color), colorDot2[1]*me.color+colorBackground[1]*(1-me.color), colorDot2[2]*me.color+colorBackground[2]*(1-me.color));
                     me.root.blep[me.i].show();
