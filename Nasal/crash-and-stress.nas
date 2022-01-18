@@ -576,6 +576,6 @@ var repair = func {
 
 var exp = func {
 	if (crashCode.exploded==0) {
-		crashCode._explodeBegin("Aircraft was abandoned ");
+		crashCode._explodeBegin("Aircraft was abandoned");
 	}
 };
