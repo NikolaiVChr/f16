@@ -611,11 +611,11 @@ var F16_HMD = {
         # set the update list - using the update manager to improve the performance
         # of the HUD update - without this there was a drop of 20fps (when running at 60fps)
         obj.update_items = [
-            props.UpdateManager.FromHashList(["hud_serviceable", "hud_display", "hmcs_sym", "hud_power"], 0.1, func(hdp)#changed to 0.1, this function is VERY heavy to run.
+            props.UpdateManager.FromHashList(["hmcs_sym", "hud_power"], 0.1, func(hdp)#changed to 0.1, this function is VERY heavy to run.
                                       {
 # print("HUD hud_serviceable=", hdp.hud_serviceable," display=", hdp.hud_display, " brt=", hdp.hud_brightness, " power=", hdp.hud_power);
                                             
-                                          if (!hdp.hud_display or !hdp.hud_serviceable) {
+                                          if (0) {
                                             obj.color = [0.3,1,0.3,0];
                                             foreach(item;obj.total) {
                                               item.setColor(obj.color);
@@ -758,15 +758,15 @@ var F16_HMD = {
                                                 }
                                              }
                                             ),
-            props.UpdateManager.FromHashList(["standby", "data"], 0.5, func(hdp)
+            props.UpdateManager.FromHashList(["standby", "data", "wow0"], 0.5, func(hdp)
                                              {
                                                  if (hdp.data != 0) {
                                                      obj.stby.setText("MKPT"~sprintf("%03d",hdp.data));
-                                                     obj.stby.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud+7+75);
+                                                     obj.stby.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud+7+100);
                                                      obj.stby.show();
-                                                 } elsif (hdp.standby) {
+                                                 } elsif (hdp.standby and !hdp.wow0) {
                                                      obj.stby.setText("NO RAD");
-                                                     obj.stby.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud+7);
+                                                     obj.stby.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud+7+75);
                                                      obj.stby.show();
                                                  } else {
                                                      obj.stby.hide();

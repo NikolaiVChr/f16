@@ -636,7 +636,7 @@ var RadarMode = {
 	azimuthTilt: 0,# modes set these depending on where they want the pattern to be centered.
 	elevationTilt: 0,
 	barHeight: 0.95,# multiple of instantFoVradius
-	barPattern:  [ [[-1,0],[1,0]] ],                    # These are multitudes of instantFoVradius, the 3rd number is which axis to rotate around, -1 for shortest.
+	barPattern:  [ [[-1,0],[1,0]] ],     # The second is multitude of instantFoVradius, the first is multitudes of me.az
 	barPatternMin: [0],
 	barPatternMax: [0],
 	nextPatternNode: 0,
@@ -910,6 +910,11 @@ var RadarMode = {
 #                                                                
 DatalinkRadar = {
 	# I check the sky 360 deg for anything on datalink
+	#
+	# I will set 'blue' and 'blueIndex' on contacts.
+	# blue==1: On our datalink
+	# blue==2: Targeted by someone on our datalink
+	#
 	# This class is only semi generic!
 	new: func (rate, max_dist_nm) {
 		var dlnk = {parents: [DatalinkRadar, Radar]};
@@ -1107,7 +1112,7 @@ var APG68Mode = {
 	minRange: 5, # MLU T1 .. should we make this 10 for block 10/30/YF? TODO
 	maxRange: 160,
 	bars: 4,
-	barPattern:  [ [[-1,0],[1,0]],                    # These are multitudes of instantFoVradius
+	barPattern:  [ [[-1,0],[1,0]],                    # These are multitudes of [me.az, instantFoVradius]
 	               [[-1,-1],[1,-1],[1,1],[-1,1]],
 	               [[-1,0],[1,0],[1,2],[-1,2],[-1,0],[1,0],[1,-2],[-1,-2]],
 	               [[1,-3],[1,3],[-1,3],[-1,1],[1,1],[1,-1],[-1,-1],[-1,-3]] ],	               

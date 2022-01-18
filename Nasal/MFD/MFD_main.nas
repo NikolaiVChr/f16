@@ -1824,7 +1824,7 @@ var MFD_Device =
                     chaff.rand3 = rand();
                     chaff.rand4 = rand();
                 }
-                me.echoPos1 = [me.echoPos[0]+chaff.rand1*6-3, me.echoPos[1]-chaff.rand2*3];
+                me.echoPos1 = [me.echoPos[0]+chaff.rand1*8-4, me.echoPos[1]-chaff.rand2*3];
                 me.root.blep[me.i].setTranslation(me.echoPos1);
                 me.root.blep[me.i].setColor(colorDot2[0]*me.color+colorBackground[0]*(1-me.color), colorDot2[1]*me.color+colorBackground[1]*(1-me.color), colorDot2[2]*me.color+colorBackground[2]*(1-me.color));
                 me.root.blep[me.i].show();
@@ -1832,7 +1832,7 @@ var MFD_Device =
                 
                 me.i += 1;
                 if (me.i < me.root.maxB) {
-                    me.echoPos2 = [me.echoPos[0]+chaff.rand3*6-3, me.echoPos[1]-chaff.rand4*3];
+                    me.echoPos2 = [me.echoPos[0]+chaff.rand3*8-4, me.echoPos[1]-chaff.rand4*3];
                     me.root.blep[me.i].setTranslation(me.echoPos2);
                     me.root.blep[me.i].setColor(colorDot2[0]*me.color+colorBackground[0]*(1-me.color), colorDot2[1]*me.color+colorBackground[1]*(1-me.color), colorDot2[2]*me.color+colorBackground[2]*(1-me.color));
                     me.root.blep[me.i].show();

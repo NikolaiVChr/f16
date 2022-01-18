@@ -6,6 +6,7 @@
 #                     the class called AIContact does allow for direct reading of contact properties, but this is forbidden outside RadarSystem. Except for Missile-code.
 #
 # Development changelog:
+# v0:   Nov  2017 - Richard shared his design document
 # v1: 7 Nov. 2017 - Modular
 # v2: 8 Nov 2017 - Decoupled via emesary
 # v3: 10 Nov 2017 - NoseRadar now finds everything inside an elevation bar on demand,
@@ -115,16 +116,16 @@ var RequestFullNotification = {
 #  ██      ██  ██████  ██████  ███████ ███████     ██      ██   ██ ██   ██ ███████ ███████ ██   ██ 
 #                                                                                                  
 #                                                                                                  
-AIToNasal = {
-# convert AI property tree to Nasal vector
-# will send notification when some is updated (emesary?)
-# listeners for adding/removing AI nodes.
-# very slow loop (5 min)
-# updates AIContacts, does not replace them. (yes will make slower, but solves many issues. Can divide workload over frames.)
-#
-# Attributes:
-#   fullContactVector of AIContacts
-#   index keys for fast locating: callsign, model-path??
+var AIToNasal = {
+	# convert AI property tree to Nasal vector
+	# will send notification when some is updated
+	# listeners for adding/removing AI nodes.
+	# very slow loop (5 min)
+	# updates AIContacts, does not replace them. (yes will make slower, but solves many issues. Can divide workload over frames.)
+	#
+	# Attributes:
+	#   fullContactVector of AIContacts
+	#   index keys for fast locating: callsign, model-path??
 	enabled: 1,
 	new: func {
 		me.prop_AIModels = props.globals.getNode("ai/models");
@@ -383,7 +384,7 @@ AIToNasal = {
 
 
 
-Contact = {
+var Contact = {
 	# Attributes:
 	getCoord: func {
 	   	return geo.Coord.new();
@@ -399,9 +400,10 @@ Contact = {
 #   ██████   ███ ███  ██   ████ ███████ ██   ██ ██ ██      
 #                                                          
 #                                                          
-SelfContact = {
-# Ownship info
-# 
+var SelfContact = {
+	#
+	# Ownship info
+	# 
 	new: func {
 		var c = {parents: [SelfContact, Contact]};
 
@@ -508,6 +510,9 @@ var Chaff = {
 #                                                                     
 #                                                                     
 var Deviation = {
+	#
+	# This is read by the main radar beam to test if it picks it up.
+	#
 	azimuthLocal: 0,   # Used for radar beam when not horizon stabilized
 	elevationLocal: 0, # Used for radar beam when not horizon stabilized
 	rangeDirect_m: 0,  # Used for RCS and chaff
@@ -740,7 +745,7 @@ var AIContact = {
 		if (prop_name == "carrier") {
 			return 1;
 		}
-		if (contains(knownCarriers, model)) {
+		if (isKnownCarrier(model)) {
 			return 1;
 		}
 		return 0;
@@ -1396,10 +1401,10 @@ var AIContact = {
 
 
 var Radar = {
-# root radar class
-#
-# Attributes:
-#   on/off
+	# root radar class
+	#
+	# Attributes:
+	#   on/off
 	enabled: 1,
 };
 
@@ -1683,7 +1688,7 @@ var SimplerNoseRadar = {
 		if (contact == nil) {return;}
 		# called on demand
 		
-		if (!contact.isVisible()) {  # moved to nose radar. TODO: WHy double it in discradar? hmm, dont matter so much, its lightning fast
+		if (!contact.isVisible()) {  # moved to nose radar. TODO: Why double it in discradar? hmm, dont matter so much, its lightning fast
 			emesary.GlobalTransmitter.NotifyAll(me.FORNotification.updateV([]));
 			return;
 		}
@@ -1898,7 +1903,7 @@ var OmniRadar = {
 		omni.OmniRadarRecipient.radar = omni;
 		omni.OmniRadarRecipient.Receive = func(notification) {
 	        if (notification.NotificationType == "AINotification") {
-	        	#printf("NoseRadar recv: %s", notification.NotificationType);
+	        	#printf("OmniRadar recv: %s", notification.NotificationType);
 	            if (me.radar.enabled == 1) {
 	    		    me.radar.vector_aicontacts = notification.vector;
 	    	    }
@@ -2289,6 +2294,10 @@ var isKnownSurface = func (model) {
 
 var isKnownHeli = func (model) {
 	contains(knownHelis, model);
+}
+
+var isKnownCarrier = func (model) {
+	contains(knownCarriers, model);
 }
 
 var knownCarriers = {
