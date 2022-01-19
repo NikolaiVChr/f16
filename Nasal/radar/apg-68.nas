@@ -933,7 +933,7 @@ DatalinkRadar = {
 		dlnk.DatalinkRadarRecipient.radar = dlnk;
 		dlnk.DatalinkRadarRecipient.Receive = func(notification) {
 	        if (notification.NotificationType == "AINotification") {
-	        	#printf("NoseRadar recv: %s", notification.NotificationType);
+	        	#printf("DLNKRadar recv: %s", notification.NotificationType);
     		    me.radar.vector_aicontacts = notification.vector;
     		    me.radar.index = 0;
 	            return emesary.Transmitter.ReceiptStatus_OK;
@@ -963,13 +963,12 @@ DatalinkRadar = {
 
 		if (!me.contact.isValid()) {
 			me.contact.blue = 0;
-			
 			if (me.wasBlue > 0) {
 				#print(me.cs," is invalid and purged from Datalink");
 				me.new_vector_aicontacts_for = [];
 				foreach (me.c ; me.vector_aicontacts_for) {
 					if (!me.c.equals(me.contact) and !me.c.equalsFast(me.contact)) {
-						append(me.new_vector_aicontacts_for, me.contact);
+						append(me.new_vector_aicontacts_for, me.c);
 					}
 				}
 				me.vector_aicontacts_for = me.new_vector_aicontacts_for;
@@ -1010,7 +1009,7 @@ DatalinkRadar = {
 				me.new_vector_aicontacts_for = [];
 				foreach (me.c ; me.vector_aicontacts_for) {
 					if (!me.c.equals(me.contact) and !me.c.equalsFast(me.contact)) {
-						append(me.new_vector_aicontacts_for, me.contact);
+						append(me.new_vector_aicontacts_for, me.c);
 					}
 				}
 				me.vector_aicontacts_for = me.new_vector_aicontacts_for;
