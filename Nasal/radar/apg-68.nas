@@ -988,7 +988,7 @@ DatalinkRadar = {
 	            me.blueIndex = me.lnk.index()+1;
 	        } elsif (me.cs == getprop("link16/wingman-4")) { # Hack that the F16 need. Just ignore it, as nil wont cause expection.
 	            me.blue = 1;
-	            me.blueIndex = 2;
+	            me.blueIndex = 0;
 	        } else {
 	        	me.blue = 0;
 	            me.blueIndex = -1;

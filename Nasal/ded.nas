@@ -712,8 +712,13 @@ var dataEntryDisplay = {
 	updateDlnk: func() {
 		
 		if (getprop("instrumentation/datalink/power")) {
-			var csl = datalink.get_connected_callsigns();
-			var idl = datalink.get_connected_indices();
+			var csl = []~datalink.get_connected_callsigns();
+			var idl = []~datalink.get_connected_indices();
+			var myW = getprop("link16/wingman-4");
+			if (myW != nil and myW != "") {
+				append(csl, myW);
+				append(idl, -1);
+			}
 			var last = size(csl);
 			var list = setsize([],last);
 			me.scroll += 0.25;
@@ -736,8 +741,6 @@ var dataEntryDisplay = {
 				}
 				j += 1;
 			}
-
-			#elsif (getprop("link16/wingman-4")!="") last = 4;			
 			
 			me.text[0] = sprintf("    DLNK  CH %s   %s",pDLNK.vector[0].getText(),me.no);
 			me.text[1] = sprintf("%s %7s       COMM VHF",usedI[0],usedC[0]);
