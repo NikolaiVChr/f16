@@ -1513,18 +1513,20 @@ var MFD_Device =
             if (radar_system.apg68Radar.currentMode.mapper) {
                 if (me["gmImage"] == nil) {
                     #setprop("a",0.8732);
+                    var sized = 64;
+                    var scaled = 512/sized;
                     me.gmImage = me.root.p_RDR_image.createChild("image")
                         .set("src", "Aircraft/f16/Nasal/MFD/gmSD0.png")# index is due to else the two MFD will share the underlying image and both write to it.
                         .setTranslation(-552*0.5*0.8732,-482)# canvas: 552,482
-                        .setCenter(31, -63)# the 0.8732 factor is due to angles not drawn correct due to uneven coordinate system. TODO: fix.
-                        .setScale(8*1.078125*0.8732,8*0.9414)
+                        .setCenter(sized*0.5, -sized)# the 0.8732 factor is due to angles not drawn correct due to uneven coordinate system. TODO: fix.
+                        .setScale(scaled*1.078125*0.8732,scaled*0.9414)
                         #.setTranslation(-512*0.5,-512)
                         #.setScale(8,8)
                         .set("z-index",0);#TODO: lower than GM text background
                     var vari = getprop("sim/variant-id");
                     me.mono = (vari<2 or vari ==3)?0.4:1;
                     me.gainNode = me.model_index?props.globals.getNode("f16/avionics/mfd-l-gain",0):props.globals.getNode("f16/avionics/mfd-l-gain",0);
-                    radar_system.mapper.setImage(me.gmImage,31,0,64,me.mono, me.gainNode);
+                    radar_system.mapper.setImage(me.gmImage, sized*0.5, 0, sized, me.mono, me.gainNode);
                 }
                 #me.gmImage.setScale(8*1.078125*getprop("a"),8*0.9414).setTranslation(-552*0.5*getprop("a"),-482);
                  

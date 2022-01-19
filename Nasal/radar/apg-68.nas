@@ -15,6 +15,7 @@ var DOPPLER = 1;
 var MONO = 0;
 #var CONICAL = -1;
 
+var overlapHorizontal = 1.75;
 
 
 #   █████  ██ ██████  ██████   ██████  ██████  ███    ██ ███████     ██████   █████  ██████   █████  ██████  
@@ -263,8 +264,11 @@ var AirborneRadar = {
 	installMapper: func (gmapper) {
 		me.gmapper = gmapper;
 	},
+	isEnabled: func {
+		return 1;
+	},
 	loop: func {
-		me.enabled = getprop("/f16/avionics/power-fcr-bit") == 2 and getprop("instrumentation/radar/radar-enable") and !getprop("/fdm/jsbsim/gear/unit[0]/WOW"); 
+		me.enabled = me.isEnabled();
 		setprop("instrumentation/radar/radar-standby", !me.enabled);
 		# calc dt here, so we don't get a massive dt when going from disabled to enabled:
 		me.elapsed = elapsedProp.getValue();
@@ -340,7 +344,7 @@ var AirborneRadar = {
 		me.doIFF = getprop("instrumentation/radar/iff");
     	setprop("instrumentation/radar/iff",0);
     	if (me.doIFF) iff.last_interogate = systime();
-    	if (me["gmapper"] != nil) me.gmapper.scanGM(me.eulerX, me.eulerY, me.instantVertFoVradius,
+    	if (me["gmapper"] != nil) me.gmapper.scanGM(me.eulerX, me.eulerY, me.instantVertFoVradius, me.instantFoVradius,
     		 me.currentMode.bars == 1 or (me.currentMode.bars == 4 and me.currentMode["nextPatternNode"] == 0) or (me.currentMode.bars == 3 and me.currentMode["nextPatternNode"] == 7) or (me.currentMode.bars == 2 and me.currentMode["nextPatternNode"] == 1),
     		 me.currentMode.bars == 1 or (me.currentMode.bars == 4 and me.currentMode["nextPatternNode"] == 2) or (me.currentMode.bars == 3 and me.currentMode["nextPatternNode"] == 3) or (me.currentMode.bars == 2 and me.currentMode["nextPatternNode"] == 3));# The last two parameter is hack
 
@@ -809,7 +813,7 @@ var RadarMode = {
 		}
 
 		# Lets move each axis of the radar seperate, as most radars likely has 2 joints anyway.
-		me.maxMove = math.min(me.radar.instantFoVradius*1.75, me.discSpeed_dps*dt);# 1.75 instead of 2 is because the FoV is round so we overlap em a bit
+		me.maxMove = math.min(me.radar.instantFoVradius*overlapHorizontal, me.discSpeed_dps*dt);# 1.75 instead of 2 is because the FoV is round so we overlap em a bit
 
 		# Azimuth
 		me.distance_deg = me.targetAzimuthTilt - me.radar.eulerX;
@@ -1058,6 +1062,9 @@ var APG68 = {
 	rcsRefValue: 3.2,
 	targetHistory: 3,# Not used in TWS
 	maxTilt: 60,#TODO: Lower this a bit
+	isEnabled: func {
+		return getprop("/f16/avionics/power-fcr-bit") == 2 and getprop("instrumentation/radar/radar-enable") and !getprop("/fdm/jsbsim/gear/unit[0]/WOW");
+	},
 	setAGMode: func {
 		if (me.rootMode != 3) {
 			me.rootMode = 3;
@@ -2599,6 +2606,8 @@ var TerrainMapper = {
 		tm.cleaned = 0;
 		tm.exp = 0;
 		tm.debug = 0;
+		tm.t_geo = 0;
+		tm.t_pix = 0;
 		return tm;
 	},
 	##################################################################################################
@@ -2613,7 +2622,7 @@ var TerrainMapper = {
 	#
 	azData: {
 				radius: nil,
-				az: nil,
+				az: 0,
 				fromDist: nil,
 				toDist: nil,
 				domainNm: nil,
@@ -2621,10 +2630,13 @@ var TerrainMapper = {
 				rangeFwdNm: nil,
 				returns: nil,
 			},
-	scanGM: func (eulerX, eulerY, verticalInstantFoV, bottomBar, topBar) {
+	scanGM: func (eulerX, eulerY, verticalInstantFoV, horizontalInstantFoV, bottomBar, topBar) {
 		# GM test code
 
 		if (me.radar.currentMode.mapper and me.enabled and me.radar.horizonStabilized and me["gmPic"] != nil and !me.exp) {
+			if (me.debug > 3) {
+				me.t0 = systime();
+			}
 			me.debug = getprop("debug-radar/debug-mapper");
 			me.mapperHeading = eulerX+self.getHeading();
 			me.discDirforGMTop = vector.Math.pitchYawVector(eulerY+verticalInstantFoV,-me.mapperHeading,[1,0,0]);
@@ -2645,9 +2657,11 @@ var TerrainMapper = {
             # Check for terrain at top and bottom of radar instant FoV
             me.terrainGeodTop = get_cart_ground_intersection(me.xyzSelf, me.radarBeamGeoVectorTop);
             me.terrainGeodBot = get_cart_ground_intersection(me.xyzSelf, me.radarBeamGeoVectorBot);
-            
+            #if (me.debug) {
+			#	setprop("debug-radar/mapper-last-deg", math.abs(eulerX-me.azData.az));
+			#}
             me.azData.az = eulerX;
-            me.azData.radius = verticalInstantFoV;
+            me.azData.radius = horizontalInstantFoV;
             me.azData.returns = [];
             if (me.terrainGeodBot != nil) {
             	me.terrainCoordBot = geo.Coord.new().set_latlon(me.terrainGeodBot.lat, me.terrainGeodBot.lon, me.terrainGeodBot.elevation);
@@ -2713,8 +2727,20 @@ var TerrainMapper = {
             		append(me.azData.returns, me.gmReturn);
             	}
             	#me.debugOutput();
+            	if (me.debug > 3) {
+            		me.t1 = systime();
+            	}
             	me.paintImage(me.azData, bottomBar, topBar);
-            }            
+            	if (me.debug > 3) {
+	            	me.t2 = systime();
+	            	me.t_geo += me.t1-me.t0;
+	            	me.t_pix += me.t2-me.t1;
+	            }
+            }
+            if (me.dirty) {
+            	me.gmPic.dirtyPixels();
+            	me.dirty = 0;
+            }
 		}
 	},
 	setImage: func (image, origin_x, origin_y, dimension, monochrome, gainNode) {
@@ -2755,11 +2781,12 @@ var TerrainMapper = {
 		}
 
 		me.jStart = math.tan((azData.az-azData.radius)*D2R);
+		me.jMid   = math.tan(azData.az*D2R);
 		me.jEnd   = math.tan((azData.az+azData.radius)*D2R);
 		me.jFactor = me.jEnd-me.jStart;
 
-		me.firstY = 0;
-		me.firstX = 0;
+		#me.firstY = 0;
+		#me.firstX = 0;
 
 		for (var i = 0; i < size(azData.returns); i+=1 ) {
 			me.debugColor = nil;
@@ -2778,15 +2805,16 @@ var TerrainMapper = {
 			}
 			
 			me.gmY  = me.gm_y_origin+me.iStart+i;
+			me.gmX  = math.floor(me.gm_x_origin+me.jMid*(i+me.iStart));
 			me.gmX0 = me.gm_x_origin+me.jStart*(i+me.iStart);
-			me.gmXj = math.round(me.gmX0+(i+me.iStart)*me.jFactor);
-			me.gmX0 = math.round(me.gmX0);
-			if (me.firstY == 0) {
-				me.firstY = math.max(me.gmY, 0)-me.gm_y_origin;
-				me.firstX = me.gmXj;
-			}
+			me.gmXj = math.round(me.gmX0+(i+me.iStart)*me.jFactor-0.5);
+			me.gmX0 = math.min(me.gmX, math.round(me.gmX0));
+			#if (me.firstY == 0) {
+			#	me.firstY = math.max(me.gmY, 0)-me.gm_y_origin;
+			#	me.firstX = me.gmXj;
+			#}
 			for (var j = me.gmX0; j <= me.gmXj; j += 1) {
-				if (j >= 0 and j <= 63 and me.gmY <= 63) {
+				if (j >= 0 and j <= me.gmPicSize-1 and me.gmY <= me.gmPicSize-1) {
 					me.gmPic.setPixel(j, math.max(me.gmY, 0), me.debugColor==nil?[me.gmColor*me.mono,me.gmColor,me.gmColor*me.mono,1]:me.debugColor);
 					me.dirty = 1;
 				}
@@ -2828,6 +2856,11 @@ var TerrainMapper = {
 			me.cleaned = 1;
 		} else {
 			me.cleaned = 0;
+		}
+		if (me.debug > 3) {
+			printf("geo=%8.6f pix=%8.6f",me.t_geo, me.t_pix);
+			me.t_geo = 0;
+			me.t_pix = 0;
 		}
 	},
 	clear: func {
@@ -3190,7 +3223,7 @@ var gmtMode = F16GMTMode.new(F16GMTFTTMode.new());
 var apg68Radar = AirborneRadar.newAirborne([[rwsMode,twsMode,lrsMode,vsrMode],[acm20Mode,acm60Mode,acmBoreMode],[seaMode],[gmMode],[gmtMode]], APG68);
 var f16_rwr = RWR.new();
 var acmLockSound = props.globals.getNode("f16/sound/acm-lock");
-var mapper = TerrainMapper.new(apg68Radar, 0.10);
+var mapper = TerrainMapper.new(apg68Radar, 0.50);
 
 
 
