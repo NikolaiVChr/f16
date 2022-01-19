@@ -697,8 +697,8 @@ var F16_HMD = {
             props.UpdateManager.FromHashList(["heading", "headingMag", "useMag","gear_down","hmdH","hmdP","roll","pitch"], 0.1, func(hdp)
                                       {
                                           if (hdp.servHead) {
-                                            var lookDir = vector.Math.yawPitchVector(hdp.hmdH,hdp.hmdP,[1,0,0]);
-                                            lookDir = vector.Math.yawPitchRollVector(-hdp.heading, hdp.pitch, hdp.roll, lookDir);
+                                            var lookDir = vector.Math.pitchYawVector(hdp.hmdP,hdp.hmdH,[1,0,0]);
+                                            lookDir = vector.Math.rollPitchYawVector(hdp.roll, hdp.pitch, -hdp.heading, lookDir);
                                             obj.lookEuler = vector.Math.cartesianToEuler(lookDir);
                                             var lookingAt = obj.lookEuler[0]==nil?hdp.heading:obj.lookEuler[0];
                                             lookingAt += (hdp.headingMag-hdp.heading);#convert to magn

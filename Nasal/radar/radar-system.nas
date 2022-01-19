@@ -425,6 +425,9 @@ var SelfContact = {
     	me.acdns      = props.globals.getNode("velocities/speed-down-fps");
     	me.aceas      = props.globals.getNode("velocities/speed-east-fps");
     	me.acnos      = props.globals.getNode("velocities/speed-north-fps");
+    	me.acus       = props.globals.getNode("velocities/uBody-fps");
+    	me.acvs       = props.globals.getNode("velocities/vBody-fps");
+    	me.acws       = props.globals.getNode("velocities/wBody-fps");
     	me.acCallsign = props.globals.getNode("sim/multiplay/callsign");
 	},
 
@@ -447,6 +450,10 @@ var SelfContact = {
         me.speed_east_mps  = me.aceas.getValue()*FT2M;
         me.speed_north_mps = me.acnos.getValue()*FT2M;
         return [me.speed_north_mps,-me.speed_east_mps,-me.speed_down_mps];
+	},
+
+	getSpeedBodyVector: func {
+        return [me.acus.getValue(),me.acvs.getValue(),me.acws.getValue()];
 	},
 	
 	getHeading: func {
@@ -951,7 +958,7 @@ var AIContact = {
 		me.getCoord();
 		me.acCoord = self.getCoord();
 		me.globalToTarget = vector.Math.eulerToCartesian3X(-me.acCoord.course_to(me.coord), vector.Math.getPitch(me.acCoord, me.coord), 0);
-		me.localToTarget = vector.Math.rollPitchYawVector(-self.getRoll(), -self.getPitch(), self.getHeading(), me.globalToTarget);
+		me.localToTarget = vector.Math.yawPitchRollVector(self.getHeading(), -self.getPitch(), -self.getRoll(), me.globalToTarget);
 		me.euler = vector.Math.cartesianToEuler(me.localToTarget);
 
 		return [geo.normdeg180(me.euler[0] ==nil?0:me.euler[0]), me.euler[1], me.acCoord.direct_distance_to(me.coord), me.coord];
@@ -1224,19 +1231,19 @@ var AIContact = {
 		# This is an instant perfect result, so don't call this outside the radar system.
 		# used in RWR. TODO: rework so this doesn't have to be called.		
 		me.selfCo = self.getCoord();
-
+		me.getCoord();
 		# Get contact velocity and direction to contact in geo centered coordinate system, so we get earth curvature factored in  (This can mean some tens of knots difference at 100+ nm, is this really needed?)
-		me.velocityOfContact = vector.Math.vectorToGeoVector(vector.Math.getCartesianVelocity(me.get_heading(), me.get_Pitch(), me.get_Roll(), me.get_uBody(), me.get_vBody(), me.get_wBody()), me.selfCo).vector;
-		me.vectorToContact   = [me.selfCo.x() - me.getCoord().x(), me.selfCo.y() - me.coord.y(), me.selfCo.z() - me.coord.z()];
+		me.velocityOfContact = vector.Math.vectorToGeoVector(vector.Math.getCartesianVelocity(-me.get_heading(), me.get_Pitch(), me.get_Roll(), me.get_uBody()*FT2M, me.get_vBody()*FT2M, me.get_wBody()*FT2M), me.coord).vector;
+		me.vectorToContact   = [me.coord.x() - me.selfCo.x(), me.coord.y() - me.selfCo.y(), me.coord.z() - me.selfCo.z()];
 
 		# Get ownship velocity and direction to ownship in geo centered coordinate system
-		me.velocityOfOwnship = vector.Math.vectorToGeoVector(self.getSpeedVector(), self.getCoord()).vector;
+		me.velocityOfOwnship = vector.Math.vectorToGeoVector(self.getSpeedVector(), me.selfCo).vector;
 		me.vectorToOwnship = vector.Math.product(-1, me.vectorToContact);
 
 		me.contactVelocityTowardsOwnship = vector.Math.projVectorOnVector(me.velocityOfContact, me.vectorToOwnship);
 		me.ownshipVelocityTowardsContact = vector.Math.projVectorOnVector(me.velocityOfOwnship, me.vectorToContact);
 
-		return MPS2KT*(vector.Math.magnitudeVector(me.contactVelocityTowardsOwnship)+vector.Math.magnitudeVector(me.ownshipVelocityTowardsContact));
+		return MPS2KT*(vector.Math.magnitudeVector(me.ownshipVelocityTowardsContact) + vector.Math.magnitudeVector(me.contactVelocityTowardsOwnship));
 	},
 
 
@@ -1470,11 +1477,11 @@ var NoseRadar = {
 		me.unitY = vector.Math.eulerToCartesian3Y(-yaw, elev, 0);
 
 		me.tmpVec = vector.Math.vectorToGeoVector(me.unitX, me.owncrd);
-		me.unitX = vector.Math.normalize([me.tmpVec.x,me.tmpVec.y,me.tmpVec.z]);
+		me.unitX = vector.Math.normalize(me.tmpVec.vector);
 		me.tmpVec = vector.Math.vectorToGeoVector(me.unitY, me.owncrd);
-		me.unitY = vector.Math.normalize([me.tmpVec.x,me.tmpVec.y,me.tmpVec.z]);
+		me.unitY = vector.Math.normalize(me.tmpVec.vector);
 		me.tmpVec = vector.Math.vectorToGeoVector(me.unitZ, me.owncrd);
-		me.unitZ = vector.Math.normalize([me.tmpVec.x,me.tmpVec.y,me.tmpVec.z]);
+		me.unitZ = vector.Math.normalize(me.tmpVec.vector);
 		
 		me.cc = [me.owncrd.x(),me.owncrd.y(),me.owncrd.z()];
 
@@ -2030,7 +2037,7 @@ var TerrainChecker = {
 		# If it moves faster than me.doppler_speed_kt seen from the angle of the nose radar, then a doppler radar can see it. Else it just looks like clutter.
 		#
 		# Get contact velocity vector in relation to terrain
-		me.vectorOfTargetSpeedRelativeToClutter = vector.Math.getCartesianVelocity(contact.get_heading(), contact.get_Pitch(), contact.get_Roll(), contact.get_uBody(), contact.get_vBody(), contact.get_wBody());
+		me.vectorOfTargetSpeedRelativeToClutter = vector.Math.getCartesianVelocity(-contact.get_heading(), contact.get_Pitch(), contact.get_Roll(), contact.get_uBody()*FT2M, contact.get_vBody()*FT2M, contact.get_wBody()*FT2M);
 
 		# Convert it to earth centered coordinate system, so we get proper earth curvature into effect
 		me.vectorOfTargetSpeedRelativeToClutter = vector.Math.vectorToGeoVector(me.vectorOfTargetSpeedRelativeToClutter, contact.getCoord()).vector;
@@ -2223,7 +2230,7 @@ var FixedBeamRadar = {
 	
 	computeBeamVector: func {
 		me.beamVector = [math.cos(me.beam_pitch_deg*D2R), 0, math.sin(me.beam_pitch_deg*D2R)];
-		me.beamVectorFix = vector.Math.yawPitchRollVector(-self.getHeading(), self.getPitch(), self.getRoll(), me.beamVector);
+		me.beamVectorFix = vector.Math.rollPitchYawVector(self.getRoll(), self.getPitch(), -self.getHeading(), me.beamVector);
 		me.geoVector = vector.Math.vectorToGeoVector(me.beamVectorFix, self.getCoord());
 		return me.geoVector;
 	},

@@ -1407,7 +1407,7 @@ var AIM = {
 				#	me.rail_head_deg = me.Tgt.get_bearing()-OurHdg.getValue();
 				#}
 				me.railvec = vector.Math.eulerToCartesian3X(-me.rail_head_deg, me.rail_pitch_deg,0);
-				me.veccy = vector.Math.yawPitchRollVector(-ac_hdg,ac_pitch,ac_roll,me.railvec);
+				me.veccy = vector.Math.rollPitchYawVector(ac_roll,ac_pitch,-ac_hdg,me.railvec);
 				me.carty = vector.Math.cartesianToEuler(me.veccy);
 				me.msl_pitch = me.carty[1];
 				me.defaultHeading = me.Tgt != nil?me.Tgt.get_bearing():0;#90 deg tubes align to target heading, else north
@@ -2210,7 +2210,7 @@ var AIM = {
 				me.hdg = OurHdg.getValue();
 			} else {
 				me.railvec = me.myMath.eulerToCartesian3X(-me.rail_head_deg, me.rail_pitch_deg,0);
-				me.veccy = me.myMath.yawPitchRollVector(-OurHdg.getValue(),OurPitch.getValue(),OurRoll.getValue(),me.railvec);
+				me.veccy = me.myMath.rollPitchYawVector(OurRoll.getValue(),OurPitch.getValue(),-OurHdg.getValue(),me.railvec);
 				me.carty = me.myMath.cartesianToEuler(me.veccy);
 				me.defaultHeading = me.Tgt != nil?me.Tgt.get_bearing():0;#90 deg tubes align to target heading, else north
 				me.pitch = me.carty[1];
@@ -3221,7 +3221,7 @@ var AIM = {
 
 	canSeekerKeepUp: func () {
 		me.globalVectorToTarget = me.myMath.eulerToCartesian3X(-me.t_course, me.t_elev_deg, 0);
-		me.localVectorTarget  = me.myMath.rollPitchYawVector(0, -me.pitch, me.hdg, me.globalVectorToTarget);
+		me.localVectorTarget  = me.myMath.yawPitchVector(me.hdg, -me.pitch, me.globalVectorToTarget);
 		if (me.counter == me.counter_last+1 and !me.newTargetAssigned and me["localVectorSeeker"] != nil and (me.guidance == "heat" or me.guidance == "vision") and me.prevGuidance == me.guidance and me.prevTarget == me.Tgt) {
 			# calculate if the seeker can keep up with the angular change of the target
 			#
@@ -3229,7 +3229,7 @@ var AIM = {
 			#
 			if (!me.caged) {
 				# Gyro is stabilized
-				me.localVectorSeeker = me.myMath.rollPitchYawVector(0, -me.last_track_e, me.last_track_h, me.localVectorSeeker);
+				me.localVectorSeeker = me.myMath.yawPitchVector(me.last_track_h, -me.last_track_e, me.localVectorSeeker);
 			}
 			me.angleSeekerToTarget  = me.myMath.angleBetweenVectors(me.localVectorSeeker, me.localVectorTarget);
 			me.deviation_per_sec = me.angleSeekerToTarget/me.dt;
@@ -3617,7 +3617,7 @@ var AIM = {
 
 			me.printGuideDetails("LOS rate: %06.4f rad/s", me.line_of_sight_rate_rps);
 
-			me.t_velocity = me.myMath.getCartesianVelocity(me.Tgt.get_heading(), me.Tgt.get_Pitch(), me.Tgt.get_Roll(), me.Tgt.get_uBody(), me.Tgt.get_vBody(), me.Tgt.get_wBody());
+			me.t_velocity = me.myMath.getCartesianVelocity(-me.Tgt.get_heading(), me.Tgt.get_Pitch(), me.Tgt.get_Roll(), me.Tgt.get_uBody(), me.Tgt.get_vBody(), me.Tgt.get_wBody());
 						
 			if ((me.flareLock == FALSE and me.chaffLock == FALSE) or me.t_heading == nil) {
 				me.euler = me.myMath.cartesianToEuler(me.t_velocity);

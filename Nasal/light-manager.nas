@@ -430,7 +430,7 @@ var FixedBeamRadar = {
   
   computeBeamVector: func {
     me.beamVector = [math.cos(me.beam_pitch_deg*D2R), 0, math.sin(me.beam_pitch_deg*D2R)];
-    me.beamVectorFix = vector.Math.yawPitchRollVector(-self.getHeading(), self.getPitch(), self.getRoll(), me.beamVector);
+    me.beamVectorFix = vector.Math.rollPitchYawVector(self.getRoll(), self.getPitch(), -self.getHeading(), me.beamVector);
     me.geoVector = vector.Math.vectorToGeoVector(vector.Math.normalize(me.beamVectorFix), self.getLightCoord());
     return me.geoVector;
   },

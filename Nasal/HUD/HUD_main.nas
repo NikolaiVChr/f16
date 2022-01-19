@@ -1921,7 +1921,7 @@ append(obj.total, obj.speed_curr);
                     me.start = geo.viewer_position();
                     me.vecto = [math.cos(me.xDevi*D2R)*math.cos(me.yDevi*D2R),math.sin(-me.xDevi*D2R)*math.cos(me.yDevi*D2R),math.sin(me.yDevi*D2R)];
                     
-                    me.direction = vector.Math.vectorToGeoVector(vector.Math.yawPitchRollVector(-getprop("orientation/heading-deg"),getprop("orientation/pitch-deg"),getprop("orientation/roll-deg"), me.vecto),me.start);
+                    me.direction = vector.Math.vectorToGeoVector(vector.Math.rollPitchYawVector(getprop("orientation/roll-deg"),getprop("orientation/pitch-deg"),-getprop("orientation/heading-deg"), me.vecto),me.start);
                     me.intercept = get_cart_ground_intersection({x:me.start.x(),y:me.start.y(),z:me.start.z()}, me.direction);
                     if (me.intercept == nil) {
                         me.value = 0;
@@ -2394,7 +2394,7 @@ append(obj.total, obj.speed_curr);
                         if (me.clamped and me.dr != nil and me.drE != nil and math.abs(me.dr) < 90) {
                             me.locatorLine.setTranslation(HudMath.getBorePos());
                             me.veccy = vector.Math.pitchYawVector(me.u.getLastElev(),-me.dr, [1,0,0]);# There is probably simpler ways to do this, but at least I know this works well at great angles.
-                            me.veccy = vector.Math.rollPitchYawVector(-hdp.roll, -hdp.pitch, 0, me.veccy);
+                            me.veccy = vector.Math.yawPitchRollVector(0, -hdp.pitch, -hdp.roll, me.veccy);
                             me.locatorLine.setRotation(math.atan2(-me.veccy[1],me.veccy[2]));
                             me.locatorAngle.setText(sprintf("%d", vector.Math.angleBetweenVectors([1,0,0], vector.Math.pitchYawVector(me.drE,-me.dr, [1,0,0]))));
                             me.locatorLineShow = 1;
