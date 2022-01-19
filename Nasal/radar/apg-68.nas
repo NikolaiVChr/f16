@@ -353,9 +353,9 @@ var AirborneRadar = {
 		me.closestChaff = 1000000;# meters
 		if (size(me.chaffList)) {
 			if (me.horizonStabilized) {
-				me.globalAntennaeDir = vector.Math.rollPitchYawVector(0, 0, -self.getHeading(), me.positionDirection);
+				me.globalAntennaeDir = vector.Math.yawVector(-self.getHeading(), me.positionDirection);
 			} else {
-				me.globalAntennaeDir = vector.Math.yawPitchRollVector(-self.getHeading(), self.getPitch(), self.getRoll(), me.positionDirection);
+				me.globalAntennaeDir = vector.Math.rollPitchYawVector(self.getRoll(), self.getPitch(), -self.getHeading(), me.positionDirection);
 			}
 			
 			foreach (me.chaff ; me.chaffList) {
@@ -404,7 +404,7 @@ var AirborneRadar = {
 				me.globalToTarget = vector.Math.eulerToCartesian3X(-me.dev.bearing,me.dev.elevationGlobal,0);
 
 				# Vector that points to target in radar coordinates as if aircraft it was not yawed, rolled or pitched.
-				me.localToTarget = vector.Math.rollPitchYawVector(0,0,self.getHeading(), me.globalToTarget);
+				me.localToTarget = vector.Math.yawVector(self.getHeading(), me.globalToTarget);
 			} else {
 				# Vector that points to target in local radar coordinates.
 				me.localToTarget = vector.Math.eulerToCartesian3X(-me.dev.azimuthLocal,me.dev.elevationLocal,0);
@@ -872,12 +872,12 @@ var RadarMode = {
 		me.vectorToDist = [math.cos(me.upperAngle*D2R), 0, math.sin(me.upperAngle*D2R)];
 		me.selfC = self.getCoord();
 		me.geo = vector.Math.vectorToGeoVector(me.vectorToDist, me.selfC);
-		me.geo = vector.Math.product(me.cursorNm*NM2M, vector.Math.normalize([me.geo.x,me.geo.y,me.geo.z]));
+		me.geo = vector.Math.product(me.cursorNm*NM2M, vector.Math.normalize(me.geo.vector));
 		me.up = geo.Coord.new();
 		me.up.set_xyz(me.selfC.x()+me.geo[0],me.selfC.y()+me.geo[1],me.selfC.z()+me.geo[2]);
 		me.vectorToDist = [math.cos(me.lowerAngle*D2R), 0, math.sin(me.lowerAngle*D2R)];
 		me.geo = vector.Math.vectorToGeoVector(me.vectorToDist, me.selfC);
-		me.geo = vector.Math.product(me.cursorNm*NM2M, vector.Math.normalize([me.geo.x,me.geo.y,me.geo.z]));
+		me.geo = vector.Math.product(me.cursorNm*NM2M, vector.Math.normalize(me.geo.vector));
 		me.down = geo.Coord.new();
 		me.down.set_xyz(me.selfC.x()+me.geo[0],me.selfC.y()+me.geo[1],me.selfC.z()+me.geo[2]);
 		return [me.up.alt()*M2FT, me.down.alt()*M2FT];

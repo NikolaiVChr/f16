@@ -39,14 +39,16 @@ var Math = {
             me.upamount = -me.end_dist_m;
         }
         me.tgt_coord.set_alt(coord.alt()+me.upamount);
-        
-        return {"x":me.tgt_coord.x()-coord.x(),  "y":me.tgt_coord.y()-coord.y(), "z":me.tgt_coord.z()-coord.z(), "vector": [me.tgt_coord.x()-coord.x(),me.tgt_coord.y()-coord.y(),me.tgt_coord.z()-coord.z()]};
+        me.geoVeccy = me.product(me.magnitudeVector(a), me.normalize([me.tgt_coord.x()-coord.x(),me.tgt_coord.y()-coord.y(),me.tgt_coord.z()-coord.z()]));
+        return {"x":me.tgt_coord.x()-coord.x(),  "y":me.tgt_coord.y()-coord.y(), "z":me.tgt_coord.z()-coord.z(), "vector": me.geoVeccy};
     },
     
     # When observing another MP aircraft the groundspeed velocity info is in body frame, this method will convert it to cartesian vector.
+    #
+    # Warning: If you input body velocities in fps the output will be in fps also. Likewise for mps.
     getCartesianVelocity: func (yaw_deg, pitch_deg, roll_deg, uBody_fps, vBody_fps, wBody_fps) {
         me.bodyVelocity = [uBody_fps, -vBody_fps, -wBody_fps];
-        return me.yawPitchRollVector(yaw_deg, pitch_deg, roll_deg, me.bodyVelocity);
+        return me.rollPitchYawVector(roll_deg, pitch_deg, yaw_deg, me.bodyVelocity);
     },
 
     # angle between 2 vectors. Returns 0-180 degrees.
@@ -85,21 +87,24 @@ var Math = {
         return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
     },
 
-    # rotate a vector. Order: roll, pitch, yaw
+    # rotate a vector. Order: roll, pitch, yaw (same as aircraft)
+    #
+    # The coordinate system is fixed during all the rolls.
+    #
     rollPitchYawVector: func (roll, pitch, yaw, vector) {
         me.rollM  = me.rollMatrix(roll);
         me.pitchM = me.pitchMatrix(pitch);
         me.yawM   = me.yawMatrix(yaw);
-        me.rotation = me.multiplyMatrices(me.rollM, me.multiplyMatrices(me.pitchM, me.yawM));
+        me.rotation = me.multiplyMatrices(me.yawM, me.multiplyMatrices(me.pitchM, me.rollM));
         return me.multiplyMatrixWithVector(me.rotation, vector);
     },
 
-    # rotate a vector. Order: yaw, pitch, roll (like an aircraft)
+    # rotate a vector. Order: yaw, pitch, roll (reverse of aircraft)
     yawPitchRollVector: func (yaw, pitch, roll, vector) {
         me.rollM  = me.rollMatrix(roll);
         me.pitchM = me.pitchMatrix(pitch);
         me.yawM   = me.yawMatrix(yaw);
-        me.rotation = me.multiplyMatrices(me.yawM, me.multiplyMatrices(me.pitchM, me.rollM));
+        me.rotation = me.multiplyMatrices(me.rollM, me.multiplyMatrices(me.pitchM, me.yawM));
         return me.multiplyMatrixWithVector(me.rotation, vector);
     },
 
@@ -117,6 +122,12 @@ var Math = {
         me.yawM   = me.yawMatrix(yaw);
         me.rotation = me.multiplyMatrices(me.yawM, me.pitchM);
         return me.multiplyMatrixWithVector(me.rotation, vector);
+    },
+
+    # rotate a vector. Order: yaw
+    yawVector: func (yaw, vector) {
+        me.yawM   = me.yawMatrix(yaw);
+        return me.multiplyMatrixWithVector(me.yawM, vector);
     },
 
     # rotate a vector. Order: pitch
@@ -453,46 +464,10 @@ var unitTest = {
         me.thousandVectorGeo = Math.product(100000, me.thousandVectorGeo);
         me.lookAt = geo.Coord.new().set_xyz(myCoord.x()+me.thousandVectorGeo[0], myCoord.y()+me.thousandVectorGeo[1], myCoord.z()+me.thousandVectorGeo[2]);
         printf("Looking out of aircraft window 100000m away heading 75 and 40 degs down: %.4f heading %.4f pitch %.4f meter.", myCoord.course_to(me.lookAt), Math.getPitch(myCoord, me.lookAt), myCoord.direct_distance_to(me.lookAt));
-        # 4: debug test for radar. Scenery must be loaded close to the f16 coord for it to work.
-        var f16 = geo.Coord.new().set_xyz(-2221506.332649736, -4628853.303172908, 3789620.646061851);
-        var heading = 151.81;
-        var altitude = 35613;
-        var lookdown = -9;
-        me.discDirforGMTop = vector.Math.pitchYawVector(lookdown+2.25,-(0+heading),[1,0,0]);
-        me.discDirforGMBot = vector.Math.pitchYawVector(lookdown-2.25,-(0+heading),[1,0,0]);
-        me.radarBeamGeoVectorBot = vector.Math.vectorToGeoVector(me.discDirforGMBot, f16);
-        me.radarBeamGeoVectorTop = vector.Math.vectorToGeoVector(me.discDirforGMTop, f16);
-        me.xyzSelf = {"x":f16.x(), "y":f16.y(), "z":f16.z()};
-        me.terrainGeodBot = get_cart_ground_intersection(me.xyzSelf, me.radarBeamGeoVectorBot);
-        me.terrainGeodTop = get_cart_ground_intersection(me.xyzSelf, me.radarBeamGeoVectorTop);
-        if (me.terrainGeodBot != nil and me.terrainGeodTop != nil) {
-            me.terrainCoordBot = geo.Coord.new().set_latlon(me.terrainGeodBot.lat, me.terrainGeodBot.lon, me.terrainGeodBot.elevation);
-            me.terrainCoordTop = geo.Coord.new().set_latlon(me.terrainGeodTop.lat, me.terrainGeodTop.lon, me.terrainGeodTop.elevation);
-            print("Heading 151");
-            printf("-05 degs pitch = %.2f",Math.getPitch(f16, me.terrainCoordTop));
-            printf("-10 degs pitch = %.2f",Math.getPitch(f16, me.terrainCoordBot));
-            printf("Distance nm between bottom and top = %.2f", me.terrainCoordBot.distance_to(me.terrainCoordTop)*M2NM);
-        } else {
-            print("Terrasunk south ",me.terrainGeodBot != nil,me.terrainGeodTop != nil);
-        }
-        heading = 0;
-        me.discDirforGMTop = vector.Math.pitchYawVector(lookdown+2.25,-(0+heading),[1,0,0]);
-        me.discDirforGMBot = vector.Math.pitchYawVector(lookdown-2.25,-(0+heading),[1,0,0]);
-        me.radarBeamGeoVectorBot = vector.Math.vectorToGeoVector(me.discDirforGMBot, f16);
-        me.radarBeamGeoVectorTop = vector.Math.vectorToGeoVector(me.discDirforGMTop, f16);
-        me.xyzSelf = {"x":f16.x(), "y":f16.y(), "z":f16.z()};
-        me.terrainGeodBot = get_cart_ground_intersection(me.xyzSelf, me.radarBeamGeoVectorBot);
-        me.terrainGeodTop = get_cart_ground_intersection(me.xyzSelf, me.radarBeamGeoVectorTop);
-        if (me.terrainGeodBot != nil and me.terrainGeodTop != nil) {
-            me.terrainCoordBot = geo.Coord.new().set_latlon(me.terrainGeodBot.lat, me.terrainGeodBot.lon, me.terrainGeodBot.elevation);
-            me.terrainCoordTop = geo.Coord.new().set_latlon(me.terrainGeodTop.lat, me.terrainGeodTop.lon, me.terrainGeodTop.elevation);
-            print("Heading 0");
-            printf("-05 degs pitch = %.2f",Math.getPitch(f16, me.terrainCoordTop));
-            printf("-10 degs pitch = %.2f",Math.getPitch(f16, me.terrainCoordBot));
-            printf("Distance nm between bottom and top = %.2f", me.terrainCoordBot.distance_to(me.terrainCoordTop)*M2NM);
-        } else {
-            print("Terrasunk north ",me.terrainGeodBot != nil,me.terrainGeodTop != nil);
-        }
+        # 4: 
+        var aircraft = Math.eulerToCartesian3X(-35, 72, 21);
+        var aircraft2 = Math.rollPitchYawVector(21, 72, -35, [1,0,0]);
+        printf("These two should be the same %s = %s",Math.format(aircraft),Math.format(aircraft2));
     },
 };
 #unitTest.start();
