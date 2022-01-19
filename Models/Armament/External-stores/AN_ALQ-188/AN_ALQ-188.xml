@@ -2,6 +2,25 @@
 
 <PropertyList>
   <path>Aircraft/f16/Models/Armament/External-stores/AN_ALQ-188/AN_ALQ-188.ac</path>
+
+   <animation>
+        <type>scale</type>
+        <object-name>Cube</object-name>
+        <object-name>Cylinder</object-name>
+        <object-name>Cylinder.001</object-name>
+        <object-name>Cylinder.002</object-name>
+        <object-name>Cylinder.003</object-name>
+        <object-name>Cylinder.004</object-name>
+        <object-name>Cylinder.005</object-name>
+        <object-name>Cylinder.006</object-name>
+        <object-name>Cylinder.007</object-name>
+        <object-name>Cylinder.008</object-name>
+        <object-name>Cylinder.009</object-name>
+        <x-offset>0.67</x-offset>
+        <y-offset>0.67</y-offset>
+        <z-offset>0.67</z-offset>
+    </animation>
+
   <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
       <parameters>
@@ -12,7 +31,7 @@
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
       <object-name>Cube</object-name>
-      <object-name>ALQ188_body</object-name>
+      <object-name>Cylinder</object-name>
       <object-name>Cylinder.001</object-name>
       <object-name>Cylinder.002</object-name>
       <object-name>Cylinder.003</object-name>

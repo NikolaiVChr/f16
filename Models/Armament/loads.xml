@@ -53,6 +53,21 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
     </greater-than>
   </condition>
  </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>AN_ALQ-188</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-4-type</property>
+      <value>AN/ALQ-188(V) EAT Pod</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-4-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
  
   <animation>
   <type>select</type>
@@ -131,6 +146,10 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
     <equals>
       <property>payload/armament/station/id-4-type</property>
       <value>AN/ALQ-184(V) ECM Pod</value>
+    </equals>
+    <equals>
+      <property>payload/armament/station/id-4-type</property>
+      <value>AN/ALQ-188(V) EAT Pod</value>
     </equals>
     <equals>
       <property>payload/armament/station/id-4-type</property>

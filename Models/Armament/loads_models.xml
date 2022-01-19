@@ -34,6 +34,17 @@
    <pitch-deg>-0.6</pitch-deg>
   </offsets>
  </model>
+
+ <model>
+  <name>AN_ALQ-188</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/AN_ALQ-188/AN_ALQ-188.xml</path>
+  <offsets>
+   <x-m>0.24</x-m>
+   <y-m>0</y-m>
+   <z-m>-1.048</z-m>
+   <pitch-deg>-0.6</pitch-deg>
+  </offsets>
+ </model>
   
  <model>
   <name>VentralTank</name>

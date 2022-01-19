@@ -161,6 +161,7 @@ Shaymo
 
 Elon Musk
 - Wide Angle Raster HUD 3D work
+- AN/ALQ-188 EAT pod 3D
 
 Pilot2938
 - Polish AF livery pack
