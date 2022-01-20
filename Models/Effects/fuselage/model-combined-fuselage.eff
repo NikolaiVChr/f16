@@ -380,15 +380,15 @@ Modifications author: Nikolai V. Chr.
 			   
 			<program>
 				<vertex-shader n="0">Aircraft/f16/Shaders/fuselage/model-combined-fuselage-ALS.vert</vertex-shader>
-			 	<vertex-shader n="1">Shaders/shadows-include.vert</vertex-shader>
+			 	<vertex-shader n="1">Aircraft/f16/Shaders/shadows-include.vert</vertex-shader>
 			 	<fragment-shader n="0">Aircraft/f16/Shaders/fuselage/model-combined-fuselage-ALS.frag</fragment-shader>
 				<fragment-shader n="1">Shaders/cloud-shadowfunc.frag</fragment-shader>
 				<fragment-shader n="2">Shaders/hazes.frag</fragment-shader>
 				<fragment-shader n="3">Shaders/secondary_lights.frag</fragment-shader>
 				<fragment-shader n="4">Shaders/noise.frag</fragment-shader>
 				<fragment-shader n="5">Shaders/filters-ALS.frag</fragment-shader>
-        		<fragment-shader n="6">Shaders/shadows-include.frag</fragment-shader>
-        		<fragment-shader n="7">Shaders/clustered-include.frag</fragment-shader>
+        		<fragment-shader n="6">Aircraft/f16/Shaders/shadows-include.frag</fragment-shader>
+        		<fragment-shader n="7">Aircraft/f16/Shaders/clustered-include.frag</fragment-shader>
 			</program>
 			   <!-- BEGIN shadows include -->
                    <uniform>
@@ -1277,9 +1277,9 @@ Modifications author: Nikolai V. Chr.
 	  <predicate>
 		<and>
 		  <less-equal>
-          <value type="int">1</value>
-          <property>/sim/version/compositor-support</property>
-        </less-equal>
+	          <value type="int">1</value>
+	          <property>/sim/version/compositor-support</property>
+	      </less-equal>
 		  <property>/sim/rendering/shaders/quality-level</property>
 		  <property>/sim/rendering/shaders/model</property>
 		  <or>
