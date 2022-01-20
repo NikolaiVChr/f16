@@ -154,10 +154,10 @@ Author: Nikolai V. Chr.
 	<technique n="4">
 		<predicate>
 		   <and>
-		   		<equal>
-          <value type="bool">true</value>
-          <property>/sim/version/compositor-support</property>
-        </equal>
+		   		<less-equal>
+		          <value type="int">1</value>
+		          <property>/sim/version/compositor-support</property>
+		        </less-equal>
 			   <or>
 				   <less-equal>
 					   <value type="float">2.0</value>

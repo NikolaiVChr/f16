@@ -71,10 +71,10 @@
   <technique n="0">
     <predicate>
       <and>
-        <equal>
-          <value type="bool">true</value>
+        <less-equal>
+          <value type="int">1</value>
           <property>/sim/version/compositor-support</property>
-        </equal>
+        </less-equal>
         <property>/sim/rendering/shaders/skydome</property>
         <less-equal>
           <value type="float">1.0</value>
@@ -697,10 +697,10 @@
   <technique n="1">
     <predicate>
       <and>
-        <equal>
-          <value type="bool">true</value>
+        <less-equal>
+          <value type="int">1</value>
           <property>/sim/version/compositor-support</property>
-        </equal>
+        </less-equal>
         <property>/sim/rendering/shaders/skydome</property>
         <or>
           <less-equal>

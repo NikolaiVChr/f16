@@ -123,7 +123,7 @@ Modifications author: Nikolai V. Chr.
 	   <predicate n="0">
 		   <and>
 		   		<equal>
-          <value type="bool">true</value>
+          <value type="int">1</value>
           <property>/sim/version/compositor-support</property>
         </equal>
 			   <property>/sim/rendering/shaders/skydome</property>
@@ -1276,10 +1276,10 @@ Modifications author: Nikolai V. Chr.
 	<technique n="1">
 	  <predicate>
 		<and>
-		  <equal>
-          <value type="bool">true</value>
+		  <less-equal>
+          <value type="int">1</value>
           <property>/sim/version/compositor-support</property>
-        </equal>
+        </less-equal>
 		  <property>/sim/rendering/shaders/quality-level</property>
 		  <property>/sim/rendering/shaders/model</property>
 		  <or>

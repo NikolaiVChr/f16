@@ -1611,8 +1611,8 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     print();
     screen.log.write("Welcome to the "~getprop("sim/description")~", version "~getprop("sim/aircraft-version"), 1.0, 0.2, 0.2);
     
-    if (left(getprop("sim/version/flightgear"),6) == "2020.3") {
-      #globals.props.getNode("/sim/rendering/shadows/enabled", 1).setBoolValue(0);
+    if (!(left(getprop("sim/version/flightgear"),6) == "2020.3")) {
+        globals.props.getNode("/sim/version/compositor-support", 1).setBoolValue(1);
     }
 
     hack.init();
