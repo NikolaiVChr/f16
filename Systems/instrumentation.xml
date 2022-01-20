@@ -8,6 +8,20 @@ This file selects the instrumentation modules that should be available.
 
 <PropertyList>
 
+	<comm-radio>
+	    <name>comm</name>
+	    <number>0</number>
+	    <power-supply>fdm/jsbsim/systems/electrical/outputs/comm[0]</power-supply>
+	    <minimum-supply-volts>20.0</minimum-supply-volts>
+	</comm-radio>
+
+	<comm-radio>
+	    <name>comm</name>
+	    <number>1</number>
+	    <power-supply>fdm/jsbsim/systems/electrical/outputs/comm[1]</power-supply>
+	    <minimum-supply-volts>20.0</minimum-supply-volts>
+	</comm-radio>
+
 	<adf>
 		<name>adf</name>
 		<number>0</number>

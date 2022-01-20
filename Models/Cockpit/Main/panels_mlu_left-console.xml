@@ -3360,7 +3360,7 @@
     <animation>
         <type>knob</type>
         <object-name>uhf-knob.01</object-name>
-        <property>instrumentation/nav[0]/frequencies/current-mhz-digit-1</property>
+        <property>instrumentation/comm[0]/frequencies/current-mhz-digit-1</property>
         <factor>18</factor>
         <offset-deg>0</offset-deg>
         <interval-sec>0.1</interval-sec>
@@ -3376,14 +3376,14 @@
             <binding>
                 <command>nasal</command>
                 <script>
-                  var f = getprop("instrumentation/nav[0]/frequencies/selected-mhz");
+                  var f = getprop("instrumentation/comm[0]/frequencies/selected-mhz");
                   fd = int(math.round((f*10-int(f*10)) * 10));
                   #printf("fd %.2f",fd);
                   if (fd == 5) fd = -0.05;
                   else fd = 0.05;
                   #printf("fd2 %.2f",fd);
                   f += fd;
-                  setprop("instrumentation/nav[0]/frequencies/selected-mhz",f);
+                  setprop("instrumentation/comm[0]/frequencies/selected-mhz",f);
                 </script>
            </binding>
         </increase>
@@ -3391,14 +3391,14 @@
             <binding>
                 <command>nasal</command>
                 <script>
-                  var f = getprop("instrumentation/nav[0]/frequencies/selected-mhz");
+                  var f = getprop("instrumentation/comm[0]/frequencies/selected-mhz");
                   fd = int(math.round((f*10-int(f*10)) * 10));
                   #printf("fd %.2f",fd);
                   if (fd == 5) fd = -0.05;
                   else fd = 0.05;
                   #printf("fd2 %.2f",fd);
                   f += fd;
-                  setprop("instrumentation/nav[0]/frequencies/selected-mhz",f);
+                  setprop("instrumentation/comm[0]/frequencies/selected-mhz",f);
                 </script>
            </binding>
         </decrease>
@@ -3406,7 +3406,7 @@
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>d1</tooltip-id>
-                <label>NAV FREQ</label>
+                <label>COMM 1 FREQ</label>
             </binding>
         </hovered>
     </animation>
@@ -3414,7 +3414,7 @@
     <animation>
         <type>knob</type>
         <object-name>uhf-knob.02</object-name>
-        <property>instrumentation/nav[0]/frequencies/current-mhz-digit-2</property>
+        <property>instrumentation/comm[0]/frequencies/current-mhz-digit-2</property>
         <factor>36</factor>
         <offset-deg>0</offset-deg>
         <interval-sec>0.1</interval-sec>
@@ -3430,7 +3430,7 @@
             <binding>
                 <command>nasal</command>
                 <script>
-                  var f = getprop("instrumentation/nav[0]/frequencies/selected-mhz");
+                  var f = getprop("instrumentation/comm[0]/frequencies/selected-mhz");
                   f = math.round(f*100)*0.01;
                   fd = int((f*1-int(f*1)) * 10);
                   #printf("fd %.2f",fd);
@@ -3439,7 +3439,7 @@
                   else fd = 0.1;
                   #printf("fd2 %.2f",fd);
                   f += fd;
-                  setprop("instrumentation/nav[0]/frequencies/selected-mhz",f);
+                  setprop("instrumentation/comm[0]/frequencies/selected-mhz",f);
                 </script>
            </binding>
         </increase>
@@ -3447,14 +3447,14 @@
             <binding>
                 <command>nasal</command>
                 <script>
-                  var f = getprop("instrumentation/nav[0]/frequencies/selected-mhz");
+                  var f = getprop("instrumentation/comm[0]/frequencies/selected-mhz");
                   f = math.round(f*100)*0.01;
                   fd = int((f*1-int(f*1)) * 10);
                   fd -= 1;
                   if (fd == -1) fd = 0.9;
                   else fd = -0.1;
                   f += fd;
-                  setprop("instrumentation/nav[0]/frequencies/selected-mhz",f);
+                  setprop("instrumentation/comm[0]/frequencies/selected-mhz",f);
                 </script>
            </binding>
         </decrease>
@@ -3462,7 +3462,7 @@
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>d2</tooltip-id>
-                <label>NAV FREQ</label>
+                <label>COMM 1 FREQ</label>
             </binding>
         </hovered>
     </animation>
@@ -3470,7 +3470,7 @@
     <animation>
         <type>knob</type>
         <object-name>uhf-knob.03</object-name>
-        <property>instrumentation/nav[0]/frequencies/current-mhz-digit-3</property>
+        <property>instrumentation/comm[0]/frequencies/current-mhz-digit-3</property>
         <factor>36</factor>
         <offset-deg>0</offset-deg>
         <interval-sec>0.1</interval-sec>
@@ -3486,13 +3486,13 @@
             <binding>
                 <command>nasal</command>
                 <script>
-                  var f = getprop("instrumentation/nav[0]/frequencies/selected-mhz");
+                  var f = getprop("instrumentation/comm[0]/frequencies/selected-mhz");
                   fd = int((f*0.1-int(f*0.1)) * 10);
                   fd += 1;
                   if (fd == 10) fd = -9;
                   else fd = 1;
                   f += fd;
-                  setprop("instrumentation/nav[0]/frequencies/selected-mhz",f);
+                  setprop("instrumentation/comm[0]/frequencies/selected-mhz",f);
                 </script>
            </binding>
         </increase>
@@ -3500,13 +3500,13 @@
             <binding>
                 <command>nasal</command>
                 <script>
-                  var f = getprop("instrumentation/nav[0]/frequencies/selected-mhz");
+                  var f = getprop("instrumentation/comm[0]/frequencies/selected-mhz");
                   fd = int((f*0.1-int(f*0.1)) * 10);
                   fd -= 1;
                   if (fd == -1) fd = 9;
                   else fd = -1;
                   f += fd;
-                  setprop("instrumentation/nav[0]/frequencies/selected-mhz",f);
+                  setprop("instrumentation/comm[0]/frequencies/selected-mhz",f);
                 </script>
            </binding>
         </decrease>
@@ -3514,7 +3514,7 @@
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>d3</tooltip-id>
-                <label>NAV FREQ</label>
+                <label>COMM 1 FREQ</label>
             </binding>
         </hovered>
     </animation>
@@ -3522,7 +3522,7 @@
     <animation>
         <type>knob</type>
         <object-name>uhf-knob.04</object-name>
-        <property>instrumentation/nav[0]/frequencies/current-mhz-digit-4</property>
+        <property>instrumentation/comm[0]/frequencies/current-mhz-digit-4</property>
         <factor>36</factor>
         <offset-deg>0</offset-deg>
         <interval-sec>0.1</interval-sec>
@@ -3538,13 +3538,13 @@
             <binding>
                 <command>nasal</command>
                 <script>
-                  var f = getprop("instrumentation/nav[0]/frequencies/selected-mhz");
+                  var f = getprop("instrumentation/comm[0]/frequencies/selected-mhz");
                   fd = int((f*0.01-int(f*0.01)) * 10);
                   fd += 1;
                   if (fd == 10) fd = -90;
                   else fd = 10;
                   f += fd;
-                  setprop("instrumentation/nav[0]/frequencies/selected-mhz",f);
+                  setprop("instrumentation/comm[0]/frequencies/selected-mhz",f);
                 </script>
            </binding>
         </increase>
@@ -3552,13 +3552,13 @@
             <binding>
                 <command>nasal</command>
                 <script>
-                  var f = getprop("instrumentation/nav[0]/frequencies/selected-mhz");
+                  var f = getprop("instrumentation/comm[0]/frequencies/selected-mhz");
                   fd = int((f*0.01-int(f*0.01)) * 10);
                   fd -= 1;
                   if (fd == -1) fd = 90;
                   else fd = -10;
                   f += fd;
-                  setprop("instrumentation/nav[0]/frequencies/selected-mhz",f);
+                  setprop("instrumentation/comm[0]/frequencies/selected-mhz",f);
                 </script>
            </binding>
         </decrease>
@@ -3566,7 +3566,7 @@
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>d4</tooltip-id>
-                <label>NAV FREQ</label>
+                <label>COMM 1 FREQ</label>
             </binding>
         </hovered>
     </animation>
@@ -3574,7 +3574,7 @@
     <animation>
         <type>knob</type>
         <object-name>uhf-knob.05</object-name>
-        <property>instrumentation/nav[0]/frequencies/current-mhz-digit-5</property>
+        <property>instrumentation/comm[0]/frequencies/current-mhz-digit-5</property>
         <factor>36</factor>
         <offset-deg>0</offset-deg>
         <interval-sec>0.1</interval-sec>
@@ -3590,13 +3590,13 @@
             <binding>
                 <command>nasal</command>
                 <script>
-                  var f = getprop("instrumentation/nav[0]/frequencies/selected-mhz");
+                  var f = getprop("instrumentation/comm[0]/frequencies/selected-mhz");
                   fd = int((f*0.001-int(f*0.001)) * 10);
                   fd += 1;
                   if (fd == 4) fd = -300;
                   else fd = 100;
                   f += fd;
-                  setprop("instrumentation/nav[0]/frequencies/selected-mhz",f);
+                  setprop("instrumentation/comm[0]/frequencies/selected-mhz",f);
                 </script>
            </binding>
         </increase>
@@ -3604,13 +3604,13 @@
             <binding>
                 <command>nasal</command>
                 <script>
-                  var f = getprop("instrumentation/nav[0]/frequencies/selected-mhz");
+                  var f = getprop("instrumentation/comm[0]/frequencies/selected-mhz");
                   fd = int((f*0.001-int(f*0.001)) * 10);
                   fd -= 1;
                   if (fd == -1) fd = 300;
                   else fd = -100;
                   f += fd;
-                  setprop("instrumentation/nav[0]/frequencies/selected-mhz",f);
+                  setprop("instrumentation/comm[0]/frequencies/selected-mhz",f);
                 </script>
            </binding>
         </decrease>
@@ -3618,7 +3618,7 @@
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>d5</tooltip-id>
-                <label>NAV FREQ</label>
+                <label>COMM 1 FREQ</label>
             </binding>
         </hovered>
     </animation>

@@ -473,7 +473,7 @@
 		<pure_gain name="elec/bus/ess-dc">
 			<input>elec/bus/switch/emergency-dc-2-epu</input>
 			<gain>1.0</gain>
-		</pure_gain>
+		</pure_gain> 
 		
 		<summer name="elec/bus/batt-1">
 			<input>elec/bus/emergency-dc-1</input>
@@ -485,6 +485,8 @@
 			</clipto>
 			<output>/systems/electrical/outputs/adf</output>
 			<output>/systems/electrical/outputs/nav</output>
+			<output>/systems/electrical/outputs/comm[0]</output>
+			<output>/systems/electrical/outputs/comm[1]</output>
 			<output>/systems/electrical/outputs/dme</output>
 			<output>/systems/electrical/outputs/tacan</output>
 			<output>/systems/electrical/outputs/gps</output>

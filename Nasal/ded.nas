@@ -20,6 +20,10 @@ var STPTaltFE = EditableField.new("f16/ded/alt", "%5d", 5);
 var STPTtypeTF = toggleableField.new(["   ", " 2 ", " 11", " 20", " SH", " P ", " AA"], "f16/ded/stpt-type");
 var STPTcolorTF = toggleableField.new(["RED", "YEL", "GRN"], "f16/ded/stpt-color");
 var dlinkEF   = EditableField.new("instrumentation/datalink/channel", "%4d", 4);
+var com1FrqEF = EditableField.new("instrumentation/comm[0]/frequencies/selected-mhz", "%6.2f", 6);
+var com2FrqEF = EditableField.new("instrumentation/comm[1]/frequencies/selected-mhz", "%6.2f", 6);
+var com1SFrqEF = EditableField.new("instrumentation/comm[0]/frequencies/standby-mhz", "%6.2f", 6);
+var com2SFrqEF = EditableField.new("instrumentation/comm[1]/frequencies/standby-mhz", "%6.2f", 6);
 
 var pTACAN = EditableFieldPage.new(0, [tacanChanEF,tacanBandTF,ilsFrqEF,ilsCrsEF]);
 var pALOW  = EditableFieldPage.new(1, [alowEF,mslFloorEF]);
@@ -57,8 +61,8 @@ var pWPT   = EditableFieldPage.new(28);
 var pHARM  = EditableFieldPage.new(29);
 
 var pCNI   = EditableFieldPage.new(30);
-var pCOMM1 = EditableFieldPage.new(31);
-var pCOMM2 = EditableFieldPage.new(32);
+var pCOMM1 = EditableFieldPage.new(31, [com1FrqEF, com1SFrqEF]);
+var pCOMM2 = EditableFieldPage.new(32, [com2FrqEF, com2SFrqEF]);
 var pIFF   = EditableFieldPage.new(33, [transpEF,transpModeTF,iffEF,iffTF]);
 
 var wp_num_lastA = nil;
@@ -897,14 +901,14 @@ var dataEntryDisplay = {
 		winddir = sprintf("%03d\xc2\xb0",getprop("environment/wind-from-heading-deg"));
 		windkts = sprintf("%03d",getprop("environment/wind-speed-kt"));
 		
-		me.text[0] = sprintf("UHF   242.10    STPT %s", me.no);# removed the 'A' here, as MLU manuals don't show it.
+		me.text[0] = sprintf("UHF   %s    STPT %s",getprop("/instrumentation/comm[0]/frequencies/selected-mhz"), me.no);# removed the 'A' here, as MLU manuals don't show it.
 
 		if (me.CNIshowWind) {
 			me.text[1] = sprintf("                %s %s", winddir, windkts);
 		} else {
 			me.text[1] = sprintf("                ");
 		}
-		me.text[2] = sprintf("VHF   %5.2f    %s",getprop("/instrumentation/comm[1]/frequencies/selected-mhz"), getprop("/sim/time/gmt-string"));
+		me.text[2] = sprintf("VHF   %s    %s",getprop("/instrumentation/comm[1]/frequencies/selected-mhz"), getprop("/sim/time/gmt-string"));
 		if (me.chrono.running) {
 			var hackHour = int(getprop("f16/avionics/hack/elapsed-time-sec") / 3600);
 			var hackMin = int((getprop("f16/avionics/hack/elapsed-time-sec") - (hackHour * 3600)) / 60);
@@ -918,19 +922,19 @@ var dataEntryDisplay = {
 	},
 	
 	updateComm1: func() {
-		me.text[0] = sprintf("         UHF MAIN  ");
-		me.text[1] = sprintf("  %5.2f", 305.00);
-		me.text[2] = sprintf("  ");
-		me.text[3] = sprintf("  PRE  1");
-		me.text[4] = sprintf("  %5.2f         NB", 242.10);
+		me.text[0] = sprintf("  SEC    UHF MAIN  ");
+		me.text[1] = sprintf("  %s", pCOMM1.vector[0].getText());
+		me.text[2] = sprintf("               1");
+		me.text[3] = sprintf("  PRE  2");
+		me.text[4] = sprintf("  %s    NB", pCOMM1.vector[1].getText());
 	},
 	
 	updateComm2: func() {
 		me.text[0] = sprintf("         VHF ON  ");
-		me.text[1] = sprintf("  %5.2f", getprop("/instrumentation/comm[1]/frequencies/selected-mhz"));
-		me.text[2] = sprintf("  ");
-		me.text[3] = sprintf("  PRE  1");
-		me.text[4] = sprintf("  %5.2f         NB", getprop("/instrumentation/comm[1]/frequencies/standby-mhz"));
+		me.text[1] = sprintf("  %s", pCOMM2.vector[0].getText());
+		me.text[2] = sprintf("              1");
+		me.text[3] = sprintf("  PRE  2     TOD");
+		me.text[4] = sprintf("  %s    NB", pCOMM2.vector[1].getText());
 	},
 	
 	updateIFF: func() {
