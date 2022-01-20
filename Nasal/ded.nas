@@ -202,6 +202,12 @@ var dataEntryDisplay = {
 		me.line3.setText(me.text[2]);
 		me.line4.setText(me.text[3]);
 		me.line5.setText(me.text[4]);
+
+		if (me.page == pLIST) {
+			me.updateListHUD();
+		} elsif (me.page == pMISC) {
+			me.updateMiscHUD();
+		}
 		
 		me.pageLast = me.page;
 
@@ -622,6 +628,14 @@ var dataEntryDisplay = {
 		me.text[3] = sprintf(" "~utf8.chstr(0xFB57)~"EWS  "~utf8.chstr(0xFB58)~"MODE "~utf8.chstr(0xFB59)~"VRP "~utf8.chstr(0xFB50)~"MISC ");
 		me.text[4] = sprintf("                        ");
 	},
+
+	updateListHUD: func() {
+		me.text[0] = sprintf("           LIST      %s ", me.no);
+		me.text[1] = sprintf(" 1DEST 2BNGO 3VIP RINTG ");
+		me.text[2] = sprintf(" 4NAV  5MAN  6INS EDLNK ");
+		me.text[3] = sprintf(" 7EWS  8MODE 9VRP 0MISC ");
+		me.text[4] = sprintf("                        ");
+	},
 	
 	updateDest: func() {
 		var lat = "";
@@ -761,6 +775,14 @@ var dataEntryDisplay = {
 		me.text[1] = sprintf(" "~utf8.chstr(0xFB51)~"CORR "~utf8.chstr(0xFB52)~"MAGV "~utf8.chstr(0xFB53)~"OFP "~utf8.chstr(0xFB6B)~"HMCS");
 		me.text[2] = sprintf(" "~utf8.chstr(0xFB54)~"INSM "~utf8.chstr(0xFB55)~"LASR "~utf8.chstr(0xFB56)~"GPS "~utf8.chstr(0xFB5E)~" ");
 		me.text[3] = sprintf(" "~utf8.chstr(0xFB57)~"DRNG "~utf8.chstr(0xFB58)~"BULL "~utf8.chstr(0xFB59)~"WPT "~utf8.chstr(0xFB50)~"HARM ");
+		me.text[4] = sprintf("                        ");
+	},
+
+	updateMiscHUD: func() {
+		me.text[0] = sprintf("           MISC      %s ", me.no);
+		me.text[1] = sprintf(" 1CORR 2MAGV 3OFP RHMCS ");
+		me.text[2] = sprintf(" 4INSM 5LASR 6GPS E     ");
+		me.text[3] = sprintf(" 7DRNG 8BULL 9WPT 0HARM ");
 		me.text[4] = sprintf("                        ");
 	},
 	
