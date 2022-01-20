@@ -323,6 +323,17 @@
   </offsets>
  </model>
 
+ <model>
+  <name>Station3_AN_ALQ-188</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/AN_ALQ-188/AN_ALQ-188.xml</path>
+  <offsets>
+   <x-m>0.3</x-m>
+   <y-m>-2.872</y-m>
+   <z-m>-0.438</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
 <!-- =============================================================================================================  --> 
 <!-- =========================================== Station 7 =======================================================  -->
 <!-- =============================================================================================================  -->  
@@ -631,6 +642,17 @@
    <x-m>0.62</x-m>
    <y-m>2.872</y-m>
    <z-m>-0.49</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station7_AN_ALQ-188</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/AN_ALQ-188/AN_ALQ-188.xml</path>
+  <offsets>
+   <x-m>0.3</x-m>
+   <y-m>2.872</y-m>
+   <z-m>-0.438</z-m>
    <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>

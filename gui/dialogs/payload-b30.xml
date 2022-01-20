@@ -113,6 +113,39 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>2</row>
             <col>0</col>
+            <legend>A/A Aggressor (Mode 1)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.b30_agrs1_aa();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>4</row>
+            <col>0</col>
+            <legend>A/A Aggressor (Mode 2)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.b30_agrs2_aa();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>6</row>
+            <col>0</col>
+            <legend>A/A Aggressor (2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.b30_agrs3_aa();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>8</row>
+            <col>0</col>
             <legend>Combat Air Patrol</legend>
             <binding>
                 <command>nasal</command>
@@ -128,7 +161,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>4</row>
+            <row>10</row>
             <col>0</col>
             <legend>Combat Air Patrol (2 bags)</legend>
             <binding>
@@ -145,7 +178,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>6</row>
+            <row>12</row>
             <col>0</col>
             <legend>Air Defense</legend>
             <binding>
@@ -162,7 +195,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>8</row>
+            <row>14</row>
             <col>0</col>
             <legend>Air Superiority</legend>
             <binding>
@@ -173,7 +206,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>10</row>
+            <row>16</row>
             <col>0</col>
             <legend>Air Superiority (2 bags)</legend>
             <binding>
@@ -190,7 +223,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>12</row>
+            <row>18</row>
             <col>0</col>
             <legend>Defensive Counter Air</legend>
             <binding>
@@ -213,7 +246,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>14</row>
+            <row>20</row>
             <col>0</col>
             <legend>Ferry Loadout (3 bags)</legend>
             <binding>
@@ -224,7 +257,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>16</row>
+            <row>22</row>
             <col>0</col>
             <legend>Ferry Loadout (2 bags XL)</legend>
             <binding>
@@ -360,6 +393,12 @@
             </binding>
         </button>
 
+        <hrule>
+            <row>15</row>
+            <col>0</col>
+            <colspan>6</colspan>
+        </hrule>
+
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>8</row>
@@ -370,6 +409,12 @@
                 <script>pylons.a2g_hyd70();</script>
             </binding>
         </button>
+
+        <hrule>
+            <row>17</row>
+            <col>0</col>
+            <colspan>6</colspan>
+        </hrule>
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
@@ -383,7 +428,13 @@
         </button>
 
         <hrule>
-            <row>15</row>
+            <row>19</row>
+            <col>0</col>
+            <colspan>6</colspan>
+        </hrule>
+
+        <hrule>
+            <row>21</row>
             <col>0</col>
             <colspan>6</colspan>
         </hrule>
