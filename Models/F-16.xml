@@ -1040,7 +1040,93 @@
 
  
 <!-- ===================== START LIGHTING =========================== -->
+  <light>
+  <name>taxi-light</name>
+  <type>spot</type>
+  <position>
+    <x-m>-3.13064</x-m>
+    <y-m>0.307693</y-m>
+    <z-m>-1.23477</z-m>
+  </position>
+  <direction>
+    <pitch-deg>85</pitch-deg>
+    <roll-deg>0</roll-deg>
+    <heading-deg>0</heading-deg>
+  </direction>
+  <ambient>
+    <r>0.03</r>
+    <g>0.03</g>
+    <b>0.03</b>
+    <a>1</a>
+  </ambient>
+  <diffuse>
+    <r>0.95</r>
+    <g>0.9</g>
+    <b>0.9</b>
+    <a>1</a>
+  </diffuse>
+  <specular>
+    <r>0.95</r>
+    <g>0.9</g>
+    <b>0.9</b>
+    <a>1</a>
+  </specular>
+  <attenuation>
+    <c>0.05</c>
+    <l>0.00045</l>
+    <q>0.000075</q>
+  </attenuation>
+  <spot-exponent>30</spot-exponent>
+  <spot-cutoff>30</spot-cutoff>
+  <range-m>100</range-m>
+  <dim-factor>
+    <property>sim/multiplay/generic/bool[46]</property>
+  </dim-factor>
+</light>
 
+<light>
+  <name>land-light</name>
+  <type>spot</type>
+  <position>
+    <x-m>-3.13064</x-m>
+    <y-m>0.307693</y-m>
+    <z-m>-1.23477</z-m>
+  </position>
+  <direction>
+    <pitch-deg>79.86</pitch-deg>
+    <roll-deg>0</roll-deg>
+    <heading-deg>0</heading-deg>
+  </direction>
+  <ambient>
+    <r>0.03</r>
+    <g>0.03</g>
+    <b>0.03</b>
+    <a>1</a>
+  </ambient>
+  <diffuse>
+    <r>0.85</r>
+    <g>0.8</g>
+    <b>0.8</b>
+    <a>1</a>
+  </diffuse>
+  <specular>
+    <r>0.85</r>
+    <g>0.8</g>
+    <b>0.8</b>
+    <a>1</a>
+  </specular>
+  <attenuation>
+    <c>1</c>
+    <l>0.0001</l>
+    <q>0.00000</q>
+  </attenuation>
+  <spot-exponent>1250</spot-exponent>
+  <spot-cutoff>7.5</spot-cutoff>
+  <range-m>250</range-m>
+  <dim-factor>
+    <property>sim/multiplay/generic/bool[47]</property>
+  </dim-factor>
+</light>
 <!-- start position lights -->
 
  <animation>

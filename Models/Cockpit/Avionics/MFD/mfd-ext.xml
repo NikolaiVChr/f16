@@ -878,7 +878,7 @@
         <object-name>MFDimage3</object-name>
     </effect>-->
     <effect>
-        <inherits-from>Effects/model-transparent</inherits-from>
+        <inherits-from>Aircraft/f16/Models/Effects/flir/canvas</inherits-from>
         <parameters>
         </parameters>
         <object-name>MFDimage3</object-name>

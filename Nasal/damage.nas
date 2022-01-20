@@ -1309,6 +1309,7 @@ var code_ct = func () {
       setprop("sim/freeze/fuel",0);
       setprop("/sim/speed-up", 1);
       setprop("/gui/map/draw-traffic", 0);
+      setprop("/sim/marker-pins/traffic", 0);
       setprop("/sim/gui/dialogs/map-canvas/draw-TFC", 0);
       #fgcommand("timeofday", props.Node.new({"timeofday": "real"}));
       #setprop("/sim/rendering/als-filters/use-filtering", 1);

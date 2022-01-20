@@ -953,7 +953,7 @@ var AIContact = {
 
 	getDeviation: func {
 		# This is an instant perfect result, so don't call this outside the radar system.
-		# optimized method that return both heading and pitch deviation as seen from pilot, to limit property calls
+		# optimized method that return both heading/pitch deviation as seen from pilot and in north,east/down coord system, to limit property calls
 		# returns [bearingDev, elevationDev, distDirect, coord]
 		me.getCoord();
 		me.acCoord = self.getCoord();

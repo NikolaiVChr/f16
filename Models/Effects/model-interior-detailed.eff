@@ -1,73 +1,89 @@
-<?xml version="1.0" encoding="utf-8"?>
-
+<?xml version="1.0" encoding="UTF-8"?>
 <PropertyList>
-  <name>Effects/model-interior</name>
+  <name>Effects/model-interior-f16</name>
   <inherits-from>Effects/model-default</inherits-from>
-
   <parameters>
-	<texture n="3">
-			<image>Aircraft/Generic/Effects/greymap.png</image>
-			<type>2d</type>
-			<filter>linear-mipmap-linear</filter>
-			<wrap-s>clamp</wrap-s>
-			<wrap-t>clamp</wrap-t>
-			<internal-format>normalized</internal-format>
-	</texture>
-  	
-	<texture n="7">
-			<image>Textures/Terrain/void.png</image>
-			<type>2d</type>
-			<filter>linear-mipmap-linear</filter>
-			<wrap-s>repeat</wrap-s>
-			<wrap-t>repeat</wrap-t>
-			<internal-format>normalized</internal-format>
-	</texture>
-	<opacity-cube-center type="vec3d" n="0"> 0.0 0.0 0.0</opacity-cube-center>
-	<opacity-cube-scale type="vec3d" n="0"> 1.0 1.0 1.0</opacity-cube-scale>
-	<opacity-cube-angle type="float">0.0</opacity-cube-angle>
-	<implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
-	<implicit-lightmap-tag-color type="vec3d">1.0 1.0 1.0</implicit-lightmap-tag-color>
-	<implicit-lightmap-threshold-low type="float">0.5</implicit-lightmap-threshold-low>
-	<implicit-lightmap-threshold-high type="float">1.5</implicit-lightmap-threshold-high>
-	<implicit-lightmap-emit-color type="vec3d">1.0 1.0 1.0</implicit-lightmap-emit-color>
-	<implicit-lightmap-intensity type="float">0.0</implicit-lightmap-intensity>
-	<light-filter-one type="vec3d">0.5 0.5 0.5</light-filter-one>
-	<light-filter-two type="vec3d">0.9 0.2 0.2</light-filter-two>
-	<light-radius type="float">9.6</light-radius>
-	<use-flashlight><use>/sim/rendering/als-secondary-lights/use-flashlight</use></use-flashlight>
-	<lightmap-enabled type="int">0</lightmap-enabled>
-	<lightmap-multi type="int">0</lightmap-multi>
-	<lightmap-factor type="float" n="0">1.0</lightmap-factor>
-	<lightmap-color type="vec3d" n="0"> 1.0 1.0 1.0 </lightmap-color>
-	<lightmap-factor type="float" n="1">1.0</lightmap-factor>
-	<lightmap-color type="vec3d" n="1"> 1.0 1.0 1.0 </lightmap-color>
-	<lightmap-factor type="float" n="2">1.0</lightmap-factor>
-	<lightmap-color type="vec3d" n="2"> 1.0 1.0 1.0 </lightmap-color>
-	<lightmap-factor type="float" n="3">1.0</lightmap-factor>
-	<lightmap-color type="vec3d" n="3"> 1.0 1.0 1.0 </lightmap-color>
-	<grain-texture-enabled type="int">0</grain-texture-enabled>
-	<grain-magnification type="float">10.0</grain-magnification>
-	<irradiance-map-type type="int">0</irradiance-map-type>
-	<irradiance-map-strength type="float">0.0</irradiance-map-strength>
-	<residual-ambience-r type="float">0.0</residual-ambience-r>
-	<residual-ambience-g type="float">0.0</residual-ambience-g>
-	<residual-ambience-b type="float">0.0</residual-ambience-b>
-	<ra-irradiance-map-type type="int">0</ra-irradiance-map-type>
-	<ra-irradiance-map-strength type="float">0.0</ra-irradiance-map-strength>
+    <texture n="3">
+      <image>Aircraft/Generic/Effects/greymap.png</image>
+      <type>2d</type>
+      <filter>linear-mipmap-linear</filter>
+      <wrap-s>clamp</wrap-s>
+      <wrap-t>clamp</wrap-t>
+      <internal-format>normalized</internal-format>
+    </texture>
+    <texture n="7">
+      <image>Textures/Terrain/void.png</image>
+      <type>2d</type>
+      <filter>linear-mipmap-linear</filter>
+      <wrap-s>repeat</wrap-s>
+      <wrap-t>repeat</wrap-t>
+      <internal-format>normalized</internal-format>
+    </texture>
+    <opacity-cube-center type="vec3d" n="0">0.0 0.0 0.0</opacity-cube-center>
+    <opacity-cube-scale type="vec3d" n="0">1.0 1.0 1.0</opacity-cube-scale>
+    <opacity-cube-angle type="float">0.0</opacity-cube-angle>
+    <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
+    <implicit-lightmap-tag-color type="vec3d">1.0 1.0 1.0</implicit-lightmap-tag-color>
+    <implicit-lightmap-threshold-low type="float">0.5</implicit-lightmap-threshold-low>
+    <implicit-lightmap-threshold-high type="float">1.5</implicit-lightmap-threshold-high>
+    <implicit-lightmap-emit-color type="vec3d">1.0 1.0 1.0</implicit-lightmap-emit-color>
+    <implicit-lightmap-intensity type="float">0.0</implicit-lightmap-intensity>
+    <light-filter-one type="vec3d">0.5 0.5 0.5</light-filter-one>
+    <light-filter-two type="vec3d">0.9 0.2 0.2</light-filter-two>
+    <light-radius type="float">9.6</light-radius>
+    <use-flashlight>
+      <use>/sim/rendering/als-secondary-lights/use-flashlight</use>
+    </use-flashlight>
+    <lightmap-enabled type="int">0</lightmap-enabled>
+    <lightmap-multi type="int">0</lightmap-multi>
+    <lightmap-factor type="float" n="0">1.0</lightmap-factor>
+    <lightmap-color type="vec3d" n="0">1.0 1.0 1.0</lightmap-color>
+    <lightmap-factor type="float" n="1">1.0</lightmap-factor>
+    <lightmap-color type="vec3d" n="1">1.0 1.0 1.0</lightmap-color>
+    <lightmap-factor type="float" n="2">1.0</lightmap-factor>
+    <lightmap-color type="vec3d" n="2">1.0 1.0 1.0</lightmap-color>
+    <lightmap-factor type="float" n="3">1.0</lightmap-factor>
+    <lightmap-color type="vec3d" n="3">1.0 1.0 1.0</lightmap-color>
+    <grain-texture-enabled type="int">0</grain-texture-enabled>
+    <grain-magnification type="float">10.0</grain-magnification>
+    <irradiance-map-type type="int">0</irradiance-map-type>
+    <irradiance-map-strength type="float">0.0</irradiance-map-strength>
+    <residual-ambience-r type="float">0.0</residual-ambience-r>
+    <residual-ambience-g type="float">0.0</residual-ambience-g>
+    <residual-ambience-b type="float">0.0</residual-ambience-b>
+    <ra-irradiance-map-type type="int">0</ra-irradiance-map-type>
+    <ra-irradiance-map-strength type="float">0.0</ra-irradiance-map-strength>
+    <!-- BEGIN shadows include -->
+    <shadows_enabled>
+      <use>/sim/rendering/shadows/enabled</use>
+    </shadows_enabled>
+    <sun_atlas_size>
+      <use>/sim/rendering/shadows/sun-atlas-size</use>
+    </sun_atlas_size>
+    <!-- END shadows include -->
   </parameters>
 
-  <technique n="3">
+
+
+
+
+
+  <technique n="0">
     <predicate>
       <and>
+        <equal>
+          <value type="bool">true</value>
+          <property>/sim/version/compositor-support</property>
+        </equal>
         <property>/sim/rendering/shaders/skydome</property>
-	<less-equal>
-		<value type="float">1.0</value>
-		<float-property>/sim/rendering/shaders/model</float-property>
-	</less-equal>
+        <less-equal>
+          <value type="float">1.0</value>
+          <float-property>/sim/rendering/shaders/model</float-property>
+        </less-equal>
         <or>
           <less-equal>
             <value type="float">2.0</value>
-            <glversion/>
+            <glversion />
           </less-equal>
           <and>
             <extension-supported>GL_ARB_shader_objects</extension-supported>
@@ -81,50 +97,1174 @@
     <pass>
       <lighting>true</lighting>
       <material>
-        <active><use>material/active</use></active>
-        <ambient><use>material/ambient</use></ambient>
-        <diffuse><use>material/diffuse</use></diffuse>
-        <specular><use>material/specular</use></specular>
-        <emissive><use>material/emissive</use></emissive>
-        <shininess><use>material/shininess</use></shininess>
-        <color-mode><use>material/color-mode</use></color-mode>
+        <active>
+          <use>material/active</use>
+        </active>
+        <ambient>
+          <use>material/ambient</use>
+        </ambient>
+        <diffuse>
+          <use>material/diffuse</use>
+        </diffuse>
+        <specular>
+          <use>material/specular</use>
+        </specular>
+        <emissive>
+          <use>material/emissive</use>
+        </emissive>
+        <shininess>
+          <use>material/shininess</use>
+        </shininess>
+        <color-mode>
+          <use>material/color-mode</use>
+        </color-mode>
       </material>
       <blend>
-        <active><use>blend/active</use></active>
-        <source><use>blend/source</use></source>
-        <destination><use>blend/destination</use></destination>
+        <active>
+          <use>blend/active</use>
+        </active>
+        <source>
+          <use>blend/source</use>
+        </source>
+        <destination>
+          <use>blend/destination</use>
+        </destination>
       </blend>
-      <shade-model><use>shade-model</use></shade-model>
-      <cull-face><use>cull-face</use></cull-face>
-      <rendering-hint><use>rendering-hint</use></rendering-hint>
+      <shade-model>
+        <use>shade-model</use>
+      </shade-model>
+      <cull-face>
+        <use>cull-face</use>
+      </cull-face>
+      <rendering-hint>
+        <use>rendering-hint</use>
+      </rendering-hint>
       <texture-unit>
         <unit>0</unit>
-        <type><use>texture[0]/type</use></type>
-        <image><use>texture[0]/image</use></image>
-        <filter><use>texture[0]/filter</use></filter>
-        <wrap-s><use>texture[0]/wrap-s</use></wrap-s>
-        <wrap-t><use>texture[0]/wrap-t</use></wrap-t>
+        <type>
+          <use>texture[0]/type</use>
+        </type>
+        <image>
+          <use>texture[0]/image</use>
+        </image>
+        <filter>
+          <use>texture[0]/filter</use>
+        </filter>
+        <wrap-s>
+          <use>texture[0]/wrap-s</use>
+        </wrap-s>
+        <wrap-t>
+          <use>texture[0]/wrap-t</use>
+        </wrap-t>
       </texture-unit>
       <texture-unit>
         <unit>3</unit>
-        <type><use>texture[3]/type</use></type>
-        <image><use>texture[3]/image</use></image>
-        <filter><use>texture[3]/filter</use></filter>
-        <wrap-s><use>texture[3]/wrap-s</use></wrap-s>
-        <wrap-t><use>texture[3]/wrap-t</use></wrap-t>
+        <type>
+          <use>texture[3]/type</use>
+        </type>
+        <image>
+          <use>texture[3]/image</use>
+        </image>
+        <filter>
+          <use>texture[3]/filter</use>
+        </filter>
+        <wrap-s>
+          <use>texture[3]/wrap-s</use>
+        </wrap-s>
+        <wrap-t>
+          <use>texture[3]/wrap-t</use>
+        </wrap-t>
       </texture-unit>
       <texture-unit>
-	<unit>4</unit>
-	<type><use>texture[4]/type</use></type>
-	<images><use>texture[4]/images</use></images>
+        <unit>4</unit>
+        <type>
+          <use>texture[4]/type</use>
+        </type>
+        <images>
+          <use>texture[4]/images</use>
+        </images>
       </texture-unit>
       <texture-unit>
         <unit>7</unit>
-        <type><use>texture[7]/type</use></type>
-        <image><use>texture[7]/image</use></image>
-        <filter><use>texture[7]/filter</use></filter>
-        <wrap-s><use>texture[7]/wrap-s</use></wrap-s>
-        <wrap-t><use>texture[7]/wrap-t</use></wrap-t>
+        <type>
+          <use>texture[7]/type</use>
+        </type>
+        <image>
+          <use>texture[7]/image</use>
+        </image>
+        <filter>
+          <use>texture[7]/filter</use>
+        </filter>
+        <wrap-s>
+          <use>texture[7]/wrap-s</use>
+        </wrap-s>
+        <wrap-t>
+          <use>texture[7]/wrap-t</use>
+        </wrap-t>
+      </texture-unit>
+      <vertex-program-two-side>
+        <use>vertex-program-two-side</use>
+      </vertex-program-two-side>
+      <program>
+        <vertex-shader>Shaders/model-interior-ALS-detailed.vert</vertex-shader>
+        <vertex-shader>Shaders/shadows-include.vert</vertex-shader>
+        <fragment-shader>Shaders/model-interior-ALS-detailed.frag</fragment-shader>
+        <fragment-shader>Shaders/secondary_lights.frag</fragment-shader>
+        <fragment-shader>Shaders/noise.frag</fragment-shader>
+        <fragment-shader>Shaders/filters-ALS.frag</fragment-shader>
+        <fragment-shader>Shaders/shadows-include.frag</fragment-shader>
+        <fragment-shader>Shaders/clustered-include.frag</fragment-shader>
+      </program>
+      <!-- BEGIN shadows include -->
+      <uniform>
+        <name>shadow_tex</name>
+        <type>sampler-2d</type>
+        <value type="int">10</value>
+      </uniform>
+      <uniform>
+        <name>shadows_enabled</name>
+        <type>bool</type>
+        <value>
+          <use>shadows_enabled</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>sun_atlas_size</name>
+        <type>int</type>
+        <value>
+          <use>sun_atlas_size</use>
+        </value>
+      </uniform>
+      <!-- END shadows include -->
+      <uniform>
+        <name>visibility</name>
+        <type>float</type>
+        <value>
+          <use>visibility</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>avisibility</name>
+        <type>float</type>
+        <value>
+          <use>avisibility</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>hazeLayerAltitude</name>
+        <type>float</type>
+        <value>
+          <use>lthickness</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>scattering</name>
+        <type>float</type>
+        <value>
+          <use>scattering</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>terminator</name>
+        <type>float</type>
+        <value>
+          <use>terminator</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>ground_scattering</name>
+        <type>float</type>
+        <value>
+          <use>ground_scattering</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>terminator</name>
+        <type>float</type>
+        <value>
+          <use>terminator</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>terrain_alt</name>
+        <type>float</type>
+        <value>
+          <use>terrain_alt</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>overcast</name>
+        <type>float</type>
+        <value>
+          <use>overcast</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>eye_alt</name>
+        <type>float</type>
+        <value>
+          <use>eye_alt</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>cloud_self_shading</name>
+        <type>float</type>
+        <value>
+          <use>cloud_self_shading</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>moonlight</name>
+        <type>float</type>
+        <value>
+          <use>moonlight</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>offset_vec</name>
+        <type>float-vec3</type>
+        <value>
+          <use>opacity-cube-center</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>scale_vec</name>
+        <type>float-vec3</type>
+        <value>
+          <use>opacity-cube-scale</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>angle</name>
+        <type>float</type>
+        <value>
+          <use>opacity-cube-angle</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>tag_color</name>
+        <type>float-vec3</type>
+        <value>
+          <use>implicit-lightmap-tag-color</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>emit_color</name>
+        <type>float-vec3</type>
+        <value>
+          <use>implicit-lightmap-emit-color</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>light_filter_one</name>
+        <type>float-vec3</type>
+        <value>
+          <use>light-filter-one</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>light_filter_two</name>
+        <type>float-vec3</type>
+        <value>
+          <use>light-filter-two</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>light_radius</name>
+        <type>float</type>
+        <value>
+          <use>light-radius</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>threshold_low</name>
+        <type>float</type>
+        <value>
+          <use>implicit-lightmap-threshold-low</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>threshold_high</name>
+        <type>float</type>
+        <value>
+          <use>implicit-lightmap-threshold-high</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>emit_intensity</name>
+        <type>float</type>
+        <value>
+          <use>implicit-lightmap-intensity</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>view_pitch_offset</name>
+        <type>float</type>
+        <value>
+          <use>view_pitch_offset</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>view_heading_offset</name>
+        <type>float</type>
+        <value>
+          <use>view_heading_offset</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>field_of_view</name>
+        <type>float</type>
+        <value>
+          <use>view_fov</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>display_xsize</name>
+        <type>int</type>
+        <value>
+          <use>display_xsize</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>display_ysize</name>
+        <type>int</type>
+        <value>
+          <use>display_ysize</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>lightmap_r_factor</name>
+        <type>float</type>
+        <value>
+          <use>lightmap-factor[0]</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>lightmap_r_color</name>
+        <type>float-vec3</type>
+        <value>
+          <use>lightmap-color[0]</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>lightmap_g_factor</name>
+        <type>float</type>
+        <value>
+          <use>lightmap-factor[1]</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>lightmap_g_color</name>
+        <type>float-vec3</type>
+        <value>
+          <use>lightmap-color[1]</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>lightmap_b_factor</name>
+        <type>float</type>
+        <value>
+          <use>lightmap-factor[2]</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>lightmap_b_color</name>
+        <type>float-vec3</type>
+        <value>
+          <use>lightmap-color[2]</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>lightmap_a_factor</name>
+        <type>float</type>
+        <value>
+          <use>lightmap-factor[3]</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>lightmap_a_color</name>
+        <type>float-vec3</type>
+        <value>
+          <use>lightmap-color[3]</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>grain_magnification</name>
+        <type>float</type>
+        <value>
+          <use>grain-magnification</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>irradiance_map_strength</name>
+        <type>float</type>
+        <value>
+          <use>irradiance-map-strength</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>ra_irradiance_map_strength</name>
+        <type>float</type>
+        <value>
+          <use>ra-irradiance-map-strength</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>residual_ambience_r</name>
+        <type>float</type>
+        <value>
+          <use>residual-ambience-r</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>residual_ambience_g</name>
+        <type>float</type>
+        <value>
+          <use>residual-ambience-g</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>residual_ambience_b</name>
+        <type>float</type>
+        <value>
+          <use>residual-ambience-b</use>
+        </value>
+      </uniform>
+      <!-- filtering -->
+      <uniform>
+        <name>gamma</name>
+        <type>float</type>
+        <value>
+          <use>gamma</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>brightness</name>
+        <type>float</type>
+        <value>
+          <use>brightness</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>use_filtering</name>
+        <type>bool</type>
+        <value>
+          <use>use_filtering</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>use_night_vision</name>
+        <type>bool</type>
+        <value>
+          <use>use_night_vision</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>use_IR_vision</name>
+        <type>bool</type>
+        <value>
+          <use>use_IR_vision</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>delta_T</name>
+        <type>float</type>
+        <value>
+          <use>delta_T</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>fact_grey</name>
+        <type>float</type>
+        <value>
+          <use>fact_grey</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>fact_black</name>
+        <type>float</type>
+        <value>
+          <use>fact_black</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>texture</name>
+        <type>sampler-2d</type>
+        <value type="int">0</value>
+      </uniform>
+      <uniform>
+        <name>lightmap_texture</name>
+        <type>sampler-2d</type>
+        <value type="int">3</value>
+      </uniform>
+      <uniform>
+        <name>cube_texture</name>
+        <type>sampler-cube</type>
+        <value type="int">4</value>
+      </uniform>
+      <uniform>
+        <name>grain_texture</name>
+        <type>sampler-2d</type>
+        <value type="int">7</value>
+      </uniform>
+      <uniform>
+        <name>colorMode</name>
+        <type>int</type>
+        <value>
+          <use>material/color-mode-uniform</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>quality_level</name>
+        <type>int</type>
+        <value>
+          <use>quality_level</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>tquality_level</name>
+        <type>int</type>
+        <value>
+          <use>tquality_level</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>implicit_lightmap_enabled</name>
+        <type>int</type>
+        <value>
+          <use>implicit-lightmap-enabled</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>use_flashlight</name>
+        <type>int</type>
+        <value>
+          <use>use-flashlight</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>lightmap_enabled</name>
+        <type>int</type>
+        <value>
+          <use>lightmap-enabled</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>lightmap_multi</name>
+        <type>int</type>
+        <value>
+          <use>lightmap-multi</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>irradiance_map_type</name>
+        <type>int</type>
+        <value>
+          <use>irradiance-map-type</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>ra_irradiance_map_type</name>
+        <type>int</type>
+        <value>
+          <use>ra-irradiance-map-type</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>grain_texture_enabled</name>
+        <type>int</type>
+        <value>
+          <use>grain-texture-enabled</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>shadow_mapping_enabled</name>
+        <type>bool</type>
+        <value>
+          <use>shadow-mapping-enabled</use>
+        </value>
+      </uniform>
+    </pass>
+  </technique>
+
+
+
+
+
+
+
+
+  <technique n="1">
+    <predicate>
+      <and>
+        <equal>
+          <value type="bool">true</value>
+          <property>/sim/version/compositor-support</property>
+        </equal>
+        <property>/sim/rendering/shaders/skydome</property>
+        <or>
+          <less-equal>
+            <value type="float">2.0</value>
+            <glversion />
+          </less-equal>
+          <and>
+            <extension-supported>GL_ARB_shader_objects</extension-supported>
+            <extension-supported>GL_ARB_shading_language_100</extension-supported>
+            <extension-supported>GL_ARB_vertex_shader</extension-supported>
+            <extension-supported>GL_ARB_fragment_shader</extension-supported>
+          </and>
+        </or>
+      </and>
+    </predicate>
+    <pass>
+      <lighting>true</lighting>
+      <material>
+        <active>
+          <use>material/active</use>
+        </active>
+        <ambient>
+          <use>material/ambient</use>
+        </ambient>
+        <diffuse>
+          <use>material/diffuse</use>
+        </diffuse>
+        <specular>
+          <use>material/specular</use>
+        </specular>
+        <emissive>
+          <use>material/emissive</use>
+        </emissive>
+        <shininess>
+          <use>material/shininess</use>
+        </shininess>
+        <color-mode>
+          <use>material/color-mode</use>
+        </color-mode>
+      </material>
+      <blend>
+        <active>
+          <use>blend/active</use>
+        </active>
+        <source>
+          <use>blend/source</use>
+        </source>
+        <destination>
+          <use>blend/destination</use>
+        </destination>
+      </blend>
+      <shade-model>
+        <use>shade-model</use>
+      </shade-model>
+      <cull-face>
+        <use>cull-face</use>
+      </cull-face>
+      <rendering-hint>
+        <use>rendering-hint</use>
+      </rendering-hint>
+      <texture-unit>
+        <unit>0</unit>
+        <type>
+          <use>texture[0]/type</use>
+        </type>
+        <image>
+          <use>texture[0]/image</use>
+        </image>
+        <filter>
+          <use>texture[0]/filter</use>
+        </filter>
+        <wrap-s>
+          <use>texture[0]/wrap-s</use>
+        </wrap-s>
+        <wrap-t>
+          <use>texture[0]/wrap-t</use>
+        </wrap-t>
+      </texture-unit>
+      <texture-unit>
+        <unit>4</unit>
+        <type>
+          <use>texture[4]/type</use>
+        </type>
+        <images>
+          <use>texture[4]/images</use>
+        </images>
+      </texture-unit>
+      <vertex-program-two-side>
+        <use>vertex-program-two-side</use>
+      </vertex-program-two-side>
+      <program>
+        <vertex-shader>Shaders/model-interior-ALS-base.vert</vertex-shader>
+        <vertex-shader>Shaders/shadows-include.vert</vertex-shader>
+        <fragment-shader>Shaders/model-interior-ALS-base.frag</fragment-shader>
+        <fragment-shader>Shaders/hazes.frag</fragment-shader>
+        <fragment-shader>Shaders/secondary_lights.frag</fragment-shader>
+        <fragment-shader>Shaders/noise.frag</fragment-shader>
+        <fragment-shader>Shaders/filters-ALS.frag</fragment-shader>
+        <fragment-shader>Shaders/shadows-include.frag</fragment-shader>
+        <fragment-shader>Shaders/clustered-include.frag</fragment-shader>
+      </program>
+      <!-- BEGIN shadows include -->
+      <uniform>
+        <name>shadow_tex</name>
+        <type>sampler-2d</type>
+        <value type="int">10</value>
+      </uniform>
+      <uniform>
+        <name>shadows_enabled</name>
+        <type>bool</type>
+        <value>
+          <use>shadows_enabled</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>sun_atlas_size</name>
+        <type>int</type>
+        <value>
+          <use>sun_atlas_size</use>
+        </value>
+      </uniform>
+      <!-- END shadows include -->
+      <uniform>
+        <name>visibility</name>
+        <type>float</type>
+        <value>
+          <use>visibility</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>avisibility</name>
+        <type>float</type>
+        <value>
+          <use>avisibility</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>hazeLayerAltitude</name>
+        <type>float</type>
+        <value>
+          <use>lthickness</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>scattering</name>
+        <type>float</type>
+        <value>
+          <use>scattering</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>terminator</name>
+        <type>float</type>
+        <value>
+          <use>terminator</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>ground_scattering</name>
+        <type>float</type>
+        <value>
+          <use>ground_scattering</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>terminator</name>
+        <type>float</type>
+        <value>
+          <use>terminator</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>terrain_alt</name>
+        <type>float</type>
+        <value>
+          <use>terrain_alt</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>overcast</name>
+        <type>float</type>
+        <value>
+          <use>overcast</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>eye_alt</name>
+        <type>float</type>
+        <value>
+          <use>eye_alt</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>cloud_self_shading</name>
+        <type>float</type>
+        <value>
+          <use>cloud_self_shading</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>moonlight</name>
+        <type>float</type>
+        <value>
+          <use>moonlight</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>offset_vec</name>
+        <type>float-vec3</type>
+        <value>
+          <use>opacity-cube-center</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>scale_vec</name>
+        <type>float-vec3</type>
+        <value>
+          <use>opacity-cube-scale</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>angle</name>
+        <type>float</type>
+        <value>
+          <use>opacity-cube-angle</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>tag_color</name>
+        <type>float-vec3</type>
+        <value>
+          <use>implicit-lightmap-tag-color</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>emit_color</name>
+        <type>float-vec3</type>
+        <value>
+          <use>implicit-lightmap-emit-color</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>light_filter_one</name>
+        <type>float-vec3</type>
+        <value>
+          <use>light-filter-one</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>light_filter_two</name>
+        <type>float-vec3</type>
+        <value>
+          <use>light-filter-two</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>light_radius</name>
+        <type>float</type>
+        <value>
+          <use>light-radius</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>threshold_low</name>
+        <type>float</type>
+        <value>
+          <use>implicit-lightmap-threshold-low</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>threshold_high</name>
+        <type>float</type>
+        <value>
+          <use>implicit-lightmap-threshold-high</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>emit_intensity</name>
+        <type>float</type>
+        <value>
+          <use>implicit-lightmap-intensity</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>view_pitch_offset</name>
+        <type>float</type>
+        <value>
+          <use>view_pitch_offset</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>view_heading_offset</name>
+        <type>float</type>
+        <value>
+          <use>view_heading_offset</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>field_of_view</name>
+        <type>float</type>
+        <value>
+          <use>view_fov</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>display_xsize</name>
+        <type>int</type>
+        <value>
+          <use>display_xsize</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>display_ysize</name>
+        <type>int</type>
+        <value>
+          <use>display_ysize</use>
+        </value>
+      </uniform>
+      <!-- filtering -->
+      <uniform>
+        <name>gamma</name>
+        <type>float</type>
+        <value>
+          <use>gamma</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>brightness</name>
+        <type>float</type>
+        <value>
+          <use>brightness</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>use_filtering</name>
+        <type>bool</type>
+        <value>
+          <use>use_filtering</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>use_night_vision</name>
+        <type>bool</type>
+        <value>
+          <use>use_night_vision</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>use_IR_vision</name>
+        <type>bool</type>
+        <value>
+          <use>use_IR_vision</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>delta_T</name>
+        <type>float</type>
+        <value>
+          <use>delta_T</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>fact_grey</name>
+        <type>float</type>
+        <value>
+          <use>fact_grey</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>fact_black</name>
+        <type>float</type>
+        <value>
+          <use>fact_black</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>texture</name>
+        <type>sampler-2d</type>
+        <value type="int">0</value>
+      </uniform>
+      <uniform>
+        <name>cube_texture</name>
+        <type>sampler-cube</type>
+        <value type="int">4</value>
+      </uniform>
+      <uniform>
+        <name>colorMode</name>
+        <type>int</type>
+        <value>
+          <use>material/color-mode-uniform</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>quality_level</name>
+        <type>int</type>
+        <value>
+          <use>quality_level</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>tquality_level</name>
+        <type>int</type>
+        <value>
+          <use>tquality_level</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>implicit_lightmap_enabled</name>
+        <type>int</type>
+        <value>
+          <use>implicit-lightmap-enabled</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>use_flashlight</name>
+        <type>int</type>
+        <value>
+          <use>use-flashlight</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>shadow_mapping_enabled</name>
+        <type>bool</type>
+        <value>
+          <use>shadow-mapping-enabled</use>
+        </value>
+      </uniform>
+    </pass>
+  </technique>
+
+
+
+
+
+
+  <technique n="2">
+    <predicate>
+      <and>
+        <property>/sim/rendering/shaders/skydome</property>
+        <less-equal>
+          <value type="float">1.0</value>
+          <float-property>/sim/rendering/shaders/model</float-property>
+        </less-equal>
+        <or>
+          <less-equal>
+            <value type="float">2.0</value>
+            <glversion />
+          </less-equal>
+          <and>
+            <extension-supported>GL_ARB_shader_objects</extension-supported>
+            <extension-supported>GL_ARB_shading_language_100</extension-supported>
+            <extension-supported>GL_ARB_vertex_shader</extension-supported>
+            <extension-supported>GL_ARB_fragment_shader</extension-supported>
+          </and>
+        </or>
+      </and>
+    </predicate>
+    <pass>
+      <lighting>true</lighting>
+      <material>
+        <active>
+          <use>material/active</use>
+        </active>
+        <ambient>
+          <use>material/ambient</use>
+        </ambient>
+        <diffuse>
+          <use>material/diffuse</use>
+        </diffuse>
+        <specular>
+          <use>material/specular</use>
+        </specular>
+        <emissive>
+          <use>material/emissive</use>
+        </emissive>
+        <shininess>
+          <use>material/shininess</use>
+        </shininess>
+        <color-mode>
+          <use>material/color-mode</use>
+        </color-mode>
+      </material>
+      <blend>
+        <active>
+          <use>blend/active</use>
+        </active>
+        <source>
+          <use>blend/source</use>
+        </source>
+        <destination>
+          <use>blend/destination</use>
+        </destination>
+      </blend>
+      <shade-model>
+        <use>shade-model</use>
+      </shade-model>
+      <cull-face>
+        <use>cull-face</use>
+      </cull-face>
+      <rendering-hint>
+        <use>rendering-hint</use>
+      </rendering-hint>
+      <texture-unit>
+        <unit>0</unit>
+        <type>
+          <use>texture[0]/type</use>
+        </type>
+        <image>
+          <use>texture[0]/image</use>
+        </image>
+        <filter>
+          <use>texture[0]/filter</use>
+        </filter>
+        <wrap-s>
+          <use>texture[0]/wrap-s</use>
+        </wrap-s>
+        <wrap-t>
+          <use>texture[0]/wrap-t</use>
+        </wrap-t>
+      </texture-unit>
+      <texture-unit>
+        <unit>3</unit>
+        <type>
+          <use>texture[3]/type</use>
+        </type>
+        <image>
+          <use>texture[3]/image</use>
+        </image>
+        <filter>
+          <use>texture[3]/filter</use>
+        </filter>
+        <wrap-s>
+          <use>texture[3]/wrap-s</use>
+        </wrap-s>
+        <wrap-t>
+          <use>texture[3]/wrap-t</use>
+        </wrap-t>
+      </texture-unit>
+      <texture-unit>
+        <unit>4</unit>
+        <type>
+          <use>texture[4]/type</use>
+        </type>
+        <images>
+          <use>texture[4]/images</use>
+        </images>
+      </texture-unit>
+      <texture-unit>
+        <unit>7</unit>
+        <type>
+          <use>texture[7]/type</use>
+        </type>
+        <image>
+          <use>texture[7]/image</use>
+        </image>
+        <filter>
+          <use>texture[7]/filter</use>
+        </filter>
+        <wrap-s>
+          <use>texture[7]/wrap-s</use>
+        </wrap-s>
+        <wrap-t>
+          <use>texture[7]/wrap-t</use>
+        </wrap-t>
       </texture-unit>
       <vertex-program-two-side>
         <use>vertex-program-two-side</use>
@@ -139,253 +1279,353 @@
       <uniform>
         <name>visibility</name>
         <type>float</type>
-        <value><use>visibility</use></value>
+        <value>
+          <use>visibility</use>
+        </value>
       </uniform>
       <uniform>
         <name>avisibility</name>
         <type>float</type>
-        <value><use>avisibility</use></value>
+        <value>
+          <use>avisibility</use>
+        </value>
       </uniform>
-       <uniform>
+      <uniform>
         <name>hazeLayerAltitude</name>
         <type>float</type>
-        <value><use>lthickness</use></value>
+        <value>
+          <use>lthickness</use>
+        </value>
       </uniform>
       <uniform>
         <name>scattering</name>
         <type>float</type>
-        <value><use>scattering</use></value>
+        <value>
+          <use>scattering</use>
+        </value>
       </uniform>
       <uniform>
-	<name>terminator</name>
-	<type>float</type>
-	<value><use>terminator</use></value>
+        <name>terminator</name>
+        <type>float</type>
+        <value>
+          <use>terminator</use>
+        </value>
       </uniform>
       <uniform>
         <name>ground_scattering</name>
         <type>float</type>
-        <value><use>ground_scattering</use></value>
+        <value>
+          <use>ground_scattering</use>
+        </value>
       </uniform>
       <uniform>
-	<name>terminator</name>
-	<type>float</type>
-	<value><use>terminator</use></value>
+        <name>terminator</name>
+        <type>float</type>
+        <value>
+          <use>terminator</use>
+        </value>
       </uniform>
       <uniform>
         <name>terrain_alt</name>
         <type>float</type>
-        <value><use>terrain_alt</use></value>
+        <value>
+          <use>terrain_alt</use>
+        </value>
       </uniform>
       <uniform>
         <name>overcast</name>
         <type>float</type>
-        <value><use>overcast</use></value>
+        <value>
+          <use>overcast</use>
+        </value>
       </uniform>
-     <uniform>
+      <uniform>
         <name>eye_alt</name>
         <type>float</type>
-        <value><use>eye_alt</use></value>
+        <value>
+          <use>eye_alt</use>
+        </value>
       </uniform>
       <uniform>
         <name>cloud_self_shading</name>
         <type>float</type>
-        <value><use>cloud_self_shading</use></value>
+        <value>
+          <use>cloud_self_shading</use>
+        </value>
       </uniform>
       <uniform>
         <name>moonlight</name>
         <type>float</type>
-        <value><use>moonlight</use></value>
+        <value>
+          <use>moonlight</use>
+        </value>
       </uniform>
-     <uniform>
+      <uniform>
         <name>offset_vec</name>
         <type>float-vec3</type>
-        <value><use>opacity-cube-center</use></value>
-     </uniform>
-     <uniform>
+        <value>
+          <use>opacity-cube-center</use>
+        </value>
+      </uniform>
+      <uniform>
         <name>scale_vec</name>
         <type>float-vec3</type>
-        <value><use>opacity-cube-scale</use></value>
-     </uniform>
-     <uniform>
+        <value>
+          <use>opacity-cube-scale</use>
+        </value>
+      </uniform>
+      <uniform>
         <name>angle</name>
         <type>float</type>
-        <value><use>opacity-cube-angle</use></value>
-     </uniform>
-     <uniform>
+        <value>
+          <use>opacity-cube-angle</use>
+        </value>
+      </uniform>
+      <uniform>
         <name>tag_color</name>
         <type>float-vec3</type>
-        <value><use>implicit-lightmap-tag-color</use></value>
-     </uniform>
-     <uniform>
+        <value>
+          <use>implicit-lightmap-tag-color</use>
+        </value>
+      </uniform>
+      <uniform>
         <name>emit_color</name>
         <type>float-vec3</type>
-        <value><use>implicit-lightmap-emit-color</use></value>
-     </uniform>
-     <uniform>
+        <value>
+          <use>implicit-lightmap-emit-color</use>
+        </value>
+      </uniform>
+      <uniform>
         <name>light_filter_one</name>
         <type>float-vec3</type>
-        <value><use>light-filter-one</use></value>
-     </uniform>
-     <uniform>
+        <value>
+          <use>light-filter-one</use>
+        </value>
+      </uniform>
+      <uniform>
         <name>light_filter_two</name>
         <type>float-vec3</type>
-        <value><use>light-filter-two</use></value>
-     </uniform>
-     <uniform>
+        <value>
+          <use>light-filter-two</use>
+        </value>
+      </uniform>
+      <uniform>
         <name>light_radius</name>
         <type>float</type>
-        <value><use>light-radius</use></value>
-     </uniform>
-     <uniform>
+        <value>
+          <use>light-radius</use>
+        </value>
+      </uniform>
+      <uniform>
         <name>threshold_low</name>
         <type>float</type>
-        <value><use>implicit-lightmap-threshold-low</use></value>
-     </uniform>
-     <uniform>
+        <value>
+          <use>implicit-lightmap-threshold-low</use>
+        </value>
+      </uniform>
+      <uniform>
         <name>threshold_high</name>
         <type>float</type>
-        <value><use>implicit-lightmap-threshold-high</use></value>
-     </uniform>
-    <uniform>
+        <value>
+          <use>implicit-lightmap-threshold-high</use>
+        </value>
+      </uniform>
+      <uniform>
         <name>emit_intensity</name>
         <type>float</type>
-        <value><use>implicit-lightmap-intensity</use></value>
-     </uniform>
-     <uniform>
+        <value>
+          <use>implicit-lightmap-intensity</use>
+        </value>
+      </uniform>
+      <uniform>
         <name>view_pitch_offset</name>
         <type>float</type>
-        <value><use>view_pitch_offset</use></value>
+        <value>
+          <use>view_pitch_offset</use>
+        </value>
       </uniform>
       <uniform>
         <name>view_heading_offset</name>
         <type>float</type>
-        <value><use>view_heading_offset</use></value>
+        <value>
+          <use>view_heading_offset</use>
+        </value>
       </uniform>
       <uniform>
         <name>field_of_view</name>
         <type>float</type>
-        <value><use>view_fov</use></value>
+        <value>
+          <use>view_fov</use>
+        </value>
       </uniform>
-     <uniform>
+      <uniform>
         <name>display_xsize</name>
         <type>int</type>
-        <value><use>display_xsize</use></value>
+        <value>
+          <use>display_xsize</use>
+        </value>
       </uniform>
       <uniform>
         <name>display_ysize</name>
         <type>int</type>
-        <value><use>display_ysize</use></value>
-      </uniform>  
+        <value>
+          <use>display_ysize</use>
+        </value>
+      </uniform>
       <uniform>
-	<name>lightmap_r_factor</name>
-	<type>float</type>
-	<value><use>lightmap-factor[0]</use></value>
-     </uniform>	   
-     <uniform>
-	<name>lightmap_r_color</name>
-	<type>float-vec3</type>
-	<value><use>lightmap-color[0]</use></value>
-     </uniform>
-    <uniform>
-	<name>lightmap_g_factor</name>
-	<type>float</type>
-	<value><use>lightmap-factor[1]</use></value>
-     </uniform>	   
-     <uniform>
-	<name>lightmap_g_color</name>
-	<type>float-vec3</type>
-	<value><use>lightmap-color[1]</use></value>
-     </uniform>
-    <uniform>
-	<name>lightmap_b_factor</name>
-	<type>float</type>
-	<value><use>lightmap-factor[2]</use></value>
-     </uniform>	   
-     <uniform>
-	<name>lightmap_b_color</name>
-	<type>float-vec3</type>
-	<value><use>lightmap-color[2]</use></value>
-     </uniform>
-    <uniform>
-	<name>lightmap_a_factor</name>
-	<type>float</type>
-	<value><use>lightmap-factor[3]</use></value>
-     </uniform>	   
-     <uniform>
-	<name>lightmap_a_color</name>
-	<type>float-vec3</type>
-	<value><use>lightmap-color[3]</use></value>
-     </uniform>
-     <uniform>
-	<name>grain_magnification</name>
-	<type>float</type>
-	<value><use>grain-magnification</use></value>
-     </uniform>	 
-     <uniform>
-	<name>irradiance_map_strength</name>
-	<type>float</type>
-	<value><use>irradiance-map-strength</use></value>
-     </uniform>
-     <uniform>
-	<name>ra_irradiance_map_strength</name>
-	<type>float</type>
-	<value><use>ra-irradiance-map-strength</use></value>
-     </uniform>
-     <uniform>
-	<name>residual_ambience_r</name>
-	<type>float</type>
-	<value><use>residual-ambience-r</use></value>
-     </uniform>
-     <uniform>
-	<name>residual_ambience_g</name>
-	<type>float</type>
-	<value><use>residual-ambience-g</use></value>
-     </uniform>
-     <uniform>
-	<name>residual_ambience_b</name>
-	<type>float</type>
-	<value><use>residual-ambience-b</use></value>
-     </uniform>
-     <!-- filtering -->
-     <uniform>
+        <name>lightmap_r_factor</name>
+        <type>float</type>
+        <value>
+          <use>lightmap-factor[0]</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>lightmap_r_color</name>
+        <type>float-vec3</type>
+        <value>
+          <use>lightmap-color[0]</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>lightmap_g_factor</name>
+        <type>float</type>
+        <value>
+          <use>lightmap-factor[1]</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>lightmap_g_color</name>
+        <type>float-vec3</type>
+        <value>
+          <use>lightmap-color[1]</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>lightmap_b_factor</name>
+        <type>float</type>
+        <value>
+          <use>lightmap-factor[2]</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>lightmap_b_color</name>
+        <type>float-vec3</type>
+        <value>
+          <use>lightmap-color[2]</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>lightmap_a_factor</name>
+        <type>float</type>
+        <value>
+          <use>lightmap-factor[3]</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>lightmap_a_color</name>
+        <type>float-vec3</type>
+        <value>
+          <use>lightmap-color[3]</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>grain_magnification</name>
+        <type>float</type>
+        <value>
+          <use>grain-magnification</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>irradiance_map_strength</name>
+        <type>float</type>
+        <value>
+          <use>irradiance-map-strength</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>ra_irradiance_map_strength</name>
+        <type>float</type>
+        <value>
+          <use>ra-irradiance-map-strength</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>residual_ambience_r</name>
+        <type>float</type>
+        <value>
+          <use>residual-ambience-r</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>residual_ambience_g</name>
+        <type>float</type>
+        <value>
+          <use>residual-ambience-g</use>
+        </value>
+      </uniform>
+      <uniform>
+        <name>residual_ambience_b</name>
+        <type>float</type>
+        <value>
+          <use>residual-ambience-b</use>
+        </value>
+      </uniform>
+      <!-- filtering -->
+      <uniform>
         <name>gamma</name>
         <type>float</type>
-        <value><use>gamma</use></value>
+        <value>
+          <use>gamma</use>
+        </value>
       </uniform>
       <uniform>
         <name>brightness</name>
         <type>float</type>
-        <value><use>brightness</use></value>
+        <value>
+          <use>brightness</use>
+        </value>
       </uniform>
       <uniform>
         <name>use_filtering</name>
         <type>bool</type>
-        <value><use>use_filtering</use></value>
+        <value>
+          <use>use_filtering</use>
+        </value>
       </uniform>
       <uniform>
         <name>use_night_vision</name>
         <type>bool</type>
-        <value><use>use_night_vision</use></value>
+        <value>
+          <use>use_night_vision</use>
+        </value>
       </uniform>
       <uniform>
         <name>use_IR_vision</name>
         <type>bool</type>
-        <value><use>use_IR_vision</use></value>
+        <value>
+          <use>use_IR_vision</use>
+        </value>
       </uniform>
       <uniform>
         <name>delta_T</name>
         <type>float</type>
-        <value><use>delta_T</use></value>
+        <value>
+          <use>delta_T</use>
+        </value>
       </uniform>
       <uniform>
         <name>fact_grey</name>
         <type>float</type>
-        <value><use>fact_grey</use></value>
+        <value>
+          <use>fact_grey</use>
+        </value>
       </uniform>
       <uniform>
         <name>fact_black</name>
         <type>float</type>
-        <value><use>fact_black</use></value>
+        <value>
+          <use>fact_black</use>
+        </value>
       </uniform>
       <uniform>
         <name>texture</name>
@@ -398,9 +1638,9 @@
         <value type="int">3</value>
       </uniform>
       <uniform>
-	<name>cube_texture</name>
+        <name>cube_texture</name>
         <type>sampler-cube</type>
-	<value type="int">4</value>
+        <value type="int">4</value>
       </uniform>
       <uniform>
         <name>grain_texture</name>
@@ -410,66 +1650,89 @@
       <uniform>
         <name>colorMode</name>
         <type>int</type>
-        <value><use>material/color-mode-uniform</use></value>
+        <value>
+          <use>material/color-mode-uniform</use>
+        </value>
       </uniform>
       <uniform>
         <name>quality_level</name>
         <type>int</type>
-        <value><use>quality_level</use></value>
+        <value>
+          <use>quality_level</use>
+        </value>
       </uniform>
       <uniform>
         <name>tquality_level</name>
         <type>int</type>
-        <value><use>tquality_level</use></value>
+        <value>
+          <use>tquality_level</use>
+        </value>
       </uniform>
       <uniform>
         <name>implicit_lightmap_enabled</name>
         <type>int</type>
-        <value><use>implicit-lightmap-enabled</use></value>
+        <value>
+          <use>implicit-lightmap-enabled</use>
+        </value>
       </uniform>
       <uniform>
- 	<name>use_flashlight</name>
- 	<type>int</type>
- 	<value><use>use-flashlight</use></value>
+        <name>use_flashlight</name>
+        <type>int</type>
+        <value>
+          <use>use-flashlight</use>
+        </value>
       </uniform>
       <uniform>
-	<name>lightmap_enabled</name>
-	<type>int</type>
-	<value><use>lightmap-enabled</use></value>
+        <name>lightmap_enabled</name>
+        <type>int</type>
+        <value>
+          <use>lightmap-enabled</use>
+        </value>
       </uniform>
       <uniform>
-	<name>lightmap_multi</name>
-	<type>int</type>
-	<value><use>lightmap-multi</use></value>
+        <name>lightmap_multi</name>
+        <type>int</type>
+        <value>
+          <use>lightmap-multi</use>
+        </value>
       </uniform>
       <uniform>
-	<name>irradiance_map_type</name>
-	<type>int</type>
-	<value><use>irradiance-map-type</use></value>
+        <name>irradiance_map_type</name>
+        <type>int</type>
+        <value>
+          <use>irradiance-map-type</use>
+        </value>
       </uniform>
       <uniform>
-	<name>ra_irradiance_map_type</name>
-	<type>int</type>
-	<value><use>ra-irradiance-map-type</use></value>
+        <name>ra_irradiance_map_type</name>
+        <type>int</type>
+        <value>
+          <use>ra-irradiance-map-type</use>
+        </value>
       </uniform>
       <uniform>
-	<name>grain_texture_enabled</name>
-	<type>int</type>
-	<value><use>grain-texture-enabled</use></value>
+        <name>grain_texture_enabled</name>
+        <type>int</type>
+        <value>
+          <use>grain-texture-enabled</use>
+        </value>
       </uniform>
     </pass>
   </technique>
 
 
 
-  <technique n="4">
+
+
+
+  <technique n="3">
     <predicate>
       <and>
         <property>/sim/rendering/shaders/skydome</property>
         <or>
           <less-equal>
             <value type="float">2.0</value>
-            <glversion/>
+            <glversion />
           </less-equal>
           <and>
             <extension-supported>GL_ARB_shader_objects</extension-supported>
@@ -483,34 +1746,74 @@
     <pass>
       <lighting>true</lighting>
       <material>
-        <active><use>material/active</use></active>
-        <ambient><use>material/ambient</use></ambient>
-        <diffuse><use>material/diffuse</use></diffuse>
-        <specular><use>material/specular</use></specular>
-        <emissive><use>material/emissive</use></emissive>
-        <shininess><use>material/shininess</use></shininess>
-        <color-mode><use>material/color-mode</use></color-mode>
+        <active>
+          <use>material/active</use>
+        </active>
+        <ambient>
+          <use>material/ambient</use>
+        </ambient>
+        <diffuse>
+          <use>material/diffuse</use>
+        </diffuse>
+        <specular>
+          <use>material/specular</use>
+        </specular>
+        <emissive>
+          <use>material/emissive</use>
+        </emissive>
+        <shininess>
+          <use>material/shininess</use>
+        </shininess>
+        <color-mode>
+          <use>material/color-mode</use>
+        </color-mode>
       </material>
       <blend>
-        <active><use>blend/active</use></active>
-        <source><use>blend/source</use></source>
-        <destination><use>blend/destination</use></destination>
+        <active>
+          <use>blend/active</use>
+        </active>
+        <source>
+          <use>blend/source</use>
+        </source>
+        <destination>
+          <use>blend/destination</use>
+        </destination>
       </blend>
-      <shade-model><use>shade-model</use></shade-model>
-      <cull-face><use>cull-face</use></cull-face>
-      <rendering-hint><use>rendering-hint</use></rendering-hint>
+      <shade-model>
+        <use>shade-model</use>
+      </shade-model>
+      <cull-face>
+        <use>cull-face</use>
+      </cull-face>
+      <rendering-hint>
+        <use>rendering-hint</use>
+      </rendering-hint>
       <texture-unit>
         <unit>0</unit>
-        <type><use>texture[0]/type</use></type>
-        <image><use>texture[0]/image</use></image>
-        <filter><use>texture[0]/filter</use></filter>
-        <wrap-s><use>texture[0]/wrap-s</use></wrap-s>
-        <wrap-t><use>texture[0]/wrap-t</use></wrap-t>
+        <type>
+          <use>texture[0]/type</use>
+        </type>
+        <image>
+          <use>texture[0]/image</use>
+        </image>
+        <filter>
+          <use>texture[0]/filter</use>
+        </filter>
+        <wrap-s>
+          <use>texture[0]/wrap-s</use>
+        </wrap-s>
+        <wrap-t>
+          <use>texture[0]/wrap-t</use>
+        </wrap-t>
       </texture-unit>
       <texture-unit>
-	<unit>4</unit>
-	<type><use>texture[4]/type</use></type>
-	<images><use>texture[4]/images</use></images>
+        <unit>4</unit>
+        <type>
+          <use>texture[4]/type</use>
+        </type>
+        <images>
+          <use>texture[4]/images</use>
+        </images>
       </texture-unit>
       <vertex-program-two-side>
         <use>vertex-program-two-side</use>
@@ -526,183 +1829,255 @@
       <uniform>
         <name>visibility</name>
         <type>float</type>
-        <value><use>visibility</use></value>
+        <value>
+          <use>visibility</use>
+        </value>
       </uniform>
       <uniform>
         <name>avisibility</name>
         <type>float</type>
-        <value><use>avisibility</use></value>
+        <value>
+          <use>avisibility</use>
+        </value>
       </uniform>
-       <uniform>
+      <uniform>
         <name>hazeLayerAltitude</name>
         <type>float</type>
-        <value><use>lthickness</use></value>
+        <value>
+          <use>lthickness</use>
+        </value>
       </uniform>
       <uniform>
         <name>scattering</name>
         <type>float</type>
-        <value><use>scattering</use></value>
+        <value>
+          <use>scattering</use>
+        </value>
       </uniform>
       <uniform>
-	<name>terminator</name>
-	<type>float</type>
-	<value><use>terminator</use></value>
+        <name>terminator</name>
+        <type>float</type>
+        <value>
+          <use>terminator</use>
+        </value>
       </uniform>
       <uniform>
         <name>ground_scattering</name>
         <type>float</type>
-        <value><use>ground_scattering</use></value>
+        <value>
+          <use>ground_scattering</use>
+        </value>
       </uniform>
       <uniform>
-	<name>terminator</name>
-	<type>float</type>
-	<value><use>terminator</use></value>
+        <name>terminator</name>
+        <type>float</type>
+        <value>
+          <use>terminator</use>
+        </value>
       </uniform>
       <uniform>
         <name>terrain_alt</name>
         <type>float</type>
-        <value><use>terrain_alt</use></value>
+        <value>
+          <use>terrain_alt</use>
+        </value>
       </uniform>
       <uniform>
         <name>overcast</name>
         <type>float</type>
-        <value><use>overcast</use></value>
+        <value>
+          <use>overcast</use>
+        </value>
       </uniform>
-     <uniform>
+      <uniform>
         <name>eye_alt</name>
         <type>float</type>
-        <value><use>eye_alt</use></value>
+        <value>
+          <use>eye_alt</use>
+        </value>
       </uniform>
       <uniform>
         <name>cloud_self_shading</name>
         <type>float</type>
-        <value><use>cloud_self_shading</use></value>
+        <value>
+          <use>cloud_self_shading</use>
+        </value>
       </uniform>
       <uniform>
         <name>moonlight</name>
         <type>float</type>
-        <value><use>moonlight</use></value>
+        <value>
+          <use>moonlight</use>
+        </value>
       </uniform>
-     <uniform>
+      <uniform>
         <name>offset_vec</name>
         <type>float-vec3</type>
-        <value><use>opacity-cube-center</use></value>
-     </uniform>
-     <uniform>
+        <value>
+          <use>opacity-cube-center</use>
+        </value>
+      </uniform>
+      <uniform>
         <name>scale_vec</name>
         <type>float-vec3</type>
-        <value><use>opacity-cube-scale</use></value>
-     </uniform>
-     <uniform>
+        <value>
+          <use>opacity-cube-scale</use>
+        </value>
+      </uniform>
+      <uniform>
         <name>angle</name>
         <type>float</type>
-        <value><use>opacity-cube-angle</use></value>
-     </uniform>
-     <uniform>
+        <value>
+          <use>opacity-cube-angle</use>
+        </value>
+      </uniform>
+      <uniform>
         <name>tag_color</name>
         <type>float-vec3</type>
-        <value><use>implicit-lightmap-tag-color</use></value>
-     </uniform>
-     <uniform>
+        <value>
+          <use>implicit-lightmap-tag-color</use>
+        </value>
+      </uniform>
+      <uniform>
         <name>emit_color</name>
         <type>float-vec3</type>
-        <value><use>implicit-lightmap-emit-color</use></value>
-     </uniform>
-     <uniform>
+        <value>
+          <use>implicit-lightmap-emit-color</use>
+        </value>
+      </uniform>
+      <uniform>
         <name>light_filter_one</name>
         <type>float-vec3</type>
-        <value><use>light-filter-one</use></value>
-     </uniform>
-     <uniform>
+        <value>
+          <use>light-filter-one</use>
+        </value>
+      </uniform>
+      <uniform>
         <name>light_filter_two</name>
         <type>float-vec3</type>
-        <value><use>light-filter-two</use></value>
-     </uniform>
-     <uniform>
+        <value>
+          <use>light-filter-two</use>
+        </value>
+      </uniform>
+      <uniform>
         <name>light_radius</name>
         <type>float</type>
-        <value><use>light-radius</use></value>
-     </uniform>
-     <uniform>
+        <value>
+          <use>light-radius</use>
+        </value>
+      </uniform>
+      <uniform>
         <name>threshold_low</name>
         <type>float</type>
-        <value><use>implicit-lightmap-threshold-low</use></value>
-     </uniform>
-     <uniform>
+        <value>
+          <use>implicit-lightmap-threshold-low</use>
+        </value>
+      </uniform>
+      <uniform>
         <name>threshold_high</name>
         <type>float</type>
-        <value><use>implicit-lightmap-threshold-high</use></value>
-     </uniform>
-    <uniform>
+        <value>
+          <use>implicit-lightmap-threshold-high</use>
+        </value>
+      </uniform>
+      <uniform>
         <name>emit_intensity</name>
         <type>float</type>
-        <value><use>implicit-lightmap-intensity</use></value>
-     </uniform>
-     <uniform>
+        <value>
+          <use>implicit-lightmap-intensity</use>
+        </value>
+      </uniform>
+      <uniform>
         <name>view_pitch_offset</name>
         <type>float</type>
-        <value><use>view_pitch_offset</use></value>
+        <value>
+          <use>view_pitch_offset</use>
+        </value>
       </uniform>
       <uniform>
         <name>view_heading_offset</name>
         <type>float</type>
-        <value><use>view_heading_offset</use></value>
+        <value>
+          <use>view_heading_offset</use>
+        </value>
       </uniform>
       <uniform>
         <name>field_of_view</name>
         <type>float</type>
-        <value><use>view_fov</use></value>
+        <value>
+          <use>view_fov</use>
+        </value>
       </uniform>
-     <uniform>
+      <uniform>
         <name>display_xsize</name>
         <type>int</type>
-        <value><use>display_xsize</use></value>
+        <value>
+          <use>display_xsize</use>
+        </value>
       </uniform>
       <uniform>
         <name>display_ysize</name>
         <type>int</type>
-        <value><use>display_ysize</use></value>
-      </uniform>  
-     <!-- filtering -->
-     <uniform>
+        <value>
+          <use>display_ysize</use>
+        </value>
+      </uniform>
+      <!-- filtering -->
+      <uniform>
         <name>gamma</name>
         <type>float</type>
-        <value><use>gamma</use></value>
+        <value>
+          <use>gamma</use>
+        </value>
       </uniform>
       <uniform>
         <name>brightness</name>
         <type>float</type>
-        <value><use>brightness</use></value>
+        <value>
+          <use>brightness</use>
+        </value>
       </uniform>
       <uniform>
         <name>use_filtering</name>
         <type>bool</type>
-        <value><use>use_filtering</use></value>
+        <value>
+          <use>use_filtering</use>
+        </value>
       </uniform>
       <uniform>
         <name>use_night_vision</name>
         <type>bool</type>
-        <value><use>use_night_vision</use></value>
+        <value>
+          <use>use_night_vision</use>
+        </value>
       </uniform>
       <uniform>
         <name>use_IR_vision</name>
         <type>bool</type>
-        <value><use>use_IR_vision</use></value>
+        <value>
+          <use>use_IR_vision</use>
+        </value>
       </uniform>
       <uniform>
         <name>delta_T</name>
         <type>float</type>
-        <value><use>delta_T</use></value>
+        <value>
+          <use>delta_T</use>
+        </value>
       </uniform>
       <uniform>
         <name>fact_grey</name>
         <type>float</type>
-        <value><use>fact_grey</use></value>
+        <value>
+          <use>fact_grey</use>
+        </value>
       </uniform>
       <uniform>
         <name>fact_black</name>
         <type>float</type>
-        <value><use>fact_black</use></value>
+        <value>
+          <use>fact_black</use>
+        </value>
       </uniform>
       <uniform>
         <name>texture</name>
@@ -710,36 +2085,45 @@
         <value type="int">0</value>
       </uniform>
       <uniform>
-	<name>cube_texture</name>
+        <name>cube_texture</name>
         <type>sampler-cube</type>
-	<value type="int">4</value>
+        <value type="int">4</value>
       </uniform>
       <uniform>
         <name>colorMode</name>
         <type>int</type>
-        <value><use>material/color-mode-uniform</use></value>
+        <value>
+          <use>material/color-mode-uniform</use>
+        </value>
       </uniform>
       <uniform>
         <name>quality_level</name>
         <type>int</type>
-        <value><use>quality_level</use></value>
+        <value>
+          <use>quality_level</use>
+        </value>
       </uniform>
       <uniform>
         <name>tquality_level</name>
         <type>int</type>
-        <value><use>tquality_level</use></value>
+        <value>
+          <use>tquality_level</use>
+        </value>
       </uniform>
       <uniform>
         <name>implicit_lightmap_enabled</name>
         <type>int</type>
-        <value><use>implicit-lightmap-enabled</use></value>
+        <value>
+          <use>implicit-lightmap-enabled</use>
+        </value>
       </uniform>
       <uniform>
- 	<name>use_flashlight</name>
- 	<type>int</type>
- 	<value><use>use-flashlight</use></value>
+        <name>use_flashlight</name>
+        <type>int</type>
+        <value>
+          <use>use-flashlight</use>
+        </value>
       </uniform>
     </pass>
   </technique>
-
 </PropertyList>
