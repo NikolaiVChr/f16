@@ -467,7 +467,7 @@
             <weight-launch-lbs type="double"> 610 </weight-launch-lbs>
             <weight-warhead-lbs type="double"> 190 </weight-warhead-lbs>
             <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
-            <drag-coeff type="double"> 0.10 </drag-coeff>
+            <drag-coeff type="double"> 0.125 </drag-coeff>
             <cross-section-sqft type="double"> 0.63 </cross-section-sqft>
             <arming-time-sec type="double"> 4 </arming-time-sec>
             <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
@@ -518,7 +518,7 @@
             <weight-launch-lbs type="double">558</weight-launch-lbs>
             <weight-warhead-lbs type="double">190</weight-warhead-lbs>
             <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
-            <drag-coeff type="double"> 0.10 </drag-coeff>
+            <drag-coeff type="double"> 0.125 </drag-coeff>
             <cross-section-sqft type="double"> 0.63 </cross-section-sqft>
             <arming-time-sec type="double"> 4 </arming-time-sec>
             <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
@@ -570,7 +570,7 @@
             <weight-launch-lbs type="double"> 2039 </weight-launch-lbs><!-- weapons file 2004 -->
             <weight-warhead-lbs type="double"> 945 </weight-warhead-lbs><!-- weapons file 2004 -->
             <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
-            <drag-coeff type="double"> 0.10 </drag-coeff>
+            <drag-coeff type="double"> 0.125 </drag-coeff>
             <cross-section-sqft type="double"> 1.78886 </cross-section-sqft><!-- the MK84 which is the bomb part is 640 mm diam -->
             <arming-time-sec type="double"> 6 </arming-time-sec>
             <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
@@ -622,7 +622,7 @@
             <weight-launch-lbs type="double"> 2257 </weight-launch-lbs><!-- weapons file 2004, 2009 -->
             <weight-warhead-lbs type="double"> 945 </weight-warhead-lbs><!-- weapons file 2004 -->
             <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
-            <drag-coeff type="double"> 0.10 </drag-coeff>
+            <drag-coeff type="double"> 0.125 </drag-coeff>
             <cross-section-sqft type="double"> 1.78886 </cross-section-sqft>
             <arming-time-sec type="double"> 6 </arming-time-sec>
             <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
@@ -672,7 +672,7 @@
             <weight-launch-lbs type="double">462</weight-launch-lbs>              <!-- source -->
             <weight-warhead-lbs type="double">126</weight-warhead-lbs>            <!-- source -->
             <weight-fuel-lbm type="double"> 90 </weight-fuel-lbm>      <!-- guess -->
-            <drag-coeff type="double">0.06</drag-coeff>
+            <drag-coeff type="double">0.10</drag-coeff>
             <cross-section-sqft type="double">3.14</cross-section-sqft>                             <!-- source -->
             <arming-time-sec type="double">1.0</arming-time-sec>          
             <min-speed-for-guiding-mach type="double">0.5</min-speed-for-guiding-mach>
@@ -711,7 +711,7 @@
             <weight-launch-lbs type="double">484.5</weight-launch-lbs>              <!-- source -->
             <weight-warhead-lbs type="double">126</weight-warhead-lbs>            <!-- source -->
             <weight-fuel-lbm type="double"> 90 </weight-fuel-lbm>      <!-- guess -->
-            <drag-coeff type="double">0.06</drag-coeff>
+            <drag-coeff type="double">0.10</drag-coeff>
             <cross-section-sqft type="double">3.14</cross-section-sqft>                             <!-- source -->
             <arming-time-sec type="double">1.0</arming-time-sec>          
             <min-speed-for-guiding-mach type="double">0.5</min-speed-for-guiding-mach>
