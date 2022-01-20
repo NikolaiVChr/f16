@@ -321,7 +321,7 @@ var Station = {
 };
 
 var InternalStation = {
-# simulates a fixed station, for example a for cannon mounted inside the aircraft
+# simulates a fixed internal station, for example a for cannon mounted inside the aircraft
 # inherits from Station
 	new: func (name, id, sets, pointmassNode, operableFunction = nil) {
 		var s = Station.new(name, id, [0,0,0], sets, nil, pointmassNode, operableFunction, nil);
@@ -332,6 +332,43 @@ var InternalStation = {
 		s.loadSet(sets[0]);
 		return s;
 	}
+};
+
+var FixedStation = {
+# simulates a fixed station, for example for CFT tanks
+# inherits from Station
+	new: func (name, id, sets, pointmassNode, dragareaNode, operableFunction = nil) {
+		var s = Station.new(name, id, [0,0,0], sets, nil, pointmassNode, operableFunction, nil);
+		s.parents = [FixedStation, Station];
+
+		s.node_dragaera = dragareaNode;
+		# these should not be called in parent.new(), as they are empty there.
+		s.initGUI();
+		s.loadSet(sets[0]);
+		return s;
+	},
+
+	loadingSet: func (set) {
+		# override this method to set custom attributes, before calculateFDM is ran after a set is loaded.
+		if (set != nil) {
+			me.launcherDA   = set.launcherDragArea;
+		} else {
+			me.launcherDA   = 0;
+		}
+	},
+
+	calculateFDM: func {
+		# override this method to set custom FDM attributes.
+		# do dragarea
+		me.totalDA = 0;
+		foreach(me.weapon;me.weapons) {
+			if (me.weapon != nil) {
+				me.totalDA += me.weapon.Cd_base*me.weapon.ref_area_sqft;
+			}
+		}
+		me.totalDA += me.launcherDA;
+		me.node_dragaera.setDoubleValue(me.totalDA);
+	},
 };
 
 var Pylon = {
@@ -960,8 +997,10 @@ var FuelTank = {
 
 	mount: func(pylon) {
 #		print(pylon.name);
-		me.guiNode = props.globals.getNode(baseGui~"/weight["~pylon.guiID~"]",1);
-		me.guiNode.initNode("tank",me.fuelTankNumber,"DOUBLE");
+		if (pylon.guiID != nil) {
+			me.guiNode = props.globals.getNode(baseGui~"/weight["~pylon.guiID~"]",1);
+			me.guiNode.initNode("tank",me.fuelTankNumber,"DOUBLE");
+		}		
 
 		# set capacity in fuel tank
 		if (fdm == "jsb") {

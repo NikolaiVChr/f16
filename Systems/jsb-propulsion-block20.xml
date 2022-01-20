@@ -12,15 +12,15 @@
     <pitch> 0 </pitch>
     <yaw> 0 </yaw>
    </orient>
-   <feed>0</feed>
+   <!--feed>0</feed>
    <feed>1</feed>
    <feed>2</feed>
-   <feed>3</feed>
+   <feed>3</feed-->
    <feed>4</feed>
    <feed>5</feed>
-   <feed>6</feed>
+   <!--feed>6</feed>
    <feed>7</feed>
-   <feed>8</feed>
+   <feed>8</feed-->
    <thruster file="direct">
     <location unit="M">
      <x> 4.2077 </x>

@@ -20,6 +20,7 @@
   <flight-model>jsb</flight-model>
   <aero>f16b52</aero>
   <variant-id type="int">5</variant-id>
+  <variant-engine type="int">2</variant-engine>
   <tags>
       <tag>fighter</tag>
       <tag>general-dynamics</tag>
@@ -146,6 +147,11 @@
       <green type="double">0.85</green>
       <blue type="double">0.00</blue>
     </dot1>
+    <dot2><!-- Radar search targets -->
+      <red type="double">1.00</red>
+      <green type="double">1.00</green>
+      <blue type="double">1.00</blue>
+    </dot2>
     <dot3><!--Lock 2 color-->
       <red type="double">1.00</red>
       <green type="double">1.00</green>

@@ -252,14 +252,10 @@ var AIM = {
         if (m.SwSoundVol.getValue() == nil) {
         	m.SwSoundVol.setDoubleValue(0);
         }
-        m.inacc                 = getprop("payload/armament/tgp-inacc-system");# set to false, unless using the f16
         m.tacview_support       = getprop("payload/armament/tacview");# set to false, unless using an aircraft that has tacview
         m.gnd_launch            = getprop("payload/armament/gnd-launch");#true to be a SAM or ship
         if (m.gnd_launch == nil) {
         	m.gnd_launch = 0;
-        }
-        if (m.inacc == nil) {
-        	m.inacc = 0;
         }
         if (m.tacview_support == nil) {
         	m.tacview_support = 0;
@@ -1411,7 +1407,7 @@ var AIM = {
 				#	me.rail_head_deg = me.Tgt.get_bearing()-OurHdg.getValue();
 				#}
 				me.railvec = vector.Math.eulerToCartesian3X(-me.rail_head_deg, me.rail_pitch_deg,0);
-				me.veccy = vector.Math.yawPitchRollVector(-ac_hdg,ac_pitch,ac_roll,me.railvec);
+				me.veccy = vector.Math.rollPitchYawVector(ac_roll,ac_pitch,-ac_hdg,me.railvec);
 				me.carty = vector.Math.cartesianToEuler(me.veccy);
 				me.msl_pitch = me.carty[1];
 				me.defaultHeading = me.Tgt != nil?me.Tgt.get_bearing():0;#90 deg tubes align to target heading, else north
@@ -1453,15 +1449,8 @@ var AIM = {
 		me.coord = geo.Coord.new(init_coord);
 		# Get target position.
 		if (me.Tgt != nil) {
-			if (me.inacc) {
-				if (!me.target_pnt) {
-					me.Tgt.inac_x = 0;
-	        		me.Tgt.inac_y = 0;
-	        		me.Tgt.inac_z = 0;
-				}
-				if (me.Tgt == contactPoint) {
-					me.usingTGPPoint = 1;
-				}
+			if (me.Tgt == contactPoint) {
+				me.usingTGPPoint = 1;
 			}
 			me.t_coord = me.Tgt.get_Coord();
 			me.maddog = FALSE;
@@ -1600,6 +1589,7 @@ var AIM = {
 			me.sun_enabled = TRUE;
 			me.sun = geo.Coord.new();
 			me.sun.set_xyz(me.ac_init.x()+sun_x*2000000, me.ac_init.y()+sun_y*2000000, me.ac_init.z()+sun_z*2000000);#heat seeking missiles don't fly far, so setting it 2000Km away is fine.
+			me.sun.alt();# TODO: once fixed in FG this line is no longer needed.
 		} else {
 			# old FG versions does not supply location of sun. So this feature gets disabled.
 			me.sun_enabled = FALSE;
@@ -1919,13 +1909,6 @@ var AIM = {
 		me.semiLostLock = FALSE;
 		me.heatLostLock = FALSE;
 		me.hasGuided = FALSE;
-		if (me.inacc) {
-			if (!me.target_pnt and tagt!=nil) {
-				me.Tgt.inac_x = 0;
-	    		me.Tgt.inac_y = 0;
-	    		me.Tgt.inac_z = 0;
-			}
-		}
 	},
 
 	flight: func {
@@ -2015,7 +1998,7 @@ var AIM = {
 				me.callsign = "Unknown";
 				me.newTargetAssigned = FALSE;
 			}
-		} elsif (me.inacc and me.Tgt != nil and me.Tgt.get_type() == POINT and me.guidance == "laser" and me.usingTGPPoint and contactPoint == nil) {
+		} elsif (me.Tgt != nil and me.Tgt.get_type() == POINT and me.guidance == "laser" and me.usingTGPPoint and contactPoint == nil) {
 			# if laser illuminated lock is lost on a targetpod target:
 			if (!(me.canSwitch and me.reaquire)) {
 				me.Tgt = nil;
@@ -2026,7 +2009,7 @@ var AIM = {
 				me.callsign = "Unknown";
 				me.newTargetAssigned = FALSE;
 			}
-		} elsif (me.inacc and me.Tgt == nil and me.guidance == "laser" and me.usingTGPPoint and contactPoint != nil) {
+		} elsif (me.Tgt == nil and me.guidance == "laser" and me.usingTGPPoint and contactPoint != nil) {
 			# see if we can regain lock on new laser spot:
 			if (me.newLock(contactPoint)) {
 				me.setNewTargetInFlight(contactPoint);
@@ -2227,7 +2210,7 @@ var AIM = {
 				me.hdg = OurHdg.getValue();
 			} else {
 				me.railvec = me.myMath.eulerToCartesian3X(-me.rail_head_deg, me.rail_pitch_deg,0);
-				me.veccy = me.myMath.yawPitchRollVector(-OurHdg.getValue(),OurPitch.getValue(),OurRoll.getValue(),me.railvec);
+				me.veccy = me.myMath.rollPitchYawVector(OurRoll.getValue(),OurPitch.getValue(),-OurHdg.getValue(),me.railvec);
 				me.carty = me.myMath.cartesianToEuler(me.veccy);
 				me.defaultHeading = me.Tgt != nil?me.Tgt.get_bearing():0;#90 deg tubes align to target heading, else north
 				me.pitch = me.carty[1];
@@ -3073,12 +3056,9 @@ var AIM = {
 						# target has released a new chaff, lets check if it blinds us
 						me.chaffLast = me.chaffNumber;
 						me.chaffTime = getprop("sim/time/elapsed-sec");
-						#me.aspectNorm = math.abs(geo.normdeg180(me.aspectToExhaust() * 2))/180;# 0 = viewing engine or front, 1 = viewing side, belly or top.
+						me.aspectDeg = me.aspectToExhaust(me.coord, me.Tgt) / 180;# 0 = viewing engine, 1 = front
 						
-						# chance to lock on chaff when viewing engine or nose, less if viewing other aspects
-						#me.chaffLock = rand() > (me.chaffResistance + (1-me.chaffResistance) * 0.5 * me.aspectNorm);
-
-						me.chaffLock = rand() > me.chaffResistance;
+						me.chaffLock = rand() < (1-me.chaffResistance - ((1-me.chaffResistance) * 0.5 * me.aspectDeg));# 50% less chance to be fooled if front aspect
 
 						if (me.chaffLock == TRUE) {
 							me.printStats(me.type~": Missile locked on chaff from "~me.callsign);
@@ -3241,7 +3221,7 @@ var AIM = {
 
 	canSeekerKeepUp: func () {
 		me.globalVectorToTarget = me.myMath.eulerToCartesian3X(-me.t_course, me.t_elev_deg, 0);
-		me.localVectorTarget  = me.myMath.rollPitchYawVector(0, -me.pitch, me.hdg, me.globalVectorToTarget);
+		me.localVectorTarget  = me.myMath.yawPitchVector(me.hdg, -me.pitch, me.globalVectorToTarget);
 		if (me.counter == me.counter_last+1 and !me.newTargetAssigned and me["localVectorSeeker"] != nil and (me.guidance == "heat" or me.guidance == "vision") and me.prevGuidance == me.guidance and me.prevTarget == me.Tgt) {
 			# calculate if the seeker can keep up with the angular change of the target
 			#
@@ -3249,7 +3229,7 @@ var AIM = {
 			#
 			if (!me.caged) {
 				# Gyro is stabilized
-				me.localVectorSeeker = me.myMath.rollPitchYawVector(0, -me.last_track_e, me.last_track_h, me.localVectorSeeker);
+				me.localVectorSeeker = me.myMath.yawPitchVector(me.last_track_h, -me.last_track_e, me.localVectorSeeker);
 			}
 			me.angleSeekerToTarget  = me.myMath.angleBetweenVectors(me.localVectorSeeker, me.localVectorTarget);
 			me.deviation_per_sec = me.angleSeekerToTarget/me.dt;
@@ -3584,8 +3564,8 @@ var AIM = {
 				me.raw_steer_signal_head = me.curr_deviation_h;
 				if (me.cruise_or_loft == FALSE) {
 					me.raw_steer_signal_elev = me.curr_deviation_e;
-					me.attitudePN = math.atan2(-(me.speed_down_fps+g_fps * me.dt), me.speed_horizontal_fps ) * R2D;
-		            me.gravComp = me.pitch - me.attitudePN;
+					me.attitudePN = (math.atan2(-(me.speed_down_fps+g_fps * me.dt), me.speed_horizontal_fps ) - math.atan2(-me.speed_down_fps, me.speed_horizontal_fps )) * R2D;
+		            me.gravComp = - me.attitudePN;
 		            #printf("Gravity compensation %0.2f degs", me.gravComp);
 		            me.raw_steer_signal_elev += me.gravComp;
 				}
@@ -3637,7 +3617,7 @@ var AIM = {
 
 			me.printGuideDetails("LOS rate: %06.4f rad/s", me.line_of_sight_rate_rps);
 
-			me.t_velocity = me.myMath.getCartesianVelocity(me.Tgt.get_heading(), me.Tgt.get_Pitch(), me.Tgt.get_Roll(), me.Tgt.get_uBody(), me.Tgt.get_vBody(), me.Tgt.get_wBody());
+			me.t_velocity = me.myMath.getCartesianVelocity(-me.Tgt.get_heading(), me.Tgt.get_Pitch(), me.Tgt.get_Roll(), me.Tgt.get_uBody(), me.Tgt.get_vBody(), me.Tgt.get_wBody());
 						
 			if ((me.flareLock == FALSE and me.chaffLock == FALSE) or me.t_heading == nil) {
 				me.euler = me.myMath.cartesianToEuler(me.t_velocity);
@@ -3736,8 +3716,8 @@ var AIM = {
 		        }
 		        if (me.fixed_aim != nil and me.life_time < me.fixed_aim_time) {
 		        	me.raw_steer_signal_elev = me.curr_deviation_e+me.fixed_aim;
-					me.attitudePN = math.atan2(-(me.speed_down_fps+g_fps * me.dt), me.speed_horizontal_fps ) * R2D;
-		            me.gravComp = me.pitch - me.attitudePN;
+					me.attitudePN = (math.atan2(-(me.speed_down_fps+g_fps * me.dt), me.speed_horizontal_fps ) - math.atan2(-me.speed_down_fps, me.speed_horizontal_fps )) * R2D;
+		            me.gravComp = - me.attitudePN;
 		            #printf("Gravity compensation %0.2f degs", me.gravComp);
 		            me.raw_steer_signal_elev += me.gravComp;
 				} else {
@@ -3795,8 +3775,8 @@ var AIM = {
 					}
 
 					# now compensate for the predicted gravity drop of attitude:				
-		            me.attitudePN = math.atan2(-(me.speed_down_fps+g_fps * me.dt), me.speed_horizontal_fps ) * R2D;
-		            me.gravComp = me.pitch - me.attitudePN;
+		            me.attitudePN = (math.atan2(-(me.speed_down_fps+g_fps * me.dt), me.speed_horizontal_fps ) - math.atan2(-me.speed_down_fps, me.speed_horizontal_fps )) * R2D;
+		            me.gravComp = -me.attitudePN;
 		            #printf("Gravity compensation %0.2f degs", me.gravComp);
 		            me.raw_steer_signal_elev += me.gravComp;
 
@@ -3870,7 +3850,7 @@ var AIM = {
 			# (use xyz coord to avoid the strange behaviour of comparing geo coordinates).
 			for (var i=me.crc_frames_look_back; i >= 0; i-=1){
 				me.crc_coord[i]   = (i != 0) ? me.crc_coord[i-1]   : me.coord.xyz();
-				me.crc_t_coord[i] = (i != 0) ? me.crc_t_coord[i-1] : (me.inacc?me.Tgt.get_Coord(0).xyz():me.t_coord.xyz());
+				me.crc_t_coord[i] = (i != 0) ? me.crc_t_coord[i-1] : me.t_coord.xyz();
 				me.crc_range[i]   = (i != 0) ? me.crc_range[i-1]   : me.myMath.magnitudeVector(
 																		 me.myMath.minus(me.crc_coord[0], 
 																						 me.crc_t_coord[0]));
@@ -3967,6 +3947,7 @@ var AIM = {
 		me.crc_closestRange = me.myMath.magnitudeVector(me.myMath.minus(targetCoord, missileCoord));
 		me.crc_missileCoord = geo.Coord.new();
 		me.crc_missileCoord.set_xyz(missileCoord[0], missileCoord[1], missileCoord[2]);
+		me.crc_missileCoord.alt();# TODO: once fixed in FG this line is no longer needed.
 	},
 	
 	log: func (str) {
@@ -4077,7 +4058,7 @@ var AIM = {
 				me.printStats("%s  time %.1f", phrase, me.life_time);
 				if(getprop("payload/armament/msg") and hitPrimaryTarget and wh_mass > 0){
 					thread.lock(mutexTimer);
-					append(AIM.timerQueue, [AIM, AIM.notifyHit, [coordinates.alt() - (me.inacc?me.Tgt.get_Coord(0).alt():me.t_coord.alt()),range,me.callsign,coordinates.course_to(me.inacc?me.Tgt.get_Coord(0):me.t_coord),reason,me.typeID, me.typeLong, 0], -1]);
+					append(AIM.timerQueue, [AIM, AIM.notifyHit, [coordinates.alt() - me.t_coord.alt(),range,me.callsign,coordinates.course_to(me.t_coord),reason,me.typeID, me.typeLong, 0], -1]);
 					thread.unlock(mutexTimer);
                 } else {
 	                thread.lock(mutexTimer);
@@ -4113,9 +4094,7 @@ var AIM = {
 				continue;
 			}
 			var min_distance = me.testMe.get_Coord().direct_distance_to(explode_coord);
-			if (me.inacc) {
-				min_distance = me.testMe.get_Coord(0).direct_distance_to(explode_coord);
-			}
+			
 			if (min_distance < me.reportDist and (me.Tgt == nil or me.testMe.getUnique() != me.Tgt.getUnique())) {
 				var phrase = sprintf("%s %s: %.1f meters from: %s", me.type,event, min_distance, me.testMe.get_Callsign());
 				me.printStats(phrase);
@@ -4191,7 +4170,7 @@ var AIM = {
 		if (me.noCommonTarget) {
 			return nil;
 		}
-		if (me.inacc and me.target_pnt and contactPoint != nil) {
+		if (me.target_pnt and contactPoint != nil) {
 			return contactPoint;
 		} else {
 			return contact;
@@ -4264,9 +4243,9 @@ var AIM = {
 			}
 			me.cooling_last_time = me.cool_elapsed;
 			me.detect_range_curr_nm = me.extrapolate(me.warm, 0, 1, me.cold_detect_range_nm, me.warm_detect_range_nm);
-			#me.detect_range_curr_nm *= me.seam_scan?0.5:1; # source for this is not credible.
+			me.detect_range_curr_nm *= me.seam_scan?0.65:1;#GR1F-16CJ-34-1-1 page 1-402
 		} else {
-			#me.detect_range_curr_nm = (me.seam_scan?0.5:1)*me.max_fire_range_nm; # no credible source for this
+			me.detect_range_curr_nm = (me.seam_scan?0.65:1)*me.max_fire_range_nm;#GR1F-16CJ-34-1-1 page 1-402
 		}
 	},
 
@@ -4849,8 +4828,8 @@ var AIM = {
 			# Notice: seeker_xxxx_target is used both for denoting where seeker should move towards and where the target is. In this case its the latter:
 			me.convertGlobalToSeekerViewDirection(me.Tgt.get_bearing(), me.Tgt.getElevation(), OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue());
 			me.testSeeker();
-			if (!me.inBeam) {
-				me.printSearch("out of beam");
+			if (!me.inBeam or (me.guidance == "semi-radar" and !me.is_painted(me.Tgt))) {
+				me.printSearch("out of beam or no beam for fox 1");
 				me.status = MISSILE_SEARCH;
 				me.Tgt = nil;
 				me.SwSoundOnOff.setBoolValue(TRUE);

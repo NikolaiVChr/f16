@@ -312,6 +312,14 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </product>
     </function>
 
+    <function name="aero/coefficient/force/CDhardpointCFT">
+        <description>drag for pylon</description>
+            <product>
+                <property>aero/qbar-psf</property>
+                <property>inertia/pointmass-dragarea-sqft[13]</property>
+            </product>
+    </function>
+
     <function name="aero/coefficient/Cx">
             <description>
                Cx coefficient in body coordinate system.
@@ -695,6 +703,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                         <property>aero/coefficient/force/CDpylon9</property>
                         <property>aero/coefficient/force/CDhardpointLeft</property>
                         <property>aero/coefficient/force/CDhardpointRight</property>
+                        <property>aero/coefficient/force/CDhardpointCFT</property>
                     </sum>
                     <cos>
                       <property>aero/alpha-rad</property>
@@ -1163,6 +1172,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                         <property>aero/coefficient/force/CDpylon9</property>
                         <property>aero/coefficient/force/CDhardpointLeft</property>
                         <property>aero/coefficient/force/CDhardpointRight</property>
+                        <property>aero/coefficient/force/CDhardpointCFT</property>
                     </sum>
                     <sin>
                       <property>aero/alpha-rad</property>
@@ -2666,6 +2676,10 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                     <product>
                         <property>aero/coefficient/force/CDhardpointRight</property>
                         <value>0.675068</value>
+                    </product>
+                    <product>
+                        <property>aero/coefficient/force/CDhardpointCFT</property>
+                        <value>0.0</value><!-- cft are center mounted so we give it zero -->
                     </product>
                 </sum>
                 <value>3.28084</value><!-- convert meter to feet -->

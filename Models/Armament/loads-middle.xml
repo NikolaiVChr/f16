@@ -188,11 +188,11 @@
  
 <animation>
   <type>select</type>
-  <object-name>Station3_3xGBU12</object-name>
+  <object-name>Station3_2xGBU12</object-name>
   <condition>
     <equals>
         <property>payload/armament/station/id-2-set</property>
-        <value>3 x GBU-12</value>
+        <value>2 x GBU-12</value>
       </equals>
   </condition>
  </animation>
@@ -457,11 +457,11 @@
  
  <animation>
   <type>select</type>
-  <object-name>Station7_3xGBU12</object-name>
+  <object-name>Station7_2xGBU12</object-name>
   <condition>
     <equals>
         <property>payload/armament/station/id-6-set</property>
-        <value>3 x GBU-12</value>
+        <value>2 x GBU-12</value>
       </equals>
   </condition>
  </animation>

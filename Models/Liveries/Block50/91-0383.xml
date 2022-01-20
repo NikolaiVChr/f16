@@ -8,6 +8,7 @@
     <texture>Liveries/Block50/91-0383.png</texture>
     <owner type="string">USAF</owner>
    </livery>
+
    <livery-logo>
     <texture>Liveries/standard.logos.black2.png</texture>
    </livery-logo>
@@ -19,9 +20,11 @@
     <livery-pod>
         <texture>Armament/External-stores/MXU-648.png</texture>
     </livery-pod>
+
     <f16>
-            <dragchute type="bool">false</dragchute>
-        </f16>
+        <dragchute type="bool">false</dragchute>
+        <cft type="bool">false</cft>
+    </f16>
   </model>
  </sim>
 </PropertyList>

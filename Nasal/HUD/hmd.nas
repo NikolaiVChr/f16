@@ -611,11 +611,11 @@ var F16_HMD = {
         # set the update list - using the update manager to improve the performance
         # of the HUD update - without this there was a drop of 20fps (when running at 60fps)
         obj.update_items = [
-            props.UpdateManager.FromHashList(["hud_serviceable", "hud_display", "hmcs_sym", "hud_power"], 0.1, func(hdp)#changed to 0.1, this function is VERY heavy to run.
+            props.UpdateManager.FromHashList(["hmcs_sym", "hud_power"], 0.1, func(hdp)#changed to 0.1, this function is VERY heavy to run.
                                       {
 # print("HUD hud_serviceable=", hdp.hud_serviceable," display=", hdp.hud_display, " brt=", hdp.hud_brightness, " power=", hdp.hud_power);
                                             
-                                          if (!hdp.hud_display or !hdp.hud_serviceable) {
+                                          if (0) {
                                             obj.color = [0.3,1,0.3,0];
                                             foreach(item;obj.total) {
                                               item.setColor(obj.color);
@@ -697,8 +697,8 @@ var F16_HMD = {
             props.UpdateManager.FromHashList(["heading", "headingMag", "useMag","gear_down","hmdH","hmdP","roll","pitch"], 0.1, func(hdp)
                                       {
                                           if (hdp.servHead) {
-                                            var lookDir = vector.Math.yawPitchVector(hdp.hmdH,hdp.hmdP,[1,0,0]);
-                                            lookDir = vector.Math.yawPitchRollVector(-hdp.heading, hdp.pitch, hdp.roll, lookDir);
+                                            var lookDir = vector.Math.pitchYawVector(hdp.hmdP,hdp.hmdH,[1,0,0]);
+                                            lookDir = vector.Math.rollPitchYawVector(hdp.roll, hdp.pitch, -hdp.heading, lookDir);
                                             obj.lookEuler = vector.Math.cartesianToEuler(lookDir);
                                             var lookingAt = obj.lookEuler[0]==nil?hdp.heading:obj.lookEuler[0];
                                             lookingAt += (hdp.headingMag-hdp.heading);#convert to magn
@@ -758,15 +758,15 @@ var F16_HMD = {
                                                 }
                                              }
                                             ),
-            props.UpdateManager.FromHashList(["standby", "data"], 0.5, func(hdp)
+            props.UpdateManager.FromHashList(["standby", "data", "wow0"], 0.5, func(hdp)
                                              {
                                                  if (hdp.data != 0) {
                                                      obj.stby.setText("MKPT"~sprintf("%03d",hdp.data));
-                                                     obj.stby.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud+7+75);
+                                                     obj.stby.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud+7+100);
                                                      obj.stby.show();
-                                                 } elsif (hdp.standby) {
+                                                 } elsif (hdp.standby and !hdp.wow0) {
                                                      obj.stby.setText("NO RAD");
-                                                     obj.stby.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud+7);
+                                                     obj.stby.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud+7+75);
                                                      obj.stby.show();
                                                  } else {
                                                      obj.stby.hide();
@@ -953,7 +953,7 @@ var F16_HMD = {
             me.target_idx = 0;
             me.designated = 0;
             
-        me.target_locked.setVisible(0);
+        me.target_lock_show = 0;
 
         me.irL = 0;#IR lock
         me.irS = 0;#IR medium circle
@@ -997,134 +997,119 @@ var F16_HMD = {
         }
         me.designatedDistanceFT = nil;
         me.groundDistanceFT = nil;
-        if (hdp["tgt_list"] != nil) {
-            foreach ( me.u; hdp.tgt_list ) {
-                if (hdp.dgft and !(hdp.active_u != nil and hdp.active_u.Callsign != nil and me.u.Callsign != nil and me.u.Callsign.getValue() == hdp.active_u.Callsign.getValue())) {
-                    continue;
-                }
-                me.callsign = "XX";
-                if (f16.rdrMode == f16.RADAR_MODE_SEA and me.u.get_type() != armament.MARINE) {
-                    continue;
-                }
-                if (f16.rdrMode == f16.RADAR_MODE_CRM and me.u.get_type() == armament.MARINE) {
-                    continue;
-                }
-                if (hdp.active_u == nil or me.u.Callsign.getValue() != hdp.active_u.Callsign.getValue()) {
-                    continue;
-                }
-                if (me.u.get_display()) {
-                    if (me.u.Callsign != nil)
-                      me.callsign = me.u.Callsign.getValue();
-                    me.model = "XX";
+        me.u = radar_system.apg68Radar.getPriorityTarget();
+        if (me.u != nil) {
+            me.callsign = "XX";
+            me.callsign = me.u.get_Callsign();
+            me.model = "XX";
 
-                    if (me.u.ModelType != "")
-                      me.model = me.u.ModelType;
-                    
-                    if (me.target_idx < me.max_symbols or me.designatedDistanceFT == nil) {
-                        me.echoPos = f16.HudMath.getDevFromCoord(me.u.get_Coord(0), hdp.hmdH, hdp.hmdP, hdp, geo.viewer_position());
-                        #print(me.echoPos[0],",",me.echoPos[1],"    ", hdp.hmdH, "," ,hdp.hmdP);
-                        me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
-                        #print("    ",me.echoPos[0]);
-                        me.echoPos[0] = (512/0.025)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512
-                        me.echoPos[1] = -(512/0.025)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512
-                        
-                        if (me.target_idx < me.max_symbols) {
-                            me.tgt = me.tgt_symbols[me.target_idx];
-                        } else {
-                            me.tgt = nil;
-                        }
-                        if (me.tgt != nil or me.designatedDistanceFT == nil) {
-                            if (me.tgt != nil) {
-                                me.tgt.setVisible(me.u.get_display());
-                            }
-                            me.clamped = math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]) > 500;
-
-                            if (me.clamped) {
-                                me.clampAmount = 500/math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]);
-                                me.echoPos[0] *= me.clampAmount;
-                                me.echoPos[1] *= me.clampAmount;
-                                me.tgt.setStrokeDashArray([7,7]);
-                            } else {
-                                me.tgt.setStrokeDashArray([1]);
-                            }
-                            
-                            if (hdp.active_u != nil and hdp.active_u.Callsign != nil and me.u.Callsign != nil and me.u.Callsign.getValue() == hdp.active_u.Callsign.getValue()) {
-                                me.designatedDistanceFT = hdp.active_u.get_Coord().direct_distance_to(geo.aircraft_position())*M2FT;
-                                me.target_locked.setVisible(1);
-                                if (me.tgt != nil) {
-                                    me.tgt.hide();
-                                }
-                                
-                                me.target_locked.setTranslation (me.echoPos);
-                                if (me.clamped) {
-                                    me.target_locked.setStrokeDashArray([7,7]);
-                                } else {
-                                    me.target_locked.setStrokeDashArray([1]);
-                                }
-                                me.target_locked.update();
-                                if (0 and currASEC != nil) {
-                                    # disabled for now as it has issues
-                                    me.cue = nil;
-                                    call(func {me.cue = hdp.weapn.getIdealFireSolution();},[], nil, nil, var err = []);
-                                    if (me.cue != nil) {
-                                        me.ascpixel = me.cue[1]*hmd.HudMath.getPixelPerDegreeAvg(2);
-                                        me.ascPos = hmd.HudMath.getPosFromDegs(me.echoPos[2], me.echoPos[3]);
-                                        me.ascDist = math.sqrt(math.pow(me.ascPos[0]+math.cos(me.cue[0]*D2R)*me.ascpixel,2)+math.pow(me.ascPos[1]+math.sin(me.cue[0]*D2R)*me.ascpixel,2));
-                                        me.ascReduce = me.ascDist > me.sx*0.20?me.sx*0.20/me.ascDist:1;
-                                        me.ASC.setTranslation(currASEC[0]+me.ascReduce*(me.ascPos[0]+math.cos(me.cue[0]*D2R)*me.ascpixel),currASEC[1]+me.ascReduce*(me.ascPos[1]+math.sin(me.cue[0]*D2R)*me.ascpixel));
-                                        showASC = 1;
-                                    }
-                                }
-                                if (0 and pylons.fcs != nil and pylons.fcs.isLock()) {
-                                    #me.target_locked.setRotation(45*D2R);
-                                    if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7" or hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T") {
-                                        var aim = pylons.fcs.getSelectedWeapon();
-                                        if (aim != nil) {
-                                            var coords = aim.getSeekerInfo();
-                                            if (coords != nil) {
-                                                me.seekPos = hmd.HudMath.getCenterPosFromDegs(coords[0],coords[1]);
-                                                #me.irLock.setTranslation(me.sx/2+me.texelPerDegreeX*coords[0],me.sy-me.texels_up_into_hud-me.texelPerDegreeY*coords[1]);
-                                                #me.radarLock.setTranslation(me.sx/2+me.texelPerDegreeX*coords[0],me.sy-me.texels_up_into_hud-me.texelPerDegreeY*coords[1]);
-                                                me.irLock.setTranslation(me.seekPos);
-                                                me.radarLock.setTranslation(me.seekPos);
-                                            }
-                                        }
-                                    }
-                                    if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
-                                        #me.radarLock.setTranslation(me.xcS, me.ycS); too perfect
-                                        me.ASEC120Aspect.setRotation(D2R*(hdp.active_u.get_heading()-hdp.heading+180));
-                                        me.rdL = 1;
-                                        me.rdT = 1;
-                                    } elsif (hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T") {
-                                        #me.irLock.setTranslation(me.xcS, me.ycS);
-                                        me.ASEC65Aspect.setRotation(D2R*(hdp.active_u.get_heading()-hdp.heading+180));
-                                        me.irL = 1;
-                                        me.irT = 1;
-                                    }
-                                } else {
-                                    #me.target_locked.setRotation(0);
-                                }
-                                if (me.clamped) {
-                                    me.locatorLineShow = 0;
-                                }
-                            } else {
-                                #
-                                # if in symbol reject mode then only show the active target.
-                                if (hdp.symbol_reject and me.tgt != nil) {
-                                  me.tgt.setVisible(0);
-                                }
-                            }
-                            if (me.tgt != nil) {
-                                me.tgt.setTranslation (me.echoPos);
-                                me.tgt.update();
-                            }
-                            if (ht_debug)
-                              printf("%-10s %f,%f [%f,%f,%f] :: %f,%f",me.callsign,me.xc,me.yc, me.devs[0], me.devs[1], me.devs[2], me.u_dev_rad*D2R, me.u_elev_rad*D2R); 
-                        }
-                        else print("[ERROR]: HUD too many targets ",me.target_idx);
+            if (me.u.getModel() != "")
+              me.model = me.u.getModel();
+            me.lastCoord = me.u.getLastCoord();
+            if ((me.target_idx < me.max_symbols or me.designatedDistanceFT == nil) and me.lastCoord != nil and me.lastCoord.is_defined()) {
+                me.echoPos = f16.HudMath.getDevFromCoord(me.lastCoord, hdp.hmdH, hdp.hmdP, hdp, geo.viewer_position());
+                #print(me.echoPos[0],",",me.echoPos[1],"    ", hdp.hmdH, "," ,hdp.hmdP);
+                me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
+                #print("    ",me.echoPos[0]);
+                me.echoPos[0] = (512/0.025)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512
+                me.echoPos[1] = -(512/0.025)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512
+                
+                if (me.target_idx < me.max_symbols) {
+                    me.tgt = me.tgt_symbols[me.target_idx];
+                } else {
+                    me.tgt = nil;
+                }
+                if (me.tgt != nil or me.designatedDistanceFT == nil) {
+                    if (me.tgt != nil) {
+                        me.tgt.setVisible(1);
                     }
-                    me.target_idx += 1;
+                    me.clamped = math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]) > 500;
+
+                    if (me.clamped) {
+                        me.clampAmount = 500/math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]);
+                        me.echoPos[0] *= me.clampAmount;
+                        me.echoPos[1] *= me.clampAmount;
+                        me.tgt.setStrokeDashArray([7,7]);
+                    } else {
+                        me.tgt.setStrokeDashArray([1]);
+                    }
+                    
+                    if (radar_system.apg68Radar.getPriorityTarget() != nil and radar_system.apg68Radar.getPriorityTarget().get_Callsign() != nil and me.u.get_Callsign() == radar_system.apg68Radar.getPriorityTarget().get_Callsign()) {
+                        me.designatedDistanceFT = radar_system.apg68Radar.getPriorityTarget().getLastRangeDirect()*M2FT;
+                        me.target_lock_show = 1;
+                        if (me.tgt != nil) {
+                            me.tgt.hide();
+                        }
+                        
+                        me.target_locked.setTranslation (me.echoPos);
+                        if (me.clamped) {
+                            me.target_locked.setStrokeDashArray([7,7]);
+                        } else {
+                            me.target_locked.setStrokeDashArray([1]);
+                        }
+                        me.target_locked.update();
+                        if (0 and currASEC != nil) {
+                            # disabled for now as it has issues
+                            me.cue = nil;
+                            call(func {me.cue = hdp.weapn.getIdealFireSolution();},[], nil, nil, var err = []);
+                            if (me.cue != nil) {
+                                me.ascpixel = me.cue[1]*hmd.HudMath.getPixelPerDegreeAvg(2);
+                                me.ascPos = hmd.HudMath.getPosFromDegs(me.echoPos[2], me.echoPos[3]);
+                                me.ascDist = math.sqrt(math.pow(me.ascPos[0]+math.cos(me.cue[0]*D2R)*me.ascpixel,2)+math.pow(me.ascPos[1]+math.sin(me.cue[0]*D2R)*me.ascpixel,2));
+                                me.ascReduce = me.ascDist > me.sx*0.20?me.sx*0.20/me.ascDist:1;
+                                me.ASC.setTranslation(currASEC[0]+me.ascReduce*(me.ascPos[0]+math.cos(me.cue[0]*D2R)*me.ascpixel),currASEC[1]+me.ascReduce*(me.ascPos[1]+math.sin(me.cue[0]*D2R)*me.ascpixel));
+                                showASC = 1;
+                            }
+                        }
+                        if (0 and pylons.fcs != nil and pylons.fcs.isLock()) {
+                            #me.target_locked.setRotation(45*D2R);
+                            if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7" or hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T") {
+                                var aim = pylons.fcs.getSelectedWeapon();
+                                if (aim != nil) {
+                                    var coords = aim.getSeekerInfo();
+                                    if (coords != nil) {
+                                        me.seekPos = hmd.HudMath.getCenterPosFromDegs(coords[0],coords[1]);
+                                        #me.irLock.setTranslation(me.sx/2+me.texelPerDegreeX*coords[0],me.sy-me.texels_up_into_hud-me.texelPerDegreeY*coords[1]);
+                                        #me.radarLock.setTranslation(me.sx/2+me.texelPerDegreeX*coords[0],me.sy-me.texels_up_into_hud-me.texelPerDegreeY*coords[1]);
+                                        me.irLock.setTranslation(me.seekPos);
+                                        me.radarLock.setTranslation(me.seekPos);
+                                    }
+                                }
+                            }
+                            if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
+                                #me.radarLock.setTranslation(me.xcS, me.ycS); too perfect
+                                me.ASEC120Aspect.setRotation(D2R*(radar_system.apg68Radar.getPriorityTarget().get_heading()-hdp.heading+180));
+                                me.rdL = 1;
+                                me.rdT = 1;
+                            } elsif (hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T") {
+                                #me.irLock.setTranslation(me.xcS, me.ycS);
+                                me.ASEC65Aspect.setRotation(D2R*(radar_system.apg68Radar.getPriorityTarget().get_heading()-hdp.heading+180));
+                                me.irL = 1;
+                                me.irT = 1;
+                            }
+                        } else {
+                            #me.target_locked.setRotation(0);
+                        }
+                        if (me.clamped) {
+                            me.locatorLineShow = 0;
+                        }
+                    } else {
+                        #
+                        # if in symbol reject mode then only show the active target.
+                        if (hdp.symbol_reject and me.tgt != nil) {
+                          me.tgt.setVisible(0);
+                        }
+                    }
+                    if (me.tgt != nil) {
+                        me.tgt.setTranslation (me.echoPos);
+                        me.tgt.update();
+                    }
+                    if (ht_debug)
+                      printf("%-10s %f,%f [%f,%f,%f] :: %f,%f",me.callsign,me.xc,me.yc, me.devs[0], me.devs[1], me.devs[2], me.u_dev_rad*D2R, me.u_elev_rad*D2R); 
+                } else {
+                    print("[ERROR]: HUD too many targets ",me.target_idx);
                 }
+                me.target_idx += 1;
             }
 
             for (me.nv = me.target_idx; me.nv < me.max_symbols;me.nv += 1) {
@@ -1134,14 +1119,28 @@ var F16_HMD = {
                 }
             }
         }
-        else print("[ERROR] Radar system missing or uninit (frame notifier)");
         me.ASC.setVisible(showASC);
         
         #print(me.irS~" "~me.irL);
 
         me.locatorLine.setVisible(me.locatorLineShow);
         me.locatorAngle.setVisible(me.locatorLineShow);
+        me.target_locked.setVisible(me.target_lock_show);
 
+        if (!me.target_lock_show and !hdp.standby and radar_system.apg68Radar.currentMode.longName == radar_system.acmBoreMode.longName) {
+            me.echoPos = f16.HudMath.getDevFromHMD(radar_system.apg68Radar.eulerX, radar_system.apg68Radar.eulerY, -hdp.hmdH, hdp.hmdP);
+            me.echoPos[0] = (512/0.025)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512
+            me.echoPos[1] = -(512/0.025)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*0.2;
+            me.clamped = math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]) > 500;
+            if (!me.clamped) {
+                me.rdrBore.setTranslation(me.echoPos);
+                me.rdrBore.show();
+            } else {
+                me.rdrBore.hide();
+            }
+        } else {
+            me.rdrBore.hide();
+        }
         
         me.dlzArray = pylons.getDLZ();
         #me.dlzArray =[10,8,6,2,9];#test
@@ -1151,9 +1150,10 @@ var F16_HMD = {
             #printf("%d %d %d %d %d",me.dlzArray[0],me.dlzArray[1],me.dlzArray[2],me.dlzArray[3],me.dlzArray[4]);
             me.dlz2.removeAllChildren();
             me.dlzArrow.setTranslation(0,-me.dlzArray[4]/me.dlzArray[0]*me.dlzHeight);
-            if (hdp.active_u != nil) {
+            if (radar_system.apg68Radar.getPriorityTarget() != nil) {
                 me.dlzClo.setTranslation(0,-me.dlzArray[4]/me.dlzArray[0]*me.dlzHeight);
-                me.dlzClo.setText(sprintf("%+d ",hdp.active_u.get_closure_rate()));
+                me.lcr = radar_system.apg68Radar.getPriorityTarget().getLastClosureRate();
+                me.dlzClo.setText(me.lcr!=0?sprintf("%+d ",me.lcr):"XXX");
                 if (pylons.fcs.isLock() and me.dlzArray[4] < me.dlzArray[2] and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
                     me.irL = 0;
                     me.rdL = 0;
@@ -1436,12 +1436,15 @@ var drag = func (Mach, _cd) {
 };
 
 var isDropping = 0;
+var dropTimer = nil;
 
 var dropping = func {
     if (getprop("payload/armament/gravity-dropping")) {
         isDropping = 1;
     } else {
-        settimer(func {isDropping = 0;}, 1.0);
+        dropTimer = maketimer(1.0, func {isDropping = 0;});
+        dropTimer.singleShot = 1;
+        dropTimer.start();
     }
 }
 

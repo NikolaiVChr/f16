@@ -22,7 +22,7 @@ var coords_cam = [
     getprop("/sim/view[105]/config/y-offset-m")
 ];
 io.include("Aircraft/Generic/updateloop.nas");
-#io.load_nasal(getprop("/sim/fg-root") ~ "/Aircraft/c172p/Nasal/generic/math_ext.nas","math_ext");
+#io.load_nasal(getprop("/sim/fg-root") ~ "/Aircraft/c172p/Nasal/generic/math_ext2.nas","math_ext2");
 var FLIRCameraUpdater = {
 
     new: func {
@@ -119,10 +119,14 @@ var FLIRCameraUpdater = {
         var computer = me._get_flir_computer(roll_deg, pitch_deg, heading);
 
         if (getprop("/aircraft/flir/target/auto-track") and me.click_coord_cam != nil) {
+
             var (yaw, pitch, distance) = computer(coords_cam, me.click_coord_cam);
+            #printf("C %.5f,%.5f,%.5f",me.click_coord_cam.lat(),me.click_coord_cam.lon(),me.click_coord_cam.alt());
             if (lock_tgp) {
+                #print("L");
                 me.update_cam(roll_deg, pitch_deg, yaw, pitch);
             } else {
+                #print("NO      LLLLLLLLLLL");
                 me.update_cam(roll_deg, pitch_deg, yaw+me.offsetH, pitch+me.offsetP);
             }
         }
@@ -139,6 +143,8 @@ var FLIRCameraUpdater = {
         var computer = me._get_flir_computer(roll_deg, pitch_deg, heading);
 
         if (getprop("/sim/current-view/name") == "TGP" and me.click_coord_cam != nil) {
+            #printf("B %.5f,%.5f,%.5f",me.click_coord_cam.lat(),me.click_coord_cam.lon(),me.click_coord_cam.alt());
+            me.click_coord_cam.lat();
             var (yaw, pitch, distance) = computer(coords_cam, me.click_coord_cam);
             me.update_cam(roll_deg, pitch_deg, yaw, pitch);
         }
@@ -163,7 +169,7 @@ var FLIRCameraUpdater = {
 
     _get_flir_auto_updater: func (offset) {
         return func (roll_deg, pitch_deg, yaw, pitch) {
-            (yaw, pitch) = math_ext.get_yaw_pitch_body(roll_deg, pitch_deg, yaw, pitch, offset);
+            (yaw, pitch) = math_ext2.get_yaw_pitch_body(roll_deg, pitch_deg, yaw, pitch, offset);
 
             setprop("/aircraft/flir/target/yaw-deg", yaw);
             setprop("/aircraft/flir/target/pitch-deg", pitch);
@@ -178,15 +184,17 @@ var FLIRCameraUpdater = {
 
     _get_flir_computer: func (roll_deg, pitch_deg, heading) {
         return func (coords, target) {
-            var (position_2d, position) = math_ext.get_point(coords[0], coords[1], coords[2], roll_deg, pitch_deg, heading);
-            return math_ext.get_yaw_pitch_distance_inert(position_2d, position, target, heading);
+            var (position_2d, position) = math_ext2.get_point(coords[0], coords[1], coords[2], roll_deg, pitch_deg, heading);
+            return get_yaw_pitch_distance_inert(position_2d, position, target, heading);
         }
     }
 
 };
 
-math_ext.get_yaw_pitch_distance_inert = func (position_2d, position, target_position, heading, f=nil) {
+get_yaw_pitch_distance_inert = func (position_2d, position, target_position, heading, f=nil) {
     # Does the same as Onox's version, except takes curvature of Earth into account.
+    #printf("A %.5f,%.5f,%.5f",target_position.lat(),target_position.lon(),target_position.alt());
+    target_position.lat();
     var heading_deg = positioned.courseAndDistance(position_2d, target_position)[0] - heading;
     var pitch_deg   = vector.Math.getPitch(position, target_position);
     var distance_m  = position.direct_distance_to(target_position);
@@ -206,8 +214,9 @@ var enable = 1;
 var camera_movement_speed_lock = 75;#Higher number means slower
 var camera_movement_speed_free =  5;
 
-var list = func () {
+var list = func (node) {
     var button = getprop("controls/MFD[2]/button-pressed");
+    
     if (button == 20) {#BACK
         setprop("sim/current-view/view-number",0);
         #setprop("/aircraft/flir/target/auto-track", 0);
@@ -221,13 +230,16 @@ var list = func () {
     }
     if (!enable) return;
     
-    
+    if (button == 0 and node.getName() == "button-pressed") {
+        setprop("controls/displays/cursor-slew-x", 0);
+        setprop("controls/displays/cursor-slew-y", 0);
+    }
     
     if (button == 1 or (getprop("controls/displays/cursor-click") and getprop("/sim/current-view/name") == "TGP")) {#LOCK
         gps = 0;
         if (lock_tgp) {
             lock_tgp = 0;
-            armament.contactPoint = nil;
+            armament.contactPoint = nil;print("Second click with TGP lock unlocks!");
             return;
         }
         var x = -2.5856;
@@ -236,6 +248,7 @@ var list = func () {
         var pos = aircraftToCart({x:-x, y:y, z: -z});
         var coordA = geo.Coord.new();
         coordA.set_xyz(pos.x, pos.y, pos.z);
+        coordA.alt();# TODO: once fixed in FG this line is no longer needed.
         var matrixMath = 0;
         if (matrixMath) {
             var dirCoord = geo.Coord.new(coordA);
@@ -289,20 +302,17 @@ var list = func () {
             var terrain = geo.Coord.new();
             terrain.set_latlon(terrainGeod.lat, terrainGeod.lon, terrainGeod.elevation);
             var ut = nil;
-            foreach (u ; awg_9.completeList) {
-                if (terrain.direct_distance_to(u.get_Coord(0))<45) {
+            foreach (u ; radar_system.getCompleteList()) {
+                if (terrain.direct_distance_to(u.get_Coord())<45) {
                     ut = u;
                     break;
                 }
             }
             if (ut!=nil) {
-                var contact = awg_9.Target.new(ut.propNode);
-                contact.setClass(awg_9.POINT);
-                contact.setVirtual(1);
-                contact.unique = rand();
+                var contact = ut.getNearbyVirtualTGPContact();
                 armament.contactPoint = contact;
             } else {
-                armament.contactPoint = fc.ContactTGP.new("TGP-Spot",terrain,1);
+                armament.contactPoint = radar_system.ContactTGP.new("TGP-Spot",terrain,1);
             }
             #flir_updater.click_coord_cam = terrain;
             #setprop("/aircraft/flir/target/auto-track", 1);
@@ -330,6 +340,8 @@ var list = func () {
     } elsif (button == 11) {#UP
         if (lock_tgp) return;
         gps = 0;
+        setprop("controls/displays/cursor-slew-y", -1);
+        return;
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetP += fov/camera_movement_speed_lock;
@@ -339,6 +351,8 @@ var list = func () {
     } elsif (button == 12) {#DOWN
         if (lock_tgp) return;
         gps = 0;
+        setprop("controls/displays/cursor-slew-y", 1);
+        return;
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetP -= fov/camera_movement_speed_lock;
@@ -348,6 +362,8 @@ var list = func () {
     } elsif (button == 14) {#LEFT
         if (lock_tgp) return;
         gps = 0;
+        setprop("controls/displays/cursor-slew-x", -1);
+        return;
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetH -= fov/camera_movement_speed_lock;
@@ -357,6 +373,8 @@ var list = func () {
     } elsif (button == 15) {#RGHT
         if (lock_tgp) return;
         gps = 0;
+        setprop("controls/displays/cursor-slew-x", 1);
+        return;
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetH += fov/camera_movement_speed_lock;
@@ -376,17 +394,19 @@ setlistener("controls/MFD[2]/button-pressed", list);
 setlistener("controls/displays/cursor-click", list);
 
 
+var flyupTime = 0;
+var flyupVis = 0;
 
 var fast_loop = func {
   var viewName = getprop("/sim/current-view/name"); 
 
-    if (viewName == "TGP" and (getprop("gear/gear/wow") or !getprop("f16/stores/tgp-mounted"))) {
+    if (viewName == "TGP" and (getprop("/fdm/jsbsim/gear/unit[0]/WOW") or !getprop("f16/stores/tgp-mounted"))) {
         # deselect view back to pilot default
         masterMode = STBY;
         setprop("sim/current-view/view-number",0);
         setprop("sim/rendering/als-filters/use-IR-vision", 0);
         setprop("sim/view[105]/enabled", 0);
-
+        pullup_cue_3.setVisible(0);
     } elsif (viewName == "TGP") {
         if (!getprop("f16/avionics/power-mfd") or getprop("f16/avionics/power-ufc-warm")!=1) {
             canvasMFDext.setColorBackground(0.00, 0.00, 0.00, 1.00);
@@ -399,6 +419,7 @@ var fast_loop = func {
             cross.hide();
             enable = 0;
             masterMode = STBY;
+            pullup_cue_3.setVisible(0);
         } elsif (getprop("f16/avionics/power-right-hdpt") == 0 or getprop("fdm/jsbsim/elec/bus/ess-dc") <=20) {
             canvasMFDext.setColorBackground(0.00, 0.00, 0.00, 1.00);
             midl.setText("      OFF     ");
@@ -410,6 +431,7 @@ var fast_loop = func {
             cross.hide();
             enable = 0;
             masterMode = STBY;
+            pullup_cue_3.setVisible(0);
         } elsif (getprop("f16/avionics/power-right-hdpt-warm") < 1) {
             canvasMFDext.setColorBackground(0.00, 0.00, 0.00, 1.00);
             
@@ -425,6 +447,7 @@ var fast_loop = func {
             line3.setText(masterMode==0?"STBY":(hiddenMode==AG?"A-G":"A-A"));
             cross.hide();
             enable = 0;
+            pullup_cue_3.setVisible(0);
         } elsif (masterMode == STBY) {
             canvasMFDext.setColorBackground(0.00, 0.00, 0.00, 1.00);
             midl.setText("   STANDBY   ");
@@ -435,11 +458,25 @@ var fast_loop = func {
             line3.setText("STBY");
             cross.hide();
             enable = 0;
+            flyupTime = getprop("instrumentation/radar/time-till-crash");
+            if (flyupTime != nil and flyupTime > 0 and flyupTime < 8) {
+                flyupVis = math.mod(getprop("sim/time/elapsed-sec"), 0.50) < 0.25;
+            } else {
+                flyupVis = 0;
+            }
+            pullup_cue_3.setVisible(flyupVis);
         } else {
             canvasMFDext.setColorBackground(1.00, 1.00, 1.00, 0.00);
             line3.setText(hiddenMode==AG?"A-G":"A-A");
             cross.show();
             enable = 1;
+            flyupTime = getprop("instrumentation/radar/time-till-crash");
+            if (flyupTime != nil and flyupTime > 0 and flyupTime < 8) {
+                flyupVis = math.mod(getprop("sim/time/elapsed-sec"), 0.50) < 0.25;
+            } else {
+                flyupVis = 0;
+            }
+            pullup_cue_3.setVisible(flyupVis);
         }
         
         # FLIR TGP stuff:
@@ -508,6 +545,7 @@ var fast_loop = func {
     steerlock = 0;
     var follow = 0;
     if (armament.contactPoint !=nil and armament.contactPoint.get_range()>35 and armament.contactPoint.get_Callsign() != "GPS-Spot") {
+        print("TGP attempted lock at 35+ nm: ",armament.contactPoint.get_range());
         armament.contactPoint = nil;
     }
     var gpps = 0;
@@ -551,7 +589,7 @@ var fast_loop = func {
                 steer = 0;
                 callsign = nil;
             }
-        } elsif (armament.contact != nil and armament.contact.get_display() and enable and masterMode) {
+        } elsif (armament.contact != nil and armament.contact.isVisible() and enable and masterMode) {
             # TGP follow radar lock
             flir_updater.click_coord_cam = armament.contact.get_Coord();
             setprop("/aircraft/flir/target/auto-track", 1);
@@ -583,7 +621,8 @@ var fast_loop = func {
             # - following steerpoint
             # - a GPS coord has been entered manually by "program GPS dialog"
             follow = 1;
-            vis = awg_9.TerrainManager.IsVisible(armament.contactPoint.propNode, nil);
+            vis = radar_system.terrain.fastTerrainCheck(armament.contactPoint);
+            if (vis > 0) vis = 1;
         }
         if (!vis or !masterMode) {
             setprop("/aircraft/flir/target/auto-track", 0);
@@ -592,7 +631,7 @@ var fast_loop = func {
             flir_updater.offsetP = 0;
             flir_updater.offsetH = 0;
             lock_tgp = 0;
-            armament.contactPoint = nil;
+            armament.contactPoint = nil;print("No vis on TGP lock");
             hiddenMode = AG;
         } else {
             lock_tgp = 1;
@@ -667,17 +706,22 @@ var fast_loop = func {
         var cy = -getprop("/controls/displays/cursor-slew-y-delta");
         setprop("/controls/displays/cursor-slew-x-delta",0);
         setprop("/controls/displays/cursor-slew-y-delta",0);
-
+        var modifier = getprop("/controls/displays/tgp-movement-modifier");
         if (!lock_tgp and (cy != 0 or cx != 0)) {
             gps = 0;
             var fov = getprop("sim/current-view/field-of-view");
             #var tme = dt - dt_old;
             if (getprop("/aircraft/flir/target/auto-track")) {
-                flir_updater.offsetP += cy*fov/camera_movement_speed_lock;
-                flir_updater.offsetH -= cx*fov/camera_movement_speed_lock;
+                var dist_modi = 1.0;
+                if (flir_updater.click_coord_cam != nil) {
+                    # 5nm is 5.0, 50 nm is 1.0
+                    dist_modi = 5 + ((flir_updater.click_coord_cam.direct_distance_to(radar_system.self.getCoord())*M2NM - 5) / (50 - 5)) * (1 - 5); 
+                }
+                flir_updater.offsetP += dist_modi*modifier*cy*fov/camera_movement_speed_lock;
+                flir_updater.offsetH -= dist_modi*modifier*cx*fov/camera_movement_speed_lock;
             } else {
-                setprop("sim/current-view/pitch-offset-deg",getprop("sim/current-view/pitch-offset-deg")+cy*fov/camera_movement_speed_free);
-                setprop("sim/current-view/heading-offset-deg",getprop("sim/current-view/heading-offset-deg")+cx*fov/camera_movement_speed_free);
+                setprop("sim/current-view/pitch-offset-deg",getprop("sim/current-view/pitch-offset-deg")+modifier*cy*fov/camera_movement_speed_free);
+                setprop("sim/current-view/heading-offset-deg",getprop("sim/current-view/heading-offset-deg")+modifier*cx*fov/camera_movement_speed_free);
             }
         }
     }
@@ -725,6 +769,7 @@ var AG = 1;
 var AA = 2;
 var masterMode = STBY;
 var hiddenMode = AG;
+var pullup_cue_3 = nil;
 
 var canvasMFDext = nil;
 var callInit = func {
@@ -918,7 +963,13 @@ var callInit = func {
             .setTranslation(128,128)
             .setStrokeLineWidth(1)
             .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"));
-};
 
-#callInit();
-#fast_loop();
+    pullup_cue_3 = canvasMFDext.createGroup().set("z-index", 9000).hide();
+    pullup_cue_3.createChild("path")
+               .moveTo(0, 0)
+               .lineTo(256, 256)
+               .moveTo(0, 256)
+               .lineTo(256, 0)
+               .setStrokeLineWidth(3)
+               .setColor([getprop("/sim/model/MFD-color/circle1/red"), getprop("/sim/model/MFD-color/circle1/green"), getprop("/sim/model/MFD-color/circle1/blue")]);
+};

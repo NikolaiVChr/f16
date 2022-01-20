@@ -33,17 +33,14 @@ var dogfight = func {
     dg = !dg;
     setprop("f16/avionics/dgft", dg);
     if (dg) {
-        setprop("instrumentation/radar/radar-standby-std", getprop("instrumentation/radar/radar-standby"));
-        setprop("instrumentation/radar/radar-standby", 1);
+        var prio = radar_system.apg68Radar.getPriorityTarget();
+        setprop("instrumentation/radar/radar-enable-std", getprop("instrumentation/radar/radar-enable"));
+        if (prio == nil) {
+            setprop("instrumentation/radar/radar-enable", 0);
+        }
         pylons.fcs.selectWeapon("20mm Cannon");
-        setprop("instrumentation/radar/radar2-range-std", getprop("instrumentation/radar/radar2-range"));
-        setprop("instrumentation/radar/radar2-range", 10);
-        setprop("instrumentation/radar/az-field-std", getprop("instrumentation/radar/az-field"));
-        setprop("instrumentation/radar/ho-field-std", getprop("instrumentation/radar/ho-field"));
-        setprop("instrumentation/radar/az-field", 30);
-        setprop("instrumentation/radar/ho-field", 20);
         ded.dataEntryDisplay.page = ded.pEWS;
-        awg_9.setupRangesDGFT();
+        radar_system.apg68Radar.setRootMode(1, prio);
         f16.f16_mfd.MFDl.resetColorAll();
         f16.f16_mfd.MFDl.PFD.selectPage(f16.f16_mfd.MFDl.p_RDR);
         f16.f16_mfd.MFDl.p_RDR.selectionBox.show();
@@ -54,11 +51,8 @@ var dogfight = func {
         f16.f16_mfd.MFDr.p_WPN.setSelection(nil, f16.f16_mfd.MFDr.PFD.buttons[18], 18);
         f16.rdrModeGM = 0;
     } else {
-        awg_9.setupRanges();
-        setprop("instrumentation/radar/radar2-range", getprop("instrumentation/radar/radar2-range-std"));
-        setprop("instrumentation/radar/az-field", getprop("instrumentation/radar/az-field-std"));
-        setprop("instrumentation/radar/ho-field", getprop("instrumentation/radar/ho-field-std"));
-        setprop("instrumentation/radar/radar-standby", getprop("instrumentation/radar/radar-standby") and getprop("instrumentation/radar/radar-standby-std"));
+        radar_system.apg68Radar.setRootMode(0, radar_system.apg68Radar.getPriorityTarget());
+        setprop("instrumentation/radar/radar-enable", getprop("instrumentation/radar/radar-enable") and getprop("instrumentation/radar/radar-enable-std"));
     }
     setprop("f16/avionics/dgft", dg); # extra invocation on purpose
 }
@@ -74,7 +68,7 @@ var replay = func {
 }
 
 var radar_standby = func {
-	screen.log.write("Radar "~(getprop("instrumentation/radar/radar-standby")==1?"SILENT":"ACTIVE"), 0.5, 0.5, 1);
+	screen.log.write("Radar "~(getprop("instrumentation/radar/radar-enable")==0?"SILENT":"ACTIVE"), 0.5, 0.5, 1);
 }
 
 var masterarm = func {

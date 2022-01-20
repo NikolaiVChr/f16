@@ -4,16 +4,17 @@
     <sim>
         <model>
             <livery>
-                <name type="string">Shaymo (fictional)</name>
+                <name type="string">Shaymo (Fictional)</name>
                 <texture>Liveries/Block60/Shaymo.png</texture> 
                 <owner type="string">USAF</owner>
             </livery>
-            <livery-logo>
-                <texture>Liveries/yf/yf16-transp.png</texture>
-            </livery-logo>
+
+        <livery-logo>
+            <texture>Liveries/yf/yf16-transp.png</texture>
+        </livery-logo>
 
         <livery-patch>
-        <texture>Liveries/patch.default.png</texture>
+            <texture>Liveries/patch.default.png</texture>
         </livery-patch>
 
         <livery-pod>
@@ -22,6 +23,7 @@
 
         <f16>
             <dragchute type="bool">false</dragchute>
+            <cft type="bool">true</cft>
         </f16>
         </model>
     </sim>

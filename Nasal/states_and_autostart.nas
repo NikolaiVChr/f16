@@ -57,7 +57,7 @@ var repair2 = func {
       # engine is not running, lets attempt to start it
       setprop("f16/engine/feed",1);
       setprop("f16/engine/cutoff-release-lever",1);
-      if (getprop("gear/gear/wow")) {
+      if (getprop("/fdm/jsbsim/gear/unit[0]/WOW")) {
         setprop("f16/engine/jfs-start-switch",1);# If airborne while doing this, maybe should set this to -1 (START 1) instead. And only to 1 (START 2) if on ground WOW.
       } else {
         setprop("f16/engine/jfs-start-switch",-1);# If airborne while doing this, maybe should set this to -1 (START 1) instead. And only to 1 (START 2) if on ground WOW.
@@ -117,7 +117,7 @@ var autostart = func {
   screen.log.write("Starting, standby..");
 
   # If on the ground put in the EPU pin
-  if (getprop("gear/gear/wow")) {
+  if (getprop("/fdm/jsbsim/gear/unit[0]/WOW")) {
     setprop("fdm/jsbsim/elec/switches/epu-pin",1);
   }
 
@@ -141,13 +141,13 @@ var autostart = func {
 
   eng.JFS.start_switch_last = 0; # bypass check for switch was in OFF
 
-  if (getprop("gear/gear/wow") and !(eng.accu_1_psi == eng.accu_psi_max or eng.accu_2_psi == eng.accu_psi_max or (eng.accu_1_psi >= eng.accu_psi_both_max and eng.accu_2_psi >= eng.accu_psi_both_max))) {
+  if (getprop("/fdm/jsbsim/gear/unit[0]/WOW") and !(eng.accu_1_psi == eng.accu_psi_max or eng.accu_2_psi == eng.accu_psi_max or (eng.accu_1_psi >= eng.accu_psi_both_max and eng.accu_2_psi >= eng.accu_psi_both_max))) {
       screen.log.write("Both JFS accumulators de-pressurized. Engine start aborted.");
       print("Both JFS accumulators de-pressurized. Auto engine start aborted.");
       print("Menu->F-16->Config to fill them up again.");
       inAutostart = 0;
       return;
-  } elsif  (!getprop("gear/gear/wow") and eng.accu_1_psi < eng.accu_psi_max and eng.accu_2_psi < eng.accu_psi_max) {
+  } elsif  (!getprop("/fdm/jsbsim/gear/unit[0]/WOW") and eng.accu_1_psi < eng.accu_psi_max and eng.accu_2_psi < eng.accu_psi_max) {
       screen.log.write("Both JFS accumulators de-pressurized. Engine start aborted.");
       print("Both JFS accumulators de-pressurized. Auto engine start aborted.");
       print("Menu->F-16->Config to fill them up again. Or wait for Hydraulic-B system to do it.");
@@ -162,7 +162,7 @@ var autostart = func {
 }
 
 var autostartelec = func {
-  if (getprop("gear/gear/wow")) {
+  if (getprop("/fdm/jsbsim/gear/unit[0]/WOW")) {
     setprop("f16/engine/jfs-start-switch",1);# Only to 1 (START 2) if on ground WOW.
   } else {
     setprop("f16/engine/jfs-start-switch",-1);# If airborne while doing this, set to -1 (START 1) instead.
@@ -240,7 +240,7 @@ var autostartengine = func {
   
   setprop("controls/test/test-panel/oxy-test", 0);
 
-  setprop("instrumentation/radar/radar-standby", 0);
+  setprop("instrumentation/radar/radar-enable", 1);
   setprop("instrumentation/comm[0]/volume",1);
   setprop("instrumentation/comm[1]/volume",1);
 
@@ -318,7 +318,7 @@ var coldndark = func {
   setprop("controls/lighting/lighting-panel/flood-inst-pnl-knob", 0.0);
   setprop("controls/lighting/lighting-panel/console-primary-knob", 0.0);
   setprop("controls/lighting/lighting-panel/data-entry-display", 0.0);
-  setprop("instrumentation/radar/radar-standby", 1);
+  setprop("instrumentation/radar/radar-enable", 1);
   setprop("instrumentation/comm[0]/volume",0);
   setprop("instrumentation/comm[1]/volume",0);
   setprop("controls/seat/ejection-safety-lever",0);

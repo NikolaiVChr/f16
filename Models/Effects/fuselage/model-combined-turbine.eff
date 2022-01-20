@@ -1516,10 +1516,10 @@ Modifications author: Nikolai V. Chr.
 			</vertex-program-two-side>
 
 	  <program n="0">
-		<vertex-shader n="0">Aircraft/f16/Shaders/ubershader.vert</vertex-shader>
-		<fragment-shader n="0">Aircraft/f16/Shaders/ubershader-gbuffer.frag</fragment-shader>
-		<fragment-shader n="1">Aircraft/f16/Shaders/gbuffer-functions.frag</fragment-shader>
-		<fragment-shader n="2">Aircraft/f16/Shaders/gbuffer-encode.frag</fragment-shader>
+		<vertex-shader n="0">Aircraft/f16/Shaders4/ubershader.vert</vertex-shader>
+		<fragment-shader n="0">Aircraft/f16/Shaders4/ubershader-gbuffer.frag</fragment-shader>
+		<fragment-shader n="1">Aircraft/f16/Shaders4/gbuffer-functions.frag</fragment-shader>
+		<fragment-shader n="2">Aircraft/f16/Shaders4/gbuffer-encode.frag</fragment-shader>
 	  </program>
 
 			<uniform>

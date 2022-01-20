@@ -369,6 +369,7 @@ SelfContact = {
     # this is much faster than calling geo.aircraft_position().
       me.light = aircraftToCart({x:3.13064, y:0.307693, z:1.15951});
       me.accoord = geo.Coord.new().set_xyz(me.light.x,me.light.y,me.light.z);
+      me.accoord.alt();# TODO: once fixed in FG this line is no longer needed.
       return me.accoord;
   },
   
@@ -429,7 +430,7 @@ var FixedBeamRadar = {
   
   computeBeamVector: func {
     me.beamVector = [math.cos(me.beam_pitch_deg*D2R), 0, math.sin(me.beam_pitch_deg*D2R)];
-    me.beamVectorFix = vector.Math.yawPitchRollVector(-self.getHeading(), self.getPitch(), self.getRoll(), me.beamVector);
+    me.beamVectorFix = vector.Math.rollPitchYawVector(self.getRoll(), self.getPitch(), -self.getHeading(), me.beamVector);
     me.geoVector = vector.Math.vectorToGeoVector(vector.Math.normalize(me.beamVectorFix), self.getLightCoord());
     return me.geoVector;
   },
@@ -456,7 +457,10 @@ var fix = FixedBeamRadar.new();
 # Beam: -10.14+(-4.86/2) = -12.57
 fix.setBeamPitch(-12.57);
 
-light_manager.init();
+if (getprop("/sim/version/compositor-support") != 1) {
+  # we only start this if not running in 2020.4.0
+  light_manager.init();
+}
 
 
 

@@ -85,8 +85,8 @@ var mainloop = func() {
     thread.unlock(mutexWrite);
     writeMyPlanePos();
     writeMyPlaneAttributes();
-    foreach (var cx; awg_9.completeList) {
-        if (cx["propNode"] != nil and cx.propNode.getName() == "multiplayer" and getprop("sim/multiplay/txhost") == "mpserver.opredflag.com") {
+    foreach (var cx; radar_system.getCompleteList()) {
+        if (cx["prop"] != nil and cx.prop.getName() == "multiplayer" and getprop("sim/multiplay/txhost") == "mpserver.opredflag.com") {
             continue;
         }
         var color = ",Color=Blue";
@@ -96,7 +96,7 @@ var mainloop = func() {
         thread.lock(mutexWrite);
         if (find_in_array(seen_ids, cx.tacobj.tacviewID) == -1) {
             append(seen_ids, cx.tacobj.tacviewID);
-            var model_is = cx.get_model();
+            var model_is = cx.getModel();
             if (model_is=="Mig-28") {
                 model_is = "F-16C";
                 color=",Color=Red";
@@ -104,9 +104,10 @@ var mainloop = func() {
             write(cx.tacobj.tacviewID ~ ",Name="~ model_is~ ",CallSign=" ~ cx.get_Callsign() ~color~"\n")
         }
         if (cx.tacobj.valid) {
-            lon = cx.get_Longitude();
-            lat = cx.get_Latitude();
-            alt = cx.get_altitude() * FT2M;
+            var cxC = cx.getCoord();
+            lon = cxC.lon();
+            lat = cxC.lat();
+            alt = cxC.alt();
             roll = cx.get_Roll();
             pitch = cx.get_Pitch();
             heading = cx.get_heading();
@@ -161,8 +162,8 @@ var writeMyPlanePos = func() {
 
 var writeMyPlaneAttributes = func() {
     var tgt = "";
-    if(awg_9.active_u != nil) {
-        tgt= ",FocusedTarget="~awg_9.active_u.tacobj.tacviewID;
+    if(radar_system.apg68Radar.getPriorityTarget() != nil) {
+        tgt= ",FocusedTarget="~radar_system.apg68Radar.getPriorityTarget().tacobj.tacviewID;
     }
     var rmode = ",RadarMode=1";
     if (getprop("sim/multiplay/generic/int[2]")) {

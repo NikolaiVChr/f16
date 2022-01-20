@@ -87,11 +87,19 @@
             </key>
             <key>
                 <name>y</name>
-                <desc>Select next radar contact</desc>
+                <desc>Select next TWS radar contact</desc>
             </key>
             <key>
                 <name>Y</name>
-                <desc>Select prev radar contact</desc>
+                <desc>Antennae level</desc>
+            </key>
+            <key>
+                <name>i</name>
+                <desc>Antennae up</desc>
+            </key>
+            <key>
+                <name>I</name>
+                <desc>Antennae down</desc>
             </key>
             <key>
                 <name>Ctrl-y</name>

@@ -74,6 +74,7 @@ var iff_hash = {
 var hash1 = "";
 var hash2 = "";
 var check_hash = "";
+var last_interogate = 0;
 
 var interrogate = func(tgt) {
 	if ( tgt.getChild("callsign") == nil or tgt.getNode("sim/multiplay/generic/string["~iff_mp_string~"]") == nil ) {

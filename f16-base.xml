@@ -109,6 +109,8 @@
         <model>
             <fallback-model-index type="int">516</fallback-model-index>
             <f16>
+                <cft type="bool">false</cft><!-- liveries set this to enable CFT tanks on b50+ -->
+                <cft-tanks-3d type="bool">false</cft-tanks-3d><!-- use this for 3D of CFT -->
                 <AIM-9L type="bool">true</AIM-9L>
                 <CATM-9L type="bool">false</CATM-9L>
                 <AIM-9_smokewinders type="bool">false</AIM-9_smokewinders>
@@ -267,7 +269,7 @@
           </view>
         -->
         <view n="0">
-            <internal>true</internal>
+            <internal type="bool">true</internal>
             <enabled>true</enabled>
             <config>
                 <pitch-offset-deg>-13.75</pitch-offset-deg>
@@ -305,7 +307,7 @@
             <enabled>true</enabled>
             <heading-offset-deg>0</heading-offset-deg>
             <pitch-offset-deg>0</pitch-offset-deg>
-            <internal>true</internal>
+            <internal type="bool">true</internal>
             <config>
                 <pitch-offset-deg>-13.55</pitch-offset-deg>
                 <heading-offset-deg>-3</heading-offset-deg>
@@ -325,7 +327,7 @@
             <enabled>true</enabled>
             <heading-offset-deg>0</heading-offset-deg>
             <pitch-offset-deg>0</pitch-offset-deg>
-            <internal>true</internal>
+            <internal type="bool">true</internal>
             <config>
                 <pitch-offset-deg>-6.25</pitch-offset-deg>
                 <heading-offset-deg>-218</heading-offset-deg>
@@ -345,7 +347,7 @@
             <enabled>true</enabled>
             <heading-offset-deg>0</heading-offset-deg>
             <pitch-offset-deg>0</pitch-offset-deg>
-            <internal>true</internal>
+            <internal type="bool">true</internal>
             <config>
                 <pitch-offset-deg>-9.0</pitch-offset-deg>
                 <heading-offset-deg>-181.5</heading-offset-deg>
@@ -362,7 +364,7 @@
         <view n="105"><!-- if change this number, also change it in tgp.nas and mfd.nas -->
             <name>TGP</name>
             <enabled>false</enabled>
-            <internal>true</internal>
+            <internal type="bool">true</internal>
             <pitch-offset-deg type="double">-30</pitch-offset-deg>
             <heading-offset-deg type="double">0</heading-offset-deg>
             <config>
@@ -516,6 +518,7 @@
                 <bool n="52" type="bool" alias="/instrumentation/gci/cutoff"/>
                 <int n="2" type="int">0</int><!-- radar-standby -->
                 <int n="9" type="int" alias="/sim/variant-id"/>
+                <int n="10" type="int" alias="/sim/variant-engine"/>
                 <float n="0" type="double" alias="/engines/engine[0]/nozzle-pos-norm"/>
                 <float n="2" type="double" alias="/engines/engine[0]/augmentation1"/>
                 <float n="3" type="double" alias="/velocities/airspeed-kt"/>
@@ -580,6 +583,11 @@
         <tacview-recording type="bool">0</tacview-recording>
         <help n="0" include="Systems/f16-help.xml"/>
     </sim>
+    <debug-radar>
+        <debug-mapper type="int">0</debug-mapper>
+        <debug-main type="int">0</debug-main>
+        <debug-stt type="int">0</debug-stt>
+    </debug-radar>
     <input n="0" include="Systems/f16-input.xml"/>
     <controls>
         <armament>
@@ -616,6 +624,7 @@
         <displays>
             <cursor-slew-x type="float">0</cursor-slew-x><!-- These 3 names cannot be changed, they are shared with other aircraft types so people have same stick binding -->
             <cursor-slew-y type="float">0</cursor-slew-y>
+            <tgp-movement-modifier type="float">1.0</tgp-movement-modifier>
             <cursor-click type="bool">false</cursor-click>
             <display-management-switch-x type="float">0</display-management-switch-x>
             <display-management-switch-y type="float">0</display-management-switch-y>
@@ -654,11 +663,15 @@
         <seat>
             <ejection-safety-lever type="bool">false</ejection-safety-lever>
         </seat>
+        <radar>
+            <antennae-knob type="double">0</antennae-knob>
+        </radar>
         <test>
             <avtr-test type="bool">false</avtr-test>
             <test-panel>
                 <fire-ovht-test type="bool">false</fire-ovht-test>
                 <mal-ind-lts type="bool">false</mal-ind-lts>
+                <mal-ind-lts-btn type="bool">false</mal-ind-lts-btn>
                 <oxy-test type="bool">false</oxy-test>
                 <epu-test type="bool">false</epu-test>
                 <pbg-test type="bool">false</pbg-test>
@@ -721,6 +734,12 @@
                 <level-norm type="double">0</level-norm>
             </tank>
             <tank n="8">
+                <name>Not attached</name>
+                <selected type="bool">false</selected>
+                <capacity-gal_us type="double">0</capacity-gal_us>
+                <level-norm type="double">0</level-norm>
+            </tank>
+            <tank n="9">
                 <name>Not attached</name>
                 <selected type="bool">false</selected>
                 <capacity-gal_us type="double">0</capacity-gal_us>
@@ -834,6 +853,7 @@
                 <pointmass-dragarea-sqft type="double" n="9">0</pointmass-dragarea-sqft>
                 <pointmass-dragarea-sqft type="double" n="11">0</pointmass-dragarea-sqft>
                 <pointmass-dragarea-sqft type="double" n="12">0</pointmass-dragarea-sqft>
+                <pointmass-dragarea-sqft type="double" n="13">0</pointmass-dragarea-sqft>
             </inertia>
             <systems>
                 <hook>
@@ -974,7 +994,8 @@
             <radar2-range type="int">40</radar2-range><!-- default range -->
             <radar2-range-std type="int">40</radar2-range-std>
             <radar-standby type="bool">true</radar-standby>
-            <radar-standby-std type="bool">true</radar-standby-std>
+            <radar-enable type="bool">false</radar-enable>
+            <radar-enable-std type="bool">false</radar-enable-std>
             <symbols-enabled type="bool">true</symbols-enabled>
             <debug-mode type="bool">true</debug-mode>
             <serviceable type="bool">true</serviceable>
@@ -1215,6 +1236,7 @@
             <front-on type="bool">true</front-on>
             <front-off type="bool">false</front-off>
             <helmet-damping type="double">0.325</helmet-damping>
+            <acm-lock type="bool">false</acm-lock>
         </sound>
         <settings>
             <bingo type="int">1500</bingo>
@@ -1249,8 +1271,8 @@ value. 18000=standard US transition altitude -->
             <mfd-l-con type="double">1.0</mfd-l-con>
             <mfd-r-brt type="double">1.0</mfd-r-brt>
             <mfd-r-con type="double">1.0</mfd-r-con>
-            <mfd-l-gain type="double">1.2</mfd-l-gain>
-            <mfd-r-gain type="double">1.2</mfd-r-gain>
+            <mfd-l-gain type="double">1.5</mfd-l-gain>
+            <mfd-r-gain type="double">1.5</mfd-r-gain>
             <hud-velocity type="int">1</hud-velocity><!-- 0=TRUE 1=CAL 2=GND -->
             <hud-scales type="int">1</hud-scales><!-- 0=OFF 1=VAH 2=VV/VAH -->
             <hud-fpm type="int">2</hud-fpm><!-- 0=OFF 1=FPM 2=ATT/FPM -->
@@ -1295,6 +1317,12 @@ value. 18000=standard US transition altitude -->
                 <c4-typ type="string">   </c4-typ>
                 <c5-typ type="string">   </c5-typ>
                 <c6-typ type="string">   </c6-typ>
+                <c1-col type="string">RED</c1-col>
+                <c2-col type="string">RED</c2-col>
+                <c3-col type="string">YEL</c3-col>
+                <c4-col type="string">YEL</c4-col>
+                <c5-col type="string">GRN</c5-col>
+                <c6-col type="string">GRN</c6-col>
                 <bulls-eye-defined type="bool">true</bulls-eye-defined>
                 <bulls-eye-lat type="double">37.20</bulls-eye-lat>
                 <bulls-eye-lon type="double">-115.60</bulls-eye-lon>
@@ -1557,12 +1585,12 @@ value. 18000=standard US transition altitude -->
         <rwrs>
             <file>Aircraft/f16/Nasal/rwr.nas</file>
         </rwrs>
-        <awg_9>
+        <!--awg_9>
             <file>Aircraft/f16/Nasal/awg_9.nas</file>
-        </awg_9>
-        <rwr_apg>
+        </awg_9-->
+        <!--rwr_apg>
             <file>Aircraft/f16/Nasal/rwr_apg.nas</file>
-        </rwr_apg>
+        </rwr_apg-->
         <f16_chronograph>
             <file>Aircraft/f16/Nasal/chronograph.nas</file>
         </f16_chronograph>
@@ -1609,9 +1637,9 @@ value. 18000=standard US transition altitude -->
         <frd>
           <file>Aircraft/f16/Nasal/freq-display.nas</file>
         </frd>
-        <math_ext>
-          <file>Aircraft/c172p/Nasal/generic/math_ext.nas</file>
-        </math_ext>
+        <math_ext2>
+          <file>Aircraft/f16/Nasal/math_ext2.nas</file>
+        </math_ext2>
         <tgp>
           <file>Aircraft/f16/Nasal/tgp.nas</file>
         </tgp>
@@ -1645,6 +1673,11 @@ value. 18000=standard US transition altitude -->
         <help>
             <file>Aircraft/f16/Nasal/help.nas</file>
         </help>
+        <radar_system>
+            <file>Aircraft/f16/Nasal/radar/radar-system.nas</file>
+            <file>Aircraft/f16/Nasal/radar/apg-68.nas</file>
+            <!--file>Aircraft/f16/Nasal/radar/f16-radar-test.nas</file-->
+        </radar_system>
     </nasal>
 
    

@@ -1309,6 +1309,7 @@ var code_ct = func () {
       setprop("sim/freeze/fuel",0);
       setprop("/sim/speed-up", 1);
       setprop("/gui/map/draw-traffic", 0);
+      setprop("/sim/marker-pins/traffic", 0);
       setprop("/sim/gui/dialogs/map-canvas/draw-TFC", 0);
       #fgcommand("timeofday", props.Node.new({"timeofday": "real"}));
       #setprop("/sim/rendering/als-filters/use-filtering", 1);
@@ -1339,6 +1340,7 @@ var re_init = func (node) {
   foreach(var failure_mode_id; mode_list) {
     FailureMgr.set_failure_level(failure_mode_id, 0);
   }
+  stopLaunch();
   damageLog.push("Aircraft was repaired due to re-init.");
 }
 

@@ -8,6 +8,7 @@
     <texture>Liveries/Block50/08-8013.png</texture>
     <owner type="string">RMAF</owner>
    </livery>
+   
    <livery-logo>
     <texture>Liveries/standard.logos.black.png</texture>
    </livery-logo>
@@ -22,6 +23,7 @@
 
     <f16>
         <dragchute type="bool">true</dragchute>
+        <cft type="bool">true</cft>
     </f16>
   </model>
  </sim>

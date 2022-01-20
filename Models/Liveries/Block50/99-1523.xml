@@ -8,12 +8,13 @@
     <texture>Liveries/Block50/99-1523.png</texture>
     <owner type="string">HAF</owner>
    </livery>
+   
    <livery-logo>
-    <texture>Liveries/standard.logos.png</texture>
+    <texture>Liveries/Block50/greek.logo1.png</texture>
    </livery-logo>
 
    <livery-patch>
-      <texture>Liveries/Block30/patch.Hellas.png</texture>
+      <texture>Liveries/Block50/patch.zeus.png</texture>
    </livery-patch>
 
   <livery-pod>
@@ -22,6 +23,7 @@
 
         <f16>
             <dragchute type="bool">true</dragchute>
+            <cft type="bool">true</cft>
         </f16>
   </model>
  </sim>

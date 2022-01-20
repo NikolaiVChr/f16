@@ -67,6 +67,7 @@
           }
         }
       }
+      setprop("rendering/scene/diffuse/red-unbound", getprop("rendering/scene/diffuse/red"));
       if (looping) settimer(loop, 0.10);
     }
     
@@ -266,6 +267,27 @@
  </animation>
 
  <model>
+  <name>irst</name>
+  <path>Aircraft/f16/Models/irst-b60.ac</path>
+  <offsets>
+        <x-m>0</x-m>
+        <y-m>0</y-m>
+        <z-m>0</z-m>
+  </offsets>
+ </model> 
+
+ <animation>
+  <type>select</type>
+  <object-name>irst</object-name>
+  <condition>
+                <equals>
+                    <property>sim/variant-id</property>
+                    <value>6</value>
+                </equals>
+  </condition>
+ </animation>
+
+ <model>
   <name>ex</name>
   <path>Aircraft/f16/Models/Effects/explosion.xml</path>
  </model>
@@ -352,7 +374,7 @@
  </model>-->
 
  <model>
-  <name>new_nozzle</name>
+  <name>PW_nozzle</name>
   <path>Aircraft/f16/Models/nozzle.xml</path>
   <offsets>
    <x-m>4.617</x-m>
@@ -360,6 +382,89 @@
    <z-m>0.0</z-m>
   </offsets>
  </model>
+
+ <animation>
+  <type>select</type>
+  <object-name>PW_nozzle</object-name>
+  <condition>
+      <equals>
+          <property>sim/multiplay/generic/int[10]</property>
+          <value>2</value>
+      </equals>
+  </condition>
+ </animation>
+
+ <model>
+  <name>GE_nozzle</name>
+  <path>Aircraft/f16/Models/nozzle-GE.xml</path>
+  <offsets>
+   <x-m>4.61285</x-m>
+   <!--y-m>-0.015</y-m>
+   <z-m>0.015</z-m-->
+  </offsets>
+ </model>
+
+ <animation>
+        <type>scale</type>
+        <object-name>GE_nozzle</object-name>
+        <!--x-factor>0.0</x-factor>
+        <y-factor>1.0</y-factor>
+        <z-factor>1.0</z-factor-->
+        <x-offset>1.0</x-offset>
+        <y-offset>0.82</y-offset>
+        <z-offset>0.82</z-offset>
+        <center>
+           <x-m> 4.61285  </x-m>
+           <y-m> 0   </y-m>
+           <z-m> 0   </z-m>
+        </center>
+    </animation>
+
+ <animation>
+        <type>translate</type>
+        <object-name>GE_nozzle</object-name>
+        <factor>0.0</factor>
+        <offset-m>-7.74</offset-m>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>GE_nozzle</object-name>
+        <factor>0.0</factor>
+        <offset-m>-1.4827</offset-m>
+        <axis>
+            <x>0</x>
+            <y>1</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>GE_nozzle</object-name>
+        <factor>0.0</factor>
+        <offset-m>1.25336</offset-m>
+        <axis>
+            <x>0</x>
+            <y>0</y>
+            <z>1</z>
+        </axis>
+    </animation>
+    
+
+ <animation>
+  <type>select</type>
+  <object-name>GE_nozzle</object-name>
+  <condition>
+      <equals>
+          <property>sim/multiplay/generic/int[10]</property>
+          <value>0</value>
+      </equals>
+  </condition>
+ </animation>
 
 
 <effect>
@@ -526,6 +631,8 @@
       <object-name>RightUpperHorizonTail</object-name>
       <object-name>RightLowerHorizonTail</object-name>
       
+      <object-name>irst</object-name>
+
       <object-name>CanopyFrame</object-name>
       <object-name>VentralFins</object-name>
       <object-name>AirIntake</object-name>
@@ -933,7 +1040,93 @@
 
  
 <!-- ===================== START LIGHTING =========================== -->
+  <light>
+  <name>taxi-light</name>
+  <type>spot</type>
+  <position>
+    <x-m>-3.13064</x-m>
+    <y-m>0.307693</y-m>
+    <z-m>-1.23477</z-m>
+  </position>
+  <direction>
+    <pitch-deg>85</pitch-deg>
+    <roll-deg>0</roll-deg>
+    <heading-deg>0</heading-deg>
+  </direction>
+  <ambient>
+    <r>0.03</r>
+    <g>0.03</g>
+    <b>0.03</b>
+    <a>1</a>
+  </ambient>
+  <diffuse>
+    <r>0.95</r>
+    <g>0.9</g>
+    <b>0.9</b>
+    <a>1</a>
+  </diffuse>
+  <specular>
+    <r>0.95</r>
+    <g>0.9</g>
+    <b>0.9</b>
+    <a>1</a>
+  </specular>
+  <attenuation>
+    <c>0.05</c>
+    <l>0.00045</l>
+    <q>0.000075</q>
+  </attenuation>
+  <spot-exponent>30</spot-exponent>
+  <spot-cutoff>30</spot-cutoff>
+  <range-m>100</range-m>
+  <dim-factor>
+    <property>sim/multiplay/generic/bool[46]</property>
+  </dim-factor>
+</light>
 
+<light>
+  <name>land-light</name>
+  <type>spot</type>
+  <position>
+    <x-m>-3.13064</x-m>
+    <y-m>0.307693</y-m>
+    <z-m>-1.23477</z-m>
+  </position>
+  <direction>
+    <pitch-deg>79.86</pitch-deg>
+    <roll-deg>0</roll-deg>
+    <heading-deg>0</heading-deg>
+  </direction>
+  <ambient>
+    <r>0.03</r>
+    <g>0.03</g>
+    <b>0.03</b>
+    <a>1</a>
+  </ambient>
+  <diffuse>
+    <r>0.85</r>
+    <g>0.8</g>
+    <b>0.8</b>
+    <a>1</a>
+  </diffuse>
+  <specular>
+    <r>0.85</r>
+    <g>0.8</g>
+    <b>0.8</b>
+    <a>1</a>
+  </specular>
+  <attenuation>
+    <c>1</c>
+    <l>0.0001</l>
+    <q>0.00000</q>
+  </attenuation>
+  <spot-exponent>1250</spot-exponent>
+  <spot-cutoff>7.5</spot-cutoff>
+  <range-m>250</range-m>
+  <dim-factor>
+    <property>sim/multiplay/generic/bool[47]</property>
+  </dim-factor>
+</light>
 <!-- start position lights -->
 
  <animation>
@@ -1433,10 +1626,10 @@
  </animation>
 
  <model>
-  <name>AB_Flame</name>
-  <path>Aircraft/f16/Models/Effects/afterburner.xml</path>
+  <name>AB_FlamePW</name>
+  <path>Aircraft/f16/Models/Effects/afterburner-pw.xml</path>
   <offsets>
-   <x-m>5.44</x-m>
+   <x-m>5.43</x-m>
    <y-m>0.0</y-m>
    <z-m>0.0</z-m>
   </offsets>
@@ -1444,9 +1637,35 @@
  
  <animation>
   <type>select</type>
-  <object-name>AB_Flame</object-name>
+  <object-name>AB_FlamePW</object-name>
   <condition>
    <property>sim/multiplay/generic/bool[39]</property>
+   <equals>
+   <property>sim/multiplay/generic/int[10]</property>
+   <value>2</value>
+   </equals>
+  </condition>
+ </animation>
+
+  <model>
+  <name>AB_FlameGE</name>
+  <path>Aircraft/f16/Models/Effects/afterburner-ge.xml</path>
+  <offsets>
+   <x-m>5.36</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.0</z-m>
+  </offsets>
+ </model>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>AB_FlameGE</object-name>
+  <condition>
+   <property>sim/multiplay/generic/bool[39]</property>
+   <equals>
+   <property>sim/multiplay/generic/int[10]</property>
+   <value>0</value>
+   </equals>
   </condition>
  </animation>
 
@@ -2535,42 +2754,6 @@
         <value>Empty</value>
       </equals>
     </not>
-    <!--not>
-      <or>
-     <equals>
-        <property>payload/armament/station/id-2-set</property>
-        <value>3 x GBU-12</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-2-set</property>
-        <value>3 x MK-82</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-2-set</property>
-        <value>2 x GBU-54</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-2-set</property>
-        <value>3 x AGM-65</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-2-set</property>
-        <value>2 x MK-83</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-2-set</property>
-        <value>2 x CBU-87</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-2-set</property>
-        <value>2 x CBU-105</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-2-set</property>
-        <value>2 x LAU-68</value>
-      </equals>
-    </or>
-    </not-->
   </and>
   </condition>
  </animation>
@@ -2586,34 +2769,6 @@
         <value>Empty</value>
       </equals>
     </not>
-    <!--not>
-      <or>
-     <equals>
-        <property>payload/armament/station/id-3-set</property>
-        <value>2 x GBU-12</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-3-set</property>
-        <value>3 x MK-82</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-3-set</property>
-        <value>2 x GBU-54</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-3-set</property>
-        <value>2 x MK-83</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-3-set</property>
-        <value>2 x CBU-87</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-3-set</property>
-        <value>2 x CBU-105</value>
-      </equals>
-    </or>
-    </not-->
   </and>
   </condition>
  </animation>
@@ -2629,34 +2784,6 @@
         <value>Empty</value>
       </equals>
     </not>
-    <!--not>
-      <or>
-     <equals>
-        <property>payload/armament/station/id-5-set</property>
-        <value>2 x GBU-12</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-5-set</property>
-        <value>3 x MK-82</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-5-set</property>
-        <value>2 x GBU-54</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-5-set</property>
-        <value>2 x MK-83</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-5-set</property>
-        <value>2 x CBU-87</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-5-set</property>
-        <value>2 x CBU-105</value>
-      </equals>
-    </or>
-    </not-->
   </and>
   </condition>
  </animation>
@@ -2672,42 +2799,6 @@
         <value>Empty</value>
       </equals>
     </not>
-    <!--not>
-      <or>
-     <equals>
-        <property>payload/armament/station/id-6-set</property>
-        <value>3 x GBU-12</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-6-set</property>
-        <value>3 x MK-82</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-6-set</property>
-        <value>2 x GBU-54</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-6-set</property>
-        <value>3 x AGM-65</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-6-set</property>
-        <value>2 x MK-83</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-6-set</property>
-        <value>2 x CBU-87</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-6-set</property>
-        <value>2 x CBU-105</value>
-      </equals>
-      <equals>
-        <property>payload/armament/station/id-6-set</property>
-        <value>2 x LAU-68</value>
-      </equals>
-    </or>
-    </not-->
   </and>
   </condition>
  </animation>
@@ -2888,6 +2979,7 @@
   <object-name>Poly.002</object-name>
   <object-name>Turbine</object-name>-->
   <object-name>Fuselage</object-name>
+  <object-name>irst</object-name>
   <!--<object-name>FrontTire</object-name>
   <object-name>LeftMainTire</object-name>
   <object-name>RightMainTire</object-name>-->

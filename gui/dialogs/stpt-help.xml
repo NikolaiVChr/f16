@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<PropertyList>
+
+	<name>stpt-help</name>
+	<layout>vbox</layout>
+
+	<group>
+		<layout>hbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>F-16 Quick Steerpoint Guide</label>
+		</text>
+		<button>
+			<halign>right</halign>
+			<pref-width>20</pref-width>
+			<pref-height>20</pref-height>
+			<legend>X</legend>
+			<key>Esc</key>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+	
+	<hrule/>
+
+	<text>
+		<halign>left</halign>
+	    <label>#000 to #099 reserved for for route (read-only).</label>
+	    <height>25</height>
+	</text>
+	<text>
+		<halign>left</halign>
+	    <label>#100 to #199 are HSD lines 1 (read-only).</label>
+	    <height>25</height>
+	</text>
+	<text>
+		<halign>left</halign>
+	    <label>#200 to #299 are HSD lines 2 (read-only).</label>
+	    <height>25</height>
+	</text>
+	<text>
+		<halign>left</halign>
+	    <label>#300 to 305 are for threat circles.</label>
+	    <height>25</height>
+	</text>
+	<text>
+		<halign>left</halign>
+	    <label>#350 to #359 for pilot mnemonics.</label>
+	    <height>25</height>
+	</text>
+	<text>
+		<halign>left</halign>
+	    <label>#400 to #404 are own OFLY/TGP marks.</label>
+	    <height>25</height>
+	</text>
+	<text>
+		<halign>left</halign>
+	    <label>#450 to 454 are for DLNK marks.</label>
+	    <height>25</height>
+	</text>
+	<text>
+		<halign>left</halign>
+	    <label>#500 is WPN program GPS coords.</label>
+	    <height>25</height>
+	</text>
+	<text>
+		<halign>left</halign>
+	    <label>#555 is Bulls-eye.</label>
+	    <height>25</height>
+	</text>
+
+	<empty><stretch>1</stretch></empty>
+
+</PropertyList>

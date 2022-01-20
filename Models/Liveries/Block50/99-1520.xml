@@ -10,7 +10,7 @@
    </livery>
 
    <livery-logo>
-    <texture>Liveries/standard.logos.png</texture>
+    <texture>Liveries/Block50/greek.logo.png</texture>
    </livery-logo>
 
    <livery-patch>
@@ -23,6 +23,7 @@
 
   <f16>
     <dragchute type="bool">true</dragchute>
+    <cft type="bool">false</cft>
   </f16>
   </model>
  </sim>

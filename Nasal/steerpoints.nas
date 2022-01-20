@@ -172,6 +172,16 @@ var getCurrentRange = func {
 	return s.distance_to(geo.aircraft_position())*M2NM;
 }
 
+var getCurrentGroundPitch = func {
+	#if (getCurrentNumber() != 0) {
+		var gCoord = getCurrentGroundCoord();
+		if (gCoord != nil) {
+			return vector.Math.getPitch(geo.aircraft_position(), gCoord);
+		}
+	#}
+	return nil;
+}
+
 var getCurrentSlantRange = func {
 	# Return slant range in nm to current steerpoint.
 	if (getCurrentNumber() == 0) return nil;
@@ -196,6 +206,24 @@ var getCurrentCoord = func {
 	var s = getNumber(getCurrentNumber());
 	if (s == nil) return nil;
 	return stpt2coord(s);
+}
+
+var getCurrentGroundCoord = func {
+	# returns current steerpoint as geo.Coord
+	var s = getNumber(getCurrentNumber());
+	if (s == nil) return nil;
+	var elev = geo.elevation(s.lat, s.lon);
+	if (elev == nil) {
+		if (s.alt != nil) {
+			elev = s.alt * FT2M;
+		} else {
+			return nil;
+		}
+	}
+	var p = geo.Coord.new();
+    p.set_latlon(s.lat, s.lon, elev);
+	
+	return p;
 }
 
 var setCurrentNumber = func (number) {
@@ -473,7 +501,7 @@ var applyToWPN = func {
 		if (wp != nil and wp.parents[0] == armament.AIM and wp.target_pnt == 1 and wp.guidance=="gps") {
 			var coord = geo.Coord.new();
 			coord.set_latlon(lat,lon,alt);
-			var spot = fc.ContactTGP.new("GPS-Spot",coord,0);
+			var spot = radar_system.ContactTGP.new("GPS-Spot",coord,0);
 			armament.contactPoint = spot;
 			tgp.gps = 1;
 			if (getprop("f16/stores/tgp-mounted") and 0) {
@@ -550,7 +578,7 @@ var _isOccupiedNumber = func (number) {
 
 
 var isRouteActive = func {
-	return getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc") and getprop("autopilot/route-manager/current-wp") != nil and getprop("autopilot/route-manager/current-wp") > -1;
+	return getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc") and getprop("autopilot/route-manager/current-wp") != nil and getprop("autopilot/route-manager/current-wp") > -1 and getprop("autopilot/route-manager/route/num") != nil and getprop("autopilot/route-manager/current-wp") < getprop("autopilot/route-manager/route/num");
 }
 
 
@@ -558,8 +586,8 @@ var data = nil;
 var sending = nil;
 var dlink_loop = func {
   if (getprop("instrumentation/datalink/data") != 0) return;
-  foreach(contact; awg_9.tgts_list) {
-    if (!contact.get_behind_terrain() and contact.get_range() < 80) {
+  foreach(contact; f16.vector_aicontacts_links) {
+    if (contact.isVisible()) {
       data = datalink.get_data(contact.get_Callsign());
       if (data != nil  and data.on_link()) {
         var p = data.point();

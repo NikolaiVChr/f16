@@ -49,7 +49,7 @@
         </canopy>
         <instrumentation>
             <radar>
-                <radar-standby type="bool">true</radar-standby>
+                <radar-enable type="bool">false</radar-enable>
             </radar>
         </instrumentation>    
     </overlay>

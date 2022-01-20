@@ -2,7 +2,7 @@ var Math = {
     #
     # Authors: Nikolai V. Chr, Axel Paccalin.
     #
-    # Version 1.97
+    # Version 1.99
     #
     # When doing euler coords. to cartesian: +x = forw, +y = left,  +z = up.
     # FG struct. coords:                     +x = back, +y = right, +z = up.
@@ -39,14 +39,16 @@ var Math = {
             me.upamount = -me.end_dist_m;
         }
         me.tgt_coord.set_alt(coord.alt()+me.upamount);
-        
-        return {"x":me.tgt_coord.x()-coord.x(),  "y":me.tgt_coord.y()-coord.y(), "z":me.tgt_coord.z()-coord.z()};
+        me.geoVeccy = me.product(me.magnitudeVector(a), me.normalize([me.tgt_coord.x()-coord.x(),me.tgt_coord.y()-coord.y(),me.tgt_coord.z()-coord.z()]));
+        return {"x":me.tgt_coord.x()-coord.x(),  "y":me.tgt_coord.y()-coord.y(), "z":me.tgt_coord.z()-coord.z(), "vector": me.geoVeccy};
     },
     
     # When observing another MP aircraft the groundspeed velocity info is in body frame, this method will convert it to cartesian vector.
+    #
+    # Warning: If you input body velocities in fps the output will be in fps also. Likewise for mps.
     getCartesianVelocity: func (yaw_deg, pitch_deg, roll_deg, uBody_fps, vBody_fps, wBody_fps) {
         me.bodyVelocity = [uBody_fps, -vBody_fps, -wBody_fps];
-        return me.yawPitchRollVector(yaw_deg, pitch_deg, roll_deg, me.bodyVelocity);
+        return me.rollPitchYawVector(roll_deg, pitch_deg, yaw_deg, me.bodyVelocity);
     },
 
     # angle between 2 vectors. Returns 0-180 degrees.
@@ -85,21 +87,24 @@ var Math = {
         return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
     },
 
-    # rotate a vector. Order: roll, pitch, yaw
+    # rotate a vector. Order: roll, pitch, yaw (same as aircraft)
+    #
+    # The coordinate system is fixed during all the rolls.
+    #
     rollPitchYawVector: func (roll, pitch, yaw, vector) {
         me.rollM  = me.rollMatrix(roll);
         me.pitchM = me.pitchMatrix(pitch);
         me.yawM   = me.yawMatrix(yaw);
-        me.rotation = me.multiplyMatrices(me.rollM, me.multiplyMatrices(me.pitchM, me.yawM));
+        me.rotation = me.multiplyMatrices(me.yawM, me.multiplyMatrices(me.pitchM, me.rollM));
         return me.multiplyMatrixWithVector(me.rotation, vector);
     },
 
-    # rotate a vector. Order: yaw, pitch, roll (like an aircraft)
+    # rotate a vector. Order: yaw, pitch, roll (reverse of aircraft)
     yawPitchRollVector: func (yaw, pitch, roll, vector) {
         me.rollM  = me.rollMatrix(roll);
         me.pitchM = me.pitchMatrix(pitch);
         me.yawM   = me.yawMatrix(yaw);
-        me.rotation = me.multiplyMatrices(me.yawM, me.multiplyMatrices(me.pitchM, me.rollM));
+        me.rotation = me.multiplyMatrices(me.rollM, me.multiplyMatrices(me.pitchM, me.yawM));
         return me.multiplyMatrixWithVector(me.rotation, vector);
     },
 
@@ -117,6 +122,12 @@ var Math = {
         me.yawM   = me.yawMatrix(yaw);
         me.rotation = me.multiplyMatrices(me.yawM, me.pitchM);
         return me.multiplyMatrixWithVector(me.rotation, vector);
+    },
+
+    # rotate a vector. Order: yaw
+    yawVector: func (yaw, vector) {
+        me.yawM   = me.yawMatrix(yaw);
+        return me.multiplyMatrixWithVector(me.yawM, vector);
     },
 
     # rotate a vector. Order: pitch
@@ -185,6 +196,39 @@ var Math = {
             me.hdg = nil;
         }
         return [me.hdg, me.pitch];
+    },
+
+    # vector to pitch
+    cartesianToEulerPitch: func (vector) {
+        me.horz  = math.sqrt(vector[0]*vector[0]+vector[1]*vector[1]);
+        if (me.horz != 0) {
+            me.pitch = math.atan2(vector[2],me.horz)*R2D;
+        } else {
+            me.pitch = vector[2]>=0?90:-90;
+        }
+        return me.pitch;
+    },
+
+    # vector to heading
+    cartesianToEulerHeading: func (vector) {
+        me.horz  = math.sqrt(vector[0]*vector[0]+vector[1]*vector[1]);
+        if (me.horz != 0) {
+            me.div = math.clamp(-vector[1]/me.horz, -1, 1);
+            me.hdg = math.asin(me.div)*R2D;
+
+            if (vector[0] < 0) {
+                # south
+                if (me.hdg >= 0) {
+                    me.hdg = 180-me.hdg;
+                } else {
+                    me.hdg = -180-me.hdg;
+                }
+            }
+            me.hdg = geo.normdeg(me.hdg);
+        } else {
+            me.hdg = 0;
+        }
+        return me.hdg;
     },
 
     # gives an vector that points up from fuselage
@@ -398,3 +442,32 @@ var Math = {
 #
 
 };
+
+
+var unitTest = {
+    start: func {
+        # 1: Simple test of rotation matrices and getting the input back in another way.
+        var localDir = Math.pitchYawVector(-40, -75, [1,0,0]);
+        me.eulerDir = Math.cartesianToEuler(localDir);
+        me.eulerDir[0] = me.eulerDir[0]==nil?0:geo.normdeg(me.eulerDir[0]);
+        printf("Looking out of aircraft window at heading 75 and 40 degs down: %.4f heading %.4f pitch.",me.eulerDir[0],me.eulerDir[1]);
+        # 2: Revert part of test #1
+        var forwardDir = Math.yawPitchVector(75, 0, localDir);
+        me.eulerDir = Math.cartesianToEuler(forwardDir);
+        me.eulerDir[0] = me.eulerDir[0]==nil?0:geo.normdeg(me.eulerDir[0]);
+        printf("Looking out of aircraft window at heading 0 and 40 degs down: %.4f heading %.4f pitch.",me.eulerDir[0],me.eulerDir[1]);
+        # 3: Tougher test, try it different places on earth since earth is not sphere. At KXTA runway it gives 0.03% error in pitch.
+        var someDir = Math.eulerToCartesian3X(-75, -40, 20);
+        var myCoord = geo.aircraft_position();
+        me.thousandVectorGeo = Math.vectorToGeoVector(someDir, myCoord).vector;# does not return magnitude with meaning, only its direction matters.
+        me.thousandVectorGeo = Math.normalize(me.thousandVectorGeo);
+        me.thousandVectorGeo = Math.product(100000, me.thousandVectorGeo);
+        me.lookAt = geo.Coord.new().set_xyz(myCoord.x()+me.thousandVectorGeo[0], myCoord.y()+me.thousandVectorGeo[1], myCoord.z()+me.thousandVectorGeo[2]);
+        printf("Looking out of aircraft window 100000m away heading 75 and 40 degs down: %.4f heading %.4f pitch %.4f meter.", myCoord.course_to(me.lookAt), Math.getPitch(myCoord, me.lookAt), myCoord.direct_distance_to(me.lookAt));
+        # 4: 
+        var aircraft = Math.eulerToCartesian3X(-35, 72, 21);
+        var aircraft2 = Math.rollPitchYawVector(21, 72, -35, [1,0,0]);
+        printf("These two should be the same %s = %s",Math.format(aircraft),Math.format(aircraft2));
+    },
+};
+#unitTest.start();

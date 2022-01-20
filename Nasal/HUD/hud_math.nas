@@ -57,13 +57,13 @@ var HudMath = {
 			me.centerOffsetSlantedMeter = -1*(me.length*0.5-me.boreSlantedDownFromTopMeter);#used (distance from center origin up to bore [negative number])
 			#printf("len=%.3fm angle=%.1fdeg angle2=%.1fdeg boredist=%.3fm borefromtop=%.3fm offset=%.3fm",me.length,me.slantAngle*R2D,me.slantAngleOther*R2D,me.distanceToBore,me.boreSlantedDownFromTopMeter,me.centerOffsetSlantedMeter);
 		}
-			if (initialization) {
-				# calc Y offset from HUD canvas center origin.
-				me.centerOffset = -1 * (me.canvasHeight/2 - ((me.hud3dTop - me.input.view0Z.getValue())*me.pixelPerMeterY));#TODO: use originCanvas?
-			} elsif (!me.parallax) {
-				# calc Y offset from HUD canvas center origin.
-				me.centerOffset = -1 * (me.canvasHeight/2 - ((me.hud3dTop - me.input.viewZ.getValue())*me.pixelPerMeterY));
-			}
+		if (initialization) {
+			# calc Y offset from HUD canvas center origin.
+			me.centerOffset = -1 * (me.canvasHeight/2 - ((me.hud3dTop - me.input.view0Z.getValue())*me.pixelPerMeterY));#TODO: use originCanvas?
+		} elsif (!me.parallax) {
+			# calc Y offset from HUD canvas center origin.
+			me.centerOffset = -1 * (me.canvasHeight/2 - ((me.hud3dTop - me.input.viewZ.getValue())*me.pixelPerMeterY));
+		}
 		
 	},
 	
@@ -95,14 +95,12 @@ var HudMath = {
 	
 	getBorePos: func {
 		# returns bore pos in canvas from center origin
+		if (me.slanted) {
+			return [0,me.centerOffsetSlantedMeter*me.pixelPerMeterYSlant];
+		}
 		return [0,me.centerOffset];
 	},
-	
-	getBorePosSlanted: func {
-		# returns bore pos in canvas from center origin
-		return [0,me.centerOffsetSlantedMeter*me.pixelPerMeterYSlant];
-	},
-	
+		
 	getPosFromCoord: func (gpsCoord, aircraft = nil) {
 		# return pos in canvas from center origin
 		if (aircraft== nil) {
@@ -265,6 +263,7 @@ var HudMath = {
 	},
 	
 	getPolarFromCenterPos: func (x,y) {
+		# only works well when not too far from bore.
 		y -= me.centerOffset;
 		return me.getPolarFromBorePos(x,y);
 	},

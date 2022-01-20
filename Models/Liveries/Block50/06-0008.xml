@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery>
+    <name type="string">HAF 336 Mira, #008</name>
+    <texture>Liveries/Block50/06-0008.png</texture>
+    <owner type="string">HAF</owner>
+   </livery>
+   
+   <livery-logo>
+    <texture>Liveries/Block50/greek.logo.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block50/patch.greece.png</texture>
+   </livery-patch>
+
+  <livery-pod>
+        <texture>Liveries/Block10/pod.white.png</texture>
+  </livery-pod>
+
+    <f16>
+        <dragchute type="bool">true</dragchute>
+        <cft type="bool">true</cft>
+    </f16>
+  </model>
+ </sim>
+</PropertyList>

@@ -20,18 +20,13 @@
     </empty>
     
     <button>
-      <pref-width>16</pref-width>
-      <pref-height>16</pref-height>
-      <legend></legend>
-      
-      <default>1</default>
-      <keynum>27</keynum>
-      <border>2</border>
+      <halign>right</halign>
+      <pref-width>20</pref-width>
+      <pref-height>20</pref-height>
+      <legend>X</legend>
+      <key>Esc</key>
       <binding>
         <command>dialog-close</command>
-      </binding>
-      <binding>
-        <command>dialog-apply</command>
       </binding>
     </button>
   </group>
@@ -200,23 +195,28 @@
     </checkbox>
 
   <hrule/>
+
+  <group>
+    <layout>hbox</layout>
   
-  <text><label>Interior engine volume</label></text>
-  
-  <slider>
-     <halign>center</halign>
-     <property>f16/sound/helmet-damping</property>
-     <min>0</min>
-     <max>1</max>
-     <step>0.025</step>
-     <live>true</live>
-     <vertical>false</vertical>
-     <pref-height>40</pref-height>
-     <pref-width>225</pref-width>
-     <binding>
-        <command>dialog-apply</command>
-     </binding>
-  </slider>
+    <text><halign>left</halign><label>Interior engine volume:</label></text>
+    
+    <slider>
+       <halign>left</halign>
+       <property>f16/sound/helmet-damping</property>
+       <min>0</min>
+       <max>1</max>
+       <step>0.025</step>
+       <live>true</live>
+       <vertical>false</vertical>
+       <pref-height>40</pref-height>
+       <pref-width>200</pref-width>
+       <binding>
+          <command>dialog-apply</command>
+       </binding>
+    </slider>
+
+  </group>
                 
     <hrule/>
   
@@ -246,7 +246,7 @@
   <empty><stretch>1</stretch></empty>
   
     <checkbox>
-      <label>Use alternative Head Up Display</label>
+      <label>Enable alternative, Intel graphics-compatible Head Up Display.</label>
       <halign>left</halign>
       <property>f16/avionics/hud-basic</property>
       <live>true</live>
@@ -255,7 +255,6 @@
           <property>f16/avionics/hud-basic</property>
         </binding>
     </checkbox>
-  <text><halign>left</halign><label>Enabling this will display an Intel graphics-compatible HUD.</label></text>
   <text><halign>left</halign><label>This option will be auto-saved.</label></text>
 
   <hrule/>

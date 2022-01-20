@@ -374,7 +374,7 @@
             <button>0</button>
             <binding>
                 <command>nasal</command>
-                <script>sound.doubleClick();if (pylons.fcs!=nil) pylons.fcs.cycleAA();</script>
+                <script>sound.doubleClick();if (pylons.fcs!=nil) pylons.fcs.cycleAA();radar_system.apg68Radar.setAAMode();</script>
             </binding>
             <binding>
                 <command>property-assign</command>
@@ -404,7 +404,7 @@
             <button>0</button>
             <binding>
                 <command>nasal</command>
-                <script>sound.doubleClick();if (pylons.fcs!=nil) pylons.fcs.cycleAG();</script>
+                <script>sound.doubleClick();if (pylons.fcs!=nil) pylons.fcs.cycleAG();radar_system.apg68Radar.setAGMode();</script>
             </binding>
             <binding>
                 <command>property-assign</command>

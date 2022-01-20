@@ -31,6 +31,7 @@ EHSI = {
         ehsi.cdiDotRadius = ehsi.tick_short*0.25;
         ehsi.ownshipSize = ehsi.tick_short;
         ehsi.toFromWidth = ehsi.cdiMaxMovement*0.5-ehsi.cdiDotRadius*2;
+        ehsi.crsILSold = getprop("f16/crs-ils");
         
         ehsi.txtCRS = ehsi.rootCenter.createChild("text")
                 .setText("123")
@@ -777,6 +778,7 @@ HSI = {
         
         ehsi.ilsDevOld = 0;
         ehsi.ilsOld = 0;
+        ehsi.crsILSold = getprop("f16/crs-ils");
         ehsi.modeOld = -1;
         ehsi.modeTime = 0;
         return ehsi;
@@ -814,6 +816,11 @@ HSI = {
         if (!me.elec) {
             settimer(func me.update(),0.2);
             return;
+        }
+
+        if (me.crsILS != me.crsILSold) {
+          # ILS CRS was entered in DED
+          setprop("instrumentation/nav[0]/radials/selected-deg", me.crsILS);
         }
         
         me.selectCRS = getprop("instrumentation/nav[0]/radials/selected-deg");
@@ -901,6 +908,7 @@ HSI = {
                 
         me.ilsDevOld = me.ilsDev;
         me.ilsOld    = me.ils;
+        me.crsILSold = me.selectCRS;
         me.modeOld = me.mode;
         settimer(func me.update(),0.1);
     },

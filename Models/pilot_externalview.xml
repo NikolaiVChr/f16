@@ -52,41 +52,39 @@
  </effect>
  
  	<effect>
-      <inherits-from>Effects/model-combined-deferred</inherits-from>
-      <parameters>
+      	<inherits-from>Effects/model-combined-deferred</inherits-from>
+      	<parameters>
 			<rain-enabled type="int">0</rain-enabled>
 			<snow-enabled type="int">0</snow-enabled>
 			<ambient-correction type="float">0.00</ambient-correction>
 			<lightmap-enabled type="int">0</lightmap-enabled>
 			<reflection-enabled type="int">0</reflection-enabled>	
-      </parameters>
+			<normalmap-enabled type="int">0</normalmap-enabled>
+			<lightmap-enabled type="int">0</lightmap-enabled>
+			<lightmap-multi type="int">0</lightmap-multi>
+			<darkmap-enabled type="int">0</darkmap-enabled>
+			<reflect-map-enabled type="int">0</reflect-map-enabled>
+			<grain-texture-enabled type="int">0</grain-texture-enabled>
+     	</parameters>
         <object-name>helmet</object-name>
         <object-name>patchL</object-name>
         <object-name>patchR</object-name>
-        <object-name>patchC</object-name>
-        <object-name>pilot</object-name>
+        <object-name>patchC</object-name>        
 		<object-name>eye-balls</object-name>
-		<object-name>LL-arm</object-name>
-		<object-name>LL-glove</object-name>
+		
 		<object-name>hand.001</object-name>
 		<object-name>thumb.001</object-name>
 		<object-name>LL-arm1</object-name>
 		<object-name>LL-arm2</object-name>
 		<object-name>LL-wrist</object-name>
-		<object-name>LL-leg</object-name>
 		<object-name>LL-Boot</object-name>
 		<object-name>LL-leg1</object-name>
 		<object-name>LL-thigh</object-name>
-		<object-name>LR-armA</object-name>
-		<object-name>LR-armB</object-name>
-		<object-name>LR-hand</object-name>
-		<object-name>LR-glove</object-name>
 		<object-name>hand</object-name>
 		<object-name>thumb</object-name>
 		<object-name>LR-wrist</object-name>
 		<object-name>LR-arm2</object-name>
 		<object-name>LR-arm1</object-name>
-		<object-name>LR-leg</object-name>
 		<object-name>LR-Boot</object-name>
 		<object-name>LR-leg1</object-name>
 		<object-name>LR-tigh</object-name>
@@ -104,6 +102,15 @@
 		<object-name>life-jacket</object-name>
 		<object-name>disk</object-name>
 		<object-name>L-face-mask</object-name>
+		<!--object-name>pilot</object-name-->        
+		<!--object-name>LL-arm</object-name-->
+		<!--object-name>LL-glove</object-name-->
+		<!--object-name>LL-leg</object-name-->
+		<!--object-name>LR-armA</object-name-->
+		<!--object-name>LR-armB</object-name-->
+		<!--object-name>LR-hand</object-name-->
+		<!--object-name>LR-glove</object-name-->		
+		<!--object-name>LR-leg</object-name-->
     </effect>
 
 </PropertyList>

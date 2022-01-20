@@ -326,9 +326,9 @@ light: ecm lamp off
     <animation>
         <type>knob</type>
         <object-name>quiet-switch</object-name>
-        <property>instrumentation/radar/radar-standby</property>
-        <offset-deg>30</offset-deg>
-        <factor>-60</factor>
+        <property>instrumentation/radar/radar-enable</property>
+        <offset-deg>-30</offset-deg>
+        <factor>60</factor>
         <drag-direction>vertical</drag-direction>
         <axis>
             <object-name>quiet-switch-axis</object-name>
@@ -336,8 +336,8 @@ light: ecm lamp off
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>instrumentation/radar/radar-standby</property>
-                <factor>-1</factor>
+                <property>instrumentation/radar/radar-enable</property>
+                <factor>1</factor>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>

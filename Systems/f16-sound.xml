@@ -2361,7 +2361,7 @@
                 <z>0.015</z>
             </position>
             <volume>
-                <factor>0.175</factor>
+                <factor>0.5</factor>
             </volume>
         </throttle>
         <throttle>
@@ -2385,7 +2385,7 @@
                 <z>0.015</z>
             </position>
             <volume>
-                <factor>0.175</factor>
+                <factor>0.5</factor>
             </volume>
         </throttle>
         <switch>
@@ -4202,7 +4202,7 @@
                 <property>f16/avionics/msl-vol-knob</property>
             </volume>
         </lock-tone>
-        <lock-tone>
+        <!--lock-tone>
             <name>aim-9-signal</name>
             <mode>once</mode>
             <type>avionics</type>
@@ -4213,6 +4213,27 @@
                     <property>payload/armament/aim-9/sound-volume</property>
                     <value>0.60</value>
                 </equals>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-1</property>
+                    <value>20</value>
+                </greater-than>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
+            </volume>
+        </lock-tone-->
+        <lock-tone>
+            <name>ACM-lock</name>
+            <mode>once</mode>
+            <type>avionics</type>
+            <path>Aircraft/f16/Sounds/betty/lock.wav</path>
+            <condition>
+                <property>f16/sound/acm-lock</property>
                 <greater-than>
                     <property>fdm/jsbsim/elec/bus/batt-1</property>
                     <value>20</value>

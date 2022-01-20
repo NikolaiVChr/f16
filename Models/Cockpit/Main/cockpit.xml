@@ -450,7 +450,6 @@
   <type>translate</type>
   <object-name>chair</object-name>
   <!-- object-name>Pilot_int</object-name -->
-  <object-name>Pilot_ext</object-name>
   <property>controls/seat/vertical-adjust</property>
   <value>1</value>
   <axis>

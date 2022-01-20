@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+  
+<PropertyList> 
+
+    <path>Aircraft/f16/Models/Armament/Racks/TER-9A/TER-9A.xml</path>
+
+    <offsets>
+      <x-m>0</x-m>
+      <y-m>0</y-m>
+      <z-m>-0.014</z-m>
+      <pitch-deg>0</pitch-deg>
+    </offsets>
+
+    <model>
+      <name>Station4_MK82AIR_left</name>
+      <path>Aircraft/f16/Models/Armament/Weapons/MK-82AIR/MK-82AIR.xml</path>
+      <offsets>
+        <x-m>-0.015</x-m>
+        <y-m>-0.25</y-m>
+        <z-m>-0.06</z-m>
+        <pitch-deg>0</pitch-deg>
+        <roll-deg>00</roll-deg>
+      </offsets>
+    </model>
+
+    <model>
+      <name>Station4_MK82AIR_center</name>
+      <path>Aircraft/f16/Models/Armament/Weapons/MK-82AIR/MK-82AIR.xml</path>
+      <offsets>
+        <x-m>-0.015</x-m>
+        <y-m>0</y-m>
+        <z-m>-0.355</z-m>
+        <pitch-deg>0</pitch-deg>
+      </offsets>
+    </model>
+
+    <model>
+      <name>Station4_MK82AIR_right</name>
+      <path>Aircraft/f16/Models/Armament/Weapons/MK-82AIR/MK-82AIR.xml</path>
+      <offsets>
+        <x-m>-0.015</x-m>
+        <y-m>0.25</y-m>
+        <z-m>-0.06</z-m>
+        <pitch-deg>0</pitch-deg>
+        <roll-deg>00</roll-deg>
+      </offsets>
+    </model>
+
+    <animation>
+        <type>rotate</type>
+        <object-name>Station4_MK82AIR_left</object-name>
+        <factor>0</factor>
+        <offset-deg>-50</offset-deg>
+        <center>
+          <x-m>-0.015</x-m>
+          <y-m>-0.25</y-m>
+          <z-m>-0.06</z-m>
+        </center>
+        <axis>
+          <x>1</x>
+          <y>0</y>
+          <z>0</z>
+        </axis>
+    </animation>
+
+    <animation>
+        <type>rotate</type>
+        <object-name>Station4_MK82AIR_right</object-name>
+        <factor>0</factor>
+        <offset-deg>50</offset-deg>
+        <center>
+          <x-m>-0.015</x-m>
+          <y-m>0.25</y-m>
+          <z-m>-0.06</z-m>
+        </center>
+        <axis>
+          <x>1</x>
+          <y>0</y>
+          <z>0</z>
+        </axis>
+    </animation>
+
+    <animation>
+      <type>select</type>
+      <object-name>Station4_MK82AIR_left</object-name>
+      <condition><and>
+        <equals>
+          <property>payload/armament/station/id-3-type</property>
+          <value>MK-82AIR</value>
+        </equals>
+        <greater-than>
+          <property>payload/armament/station/id-3-count</property>
+          <value>0</value>
+        </greater-than></and>
+      </condition>
+     </animation>
+
+     <animation>
+      <type>select</type>
+      <object-name>Station4_MK82AIR_right</object-name>
+      <condition>
+        <and>
+        <equals>
+          <property>payload/armament/station/id-3-type</property>
+          <value>MK-82AIR</value>
+        </equals>
+        <greater-than>
+          <property>payload/armament/station/id-3-count</property>
+          <value>1</value>
+        </greater-than>
+      </and>
+      </condition>
+     </animation>
+
+     <animation>
+      <type>select</type>
+      <object-name>Station4_MK82AIR_center</object-name>
+      <condition><and>
+        <equals>
+          <property>payload/armament/station/id-3-type</property>
+          <value>MK-82AIR</value>
+        </equals>
+        <greater-than>
+          <property>payload/armament/station/id-3-count</property>
+          <value>2</value>
+        </greater-than></and>
+      </condition>
+     </animation>
+
+</PropertyList> 

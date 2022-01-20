@@ -24,7 +24,7 @@
         <modelsUpperCase type="bool">true</modelsUpperCase>
         <msg type="bool">false</msg>
         <tacview type="bool">true</tacview>
-        <tgp-inacc-system type="bool">true</tgp-inacc-system>        
+        <tgp-inacc-system type="bool">false</tgp-inacc-system> <!-- With the new radar this must not be turned on, this system gets deprecated -->
         <enable-craters type="bool">true</enable-craters>
         <pylon-offset type="int">0</pylon-offset>
         <pylon-stations>payload</pylon-stations>
@@ -453,7 +453,7 @@
             <max-fire-range-nm type="double">15 </max-fire-range-nm>
             <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
             <guidance type="string">laser</guidance>
-            <navigation type="string">PN</navigation>
+            <navigation type="string">APN</navigation>
             <loft-altitude type="int"> 0 </loft-altitude>
             <terrain-follow type="bool">false</terrain-follow>
             <FCS-field-deg type="int"> 200 </FCS-field-deg>
@@ -504,7 +504,7 @@
             <max-fire-range-nm type="double">15</max-fire-range-nm>
             <min-fire-range-nm type="double">0</min-fire-range-nm>
             <guidance type="string">gps</guidance>
-            <navigation type="string">PN</navigation>
+            <navigation type="string">APN</navigation>
             <loft-altitude type="int"> 0 </loft-altitude>
             <terrain-follow type="bool">false</terrain-follow>
             <FCS-field-deg type="int"> 200 </FCS-field-deg>
@@ -556,7 +556,7 @@
             <max-fire-range-nm type="double">15 </max-fire-range-nm>
             <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
             <guidance type="string">gps</guidance>
-            <navigation type="string">PN</navigation>
+            <navigation type="string">APN</navigation>
             <loft-altitude type="int"> 0 </loft-altitude>
             <terrain-follow type="bool">false</terrain-follow>
             <FCS-field-deg type="int"> 200 </FCS-field-deg>
@@ -608,7 +608,7 @@
             <max-fire-range-nm type="double">15 </max-fire-range-nm>
             <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
             <guidance type="string">laser</guidance>
-            <navigation type="string">PN</navigation>
+            <navigation type="string">APN</navigation>
             <loft-altitude type="int"> 0 </loft-altitude>
             <terrain-follow type="bool">false</terrain-follow>
             <FCS-field-deg type="int"> 200 </FCS-field-deg>
@@ -657,7 +657,7 @@
             <vol-search type="double">0.00</vol-search>
             <vol-track type="double">1.00</vol-track>
             <guidance type="string">vision</guidance>
-            <navigation type="string">PN</navigation>                           
+            <navigation type="string">APN</navigation>                           
             <all-aspect type="bool">true</all-aspect>
             <max-fire-range-nm type="double">12</max-fire-range-nm>              <!-- source -->
             <FCS-field-deg type="int">25</FCS-field-deg>            
@@ -695,7 +695,7 @@
             <vol-search type="double">0.00</vol-search>
             <vol-track type="double">1.00</vol-track>
             <guidance type="string">heat</guidance>
-            <navigation type="string">PN</navigation>                           
+            <navigation type="string">APN</navigation>                           
             <all-aspect type="bool">true</all-aspect>
             <max-fire-range-nm type="double">12</max-fire-range-nm>              <!-- source -->
             <FCS-field-deg type="int">25</FCS-field-deg>            
@@ -769,7 +769,7 @@
             <vol-search type="double">0.00</vol-search>
             <vol-track type="double">1.00</vol-track>
             <guidance type="string">radiation</guidance>
-            <navigation type="string">PN</navigation>                           
+            <navigation type="string">APN</navigation>                           
             <all-aspect type="bool">true</all-aspect>
             <max-fire-range-nm type="double">30</max-fire-range-nm>              <!--  -->
             <FCS-field-deg type="int">25</FCS-field-deg>            
@@ -990,7 +990,7 @@
             <max-fire-range-nm type="double">10</max-fire-range-nm>
             <min-fire-range-nm type="double">0</min-fire-range-nm>
             <guidance type="string">gps</guidance>
-            <navigation type="string">PN</navigation>
+            <navigation type="string">APN</navigation>
             <loft-altitude type="int"> 0 </loft-altitude>
             <terrain-follow type="bool">false</terrain-follow>
             <FCS-field-deg type="int"> 200 </FCS-field-deg>
