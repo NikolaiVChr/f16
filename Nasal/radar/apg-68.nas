@@ -2966,11 +2966,18 @@ var TerrainMapper = {
 	    "SubUrban": 1,
 	},
 	natural_names: {
-		# TODO: find real data on this.
+		# TODO: find more real data on this.
 	    "Cliffs": 0.8,  # tend to be steep, hence greater return
 	    "Asphalt": 0.7, # very granular hence good backscatter
-	    #"Airport": 0.5, # 
+	    "Airport": 0.5, # 
 	    "Rock": 0.6,    # tend to be somewhat steep, hence some solid backscatter
+	    "RainForest": 0.35,
+	    "MixedForest": 0.35,
+	    "AgroForest": 0.25,
+	    "SnowCover": 0.2, 
+	    "PolarIce": 0.4,
+	    "PackIce": 0.7,
+	    "Glacier": 0.5,
 	},
 	interpolateCoords: func (start, end, fraction) {
 		if (fraction == 0) {
