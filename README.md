@@ -41,6 +41,8 @@ Hangar: https://sourceforge.net/p/flightgear/fgaddon/HEAD/tree/trunk/Aircraft/f1
 
 Wiki: http://wiki.flightgear.org/General_Dynamics_F-16_Fighting_Falcon  (not up-to date)
 
+Manual: https://github.com/NikolaiVChr/f16/wiki
+
 GitHub: https://github.com/NikolaiVChr/f16
 
 Forum: https://forum.flightgear.org/viewtopic.php?f=4&t=2003

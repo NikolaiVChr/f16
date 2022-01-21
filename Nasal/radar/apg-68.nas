@@ -2966,17 +2966,17 @@ var TerrainMapper = {
 	    "SubUrban": 1,
 	},
 	natural_names: {
-		# TODO: find more real data on this.
+		# TODO: find more real data on this. Best source so far: AP3456 – 11-x - Radar
 	    "Cliffs": 0.8,  # tend to be steep, hence greater return
 	    "Asphalt": 0.7, # very granular hence good backscatter
 	    "Airport": 0.5, # 
 	    "Rock": 0.6,    # tend to be somewhat steep, hence some solid backscatter
 	    "RainForest": 0.35,
-	    "MixedForest": 0.35,
+	    "MixedForest": 0.35,# wood does very little backscatter, but trees are upright, so good opportunity for specular return
 	    "AgroForest": 0.25,
-	    "SnowCover": 0.2, 
+	    "SnowCover": 0.2,   # snow is very diffuse, hence very little backscatter
 	    "PolarIce": 0.4,
-	    "PackIce": 0.7,
+	    "PackIce": 0.25,    # very smooth like the water it formed on, hence little return
 	    "Glacier": 0.5,
 	},
 	interpolateCoords: func (start, end, fraction) {
