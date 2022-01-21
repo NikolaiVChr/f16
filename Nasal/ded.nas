@@ -908,7 +908,7 @@ var dataEntryDisplay = {
 		} else {
 			me.text[1] = sprintf("                ");
 		}
-		me.text[2] = sprintf("VHF   %s    %s",getprop("/instrumentation/comm[1]/frequencies/selected-mhz"), getprop("/sim/time/gmt-string"));
+		me.text[2] = sprintf("VHF   %6.2f    %s",getprop("/instrumentation/comm[1]/frequencies/selected-mhz"), getprop("/sim/time/gmt-string"));
 		if (me.chrono.running) {
 			var hackHour = int(getprop("f16/avionics/hack/elapsed-time-sec") / 3600);
 			var hackMin = int((getprop("f16/avionics/hack/elapsed-time-sec") - (hackHour * 3600)) / 60);
