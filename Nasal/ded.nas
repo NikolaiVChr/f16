@@ -901,7 +901,7 @@ var dataEntryDisplay = {
 		winddir = sprintf("%03d\xc2\xb0",getprop("environment/wind-from-heading-deg"));
 		windkts = sprintf("%03d",getprop("environment/wind-speed-kt"));
 		
-		me.text[0] = sprintf("UHF   %s    STPT %s",getprop("/instrumentation/comm[0]/frequencies/selected-mhz"), me.no);# removed the 'A' here, as MLU manuals don't show it.
+		me.text[0] = sprintf("UHF   %6.2f    STPT %s",getprop("/instrumentation/comm[0]/frequencies/selected-mhz"), me.no);# removed the 'A' here, as MLU manuals don't show it.
 
 		if (me.CNIshowWind) {
 			me.text[1] = sprintf("                %s %s", winddir, windkts);
