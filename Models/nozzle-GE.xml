@@ -4,6 +4,48 @@
 
  <path>nozzle-GE.ac</path>
 
+ <effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.90</metallic>
+          <ambient-factor type="float">0.00</ambient-factor>
+          <rain-enabled type="int">0</rain-enabled>
+          <snow-enabled type="int">0</snow-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">1</reflection-enabled>
+          <reflection-correction type="float">-0.46</reflection-correction>
+      </parameters>
+      <!-- outer plates -->
+      <object-name>Petals-R</object-name>
+      <object-name>NozzlePetal.024</object-name>
+      <object-name>NozzlePetal.025</object-name>
+      <object-name>NozzlePetal.026</object-name>
+      <object-name>NozzlePetal.027</object-name>
+      <object-name>NozzlePetal.028</object-name>
+      <object-name>NozzlePetal.029</object-name>
+      <object-name>NozzlePetal.030</object-name>
+      <object-name>NozzlePetal.031</object-name>
+      <object-name>NozzlePetal.032</object-name>
+      <object-name>NozzlePetal.033</object-name>
+      <object-name>NozzlePetal.034</object-name>
+      <object-name>NozzlePetal.035</object-name>
+  </effect>
+  
+  <effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.90</metallic>
+          <ambient-factor type="float">0.00</ambient-factor>
+          <rain-enabled type="int">0</rain-enabled>
+          <snow-enabled type="int">0</snow-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+      <!-- inner plates -->
+      <object-name>InNozzleROpen</object-name>
+        <object-name>InNozzleR</object-name>
+  </effect>
+
  <!--animation>
   <type>range</type>
   <object-name>InNozzleROpen</object-name>
