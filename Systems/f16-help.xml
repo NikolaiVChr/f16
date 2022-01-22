@@ -157,7 +157,10 @@
                 <name>Ctrl-4</name>
                 <desc>IFF interrogation</desc>
             </key>
-            <text>Choose your section</text>
+            <text>
+This help is old, new manual here:
+https://github.com/NikolaiVChr/f16/wiki
+            </text>
             <text-1><![CDATA[
 TAKE-OFF
 You can rotate around 150 kt when the aircraft is light. Be somewhat gentle on the stick if you rotate early, as you otherwise might tail-scrape.
