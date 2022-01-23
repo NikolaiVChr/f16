@@ -74,7 +74,7 @@
 			<life-sec>
 				<value>5.0</value>
 			</life-sec>
-			<mass-kg>0.05</mass-kg>
+			<mass-kg>0.075</mass-kg>
 			<radius-m>0.40</radius-m>
 		</particle>
 		<program>
