@@ -3406,7 +3406,7 @@
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>d1</tooltip-id>
-                <label>COMM 1 FREQ</label>
+                <label>COM 1 FREQ</label>
             </binding>
         </hovered>
     </animation>
@@ -3462,7 +3462,7 @@
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>d2</tooltip-id>
-                <label>COMM 1 FREQ</label>
+                <label>COM 1 FREQ</label>
             </binding>
         </hovered>
     </animation>
@@ -3514,7 +3514,7 @@
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>d3</tooltip-id>
-                <label>COMM 1 FREQ</label>
+                <label>COM 1 FREQ</label>
             </binding>
         </hovered>
     </animation>
@@ -3566,7 +3566,7 @@
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>d4</tooltip-id>
-                <label>COMM 1 FREQ</label>
+                <label>COM 1 FREQ</label>
             </binding>
         </hovered>
     </animation>
@@ -3593,7 +3593,7 @@
                   var f = getprop("instrumentation/comm[0]/frequencies/selected-mhz");
                   fd = int((f*0.001-int(f*0.001)) * 10);
                   fd += 1;
-                  if (fd == 4) fd = -300;
+                  if (fd == 5) fd = -400;
                   else fd = 100;
                   f += fd;
                   setprop("instrumentation/comm[0]/frequencies/selected-mhz",f);
@@ -3607,7 +3607,7 @@
                   var f = getprop("instrumentation/comm[0]/frequencies/selected-mhz");
                   fd = int((f*0.001-int(f*0.001)) * 10);
                   fd -= 1;
-                  if (fd == -1) fd = 300;
+                  if (fd == -1) fd = 400;
                   else fd = -100;
                   f += fd;
                   setprop("instrumentation/comm[0]/frequencies/selected-mhz",f);
@@ -3618,7 +3618,7 @@
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>d5</tooltip-id>
-                <label>COMM 1 FREQ</label>
+                <label>COM 1 FREQ</label>
             </binding>
         </hovered>
     </animation>
