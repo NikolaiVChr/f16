@@ -1077,6 +1077,7 @@
         <comm n="0">
             <volume type="double">0</volume>
             <frequencies>
+                <selected-mhz type="double">325.00</selected-mhz>
                 <current-mhz-digit-1 type="int">0</current-mhz-digit-1>
                 <current-mhz-digit-2 type="int">0</current-mhz-digit-2>
                 <current-mhz-digit-3 type="int">0</current-mhz-digit-3>
@@ -1086,6 +1087,9 @@
         </comm>
         <comm n="1">
             <volume type="double">0</volume>
+            <frequencies>
+                <selected-mhz type="double">128.30</selected-mhz>
+            </frequencies>
         </comm>
         <gci>
             <picture type="bool">false</picture>

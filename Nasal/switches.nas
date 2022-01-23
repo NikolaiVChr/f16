@@ -133,7 +133,7 @@ var malIndLtsBtn = props.globals.getNode("controls/test/test-panel/mal-ind-lts-b
     setprop("instrumentation/comm/frequencies/selected-mhz", getPreset);
  }
 
-getPresetUHF();
+#getPresetUHF();
 
 # Display active selected UHF frequency
 
@@ -171,7 +171,7 @@ getPresetUHF();
     setprop("sim/model/f16/instrumentation/uhf/frequencies/alt-selected-mhz-000011", altSelMhz000011);
  }
 
-getSelectedUHF();
+#getSelectedUHF();
 
 # Manually tune UHF frequency or set GUARD frequency
   
@@ -220,7 +220,7 @@ getSelectedUHF();
     }
  }
 
-setlistener("instrumentation/comm/frequencies/selected-mhz", getSelectedUHF);
+#setlistener("instrumentation/comm/frequencies/selected-mhz", getSelectedUHF);
 
 # =====================================
 # Landing Gear Panel (left aux console)
