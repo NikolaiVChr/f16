@@ -2484,8 +2484,7 @@ var RWR = {
         	me.threatDB = me.u.getThreatStored();
             me.cs = me.threatDB[7];
             me.rn = me.threatDB[6];
-            me.lnk16 = me.cs==nil?nil:datalink.get_data(me.cs);
-            if ((me.lnk16 != nil and me.lnk16.on_link() == 1 and !me.threatDB[10]) or me.rn > 150) {
+            if ((me.u["blue"] != nil and me.u.blue == 1 and !me.threatDB[10]) or me.rn > 150) {
                 continue;
             }
             me.bearing = me.threatDB[0];
