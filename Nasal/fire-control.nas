@@ -400,12 +400,12 @@ var FireControl = {
 			}
 		}
 		if (me.selectedType != nil) {
-			screen.log.write("Deselected "~me.selectedType, 0.5, 0.5, 1);
-		} else {
-			screen.log.write("Selected nothing", 0.5, 0.5, 1);
+			me.stopCurrent();
 		}
-		me.selectedType = nil;
-		me.selected = nil;
+		
+		me.selectedType = "20mm Cannon";
+		me.nextWeapon(me.selectedType);
+		
 		me.selectedAdd = nil;
 		me.updateDual();
 	},
@@ -503,12 +503,12 @@ var FireControl = {
 			}
 		}
 		if (me.selectedType != nil) {
-			screen.log.write("Deselected "~me.selectedType, 0.5, 0.5, 1);
-		} else {
-			screen.log.write("Selected nothing", 0.5, 0.5, 1);
+			me.stopCurrent();
 		}
-		me.selectedType = nil;
-		me.selected = nil;
+		
+		me.selectedType = "20mm Cannon";
+		me.nextWeapon(me.selectedType);
+		
 		me.selectedAdd = nil;
 		if (me.changeListener != nil) me.changeListener();
 	},
