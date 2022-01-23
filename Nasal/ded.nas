@@ -745,11 +745,14 @@ var dataEntryDisplay = {
 			var usedC = setsize([],4);
 			var j = 0;
 			var highest = 0;
+			foreach (var idl_ ; idl) {
+				if (idl_ > highest) highest = idl_+1;
+			}
 			for(var i = int(me.scroll); i < int(me.scroll)+4;i+=1) {
 				if (i < last) {
 					usedI[j] = sprintf("#%02d", idl[i]+1);
 					usedC[j] = csl[i];
-					if (idl[i] > highest) highest = idl[i]+1;
+					
 					while(size(usedC[j]) < 7) {
 						usedC[j] = usedC[j]~" ";
 					}
