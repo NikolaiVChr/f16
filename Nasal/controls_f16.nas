@@ -49,7 +49,8 @@ var dogfight = func {
         f16.f16_mfd.MFDr.PFD.selectPage(f16.f16_mfd.MFDr.p_WPN);
         f16.f16_mfd.MFDr.p_WPN.selectionBox.show();
         f16.f16_mfd.MFDr.p_WPN.setSelection(nil, f16.f16_mfd.MFDr.PFD.buttons[18], 18);
-        f16.rdrModeGM = 0;
+        setprop("f16/avionics/strf",0);
+        #f16.rdrModeGM = 0;
     } else {
         radar_system.apg68Radar.setRootMode(0, radar_system.apg68Radar.getPriorityTarget());
         setprop("instrumentation/radar/radar-enable", getprop("instrumentation/radar/radar-enable") and getprop("instrumentation/radar/radar-enable-std"));
