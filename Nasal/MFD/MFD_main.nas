@@ -1115,7 +1115,7 @@ var MFD_Device =
                 me.root.silent.hide();
             } elsif (getprop("/f16/avionics/power-fcr-bit") == 2) {
                 me.root.silent.setText("SILENT");
-                me.root.silent.show();
+                me.root.silent.setVisible(!getprop("/fdm/jsbsim/gear/unit[0]/WOW"));
             } elsif (getprop("/f16/avionics/power-fcr-bit") == 1) {
                 me.fcrBITsecs = (1.0-getprop("/f16/avionics/power-fcr-warm"))*120;
                 me.root.silent.setText(sprintf("  BIT TIME REMAINING IS %-3d SEC", me.fcrBITsecs));
