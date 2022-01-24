@@ -125,6 +125,9 @@ var F16_HUD = {
 
         obj.roll_pointer = obj.get_element("roll-pointer");
         obj.roll_lines = obj.get_element("g3415");
+        obj.roll_lines.hide();
+        obj.roll_pointer.hide();
+
 
         obj.alt_range = obj.get_element("alt_range");
         obj.ias_range = obj.get_element("ias_range");
@@ -194,8 +197,8 @@ var F16_HUD = {
         append(obj.total, obj.heading_tape);
         #append(obj.total, obj.VV);
         append(obj.total, obj.heading_tape_pointer);
-        append(obj.total, obj.roll_pointer);
-        append(obj.total, obj.roll_lines);
+        #append(obj.total, obj.roll_pointer);
+        #append(obj.total, obj.roll_lines);
         append(obj.total, obj.alt_range);
         append(obj.total, obj.ias_range);
         append(obj.total, obj.alt_line);
@@ -582,6 +585,63 @@ append(obj.total, obj.speed_curr);
         obj.centerOrigin = obj.canvas.createGroup()
                            .setTranslation(HudMath.getCenterOrigin());
         
+
+        obj.rollPos = [0,25];
+        var tickShort = 8;
+        var rollRadius = 50;
+        var bankRadius = 15*mr;
+        obj.bank_angle_indicator = obj.centerOrigin.createChild("path")
+                            .moveTo(0, -bankRadius)
+                            .lineTo(0, -bankRadius-tickShort*0.5)
+                            .moveTo(math.sin(10*D2R)*bankRadius, -math.cos(10*D2R)*bankRadius)
+                            .lineTo(math.sin(10*D2R)*(bankRadius+tickShort*0.2), -math.cos(10*D2R)*(bankRadius+tickShort*0.2))
+                            .moveTo(math.sin(-10*D2R)*bankRadius, -math.cos(-10*D2R)*bankRadius)
+                            .lineTo(math.sin(-10*D2R)*(bankRadius+tickShort*0.2), -math.cos(-10*D2R)*(bankRadius+tickShort*0.2))
+                            .moveTo(math.sin(20*D2R)*bankRadius, -math.cos(20*D2R)*bankRadius)
+                            .lineTo(math.sin(20*D2R)*(bankRadius+tickShort*0.2), -math.cos(20*D2R)*(bankRadius+tickShort*0.2))
+                            .moveTo(math.sin(-20*D2R)*bankRadius, -math.cos(-20*D2R)*bankRadius)
+                            .lineTo(math.sin(-20*D2R)*(bankRadius+tickShort*0.2), -math.cos(-20*D2R)*(bankRadius+tickShort*0.2))
+                            .moveTo(math.sin(30*D2R)*bankRadius, -math.cos(30*D2R)*bankRadius)
+                            .lineTo(math.sin(30*D2R)*(bankRadius+tickShort*0.5), -math.cos(30*D2R)*(bankRadius+tickShort*0.5))
+                            .moveTo(math.sin(-30*D2R)*bankRadius, -math.cos(-30*D2R)*bankRadius)
+                            .lineTo(math.sin(-30*D2R)*(bankRadius+tickShort*0.5), -math.cos(-30*D2R)*(bankRadius+tickShort*0.5))
+                            .moveTo(math.sin(60*D2R)*bankRadius, -math.cos(60*D2R)*bankRadius)
+                            .lineTo(math.sin(60*D2R)*(bankRadius+tickShort*0.5), -math.cos(60*D2R)*(bankRadius+tickShort*0.5))
+                            .moveTo(math.sin(-60*D2R)*bankRadius, -math.cos(-60*D2R)*bankRadius)
+                            .lineTo(math.sin(-60*D2R)*(bankRadius+tickShort*0.5), -math.cos(-60*D2R)*(bankRadius+tickShort*0.5))
+                            .setStrokeLineWidth(1)
+                            .setColor(0,1,0);
+        obj.roll_lines   = obj.centerOrigin.createChild("path")
+                            .moveTo(obj.rollPos[0], obj.rollPos[1]+rollRadius)
+                            .lineTo(obj.rollPos[0], obj.rollPos[1]+rollRadius+tickShort*2)
+                            .moveTo(obj.rollPos[0]+math.sin(10*D2R)*rollRadius, obj.rollPos[1]+math.cos(10*D2R)*rollRadius)
+                            .lineTo(obj.rollPos[0]+math.sin(10*D2R)*(rollRadius+tickShort), obj.rollPos[1]+math.cos(10*D2R)*(rollRadius+tickShort))
+                            .moveTo(obj.rollPos[0]+math.sin(20*D2R)*rollRadius, obj.rollPos[1]+math.cos(20*D2R)*rollRadius)
+                            .lineTo(obj.rollPos[0]+math.sin(20*D2R)*(rollRadius+tickShort), obj.rollPos[1]+math.cos(20*D2R)*(rollRadius+tickShort))
+                            .moveTo(obj.rollPos[0]+math.sin(30*D2R)*rollRadius, obj.rollPos[1]+math.cos(30*D2R)*rollRadius)
+                            .lineTo(obj.rollPos[0]+math.sin(30*D2R)*(rollRadius+tickShort*2), obj.rollPos[1]+math.cos(30*D2R)*(rollRadius+tickShort*2))
+                            .moveTo(obj.rollPos[0]+math.sin(45*D2R)*rollRadius, obj.rollPos[1]+math.cos(45*D2R)*rollRadius)
+                            .lineTo(obj.rollPos[0]+math.sin(45*D2R)*(rollRadius+tickShort*2), obj.rollPos[1]+math.cos(45*D2R)*(rollRadius+tickShort*2))
+                            .moveTo(obj.rollPos[0]+math.sin(-10*D2R)*rollRadius, obj.rollPos[1]+math.cos(-10*D2R)*rollRadius)
+                            .lineTo(obj.rollPos[0]+math.sin(-10*D2R)*(rollRadius+tickShort), obj.rollPos[1]+math.cos(-10*D2R)*(rollRadius+tickShort))
+                            .moveTo(obj.rollPos[0]+math.sin(-20*D2R)*rollRadius, obj.rollPos[1]+math.cos(-20*D2R)*rollRadius)
+                            .lineTo(obj.rollPos[0]+math.sin(-20*D2R)*(rollRadius+tickShort), obj.rollPos[1]+math.cos(-20*D2R)*(rollRadius+tickShort))
+                            .moveTo(obj.rollPos[0]+math.sin(-30*D2R)*rollRadius, obj.rollPos[1]+math.cos(-30*D2R)*rollRadius)
+                            .lineTo(obj.rollPos[0]+math.sin(-30*D2R)*(rollRadius+tickShort*2), obj.rollPos[1]+math.cos(-30*D2R)*(rollRadius+tickShort*2))
+                            .moveTo(obj.rollPos[0]+math.sin(-45*D2R)*rollRadius, obj.rollPos[1]+math.cos(-45*D2R)*rollRadius)
+                            .lineTo(obj.rollPos[0]+math.sin(-45*D2R)*(rollRadius+tickShort*2), obj.rollPos[1]+math.cos(-45*D2R)*(rollRadius+tickShort*2))
+                            .setStrokeLineWidth(1)
+                            .setColor(0,1,0);
+        obj.roll_pointer = obj.centerOrigin.createChild("path")
+                            .moveTo(0, rollRadius+tickShort*2)
+                            .lineTo(tickShort*0.5, rollRadius+tickShort*2+tickShort)
+                            .lineTo(-tickShort*0.5, rollRadius+tickShort*2+tickShort)
+                            .lineTo(0, rollRadius+tickShort*2)
+                            .setStrokeLineWidth(1)
+                            .setColor(0,1,0);
+        append(obj.total, obj.roll_pointer);
+        append(obj.total, obj.roll_lines);
+        append(obj.total, obj.bank_angle_indicator);
         obj.flyupLeft    = obj.centerOrigin.createChild("path")
                             .lineTo(-50,-50)
                             .moveTo(0,0)
@@ -1330,15 +1390,29 @@ append(obj.total, obj.speed_curr);
                                                      obj.appLine.hide();
                                                  }
                                       }),
-            props.UpdateManager.FromHashList(["texUp","VV_x","VV_y","fpm"], 0.001, func(hdp)
+            props.UpdateManager.FromHashList(["VV_x","VV_y","fpm","HUD_SCA","ded","dgft","gear_down","wow","fpm"], 0.001, func(hdp)
                                       {
+                                        obj.r_show = 1;
                                         if (hdp.fpm > 0 and (!obj.showmeCCIP or !isDropping or math.mod(int(8*(systime()-int(systime()))),2)>0)) {
                                             obj.VV.setTranslation (hdp.VV_x, hdp.VV_y);
+                                            if (hdp.HUD_SCA == 2) {
+                                                obj.bank_angle_indicator.setTranslation (hdp.VV_x, hdp.VV_y);
+                                                obj.r_show = 0;
+                                            }
                                             obj.VV.show();
                                             obj.VV.update();
                                         } else {
                                             obj.VV.hide();
                                         }
+                                        obj.bank_angle_indicator.setVisible(!obj.r_show);
+                                        if (obj.r_show and hdp.fpm==2 and hdp.ded == 0 and !hdp.dgft and !(hdp.gear_down and !hdp.wow)) {
+                                              obj.roll_pointer.setTranslation(obj.rollPos);
+                                              obj.roll_lines.show();
+                                              obj.roll_pointer.show();
+                                          } else {
+                                              obj.roll_lines.hide();
+                                              obj.roll_pointer.hide();
+                                          }
                                         obj.localizer.setTranslation (hdp.VV_x, hdp.VV_y);
                                       }),
             props.UpdateManager.FromHashList(["rotary","hasGS","GSDeg","GSinRange","ILSDeg", "ILSinRange", "GSdist", "DGFT"], 0.01, func(hdp)
@@ -1398,25 +1472,15 @@ append(obj.total, obj.speed_curr);
                                         if (hdp.gear_down and !hdp.wow) {
                                           obj.bracket.setTranslation (hdp.VV_x, HudMath.getCenterPosFromDegs(0,-11)[1]);
                                           obj.bracket.show();
-                                          obj.roll_lines.hide();
-                                          obj.roll_pointer.hide();
                                         } else {
                                           obj.bracket.hide();
-                                          if (hdp.fpm==2 and hdp.ded == 0 and !hdp.dgft) {
-                                              obj.roll_lines.setTranslation(skew_rll, 0);
-                                              obj.roll_pointer.setTranslation(skew_rll, 0);
-                                              obj.roll_lines.show();
-                                              obj.roll_pointer.show();
-                                          } else {
-                                              obj.roll_lines.hide();
-                                              obj.roll_pointer.hide();
-                                          }
                                         }
                                       }),
             props.UpdateManager.FromHashList(["texUp","pitch","roll","fpm","VV_x","VV_y","gear_down", "dgft", "drift"], 0.001, func(hdp)
                                       {
                                           if (hdp.servTurn) {
-                                            obj.roll_pointer.setRotation (hdp.roll_rad);
+                                            obj.roll_pointer.setRotation (math.clamp(hdp.roll,-45,45)*D2R);
+                                            obj.bank_angle_indicator.setRotation(hdp.roll_rad);
                                           }
                                           if ((hdp.fpm != 2 and !hdp.gear_down) or hdp.dgft) {
                                             obj.ladder_group.hide();
