@@ -713,7 +713,7 @@ var F16_HMD = {
                                           var hd = math.abs(geo.normdeg180(hdp.hmdH));
                                           
                                           if (hd < 5) currLimit = 1.5;
-                                          elsif (hd < 15) currLimit = -14;
+                                          elsif (hd < 15) currLimit = -17;
                                           elsif (hd < 30) currLimit = -30;
                                           else currLimit = -50;
                                           
