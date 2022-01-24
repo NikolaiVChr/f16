@@ -671,7 +671,7 @@
             <weight-launch-lbs type="double">462</weight-launch-lbs>              <!-- source -->
             <weight-warhead-lbs type="double">126</weight-warhead-lbs>            <!-- source -->
             <weight-fuel-lbm type="double"> 90 </weight-fuel-lbm>      <!-- guess -->
-            <drag-coeff type="double">0.10</drag-coeff>
+            <drag-coeff type="double">0.14</drag-coeff>
             <cross-section-sqft type="double">3.14</cross-section-sqft>                             <!-- source -->
             <arming-time-sec type="double">1.0</arming-time-sec>          
             <min-speed-for-guiding-mach type="double">0.5</min-speed-for-guiding-mach>
@@ -710,7 +710,7 @@
             <weight-launch-lbs type="double">484.5</weight-launch-lbs>              <!-- source -->
             <weight-warhead-lbs type="double">126</weight-warhead-lbs>            <!-- source -->
             <weight-fuel-lbm type="double"> 90 </weight-fuel-lbm>      <!-- guess -->
-            <drag-coeff type="double">0.10</drag-coeff>
+            <drag-coeff type="double">0.14</drag-coeff>
             <cross-section-sqft type="double">3.14</cross-section-sqft>                             <!-- source -->
             <arming-time-sec type="double">1.0</arming-time-sec>          
             <min-speed-for-guiding-mach type="double">0.5</min-speed-for-guiding-mach>
