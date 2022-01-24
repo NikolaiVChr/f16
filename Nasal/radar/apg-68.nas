@@ -919,6 +919,8 @@ DatalinkRadar = {
 	# blue==1: On our datalink
 	# blue==2: Targeted by someone on our datalink
 	#
+	# Direct line of sight required for ~1000MHz signal.
+	#
 	# This class is only semi generic!
 	new: func (rate, max_dist_nm) {
 		var dlnk = {parents: [DatalinkRadar, Radar]};
