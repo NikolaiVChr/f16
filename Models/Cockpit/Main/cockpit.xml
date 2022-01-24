@@ -765,7 +765,7 @@
   <path>Aircraft/f16/Models/Cockpit/Avionics/EWS/MLU_threat_warning_prime.xml</path>
   <offsets>
    <x-m>-4.786</x-m>
-   <y-m>-0.203</y-m>
+   <y-m>-0.213</y-m>
    <z-m>0.578</z-m>
    <pitch-deg>-15</pitch-deg><!-- needs verification! -->
   </offsets>
@@ -788,7 +788,7 @@
   <path>Aircraft/f16/Models/Cockpit/Avionics/EWS/US_threat_warning_prime.xml</path>
   <offsets>
    <x-m>-4.786</x-m>
-   <y-m>-0.203</y-m>
+   <y-m>-0.213</y-m>
    <z-m>0.578</z-m>
    <pitch-deg>-15</pitch-deg><!-- needs verification! -->
   </offsets>
@@ -939,7 +939,7 @@
   <path>Aircraft/f16/Models/Cockpit/Avionics/EWS/rwr.xml</path>
   <offsets>
    <x-m>-4.77</x-m>
-   <y-m>-0.125</y-m>
+   <y-m>-0.135</y-m>
    <z-m>0.595</z-m>
    <pitch-deg>-13.8</pitch-deg>
   </offsets>
