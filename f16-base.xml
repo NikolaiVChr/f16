@@ -276,7 +276,7 @@
                 <x-offset-m>0</x-offset-m>
                 <y-offset-m>0.8579</y-offset-m>
                 <z-offset-m>-4.1050</z-offset-m>
-                <default-field-of-view-deg>62</default-field-of-view-deg>
+                <default-field-of-view-deg>68.5</default-field-of-view-deg>
                 <limits>
                     <right>
                         <heading-max-deg>170</heading-max-deg>
