@@ -1725,7 +1725,7 @@ var MFD_Device =
                 }
             }
             me.sizeBleps = size(me.bleps);
-            if (contact["blue"] != 1 and me.ii < me.root.maxT and ((me.sizeBleps and contact.hadTrackInfo()) or contact["blue"] == 2) and me.iff == 0 and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName) {
+            if (contact["blue"] != 1 and me.ii < me.root.maxT and me.sizeBleps and ((me.sizeBleps and contact.hadTrackInfo()) or contact["blue"] == 2) and me.iff == 0 and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName) {
                 # Paint bleps with tracks
                 me.bleppy = me.bleps[me.sizeBleps-1];
                 if ((me.bleppy.hasTrackInfo() and me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.currentMode.timeToKeepBleps) or contact["blue"] == 2) {
