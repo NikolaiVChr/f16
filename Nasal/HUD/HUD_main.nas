@@ -642,6 +642,39 @@ append(obj.total, obj.speed_curr);
         append(obj.total, obj.roll_pointer);
         append(obj.total, obj.roll_lines);
         append(obj.total, obj.bank_angle_indicator);
+        var vTick = 4;
+        var tickSpace = 6;
+        obj.vertical_pointer = obj.centerOrigin.createChild("path")
+                            .setTranslation(0.25*sx*uv_used-vTick*1.5-8,sy*0.245-sy*0.5)
+                            .lineTo(-tickShort*0.66, vTick*0.66)
+                            .lineTo(-tickShort*0.66, -vTick*0.66)
+                            .lineTo(0, 0)
+                            .setStrokeLineWidth(1)
+                            .setColor(0,1,0);
+        obj.vertical_scale = obj.centerOrigin.createChild("path")
+                            .setTranslation(0.25*sx*uv_used-vTick*1.5-8,sy*0.245-sy*0.5)
+                            .moveTo(0, 0)
+                            .lineTo(vTick*1.5,0)
+                            .moveTo(0, tickSpace)
+                            .lineTo(vTick,tickSpace)
+                            .moveTo(0, -tickSpace)
+                            .lineTo(vTick,-tickSpace)
+                            .moveTo(0, tickSpace*2)
+                            .lineTo(vTick*1.5,tickSpace*2)
+                            .moveTo(0, -tickSpace*2)
+                            .lineTo(vTick*1.5,-tickSpace*2)
+                            .moveTo(0, tickSpace*3)
+                            .lineTo(vTick,tickSpace*3)
+                            .moveTo(0, -tickSpace*3)
+                            .lineTo(vTick,-tickSpace*3)
+                            .moveTo(0, tickSpace*4)
+                            .lineTo(vTick*1.5,tickSpace*4)
+                            .moveTo(0, -tickSpace*4)
+                            .lineTo(vTick*1.5,-tickSpace*4)
+                            .setStrokeLineWidth(1)
+                            .setColor(0,1,0);
+        append(obj.total, obj.vertical_pointer);
+        append(obj.total, obj.vertical_scale);
         obj.flyupLeft    = obj.centerOrigin.createChild("path")
                             .lineTo(-50,-50)
                             .moveTo(0,0)
@@ -1292,6 +1325,7 @@ append(obj.total, obj.speed_curr);
                  hmdH:                       "sim/current-view/heading-offset-deg",
                  hmdP:                       "sim/current-view/pitch-offset-deg",
                  hmcs_sym:                  "f16/avionics/hmd-sym-int-knob",
+                 vSpeed:                    "velocities/vertical-speed-fps",
                 };
 
         foreach (var name; keys(input)) {
@@ -1405,6 +1439,8 @@ append(obj.total, obj.speed_curr);
                                             obj.VV.hide();
                                         }
                                         obj.bank_angle_indicator.setVisible(!obj.r_show);
+                                        obj.vertical_pointer.setVisible(!obj.r_show);
+                                        obj.vertical_scale.setVisible(!obj.r_show);
                                         if (obj.r_show and hdp.fpm==2 and hdp.ded == 0 and !hdp.dgft and !(hdp.gear_down and !hdp.wow)) {
                                               obj.roll_pointer.setTranslation(obj.rollPos);
                                               obj.roll_lines.show();
@@ -1475,6 +1511,10 @@ append(obj.total, obj.speed_curr);
                                         } else {
                                           obj.bracket.hide();
                                         }
+                                      }),
+            props.UpdateManager.FromHashList(["vSpeed"], 0.10, func(hdp)
+                                      {
+                                        obj.vertical_pointer.setTranslation(0.25*sx*uv_used-4*1.5-8,sy*0.245-sy*0.5-6*hdp.vSpeed/500);
                                       }),
             props.UpdateManager.FromHashList(["texUp","pitch","roll","fpm","VV_x","VV_y","gear_down", "dgft", "drift"], 0.001, func(hdp)
                                       {
