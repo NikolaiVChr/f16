@@ -1008,7 +1008,7 @@
 		</switch>
 		
 		<switch name="/f16/avionics/gear-horn">
-            <description>Dash-1  1-70</description>
+            <description>Dash-1  1-70 and AD-A145-469</description>
 			<default value="0"/>
 			<test logic="AND" value="0">
 				/f16/avionics/gear-horn-cancel eq 1

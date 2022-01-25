@@ -1444,7 +1444,7 @@ append(obj.total, obj.speed_curr);
                                         if (obj.r_show and hdp.fpm==2 and hdp.ded == 0 and !hdp.dgft and !(hdp.gear_down and !hdp.wow)) {
                                               obj.roll_pointer.setTranslation(obj.rollPos);
                                               obj.roll_lines.show();
-                                              obj.roll_pointer.show();
+                                              obj.roll_pointer.setVisible(math.abs(hdp.roll) <= 45);
                                           } else {
                                               obj.roll_lines.hide();
                                               obj.roll_pointer.hide();

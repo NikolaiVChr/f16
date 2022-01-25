@@ -921,6 +921,11 @@
  <model>
   <name>DED</name>
   <path>Aircraft/f16/Models/Cockpit/Avionics/DED/ded.xml</path>
+  <offsets>
+   <x-m>0.02</x-m>
+   <y-m>0</y-m>
+   <z-m>0</z-m>
+  </offsets>
  </model>
 
  <model>
