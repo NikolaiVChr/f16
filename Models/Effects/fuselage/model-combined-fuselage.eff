@@ -122,10 +122,7 @@ Modifications author: Nikolai V. Chr.
 		<!--<scheme>als-lighting</scheme>-->
 	   <predicate n="0">
 		   <and>
-		   		<equal>
-          <value type="int">1</value>
-          <property>/sim/version/compositor-support</property>
-        </equal>
+			   <property>/sim/version/compositor-support</property>
 			   <property>/sim/rendering/shaders/skydome</property>
 			   <property>/sim/rendering/shaders/quality-level</property>
 			   <property>/sim/rendering/shaders/model</property>
@@ -1277,10 +1274,7 @@ Modifications author: Nikolai V. Chr.
 	<technique n="1">
 	  <predicate>
 		<and>
-		  <less-equal>
-	          <value type="int">1</value>
-	          <property>/sim/version/compositor-support</property>
-	      </less-equal>
+          <property>/sim/version/compositor-support</property>
 		  <property>/sim/rendering/shaders/quality-level</property>
 		  <property>/sim/rendering/shaders/model</property>
 		  <or>
