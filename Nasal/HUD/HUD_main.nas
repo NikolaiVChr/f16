@@ -1427,7 +1427,7 @@ append(obj.total, obj.speed_curr);
             props.UpdateManager.FromHashList(["VV_x","VV_y","fpm","HUD_SCA","ded","dgft","gear_down","wow","fpm"], 0.001, func(hdp)
                                       {
                                         obj.r_show = 1;
-                                        if (hdp.fpm > 0 and (!obj.showmeCCIP or !isDropping or math.mod(int(8*(systime()-int(systime()))),2)>0)) {
+                                        if (hdp.fpm > 0 and !hdp.dgft and (!obj.showmeCCIP or !isDropping or math.mod(int(8*(systime()-int(systime()))),2)>0)) {
                                             obj.VV.setTranslation (hdp.VV_x, hdp.VV_y);
                                             if (hdp.HUD_SCA == 2) {
                                                 obj.bank_angle_indicator.setTranslation (hdp.VV_x, hdp.VV_y);
@@ -1439,8 +1439,8 @@ append(obj.total, obj.speed_curr);
                                             obj.VV.hide();
                                         }
                                         obj.bank_angle_indicator.setVisible(!obj.r_show);
-                                        obj.vertical_pointer.setVisible(!obj.r_show);
-                                        obj.vertical_scale.setVisible(!obj.r_show);
+                                        obj.vertical_pointer.setVisible(hdp.HUD_SCA == 2 and hdp["dlz_show"] != 1);
+                                        obj.vertical_scale.setVisible(hdp.HUD_SCA == 2 and hdp["dlz_show"] != 1);
                                         if (obj.r_show and hdp.fpm==2 and hdp.ded == 0 and !hdp.dgft and !(hdp.gear_down and !hdp.wow)) {
                                               obj.roll_pointer.setTranslation(obj.rollPos);
                                               obj.roll_lines.show();
@@ -1547,20 +1547,22 @@ append(obj.total, obj.speed_curr);
                                       {
                                           obj.agl=hdp.altitude_agl_ft;
                                           obj.altScaleMode = 0;#0=baro, 1=radar 2=thermo
-                                          if (hdp.altSwitch == 2) {#RDR
-                                                obj.altScaleMode = hdp.cara;
-                                          } elsif (hdp.altSwitch == 1) {#BARO
-                                                obj.altScaleMode = 0;
-                                          } else {#AUTO
-                                                if (obj["altScaleModeOld"] != nil) {
-                                                    if (obj.altScaleModeOld == 2) {
-                                                        obj.altScaleMode = (obj.agl < 1500 and hdp.cara and !hdp.dgft and !obj.hidingScales)*2;
+                                          if (!hdp.dgft) {
+                                              if (hdp.altSwitch == 2) {#RDR
+                                                    obj.altScaleMode = hdp.cara;
+                                              } elsif (hdp.altSwitch == 1) {#BARO
+                                                    obj.altScaleMode = 0;
+                                              } else {#AUTO
+                                                    if (obj["altScaleModeOld"] != nil) {
+                                                        if (obj.altScaleModeOld == 2) {
+                                                            obj.altScaleMode = (obj.agl < 1500 and hdp.cara and !hdp.dgft and !obj.hidingScales)*2;
+                                                        } else {
+                                                            obj.altScaleMode = (obj.agl < 1200 and hdp.cara and !hdp.dgft and !obj.hidingScales)*2;
+                                                        }
                                                     } else {
-                                                        obj.altScaleMode = (obj.agl < 1200 and hdp.cara and !hdp.dgft and !obj.hidingScales)*2;
+                                                        obj.altScaleMode = (obj.agl < 1300 and hdp.cara and !hdp.dgft and !obj.hidingScales)*2;
                                                     }
-                                                } else {
-                                                    obj.altScaleMode = (obj.agl < 1300 and hdp.cara and !hdp.dgft and !obj.hidingScales)*2;
-                                                }
+                                              }
                                           }
                                           obj.altScaleModeOld = obj.altScaleMode;
                                           #print("UPDATE "~obj.altScaleMode~"  CARA "~hdp.cara~"  AGL "~obj.agl);
@@ -1663,7 +1665,7 @@ append(obj.total, obj.speed_curr);
                                       {   
                                           # the real F-16 has calibrated airspeed as default in HUD.
                                           var pitot = hdp.servPitot and hdp.servStatic;
-                                          if (hdp.HUD_VEL == 1 or hdp.gear_down) {
+                                          if (hdp.HUD_VEL == 1 or hdp.gear_down or hdp.dgft) {
                                             if (hdp.servSpeed) {
                                                 obj.ias_range.setTranslation(skew_spd, hdp.calibrated * ias_range_factor * pitot);
                                                 obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.calibrated));
@@ -2560,6 +2562,7 @@ append(obj.total, obj.speed_curr);
         #me.dlzArray =[10,8,6,2,9];#test
         if (me.dlzArray == nil or size(me.dlzArray) == 0) {
                 me.dlz.hide();
+                hdp.dlz_show = 0;
         } else {
             #printf("%d %d %d %d %d",me.dlzArray[0],me.dlzArray[1],me.dlzArray[2],me.dlzArray[3],me.dlzArray[4]);
             me.dlz2.removeAllChildren();
@@ -2610,6 +2613,7 @@ append(obj.total, obj.speed_curr);
                     .setColor(me.color);
             me.dlz2.update();
             me.dlz.show();
+            hdp.dlz_show = 1;
         }
 
         me.radarLock.setVisible(me.rdL);
