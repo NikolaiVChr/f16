@@ -5,7 +5,7 @@
 <PropertyList>
 
 	<name>AIM-9L</name>
-	<path>AIM-9L_RW.ac</path>
+	<path>AIM-9L.ac</path>
 
 	<effect>  
     	<inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>  
@@ -37,7 +37,7 @@
       		<object-name>AIM9_Frontwing</object-name>
       		<object-name>AIM9_IRsphere</object-name>
 		<condition>
-			<property>payload/armament/aim-9/flags/msl-id-800</property>
+			<property>payload/armament/aim-9l/flags/msl-id-200</property>
 		</condition>
 	</animation>
 
@@ -49,7 +49,7 @@
 	   <lighting type="bool">false</lighting>
 
 	   <condition>
-	         <property>payload/armament/aim-9/flags/smoke-id-800</property>
+	         <property>payload/armament/aim-9l/flags/smoke-id-200</property>
 	   </condition>
 
 	   <attach>world</attach>
@@ -135,7 +135,7 @@
 	 
 	 <model>
 		<name>flaminghot</name>
-		<path>aim-9-exhaust.xml</path>
+		<path>aim-9l-exhaust.xml</path>
 		<offsets>
 			<x-m>1.43018</x-m>
 			<y-m>0</y-m>
@@ -148,7 +148,7 @@
       <object-name>flaminghot</object-name>
       <condition>
            <and>
-           <property>payload/armament/aim-9/flags/smoke-id-0</property>
+           <property>payload/armament/aim-9l/flags/smoke-id-0</property>
            <property>/sim/rendering/shaders/skydome</property>
        </and>
      </condition>
@@ -163,7 +163,7 @@
 	   <lighting type="bool">false</lighting>
 
 	   <condition>
-	         <property>payload/armament/aim-9/flags/smoke-id-800</property>
+	         <property>payload/armament/aim-9l/flags/smoke-id-200</property>
 	         <not>
                  <property>/sim/rendering/shaders/skydome</property>
              </not>
@@ -258,7 +258,7 @@
 	   <lighting type="bool">false</lighting>
 
 	   <condition>
-	         <property>payload/armament/aim-9/flags/explode-id-800</property>
+	         <property>payload/armament/aim-9l/flags/explode-id-200</property>
 	   </condition>
 
 	   <attach>world</attach>
@@ -350,7 +350,7 @@
 	   <lighting type="bool">false</lighting>
 
 	   <condition>
-	         <property>payload/armament/aim-9/flags/explode-smoke-id-800</property>
+	         <property>payload/armament/aim-9l/flags/explode-smoke-id-200</property>
 	   </condition>
 
 	   <attach>world</attach>

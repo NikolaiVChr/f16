@@ -14,7 +14,18 @@
  <!-- =============================================================================================================  --> 
  <model>
   <name>Station1_AIM-9L</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9L_LW.xml</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9L/AIM-9L_LW.xml</path>
+  <offsets>
+   <x-m>1.16</x-m>
+   <y-m>-4.865</y-m>
+   <z-m>-0.01</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station1_AIM-9M</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9M/AIM-9M_LW.xml</path>
   <offsets>
    <x-m>1.16</x-m>
    <y-m>-4.865</y-m>
@@ -25,7 +36,7 @@
 
   <model>
   <name>Station1_CATM-9L</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/CATM-9L_LW.xml</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9L/CATM-9L_LW.xml</path>
   <offsets>
    <x-m>1.16</x-m>
    <y-m>-4.865</y-m>
@@ -36,7 +47,7 @@
 
   <model>
   <name>Station1_AN-T-17</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AN-T-17_LW.xml</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9L/AN-T-17_LW.xml</path>
   <offsets>
    <x-m>1.16</x-m>
    <y-m>-4.865</y-m>
@@ -127,7 +138,18 @@
 <!-- =============================================================================================================  -->  
   <model>
   <name>Station9_AIM-9L</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9L_RW.xml</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9L/AIM-9L_RW.xml</path>
+  <offsets>
+   <x-m>1.16</x-m>
+   <y-m>4.865</y-m>
+   <z-m>-0.01</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station9_AIM-9M</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9M/AIM-9M_RW.xml</path>
   <offsets>
    <x-m>1.16</x-m>
    <y-m>4.865</y-m>
@@ -138,7 +160,7 @@
  
  <model>
   <name>Station9_CATM-9L</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/CATM-9L_RW.xml</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9L/CATM-9L_RW.xml</path>
   <offsets>
    <x-m>1.16</x-m>
    <y-m>4.865</y-m>
@@ -149,7 +171,7 @@
 
   <model>
   <name>Station9_AN-T-17</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AN-T-17_RW.xml</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9L/AN-T-17_RW.xml</path>
   <offsets>
    <x-m>1.16</x-m>
    <y-m>4.865</y-m>

@@ -53,7 +53,7 @@
         <fire-control>
             <serviceable type="bool">true</serviceable><!-- why is this not auto created by failure system in 2018.3?? -->
         </fire-control>
-        <aim-9>
+        <aim-9l>
             <type-id type="int">57</type-id>
             <short-name type="string">A-9L</short-name>
             <long-name type="string">AIM-9L Sidewinder</long-name>
@@ -112,7 +112,7 @@
             <simplified-induced-drag type="bool">false</simplified-induced-drag>
             <wing-aspect-ratio type="double">8</wing-aspect-ratio>
             <wing-efficiency-relative-to-an-elliptical-planform type="double">0.85</wing-efficiency-relative-to-an-elliptical-planform>
-        </aim-9>
+        </aim-9l>
         <aim-9m>
             <type-id type="int">69</type-id>
             <short-name type="string">A-9M</short-name>

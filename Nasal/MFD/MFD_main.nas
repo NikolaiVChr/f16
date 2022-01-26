@@ -2835,7 +2835,7 @@ var MFD_Device =
                     }                    
                     if (me.wpnType=="heat") {
                         me.cooling = !pylons.fcs.getSelectedWeapon().isCooling();
-                        foreach(var snake;pylons.fcs.getAllOfType("AIM-9")) {
+                        foreach(var snake;pylons.fcs.getAllOfType("AIM-9L")) {
                             snake.setCooling(me.cooling);
                         }                        
                         foreach(var snake;pylons.fcs.getAllOfType("AIM-9M")) {
@@ -3018,7 +3018,7 @@ var MFD_Device =
                     } else {
                         me.ready = "RDY";
                     }
-                } elsif (me.wpn.type == "AIM-9" or me.wpn.type == "AIM-9M") {
+                } elsif (me.wpn.type == "AIM-9L" or me.wpn.type == "AIM-9M") {
                     me.wpnType ="heat";
                     me.cool = me.wpn.getWarm()==0?"COOL":"WARM";
                     me.eegs = "A-A";
