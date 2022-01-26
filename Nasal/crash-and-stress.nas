@@ -196,6 +196,15 @@ var CrashAndStress = {
 		me.input.simCrashed.setBoolValue(FALSE);
 		me.repairTimer.restart(10.0);
 	},
+	abandon: func {
+		me.failure_modes = FailureMgr._failmgr.failure_modes;
+	    me.mode_list = keys(me.failure_modes);
+
+	    foreach(var failure_mode_id; me.mode_list) {
+      		FailureMgr.set_failure_level(failure_mode_id, 1);
+	    }
+	    me.wingsAttached = FALSE;
+	},
 	_finishRepair: func () {
 		me.repairing = FALSE;
 	},
@@ -575,7 +584,5 @@ var repair = func {
 };
 
 var exp = func {
-	if (crashCode.exploded==0) {
-		crashCode._explodeBegin("Pilot ejected");
-	}
+	crashCode.abandon();
 };
