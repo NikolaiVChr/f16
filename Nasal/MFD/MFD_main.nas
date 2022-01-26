@@ -1735,11 +1735,13 @@ var MFD_Device =
                         me.c_devheading = contact.getDeviationHeading();
                         me.c_speed      = contact.getSpeed();
                         me.c_alt        = contact.getAltitude();
+                        me.distPixels   = contact.getRange()*(482/(radar_system.apg68Radar.getRange()*NM2M));
                     } else {
                         me.c_heading    = me.bleppy.getHeading();         
                         me.c_devheading = me.bleppy.getAZDeviation();
                         me.c_speed      = me.bleppy.getSpeed();
                         me.c_alt        = me.bleppy.getAltitude();
+                        me.distPixels   = me.bleppy.getRangeNow()*(482/(radar_system.apg68Radar.getRange()*NM2M));
                     }
                     me.rot = 22.5*math.round((me.c_heading-radar_system.self.getHeading()-me.c_devheading)/22.5);
                     me.root.blepTrianglePaths[me.ii].setRotation(me.rot*D2R);
