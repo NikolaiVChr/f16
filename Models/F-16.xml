@@ -38,9 +38,9 @@
     var livery_update = aircraft.livery_update.new(folder, 10);
 
     if (!(left(getprop("sim/version/flightgear"),6) == "2020.3")) {
-        globals.props.getNode("/sim/version/compositor-support", 1).setBoolValue(1);
+        props.globals.getNode("/sim/version/compositor-support", 1).setBoolValue(1);
     } elsif (left(getprop("sim/version/flightgear"),6) == "2020.3") {
-        globals.props.getNode("/sim/version/compositor-support", 1).setBoolValue(0);
+        props.globals.getNode("/sim/version/compositor-support", 1).setBoolValue(0);
     }
     
     # Stores visible over MP:
