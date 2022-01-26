@@ -148,7 +148,7 @@
       <object-name>flaminghot</object-name>
       <condition>
            <and>
-           <property>payload/armament/aim-9l/flags/smoke-id-0</property>
+           <property>payload/armament/aim-9l/flags/smoke-id-100</property>
            <property>/sim/rendering/shaders/skydome</property>
        </and>
      </condition>
