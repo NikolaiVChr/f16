@@ -261,7 +261,7 @@
             <legend>A/G Unguided Retarded (2 bags)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2g_mkair();</script>
+                <script>pylons.b60_a2g_mkair();</script>
             </binding>
         </button>
 
@@ -283,7 +283,7 @@
             <legend>A/G Cluster CEM (2 bags)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2g_cem();</script>
+                <script>pylons.b60_a2g_cem();</script>
             </binding>
         </button>
 
@@ -305,7 +305,7 @@
             <legend>A/G LGB Light (PW-II, 2 bags)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2g_lgb1();</script>
+                <script>pylons.b60_a2g_lgb1();</script>
             </binding>
         </button>
 
@@ -338,7 +338,7 @@
             <legend>A/G GPS (L-JDAM, 2 bags)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.b40_a2g_gpslsr();</script>
+                <script>pylons.b60_a2g_gpslsr();</script>
             </binding>
         </button>
 
