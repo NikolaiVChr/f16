@@ -50,8 +50,8 @@
         <offset-deg>0</offset-deg>
         <center>
             <x-m>  0.003947 </x-m>
-            <y-m> -0.0335 </y-m>
-            <z-m>  0.0341 </z-m>
+            <y-m> -0.033889 </y-m>
+            <z-m>  0.030229 </z-m>
         </center>
         <axis>
             <x> 1.0 </x>
@@ -64,7 +64,7 @@
                 <property>f16/avionics/rwr-int</property>
                 <factor>1</factor>
                 <step>0.1</step>
-                <min>0</min>
+                <min>0.2</min>
                 <max>2</max>
                 <wrap>false</wrap>
             </binding>
@@ -75,7 +75,7 @@
                 <property>f16/avionics/rwr-int</property>
                 <factor>1</factor>
                 <step>-0.1</step>
-                <min>0</min>
+                <min>0.2</min>
                 <max>2</max>
                 <wrap>false</wrap>
             </binding>
