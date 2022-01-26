@@ -348,6 +348,11 @@ var re_init_listener = setlistener("/sim/signals/reinit", func {
         aim.cool_total_time = 0;#consider making a method in AIM for this!
         aim.setCooling(0);
       }
+      var aim9s = pylons.fcs.getAllOfType("AIM-9M");
+      foreach(aim;aim9s) {
+        aim.cool_total_time = 0;#consider making a method in AIM for this!
+        aim.setCooling(0);
+      }
     }
     repair2();
   }

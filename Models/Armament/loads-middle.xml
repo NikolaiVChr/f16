@@ -14,10 +14,16 @@
   <type>select</type>
   <object-name>Station3_AIM-9L</object-name>
   <condition>
-    <equals>
-      <property>payload/armament/station/id-2-type</property>
-      <value>AIM-9</value>
-    </equals>
+    <or>
+      <equals>
+        <property>payload/armament/station/id-2-type</property>
+        <value>AIM-9</value>
+      </equals>
+      <equals>
+        <property>payload/armament/station/id-2-type</property>
+        <value>AIM-9M</value>
+      </equals>
+    </or>
     <greater-than>
       <property>payload/armament/station/id-2-count</property>
       <value>0</value>
@@ -429,10 +435,16 @@
   <type>select</type>
   <object-name>Station7_AIM-9L</object-name>
   <condition>
-    <equals>
-      <property>payload/armament/station/id-6-type</property>
-      <value>AIM-9</value>
-    </equals>
+    <or>
+      <equals>
+        <property>payload/armament/station/id-6-type</property>
+        <value>AIM-9</value>
+      </equals>
+      <equals>
+        <property>payload/armament/station/id-6-type</property>
+        <value>AIM-9M</value>
+      </equals>
+    </or>
     <greater-than>
       <property>payload/armament/station/id-6-count</property>
       <value>0</value>
