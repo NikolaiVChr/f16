@@ -2488,7 +2488,7 @@ append(obj.total, obj.speed_curr);
                                 me.ASEC120Aspect.setRotation(D2R*(me.lastH-hdp.heading+180));
                                 me.rdL = 1;
                                 me.rdT = 1;
-                            } elsif (me.lastH != nil and (hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "IRIS-T")) {
+                            } elsif (me.lastH != nil and (hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "AIM-9M" or hdp.weapon_selected == "IRIS-T")) {
                                 me.ASEC65Aspect.setRotation(D2R*(me.lastH-hdp.heading+180));
                                 me.irT = 1;
                             }
