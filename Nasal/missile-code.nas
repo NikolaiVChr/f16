@@ -1246,9 +1246,11 @@ var AIM = {
 	commandDir: func (heading_deg, pitch_deg) {
 		# commands are relative to aircraft bore
 		if (me.status == MISSILE_FLYING) return;
-		me.command_dir_heading = heading_deg;
-		me.command_dir_pitch = pitch_deg;
-		me.slave_to_radar = FALSE;
+		if (vector.Math.angleBetweenVectors(vector.Math.eulerToCartesian2(-heading_deg, pitch_deg), [1,0,0]) <= me.fcs_fov) {
+			me.command_dir_heading = heading_deg;
+			me.command_dir_pitch = pitch_deg;
+			me.slave_to_radar = FALSE;
+		}
 		me.printCode("Bore/dir command: heading %0.1f pitch %0.1f", heading_deg, pitch_deg);
 	},
 

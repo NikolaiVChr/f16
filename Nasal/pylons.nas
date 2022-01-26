@@ -2237,7 +2237,7 @@ var bore_loop = func {
         		aim.setContacts(radar_system.getCompleteList());
         		var h = -geo.normdeg180(getprop("sim/current-view/heading-offset-deg"));
                 var p = getprop("sim/current-view/pitch-offset-deg");
-        		if (math.sqrt(h*h+p*p) < aim.fcs_fov) {
+        		if (1 or math.sqrt(h*h+p*p) < aim.fcs_fov) {
                 	aim.commandDir(h,p);
                 	bore = 2;
             	} else {
