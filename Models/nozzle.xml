@@ -158,13 +158,13 @@
   <object-name>sect15</object-name>
   <object-name>sect16</object-name>
   <min-m>0</min-m>
-  <max-m>300</max-m>
+  <max-m>3000</max-m>
  </animation>
 
  <animation>  
   <type>range</type>  
   <object-name>nozzle</object-name> 
-  <min-m>300</min-m>  
+  <min-m>3000</min-m>  
   <max-m>50000</max-m>  
  </animation>
 
