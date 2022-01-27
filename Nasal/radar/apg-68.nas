@@ -3213,7 +3213,7 @@ var baser = AIToNasal.new();
 var partitioner = NoseRadar.new();
 var omni = OmniRadar.new(1.0, 150, 55);
 var terrain = TerrainChecker.new(0.05, 1, 30);# 0.05 or 0.10 is fine here
-var dlnkRadar = DatalinkRadar.new(0.03, 90);# 3 seconds because cannot be too slow for DLINK targets
+var dlnkRadar = DatalinkRadar.new(0.03, 110);# 3 seconds because cannot be too slow for DLINK targets
 var ecm = ECMChecker.new(0.05, 6);
 
 # start specific radar system

@@ -1157,8 +1157,77 @@
             <input> -fcs/fly-by-wire/roll/inter-schedule </input>
         </summer>
 
+        <switch name="fcs/fly-by-wire/pitch/gravity-speed">
+            <description>
+                
+            </description>
+            <default value="0.025"/>
+            <test  logic="OR" value="5">
+                systems/hydraulics/sysa-psi ge 2000
+                systems/hydraulics/sysb-psi ge 2000
+            </test>
+        </switch>
+        
+        <switch name="fcs/fly-by-wire/pitch/gravity-target-right">
+            <description>
+                
+            </description>
+            <default value="0"/>
+            <test  logic="OR" value="fcs/fly-by-wire/pitch/right-sum">
+                systems/hydraulics/sysa-psi ge 2000
+                systems/hydraulics/sysb-psi ge 2000
+            </test>
+            <test logic="AND" value="50">
+                gear/unit[0]/WOW eq 1
+                gear/unit[1]/WOW eq 1
+                gear/unit[2]/WOW eq 1
+            </test>
+        </switch>
+
+        <actuator name="fcs/fly-by-wire/pitch/gravity-droop-right">
+            <description>
+                
+            </description>
+          <input> fcs/fly-by-wire/pitch/gravity-target-right </input>
+          <!--lag> 40 </lag-->
+          <rate_limit sense="incr"> fcs/fly-by-wire/pitch/gravity-speed </rate_limit>
+          <rate_limit sense="decr"> 5 </rate_limit>
+          <bias> 0 </bias>
+          <deadband_width> 0 </deadband_width>
+          <hysteresis_width> 0 </hysteresis_width>
+        </actuator>
+
+        <switch name="fcs/fly-by-wire/pitch/gravity-target-left">
+            <description>
+                
+            </description>
+            <default value="0"/>
+            <test  logic="OR" value="fcs/fly-by-wire/pitch/left-sum">
+                systems/hydraulics/sysa-psi ge 2000
+                systems/hydraulics/sysb-psi ge 2000
+            </test>
+            <test logic="AND" value="50">
+                gear/unit[0]/WOW eq 1
+                gear/unit[1]/WOW eq 1
+                gear/unit[2]/WOW eq 1
+            </test>
+        </switch>
+
+        <actuator name="fcs/fly-by-wire/pitch/gravity-droop-left">
+            <description>
+                
+            </description>
+          <input> fcs/fly-by-wire/pitch/gravity-target-left </input>
+          <!--lag> 40 </lag-->
+          <rate_limit sense="incr"> fcs/fly-by-wire/pitch/gravity-speed </rate_limit>
+          <rate_limit sense="decr"> 5 </rate_limit>
+          <bias> 0 </bias>
+          <deadband_width> 0 </deadband_width>
+          <hysteresis_width> 0 </hysteresis_width>
+        </actuator>
+
         <switch name="fcs/fly-by-wire/pitch/right-hyd">
-          <default value="0"/>
+          <default value="fcs/fly-by-wire/pitch/gravity-droop-right"/>
           <test  logic="OR" value="fcs/fly-by-wire/pitch/right-sum">
             systems/hydraulics/sysa-psi ge 2000
             systems/hydraulics/sysb-psi ge 2000
@@ -1166,7 +1235,7 @@
          </switch>
 
          <switch name="fcs/fly-by-wire/pitch/left-hyd">
-          <default value="0"/>
+          <default value="fcs/fly-by-wire/pitch/gravity-droop-left"/>
           <test  logic="OR" value="fcs/fly-by-wire/pitch/left-sum">
             systems/hydraulics/sysa-psi ge 2000
             systems/hydraulics/sysb-psi ge 2000
