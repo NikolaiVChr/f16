@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model> 
+   <livery>
+    <name type="string">RoAF Esc 53, #1616</name>
+    <texture>Liveries/Block20/83-1080.png</texture>
+    <owner type="string">RoAF</owner>
+   </livery>
+
+   <livery-logo>
+    <texture>Liveries/Block20/romania.logos.png</texture>
+   </livery-logo>
+
+    <livery-patch>
+        <texture>Liveries/Bock20/patch.romania.png</texture>
+    </livery-patch>
+
+    <livery-pod>
+        <texture>Liveries/Block10/pod.white.png</texture>
+    </livery-pod>
+    
+    <f16>
+        <dragchute type="bool">false</dragchute>
+	    <CFT type="bool">false</CFT>
+    </f16>
+  </model>
+ </sim>
+</PropertyList>

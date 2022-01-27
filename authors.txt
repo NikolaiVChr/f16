@@ -20,7 +20,7 @@ Pensacola
 Nikolai V. Chr. "Leto", "Necolatis"
 - F16 Blocks 10, 20 and YF-16 aerodynamics
 - Fly-by-wire system for all variants except simplified
-- Danish, Ghost Gray, Blue Bandit, 2xUAE, Croatian, Empire, Norwegian and prototype livery
+- Danish, Ghost Gray, Blue Bandit, 2xUAE, Croatian, Empire, Norwegian, Indian and prototype livery
 - Various changes to radar, MFD, HUD, 3D cockpit
 - Ejection and drag chute
 - Effects and shader work
@@ -37,7 +37,7 @@ J Maverick 16
 - Research, addition and implementation of weapons, stores, pods
 - 3D works (pilot model, weapons/stores, cockpit, exterior, misc)
 - RWR/RCS data research and update
-- Block-specific changes: panel layouts, CCIP conversion of Block 40/42, stores availability
+- Block-specific changes: panel layouts, CCIP conversion of Block 40/42, stores availability, payload presets
 - MFD updates
 - Effects improvement
 - Systems tweaking
@@ -95,7 +95,7 @@ Adam Barszczak "barszczisbad", "BARS1"
 - Canvas MFD rework
 
 Gary Brown "thebroons", "N-SCOT"
-- Most liveries
+- Most liveries from FGUK's F-16CJ
 - ALE-50 3D model
 - F-16CJ Paintkit
 
@@ -124,7 +124,8 @@ PH-JAKE
 - Block 50 left panel animations
 - Bug fixes and improvements
 - Improved checklists
-- Help menu updates.
+- Help menu updates
+- AP exceptions.
 
 FGUK
 - Sounds
@@ -154,7 +155,7 @@ Axel Paccalin
 
 Baptiste "Bat" Campion
 - Belgian AF, Hellenic AF, PACAF-USN Aggressors, Dutch AF, PACAF, AFRC Makos, 31FW HGV, FLTS, 480FS livery packs
-- Portuguese AF, QF-16, Turkish AF, Royal Moroccan AF, Arizona ANG, DC ANG, Texas ANG, Alabama ANG, 89-2068 Special, USAF HGV liveries
+- Portuguese AF, QF-16, Turkish AF, Royal Moroccan AF, Arizona ANG, DC ANG, Texas ANG, Alabama ANG, 89-2068 Special, USAF HGV, Romanian AF liveries
 
 Shaymo
 - Exterior and interior 3D model fixes
