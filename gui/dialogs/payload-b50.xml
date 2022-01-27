@@ -357,7 +357,18 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>20</row>
             <col>2</col>
-            <legend>A/G LGB + GPS (2 bags)</legend>
+            <legend>A/G LGB + GPS (Light, 2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_lgbgps2();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>22</row>
+            <col>2</col>
+            <legend>A/G LGB + GPS (Heavy, 2 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.a2g_lgbgps();</script>
@@ -366,7 +377,7 @@
         
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>22</row>
+            <row>24</row>
             <col>2</col>
             <legend>A/G Strategic (Unguided, 2 bags)</legend>
             <binding>
@@ -377,7 +388,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>24</row>
+            <row>26</row>
             <col>2</col>
             <legend>Tactical Test and Evaluation (2 bags)</legend>
             <binding>
@@ -556,6 +567,12 @@
 
         <hrule>
             <row>23</row>
+            <col>0</col>
+            <colspan>6</colspan>
+        </hrule>
+
+        <hrule>
+            <row>25</row>
             <col>0</col>
             <colspan>6</colspan>
         </hrule>
