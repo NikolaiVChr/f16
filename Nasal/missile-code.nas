@@ -3827,7 +3827,7 @@ var AIM = {
 
 		####Ground interaction
 		me.ground = geo.elevation(me.coord.lat(), me.coord.lon()) or 0;
-		me.terrainImpact = 0
+		me.terrainImpact = 0;
 		if(me.ground > me.coord.alt()) {
 			me.event = "exploded";
 			if(me.life_time < me.arming_time) {
