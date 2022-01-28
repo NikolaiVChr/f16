@@ -90,7 +90,7 @@ var ArmamentInFlightNotification =
         new_class.isValid = func {
             var valid = "";
             var limitMin = -124;
-            var limitMax =  124;
+            var limitMax =  123;
             # 1 byte integer
             if (int(me.Kind) > limitMax or int(me.Kind) < limitMin) {
                 valid ~= "|ArmamentInFlight.Kind is "~me.Kind;
@@ -109,7 +109,7 @@ var ArmamentInFlightNotification =
             }
             # 1 byte float
             if (int(geo.normdeg180(me.Heading)/1.54) > limitMax or int(geo.normdeg180(me.Heading)/1.54) < limitMin) {
-                valid ~= "|ArmamentInFlight.Pitch is "~me.Pitch;
+                valid ~= "|ArmamentInFlight.Heading is "~me.Heading;
             }
             # 1 byte integer
             if (int(me.Flags) > limitMax or int(me.Flags) < limitMin) {
