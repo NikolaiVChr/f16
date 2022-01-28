@@ -151,7 +151,7 @@
   <group>
     <layout>vbox</layout>
     <checkbox>
-      <label>Wear 1997 G-suit</label>
+      <label>Wear newer, more capable 1997 G-suit</label>
       <halign>left</halign>
       <property>sim/rendering/redout/new</property>
       <live>true</live>
@@ -160,7 +160,6 @@
           <property>sim/rendering/redout/new</property>
         </binding>
     </checkbox>
-  <text><halign>left</halign><label>Enable this to use a newer, more capable G-suit.</label></text>
   <text><halign>left</halign><label>Disabled means G-suit year 1979.</label></text>
 
   <hrule/>
@@ -219,6 +218,25 @@
   </group>
                 
     <hrule/>
+
+    <checkbox>
+        <label>Enable Spectator mode</label>
+        <halign>left</halign>
+        <enable><not><property>/payload/armament/msg</property></not></enable>
+        <property>/payload/armament/spectator</property>
+        <live>true</live>
+        <binding>
+          <command>dialog-apply</command>
+        </binding>
+    </checkbox>
+    <text>
+      <halign>left</halign><label>Shows missile trails, craters, etc. from MP aircraft without dealing or receiving damage.</label>
+    </text>
+    <text>
+      <halign>left</halign><label>Shows missile trails, craters, etc. from MP aircraft without dealing or receiving damage.</label>
+    </text>
+
+    <hrule/>
   
     <checkbox>
       <label>Activate weapon-follow view</label>
@@ -246,7 +264,7 @@
   <empty><stretch>1</stretch></empty>
   
     <checkbox>
-      <label>Enable alternative, Intel graphics-compatible Head Up Display.</label>
+      <label>Enable alternative, Intel graphics-compatible Head Up Display</label>
       <halign>left</halign>
       <property>f16/avionics/hud-basic</property>
       <live>true</live>
@@ -318,7 +336,5 @@
  </group>
                 
  </group>
-  
-  <empty><stretch>1</stretch></empty>
 
 </PropertyList>
