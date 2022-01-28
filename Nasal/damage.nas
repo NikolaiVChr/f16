@@ -875,9 +875,6 @@ var flare_sorter = func(a, b) {
 
 var animate_flare = func {
   # Send out notifications about own flare positions every 0.4s
-  if (!getprop("payload/armament/msg")) {
-    return;
-  }
   var stime = systime();
   # old flares
   var old_flares = [];
@@ -940,9 +937,6 @@ var auto_flare_released = func {
 }
 
 var flare_released = func {
-    if (!getprop("payload/armament/msg")) {
-      return;
-    }
     # We released a flare. If you call this method manually, then make sure 'auto_flare_caller' is false.
     var stime = systime();
     var flare =[stime, stime,
@@ -950,7 +944,7 @@ var flare_released = func {
                 getprop("orientation/heading-deg"),
                 FT2M*getprop("velocities/speed-down-fps"),
                 FT2M*math.sqrt(getprop("velocities/speed-north-fps")*getprop("velocities/speed-north-fps")+getprop("velocities/speed-east-fps")*getprop("velocities/speed-east-fps")),
-                int(rand()*200)-100];
+                int(rand()*240)-120];
     append(flare_list, flare);
     var msg = notifications.ObjectInFlightNotification.new("ffly", flare[6], MOVE, 21+95);
     msg.Flags = 0;
