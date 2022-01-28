@@ -688,10 +688,10 @@ var serialize = func() {
 var unserialize = func(m) {
   var stpts = split("|",m);
   foreach(item;stpts) {
-    if (size(item)>5) {
+    if (size(item)>4) {#why is this chekc even here???!
       var items = split(",", item);
       var key = items[0];
-
+      
       if (key == "STPT") {
       	var newST = nil;
       	if (items[2]!="nil") {
