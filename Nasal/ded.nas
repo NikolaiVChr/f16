@@ -1,5 +1,5 @@
 # Setup editable pages:
-var bingoEF = EditableField.new("f16/settings/bingo", "%-d", 5);
+var bingoEF = EditableField.new("f16/settings/bingo", "%-d", 5, func (v) {return v<=5700?0:-1;});
 var tacanChanEF = EditableField.new("instrumentation/tacan/frequencies/selected-channel", "%-3d", 3);
 var tacanBandTF = toggleableField.new(["X", "Y"], "instrumentation/tacan/frequencies/selected-channel[4]");
 var ilsFrqEF = EditableField.new("instrumentation/nav[0]/frequencies/selected-mhz", "%6.2f", 6);
