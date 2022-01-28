@@ -3023,7 +3023,7 @@ var ContactTGP = {
 	new: func(callsign, coord, laser = 1) {
 		var obj             = { parents : [ContactTGP, Contact]};# in real OO class this should inherit from Contact, but in nasal it does not need to
 		obj.coord           = geo.Coord.new(coord);
-		obj.coord.set_alt(coord.alt()+1);#avoid z fighting
+		#obj.coord.set_alt(coord.alt()+1);#avoid z fighting
 		obj.callsign        = callsign;
 		obj.unique          = rand();
 

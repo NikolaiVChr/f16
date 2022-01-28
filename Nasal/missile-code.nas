@@ -3827,6 +3827,7 @@ var AIM = {
 
 		####Ground interaction
 		me.ground = geo.elevation(me.coord.lat(), me.coord.lon()) or 0;
+		me.terrainImpact = 0
 		if(me.ground > me.coord.alt()) {
 			me.event = "exploded";
 			if(me.life_time < me.arming_time) {
@@ -3841,9 +3842,9 @@ var AIM = {
 				#me.direct_dist_m = me.coord.direct_distance_to(me.Tgt.get_Coord());
 			}
 			if ((me.Tgt != nil and me.direct_dist_m != nil) or me.Tgt == nil) {
-				me.coord.set_alt(me.ground);
-				me.explode("Hit terrain.", me.coord, me.direct_dist_m, me.event);
-				return TRUE;
+				me.terrainImpact = 1;
+				#me.explode("Hit terrain.", me.coord, me.direct_dist_m, me.event);
+				#return TRUE;
 			}
 		}
 
@@ -3858,8 +3859,14 @@ var AIM = {
 																						 me.crc_t_coord[0]));
 			}
 
-			if (me.crc_coord[1] == nil or me.crc_t_coord[1] == nil or me.crc_range[1] == nil)
+			if (me.crc_coord[1] == nil or me.crc_t_coord[1] == nil or me.crc_range[1] == nil) {
+				if (me.terrainImpact) {
+					me.coord.set_alt(me.ground);
+					me.explode("Hit terrain.", me.coord, me.direct_dist_m, me.event);
+					return TRUE;
+				}
 				return FALSE; # Wait for the buffer to fill at least once.		   
+			}
 
 			if (me.life_time > me.arming_time) {
 				# Distance to target increase.
@@ -3880,6 +3887,11 @@ var AIM = {
 			me.Tgt = nil; # make sure we dont in inertial mode with target go in and start checking distances.
 			me.explode("Selfdestructed.", me.coord);
 		    return TRUE;
+		}
+		if (me.terrainImpact) {
+			me.coord.set_alt(me.ground);
+			me.explode("Hit terrain.", me.coord, me.direct_dist_m, me.event);
+			return TRUE;
 		}
 		return FALSE;
 	},
