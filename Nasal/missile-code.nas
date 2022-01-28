@@ -3986,6 +3986,7 @@ var AIM = {
         msg.Pitch = pitch;
         msg.Heading = heading;
         msg.u_fps = speed;
+        msg.isValid();
         notifications.geoBridgedTransmitter.NotifyAll(msg);
 #print("fox2.nas: transmit in flight");
 #f14.debugRecipient.Receive(msg);

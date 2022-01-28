@@ -87,6 +87,48 @@ var ArmamentInFlightNotification =
         new_class.Flags = 0; # 8 bits for whatever.
         new_class.UniqueIdentity = _unique;
 
+        new_class.isValid = func {
+            var valid = "";
+            var limitMin = -124;
+            var limitMax =  124;
+            # 1 byte integer
+            if (int(me.Kind) > limitMax or int(me.Kind) < limitMin) {
+                valid ~= "|ArmamentInFlight.Kind is "~me.Kind;
+            }
+            # 1 byte integer
+            if (int(me.SecondaryKind) > limitMax or int(me.SecondaryKind) < limitMin) {
+                valid ~= "|ArmamentInFlight.SecondaryKind is "~me.SecondaryKind;
+            }
+            # 1 byte float
+            if (int((me.u_fps-3348)*0.03703) > limitMax or int((me.u_fps-3348)*0.03703) < limitMin) {
+                valid ~= "|ArmamentInFlight.u_fps is "~me.u_fps;
+            }
+            # 1 byte float
+            if (int(me.Pitch*1.38) > limitMax or int(me.Pitch*1.38) < limitMin) {
+                valid ~= "|ArmamentInFlight.Pitch is "~me.Pitch;
+            }
+            # 1 byte float
+            if (int(geo.normdeg180(me.Heading)/1.54) > limitMax or int(geo.normdeg180(me.Heading)/1.54) < limitMin) {
+                valid ~= "|ArmamentInFlight.Pitch is "~me.Pitch;
+            }
+            # 1 byte integer
+            if (int(me.Flags) > limitMax or int(me.Flags) < limitMin) {
+                valid ~= "|ArmamentInFlight.Flags is "~me.Flags;
+            }
+            # 1 byte integer
+            if (int(me.UniqueIdentity) > limitMax or int(me.UniqueIdentity) < limitMin) {
+                valid ~= "|ArmamentInFlight.UniqueIdentity is "~me.UniqueIdentity;
+            }
+            # 7 byte string
+            if (size(me.RemoteCallsign) > 7) {
+                valid ~= "|ArmamentInFlight.RemoteCallsign is "~me.RemoteCallsign;
+            }
+            if (valid != "") {
+                print("\nEMESARY ENCODING WILL FAIL:");
+                print("  "~valid);
+            }
+        };     
+
         new_class.GetBridgeMessageNotificationTypeKey = func {
             return new_class.NotificationType~"."~new_class.Ident~"."~new_class.UniqueIndex;
         };
