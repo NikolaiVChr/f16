@@ -682,6 +682,11 @@ var serialize = func() {
   }
   ret = ret~sprintf("IFF,%d|",getprop("instrumentation/iff/channel-selection"));
   ret = ret~sprintf("DATALINK,%d|",getprop("instrumentation/datalink/channel"));
+  ret = ret~sprintf("COM1,%.2f|",getprop("instrumentation/comm[0]/frequencies/selected-mhz"));
+  ret = ret~sprintf("COM1S,%.2f|",getprop("instrumentation/comm[0]/frequencies/standby-mhz"));
+  ret = ret~sprintf("COM2,%.2f|",getprop("instrumentation/comm[1]/frequencies/selected-mhz"));
+  ret = ret~sprintf("COM2S,%.2f|",getprop("instrumentation/comm[1]/frequencies/standby-mhz"));
+  
   return ret;
 }
 
@@ -727,6 +732,14 @@ var unserialize = func(m) {
       	setprop("instrumentation/iff/channel-selection", num(items[1]));
       } elsif (key == "DATALINK") {
       	setprop("instrumentation/datalink/channel", num(items[1]));
+      } elsif (key == "COM1") {
+      	setprop("instrumentation/comm[0]/frequencies/selected-mhz", num(items[1]));
+      } elsif (key == "COM1S") {
+      	setprop("instrumentation/comm[0]/frequencies/standby-mhz", num(items[1]));
+      } elsif (key == "COM2") {
+      	setprop("instrumentation/comm[1]/frequencies/selected-mhz", num(items[1]));
+      } elsif (key == "COM2S") {
+      	setprop("instrumentation/comm[1]/frequencies/standby-mhz", num(items[1]));
       }
     }
   }
