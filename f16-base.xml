@@ -1568,9 +1568,6 @@ value. 18000=standard US transition altitude -->
         <autoflight>
             <file>Aircraft/f16/Nasal/autoflight.nas</file>
         </autoflight>
-        <radardist>
-            <file>Aircraft/Instruments-3d/radardist/radardist.nas</file>
-        </radardist>
         <datalink>
             <file>Aircraft/f16/Nasal/datalink.nas</file>
         </datalink>
@@ -1592,12 +1589,6 @@ value. 18000=standard US transition altitude -->
         <rwrs>
             <file>Aircraft/f16/Nasal/rwr.nas</file>
         </rwrs>
-        <!--awg_9>
-            <file>Aircraft/f16/Nasal/awg_9.nas</file>
-        </awg_9-->
-        <!--rwr_apg>
-            <file>Aircraft/f16/Nasal/rwr_apg.nas</file>
-        </rwr_apg-->
         <f16_chronograph>
             <file>Aircraft/f16/Nasal/chronograph.nas</file>
         </f16_chronograph>
@@ -1683,7 +1674,6 @@ value. 18000=standard US transition altitude -->
         <radar_system>
             <file>Aircraft/f16/Nasal/radar/radar-system.nas</file>
             <file>Aircraft/f16/Nasal/radar/apg-68.nas</file>
-            <!--file>Aircraft/f16/Nasal/radar/f16-radar-test.nas</file-->
         </radar_system>
     </nasal>
 
