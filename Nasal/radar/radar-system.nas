@@ -276,6 +276,7 @@ var AIToNasal = {
         	me.sign = "";
         } else {
         	me.sign = me.sign.getValue();
+        	me.sign = me.sign == nil?"":me.sign;
         }
         #AIcontact needs 2 calls to work. new() [cheap] and init() [expensive]. Only new is called here, updateVector will do init():
         me.aicontact = AIContact.new(me.prop_ai, me.model, me.callsign, me.pos_type, me.id, me.ainame, me.subid, me.aitype, me.sign);
