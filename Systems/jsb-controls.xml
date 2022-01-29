@@ -2537,17 +2537,42 @@
         </fcs_function>
 
         <switch name="fcs/fly-by-wire/lef/cmd-pos-elec">
-            <description>The last condition is from watching videos of take-offs. The 1979 schedule is only for in-air conditions. The number 20 is from the 1987 diagram note 6 switch.</description>
+            <description>
+                GR1F-16CJ-1 page 1-127
+                When operating on standby gains, the LEF's are at
+                zero degrees with the LG handle in UP and the ALT
+                FLAPS switch in NORM. The LEF's deflect 15
+                degrees down with the LG handle in DN or the ALT
+                FLAPS switch in EXTEND.
+                GR1F-16CJ-1 page 1-118
+                The LEF's are automatically programmed when the LE FLAPS switch is in AUTO.
+                Exceptions are:
+                - When weight is on both MLG (the LEF's are 2 degrees up).
+                - When the throttle is at IDLE and MLG wheel speed is greater than
+                  60 knots groundspeed (the LEF's are 2 degrees up).
+                - LEF asymmetry brakes are locked.
+                - When the FLCS is operating on standby gains.
+            </description>
             <default value="fcs/fly-by-wire/lef/cmd-pos"/>
-            <test logic="AND" value="0">
-                fcs/fly-by-wire/enable-standby-gains == 1
-            </test>
             <test logic="AND" value="fcs/fly-by-wire/lef/cmd-pos-elec">
                 elec/bus/flcc/d lt 20
             </test>
-            <test logic="AND" value="20">
-                gear/gear-cmd-norm == 1
+            <test logic="AND" value="0">
+                fcs/fly-by-wire/enable-standby-gains == 1
+                fcs/fly-by-wire/tef/cmd-switch == 0
+            </test>
+            <test logic="AND" value="15">
+                fcs/fly-by-wire/enable-standby-gains == 1
+                fcs/fly-by-wire/tef/cmd-switch == 1
+            </test>
+            <test logic="AND" value="0">  <!-- Should be -2 deg -->
+                fcs/fly-by-wire/MLG-GND == 1
+            </test>
+            <test logic="AND" value="0">  <!-- Should be -2 deg -->
                 fcs/fly-by-wire/MLG-GND == 0
+                gear/unit[1]/wheel-speed-fps gt 100
+                fcs/throttle-cmd-deg lt 18
+                fcs/throttle-cmd-deg ge 16
             </test>
         </switch>
 
