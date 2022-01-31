@@ -230,7 +230,7 @@
         </binding>
     </checkbox>
     <text>
-      <halign>left</halign><label>Shows missile trails, craters, etc. from MP aircraft without dealing or receiving damage.</label>
+      <halign>left</halign><label>Shows missile trails, craters, etc. from MP aircraft even when weapons damage is off.</label>
     </text>
 
     <hrule/>
