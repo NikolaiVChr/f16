@@ -296,9 +296,9 @@ var AIToNasal = {
 		#
 		me.vector_raw_index += 1;
         if (me.vector_raw_index < size(me.vector_raw)) {
-        	var mt = maketimer(0,func me.readTreeFrame());
-        	mt.singleShot = 1;
-        	mt.start();
+        	me.mtimer = maketimer(0, me, func me.readTreeFrame());
+        	me.mtimer.singleShot = 1;
+        	me.mtimer.start();
         } else {
         	me.updateVector();
         	me.scanInProgress = 0;
@@ -534,7 +534,7 @@ var Deviation = {
 	#frustum_norm_z: 0,
 	#alt_ft: 0,
 	speed_kt: 0,       # Used by GMT mode
-	#closureSpeed: 0,
+	closureSpeed: 0,
 };
 
 
@@ -660,7 +660,6 @@ var AIContact = {
 		c.visible  = 1;
 		c.inClutter = 0;
 		c.hiddenFromDoppler = 0;
-		c.hiddenFromMono = 0;
 		c.id = ident;
 		c.ainame = ainame;
 		c.subid = subid;
@@ -999,13 +998,12 @@ var AIContact = {
 		me.inClutter = clut;
 	},
 	
-	isHiddenFromDoppler: func (dopplerRadar = 1) {
-		return me.getType() == AIR and (dopplerRadar?me.hiddenFromDoppler:me.hiddenFromMono);
+	isHiddenFromDoppler: func () {
+		return me.hiddenFromDoppler;
 	},
 
-	setHiddenFromDoppler: func (dopp, mono) {
+	setHiddenFromDoppler: func (dopp) {
 		me.hiddenFromDoppler = dopp;
-		me.hiddenFromMono = mono;
 	},
 
 	getModel: func {
@@ -1538,7 +1536,7 @@ var NoseRadar = {
 				#frustum_norm_z: me.pc_z/(me.h/2),
 				#alt_ft: me.crd.alt()*M2FT,
 				speed_kt: contact.getSpeed(),
-				#closureSpeed: contact.getClosureRate(),
+				closureSpeed: contact.getClosureRate(),
 			};
 			contact.storeDeviation(me.contactDev);
 			append(me.vector_aicontacts_for, contact);
@@ -1575,7 +1573,7 @@ var NoseRadar = {
 			#frustum_norm_z: 0,
 			#alt_ft: me.crd.alt()*M2FT,
 			speed_kt: contact.getSpeed(),
-			#closureSpeed: contact.getClosureRate(),
+			closureSpeed: contact.getClosureRate(),
 		};
 		contact.storeDeviation(me.contactDev);
 		append(me.vector_aicontacts_for, contact);
@@ -1682,7 +1680,7 @@ var SimplerNoseRadar = {
 				#frustum_norm_z: 0,
 				#alt_ft: me.crd.alt()*M2FT,
 				speed_kt: contact.getSpeed(),
-				#closureSpeed: contact.getClosureRate(),
+				closureSpeed: contact.getClosureRate(),
 			};
 			contact.storeDeviation(me.contactDev);
 			append(me.vector_aicontacts_for, contact);
@@ -1719,7 +1717,7 @@ var SimplerNoseRadar = {
 			#frustum_norm_z: 0,
 			#alt_ft: me.crd.alt()*M2FT,
 			speed_kt: contact.getSpeed(),
-			#closureSpeed: contact.getClosureRate(),
+			closureSpeed: contact.getClosureRate(),
 		};
 		contact.storeDeviation(me.contactDev);
 		append(me.vector_aicontacts_for, contact);
@@ -1829,7 +1827,7 @@ var FullRadar = {
 				#frustum_norm_z: 0,
 				#alt_ft: me.crd.alt()*M2FT,
 				speed_kt: contact.getSpeed(),
-				#closureSpeed: contact.getClosureRate(),
+				closureSpeed: contact.getClosureRate(),
 			};
 			contact.storeDeviation(me.contactDev);
 			append(me.vector_aicontacts_for, contact);
@@ -1872,7 +1870,7 @@ var FullRadar = {
 			#frustum_norm_z: 0,
 			#alt_ft: me.crd.alt()*M2FT,
 			speed_kt: contact.getSpeed(),
-			#closureSpeed: contact.getClosureRate(),
+			closureSpeed: contact.getClosureRate(),
 		};
 		contact.storeDeviation(me.contactDev);
 		append(me.vector_aicontacts_for, contact);
@@ -2021,15 +2019,15 @@ var TerrainChecker = {
 		contact.setInClutter(me.inClutter);
 	    
 		me.dopplerCanDetect = 0;
-	    if(contact.getType() != AIR or !me.inClutter) {
+	    if(!me.inClutter) {
 	    	# Either no clutter behind or is not an air target so ground/sea radar needs to be able to see it.
 	        me.dopplerCanDetect = 1;
 	    } elsif (me.getTargetSpeedRelativeToClutter(contact) > me.doppler_speed_kt) {
 	        me.dopplerCanDetect = 1;
 	    }
-	    contact.setHiddenFromDoppler(!me.dopplerCanDetect, me.inClutter);
+	    contact.setHiddenFromDoppler(!me.dopplerCanDetect);
 	},
-		
+	
 	getTargetSpeedRelativeToClutter: func (contact) {
 		#
 		# Seen from aircraft the terrain clutter is moving with a certain velocity vector depending on aircraft position, attitude and speed.

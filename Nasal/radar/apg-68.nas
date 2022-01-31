@@ -13,9 +13,8 @@ var FOR_SQUARE = 1;
 #Pulses
 var DOPPLER = 1;
 var MONO = 0;
-#var CONICAL = -1;
 
-var overlapHorizontal = 1.75;
+var overlapHorizontal = 1.5;
 
 
 #   █████  ██ ██████  ██████   ██████  ██████  ███    ██ ███████     ██████   █████  ██████   █████  ██████  
@@ -35,6 +34,7 @@ var AirborneRadar = {
 	fieldOfRegardType: FOR_SQUARE,
 	fieldOfRegardMaxAz: 60,
 	fieldOfRegardMaxElev: 60,
+	fieldOfRegardMinElev: -60,
 	currentMode: nil, # vector of cascading modes ending with current submode
 	currentModeIndex: 0,
 	rootMode: 0,
@@ -45,7 +45,6 @@ var AirborneRadar = {
 	rcsRefDistance: 70,
 	rcsRefValue: 3.2,
 	#closureReject: -1, # The minimum kt closure speed it will pick up, else rejected.
-	maxTilt: 60,
 	#positionEuler: [0,0,0,0],# euler direction
 	positionDirection: [1,0,0],# vector direction
 	positionCart: [0,0,0,0],
@@ -58,9 +57,9 @@ var AirborneRadar = {
 	chaffSeenList: [],
 	chaffFilter: 0.60,# 1=filters all chaff, 0=sees all chaff all the time
 	timer: nil,
-	pulse: DOPPLER, # MONO or DOPPLER
 	timerMedium: nil,
 	timerSlow: nil,
+	timeToKeepBleps: 13,
 	elapsed: elapsedProp.getValue(),
 	lastElapsed: elapsedProp.getValue(),
 	debug: 0,
@@ -333,7 +332,7 @@ var AirborneRadar = {
 		# Here we ask the NoseRadar for a slice of the sky once in a while.
 		#
 		if (me.enabled and !(me.currentMode.painter and me.currentMode.detectAIR)) {
-			emesary.GlobalTransmitter.NotifyAll(me.SliceNotification.slice(self.getPitch(), self.getHeading(), me.fieldOfRegardMaxElev*1.414, me.fieldOfRegardMaxAz*1.414, me.getRange()*NM2M, !me.currentMode.detectAIR, !me.currentMode.detectSURFACE, !me.currentMode.detectMARINE));
+			emesary.GlobalTransmitter.NotifyAll(me.SliceNotification.slice(self.getPitch(), self.getHeading(), math.max(-me.fieldOfRegardMinElev, me.fieldOfRegardMaxElev)*1.414, me.fieldOfRegardMaxAz*1.414, me.getRange()*NM2M, !me.currentMode.detectAIR, !me.currentMode.detectSURFACE, !me.currentMode.detectMARINE));
 		}
 	},
 	scanFOV: func {
@@ -420,7 +419,7 @@ var AirborneRadar = {
 			}
 			if (me.beamDeviation < me.instantFoVradius and (me.dev.rangeDirect_m < me.closestChaff or rand() < me.chaffFilter) ) {#  and (me.closureReject == -1 or me.dev.closureSpeed > me.closureReject)
 				# TODO: Refine the chaff conditional (ALOT)
-				me.registerBlep(contact, me.dev, me.currentMode.painter, me.pulse);
+				me.registerBlep(contact, me.dev, me.currentMode.painter, me.currentMode.pulse);
 				#print("REGISTER BLEP");
 
 				# Return here, so that each instant FoV max gets 1 target:
@@ -433,10 +432,15 @@ var AirborneRadar = {
 			setprop("debug-radar/main-beam-deviation", "--unseen-lock--");
 		}
 	},
-	registerBlep: func (contact, dev, stt, pulse = 1) {
+	registerBlep: func (contact, dev, stt, doppler = 1) {
 		if (!contact.isVisible()) return 0;
-		if (contact.isHiddenFromDoppler(pulse)) {
-			return 0;
+		if (doppler) {
+			if (contact.isHiddenFromDoppler()) {
+				return 0;
+			}
+			if (math.abs(dev.closureSpeed) < me.currentMode.minClosure) {
+				return 0;
+			}
 		}
 
 		me.maxDistVisible = me.currentMode.rcsFactor * me.targetRCSSignal(self.getCoord(), dev.coord, contact.model, dev.heading, dev.pitch, dev.roll,me.rcsRefDistance*NM2M,me.rcsRefValue);
@@ -468,7 +472,7 @@ var AirborneRadar = {
 		foreach(contact ; me.vector_aicontacts_bleps) {
 			me.bleps_cleaned = [];
 			foreach (me.blep;contact.getBleps()) {
-				if (me.elapsed - me.blep.getBlepTime() < me.currentMode.timeToKeepBleps) {
+				if (me.elapsed - me.blep.getBlepTime() < math.max(me.timeToKeepBleps, me.currentMode.timeToFadeBleps)) {
 					append(me.bleps_cleaned, me.blep);
 				}
 			}
@@ -496,7 +500,7 @@ var AirborneRadar = {
 
 		me.chaffSeenList_tmp = [];
 		foreach(me.evilchaff ; me.chaffSeenList) {
-			if (me.elapsed - me.evilchaff.releaseTime < me.chaffLifetime or me.elapsed - me.evilchaff.seenTime < me.currentMode.timeToKeepBleps) {
+			if (me.elapsed - me.evilchaff.releaseTime < me.chaffLifetime or me.elapsed - me.evilchaff.seenTime < me.timeToKeepBleps) {
 				append(me.chaffSeenList_tmp, me.evilchaff);
 			}
 		}
@@ -639,13 +643,13 @@ var RadarMode = {
 	bars: 1,
 	azimuthTilt: 0,# modes set these depending on where they want the pattern to be centered.
 	elevationTilt: 0,
-	barHeight: 0.95,# multiple of instantFoVradius
+	barHeight: 0.80,# multiple of instantFoVradius
 	barPattern:  [ [[-1,0],[1,0]] ],     # The second is multitude of instantFoVradius, the first is multitudes of me.az
 	barPatternMin: [0],
 	barPatternMax: [0],
 	nextPatternNode: 0,
 	scanPriorityEveryFrame: 0,# Related to SPOT_SCAN.
-	timeToKeepBleps: 13,
+	timeToFadeBleps: 13,
 	rootName: "Base",
 	shortName: "",
 	longName: "",
@@ -657,6 +661,8 @@ var RadarMode = {
 	detectAIR: 1,
 	detectSURFACE: 0,
 	detectMARINE: 0,
+	pulse: DOPPLER, # MONO or DOPPLER
+	minClosure: 0, # kt
 	cursorAz: 0,
 	cursorNm: 20,
 	upperAngle: 10,
@@ -765,7 +771,7 @@ var RadarMode = {
 		me.gimbalInBounds = 1;
 		if (me.radar.horizonStabilized) {
 			# figure out if we reach the gimbal limit
-	 		me.actualMin = self.getPitch()-me.radar.fieldOfRegardMaxElev;
+	 		me.actualMin = self.getPitch()+me.radar.fieldOfRegardMinElev;
 	 		me.actualMax = self.getPitch()+me.radar.fieldOfRegardMaxElev;
 	 		if (me.targetElevationTilt < me.actualMin) {
 	 			me.gimbalInBounds = 0;
@@ -885,7 +891,6 @@ var RadarMode = {
 	leaveMode: func {
 		# Warning: In this method do not set anything on me.radar only on me.
 		me.lastFrameStart = -1;
-		me.timeToKeepBleps = 13;
 	},
 	enterMode: func {
 		# Warning: This gets called BEFORE previous mode's leaveMode()
@@ -1062,9 +1067,8 @@ var APG68 = {
 	rcsRefDistance: 70,
 	rcsRefValue: 3.2,
 	targetHistory: 3,# Not used in TWS
-	maxTilt: 60,#TODO: Lower this a bit
 	isEnabled: func {
-		return getprop("/f16/avionics/power-fcr-bit") == 2 and getprop("instrumentation/radar/radar-enable") and !getprop("/fdm/jsbsim/gear/unit[0]/WOW");
+		return getprop("/f16/avionics/power-fcr-bit") == 2 and getprop("instrumentation/radar/radar-enable");# and !getprop("/fdm/jsbsim/gear/unit[0]/WOW")
 	},
 	setAGMode: func {
 		if (me.rootMode != 3) {
@@ -1157,7 +1161,7 @@ var APG68Mode = {
 	frameCompleted: func {
 		if (me.lastFrameStart != -1) {
 			me.lastFrameDuration = me.radar.elapsed - me.lastFrameStart;
-			me.timeToKeepBleps = me.radar.targetHistory*me.lastFrameDuration;
+			me.timeToFadeBleps = me.radar.targetHistory*me.lastFrameDuration;
 		}
 		me.lastFrameStart = me.radar.elapsed;
 	},
@@ -1198,7 +1202,7 @@ var F16RWSMode = {
 	},
 	cycleAZ: func {
 		if (me.az == 10) me.az = 30;
-		elsif (me.az == 30) {me.az = 60; me.azimuthTilt = 0;}
+		elsif (me.az == 30) me.az = 60;
 		elsif (me.az == 60) me.az = 10;
 	},
 	cycleBars: func {
@@ -1285,6 +1289,7 @@ var F16SeaMode = {
 	detectAIR: 0,
 	detectSURFACE: 0,
 	detectMARINE: 1,
+	pulse: MONO, # MONO or DOPPLER
 	#barPattern:  [ [[-1,-3],[1,-3]], # The SURFACE/SEA pattern is centered so pattern is almost entirely under horizon
 	#               [[-1,-5],[1,-5],[1,-3],[-1,-3]],
 	#               [[-1,-5],[1,-5],[1,-3],[-1,-3],[-1,-5],[1,-5],[1,-7],[-1,-7]],
@@ -1341,7 +1346,7 @@ var F16SeaMode = {
 	},
 	cycleAZ: func {
 		if (me.az == 10) me.az = 30;
-		elsif (me.az == 30) {me.az = 60; me.azimuthTilt = 0;}
+		elsif (me.az == 30) me.az = 60;
 		elsif (me.az == 60) me.az = 10;
 	},
 	cycleBars: func {
@@ -1416,7 +1421,7 @@ var F16GMMode = {
 		#print("frame ",me.radar.elapsed-me.lastFrameStart);
 		if (me.lastFrameStart != -1) {
 			me.lastFrameDuration = me.radar.elapsed - me.lastFrameStart;
-			me.timeToKeepBleps = me.radar.targetHistory*me.lastFrameDuration;
+			me.timeToFadeBleps = me.radar.targetHistory*me.lastFrameDuration;
 		}
 		me.lastFrameStart = me.radar.elapsed;
 		if (me.radar["gmapper"] != nil) {
@@ -1512,6 +1517,7 @@ var F16VSMode = {
 	discSpeed_confirm_dps: 100, # From manual
 	maxScanIntervalForVelocity: 12,
 	rcsFactor: 1.15,
+	minClosure: 75, # kt
 	new: func (subMode, radar = nil) {
 		var mode = {parents: [F16VSMode, F16LRSMode, F16RWSMode, APG68Mode, RadarMode]};
 		mode.radar = radar;
@@ -1524,7 +1530,7 @@ var F16VSMode = {
 		if (me.lastFrameStart != -1 and me.discSpeed_dps == me.discSpeed_alert_dps) {
 			# Its max around 11.5 secs for alert scan
 			me.lastFrameDuration = me.radar.elapsed - me.lastFrameStart;
-			me.timeToKeepBleps = me.radar.targetHistory*me.lastFrameDuration;
+			me.timeToFadeBleps = me.radar.targetHistory*me.lastFrameDuration;
 		}
 		me.lastFrameStart = me.radar.elapsed;
 		if (me.discSpeed_dps == me.discSpeed_alert_dps) {
@@ -1601,7 +1607,7 @@ var F16TWSMode = {
 	maxRange: 80,
 	discSpeed_dps: 50, # source: https://www.youtube.com/watch?v=Aq5HXTGUHGI
 	rcsFactor: 0.9,
-	timeToKeepBleps: 13,# TODO
+	timeToBlinkTracks: 8,# GR1F-16CJ-34-1-1
 	maxScanIntervalForTrack: 6.5,# authentic for TWS
 	priorityTarget: nil,
 	currentTracked: [],
@@ -1623,7 +1629,6 @@ var F16TWSMode = {
 			me.az = 25;
 		} elsif (me.az == 25 and me.priorityTarget == nil) {
 			me.az = 60;
-			me.azimuthTilt = 0;
 		} elsif (me.az == 25) {
 			me.az = 10;
 		} elsif (me.az == 60) {
@@ -1665,7 +1670,7 @@ var F16TWSMode = {
 	 	me.azimuthTilt = me.cursorAz;
 	 	me.elevationTilt = me.radar.getTiltKnob();
 		if (me.priorityTarget != nil) {
-			if (!size(me.priorityTarget.getBleps()) or !me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, me.priorityTarget) or me.radar.elapsed - me.priorityTarget.getLastBlepTime() > me.timeToKeepBleps) {
+			if (!size(me.priorityTarget.getBleps()) or !me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, me.priorityTarget) or me.radar.elapsed - me.priorityTarget.getLastBlepTime() > me.radar.timeToKeepBleps) {
 				me.priorityTarget = nil;
 				me.undesignate();
 				return;
@@ -1716,7 +1721,6 @@ var F16TWSMode = {
 	leaveMode: func {
 		me.priorityTarget = nil;
 		me.lastFrameStart = -1;
-		me.timeToKeepBleps=13;
 	},
 	increaseRange: func {
 		if (me.priorityTarget != nil) return 0;
@@ -1822,6 +1826,7 @@ var F16RWSSAMMode = {
 	maxRange: 160,
 	priorityTarget: nil,
 	bars: 2,
+	azMFD: 60,
 	new: func (subMode = nil, radar = nil) {
 		var mode = {parents: [F16RWSSAMMode, APG68Mode, RadarMode]};
 		mode.radar = radar;
@@ -1848,13 +1853,13 @@ var F16RWSSAMMode = {
 				return;
 			}
 			me.prioRange_nm = me.priorityTarget.getRangeDirect()*M2NM;
-			me.az = me.calcSAMwidth();
+			me.az = math.min(me.calcSAMwidth(), me.azMFD);#GR1F-16CJ-34-1-1 page 1-125
 			me.lastBlep = me.priorityTarget.getLastBlep();
 			if (me.lastBlep != nil) {
 				if (math.abs(me.azimuthTilt - (me.lastBlep.getAZDeviation())) > me.az) {
 					me.scanPriorityEveryFrame = 1;
 				} else {
-					me.scanPriorityEveryFrame = 0;
+					me.scanPriorityEveryFrame = 0; # due to the overlap not being perfect, scan the designation extra, just to be safe
 				}
 				me.elevationTilt = me.lastBlep.getElev();
 			} else {
@@ -1898,7 +1903,14 @@ var F16RWSSAMMode = {
 		elsif (me.bars == 5) me.bars = 1;
 		me.nextPatternNode = 0;
 	},
-	cycleAZ: func {},
+	cycleAZ: func {
+		if (me.azMFD == 10) me.azMFD = 30;
+		elsif (me.azMFD == 30) me.azMFD = 60;
+		elsif (me.azMFD == 60) me.azMFD = 10;
+	},
+	getAz: func {
+		return me.azMFD;
+	},
 	increaseRange: func {# Range is auto-set in RWS-SAM
 		return 0;
 	},
@@ -1910,7 +1922,6 @@ var F16RWSSAMMode = {
 	leaveMode: func {
 		me.priorityTarget = nil;
 		me.lastFrameStart = -1;
-		me.timeToKeepBleps = 13;
 	},
 	getSearchInfo: func (contact) {
 		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
@@ -1980,7 +1991,7 @@ var F16ACMMode = {#TODO
 	maxRange: 10,
 	discSpeed_dps: 84.6,# have reliable source for this.
 	rcsFactor: 0.9,
-	timeToKeepBleps: 1,
+	timeToFadeBleps: 1,
 	bars: 1,
 	az: 1,
 	new: func (subMode, radar = nil) {
@@ -2039,9 +2050,9 @@ var F16ACM20Mode = {
 	maxRange: 10,
 	discSpeed_dps: 84.6,
 	rcsFactor: 0.9,
-	timeToKeepBleps: 1,# TODO
+	timeToFadeBleps: 1,# TODO
 	bars: 1,
-	barPattern: [ [[1,-6],[1,3],[-1,3],[-1,1],[1,1],[1,-1],[-1,-1],[-1,-3],[1,-3],[1,-5],[-1,-5],[-1,-6]] ],
+	barPattern: [ [[1,-7],[1,3],[-1,3],[-1,1],[1,1],[1,-1],[-1,-1],[-1,-3],[1,-3],[1,-5],[-1,-5],[-1,-7]] ],
 	az: 15,
 	new: func (subMode, radar = nil) {
 		var mode = {parents: [F16ACM20Mode, APG68Mode, RadarMode]};
@@ -2193,7 +2204,7 @@ var F16STTMode = {
 	barHeight: 0.90,# multiple of instantFoVradius
 	bars: 2,
 	minimumTimePerReturn: 0.10,
-	timeToKeepBleps: 5, # Need to have time to move disc to the selection from wherever it was before entering STT. Plus already faded bleps from superMode will get pruned if this is to low.
+	timeToFadeBleps: 5, # Need to have time to move disc to the selection from wherever it was before entering STT. Plus already faded bleps from superMode will get pruned if this is to low.
 	debug: 1,
 	painter: 1,
 	debug: 0,
@@ -2287,14 +2298,14 @@ var F16STTMode = {
 	frameCompleted: func {
 		if (me.lastFrameStart != -1) {
 			me.lastFrameDuration = me.radar.elapsed - me.lastFrameStart;
-			#me.timeToKeepBleps = math.max(2, me.radar.targetHistory*me.lastFrameDuration);
+			#me.timeToFadeBleps = math.max(2, me.radar.targetHistory*me.lastFrameDuration);
 		}
 		me.lastFrameStart = me.radar.elapsed;
 	},
 	leaveMode: func {
 		me.priorityTarget = nil;
 		me.lastFrameStart = -1;
-		me.timeToKeepBleps = 5;# Reset to 5, since frameCompleted might have lowered it.
+		#me.timeToFadeBleps = 5;# Reset to 5, since frameCompleted might have lowered it.
 	},
 	getSearchInfo: func (contact) {
 		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
@@ -2363,6 +2374,7 @@ var F16SEAFTTMode = {
 	detectAIR: 0,
 	detectSURFACE: 0,
 	detectMARINE: 1,
+	pulse: MONO,
 	minimumTimePerReturn: 0.20,
 	new: func (radar = nil) {
 		var mode = {parents: [F16SEAFTTMode, F16STTMode, APG68Mode, RadarMode]};

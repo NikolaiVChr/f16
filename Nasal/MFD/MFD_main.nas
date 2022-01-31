@@ -1392,18 +1392,18 @@ var MFD_Device =
                 }
             }
             if (radar_system.apg68Radar.enabled) {
+                if (!radar_system.apg68Radar.currentMode.painter) {
+                    #me.wind = getprop("environment/wind-speed-kt");
+                    #me.chaffLifetime = math.max(0, me.wind==0?25:25*(1-me.wind/50));
+                    foreach(var chaff; radar_system.apg68Radar.getActiveChaff()) {
+                        me.paintChaff(chaff);
+                    }
+                }
                 foreach(contact; radar_system.apg68Radar.getActiveBleps()) {
                     if (contact["randoo"] == me.randoo) continue;
 
                     me.paintRdr(contact);
                     contact.randoo = me.randoo;
-                }
-                if (!radar_system.apg68Radar.currentMode.painter) {
-                    me.wind = getprop("environment/wind-speed-kt");
-                    me.chaffLifetime = math.max(0, me.wind==0?25:25*(1-me.wind/50));
-                    foreach(var chaff; radar_system.apg68Radar.getActiveChaff()) {
-                        me.paintChaff(chaff);
-                    }
                 }
             }
             if (radar_system.datalink_power.getBoolValue() and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName and !radar_system.apg68Radar.currentMode.painter) {
@@ -1691,7 +1691,7 @@ var MFD_Device =
             }
             me.bleps = contact.getBleps();
             foreach(me.bleppy ; me.bleps) {
-                if (me.i < me.root.maxB and me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.currentMode.timeToKeepBleps and me.bleppy.getDirection() != nil and (radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName or (me.bleppy.getClosureRate() != nil and me.bleppy.getClosureRate()>0))) {
+                if (me.i < me.root.maxB and me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.currentMode.timeToFadeBleps and me.bleppy.getDirection() != nil and (radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName or (me.bleppy.getClosureRate() != nil and me.bleppy.getClosureRate()>0))) {
                     if (me.bleppy.getClosureRate() != nil and radar_system.apg68Radar.currentMode.longName == radar_system.vsrMode.longName) {
                         me.distPixels = math.min(950, me.bleppy.getClosureRate())*(482/(1000));
                     } else {
@@ -1702,13 +1702,13 @@ var MFD_Device =
                     if (me.echoPos == nil) {
                         continue;
                     }
-                    me.color = math.pow(1-(me.elapsed - me.bleppy.getBlepTime())/radar_system.apg68Radar.currentMode.timeToKeepBleps, 2.2);
+                    me.color = math.pow(1-(me.elapsed - me.bleppy.getBlepTime())/radar_system.apg68Radar.currentMode.timeToFadeBleps, 2.2);
                     me.root.blep[me.i].setTranslation(me.echoPos);
                     me.root.blep[me.i].setColor(colorDot2[0]*me.color+colorBackground[0]*(1-me.color), colorDot2[1]*me.color+colorBackground[1]*(1-me.color), colorDot2[2]*me.color+colorBackground[2]*(1-me.color));
                     me.root.blep[me.i].show();
                     me.root.blep[me.i].update();
                     if (contact.equalsFast(radar_system.apg68Radar.getPriorityTarget()) and me.bleppy == me.bleps[size(me.bleps)-1]) {
-                        me.selectShowTemp = radar_system.apg68Radar.currentMode.longName != radar_system.twsMode.longName or (me.elapsed - contact.getLastBlepTime() < 8) or (math.mod(me.elapsed,0.50)<0.25);
+                        me.selectShowTemp = radar_system.apg68Radar.currentMode.longName != radar_system.twsMode.longName or (me.elapsed - contact.getLastBlepTime() < radar_system.F16TWSMode.timeToBlinkTracks) or (math.mod(me.elapsed,0.50)<0.25);
                         me.selectShow = me.selectShowTemp and contact.getType() == radar_system.AIR;
                         me.selectShowGM = me.selectShowTemp and contact.getType() != radar_system.AIR;
                         me.root.selection.setTranslation(me.echoPos);
@@ -1718,7 +1718,7 @@ var MFD_Device =
                         me.printInfo(contact);
                         me.lockInfo = 1;
                     }
-                    if (me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.currentMode.timeToKeepBleps) {
+                    if (me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.currentMode.timeToFadeBleps) {
                         me.calcClick(contact, me.echoPos);
                     }
                     me.i += 1;
@@ -1728,7 +1728,7 @@ var MFD_Device =
             if (contact["blue"] != 1 and me.ii < me.root.maxT and ((me.sizeBleps and contact.hadTrackInfo()) or contact["blue"] == 2) and me.iff == 0 and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName) {
                 # Paint bleps with tracks
                 if (contact["blue"] != 2) me.bleppy = me.bleps[me.sizeBleps-1];
-                if (contact["blue"] == 2 or (me.bleppy.hasTrackInfo() and me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.currentMode.timeToKeepBleps)) {
+                if (contact["blue"] == 2 or (me.bleppy.hasTrackInfo() and me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.timeToKeepBleps)) {
                     me.color = contact["blue"] == 2?colorCircle1:colorCircle2;
                     if (contact["blue"] == 2) {
                         me.c_heading    = contact.getHeading();                  
@@ -1773,7 +1773,7 @@ var MFD_Device =
                     } else {
                         me.root.blepTriangleText[me.ii].setText("");
                     }
-                    me.blinkShow = radar_system.apg68Radar.currentMode.longName != radar_system.twsMode.longName or (me.elapsed - contact.getLastBlepTime() < 8) or (math.mod(me.elapsed,0.50)<0.25);
+                    me.blinkShow = radar_system.apg68Radar.currentMode.longName != radar_system.twsMode.longName or (me.elapsed - contact.getLastBlepTime() < radar_system.F16TWSMode.timeToBlinkTracks) or (math.mod(me.elapsed,0.50)<0.25);
                     if (contact.equalsFast(radar_system.apg68Radar.getPriorityTarget())) {
                         me.selectShow = me.blinkShow and contact.getType() == radar_system.AIR;
                         me.selectShowGM = me.blinkShow and contact.getType() != radar_system.AIR;
@@ -1794,7 +1794,7 @@ var MFD_Device =
             } elsif (me.iff != 0 and contact["blue"] != 1 and contact.isVisible() and me.iiii < me.root.maxT and me.sizeBleps and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName) {
                 # Paint IFF symbols
                 me.bleppy = me.bleps[me.sizeBleps-1];
-                if (me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.currentMode.timeToKeepBleps) {
+                if (me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.timeToKeepBleps) {
                     me.echoPos = me.calcPos(me.wdt, geo.normdeg180(me.bleppy.getAZDeviation()), me.distPixels);
                     me.echoPos = me.calcEXPPos(me.echoPos);
                     if (me.echoPos == nil) {
@@ -1810,7 +1810,7 @@ var MFD_Device =
             }            
         };
         me.p_RDR.paintChaff = func (chaff) {
-            if (me.chaffLifetime == 0) return;
+            #if (me.chaffLifetime == 0) return;
             if (me.i < me.root.maxB and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName) {
                 me.distPixels = chaff.meters*(482/(radar_system.apg68Radar.getRange()*NM2M));
 
@@ -1820,7 +1820,7 @@ var MFD_Device =
                     return;
                 }
                 #me.color = math.pow(math.max(0, rand()-(me.elapsed - chaff.seenTime)/me.chaffLifetime), 2.2);
-                me.color = math.pow(math.max(0, 0.8-(me.elapsed - chaff.seenTime)/radar_system.apg68Radar.currentMode.timeToKeepBleps), 2.2);
+                me.color = math.pow(math.max(0, 0.8-(me.elapsed - chaff.seenTime)/radar_system.apg68Radar.currentMode.timeToFadeBleps), 2.2);
 
                 if (chaff["rand1"] == nil) {
                     chaff.rand1 = rand();
