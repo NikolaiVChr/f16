@@ -83,7 +83,6 @@
     <wind>false</wind>
     <aero-stabilised>false</aero-stabilised>
     <collision>true</collision>
-    <collision-report>sim/ai/aircraft/collision/bullet</collision-report>
     <impact>true</impact>
     <impact-reports>/ai/models/model-impact</impact-reports>
     <submodel-path>Aircraft/f16/Models/Armament/Weapons/M61A1/bullet-submodel.xml</submodel-path>
@@ -127,7 +126,6 @@
     <cd>0.0</cd><!-- since it has engine and submodels dont support that, its drag is set to zero -->
     <eda>0.00136354</eda>
     <collision>true</collision>
-    <collision-report>sim/ai/aircraft/collision/bullet</collision-report>
     <impact>true</impact>
     <impact-reports>/ai/models/model-impact</impact-reports>
     <submodel-path>Aircraft/f16/Models/Armament/Weapons/LAU-68/rocket-submodel.xml</submodel-path>
@@ -152,7 +150,6 @@
     <cd>0.0</cd>
     <eda>0.00136354</eda>
     <collision>true</collision>
-    <collision-report>sim/ai/aircraft/collision/bullet</collision-report>
     <impact>true</impact>
     <impact-reports>/ai/models/model-impact</impact-reports>
     <submodel-path>Aircraft/f16/Models/Armament/Weapons/LAU-68/rocket-submodel.xml</submodel-path>
@@ -177,7 +174,6 @@
     <cd>0.0</cd>
     <eda>0.00136354</eda>
     <collision>true</collision>
-    <collision-report>sim/ai/aircraft/collision/bullet</collision-report>
     <impact>true</impact>
     <impact-reports>/ai/models/model-impact</impact-reports>
     <submodel-path>Aircraft/f16/Models/Armament/Weapons/LAU-68/rocket-submodel.xml</submodel-path>
@@ -202,7 +198,6 @@
     <cd>0.0</cd>
     <eda>0.00136354</eda>
     <collision>true</collision>
-    <collision-report>sim/ai/aircraft/collision/bullet</collision-report>
     <impact>true</impact>
     <impact-reports>/ai/models/model-impact</impact-reports>
     <submodel-path>Aircraft/f16/Models/Armament/Weapons/LAU-68/rocket-submodel.xml</submodel-path>
