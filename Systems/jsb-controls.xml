@@ -2552,6 +2552,10 @@
                   60 knots groundspeed (the LEF's are 2 degrees up).
                 - LEF asymmetry brakes are locked.
                 - When the FLCS is operating on standby gains.
+                In addition, from observation, the LEF's are extended to 15 degrees
+                on take off, when weight is off of both MLG and LG handle is down.
+                Ref: https://www.youtube.com/watch?v=_LUsto6k3qs
+                Ref: https://www.airliners.net/forum/viewtopic.php?t=759285#p10957693
             </description>
             <default value="fcs/fly-by-wire/lef/cmd-pos"/>
             <test logic="AND" value="fcs/fly-by-wire/lef/cmd-pos-elec">
@@ -2559,20 +2563,25 @@
             </test>
             <test logic="AND" value="0">
                 fcs/fly-by-wire/enable-standby-gains == 1
-                fcs/fly-by-wire/tef/cmd-switch == 0
+                gear/gear-cmd-norm == 0
+                /controls/flight/flaps eq 0
             </test>
             <test logic="AND" value="15">
                 fcs/fly-by-wire/enable-standby-gains == 1
-                fcs/fly-by-wire/tef/cmd-switch == 1
             </test>
             <test logic="AND" value="0">  <!-- Should be -2 deg -->
                 fcs/fly-by-wire/MLG-GND == 1
             </test>
             <test logic="AND" value="0">  <!-- Should be -2 deg -->
-                fcs/fly-by-wire/MLG-GND == 0
                 gear/unit[1]/wheel-speed-fps gt 100
                 fcs/throttle-cmd-deg lt 18
                 fcs/throttle-cmd-deg ge 16
+            </test>
+            <test logic="AND" value="15">
+                <!-- Using wheel-speed-fps to detect start of flight, either take off or go around.
+                     Should give enough time to select gear up before spin down. -->
+                gear/unit[1]/wheel-speed-fps gt 0
+                gear/gear-cmd-norm == 1
             </test>
         </switch>
 
