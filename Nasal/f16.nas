@@ -1690,6 +1690,9 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     #screen.property_display.add("fdm/jsbsim/fcs/fly-by-wire/pitch/pitch-rate-lower-lag");
     #screen.property_display.add("fdm/jsbsim/fcs/fly-by-wire/pitch/bias-final");
     startDLListener();
+    file_selector_dtc = gui.FileSelector.new(
+      callback: load_stpts, title: "Load data", button: "Load",
+      dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.f16dtc"]);
   }
  }, 0, 0);
 
@@ -1706,9 +1709,7 @@ view.setViewByIndex(1);
       steerpoints.loadSTPTs(path.getValue());
       }
  var defaultDirInFileSelector = getprop("/sim/fg-home") ~ "/Export";
- var file_selector_dtc = gui.FileSelector.new(
-      callback: load_stpts, title: "Load data", button: "Load",
-      dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.f16dtc"]);
+ var file_selector_dtc = nil;
 
 #var stepNode = props.Node.new();
 #io.read_properties(getprop("/sim/fg-aircraft") ~ "/f16/sview/config.xml", stepNode);
