@@ -1536,7 +1536,7 @@
       </emission>
     </animation>
 
-    <!--animation>
+    <animation>
         <type>knob</type>
         <object-name>DTU</object-name>
         <action>
@@ -1555,7 +1555,7 @@
                ]]></script>
             </binding>
         </action>
-    </animation-->
+    </animation>
 
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>

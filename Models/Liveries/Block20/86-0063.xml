@@ -4,12 +4,12 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">RNLAF 322 Sqn, J-063 "MiG Killer"</name>
+    <name type="string">RNLAF 322 Sqn, J-063 "60 years Polly"</name>
     <texture>Liveries/Block20/86-0063.png</texture>
     <owner type="string">RNLAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/Block20/standard.rnlaf.logos.png</texture>
+    <texture>Liveries/Block20/rnlaf.mig.logos.png</texture>
    </livery-logo>
 
    <livery-patch>
