@@ -1543,15 +1543,7 @@
             <binding>
                 <command>nasal</command>
                 <script><![CDATA[
-            var load_stpts = func(path) {
-                steerpoints.loadSTPTs(path.getValue());
-            }
-            var defaultDirInFileSelector = getprop("/sim/fg-home") ~ "/Export";
-             var file_selector_dtc = gui.FileSelector.new(
-              callback: load_stpts, title: "Load data", button: "Load",
-              dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.f16dtc"]);
-              file_selector_dtc.open();
-              file_selector_dtc.del();
+                    f16.file_selector_dtc.open();
                ]]></script>
             </binding>
         </action>

@@ -1702,6 +1702,14 @@ var load_interior = func {
 settimer(load_interior, 0.5, 1);
 view.setViewByIndex(1);
 
+ var load_stpts = func(path) {
+      steerpoints.loadSTPTs(path.getValue());
+      }
+ var defaultDirInFileSelector = getprop("/sim/fg-home") ~ "/Export";
+ var file_selector_dtc = gui.FileSelector.new(
+      callback: load_stpts, title: "Load data", button: "Load",
+      dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.f16dtc"]);
+
 #var stepNode = props.Node.new();
 #io.read_properties(getprop("/sim/fg-aircraft") ~ "/f16/sview/config.xml", stepNode);
 return;
