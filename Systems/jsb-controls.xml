@@ -2576,6 +2576,7 @@
                 gear/unit[1]/wheel-speed-fps gt 100
                 fcs/throttle-cmd-deg lt 18
                 fcs/throttle-cmd-deg ge 16
+                /f16/engine/cutoff-release-lever == 0 <!-- if this is 1 then throttle is not in IDLE -->
             </test>
             <test logic="AND" value="15">
                 <!-- Using wheel-speed-fps to detect start of flight, either take off or go around.
