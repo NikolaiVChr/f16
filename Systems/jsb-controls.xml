@@ -414,6 +414,21 @@
 
     <channel execrate="1" name="Pitch">
 
+        <switch name="fcs/fly-by-wire/pitch/trim-cmd">
+            <description>
+                GR1F-16CJ-1 page 1-135
+                With both main wheel speeds at 60 knots groundspeed
+                or greater, pitch trim automatically centers.
+            </description>
+            <default value="/controls/flight/elevator-trim"/>
+            <test logic="AND" value="0">
+                fcs/fly-by-wire/MLG-GND == 1
+                gear/unit[1]/wheel-speed-fps gt 100
+                gear/unit[2]/wheel-speed-fps gt 100
+            </test>
+            <output>/controls/flight/elevator-trim</output>
+        </switch>
+
         <fcs_function name="fcs/fly-by-wire/pitch/stick-force-lbf">
             <function>
                 <table>
