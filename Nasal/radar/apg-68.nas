@@ -1068,7 +1068,7 @@ var APG68 = {
 	rcsRefValue: 3.2,
 	targetHistory: 3,# Not used in TWS
 	isEnabled: func {
-		return getprop("/f16/avionics/power-fcr-bit") == 2 and getprop("instrumentation/radar/radar-enable");# and !getprop("/fdm/jsbsim/gear/unit[0]/WOW")
+		return getprop("/f16/avionics/power-fcr-bit") == 2 and getprop("instrumentation/radar/radar-enable") and !getprop("/fdm/jsbsim/gear/unit[0]/WOW");
 	},
 	setAGMode: func {
 		if (me.rootMode != 3) {
