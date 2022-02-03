@@ -1616,6 +1616,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
         props.globals.getNode("/sim/version/compositor-support", 1).setBoolValue(1);
     } elsif (left(getprop("sim/version/flightgear"),6) == "2020.3") {
         props.globals.getNode("/sim/version/compositor-support", 1).setBoolValue(0);
+        lm.light_manager.init();
     }
 
     hack.init();
