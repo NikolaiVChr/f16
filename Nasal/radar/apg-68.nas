@@ -510,6 +510,7 @@ var AirborneRadar = {
 		#ok, lets delete all bleps:
 		foreach(contact ; me.vector_aicontacts_bleps) {
 			contact.setBleps([]);
+			me.currentMode.prunedContact(contact);
 		}
 		me.vector_aicontacts_bleps = [];
 		me.chaffSeenList = [];
