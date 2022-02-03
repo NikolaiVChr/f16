@@ -757,6 +757,16 @@ append(obj.total, obj.speed_curr);
             append(obj.tgt_symbols, obj.tgt);
             append(obj.total, obj.tgt);
         }
+        obj.steerPT = obj.centerOrigin.createChild("path")
+                .moveTo(-boxRadius*0.3, 0)
+                .lineTo(0, boxRadiusHalf*0.85)
+                .lineTo(boxRadius*0.3, 0)
+                .lineTo(0, -boxRadiusHalf*0.85)
+                .lineTo(-boxRadius*0.3, 0)
+                .setStrokeLineWidth(1)
+                .hide()
+                .setColor(0,1,0);
+        append(obj.total, obj.steerPT);
         obj.radarLock = obj.centerOrigin.createChild("path")
             .moveTo(-boxRadius*hairFactor,0)
             .horiz(boxRadiusHalf*hairFactor)
@@ -1384,7 +1394,8 @@ append(obj.total, obj.speed_curr);
                                              {
                                                  # the Y position is still not accurate due to HUD being at an angle, but will have to do.
                                                  if (steerpoints.getCurrentNumber() != 0 and !hdp.dgft) {
-                                                     obj.wpbear = steerpoints.getCurrentDirection()[0];
+                                                     obj.steerDir = steerpoints.getCurrentDirection();
+                                                     obj.wpbear = obj.steerDir[0];
                                                      if (obj.wpbear!=nil) {
                                                          obj.wpbear=geo.normdeg180(obj.wpbear-hdp.heading);
                                                          obj.tadpoleX = HudMath.getCenterPosFromDegs(obj.wpbear,0)[0];
@@ -1397,11 +1408,23 @@ append(obj.total, obj.speed_curr);
                                                          obj.greatCircleSteeringCue.setTranslation(obj.tadpoleX, hdp.VV_y);
                                                          obj.greatCircleSteeringCue.setRotation(obj.wpbear*D2R);
                                                          obj.greatCircleSteeringCue.show();
+                                                         if (obj.steerDir[1] != nil) {
+                                                            obj.steerCart = vector.Math.eulerToCartesian2(-obj.steerDir[0], obj.steerDir[1]);
+                                                            obj.steerLocal = vector.Math.yawPitchRollVector(hdp.heading, -hdp.pitch, -hdp.roll, obj.steerCart);
+                                                            obj.steerLocalEuler = vector.Math.cartesianToEuler(obj.steerLocal);
+                                                            obj.steerHUD = HudMath.getCenterPosFromDegs(obj.steerLocalEuler[0]==nil?0:geo.normdeg180(obj.steerLocalEuler[0]),obj.steerLocalEuler[1]);
+                                                            obj.steerPT.setTranslation(obj.steerHUD);
+                                                            obj.steerPT.show();
+                                                         } else {
+                                                            obj.steerPT.hide();
+                                                         }
                                                      } else {
                                                          obj.greatCircleSteeringCue.hide();
+                                                         obj.steerPT.hide();
                                                      }
                                                  } else {
                                                      obj.greatCircleSteeringCue.hide();
+                                                     obj.steerPT.hide();
                                                  }
                                              }
                                             ),
