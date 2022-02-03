@@ -1394,7 +1394,7 @@ append(obj.total, obj.speed_curr);
                                              {
                                                  # the Y position is still not accurate due to HUD being at an angle, but will have to do.
                                                  if (steerpoints.getCurrentNumber() != 0 and !hdp.dgft) {
-                                                     obj.steerDir = steerpoints.getCurrentDirection();
+                                                     obj.steerDir = steerpoints.getCurrentDirectionForHUD();
                                                      obj.wpbear = obj.steerDir[0];
                                                      if (obj.wpbear!=nil) {
                                                          obj.wpbear=geo.normdeg180(obj.wpbear-hdp.heading);

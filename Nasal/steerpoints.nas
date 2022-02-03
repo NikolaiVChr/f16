@@ -159,7 +159,18 @@ var setNumber = func (number, stpt) {
 var getCurrentDirection = func {
 	# Get directions to current steerpoint or [nil,nil] for none.
 	if (getCurrentNumber() != 0) {
-		return [geo.aircraft_position().course_to(getCurrentCoord()), vector.Math.getPitch(geo.aircraft_position(), getCurrentCoord())];
+		var cc = getCurrentCoord();
+		return [geo.aircraft_position().course_to(cc), vector.Math.getPitch(geo.aircraft_position(), cc)];
+	} else {
+		return [nil, nil];
+	}
+}
+
+var getCurrentDirectionForHUD = func {
+	# Get directions to current steerpoint or [nil,nil] for none.
+	if (getCurrentNumber() != 0) {
+		var cc = getCurrentCoordForHUD();
+		return [geo.aircraft_position().course_to(cc), vector.Math.getPitch(geo.aircraft_position(), cc)];
 	} else {
 		return [nil, nil];
 	}
@@ -206,6 +217,13 @@ var getCurrentCoord = func {
 	var s = getNumber(getCurrentNumber());
 	if (s == nil) return nil;
 	return stpt2coord(s);
+}
+
+var getCurrentCoordForHUD = func {
+	# returns current steerpoint as geo.Coord
+	var s = getNumber(getCurrentNumber());
+	if (s == nil) return nil;
+	return stpt2coordGrounded(s);
 }
 
 var getCurrentGroundCoord = func {
@@ -436,6 +454,20 @@ var stpt2coord = func (stpt) {
 	# Convert steerpoint to geo.Coord
 	var p = geo.Coord.new();
     p.set_latlon(stpt.lat, stpt.lon, stpt.alt*FT2M);
+    return p;
+}
+
+var stpt2coordGrounded = func (stpt) {
+	# Convert steerpoint to geo.Coord but not lower than ground
+	var p = geo.Coord.new();
+	var elev = stpt.alt*FT2M;
+	if (elev <= 0) {
+		elev = geo.elevation(s.lat, s.lon);
+		if (elev == nil) {
+			elev = 0;
+		}
+	}
+    p.set_latlon(stpt.lat, stpt.lon, elev);
     return p;
 }
 
