@@ -222,7 +222,6 @@ var getCurrentCoord = func {
 var getCurrentCoordForHUD = func {
 	# returns current steerpoint as geo.Coord
 	var s = getNumber(getCurrentNumber());
-	if (s == nil) return nil;
 	return stpt2coordGrounded(s);
 }
 
@@ -462,7 +461,7 @@ var stpt2coordGrounded = func (stpt) {
 	var p = geo.Coord.new();
 	var elev = stpt.alt*FT2M;
 	if (elev <= 0) {
-		elev = geo.elevation(s.lat, s.lon);
+		elev = geo.elevation(stpt.lat, stpt.lon);
 		if (elev == nil) {
 			elev = 0;
 		}
