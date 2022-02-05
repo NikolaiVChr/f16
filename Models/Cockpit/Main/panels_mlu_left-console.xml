@@ -1535,6 +1535,49 @@
         </decrease>
     </animation>
   
+    <animation>
+        <type>knob</type>
+        <object-name>SW_DBU</object-name>
+        <visible>true</visible>
+	    <property>f16/fcs/digital-backup</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.75</interval-sec>
+        <factor>-40</factor>
+        <offset-deg>20</offset-deg>
+        <center>
+            <x-m>0.63394</x-m>
+            <y-m>-0.53211</y-m>
+            <z-m>0.007677</z-m>
+        </center>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+	            <property>f16/fcs/digital-backup</property>
+                <step>1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+	            <property>f16/fcs/digital-backup</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+
 	<!-- Trim panel -->
 	
 	<animation>

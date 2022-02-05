@@ -312,9 +312,10 @@ var loop_caution = func {# TODO: unlit the caution lights except elec-sys when m
     var batt2 = getprop("fdm/jsbsim/elec/bus/batt-2") >= 20;
     var dc1 = getprop("fdm/jsbsim/elec/bus/emergency-dc-1") >= 20;
     var test  = getprop("controls/test/test-panel/mal-ind-lts");
-	var testFire = getprop("controls/test/test-panel/fire-ovht-test");
-	var fuelTest = getprop("controls/fuel/qty-selector") == 0;
-    setprop("f16/avionics/caution/stores-config",     test or (batt2 and ((getprop("f16/stores-cat")>1 and getprop("fdm/jsbsim/fcs/fly-by-wire/enable-cat-III") < 1) or (getprop("f16/stores-cat")==1 and getprop("fdm/jsbsim/fcs/fly-by-wire/enable-cat-III") == 1))));
+    var testFire = getprop("controls/test/test-panel/fire-ovht-test");
+    var fuelTest = getprop("controls/fuel/qty-selector") == 0;
+    # GR1F-16CJ-1 page 121 : DBU - STORES CONFIG switch inoperative
+    setprop("f16/avionics/caution/stores-config",     test or (batt2 and ((getprop("f16/stores-cat")>1 and getprop("fdm/jsbsim/fcs/fly-by-wire/enable-cat-III") < 1) or (getprop("f16/stores-cat")==1 and getprop("fdm/jsbsim/fcs/fly-by-wire/enable-cat-III") == 1)) and !getprop("fdm/jsbsim/fcs/fly-by-wire/digital-backup")));
     setprop("f16/avionics/caution/seat-not-armed",    test or (batt2 and !getprop("controls/seat/ejection-safety-lever")));
     setprop("f16/avionics/caution/oxy-low",           test or (batt2 and getprop("f16/cockpit/oxygen-liters-output")<0.5) or (batt2 and getprop("f16/avionics/oxy-psi")<42));
     setprop("f16/avionics/caution/le-flaps",          test or (batt2 and (!getprop("f16/avionics/le-flaps-switch") or getprop("fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains"))));
@@ -326,7 +327,7 @@ var loop_caution = func {# TODO: unlit the caution lights except elec-sys when m
     setprop("f16/avionics/caution/adc",               test or (batt2 and getprop("fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains")));
     setprop("f16/avionics/caution/equip-hot",         test or (batt2 and (!getprop("controls/ventilation/airconditioning-source") and getprop("f16/avionics/power-ufc-warm"))));
     setprop("f16/avionics/caution/overheat",          test or (batt2 and (!getprop("damage/fire/serviceable") or testFire)));
-	setprop("f16/avionics/caution/sec",               test or (batt2 and (getprop("f16/engine/sec-self-test") or getprop("f16/engine/ctl-sec"))));
+    setprop("f16/avionics/caution/sec",               test or (batt2 and (getprop("f16/engine/sec-self-test") or getprop("f16/engine/ctl-sec"))));
     setprop("f16/avionics/caution/avionics",          test or (batt2 and (!getprop("instrumentation/hud/serviceable") or !getprop("instrumentation/radar/serviceable") or !getprop("instrumentation/rwr/serviceable") or !getprop("instrumentation/tacan/serviceable"))));
 };
 

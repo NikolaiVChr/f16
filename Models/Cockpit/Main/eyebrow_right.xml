@@ -33,7 +33,6 @@
  <animation>
   <type>select</type>
   <object-name>flcs</object-name>
-  <object-name>dbu_on</object-name>
   <object-name>unused</object-name>
   <condition>
     <or>
@@ -112,8 +111,25 @@
               <value>2000</value>
             </less-than>
         </or>
-    </and>
-    <property>controls/test/test-panel/mal-ind-lts</property>
+      </and>
+      <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+  </condition>
+ </animation>
+
+  <animation>
+  <type>select</type>
+  <object-name>dbu_on</object-name>
+  <condition>
+    <or>
+        <and>
+            <greater-than>
+                <property>fdm/jsbsim/elec/bus/batt-1</property>
+                <value>20</value>
+            </greater-than>
+            <property>fdm/jsbsim/fcs/fly-by-wire/digital-backup</property>
+        </and>
+        <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>
  </animation>

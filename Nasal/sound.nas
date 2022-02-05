@@ -291,6 +291,7 @@ setlistener("f16/fcs/autopilot-off", button2, nil, 0);
 setlistener("f16/fcs/autopilot-on", button2, nil, 0);
 setlistener("f16/fcs/switch-pitch-block15", button2, nil, 0);
 setlistener("f16/fcs/switch-roll-block15", button2, nil, 0);
+setlistener("f16/fcs/digital-backup", button2, nil, 0);
 setlistener("fdm/jsbsim/fcs/fbw-override", button2, nil, 0);
 setlistener("controls/lighting/landing-light", click2, nil, 0);
 setlistener("controls/MFD[0]/button-pressed", doubleClick, nil, 0);

@@ -419,12 +419,15 @@
                 GR1F-16CJ-1 page 1-135
                 With both main wheel speeds at 60 knots groundspeed
                 or greater, pitch trim automatically centers.
+                GR1F-16CJ-1 page 1-120
+                DBU - Pitch trim centering at wheel spin-up is inoperative
             </description>
             <default value="/controls/flight/elevator-trim"/>
             <test logic="AND" value="0">
                 fcs/fly-by-wire/MLG-GND == 1
                 gear/unit[1]/wheel-speed-fps gt 100
                 gear/unit[2]/wheel-speed-fps gt 100
+                fcs/fly-by-wire/digital-backup == 0
             </test>
             <output>/controls/flight/elevator-trim</output>
         </switch>
@@ -569,6 +572,17 @@
             </function>
         </fcs_function>
 
+        <switch name="fcs/fly-by-wire/control-c">
+            <description>
+                GR1F-16CJ-1 page 120
+                DBU - There is no roll rate input to the AOA limiter.
+            </description>
+            <default value="fcs/fly-by-wire/enable-control-c"/>
+            <test value="0">
+                fcs/fly-by-wire/digital-backup == 1
+            </test>
+        </switch>
+
         <pure_gain name="fcs/fly-by-wire/pitch/control-c/da_p">
             <description>
                 I just named this control-c since it uses the
@@ -580,7 +594,7 @@
                       its not used in yaw, ari or roll.
             </description>
             <input> fcs/fly-by-wire/pitch/control-c/roll-rate-schedule </input>
-            <gain> fcs/fly-by-wire/enable-control-c </gain>
+            <gain> fcs/fly-by-wire/control-c </gain>
         </pure_gain>
 
         <lag_filter name="fcs/fly-by-wire/pitch/a_f">
@@ -612,10 +626,21 @@
             </test>
         </switch>
 
+        <switch name="fcs/fly-by-wire/pitch/enable-cat-III">
+            <description>
+                GR1F-16CJ-1 page 120
+                DBU - Stick commands are essentially CAT III limited.
+            </description>
+            <default value="fcs/fly-by-wire/enable-cat-III"/>
+            <test value="1">
+                fcs/fly-by-wire/digital-backup == 1
+            </test>
+        </switch>
+
         <fcs_function name="fcs/fly-by-wire/pitch/alpha-reduction">
             <function>
                 <table>
-                    <independentVar lookup="row">fcs/fly-by-wire/enable-cat-III</independentVar>
+                    <independentVar lookup="row">fcs/fly-by-wire/pitch/enable-cat-III</independentVar>
                     <independentVar lookup="column">inertia/weight-lbs</independentVar>
                     <tableData>
                                 25000 30000 35000
@@ -696,7 +721,7 @@
             </description>
             <function>
                 <table>
-                    <independentVar lookup="row">fcs/fly-by-wire/enable-cat-III</independentVar>
+                    <independentVar lookup="row">fcs/fly-by-wire/pitch/enable-cat-III</independentVar>
                     <independentVar lookup="column">velocities/vc-kts</independentVar>
                     <tableData>
                            100 420
@@ -1528,9 +1553,13 @@
         </fcs_function>
 
         <switch name="fcs/fly-by-wire/roll/max-cmd-roll-rate">
+            <description>
+                GR1F-16CJ-1 page 120
+                DBU - Maximum roll rate command is a constant 167 degrees per second.
+            </description>
             <default value="308"/>
             <test logic="OR" value="fcs/fly-by-wire/roll/control-c/max-cmd-roll-rate">
-                fcs/fly-by-wire/enable-control-c == 1
+                fcs/fly-by-wire/control-c == 1
             </test>
         </switch>
 
@@ -1565,11 +1594,22 @@
             </function>
         </fcs_function>
 
+        <switch name="fcs/fly-by-wire/roll/enable-cat-III">
+            <description>
+                GR1F-16CJ-1 page 120
+                DBU - Maximum roll rate command is a constant 167 degrees per second.
+            </description>
+            <default value="fcs/fly-by-wire/enable-cat-III"/>
+            <test value="0">
+                fcs/fly-by-wire/digital-backup == 1
+            </test>
+        </switch>
+
         <fcs_function name="fcs/fly-by-wire/roll/command-limited-deg_s">
             <function>
                 <product>
                     <table>
-                        <independentVar lookup="row">fcs/fly-by-wire/enable-cat-III</independentVar>
+                        <independentVar lookup="row">fcs/fly-by-wire/roll/enable-cat-III</independentVar>
                         <tableData>
                              0  1
                              1  0.6
@@ -1601,9 +1641,14 @@
         </aerosurface_scale>
 
         <switch name="fcs/fly-by-wire/roll/gain-switch">
+            <description>
+                GR1F-16CJ-1 page 120
+                DBU - Maximum roll rate command is a constant 167 degrees per second.
+            </description>
             <default value="1.0"/>
             <test logic="OR" value="0.542">
                 fcs/fly-by-wire/condition-a == 1
+                fcs/fly-by-wire/digital-backup == 1
             </test>
         </switch>
 
@@ -2150,6 +2195,17 @@
             <input>-fcs/fly-by-wire/yaw/command-deg</input>
         </summer>
 
+        <switch name="fcs/fly-by-wire/yaw/enable-cat-III">
+            <description>
+                GR1F-16CJ-1 page 120
+                DBU - Rudder pedal commands are essentially CAT I limited.
+            </description>
+            <default value="fcs/fly-by-wire/enable-cat-III"/>
+            <test value="0">
+                fcs/fly-by-wire/digital-backup == 1
+            </test>
+        </switch>
+
         <fcs_function name="fcs/fly-by-wire/yaw/command-schedule">
             <description>
                 In Cat I TP-1538 say 20-30, but modern flight manual say 14-26.
@@ -2162,7 +2218,7 @@
                 <product>
                     <table>
                         <independentVar lookup="row">fcs/fly-by-wire/pitch/a_f</independentVar>
-                        <independentVar lookup="column">fcs/fly-by-wire/enable-cat-III</independentVar>
+                        <independentVar lookup="column">fcs/fly-by-wire/yaw/enable-cat-III</independentVar>
                         <tableData>
                                    0           1
                              3   1.0         1.0
@@ -2181,7 +2237,7 @@
                 <product>
                     <table>
                         <independentVar lookup="row">fcs/fly-by-wire/pitch/control-c/roll-rate-abs</independentVar>
-                        <independentVar lookup="column">fcs/fly-by-wire/enable-control-c</independentVar>
+                        <independentVar lookup="column">fcs/fly-by-wire/control-c</independentVar>
                         <tableData>
                                    0  1
                             20   1.0 1.0
@@ -2532,6 +2588,27 @@
             <gain>1.38</gain>
         </pure_gain>
 
+        <fcs_function name="fcs/fly-by-wire/lef/qcps-ratio-simplified">
+            <description>
+                GR1F-16CJ-1 Page 1-121
+                DBU - LEF scheduling is simplified and optimized for a
+                cruise condition at approximately 20,000 feet MSL.
+            </description>
+            <function>
+                <quotient>
+                    <p>velocities/vc-kts</p>
+                    <v>975</v>
+                </quotient>
+            </function>
+        </fcs_function>
+
+        <switch name="fcs/fly-by-wire/lef/qcps-ratio">
+            <default value="fcs/fly-by-wire/qcps-ratio"/>
+            <test value="fcs/fly-by-wire/lef/qcps-ratio-simplified">
+                fcs/fly-by-wire/digital-backup == 1
+            </test>
+        </switch>
+
         <fcs_function name="fcs/fly-by-wire/lef/cmd-pos">
             <function>
                 <min>
@@ -2542,7 +2619,7 @@
                             <p>fcs/fly-by-wire/lef/alpha-gain</p>
                             <product>
                                 <value>-9.05</value>
-                                <p>fcs/fly-by-wire/qcps-ratio</p>
+                                <p>fcs/fly-by-wire/lef/qcps-ratio</p>
                             </product>
                             <v>1.45</v>
                         </sum>
@@ -2571,10 +2648,18 @@
                 on take off, when weight is off of both MLG and LG handle is down.
                 Ref: https://www.youtube.com/watch?v=_LUsto6k3qs
                 Ref: https://www.airliners.net/forum/viewtopic.php?t=759285#p10957693
+                GR1F-16CJ-1 page 1-120
+                DBU - Standby gains are not engaged.
+                GR1F-16CJ-1 page 1-121
+                DBU - LEF are not commanded to 2 degrees up when MLG wheel speed is8522
+                greater than 60 knots and the throttle is IDLE or if MLG WOW.
             </description>
             <default value="fcs/fly-by-wire/lef/cmd-pos"/>
             <test logic="AND" value="fcs/fly-by-wire/lef/cmd-pos-elec">
                 elec/bus/flcc/d lt 20
+            </test>
+            <test value="fcs/fly-by-wire/lef/cmd-pos">
+                fcs/fly-by-wire/digital-backup == 1
             </test>
             <test logic="AND" value="0">
                 fcs/fly-by-wire/enable-standby-gains == 1
@@ -2694,7 +2779,7 @@
             </test>
         </switch>
 
-        <fcs_function name="fcs/fly-by-wire/tef/cmd">
+        <fcs_function name="fcs/fly-by-wire/tef/cmd-deg">
             <function>
                 <product>
                     <p>fcs/fly-by-wire/tef/cmd-switch</p>
@@ -2708,6 +2793,26 @@
                 </product>
             </function>
         </fcs_function>
+
+        <switch name="fcs/fly-by-wire/tef/cmd">
+            <description>
+                GR1F-16CJ-1 page 1-120
+                DBU - With the LG handle in DN, the TEF's are positioned to 20 degrees down.
+                With the LG handle in UP and the ALT FLAPS in EXTEND, the TEF's are
+                positioned to 20 degrees down if airspeed is less than 290 knots.
+            </description>
+            <default value="0"/>
+            <test value="fcs/fly-by-wire/tef/cmd-deg">
+                fcs/fly-by-wire/digital-backup == 0
+            </test>
+            <test logic="OR" value="20">
+                fcs/fly-by-wire/tef/cmd-gear == 1
+                <test logic="AND">
+                    /controls/flight/flaps == 1
+                    velocities/vc-kts lt 290
+                </test>
+            </test>
+        </switch>
 
         <summer name="fcs/fly-by-wire/tef/F9-limit">
             <input> fcs/fly-by-wire/tef/F9 </input>

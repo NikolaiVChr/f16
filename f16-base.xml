@@ -912,6 +912,7 @@
                     <enable-q type="bool">true</enable-q>
                     <enable-alpha type="bool">true</enable-alpha>-->
                     <enable-control-c type="bool">true</enable-control-c>
+                    <control-c type="bool">true</control-c>
                     <pitch>
                         <a_f type="double">0</a_f>
                         <control-c>
@@ -922,6 +923,7 @@
                     <lef>
                         <lef-pos-deg type="double">0</lef-pos-deg>
                     </lef>
+                    <digital-backup type="bool">false</digital-backup>
                 </fly-by-wire>
                 <gear-control type="double">1</gear-control>
                 <gear-wow type="bool">true</gear-wow>
@@ -1417,6 +1419,8 @@ value. 18000=standard US transition altitude -->
             <switch-roll-block20 type="int">0</switch-roll-block20>
             <autopilot-aoa-limit-exceed type="bool">false</autopilot-aoa-limit-exceed>
             <autopilot-inhibit type="bool">false</autopilot-inhibit>
+
+            <digital-backup type="bool">false</digital-backup>
         </fcs>
         <engine>
 			<ctl-sec type="bool">false</ctl-sec>

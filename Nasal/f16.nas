@@ -447,7 +447,11 @@ var slow = {
     if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1")<20 and getprop("fdm/jsbsim/elec/bus/emergency-dc-2")<20) {
       setprop("sound/rwr-new", -1);#prevent sound from going off whenever it gets elec
     }
-    if (!getprop("systems/pitot/serviceable") or !getprop("systems/static/serviceable")) {
+
+    if ((!getprop("systems/pitot/serviceable") or !getprop("systems/static/serviceable")) and
+        # GR1F-16CJ-1 page 120: DBU - Standby gains are not engaged
+        (!getprop("fdm/jsbsim/fcs/fly-by-wire/digital-backup"))
+    ) {
       setprop("fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains", 1);
     } else {
       setprop("fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains", 0);
@@ -670,6 +674,19 @@ var laser = func {
   }
 }
 
+# Currently the cockpit switch is the only source of setting digital backup.
+# An FLCS failure could do the same, allowing this switch to reset it.
+setlistener("/f16/fcs/digital-backup", func(node) {
+    setprop("/fdm/jsbsim/fcs/fly-by-wire/digital-backup", node.getValue());
+});
+
+setlistener("/fdm/jsbsim/fcs/fly-by-wire/digital-backup", func(node) {
+    if (node.getValue() == 1) {
+        # GR1F-16CJ-1 page 120: DBU - Standby gains are not engaged
+        setprop("/fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains", 0);
+    }
+});
+
 var autopilot_inhibit = {
 # Ref (up to block 40): 1F-16A-1 page 1-133
 # Ref (block 40 and up): GR1F-16CJ-1 page 1-135
@@ -682,7 +699,7 @@ var autopilot_inhibit = {
     if (getprop("/sim/variant-id") >= 4) {
       # TODO: A/P FAIL PFL occurs
       setlistener("/f16/fcs/autopilot-aoa-limit-exceed", me.evaluate, 0, 0);
-      # TODO: DBU engaged
+      setlistener("/fdm/jsbsim/fcs/fly-by-wire/digital-backup", me.evaluate, 0, 0);
       setlistener("/f16/avionics/low-speed-warning-tone-a", me.evaluate, 0, 0);
       setlistener("/f16/avionics/low-speed-warning-tone-b", me.evaluate, 0, 0);
       setlistener("/fdm/jsbsim/fcs/fbw-override", me.evaluate, 0, 0);
@@ -702,7 +719,7 @@ var autopilot_inhibit = {
         (
           # TODO: A/P FAIL PFL occurs
           (getprop("/f16/fcs/autopilot-aoa-limit-exceed")) or
-          # TODO: DBU engaged
+          (getprop("/fdm/jsbsim/fcs/fly-by-wire/digital-backup")) or
           (getprop("/f16/avionics/low-speed-warning-tone-a")) or
           (getprop("/f16/avionics/low-speed-warning-tone-b")) or
           (getprop("/fdm/jsbsim/fcs/fbw-override"))
