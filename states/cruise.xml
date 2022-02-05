@@ -7,6 +7,15 @@
     <overlay>
         <fdm>
             <jsbsim>
+                <fcs>
+                    <fly-by-wire>
+                        <pitch>
+                            <!--gravity-droop-right type="double">0</gravity-droop-right>
+                            <gravity-droop-left type="double">0</gravity-droop-left-->
+                            <integrator-trigger type="bool">true</integrator-trigger>
+                        </pitch>
+                    </fly-by-wire>
+                </fcs>
                 <elec>
                     <switches>
                         <main-pwr type="int">2</main-pwr>

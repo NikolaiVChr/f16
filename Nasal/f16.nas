@@ -1711,6 +1711,9 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     file_selector_dtc = gui.FileSelector.new(
       callback: load_stpts, title: "Load data", button: "Load",
       dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.f16dtc"]);
+
+    # Start the integrator if a state has paused it
+    settimer(func {setprop("fdm/jsbsim/fcs/fly-by-wire/pitch/integrator-trigger", 0);}, 0.5, 0);# very important this runs in sim time
   }
  }, 0, 0);
 

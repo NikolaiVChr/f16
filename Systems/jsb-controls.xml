@@ -1095,6 +1095,7 @@
                 - ab3, for a third order Adams Bashforth integrator
             </description>
             <input> fcs/fly-by-wire/pitch/integrator-pre </input>
+            <trigger>fcs/fly-by-wire/pitch/integrator-trigger</trigger>
             <c1 type="ab2"> 5 </c1>
         </integrator>
 

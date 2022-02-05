@@ -919,6 +919,7 @@
                             <roll-rate-abs type="double">0</roll-rate-abs>
                         </control-c>
                         <ground-input type="double">0</ground-input>
+                        <integrator-trigger type="bool">false</integrator-trigger>
                     </pitch>
                     <lef>
                         <lef-pos-deg type="double">0</lef-pos-deg>
