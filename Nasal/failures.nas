@@ -57,6 +57,73 @@ var init = func {
             return me.fired = 0;
         }
     };
+    ##
+    # Trigger object that will fire when aircraft air-speed is over
+    # min, specified in knots. Probability of failing will
+    # be 0% at min speed and 100% at max speed and beyond.
+    # When the specified property is 0 there is zero chance of failing.
+    var RandSpeedTrigger = {
+
+        parents: [FailureMgr.Trigger],
+        requires_polling: 1,
+        type: "RandSpeed",
+
+        new: func(min, max, prop) {
+            if(min == nil or max == nil)
+                die("RandSpeedTrigger.new: min and max must be specified");
+
+            if(min >= max)
+                die("RandSpeedTrigger.new: min must be less than max");
+
+            if(min < 0 or max <= 0)
+                die("RandSpeedTrigger.new: min must be positive or zero and max larger than zero");
+
+            if(prop == nil or prop == "")
+                die("RandSpeedTrigger.new: prop must be specified");
+
+            var m = FailureMgr.Trigger.new();
+            m.parents = [RandSpeedTrigger];
+            m.params["min-speed-kt"] = min;
+            m.params["max-speed-kt"] = max;
+            m.params["property"] = prop;
+            m._speed_prop = "/velocities/airspeed-kt";
+            return m;
+        },
+
+        to_str: func {
+            sprintf("Increasing probability of fails between %d and %d kt air-speed when deployed",
+                int(me.params["min-speed-kt"]), int(me.params["max-speed-kt"]))
+        },
+
+        update: func {
+            if(getprop(me.params["property"]) != 0) {
+                var speed = getprop(me._speed_prop);
+                var min = me.params["min-speed-kt"];
+                var max = me.params["max-speed-kt"];
+                var speed_d =  0;
+                if(speed > min) {
+                    speed_d = speed-min;
+                    var delta_factor = 1/(max - min);
+                    var factor = speed <= max ? delta_factor*speed_d : 1;
+                    if(rand() < factor) {
+                        return me.fired = 1;
+                    }
+                }
+            }
+            return me.fired = 0;
+        }
+    };
+
+    var set_value = func(path, value) {
+
+        var default = getprop(path);
+
+        return {
+            parents: [FailureMgr.FailureActuator],
+            set_failure_level: func(level) setprop(path, level > 0 ? value : default),
+            get_failure_level: func { getprop(path) == default ? 0 : 1 }
+        }
+    }
     
     var prop = "payload/armament/fire-control";
 	var actuator_fc = compat_failure_modes.set_unserviceable(prop);
@@ -98,6 +165,29 @@ var init = func {
     var hud = compat_failure_modes.set_unserviceable("instrumentation/hud");
     FailureMgr.add_failure_mode("instrumentation/hud", "HUD", hud);
     
+    #gears
+
+    prop = "gear/gear[0]/position-norm";
+    var trigger_gear0 = RandSpeedTrigger.new(350, 500, prop);
+    var actuator_gear0 = set_value("fdm/jsbsim/gear/unit[0]/z-position", 0.001);
+    FailureMgr.add_failure_mode("controls/gear0", "Front gear locking mechanism", actuator_gear0);
+    FailureMgr.set_trigger("controls/gear0", trigger_gear0);
+    trigger_gear0.arm();
+
+    prop = "gear/gear[1]/position-norm";
+    var trigger_gear1 = RandSpeedTrigger.new(350, 500, prop);
+    var actuator_gear1 = set_value("fdm/jsbsim/gear/unit[1]/z-position", 0.001);
+    FailureMgr.add_failure_mode("controls/gear1", "Right gear locking mechanism", actuator_gear1);
+    FailureMgr.set_trigger("controls/gear1", trigger_gear1);
+    trigger_gear1.arm();
+
+    prop = "gear/gear[2]/position-norm";
+    var trigger_gear2 = RandSpeedTrigger.new(350, 500, prop);
+    var actuator_gear2 = set_value("fdm/jsbsim/gear/unit[2]/z-position", 0.001);
+    FailureMgr.add_failure_mode("controls/gear2", "Left gear locking mechanism", actuator_gear2);
+    FailureMgr.set_trigger("controls/gear2", trigger_gear2);
+    trigger_gear2.arm();
+
     #var ch = compat_failure_modes.set_unserviceable("canopy");
     #FailureMgr.add_failure_mode("canopy", "Canopy hinges", ch);
     
