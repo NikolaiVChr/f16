@@ -60,9 +60,9 @@
   <name>Station1_AIM-120B</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/AIM-120B_LW.xml</path>
   <offsets>
-   <x-m>1.15374</x-m>
-   <y-m>-4.89183</y-m>
-   <z-m>0.0</z-m>
+   <x-m>0.93</x-m>
+   <y-m>-4.885</y-m>
+   <z-m>-0.025</z-m>
    <pitch-deg>-3.5</pitch-deg>
   </offsets>
  </model>
@@ -71,9 +71,9 @@
   <name>Station1_CATM-120B</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/CATM-120B_LW.xml</path>
   <offsets>
-   <x-m>1.15374</x-m>
-   <y-m>-4.89183</y-m>
-   <z-m>0.0</z-m>
+   <x-m>0.93</x-m>
+   <y-m>-4.885</y-m>
+   <z-m>-0.025</z-m>
    <pitch-deg>-3.5</pitch-deg>
   </offsets>
  </model>
@@ -184,9 +184,9 @@
   <name>Station9_AIM-120B</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/AIM-120B_RW.xml</path>
   <offsets>
-   <x-m>1.15374</x-m>
-   <y-m>4.89183</y-m>
-   <z-m>0.0</z-m>
+   <x-m>0.93</x-m>
+   <y-m>4.885</y-m>
+   <z-m>-0.025</z-m>
    <pitch-deg>-3.5</pitch-deg>
   </offsets>
  </model>
@@ -195,9 +195,9 @@
   <name>Station9_CATM-120B</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/CATM-120B_RW.xml</path>
   <offsets>
-   <x-m>1.15374</x-m>
-   <y-m>4.89183</y-m>
-   <z-m>0.0</z-m>
+   <x-m>0.93</x-m>
+   <y-m>4.885</y-m>
+   <z-m>-0.025</z-m>
    <pitch-deg>-3.5</pitch-deg>
   </offsets>
  </model>
