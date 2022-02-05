@@ -171,11 +171,11 @@
    <default>
     <menu n="101">
      <label>F-16A Block 10</label>
-     <item n="11">
+     <item n="8">
           <label>--- Block options ---</label>
           <enabled>false</enabled>
         </item>
-      <item n="12">
+      <item n="9">
           <label>Payload presets</label>
           <binding>
             <command>dialog-show</command>

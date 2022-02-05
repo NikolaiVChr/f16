@@ -426,26 +426,6 @@
                         <enabled>false</enabled>
                     </item>
                     <item>
-                        <label>Control Panel Left</label>
-                        <name>controlPanel</name>
-                        <binding>
-                          <command>dialog-show</command>
-                          <dialog-name>controlPanel</dialog-name>
-                        </binding>
-                      </item>
-                      <item>
-                        <label>Control Panel Right and Center</label>
-                        <name>controlPanel</name>
-                        <binding>
-                          <command>dialog-show</command>
-                          <dialog-name>controlPanel2</dialog-name>
-                        </binding>
-                      </item>
-                      <item>
-                        <label>--- GUI Panels ---</label>
-                        <enabled>false</enabled>
-                      </item>
-                    <item>
                         <label>Mission Preplanning</label>
                         <enabled type="bool">true</enabled>
                         <name>circles</name>

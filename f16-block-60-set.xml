@@ -166,18 +166,18 @@
    <default>
     <menu n="101">
      <label>F-16E Block 60</label>
-        <item n="11">
+        <item n="8">
           <label>--- Block options ---</label>
           <enabled>false</enabled>
         </item>
-        <item n="12">
+        <item n="9">
           <label>Payload presets</label>
           <binding>
             <command>dialog-show</command>
             <dialog-name>payload-b60</dialog-name>
           </binding>
       </item>
-      <item n="13">
+      <item n="10">
           <label>Program target</label>
           <enabled type="bool">true</enabled>
           <name>programGPS</name>
