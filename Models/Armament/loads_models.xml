@@ -133,7 +133,7 @@
   <name>Station10_LITENINGat</name>
   <path>Aircraft/f16/Models/Armament/External-stores/LITENING_AT/AN-AAQ-28.xml</path>
   <offsets>
-   <x-m>-2.2</x-m>
+   <x-m>-2.25</x-m>
    <y-m>0.69</y-m>
    <z-m>-1.02</z-m>
    <pitch-deg>-0.5</pitch-deg>
