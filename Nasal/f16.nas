@@ -1734,3 +1734,11 @@ view.setViewByIndex(1);
 return;
 var stepNode = io.read_properties("Aircraft/f16/sview/config.xml");#
 fgcommand("view-new2020", stepNode);#
+
+var gui_dir_local = getprop("/sim/fg-aircraft") ~ "/f16/Nasal/canvas/gui/";#
+var loadGUIFileLocal = func(file) io.load_nasal(gui_dir_local ~ file, "canvas");#
+var loadWidgetLocal = func(name) loadGUIFileLocal("widgets/" ~ name ~ ".nas");#
+var loadDialogLocal = func(name) loadGUIFileLocal("dialogs/" ~ name ~ ".nas");#
+loadWidgetLocal("Failure");#
+loadWidgetLocal("Tabs");#
+loadDialogLocal("FailureDialog");#
