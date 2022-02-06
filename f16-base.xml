@@ -892,7 +892,7 @@
                     <enable-q type="bool">true</enable-q>
                     <enable-alpha type="bool">true</enable-alpha>-->
                     <enable-control-c type="bool">true</enable-control-c>
-                    <control-c type="bool">true</control-c>
+                    <control-c-actual type="bool">true</control-c-actual>
                     <pitch>
                         <a_f type="double">0</a_f>
                         <control-c>

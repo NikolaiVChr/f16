@@ -572,7 +572,7 @@
             </function>
         </fcs_function>
 
-        <switch name="fcs/fly-by-wire/control-c">
+        <switch name="fcs/fly-by-wire/control-c-actual">
             <description>
                 GR1F-16CJ-1 page 120
                 DBU - There is no roll rate input to the AOA limiter.
@@ -594,7 +594,7 @@
                       its not used in yaw, ari or roll.
             </description>
             <input> fcs/fly-by-wire/pitch/control-c/roll-rate-schedule </input>
-            <gain> fcs/fly-by-wire/control-c </gain>
+            <gain> fcs/fly-by-wire/control-c-actual </gain>
         </pure_gain>
 
         <lag_filter name="fcs/fly-by-wire/pitch/a_f">
@@ -1560,7 +1560,7 @@
             </description>
             <default value="308"/>
             <test logic="OR" value="fcs/fly-by-wire/roll/control-c/max-cmd-roll-rate">
-                fcs/fly-by-wire/control-c == 1
+                fcs/fly-by-wire/control-c-actual == 1
             </test>
         </switch>
 
@@ -2238,7 +2238,7 @@
                 <product>
                     <table>
                         <independentVar lookup="row">fcs/fly-by-wire/pitch/control-c/roll-rate-abs</independentVar>
-                        <independentVar lookup="column">fcs/fly-by-wire/control-c</independentVar>
+                        <independentVar lookup="column">fcs/fly-by-wire/control-c-actual</independentVar>
                         <tableData>
                                    0  1
                             20   1.0 1.0
