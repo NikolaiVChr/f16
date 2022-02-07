@@ -102,6 +102,20 @@
 		<object-name>life-jacket</object-name>
 		<object-name>disk</object-name>
 		<object-name>L-face-mask</object-name>
+		<object-name>mount</object-name>
+		<object-name>paper</object-name>
+		<object-name>springFast</object-name>
+		<object-name>Torus1</object-name>
+		<object-name>Torus2</object-name>
+		<object-name>Torus3</object-name>
+		<object-name>Torus4</object-name>
+		<object-name>mountr</object-name>
+		<object-name>paper-r</object-name>
+		<object-name>springFastr</object-name>
+		<object-name>Torus1r</object-name>
+		<object-name>Torus2r</object-name>
+		<object-name>Torus3r</object-name>
+		<object-name>Torus4r</object-name>
 		<!--object-name>pilot</object-name-->        
 		<!--object-name>LL-arm</object-name-->
 		<!--object-name>LL-glove</object-name-->
@@ -111,6 +125,40 @@
 		<!--object-name>LR-hand</object-name-->
 		<!--object-name>LR-glove</object-name-->		
 		<!--object-name>LR-leg</object-name-->
-    </effect>
+   </effect>
+
+   <animation>
+     <type>select</type>
+     <object-name>mount</object-name>
+     <object-name>paper</object-name>
+     <object-name>springFast</object-name>
+     <object-name>Torus1</object-name>
+     <object-name>Torus2</object-name>
+     <object-name>Torus3</object-name>
+     <object-name>Torus4</object-name>
+     <condition>
+        <equals>
+          <property>f16/cockpit/kneeboard-left-visible</property>
+          <value>1</value>
+        </equals>
+      </condition>
+   </animation>
+
+   <animation>
+     <type>select</type>
+     <object-name>mountr</object-name>
+     <object-name>paper-r</object-name>
+     <object-name>springFastr</object-name>
+     <object-name>Torus1r</object-name>
+     <object-name>Torus2r</object-name>
+     <object-name>Torus3r</object-name>
+     <object-name>Torus4r</object-name>
+     <condition>
+        <equals>
+          <property>f16/cockpit/kneeboard-right-visible</property>
+          <value>1</value>
+        </equals>
+      </condition>
+   </animation>
 
 </PropertyList>
