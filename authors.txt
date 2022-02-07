@@ -125,7 +125,9 @@ PH-JAKE
 - Bug fixes and improvements
 - Improved checklists
 - Help menu updates
-- AP exceptions.
+- AP exceptions
+- LEF performance changes
+- DBU system
 
 FGUK
 - Sounds
