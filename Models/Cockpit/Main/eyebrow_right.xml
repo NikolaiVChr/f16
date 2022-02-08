@@ -33,11 +33,22 @@
  <animation>
   <type>select</type>
   <object-name>flcs</object-name>
+  <condition>
+    <!-- GR1F-16CJ-1 page 1-130 -->
+    <or>
+      <not><property>systems/pitot/serviceable</property></not>
+      <not><property>systems/static/serviceable</property></not>
+      <not><property>f16/avionics/le-flaps-switch</property></not>
+      <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
   <object-name>unused</object-name>
   <condition>
-    <or>
     <property>controls/test/test-panel/mal-ind-lts</property>
-    </or>
   </condition>
  </animation>
 
