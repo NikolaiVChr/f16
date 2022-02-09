@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model> 
+   <livery>
+    <name type="string">BAC 350 Sqn, "Ambiorix 80 years"</name>
+    <texture>Liveries/Block20/80-3577.png</texture>
+    <owner type="string">BAC</owner>
+   </livery>
+
+   <livery-logo>
+     <texture>Liveries/standard.logos.black2.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+     <texture>Liveries/patch.BAF_2.png</texture>
+   </livery-patch>
+
+    <livery-pod>
+        <texture>Liveries/Block10/pod.white.png</texture>
+    </livery-pod>
+    <f16>
+        <dragchute type="bool">true</dragchute>
+    </f16>
+  </model>
+ </sim>
+</PropertyList>
