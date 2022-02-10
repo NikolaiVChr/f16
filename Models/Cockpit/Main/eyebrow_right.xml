@@ -38,7 +38,7 @@
     <or>
       <not><property>systems/pitot/serviceable</property></not>
       <not><property>systems/static/serviceable</property></not>
-      <not><property>f16/avionics/le-flaps-switch</property></not>
+      <not><property>f16/fcs/le-flaps-switch</property></not>
       <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>

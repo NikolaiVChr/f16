@@ -2370,7 +2370,7 @@
    <animation>
         <type>knob</type>
         <object-name>SW_LE_FLAPS</object-name>
-        <property>f16/avionics/le-flaps-switch</property>
+        <property>f16/fcs/le-flaps-switch</property>
         <factor>40</factor>
         <offset-deg>-20</offset-deg>
         <drag-direction>vertical</drag-direction>
@@ -2388,7 +2388,7 @@
         <increase>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/le-flaps-switch</property>
+                <property>f16/fcs/le-flaps-switch</property>
                 <step>1</step>
                 <min>0</min>
                 <max>1</max>
@@ -2398,7 +2398,7 @@
         <decrease>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/le-flaps-switch</property>
+                <property>f16/fcs/le-flaps-switch</property>
                 <step>-1</step>
                 <min>0</min>
                 <max>1</max>
@@ -2410,7 +2410,7 @@
     <animation>
         <type>knob</type>
         <object-name>SW_LE_FLAPS_50</object-name>
-        <property>f16/avionics/le-flaps-switch</property>
+        <property>f16/fcs/le-flaps-switch</property>
         <factor>-40</factor>
         <offset-deg>20</offset-deg>
         <drag-direction>vertical</drag-direction>
@@ -2428,7 +2428,7 @@
         <increase>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/le-flaps-switch</property>
+                <property>f16/fcs/le-flaps-switch</property>
                 <step>-1</step>
                 <min>0</min>
                 <max>1</max>
@@ -2438,7 +2438,7 @@
         <decrease>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/le-flaps-switch</property>
+                <property>f16/fcs/le-flaps-switch</property>
                 <step>1</step>
                 <min>0</min>
                 <max>1</max>

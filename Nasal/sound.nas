@@ -268,7 +268,7 @@ setlistener("controls/test/avtr-test", doubleClick2, nil, 0);
 setlistener("f16/avionics/emer-jett-switch", doubleClick2, nil, 0);
 setlistener("f16/avionics/caution/elec-reset-btn", doubleClick, nil, 0);
 setlistener("fdm/jsbsim/elec/switches/flcs-pwr-test", click2, nil, 0);
-setlistener("f16/avionics/le-flaps-switch", button2, nil, 0);
+setlistener("f16/fcs/le-flaps-switch", button2, nil, 0);
 setlistener("f16/fail/servo-rudder-switch", button2, nil, 0);
 setlistener("f16/fail/servo-flaperon-switch", button2, nil, 0);
 setlistener("f16/fail/servo-tail-switch", button2, nil, 0);

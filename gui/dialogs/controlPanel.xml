@@ -812,11 +812,11 @@
 	    </checkbox>
 	    <text><label>LE FLAPS</label></text>
 	    <checkbox>
-	      <property>f16/avionics/le-flaps-switch</property>
+	      <property>f16/fcs/le-flaps-switch</property>
 	      <live>true</live>
 	        <binding>
 	          <command>property-toggle</command>
-	          <property>f16/avionics/le-flaps-switch</property>
+	          <property>f16/fcs/le-flaps-switch</property>
 	        </binding>
 	    </checkbox>
 	    <empty>

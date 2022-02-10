@@ -1341,7 +1341,6 @@ value. 18000=standard US transition altitude -->
             <power-fcr-warming type="bool">true</power-fcr-warming>
             <power-right-hdpt-warm type="double">0</power-right-hdpt-warm>
             <power-right-hdpt-warming type="bool">true</power-right-hdpt-warming>
-            <le-flaps-switch type="bool">true</le-flaps-switch>
             <trim-ap-disc-switch type="bool">false</trim-ap-disc-switch>
             <ins-knob type="int">0</ins-knob>            
             <ew-disp-switch type="bool">false</ew-disp-switch>
@@ -1401,6 +1400,7 @@ value. 18000=standard US transition altitude -->
             <autopilot-aoa-limit-exceed type="bool">false</autopilot-aoa-limit-exceed>
             <autopilot-inhibit type="bool">false</autopilot-inhibit>
 
+            <le-flaps-switch type="bool">true</le-flaps-switch>
             <digital-backup type="bool">false</digital-backup>
         </fcs>
         <engine>
