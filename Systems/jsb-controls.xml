@@ -3123,7 +3123,12 @@
     <table>
      <independentVar lookup="row">velocities/vg-fps</independentVar>
      <independentVar lookup="column">elec/bus/emergency-dc-1</independentVar>
-     <tableData>
+     <independentVar lookup="table">/controls/gear/nose-wheel-steering</independentVar>
+     <tableData breakPoint="0">
+            0 20
+       1.0  0  0
+     </tableData>
+     <tableData breakPoint="1">
             0 20
        1.0  0  10.0
       10.0  0  32.0

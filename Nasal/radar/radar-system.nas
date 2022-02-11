@@ -287,6 +287,8 @@ var AIToNasal = {
         #AIcontact needs 2 calls to work. new() [cheap] and init() [expensive]. Only new is called here, updateVector will do init():
         me.aicontact = AIContact.new(me.prop_ai, me.model, me.callsign, me.pos_type, me.id, me.ainame, me.subid, me.aitype, me.sign);
 
+        me.aicontact.coord = me.aircraftPos;
+        
         me.usign = sprintf("%s%04d",me.callsign,me.id);
         me.usignLookup = [me.aicontact];
         
@@ -816,6 +818,7 @@ var AIContact = {
 	},
 
 	getCoord: func {
+		me.oldCoord = me.coord;
 		if (me.pos_type == ECEF) {
 	    	me.coord = geo.Coord.new().set_xyz(me.x.getValue(), me.y.getValue(), me.z.getValue());
 	    	me.coord.alt();# TODO: once fixed in FG this line is no longer needed.
@@ -827,6 +830,7 @@ var AIContact = {
 		    }
 		    me.coord = geo.Coord.new().set_latlon(me.lat.getValue(), me.lon.getValue(), me.alt.getValue()*FT2M);
 	    }
+	    if (me.coord.lat() == nil or me.coord.lon() == nil or me.coord.alt() == nil) me.coord = me.oldCoord;# This is due to an error Sammy had
 	    return me.coord;
 	},
 

@@ -887,16 +887,17 @@
   <object-name>ar_nws</object-name>
   <condition>
     <or>
-    <and><greater-than><property>fdm/jsbsim/elec/bus/emergency-dc-2</property><value>20</value></greater-than>   
-    <or>
       <and>
-        <property>/systems/refuel/contact</property>
-        <property>/systems/refuel/serviceable</property>
-      </and>
-      <property>gear/gear[0]/wow</property>
-    </or>
-    </and>
-    <property>controls/test/test-panel/mal-ind-lts</property>
+        <greater-than><property>fdm/jsbsim/elec/bus/emergency-dc-2</property><value>20</value></greater-than>   
+        <or>
+          <and>
+            <property>/systems/refuel/contact</property>
+            <property>/systems/refuel/serviceable</property>
+          </and>
+          <property>controls/gear/nose-wheel-steering</property>
+        </or>
+      </and>      
+      <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>
  </animation>
