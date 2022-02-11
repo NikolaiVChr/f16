@@ -1257,8 +1257,10 @@ var AIM = {
 	commandRadar: func (idle_heading = 0, idle_elevation = 0) {
 		# command that radar is looking at a target, slave to that.
 		if (!me.seam_support or me.status == MISSILE_FLYING) return;
-		me.command_dir_heading = idle_heading;
-		me.command_dir_pitch   = idle_elevation;
+		if (me.status != MISSILE_LOCK) {
+			me.command_dir_heading = idle_heading;
+			me.command_dir_pitch   = idle_elevation;
+		}
 		me.slave_to_radar = TRUE;
 		me.printCode("Slave radar command. Idle: heading %0.1f pitch %0.1f", idle_heading, idle_elevation);
 	},
@@ -3989,7 +3991,7 @@ var AIM = {
         msg.Pitch = pitch;
         msg.Heading = heading;
         msg.u_fps = speed;
-        msg.isValid();
+        #msg.isValid();
         notifications.geoBridgedTransmitter.NotifyAll(msg);
 #print("fox2.nas: transmit in flight");
 #f14.debugRecipient.Receive(msg);
