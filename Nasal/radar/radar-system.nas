@@ -61,6 +61,7 @@ var TERRASUNK = 5; # Terrain not loaded underneath this (low altitude), most lik
 var ECEF = 0;
 var GPS = 1;
 
+var DualSeaterCallsign = props.globals.getNode("/sim/remote/pilot-callsign", 1);
 
 var emptyCoord = geo.Coord.new().set_xyz(0,0,0);
 
@@ -243,6 +244,11 @@ var AIToNasal = {
         	me.callsign = "";
         } else {
         	me.callsign = me.callsign.getValue();
+        }
+        if (me.callsign != nil and me.callsign != "" and me.callsign == DualSeaterCallsign.getValue()) {
+        	# Ignore the dual seater
+        	me.nextReadTreeFrame();
+		    return;
         }
         me.id = me.prop_ai.getNode("id");
         if (me.id == nil) {
@@ -573,11 +579,30 @@ var Blep = {
 		return geo.normdeg180(me.blepHeading-self.getHeading());
 	},
 
+	getBearing: func {
+		# Get azimuth deviation to the blep from my current position/orientation
+		me.blepCoord = me.getCoord();
+		me.blepHeading = self.getCoord().course_to(me.blepCoord);
+		return me.blepHeading;
+	},
+
 	getElevDeviation: func {
 		# Get elevation deviation to the blep from my current position/orientation
 		me.blepCoord = me.getCoord();
 		me.blepPitch = vector.Math.getPitch(self.getCoord(), me.blepCoord);
 		return me.blepPitch - self.getPitch();
+	},
+
+	getPilotDeviations: func {
+		# For displaying blep in HUD etc.
+		me.blepCoord = me.getCoord();
+		me.blepHeading = self.getCoord().course_to(me.blepCoord);
+		me.blepPitch = vector.Math.getPitch(self.getCoord(), me.blepCoord);
+		me.global = vector.Math.eulerToCartesian2(-me.blepHeading, me.blepPitch);
+		me.local  = vector.Math.yawPitchRollVector(self.getHeading(),-self.getPitch(),-self.getRoll(),me.global);
+		me.localDevs = vector.Math.cartesianToEuler(me.local);
+		if (me.localDevs[0] == nil) me.localDevs[0] = 0;
+		return me.localDevs; #  [heading_dev, pitch_dev] from bore
 	},
 
 	getElev: func {
@@ -1469,7 +1494,7 @@ var NoseRadar = {
 		# sort in bearing?
 		# called on demand
 		# TODO: vectorized field instead
-		me.owncrd = geo.aircraft_position();
+		me.owncrd = self.getCoord();
 
 		me.unitX = vector.Math.eulerToCartesian3X(-yaw, elev, 0);
 		me.unitZ = vector.Math.eulerToCartesian3Z(-yaw, elev, 0);
@@ -1512,12 +1537,12 @@ var NoseRadar = {
 
 			me.h = me.pc_x*2*math.tan(elev_radius*D2R);
 			if (-me.h/2 > me.pc_z or me.pc_z > me.h/2) {
-				#print("not Z in for");
+				#print(contact.get_Callsign()," not Z in for ",-me.h/2 > me.pc_z,":",me.pc_z > me.h/2,":",me.pc_x,":",math.tan(elev_radius*D2R),";",elev_radius);
 				continue;
 			}
 			me.w = me.h * yaw_radius / elev_radius; # height x ratio
 			if (-me.w/2 > me.pc_y or me.pc_y  >  me.w/2) {
-				#print("not Y in for");
+				#print(contact.get_Callsign()," not Y in for");
 				continue;
 			}
 			# TODO: clean this up. Only what is needed for testing against instant FoV and RCS should be in here:

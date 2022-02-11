@@ -32,7 +32,7 @@ var FireControl = {
 		fc.changeListener = nil;
 		setlistener("controls/armament/trigger",func{fc.trigger();fc.updateDual()},nil,0);
 		#setlistener("controls/armament/master-arm",func{fc.updateCurrent()},nil,0);
-		setlistener("controls/armament/master-arm-switch",func{fc.masterArmSwitch()},nil,0);
+		setlistener(masterArmSwitch,func{fc.masterArmSwitch()},nil,0);
 		setlistener("controls/armament/dual",func{fc.updateDual()},nil,0);
 		return fc;
 	},
@@ -1190,3 +1190,4 @@ var getCompleteRadarTargetsList = func {
 	# A list of all MP/AI aircraft/ships/surface-targets around the aircraft, including those that is outside radar line of sight etc..
 	return radar_system.getCompleteList();
 }
+var masterArmSwitch = "controls/armament/master-arm-switch";

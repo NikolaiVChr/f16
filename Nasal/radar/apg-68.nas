@@ -472,7 +472,7 @@ var AirborneRadar = {
 		foreach(contact ; me.vector_aicontacts_bleps) {
 			me.bleps_cleaned = [];
 			foreach (me.blep;contact.getBleps()) {
-				if (me.elapsed - me.blep.getBlepTime() < math.max(me.timeToKeepBleps, me.currentMode.timeToFadeBleps)) {
+				if (me.elapsed - me.blep.getBlepTime() < me.currentMode.timeToFadeBleps) {
 					append(me.bleps_cleaned, me.blep);
 				}
 			}
@@ -2205,7 +2205,7 @@ var F16STTMode = {
 	barHeight: 0.90,# multiple of instantFoVradius
 	bars: 2,
 	minimumTimePerReturn: 0.10,
-	timeToFadeBleps: 5, # Need to have time to move disc to the selection from wherever it was before entering STT. Plus already faded bleps from superMode will get pruned if this is to low.
+	timeToFadeBleps: 13, # Need to have time to move disc to the selection from wherever it was before entering STT. Plus already faded bleps from superMode will get pruned if this is to low.
 	debug: 1,
 	painter: 1,
 	debug: 0,
@@ -2306,11 +2306,12 @@ var F16STTMode = {
 	leaveMode: func {
 		me.priorityTarget = nil;
 		me.lastFrameStart = -1;
-		#me.timeToFadeBleps = 5;# Reset to 5, since frameCompleted might have lowered it.
+		me.timeToFadeBleps = 13;# Reset to 5, since getSearchInfo might have lowered it.
 	},
 	getSearchInfo: func (contact) {
 		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
 		if (me.priorityTarget != nil and contact.equals(me.priorityTarget)) {
+			me.timeToFadeBleps = 1.5;
 			return [1,1,1,1,1,1];
 		}
 		return nil;
