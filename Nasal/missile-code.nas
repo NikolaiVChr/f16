@@ -5510,7 +5510,7 @@ var develev_to_devroll = func(dev_rad, elev_rad) {
 	# -90° left, 0° up, 90° right, +/- 180° down. 
 	var dev_deg =  math.atan2( h_dev, v_dev ) * R2D;
 	# Correction with own a/c roll.
-	var combined_dev_deg = dev_deg - OurRoll.getValue();
+	var combined_dev_deg = dev_deg;
 	# Lenght HUD center <-> symbol pos on the HUD:
 	var combined_dev_length = math.sqrt((h_dev*h_dev)+(v_dev*v_dev));
 	# clamp and squeeze the top of the display area so the symbol follow the egg shaped HUD limits.
