@@ -28,6 +28,8 @@
         <object-name>flaperons-r</object-name>
         <object-name>flcs-pwr</object-name>
         <object-name>flcs-run-fail</object-name>
+        <object-name>flcs-run</object-name>
+        <object-name>flcs-fail</object-name>
         <object-name>freqDisplay</object-name>
         <object-name>Guards</object-name>
         <object-name>Guards_trim</object-name>
@@ -609,7 +611,6 @@
   <object-name>ecm-nil</object-name>
   <object-name>ecm-frm</object-name>
   <object-name>ecm-spl</object-name>
-  <object-name>flcs-run-fail</object-name>
   <type>material</type>
   <condition>
       <property>controls/test/test-panel/mal-ind-lts</property>
@@ -620,6 +621,34 @@
    <blue>1</blue>
    <factor-prop>controls/lighting/lighting-panel/mal-ind-lts-brightness</factor-prop>
   </emission>
+ </animation>
+
+ <animation>
+  <type>material</type>
+  <condition>
+      <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+  <emission>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+   <factor-prop>controls/lighting/lighting-panel/mal-ind-lts-brightness</factor-prop>
+  </emission>
+  <object-name>flcs-fail</object-name>
+ </animation>
+
+ <animation>
+  <type>material</type>
+  <condition>
+      <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+  <emission>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+   <factor-prop>controls/lighting/lighting-panel/mal-ind-lts-brightness</factor-prop>
+  </emission>
+  <object-name>flcs-run</object-name>
  </animation>
  
  <animation>
@@ -3882,6 +3911,8 @@
         <object-name>pitch-trim-wheel_50</object-name>
         <object-name>roll-trim-wheel_50</object-name>
         <object-name>flcs-run-fail</object-name>
+        <object-name>flcs-fail</object-name>
+        <object-name>flcs-run</object-name>
         <type>select</type>
         <condition>
           <greater-than>
@@ -4099,6 +4130,8 @@
         <object-name>eec-switch</object-name>
         <object-name>flcs-pwr</object-name>
         <object-name>flcs-run-fail</object-name>
+        <object-name>flcs-run</object-name>
+        <object-name>flcs-fail</object-name>
         <object-name>horiz-l</object-name>
         <object-name>horiz-r</object-name>
         <object-name>flaperons-l</object-name>
