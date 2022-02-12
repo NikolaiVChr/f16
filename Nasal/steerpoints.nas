@@ -748,10 +748,10 @@ var unserialize = func(m) {
 
       	} elsif (number >= 450) {
       		stpt450[number-450] = newST;
-
+      		dlMarkIndex = number-450;
       	} elsif (number >= 400) {
       		stpt400[number-400] = newST;
-
+      		ownMarkIndex = number-400;
       	} elsif (number >= 350) {
       		stpt350[number-350] = newST;
 
