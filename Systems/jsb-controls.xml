@@ -89,15 +89,6 @@
             </function>
         </fcs_function>
 
-        <fcs_function name="fcs/fly-by-wire/enable-standby-gains-inv">
-            <function>
-                <difference>
-                    <v>1</v>
-                    <p>fcs/fly-by-wire/enable-standby-gains</p>
-                </difference>
-            </function>
-        </fcs_function>
-
         <switch name="fcs/fly-by-wire/q_c_standby">
             <description>
                 pound per square feet
@@ -113,16 +104,11 @@
                 Dynamic pressure. Pound per square feet
             </description>
             <function>
-                <sum>
-                    <product>
-                        <p>fcs/fly-by-wire/q_c_standby</p><!-- standby gain-->
-                        <p>fcs/fly-by-wire/enable-standby-gains</p>
-                    </product>
-                    <product>
-                        <p>aero/qbar-psf</p>
-                        <p>fcs/fly-by-wire/enable-standby-gains-inv</p>
-                    </product>
-                </sum>
+                <ifthen>
+                    <p>fcs/fly-by-wire/enable-standby-gains</p>
+                    <p>fcs/fly-by-wire/q_c_standby</p>
+                    <p>aero/qbar-psf</p>
+                </ifthen>
             </function>
         </fcs_function>
 
@@ -143,16 +129,11 @@
                 Static pressure. Pound per square feet
             </description>
             <function>
-                <sum>
-                    <product>
-                        <v>2116</v><!-- standby gain-->
-                        <p>fcs/fly-by-wire/enable-standby-gains</p>
-                    </product>
-                    <product>
-                        <p>atmosphere/P-psf</p>
-                        <p>fcs/fly-by-wire/enable-standby-gains-inv</p>
-                    </product>
-                </sum>
+                <ifthen>
+                    <p>fcs/fly-by-wire/enable-standby-gains</p>
+                    <v>2116</v>
+                    <p>atmosphere/P-psf</p>
+                </ifthen>
             </function>
         </fcs_function>
 
