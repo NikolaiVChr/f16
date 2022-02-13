@@ -150,7 +150,6 @@ var AirborneRadar = {
 		me.newMode.setRange(me.currentMode.getRange());
 		me.oldMode = me.currentMode;
 		me.setCurrentMode(me.newMode, me.oldMode["priorityTarget"]);
-		me.oldMode.leaveMode();
 	},
 	cycleRootMode: func {
 		me.rootMode += 1;
@@ -162,7 +161,6 @@ var AirborneRadar = {
 		#me.newMode.setRange(me.currentMode.getRange());
 		me.oldMode = me.currentMode;
 		me.setCurrentMode(me.newMode, me.oldMode["priorityTarget"]);
-		me.oldMode.leaveMode();
 	},
 	cycleAZ: func {
 		if (me["gmapper"] != nil) me.gmapper.clear();
@@ -204,6 +202,7 @@ var AirborneRadar = {
 		new_mode.radar = me;
 		#new_mode.setCursorDeviation(me.currentMode.getCursorDeviation()); # no need since submodes don't overwrite this
 		new_mode.designatePriority(priority);
+		if (me.oldMode != nil) me.oldMode.leaveMode();
 		new_mode.enterMode();
 		settimer(func me.clearShowScan(), 0.5);
 	},
@@ -217,7 +216,6 @@ var AirborneRadar = {
 		#me.newMode.setRange(me.currentMode.getRange());
 		me.oldMode = me.currentMode;
 		me.setCurrentMode(me.newMode, priority);
-		me.oldMode.leaveMode();
 	},
 	getRange: func {
 		return me.currentMode.getRange();
@@ -894,7 +892,6 @@ var RadarMode = {
 		me.lastFrameStart = -1;
 	},
 	enterMode: func {
-		# Warning: This gets called BEFORE previous mode's leaveMode()
 	},
 	designatePriority: func (contact) {},
 	cycleDesignate: func {},
@@ -1078,7 +1075,6 @@ var APG68 = {
 			me.currentModeIndex = 0;
 			me.newMode = me.mainModes[me.rootMode][me.currentModeIndex];
 			me.setCurrentMode(me.newMode, me.oldMode["priorityTarget"]);
-			me.oldMode.leaveMode();
 		}
 	},
 	setAAMode: func {
@@ -1088,7 +1084,6 @@ var APG68 = {
 			me.currentModeIndex = 0;
 			me.newMode = me.mainModes[me.rootMode][me.currentModeIndex];
 			me.setCurrentMode(me.newMode, me.oldMode["priorityTarget"]);
-			me.oldMode.leaveMode();
 		}
 	},
 	showAZ: func {
