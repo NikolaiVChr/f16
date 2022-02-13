@@ -815,7 +815,7 @@
   <condition>
     <or>
     <greater-than>
-     <property>orientation/alpha-deg</property>
+     <property>/fdm/jsbsim/fcs/fly-by-wire/pitch/alpha-indicated</property>
      <value>15.0</value>
     </greater-than>
     <property>controls/test/test-panel/mal-ind-lts</property>
@@ -834,11 +834,11 @@
     <or>
     <and>
     <greater-than>
-     <property>orientation/alpha-deg</property> 
+     <property>/fdm/jsbsim/fcs/fly-by-wire/pitch/alpha-indicated</property>
      <value>11.0</value>
     </greater-than>
     <less-than>
-     <property>orientation/alpha-deg</property>
+     <property>/fdm/jsbsim/fcs/fly-by-wire/pitch/alpha-indicated</property>
      <value>15.0</value>
     </less-than>
     </and>
@@ -857,7 +857,7 @@
   <condition>
     <or>
     <less-than>
-     <property>orientation/alpha-deg</property>
+     <property>/fdm/jsbsim/fcs/fly-by-wire/pitch/alpha-indicated</property>
      <value>11.0</value>
     </less-than>
     <property>controls/test/test-panel/mal-ind-lts</property>

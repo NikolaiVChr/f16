@@ -505,6 +505,23 @@
             <c1> 8.3 </c1>
         </lag_filter>
 
+        <switch name="fcs/fly-by-wire/pitch/alpha-indicated">
+            <description>
+                GR1F-16CJ-1 page 1-137
+                When NLG WOW occurs, all AOA indications are based on
+                zero degrees.
+                GR1F-16CJ-1 page 1-120
+                DBU - AOA indications do not set to zero and random AOA
+                indications are possible in gusty wind conditions
+                with NLG WOW.
+            </description>
+            <default value="aero/alpha-deg"/>
+            <test logic="AND" value="0">
+                gear/unit[0]/WOW eq 1
+                fcs/fly-by-wire/digital-backup == 0
+            </test>
+        </switch>
+
         <summer name="fcs/fly-by-wire/pitch/alpha-indicated-clamp">
             <input>aero/alpha-deg</input><!-- should really be indicated -->
             <clipto>
