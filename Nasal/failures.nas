@@ -214,7 +214,12 @@ var loop = func {
     fail_master_tmp = [0,0,0,0];
     foreach (sys;fail_list) {
         if (sys[2] != nil) {
-            var status = getprop(sys[2]);
+            var status = 0;
+            if (left(sys[2], 1) == "!") {
+                status = !getprop(substr(sys[2], 1));
+            } else {
+                status = getprop(sys[2]);
+            }
             sys[3] = status == 1;
             if (status == 0) {
                 fail_master_tmp[sys[0]] = 1;
@@ -271,10 +276,11 @@ var fail_list = [
        [3," PLS  GS   FAIL ", "instrumentation/nav/gs/serviceable", 1, 0],
 #      [3," IND  CDI  FAIL ", "instrumentation/nav/cdi", 1, 0], not used by F-16
        [3," ELEC MAIN FAIL ", "systems/electrical/serviceable", 1, 0],    
-       [0,">STBY      GAIN<", "systems/pitot/serviceable", 1, 0], 
-       [0,">STBY      GAIN<", "systems/static/serviceable", 1, 0], 
+       [0,">STBY      GAIN<", "!fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains", 1, 0],
+       [1," FLCS AOA  FAIL ", "systems/static/serviceable", 1, 0],
        [3," CADC BUS  FAIL ", "systems/vacuum/serviceable", 1, 0],
-#       [1,">FLCS LEF  LOCK<", "fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains", 1, 0]
+       [0,">FLCS LEF  LOCK<", "f16/fcs/le-flaps-switch", 1, 0]
+#      [1," FLCS A/P  FAIL ", "???", 1, 0]  if created, contributes to A/P inhibit
 ]; 
 # Systems:
 # 0: FLCS (Warning)
