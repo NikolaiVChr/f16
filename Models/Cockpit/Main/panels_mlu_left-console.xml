@@ -1865,7 +1865,7 @@
         <type>knob</type>
         <object-name>SW_TRIM_DISC</object-name>
         <visible>true</visible>
-        <property>f16/avionics/trim-ap-disc-switch</property>
+        <property>f16/fcs/trim-ap-disc-switch</property>
         <drag-direction>vertical</drag-direction>
         <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
         <repeatable>false</repeatable>
@@ -1885,14 +1885,14 @@
         <increase>
             <binding>
                 <command>property-assign</command>
-                <property>f16/avionics/trim-ap-disc-switch</property>
+                <property>f16/fcs/trim-ap-disc-switch</property>
                 <value>0</value>
             </binding>
         </increase>
         <decrease>
             <binding>
                 <command>property-assign</command>
-                <property>f16/avionics/trim-ap-disc-switch</property>
+                <property>f16/fcs/trim-ap-disc-switch</property>
                 <value>1</value>
             </binding>
         </decrease>
@@ -1902,7 +1902,7 @@
         <type>knob</type>
         <object-name>SW_TRIM_DISC_50</object-name>
         <visible>true</visible>
-        <property>f16/avionics/trim-ap-disc-switch</property>
+        <property>f16/fcs/trim-ap-disc-switch</property>
         <drag-direction>vertical</drag-direction>
         <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
         <repeatable>false</repeatable>
@@ -1922,14 +1922,14 @@
         <increase>
             <binding>
                 <command>property-assign</command>
-                <property>f16/avionics/trim-ap-disc-switch</property>
+                <property>f16/fcs/trim-ap-disc-switch</property>
                 <value>0</value>
             </binding>
         </increase>
         <decrease>
             <binding>
                 <command>property-assign</command>
-                <property>f16/avionics/trim-ap-disc-switch</property>
+                <property>f16/fcs/trim-ap-disc-switch</property>
                 <value>1</value>
             </binding>
         </decrease>

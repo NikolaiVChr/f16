@@ -340,7 +340,7 @@ setlistener("controls/lighting/lighting-panel/mal-ind-lts-brightness-switch", bu
 setlistener("controls/flight/rudder-trim", click3, nil, 0);
 setlistener("controls/flight/elevator-trim", click3, nil, 0);
 setlistener("controls/flight/aileron-trim", click3, nil, 0);
-setlistener("f16/avionics/trim-ap-disc-switch", button2, nil, 0);
+setlistener("f16/fcs/trim-ap-disc-switch", button2, nil, 0);
 setlistener("f16/avionics/indv-ltg-brightness-switch", click2, nil, 0);
 setlistener("f16/avionics/nvis", button2, nil, 0);
 setlistener("f16/avionics/ky58-volume", click3, nil, 0);
