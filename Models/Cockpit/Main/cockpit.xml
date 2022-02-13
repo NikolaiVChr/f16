@@ -894,7 +894,10 @@
             <property>/systems/refuel/contact</property>
             <property>/systems/refuel/serviceable</property>
           </and>
-          <property>controls/gear/nose-wheel-steering</property>
+          <and>
+            <property>controls/gear/nose-wheel-steering</property>
+            <property>gear/gear[0]/wow</property>
+          </and>          
         </or>
       </and>      
       <property>controls/test/test-panel/mal-ind-lts</property>
