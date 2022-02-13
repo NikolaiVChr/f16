@@ -35,7 +35,6 @@ var AirborneRadar = {
 	fieldOfRegardMaxAz: 60,
 	fieldOfRegardMaxElev: 60,
 	fieldOfRegardMinElev: -60,
-	oldMode: nil,
 	currentMode: nil, # vector of cascading modes ending with current submode
 	currentModeIndex: 0,
 	rootMode: 0,
@@ -199,11 +198,12 @@ var AirborneRadar = {
 		return me.currentMode.shortName;
 	},
 	setCurrentMode: func (new_mode, priority = nil) {
+		me.olderMode = me.currentMode;
 		me.currentMode = new_mode;
 		new_mode.radar = me;
 		#new_mode.setCursorDeviation(me.currentMode.getCursorDeviation()); # no need since submodes don't overwrite this
 		new_mode.designatePriority(priority);
-		if (me.oldMode != nil) me.oldMode.leaveMode();
+		if (me.olderMode != nil) me.olderMode.leaveMode();
 		new_mode.enterMode();
 		settimer(func me.clearShowScan(), 0.5);
 	},
