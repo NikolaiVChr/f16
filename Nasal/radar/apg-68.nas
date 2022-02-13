@@ -35,6 +35,7 @@ var AirborneRadar = {
 	fieldOfRegardMaxAz: 60,
 	fieldOfRegardMaxElev: 60,
 	fieldOfRegardMinElev: -60,
+	oldMode: nil,
 	currentMode: nil, # vector of cascading modes ending with current submode
 	currentModeIndex: 0,
 	rootMode: 0,
