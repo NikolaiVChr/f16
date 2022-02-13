@@ -1533,7 +1533,7 @@ var setInvisible = func (m) {
 
 settimer( func { ignoreLoop(); }, 5);
 
-setlistener("controls/flight/alt-rel-button", func (node) {setprop("controls/armament/trigger", node.getValue());});
+setlistener("controls/armament/alt-rel-button", func (node) {setprop("controls/armament/trigger", node.getValue());});
 
 var SOI = int(rand() * 3)+1; # 1 to 3
 

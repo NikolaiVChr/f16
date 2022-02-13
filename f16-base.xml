@@ -577,6 +577,7 @@
             <trigger type="bool">false</trigger>
             <dual type="int">1</dual>
             <master-arm-switch type="int">0</master-arm-switch>
+            <alt-rel-button type="bool">false</alt-rel-button>
         </armament>
       
         <fuel>

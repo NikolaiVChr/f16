@@ -6,7 +6,7 @@
 
 controls/lighting/lighting-panel/flood-inst-pnl Flood lighting
 
-controls/flight/alt-rel-button           Alternative release (pickle) button
+controls/armament/alt-rel-button         Alternative release (pickle) button
 
 f16/fcs/autopilot-on                     Autopilot engage (block 15 and earlier)
 
@@ -124,13 +124,13 @@ light: ecm lamp off
             <button>0</button>
             <binding>
                 <command>property-assign</command>
-                <property>controls/flight/alt-rel-button</property>
+                <property>controls/armament/alt-rel-button</property>
                 <value>1</value>
             </binding>
             <mod-up>
                 <binding>
                     <command>property-assign</command>
-                    <property>controls/flight/alt-rel-button</property>
+                    <property>controls/armament/alt-rel-button</property>
                     <value>0</value>
                 </binding>
             </mod-up>
@@ -140,7 +140,7 @@ light: ecm lamp off
         <type>translate</type>
         <object-name>alt-rel-button</object-name>
         <factor>-0.005</factor>
-        <property>controls/flight/alt-rel-button</property>
+        <property>controls/armament/alt-rel-button</property>
         <axis>
             <x>0</x>
             <y>0</y>
