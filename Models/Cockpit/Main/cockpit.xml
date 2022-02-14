@@ -875,9 +875,8 @@
   <object-name>rdy</object-name>
    <condition>
     <or>
-      <and><greater-than><property>fdm/jsbsim/elec/bus/emergency-dc-2</property><value>20</value></greater-than>
-    <property>/systems/refuel/serviceable</property></and>
-    <property>controls/test/test-panel/mal-ind-lts</property>
+      <equals><property>controls/lighting/ar-nws</property><value>3</value></equals>
+      <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
    </condition>
  </animation>
@@ -887,19 +886,7 @@
   <object-name>ar_nws</object-name>
   <condition>
     <or>
-      <and>
-        <greater-than><property>fdm/jsbsim/elec/bus/emergency-dc-2</property><value>20</value></greater-than>   
-        <or>
-          <and>
-            <property>/systems/refuel/contact</property>
-            <property>/systems/refuel/serviceable</property>
-          </and>
-          <and>
-            <property>controls/gear/nose-wheel-steering</property>
-            <property>gear/gear[0]/wow</property>
-          </and>          
-        </or>
-      </and>      
+      <equals><property>controls/lighting/ar-nws</property><value>2</value></equals>
       <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>
@@ -910,10 +897,7 @@
   <object-name>disc</object-name>
   <condition>
     <or>
-      <and><greater-than><property>fdm/jsbsim/elec/bus/emergency-dc-2</property><value>20</value></greater-than>
-        <not><property>/systems/refuel/contact</property></not>
-        <property>/systems/refuel/serviceable</property>
-      </and>
+      <equals><property>controls/lighting/ar-nws</property><value>1</value></equals>
       <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>

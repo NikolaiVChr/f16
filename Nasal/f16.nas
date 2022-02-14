@@ -345,7 +345,34 @@ var medium_fast = {
     {
        setprop("controls/lighting/lighting-panel/mal-ind-lts-brightness", 1.0);
     }
-    
+
+    # AR/NWS status light
+    if (getprop("fdm/jsbsim/elec/bus/emergency-dc-2")<20) {
+      setprop("controls/lighting/ar-nws", 0);        # Off
+      aar_disc_timer.stop();
+    } else {
+      if (getprop("/systems/refuel/serviceable") == 1) {
+        if (getprop("/systems/refuel/contact") == 1) {
+          setprop("controls/lighting/ar-nws", 2);    # AR/NWS
+        } else {
+          if (getprop("controls/lighting/ar-nws") == 2) {
+            setprop("controls/lighting/ar-nws", !getprop("gear/gear[0]/wow"));  # DISC / Off
+          }
+          if ((getprop("controls/lighting/ar-nws") != 3) and (aar_disc_timer.isRunning == 0)) {
+            aar_disc_timer.start();
+          }
+        }
+      } else {
+        aar_disc_timer.stop();
+        if ((getprop("controls/gear/nose-wheel-steering") == 1) and
+           (getprop("gear/gear[0]/wow") == 1)) {
+            setprop("controls/lighting/ar-nws", 2); # AR/NWS
+        } else {
+            setprop("controls/lighting/ar-nws", 0); # Off
+        }
+      }
+    }
+
     setprop("/instrumentation/nav[0]/volume", getprop("/f16/avionics/ils-volume")*getprop("sim/current-view/internal"));
 
     setprop("f16/external", !getprop("sim/current-view/internal"));
@@ -356,6 +383,9 @@ var medium_fast = {
   },
 };
 var LOOP_MEDIUM_FAST_RATE = 0.1;
+
+var aar_disc_timer = maketimer(3, func() { setprop("controls/lighting/ar-nws", 3); } );
+aar_disc_timer.singleShot = 1;
 
 var medium = {
   loop: func {
