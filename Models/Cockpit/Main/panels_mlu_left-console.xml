@@ -597,9 +597,6 @@
  </animation>
  
  <animation>
-  <object-name>stbygains-y</object-name>
-  <object-name>stbygains-r</object-name>
-  <object-name>stbygains-p</object-name>
   <object-name>mal</object-name>
   <object-name>adv</object-name>
   <object-name>slf-tst-num</object-name>
@@ -1075,6 +1072,49 @@
   </emission>
  </animation>
  
+ <animation>
+  <!-- 1F-16A-1 page 1-136 -->
+  <object-name>stbygains-y</object-name>
+  <object-name>stbygains-r</object-name>
+  <object-name>stbygains-p</object-name>
+  <type>material</type>
+  <condition>
+    <or>
+          <and>
+            <greater-than>
+              <property>fdm/jsbsim/elec/bus/batt-2</property>
+              <value>20</value>
+            </greater-than>
+            <or>
+              <less-than-equals>
+                <property>fdm/jsbsim/elec/bus/flcc/a</property>
+                <value>22</value>
+              </less-than-equals>
+              <less-than-equals>
+                <property>fdm/jsbsim/elec/bus/flcc/b</property>
+                <value>22</value>
+              </less-than-equals>
+              <less-than-equals>
+                <property>fdm/jsbsim/elec/bus/flcc/c</property>
+                <value>22</value>
+              </less-than-equals>
+              <less-than-equals>
+                <property>fdm/jsbsim/elec/bus/flcc/d</property>
+                <value>22</value>
+              </less-than-equals>
+            </or>
+          </and>
+          <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+  </condition>
+  <emission>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+   <factor-prop>controls/lighting/lighting-panel/mal-ind-lts-brightness</factor-prop>
+  </emission>
+ </animation>
+
  <animation>
   <object-name>stbygains-dot</object-name>
   <type>material</type>
