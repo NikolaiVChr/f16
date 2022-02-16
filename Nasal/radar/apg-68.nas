@@ -17,13 +17,13 @@ var MONO = 0;
 var overlapHorizontal = 1.5;
 
 
-#   █████  ██ ██████  ██████   ██████  ██████  ███    ██ ███████     ██████   █████  ██████   █████  ██████  
-#  ██   ██ ██ ██   ██ ██   ██ ██    ██ ██   ██ ████   ██ ██          ██   ██ ██   ██ ██   ██ ██   ██ ██   ██ 
-#  ███████ ██ ██████  ██████  ██    ██ ██████  ██ ██  ██ █████       ██████  ███████ ██   ██ ███████ ██████  
-#  ██   ██ ██ ██   ██ ██   ██ ██    ██ ██   ██ ██  ██ ██ ██          ██   ██ ██   ██ ██   ██ ██   ██ ██   ██ 
-#  ██   ██ ██ ██   ██ ██████   ██████  ██   ██ ██   ████ ███████     ██   ██ ██   ██ ██████  ██   ██ ██   ██ 
-#                                                                                                            
-#                                                                                                            
+#   █████  ██ ██████  ██████   ██████  ██████  ███    ██ ███████     ██████   █████  ██████   █████  ██████
+#  ██   ██ ██ ██   ██ ██   ██ ██    ██ ██   ██ ████   ██ ██          ██   ██ ██   ██ ██   ██ ██   ██ ██   ██
+#  ███████ ██ ██████  ██████  ██    ██ ██████  ██ ██  ██ █████       ██████  ███████ ██   ██ ███████ ██████
+#  ██   ██ ██ ██   ██ ██   ██ ██    ██ ██   ██ ██  ██ ██ ██          ██   ██ ██   ██ ██   ██ ██   ██ ██   ██
+#  ██   ██ ██ ██   ██ ██████   ██████  ██   ██ ██   ████ ███████     ██   ██ ██   ██ ██████  ██   ██ ██   ██
+#
+#
 var AirborneRadar = {
 	#
 	# This is an base class for an airborne forward looking radar
@@ -67,7 +67,7 @@ var AirborneRadar = {
 		var rdr = {parents: [child, AirborneRadar, Radar]};
 
 		rdr.mainModes = mainModes;
-		
+
 		foreach (modes ; mainModes) {
 			foreach (mode ; modes) {
 				# this needs to be set on submodes also...hmmm
@@ -187,7 +187,7 @@ var AirborneRadar = {
 	getCursorAltitudeLimits: func {
 		if (!me.enabled) return nil;
 		return me.currentMode.getCursorAltitudeLimits();
-	},	
+	},
 	getBars: func {
 		return me.currentMode.getBars();
 	},
@@ -252,7 +252,7 @@ var AirborneRadar = {
 
 		# Make an array that holds: [azimuth_norm, elevation_norm, azimuth_deg, elevation_deg]
 		me.positionCart = [me.posAZDeg/me.fieldOfRegardMaxAz, me.posElDeg/me.fieldOfRegardMaxElev,me.posAZDeg,me.posElDeg];
-		
+
 		# Note: that all these numbers can be either relative to aircraft or relative to scenery.
 		# Its the modes responsibility to call this method with antennae local_dir that is either relative to
 		# aircraft, or to landscape so that they match how scanFOV compares the antennae direction to target positions.
@@ -323,7 +323,7 @@ var AirborneRadar = {
 	            datalink.clear_data();
 	        }
 		}
-		
+
 		me.debug = getprop("debug-radar/debug-main");
 	},
 	loopSlow: func {
@@ -347,7 +347,7 @@ var AirborneRadar = {
     		 me.currentMode.bars == 1 or (me.currentMode.bars == 4 and me.currentMode["nextPatternNode"] == 2) or (me.currentMode.bars == 3 and me.currentMode["nextPatternNode"] == 3) or (me.currentMode.bars == 2 and me.currentMode["nextPatternNode"] == 3));# The last two parameter is hack
 
     	# test for passive ECM (chaff)
-		# 
+		#
 		me.closestChaff = 1000000;# meters
 		if (size(me.chaffList)) {
 			if (me.horizonStabilized) {
@@ -355,11 +355,11 @@ var AirborneRadar = {
 			} else {
 				me.globalAntennaeDir = vector.Math.rollPitchYawVector(self.getRoll(), self.getPitch(), -self.getHeading(), me.positionDirection);
 			}
-			
+
 			foreach (me.chaff ; me.chaffList) {
 				if (rand() < me.chaffFilter or me.chaff.meters < 10000+10000*rand()) continue;# some chaff are filtered out.
 				me.globalToTarget = vector.Math.pitchYawVector(me.chaff.pitch, -me.chaff.bearing, [1,0,0]);
-				
+
 				# Degrees from center of radar beam to center of chaff cloud
 				me.beamDeviation = vector.Math.angleBetweenVectors(me.globalAntennaeDir, me.globalToTarget);
 
@@ -526,7 +526,7 @@ var AirborneRadar = {
 	    } else {
 	        # GA/Commercial return most likely
 	        me.target_front_rcs = rcs.rcs_oprf_database["default"];
-	    }	    
+	    }
 	    me.target_rcs = rcs.getRCS(targetCoord, targetHeading, targetPitch, targetRoll, aircraftCoord, me.target_front_rcs);
 
 	    # standard formula
@@ -624,13 +624,13 @@ var SPOT_SCAN = -1; # must be -1
 
 
 
-#  ██████   █████  ██████   █████  ██████      ███    ███  ██████  ██████  ███████ 
-#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ████  ████ ██    ██ ██   ██ ██      
-#  ██████  ███████ ██   ██ ███████ ██████      ██ ████ ██ ██    ██ ██   ██ █████   
-#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██  ██  ██ ██    ██ ██   ██ ██      
-#  ██   ██ ██   ██ ██████  ██   ██ ██   ██     ██      ██  ██████  ██████  ███████ 
-#                                                                                  
-#                                                                                  
+#  ██████   █████  ██████   █████  ██████      ███    ███  ██████  ██████  ███████
+#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ████  ████ ██    ██ ██   ██ ██
+#  ██████  ███████ ██   ██ ███████ ██████      ██ ████ ██ ██    ██ ██   ██ █████
+#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██  ██  ██ ██    ██ ██   ██ ██
+#  ██   ██ ██   ██ ██████  ██   ██ ██   ██     ██      ██  ██████  ██████  ███████
+#
+#
 var RadarMode = {
 	#
 	# Subclass and modify as needed.
@@ -738,7 +738,7 @@ var RadarMode = {
 		# Individual modes override this method and get ready for the step.
 		# Inside this they typically set 'azimuthTilt' and 'elevationTilt' for moving the pattern around.
 		me.preStep();
-		
+
 		# Lets figure out the desired antennae tilts
 	 	me.azimuthTiltIntern = me.azimuthTilt;
 	 	me.elevationTiltIntern = me.elevationTilt;
@@ -803,7 +803,7 @@ var RadarMode = {
 	 	# Lets get a status for where we are in relation to where we are going
 		me.targetDir = vector.Math.pitchYawVector(me.targetElevationTilt, -me.targetAzimuthTilt, [1,0,0]);# A vector for where we want the disc to go
 		me.angleToNextNode = vector.Math.angleBetweenVectors(me.radar.positionDirection, me.targetDir);# Lets test how far from the target tilts we are.
-		
+
 		# Move the disc
 		if (me.angleToNextNode < me.radar.instantFoVradius) {
 			# We have reached our target
@@ -911,11 +911,11 @@ var RadarMode = {
 
 #  ██████   █████  ████████  █████  ██      ██ ███    ██ ██   ██ 
 #  ██   ██ ██   ██    ██    ██   ██ ██      ██ ████   ██ ██  ██  
-#  ██   ██ ███████    ██    ███████ ██      ██ ██ ██  ██ █████   
-#  ██   ██ ██   ██    ██    ██   ██ ██      ██ ██  ██ ██ ██  ██  
+#  ██   ██ ███████    ██    ███████ ██      ██ ██ ██  ██ █████  
+#  ██   ██ ██   ██    ██    ██   ██ ██      ██ ██  ██ ██ ██  ██ 
 #  ██████  ██   ██    ██    ██   ██ ███████ ██ ██   ████ ██   ██ 
 #                                                                
-#                                                                
+#
 DatalinkRadar = {
 	# I check the sky 360 deg for anything on datalink
 	#
@@ -928,7 +928,7 @@ DatalinkRadar = {
 	# This class is only semi generic!
 	new: func (rate, max_dist_nm) {
 		var dlnk = {parents: [DatalinkRadar, Radar]};
-		
+
 		dlnk.max_dist_nm = max_dist_nm;
 		dlnk.index = 0;
 		dlnk.vector_aicontacts = [];
@@ -955,7 +955,7 @@ DatalinkRadar = {
 
 	scan: func () {
 		if (!me.enabled) return;
-		
+
 		#this loop is really fast. But we only check 1 contact per call
 		if (me.index >= size(me.vector_aicontacts)) {
 			# will happen if there is no contacts or if contact(s) went away
@@ -980,10 +980,10 @@ DatalinkRadar = {
 				me.vector_aicontacts_for = me.new_vector_aicontacts_for;
 			}
 		} else {
-			
+
 
 			if (me.contact.getRangeDirect()*M2NM > me.max_dist_nm) {me.index += 1;return;}
-			
+
 
 	        me.lnk = datalink.get_data(me.cs);
 	        if (!me.contact.isValid()) {
@@ -1049,13 +1049,13 @@ DatalinkRadar = {
 
 
 
-#   █████  ██████   ██████         ██████   █████  
+#   █████  ██████   ██████         ██████   █████ 
 #  ██   ██ ██   ██ ██             ██       ██   ██ 
 #  ███████ ██████  ██   ███ █████ ███████   █████  
 #  ██   ██ ██      ██    ██       ██    ██ ██   ██ 
 #  ██   ██ ██       ██████         ██████   █████  
-#                                                  
-#                                                  
+#                                                 
+#
 var APG68 = {
 	#
 	# Root modes is  0: CRM  1: ACM 2: SEA 3: GM 4: GMT
@@ -1067,7 +1067,7 @@ var APG68 = {
 	rcsRefValue: 3.2,
 	targetHistory: 3,# Not used in TWS
 	isEnabled: func {
-		return getprop("/f16/avionics/power-fcr-bit") == 2 and getprop("instrumentation/radar/radar-enable") and !getprop("/fdm/jsbsim/gear/unit[0]/WOW");
+		return getprop("/f16/avionics/power-fcr-bit") == 2 and getprop("instrumentation/radar/radar-enable");# and !getprop("/fdm/jsbsim/gear/unit[0]/WOW");
 	},
 	setAGMode: func {
 		if (me.rootMode != 3) {
@@ -1110,13 +1110,13 @@ var APG68 = {
 
 
 
-#  ███████        ██  ██████      ███    ███  █████  ██ ███    ██     ███    ███  ██████  ██████  ███████ 
-#  ██            ███ ██           ████  ████ ██   ██ ██ ████   ██     ████  ████ ██    ██ ██   ██ ██      
-#  █████   █████  ██ ███████      ██ ████ ██ ███████ ██ ██ ██  ██     ██ ████ ██ ██    ██ ██   ██ █████   
-#  ██             ██ ██    ██     ██  ██  ██ ██   ██ ██ ██  ██ ██     ██  ██  ██ ██    ██ ██   ██ ██      
-#  ██             ██  ██████      ██      ██ ██   ██ ██ ██   ████     ██      ██  ██████  ██████  ███████ 
-#                                                                                                         
-#                                                                                                         
+#  ███████        ██  ██████      ███    ███  █████  ██ ███    ██     ███    ███  ██████  ██████  ███████
+#  ██            ███ ██           ████  ████ ██   ██ ██ ████   ██     ████  ████ ██    ██ ██   ██ ██
+#  █████   █████  ██ ███████      ██ ████ ██ ███████ ██ ██ ██  ██     ██ ████ ██ ██    ██ ██   ██ █████
+#  ██             ██ ██    ██     ██  ██  ██ ██   ██ ██ ██  ██ ██     ██  ██  ██ ██    ██ ██   ██ ██
+#  ██             ██  ██████      ██      ██ ██   ██ ██ ██   ████     ██      ██  ██████  ██████  ███████
+#
+#
 var APG68Mode = {
 	minRange: 5, # MLU T1 .. should we make this 10 for block 10/30/YF? TODO
 	maxRange: 160,
@@ -1124,7 +1124,7 @@ var APG68Mode = {
 	barPattern:  [ [[-1,0],[1,0]],                    # These are multitudes of [me.az, instantFoVradius]
 	               [[-1,-1],[1,-1],[1,1],[-1,1]],
 	               [[-1,0],[1,0],[1,2],[-1,2],[-1,0],[1,0],[1,-2],[-1,-2]],
-	               [[1,-3],[1,3],[-1,3],[-1,1],[1,1],[1,-1],[-1,-1],[-1,-3]] ],	               
+	               [[1,-3],[1,3],[-1,3],[-1,1],[1,1],[1,-1],[-1,-1],[-1,-3]] ],
 	barPatternMin: [0,-1, -2, -3],
 	barPatternMax: [0, 1,  2,  3],
 	rootName: "CRM",
@@ -1152,7 +1152,7 @@ var APG68Mode = {
 			return me.decreaseRange();
 		} elsif (nm > me.radar.getRange()*0.95) {
 			return me.increaseRange();
-		}		
+		}
 		return 0;
 	},
 	frameCompleted: func {
@@ -1177,7 +1177,7 @@ var APG68Mode = {
 #  ██   ██ ██ ███ ██      ██ 
 #  ██   ██  ███ ███  ███████ 
 #                            
-#                            
+#
 var F16RWSMode = {
 	radar: nil,
 	shortName: "RWS",
@@ -1249,7 +1249,7 @@ var F16RWSMode = {
 #  ██      ██   ██      ██ 
 #  ███████ ██   ██ ███████ 
 #                          
-#                          
+#
 var F16LRSMode = {
 	shortName: "LRS",
 	longName: "Long Range Search",
@@ -1267,13 +1267,13 @@ var F16LRSMode = {
 };
 
 
-#  ███████ ███████  █████  
+#  ███████ ███████  █████ 
 #  ██      ██      ██   ██ 
 #  ███████ █████   ███████ 
 #       ██ ██      ██   ██ 
 #  ███████ ███████ ██   ██ 
 #                          
-#                          
+#
 var F16SeaMode = {
 	rootName: "SEA",
 	shortName: "AUTO",
@@ -1319,7 +1319,7 @@ var F16SeaMode = {
 			return me.decreaseRange();
 		} elsif (me.autoCursor and nm > me.radar.getRange()*0.95) {
 			return me.increaseRange();
-		}		
+		}
 		return 0;
 	},
 	preStep: func {
@@ -1396,7 +1396,7 @@ var F16SeaMode = {
 #  ██    ██ ██  ██  ██ 
 #   ██████  ██      ██ 
 #                      
-#                      
+#
 var F16GMMode = {
 	rootName: "GM",
 	longName: "Ground Map",
@@ -1459,18 +1459,18 @@ var F16GMMode = {
 			return [me.azStart, me.azEnd, me.expMinRange, me.cornerRangeNm];
 		} else {
 			return nil;
-		}		
+		}
 	},
 };
 
 
 #   ██████  ███    ███ ████████ 
 #  ██       ████  ████    ██    
-#  ██   ███ ██ ████ ██    ██    
-#  ██    ██ ██  ██  ██    ██    
-#   ██████  ██      ██    ██    
-#                               
-#                               
+#  ██   ███ ██ ████ ██    ██ 
+#  ██    ██ ██  ██  ██    ██ 
+#   ██████  ██      ██    ██ 
+#                            
+#
 var F16GMTMode = {
 	rootName: "GMT",
 	longName: "Ground Moving Target",
@@ -1498,13 +1498,13 @@ var F16GMTMode = {
 };
 
 
-#  ██    ██ ███████ ██████  
+#  ██    ██ ███████ ██████ 
 #  ██    ██ ██      ██   ██ 
 #  ██    ██ ███████ ██████  
 #   ██  ██       ██ ██   ██ 
 #    ████   ███████ ██   ██ 
 #                           
-#                           
+#
 var F16VSMode = {
 	shortName: "VSR",
 	longName: "Velocity Search",
@@ -1594,7 +1594,7 @@ var F16VSMode = {
 #     ██    ██ ███ ██      ██ 
 #     ██     ███ ███  ███████ 
 #                             
-#                             
+#
 var F16TWSMode = {
 	radar: nil,
 	shortName: "TWS",
@@ -1738,7 +1738,7 @@ var F16TWSMode = {
 		me.isInCurrent = me.radar.containsVectorContact(me.currentTracked, contact);
 		if (size(me.currentTracked) < me.maxTracked and me.scanInterval) {
 			#print("  TWICE    ",me.radar.elapsed);
-			#print(me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, contact),"   ",me.radar.elapsed - contact.blepTime);			
+			#print(me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, contact),"   ",me.radar.elapsed - contact.blepTime);
 			if (!me.isInCurrent) append(me.currentTracked, contact);
 			return [1,1,1,1,1,1];
 		} elsif (me.isInCurrent and me.scanInterval) {
@@ -1812,7 +1812,7 @@ var F16TWSMode = {
 #  ██   ██ ██ ███ ██      ██            ██ ██   ██ ██  ██  ██ 
 #  ██   ██  ███ ███  ███████       ███████ ██   ██ ██      ██ 
 #                                                             
-#                                                             
+#
 var F16RWSSAMMode = {
 	radar: nil,
 	shortName: "RWS",
@@ -1942,7 +1942,7 @@ var F16RWSSAMMode = {
 #  ██      ██   ██      ██            ██ ██   ██ ██  ██  ██ 
 #  ███████ ██   ██ ███████       ███████ ██   ██ ██      ██ 
 #                                                           
-#                                                           
+#
 var F16LRSSAMMode = {
 	shortName: "LRS",
 	longName: "Long Range Search - Situational Awareness Mode",
@@ -1976,7 +1976,7 @@ var F16LRSSAMMode = {
 #  ██   ██ ██      ██  ██  ██ 
 #  ██   ██  ██████ ██      ██ 
 #                             
-#                             
+#
 var F16ACMMode = {#TODO
 	radar: nil,
 	rootName: "ACM",
@@ -2165,7 +2165,7 @@ var F16ACMBoreMode = {
 		me.preStep();
 		me.localDirHMD = vector.Math.pitchYawVector(me.elevationTilt, -me.azimuthTilt, [1,0,0]);
 		me.angleToHMD = vector.Math.angleBetweenVectors(me.radar.positionDirection, me.localDirHMD);
-		me.maxMove = math.min(me.angleToHMD, me.discSpeed_dps*dt);		
+		me.maxMove = math.min(me.angleToHMD, me.discSpeed_dps*dt);
 		if (me.angleToHMD < 0.1) {
 			me.radar.setAntennae(me.localDirHMD);
 			me.lastFrameDuration = 0;
@@ -2183,11 +2183,11 @@ var F16ACMBoreMode = {
 
 #  ███████ ████████ ████████ 
 #  ██         ██       ██    
-#  ███████    ██       ██    
-#       ██    ██       ██    
-#  ███████    ██       ██    
-#                            
-#                            
+#  ███████    ██       ██ 
+#       ██    ██       ██ 
+#  ███████    ██       ██ 
+#                         
+#
 var F16STTMode = {
 	radar: nil,
 	shortName: "STT",
@@ -2359,11 +2359,11 @@ var F16MultiSTTMode = {
 
 #  ███████ ████████ ████████ 
 #  ██         ██       ██    
-#  █████      ██       ██    
-#  ██         ██       ██    
-#  ██         ██       ██    
-#                            
-#                            
+#  █████      ██       ██ 
+#  ██         ██       ██ 
+#  ██         ██       ██ 
+#                         
+#
 var F16SEAFTTMode = {
 	rootName: "",
 	shortName: "FTT",
@@ -2423,13 +2423,13 @@ var F16GMTFTTMode = {
 
 
 
-#  ███████        ██  ██████      ██████  ██     ██ ██████  
+#  ███████        ██  ██████      ██████  ██     ██ ██████ 
 #  ██            ███ ██           ██   ██ ██     ██ ██   ██ 
 #  █████   █████  ██ ███████      ██████  ██  █  ██ ██████  
 #  ██             ██ ██    ██     ██   ██ ██ ███ ██ ██   ██ 
 #  ██             ██  ██████      ██   ██  ███ ███  ██   ██ 
 #                                                           
-#                                                           
+#
 var RWR = {
 	# inherits from Radar
 	# will check radar/transponder and ground occlusion.
@@ -2506,7 +2506,7 @@ var RWR = {
             me.inv_bearing =  me.bearing+180;#bearing from target to me
             me.deviation = me.inv_bearing - me.heading;# bearing deviation from target to me
             me.dev = math.abs(geo.normdeg180(me.deviation));# my degrees from opponents nose
-            
+
             if (me.show == 1) {
                 if (me.dev < 30 and me.rn < 7 and me.threatDB[8] > 60) {
                     # he is in position to fire heatseeker at me
@@ -2595,13 +2595,13 @@ var RWR = {
 
 
 
-#   ██████  ██████   ██████  ██    ██ ███    ██ ██████      ███    ███  █████  ██████  ██████  ███████ ██████  
-#  ██       ██   ██ ██    ██ ██    ██ ████   ██ ██   ██     ████  ████ ██   ██ ██   ██ ██   ██ ██      ██   ██ 
-#  ██   ███ ██████  ██    ██ ██    ██ ██ ██  ██ ██   ██     ██ ████ ██ ███████ ██████  ██████  █████   ██████  
-#  ██    ██ ██   ██ ██    ██ ██    ██ ██  ██ ██ ██   ██     ██  ██  ██ ██   ██ ██      ██      ██      ██   ██ 
-#   ██████  ██   ██  ██████   ██████  ██   ████ ██████      ██      ██ ██   ██ ██      ██      ███████ ██   ██ 
-#                                                                                                              
-#                                                                                                              
+#   ██████  ██████   ██████  ██    ██ ███    ██ ██████      ███    ███  █████  ██████  ██████  ███████ ██████
+#  ██       ██   ██ ██    ██ ██    ██ ████   ██ ██   ██     ████  ████ ██   ██ ██   ██ ██   ██ ██      ██   ██
+#  ██   ███ ██████  ██    ██ ██    ██ ██ ██  ██ ██   ██     ██ ████ ██ ███████ ██████  ██████  █████   ██████
+#  ██    ██ ██   ██ ██    ██ ██    ██ ██  ██ ██ ██   ██     ██  ██  ██ ██   ██ ██      ██      ██      ██   ██
+#   ██████  ██   ██  ██████   ██████  ██   ████ ██████      ██      ██ ██   ██ ██      ██      ███████ ██   ██
+#
+#
 var TerrainMapper = {
 	new: func (radar, rate) {
 		var tm = {parents: [TerrainMapper, Radar]};
@@ -2774,7 +2774,7 @@ var TerrainMapper = {
 	paintImage: func (azData, bottomBar, topBar) {
 
 		me.iStart = math.floor(me.gmPicSize*azData.rangeFwdNm/me.radar.getRange());
-		
+
 		if (me.debug) {
 			setprop("debug-radar/mapper-steps", size(azData.returns));
 			setprop("debug-radar/mapper-domain-fwd-nm", azData.domainFwdNm);
@@ -2813,7 +2813,7 @@ var TerrainMapper = {
 			} else {
 				me.gmColor = azData.returns[i]==nil?0:math.pow(math.clamp(azData.returns[i],0,1), me.gainNode.getValue());
 			}
-			
+
 			me.gmY  = me.gm_y_origin+me.iStart+i;
 			me.gmX  = math.floor(me.gm_x_origin+me.jMid*(i+me.iStart));
 			me.gmX0 = me.gm_x_origin+me.jStart*(i+me.iStart);
@@ -2834,7 +2834,7 @@ var TerrainMapper = {
 		#	# Clear the field below the bottom bar as we might have risen in alitude so its old data shown closer to ownship that can confuse pilot.
 		#	for (var y = me.firstY-1; y >= 0; y-=1 ) {
 		#		#var x = math.clamp(me.gm_x_origin + (y/me.firstY) * me.firstX, 0, 63);
-		#		if (me.firstX > 31)    {me.gmPic.setPixel(me.firstX,   y, [0,0,0,1]);me.gmPic.setPixel(me.firstX-1, y, [0,0,0,1]);me.gmPic.setPixel(me.firstX-2, y, [0,0,0,1]);}				                    
+		#		if (me.firstX > 31)    {me.gmPic.setPixel(me.firstX,   y, [0,0,0,1]);me.gmPic.setPixel(me.firstX-1, y, [0,0,0,1]);me.gmPic.setPixel(me.firstX-2, y, [0,0,0,1]);}
 		#		elsif (me.firstX < 31) {me.gmPic.setPixel(me.firstX+1, y, [0,0,0,1]);me.gmPic.setPixel(me.firstX+2, y, [0,0,0,1]);me.gmPic.setPixel(me.firstX+3, y, [0,0,0,1]);}
 		#		else                    me.gmPic.setPixel(me.firstX,   y, [0,0,0,1]);
 		#	}
@@ -2963,7 +2963,7 @@ var TerrainMapper = {
 	    }
 	    foreach (var name; info.names) {
 	        if (contains(me.natural_names, name)) return me.natural_names[name];
-	    }	    
+	    }
     	return 0;
     },
     urban_names: {
@@ -2980,7 +2980,7 @@ var TerrainMapper = {
 		# TODO: find more real data on this. Best source so far: AP3456 – 11-x - Radar
 	    "Cliffs": 0.8,  # tend to be steep, hence greater return
 	    "Asphalt": 0.7, # very granular hence good backscatter
-	    "Airport": 0.5, # 
+	    "Airport": 0.5, #
 	    "Rock": 0.6,    # tend to be somewhat steep, hence some solid backscatter
 	    "RainForest": 0.35,
 	    "MixedForest": 0.35,# wood does very little backscatter, but trees are upright, so good opportunity for specular return
@@ -3022,13 +3022,13 @@ var TerrainMapper = {
 
 
 
-#  ████████  ██████  ██████      ██████   ██████  ██ ███    ██ ████████ 
-#     ██    ██       ██   ██     ██   ██ ██    ██ ██ ████   ██    ██    
-#     ██    ██   ███ ██████      ██████  ██    ██ ██ ██ ██  ██    ██    
-#     ██    ██    ██ ██          ██      ██    ██ ██ ██  ██ ██    ██    
-#     ██     ██████  ██          ██       ██████  ██ ██   ████    ██    
-#                                                                       
-#                                                                       
+#  ████████  ██████  ██████      ██████   ██████  ██ ███    ██ ████████
+#     ██    ██       ██   ██     ██   ██ ██    ██ ██ ████   ██    ██
+#     ██    ██   ███ ██████      ██████  ██    ██ ██ ██ ██  ██    ██
+#     ██    ██    ██ ██          ██      ██    ██ ██ ██  ██ ██    ██
+#     ██     ██████  ██          ██       ██████  ██ ██   ████    ██
+#
+#
 var ContactTGP = {
 	new: func(callsign, coord, laser = 1) {
 		var obj             = { parents : [ContactTGP, Contact]};# in real OO class this should inherit from Contact, but in nasal it does not need to
@@ -3116,10 +3116,10 @@ var ContactTGP = {
 
 	get_uBody: func {
 		return 0;
-	},    
+	},
 	get_vBody: func {
 		return 0;
-	},    
+	},
 	get_wBody: func {
 		return 0;
 	},
@@ -3230,11 +3230,11 @@ var ecm = ECMChecker.new(0.05, 6);
 var rwsMode = F16RWSMode.new(F16RWSSAMMode.new(F16MultiSTTMode.new()));
 var twsMode = F16TWSMode.new(F16MultiSTTMode.new());
 var lrsMode = F16LRSMode.new(F16LRSSAMMode.new(F16MultiSTTMode.new()));
-var vsrMode = F16VSMode.new(F16STTMode.new()); 
+var vsrMode = F16VSMode.new(F16STTMode.new());
 var acm20Mode = F16ACM20Mode.new(F16ACMSTTMode.new());
 var acm60Mode = F16ACM60Mode.new(F16ACMSTTMode.new());
 var acmBoreMode = F16ACMBoreMode.new(F16ACMSTTMode.new());
-var seaMode = F16SeaMode.new(F16SEAFTTMode.new()); 
+var seaMode = F16SeaMode.new(F16SEAFTTMode.new());
 var gmMode = F16GMMode.new(F16GMFTTMode.new());
 var gmtMode = F16GMTMode.new(F16GMTFTTMode.new());
 var apg68Radar = AirborneRadar.newAirborne([[rwsMode,twsMode,lrsMode,vsrMode],[acm20Mode,acm60Mode,acmBoreMode],[seaMode],[gmMode],[gmtMode]], APG68);

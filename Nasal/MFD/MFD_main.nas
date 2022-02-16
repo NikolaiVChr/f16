@@ -83,15 +83,15 @@ var MFD_Device =
         obj.model_element = model_element;
         var dev_canvas= canvas.new({
                 "name": designation,
-                           "size": [512,512], 
-                            "view": [552,482],                       
-                    "mipmapping": 1     
-                    });                          
+                           "size": [512,512],
+                            "view": [552,482],
+                    "mipmapping": 1
+                    });
 
         obj.canvas = dev_canvas;
         dev_canvas.addPlacement({"node": model_element});
         dev_canvas.setColorBackground(colorBackground);
-        
+
         if (model_index == 0) {
             pullup_cue_0 = obj.canvas.createGroup().set("z-index", 20000);
             pullup_cue_0.createChild("path")
@@ -111,12 +111,12 @@ var MFD_Device =
                .setStrokeLineWidth(3)
                .setColor(colorCircle1);
         }
-        
+
         # Create a group for the parsed elements
         obj.PFDsvg = dev_canvas.createGroup();
         var pres = canvas.parsesvg(obj.PFDsvg, "Nasal/MFD/MFD.svg");
         obj.PFDsvg.set("z-index",1000);
-        
+
         me.get_element(obj.PFDsvg, "layer2").setColor(colorText1);
         var selectionBoxGroup = dev_canvas.createGroup().set("z-index",1);
         obj.selectionBox = selectionBoxGroup.createChild("path")
@@ -142,11 +142,11 @@ var MFD_Device =
     setFontSizeMFDEdgeButton: func(index, size) {
         me.PFD.buttons[index].setFontSize(size);
     },
-    
+
     setTextMFDEdgeButton: func(index, text) {
         me.PFD.buttons[index].setText(text);
     },
-    
+
     get_element : func(svg, id) {
         var el = svg.getElementById(id);
         if (el == nil)
@@ -160,7 +160,7 @@ var MFD_Device =
             clip_el.setVisible(0);
             var tran_rect = clip_el.getTransformedBounds();
 
-            var clip_rect = sprintf("rect(%d,%d, %d,%d)", 
+            var clip_rect = sprintf("rect(%d,%d, %d,%d)",
                                    tran_rect[1], # 0 ys
                                    tran_rect[2],  # 1 xe
                                    tran_rect[3], # 2 ye
@@ -175,13 +175,13 @@ var MFD_Device =
     },
 
 
-#  ██    ██  ██████  ██ ██████  
+#  ██    ██  ██████  ██ ██████ 
 #  ██    ██ ██    ██ ██ ██   ██ 
 #  ██    ██ ██    ██ ██ ██   ██ 
 #   ██  ██  ██    ██ ██ ██   ██ 
 #    ████    ██████  ██ ██████  
-#                               
-#                               
+#                              
+#
     setupVoid: func (svg) {
         svg.p_VOID = me.canvas.createGroup()
             .set("z-index",0);
@@ -207,13 +207,13 @@ var MFD_Device =
     },
 
 
-#   ██████  ██████  ██ ██████  
+#   ██████  ██████  ██ ██████ 
 #  ██       ██   ██ ██ ██   ██ 
 #  ██   ███ ██████  ██ ██   ██ 
 #  ██    ██ ██   ██ ██ ██   ██ 
 #   ██████  ██   ██ ██ ██████  
-#                              
-#                              
+#                             
+#
     setupGrid: func (svg) {
         svg.p_GRID = me.canvas.createGroup()
             .set("z-index",0);
@@ -272,11 +272,11 @@ var MFD_Device =
 
 #   ██████ ██    ██ ██████  ███████ 
 #  ██      ██    ██ ██   ██ ██      
-#  ██      ██    ██ ██████  █████   
-#  ██      ██    ██ ██   ██ ██      
+#  ██      ██    ██ ██████  █████ 
+#  ██      ██    ██ ██   ██ ██    
 #   ██████  ██████  ██████  ███████ 
 #                                   
-#                                   
+#
     setupCube: func (svg) {
         svg.p_CUBE = me.canvas.createGroup()
             .set("z-index",0)
@@ -337,13 +337,13 @@ var MFD_Device =
     },
 
 
-#  ██████   █████  ██████   █████  ██████      ███████ ███████ ████████ ██    ██ ██████  
+#  ██████   █████  ██████   █████  ██████      ███████ ███████ ████████ ██    ██ ██████ 
 #  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██      ██         ██    ██    ██ ██   ██ 
 #  ██████  ███████ ██   ██ ███████ ██████      ███████ █████      ██    ██    ██ ██████  
-#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██          ██ ██         ██    ██    ██ ██      
-#  ██   ██ ██   ██ ██████  ██   ██ ██   ██     ███████ ███████    ██     ██████  ██      
-#                                                                                        
-#                                                                                        
+#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██          ██ ██         ██    ██    ██ ██     
+#  ██   ██ ██   ██ ██████  ██   ██ ██   ██     ███████ ███████    ██     ██████  ██ 
+#                                                                                   
+#
     setupRadar: func (svg, index) {
         svg.p_RDR = me.canvas.createGroup()
                 .setTranslation(276*0.795,482)
@@ -428,7 +428,7 @@ var MFD_Device =
                                 .hide()
                                 .set("z-index",11)
                                 .setStrokeLineWidth(3);
-                
+
             svg.lnkT[i] = svg.p_RDR.createChild("text")
                 .setAlignment("center-bottom")
                 .setColor(colorDot1)
@@ -473,8 +473,8 @@ var MFD_Device =
                     .setStrokeLineWidth(3)
                     .set("z-index",1)
                     .setColor(colorText1);
-        
-        
+
+
         svg.ant_bottom = svg.p_RDR.createChild("path")
                     .moveTo(-276*0.795,-25)
                     .vert(-13)
@@ -543,7 +543,7 @@ var MFD_Device =
                     .set("z-index",1)
                     .setColor(colorLine1);
         }
-        
+
         svg.selection = svg.p_RDR.createChild("group")
                 .set("z-index",12);
         svg.selectionPath = svg.selection.createChild("path")
@@ -552,14 +552,14 @@ var MFD_Device =
                 .arcSmallCW(16, 16, 0, -16*2, 0)
                 .setColor(colorDot1)
                 .setStrokeLineWidth(2);
-            
+
         svg.lockInfo = svg.p_RDR.createChild("text")
                 .setTranslation(276*0.795*0.85, -482*0.9)
                 .setAlignment("right-center")
                 .setColor(colorLine3)
                 .set("z-index",1)
                 .setFontSize(20, 1.0);
-                
+
         svg.interceptCross = svg.p_RDR.createChild("path")
                             .moveTo(10,0)
                             .lineTo(-10,0)
@@ -568,7 +568,7 @@ var MFD_Device =
                             .setColor(colorCircle2)
                             .set("z-index",14)
                             .setStrokeLineWidth(2);
-                            
+
         svg.lockGM = svg.p_RDR.createChild("path")
                             .moveTo(10,0)
                             .lineTo(0,10)
@@ -579,7 +579,7 @@ var MFD_Device =
                             .setColor(colorCircle2)
                             .set("z-index",20)
                             .setStrokeLineWidth(2);
-        
+
         svg.dlzX      = 276*0.795*0.75;
         svg.dlzY      =-482*0.25;
         svg.dlzWidth  =  20;
@@ -636,7 +636,7 @@ var MFD_Device =
            .set("z-index",16)
            .setFontSize(18, 1.0)
            .setColor(colorText2);
-		   
+
 		svg.notSOI = svg.p_RDR.createChild("text")
            .setTranslation(0, -482*0.55)
            .setAlignment("center-center")
@@ -656,7 +656,7 @@ var MFD_Device =
             .set("z-index",1)
             .hide();
 
-           
+
         # OBS 13
         svg.norm = svg.p_RDR.createChild("text")
                 .setTranslation(276*0.795*0.0, -482*0.5-225)
@@ -736,10 +736,10 @@ var MFD_Device =
                 .vert(20)
                 .horiz(-35)
                 .vert(-20)
-                .setColorFill(colorText1)                
+                .setColorFill(colorText1)
                 .setColor(colorText1)
                 .set("z-index",1);
-        
+
         svg.cursor = svg.p_RDR.createChild("group").set("z-index",1000);
         svg.cursorAir = svg.cursor.createChild("path")
                     .moveTo(-8,-9)
@@ -782,7 +782,7 @@ var MFD_Device =
                 .setAlignment("left-top")
                 .setColor(colorLine3)
                 .setFontSize(18, 1.0);
-        
+
         svg.bullseye = svg.p_RDR.createChild("path")
             .moveTo(-25,0)
             .arcSmallCW(25,25, 0,  25*2, 0)
@@ -831,7 +831,7 @@ var MFD_Device =
                 .setTranslation(-190, -50)
                 .setText("12")
                 .set("z-index",1)
-                .setFontSize(18, 1.0);            
+                .setFontSize(18, 1.0);
         svg.bullOwnDir = svg.p_RDR.createChild("text")
                 .setAlignment("center-top")
                 .setColor(colorBullseye)
@@ -874,7 +874,7 @@ var MFD_Device =
     addRadar: func {
         var svg = {getElementById: func (id) {return me[id]},};
         me.setupRadar(svg, me.model_index);
-        me.PFD.addRadarPage = func(svg, title, layer_id) {   
+        me.PFD.addRadarPage = func(svg, title, layer_id) {
             var np = PFD_Page.new(svg, title, layer_id, me);
             append(me.pages, np);
             me.page_index[layer_id] = np;
@@ -964,11 +964,11 @@ var MFD_Device =
 # Menu Id's
 #  CRM
 #   10  11  12  13  14
-# 0                    5            
-# 1                    6            
-# 2                    7            
-# 3                    8            
-# 4                    9            
+# 0                    5
+# 1                    6
+# 2                    7
+# 3                    8
+# 4                    9
 #   15  16  17  18  19
 #  VSD HSD SMS SIT
         };
@@ -976,11 +976,11 @@ var MFD_Device =
 
 #  ██████   █████  ██████   █████  ██████      ██    ██ ██████  ██████   █████  ████████ ███████ 
 #  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██    ██ ██   ██ ██   ██ ██   ██    ██    ██      
-#  ██████  ███████ ██   ██ ███████ ██████      ██    ██ ██████  ██   ██ ███████    ██    █████   
-#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██    ██ ██      ██   ██ ██   ██    ██    ██      
+#  ██████  ███████ ██   ██ ███████ ██████      ██    ██ ██████  ██   ██ ███████    ██    █████ 
+#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██    ██ ██      ██   ██ ██   ██    ██    ██    
 #  ██   ██ ██   ██ ██████  ██   ██ ██   ██      ██████  ██      ██████  ██   ██    ██    ███████ 
 #                                                                                                
-#                                                                                                
+#
         me.p_RDR.update = func (noti) {
 
             me.root.p_RDR_image.setVisible(radar_system.apg68Radar.enabled);
@@ -992,16 +992,16 @@ var MFD_Device =
 			} else {
 				me.root.notSOI.show();
 			}
-            
+
             me.ver = num(split(".", getprop("sim/version/flightgear"))[0]) >= 2020;
-            
-            me.modeSw = getprop("instrumentation/radar/mode-switch");            
-            
+
+            me.modeSw = getprop("instrumentation/radar/mode-switch");
+
             setprop("instrumentation/radar/mode-switch", 0);
-            
-            me.modeSwHD = getprop("instrumentation/radar/mode-hd-switch");            
-              
-            
+
+            me.modeSwHD = getprop("instrumentation/radar/mode-hd-switch");
+
+
             me.root.acm.setText(radar_system.apg68Radar.currentMode.shortName);
             me.root.acm.setColor(colorText1);
             me.root.mod.setText(radar_system.apg68Radar.currentMode.rootName);
@@ -1024,7 +1024,7 @@ var MFD_Device =
                 me.root.rangeRingMid.hide();
                 me.root.rangeRingLow.hide();
             }
-            
+
             #
             # Bulls-eye info on FCR
             #
@@ -1041,7 +1041,7 @@ var MFD_Device =
                 me.bullDistToMe = me.bullCoord.distance_to(me.ownCoord)*M2NM;
                 me.distPixels = me.bullDistToMe*(482/radar_system.apg68Radar.getRange());
                 me.bullPos = me.calcPos(me.wdt, geo.normdeg180(me.meToBull*R2D), me.distPixels);
-                
+
                 me.bullDirToMe = sprintf("%03d", me.bullDirToMe);
                 if (me.bullDistToMe > 100) {
                     me.bullDistToMe = "  ";
@@ -1061,7 +1061,7 @@ var MFD_Device =
             } else {
                 me.root.M.setText("M");
             }
-            
+
             if (me.DGFT or !radar_system.apg68Radar.currentMode.EXPsupport or (radar_system.apg68Radar.getPriorityTarget() != nil and radar_system.apg68Radar.currentMode.EXPfixedAim)) {
                 exp = 0;
                 me.root.norm.hide();
@@ -1082,7 +1082,7 @@ var MFD_Device =
             }
             if (exp) {
                 me.root.norm.setText("EXP");
-                me.root.exp.setTranslation(cursor_pos);                
+                me.root.exp.setTranslation(cursor_pos);
             } else {
                 me.root.norm.setText("NORM");
             }
@@ -1090,7 +1090,7 @@ var MFD_Device =
             me.root.exp.setVisible(exp and !radar_system.apg68Radar.currentMode.EXPfixedAim);
             me.root.acm.setVisible(1);
             me.root.horiz.setRotation(-radar_system.self.getRoll()*D2R);
-            
+
             if (radar_system.apg68Radar.currentMode.longName == radar_system.vsrMode.longName) {
                 me.root.distl.setScale(-1,1);
             } else {
@@ -1101,7 +1101,7 @@ var MFD_Device =
             if (radar_system.apg68Radar.enabled) {
                 if (1) {
                     # radar carets
-                    
+
                     me.caretPosition = radar_system.apg68Radar.getCaretPosition();
                     me.root.ant_bottom.setTranslation(me.wdt*0.5+me.caretPosition[0]*me.wdt*0.5,0);
                     me.root.ant_side.setTranslation(0,-me.caretPosition[1]*482*0.5);
@@ -1111,7 +1111,7 @@ var MFD_Device =
                 } else {
                     me.root.ant_bottom.hide();
                     me.root.ant_side.hide();
-                }                
+                }
                 me.root.silent.hide();
             } elsif (getprop("/f16/avionics/power-fcr-bit") == 2) {
                 me.root.silent.setText("SILENT");
@@ -1124,7 +1124,7 @@ var MFD_Device =
                 me.root.silent.setText("  OFF  ");
                 me.root.silent.show();
             }
-            
+
             if (getprop("/f16/avionics/power-fcr-bit") == 1) {
                 me.root.silent.setTranslation(0, -482*0.825);
                 me.root.bitText.show();
@@ -1132,7 +1132,7 @@ var MFD_Device =
                 me.root.silent.setTranslation(0, -482*0.25);
                 me.root.bitText.hide();
             }
-            
+
             if (uv != nil and me.root.index == uv[2]) {
                 if (systime()-uv[3] < 0.5) {
                     # the time check is to prevent click on other pages to carry over to CRM when that is selected.
@@ -1141,17 +1141,17 @@ var MFD_Device =
                 uv = nil;
             }
             me.exp_modi = exp?(radar_system.apg68Radar.currentMode.EXPfixedAim?0.20:0.25):1.00;# slow down cursor movement when in zoom mode
-            
+
             me.slew_x = getprop("controls/displays/target-management-switch-x[" ~ me.model_index ~ "]")*me.exp_modi;
             me.slew_y = -getprop("controls/displays/target-management-switch-y[" ~ me.model_index ~ "]")*me.exp_modi;
 
             if (getprop("/sim/current-view/name") != "TGP") {
                 f16.resetSlew();
             }
-            
+
             #me.dt = math.min(noti.ElapsedSeconds - me.elapsed, 0.05);
             me.dt = noti.ElapsedSeconds - me.elapsed;
-            
+
             if ((me.slew_x != 0 or me.slew_y != 0 or slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.root.index) and getprop("/sim/current-view/name") != "TGP") {
                 cursor_destination = nil;
                 cursor_pos[0] += me.slew_x*175;
@@ -1217,7 +1217,7 @@ var MFD_Device =
             }
             me.fixedEXPwidth = nil;
             var pixelPerNM = nil;
-            
+
             if (!exp or !radar_system.apg68Radar.currentMode.EXPfixedAim) {
                 me.root.cursor.setTranslation(cursor_pos);
             } else {
@@ -1262,9 +1262,9 @@ var MFD_Device =
                 me.root.cursorLoc.setText(sprintf("%03d %03d",me.cursorBullCrs, me.cursorBullDist*M2NM));
             }
             me.root.cursorLoc.setVisible(me.bullOn);
-            
-            
-            
+
+
+
             me.root.az1.setVisible(radar_system.apg68Radar.showAZ());
             me.root.az2.setVisible(radar_system.apg68Radar.showAZ());
             me.root.bars.setVisible(radar_system.apg68Radar.currentMode.showBars());
@@ -1272,9 +1272,9 @@ var MFD_Device =
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
             me.root.rang.setText(sprintf("%d",radar_system.apg68Radar.getRange()));
-            
+
             me.i=0;
-                        
+
             var a = 0;
             if (radar_system.apg68Radar.getAzimuthRadius() < 20) {
                 a = 1;
@@ -1310,8 +1310,8 @@ var MFD_Device =
             }
             #me.root.lock.hide();
             #me.root.lockGM.hide();
-            
-            
+
+
             # The distance in pixels from cursor that stuff should be zoomed
             if (me.fixedEXPwidth != nil) {
                 me.closeDef = pixelPerNM*me.fixedEXPwidth*0.5;
@@ -1322,7 +1322,7 @@ var MFD_Device =
             #
             # Bulls-eye position on FCR
             #
-            if (me.bullOn) {                
+            if (me.bullOn) {
                 me.bullPos = me.calcEXPPos(me.bullPos);
                 if (me.bullPos == nil) {
                     me.bullOn = 0;
@@ -1332,7 +1332,7 @@ var MFD_Device =
             if (me.bullOn) {
                 me.root.bullseye.setTranslation(me.bullPos);
             }
-            
+
             #
             # Current steerpoint on FCR
             #
@@ -1357,7 +1357,7 @@ var MFD_Device =
                 me.root.steerpoint.setVisible(0);
             }
 
-            
+
 
 #  ██████   █████  ██████   █████  ██████      ██████  ██      ███████ ██████  ███████ 
 #  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██   ██ ██      ██      ██   ██ ██      
@@ -1365,7 +1365,7 @@ var MFD_Device =
 #  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██   ██ ██      ██      ██           ██ 
 #  ██   ██ ██   ██ ██████  ██   ██ ██   ██     ██████  ███████ ███████ ██      ███████ 
 #                                                                                      
-#                                                                                      
+#
             me.desig_new = nil;
             #me.gm_echoPos = {};
             me.ijk = 0;
@@ -1497,13 +1497,13 @@ var MFD_Device =
                 me.root.dlz2.update();
                 me.root.dlz.show();
             }
-            
+
             if (radar_system.apg68Radar.getRange() == radar_system.apg68Radar.currentMode.minRange or !radar_system.apg68Radar.currentMode.showRangeOptions()) {
                 me.root.rangDown.hide();
             } else {
                 me.root.rangDown.show();
             }
-            
+
             if (radar_system.apg68Radar.getRange() == radar_system.apg68Radar.currentMode.maxRange or !radar_system.apg68Radar.currentMode.showRangeOptions()) {
                 me.root.rangUp.hide();
             } else {
@@ -1529,7 +1529,7 @@ var MFD_Device =
                     radar_system.mapper.setImage(me.gmImage, sized*0.5, 0, sized, me.mono, me.gainNode);
                 }
                 #me.gmImage.setScale(8*1.078125*getprop("a"),8*0.9414).setTranslation(-552*0.5*getprop("a"),-482);
-                 
+
                 me.root.gainGaugePointer.setTranslation(-552*0.5*0.65-20,me.interpolate(me.gainNode.getValue(), 1.0, 2.5,-482*0.95+10,-482*0.95-10+65));
                 me.root.gainGaugePointer.show();
                 me.root.gainGauge.show();
@@ -1554,7 +1554,7 @@ var MFD_Device =
 #  ██      ██   ██ ██ ██  ██ ██    ██        ██   ██ ██   ██ ██   ██     ██   ██ ██      ██      ██           ██ 
 #  ██      ██   ██ ██ ██   ████    ██        ██   ██ ██████  ██   ██     ██████  ███████ ███████ ██      ███████ 
 #                                                                                                                
-#                                                                                                                
+#
         me.p_RDR.paintDL = func (contact) {
             if (contact.blue != 1) return;
             if (contact["iff"] != nil) {
@@ -1731,13 +1731,13 @@ var MFD_Device =
                 if (contact["blue"] == 2 or (me.bleppy.hasTrackInfo() and me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.timeToKeepBleps)) {
                     me.color = contact["blue"] == 2?colorCircle1:colorCircle2;
                     if (contact["blue"] == 2) {
-                        me.c_heading    = contact.getHeading();                  
+                        me.c_heading    = contact.getHeading();
                         me.c_devheading = contact.getDeviationHeading();
                         me.c_speed      = contact.getSpeed();
                         me.c_alt        = contact.getAltitude();
                         me.distPixels   = contact.getRange()*(482/(radar_system.apg68Radar.getRange()*NM2M));
                     } else {
-                        me.c_heading    = me.bleppy.getHeading();         
+                        me.c_heading    = me.bleppy.getHeading();
                         me.c_devheading = me.bleppy.getAZDeviation();
                         me.c_speed      = me.bleppy.getSpeed();
                         me.c_alt        = me.bleppy.getAltitude();
@@ -1807,7 +1807,7 @@ var MFD_Device =
                     me.path.show();
                     me.iiii += 1;
                 }
-            }            
+            }
         };
         me.p_RDR.paintChaff = func (chaff) {
             #if (me.chaffLifetime == 0) return;
@@ -1833,7 +1833,7 @@ var MFD_Device =
                 me.root.blep[me.i].setColor(colorDot2[0]*me.color+colorBackground[0]*(1-me.color), colorDot2[1]*me.color+colorBackground[1]*(1-me.color), colorDot2[2]*me.color+colorBackground[2]*(1-me.color));
                 me.root.blep[me.i].show();
                 me.root.blep[me.i].update();
-                
+
                 me.i += 1;
                 if (me.i < me.root.maxB) {
                     me.echoPos2 = [me.echoPos[0]+chaff.rand3*8-4, me.echoPos[1]-chaff.rand4*3];
@@ -1841,7 +1841,7 @@ var MFD_Device =
                     me.root.blep[me.i].setColor(colorDot2[0]*me.color+colorBackground[0]*(1-me.color), colorDot2[1]*me.color+colorBackground[1]*(1-me.color), colorDot2[2]*me.color+colorBackground[2]*(1-me.color));
                     me.root.blep[me.i].show();
                     me.root.blep[me.i].update();
-                    
+
                     me.i += 1;
                 }
             }
@@ -1856,7 +1856,7 @@ var MFD_Device =
     addList: func {
         var svg = {getElementById: func (id) {return me[id]},};
         me.setupList(svg);
-        me.PFD.addListPage = func(svg, title, layer_id) {   
+        me.PFD.addListPage = func(svg, title, layer_id) {
             var np = PFD_Page.new(svg, title, layer_id, me);
             append(me.pages, np);
             me.page_index[layer_id] = np;
@@ -1877,15 +1877,15 @@ var MFD_Device =
         me.p_LIST.setSelection = me.setSelection;
         me.p_LIST.notifyButton = func (eventi) {
             if (eventi != nil) {
-                
+
 # Menu Id's
 #  CRM
 #   10  11  12  13  14
-# 0                    5            
-# 1                    6            
-# 2                    7            
-# 3                    8            
-# 4                    9            
+# 0                    5
+# 1                    6
+# 2                    7
+# 3                    8
+# 4                    9
 #   15  16  17  18  19
 #  VSD HSD SMS SIT
                 if (eventi == 0) {
@@ -1920,27 +1920,27 @@ var MFD_Device =
     },
 
 
-                                                                          
+
 
 #  ██████   █████  ██████   █████  ██████      ███    ███  ██████  ██████  ███████     ██      ██ ███████ ████████ 
 #  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ████  ████ ██    ██ ██   ██ ██          ██      ██ ██         ██    
-#  ██████  ███████ ██   ██ ███████ ██████      ██ ████ ██ ██    ██ ██   ██ █████       ██      ██ ███████    ██    
-#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██  ██  ██ ██    ██ ██   ██ ██          ██      ██      ██    ██    
-#  ██   ██ ██   ██ ██████  ██   ██ ██   ██     ██      ██  ██████  ██████  ███████     ███████ ██ ███████    ██    
-#                                                                                                                  
-#                                                                                                                  
+#  ██████  ███████ ██   ██ ███████ ██████      ██ ████ ██ ██    ██ ██   ██ █████       ██      ██ ███████    ██ 
+#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██  ██  ██ ██    ██ ██   ██ ██          ██      ██      ██    ██ 
+#  ██   ██ ██   ██ ██████  ██   ██ ██   ██     ██      ██  ██████  ██████  ███████     ███████ ██ ███████    ██ 
+#                                                                                                               
+#
     setupRList: func(svg) {
         svg.r_LIST = me.canvas.createGroup()
             .set("z-index",2)
             .setTranslation(276*0.795,482)
             .set("font","LiberationFonts/LiberationMono-Regular.ttf");#552,482 , 0.795 is for UV map
 
-        
+
     },
     addRList: func {
         var svg = {getElementById: func (id) {return me[id]},};
         me.setupRList(svg);
-        me.PFD.addRListPage = func(svg, title, layer_id) {   
+        me.PFD.addRListPage = func(svg, title, layer_id) {
             var np = PFD_Page.new(svg, title, layer_id, me);
             append(me.pages, np);
             me.page_index[layer_id] = np;
@@ -1961,15 +1961,15 @@ var MFD_Device =
         me.r_LIST.setSelection = me.setSelection;
         me.r_LIST.notifyButton = func (eventi) {
             if (eventi != nil) {
-                
+
 # Menu Id's
 #  CRM
 #   10  11  12  13  14
-# 0                    5            
-# 1                    6            
-# 2                    7            
-# 3                    8            
-# 4                    9            
+# 0                    5
+# 1                    6
+# 2                    7
+# 3                    8
+# 4                    9
 #   15  16  17  18  19
 #  VSD HSD SMS SIT
                 if (eventi == 0) {
@@ -2011,8 +2011,8 @@ var MFD_Device =
 
 #   ██████ ███    ██ ████████ ██          ██████   █████   ██████  ███████ 
 #  ██      ████   ██    ██    ██          ██   ██ ██   ██ ██       ██      
-#  ██      ██ ██  ██    ██    ██          ██████  ███████ ██   ███ █████   
-#  ██      ██  ██ ██    ██    ██          ██      ██   ██ ██    ██ ██      
+#  ██      ██ ██  ██    ██    ██          ██████  ███████ ██   ███ █████ 
+#  ██      ██  ██ ██    ██    ██          ██      ██   ██ ██    ██ ██    
 #   ██████ ██   ████    ██    ███████     ██      ██   ██  ██████  ███████ 
 #                                                                          
 #
@@ -2057,7 +2057,7 @@ var MFD_Device =
     addRMList: func {
         var svg = {getElementById: func (id) {return me[id]},};
         me.setupRMList(svg);
-        me.PFD.addRListPage = func(svg, title, layer_id) {   
+        me.PFD.addRListPage = func(svg, title, layer_id) {
             var np = PFD_Page.new(svg, title, layer_id, me);
             append(me.pages, np);
             me.page_index[layer_id] = np;
@@ -2080,15 +2080,15 @@ var MFD_Device =
         me.rm_LIST.setSelection = me.setSelection;
         me.rm_LIST.notifyButton = func (eventi) {
             if (eventi != nil) {
-                
+
 # Menu Id's
 #  CRM
 #   10  11  12  13  14
-# 0                    5            
-# 1                    6            
-# 2                    7            
-# 3                    8            
-# 4                    9            
+# 0                    5
+# 1                    6
+# 2                    7
+# 3                    8
+# 4                    9
 #   15  16  17  18  19
 #  VSD HSD SMS SIT
                 if (eventi == 2) {
@@ -2121,15 +2121,15 @@ var MFD_Device =
             me.root.obs6.setText("CHAN\n"~me.chan);
         };
     },
-    
 
-#  ███████ ███    ███ ███████     ███████ ███████ ████████ ██    ██ ██████  
+
+#  ███████ ███    ███ ███████     ███████ ███████ ████████ ██    ██ ██████ 
 #  ██      ████  ████ ██          ██      ██         ██    ██    ██ ██   ██ 
 #  ███████ ██ ████ ██ ███████     ███████ █████      ██    ██    ██ ██████  
-#       ██ ██  ██  ██      ██          ██ ██         ██    ██    ██ ██      
-#  ███████ ██      ██ ███████     ███████ ███████    ██     ██████  ██      
-#                                                                           
-#                                                                           
+#       ██ ██  ██  ██      ██          ██ ██         ██    ██    ██ ██     
+#  ███████ ██      ██ ███████     ███████ ███████    ██     ██████  ██ 
+#                                                                      
+#
     setupSMS: func (svg) {
         svg.p_SMS = me.canvas.createGroup()
                 .set("z-index",2)
@@ -2174,7 +2174,7 @@ var MFD_Device =
                 .setAlignment("left-center")
                 .setColor(colorText1)
                 .setFontSize(20, 1.0);
-        
+
         svg.p7 = svg.p_SMS.createChild("text")
                 .setTranslation(276*0.795*0.37, -482*0.5-15)
                 .setText("--------")
@@ -2206,7 +2206,7 @@ var MFD_Device =
                 .setAlignment("left-center")
                 .setColor(colorText1)
                 .setFontSize(20, 1.0);
-        
+
         svg.p9 = svg.p_SMS.createChild("text")
                 .setTranslation(276*0.795*0.52, -482*0.5+125)
                 .setText("--------")
@@ -2302,14 +2302,14 @@ var MFD_Device =
                 .setAlignment("left-center")
                 .setColor(colorText1)
                 .setFontSize(20, 1.0);
-        
+
         #svg.drop = svg.p_SMS.createChild("text")
         #        .setTranslation(276*0.795*0.65, -482*0.5-225)
         #        .setText("CCRP")
         #        .setAlignment("center-top")
         #        .setColor(colorText1)
-        #        .setFontSize(16, 1.0);        
-        
+        #        .setFontSize(16, 1.0);
+
         svg.p1f = svg.p_SMS.createChild("path")
            .moveTo(-276*0.795*0.97, -482*0.5+115)
            .vert(50)
@@ -2409,7 +2409,7 @@ var MFD_Device =
     addSMS: func {
         var svg = {getElementById: func (id) {return me[id]},};
         me.setupSMS(svg);
-        me.PFD.addSMSPage = func(svg, title, layer_id) {   
+        me.PFD.addSMSPage = func(svg, title, layer_id) {
             var np = PFD_Page.new(svg, title, layer_id, me);
             append(me.pages, np);
             me.page_index[layer_id] = np;
@@ -2511,11 +2511,11 @@ var MFD_Device =
 # Menu Id's
 #  CRM
 #   10  11  12  13  14
-# 0                    5            
-# 1                    6            
-# 2                    7            
-# 3                    8            
-# 4                    9            
+# 0                    5
+# 1                    6
+# 2                    7
+# 3                    8
+# 4                    9
 #   15  16  17  18  19
 #  VSD HSD SMS SIT
             }
@@ -2534,7 +2534,7 @@ var MFD_Device =
             } else {
                 me.root.notSOI.show();
             }
-			
+
             me.cat = pylons.fcs.getCategory();
             me.root.cat.setText(sprintf("CAT %s", me.cat==1?"I":(me.cat==2?"II":"III")));
 
@@ -2611,43 +2611,43 @@ var MFD_Device =
             }
         };
     },
-    
 
-#  ██     ██ ██████  ███    ██     ███████ ███████ ████████ ██    ██ ██████  
+
+#  ██     ██ ██████  ███    ██     ███████ ███████ ████████ ██    ██ ██████ 
 #  ██     ██ ██   ██ ████   ██     ██      ██         ██    ██    ██ ██   ██ 
 #  ██  █  ██ ██████  ██ ██  ██     ███████ █████      ██    ██    ██ ██████  
-#  ██ ███ ██ ██      ██  ██ ██          ██ ██         ██    ██    ██ ██      
-#   ███ ███  ██      ██   ████     ███████ ███████    ██     ██████  ██      
-#                                                                            
-#                                                                            
+#  ██ ███ ██ ██      ██  ██ ██          ██ ██         ██    ██    ██ ██     
+#   ███ ███  ██      ██   ████     ███████ ███████    ██     ██████  ██ 
+#                                                                       
+#
     setupWPN: func (svg) {
         svg.p_WPN = me.canvas.createGroup()
                 .set("z-index",2)
                 .setTranslation(276*0.795,482)
                 .set("font","LiberationFonts/LiberationMono-Regular.ttf");#552,482 , 0.795 is for UV map
 
-        
-        
+
+
         svg.drop = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795*-0.30, -482*0.5-225)
                 .setText("")
                 .setAlignment("center-top")
                 .setColor(colorText1)
-                .setFontSize(18, 1.0);    
-                
+                .setFontSize(18, 1.0);
+
         svg.pre = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795*0.0, -482*0.5-225)
                 .setText("")
                 .setAlignment("center-top")
                 .setColor(colorText1)
                 .setFontSize(18, 1.0);
-                
+
         svg.eegs = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795*0.325, -482*0.5-225)
                 .setText("")
                 .setAlignment("center-top")
                 .setColor(colorText1)
-                .setFontSize(18, 1.0);       
+                .setFontSize(18, 1.0);
         # OBS 6
         svg.weap = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795, -482*0.5-135)
@@ -2655,7 +2655,7 @@ var MFD_Device =
                 .setAlignment("right-center")
                 .setColor(colorText1)
                 .setFontSize(20, 1.0);
-                
+
         svg.ready = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795, -482*0.5+0)
                 .setText("")
@@ -2669,21 +2669,21 @@ var MFD_Device =
         #        .setAlignment("right-center")
         #        .setColor(colorText1)
         #        .setFontSize(20, 1.0);
-                
+
         svg.ripple = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795, -482*0.5+70)
                 .setText("")
                 .setAlignment("right-center")
                 .setColor(colorText1)
                 .setFontSize(20, 1.0);
-        
+
         svg.cool = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795, -482*0.5+140)
                 .setText("")
                 .setAlignment("right-center")
                 .setColor(colorText1)
                 .setFontSize(20, 1.0);
-                
+
         svg.rangUpA = svg.p_WPN.createChild("path")
                     .moveTo(-276*0.795,-482*0.5-105-27.5)
                     .horiz(30)
@@ -2706,7 +2706,7 @@ var MFD_Device =
                     .setStrokeLineWidth(3)
                     .hide()
                     .setColor(colorText1);
-                    
+
         svg.distUpA = svg.p_WPN.createChild("path")
                     .moveTo(-276*0.795,-482*0.5-105-27.5)
                     .horiz(30)
@@ -2730,7 +2730,7 @@ var MFD_Device =
                     .setStrokeLineWidth(3)
                     .hide()
                     .setTranslation(0,140)
-                    .setColor(colorText1);         
+                    .setColor(colorText1);
 		svg.notSOI = svg.p_WPN.createChild("text")
            .setTranslation(0, -482*0.55)
            .setAlignment("center-center")
@@ -2739,8 +2739,8 @@ var MFD_Device =
 		   .hide()
            .setFontSize(18, 1.0)
            .setColor(colorText2);
-        
-                
+
+
         svg.coolFrame = svg.p_WPN.createChild("path")
            .moveTo(276*0.795, -482*0.5+140+12)
            .vert(-24)
@@ -2751,11 +2751,11 @@ var MFD_Device =
            .setStrokeLineWidth(2)
            .hide();
     },
-    
+
     addWPN: func {
         var svg = {getElementById: func (id) {return me[id]},};
         me.setupWPN(svg);
-        me.PFD.addWPNPage = func(svg, title, layer_id) {   
+        me.PFD.addWPNPage = func(svg, title, layer_id) {
             var np = PFD_Page.new(svg, title, layer_id, me);
             append(me.pages, np);
             me.page_index[layer_id] = np;
@@ -2832,12 +2832,12 @@ var MFD_Device =
                 } elsif (eventi == 9) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
-                    }                    
+                    }
                     if (me.wpnType=="heat") {
                         me.cooling = !pylons.fcs.getSelectedWeapon().isCooling();
                         foreach(var snake;pylons.fcs.getAllOfType("AIM-9L")) {
                             snake.setCooling(me.cooling);
-                        }                        
+                        }
                         foreach(var snake;pylons.fcs.getAllOfType("AIM-9M")) {
                             snake.setCooling(me.cooling);
                         }
@@ -2847,13 +2847,13 @@ var MFD_Device =
                         } else {
                             setprop("controls/armament/dual",1);
                         }
-                    }               
+                    }
                 } elsif (eventi == 17) {
                     me.ppp.selectPage(me.my.p_SMS);
                     me.setSelection(me.ppp.buttons[18], me.ppp.buttons[17], 17);
                 #} elsif (eventi == 18) {
                 #    me.ppp.selectPage(me.my.pjitds_1);
-                
+
                 } elsif (eventi == 18) {
                     me.ppp.selectPage(me.my.p_LIST);
                     me.resetColor(me.ppp.buttons[18]);
@@ -2893,11 +2893,11 @@ var MFD_Device =
 # Menu Id's
 #  CRM
 #   10  11  12  13  14
-# 0                    5            
-# 1                    6            
-# 2                    7            
-# 3                    8            
-# 4                    9            
+# 0                    5
+# 1                    6
+# 2                    7
+# 3                    8
+# 4                    9
 #   15  16  17  18  19
 #  VSD HSD WPN SIT
             }
@@ -2909,7 +2909,7 @@ var MFD_Device =
             if (getprop("sim/variant-id") == 0) {
                 return;
             }
-			
+
 			if (f16.SOI == 3 and me.model_index == 1) {
                 me.root.notSOI.hide();
             } elsif (f16.SOI == 2 and me.model_index == 0) {
@@ -2917,7 +2917,7 @@ var MFD_Device =
             } else {
                 me.root.notSOI.show();
             }
-			
+
             if (me["at"]== nil) {
                 me.at = 0;
             }
@@ -2926,7 +2926,7 @@ var MFD_Device =
             }
             me.wpn = pylons.fcs.getSelectedWeapon();
             me.pylon = pylons.fcs.getSelectedPylon();
-            
+
             me.wpnType = "";
             me.cool = "";
             me.eegs = "";
@@ -2964,9 +2964,9 @@ var MFD_Device =
                     pylons.fcs.setRippleDist(FT2M * rpd);
                     me.downAd = rpd>25 and me.showDist;
                     me.upAd = rpd<400 and me.showDist;
-                    
+
                     me.rippleDist = sprintf("RP %3d FT",math.round(rpd));
-                    
+
                     me.eegs = "A-G";
                     me.wpn.arming_time += me.at;
                     if (me.wpn.arming_time < 0) {
@@ -3023,7 +3023,7 @@ var MFD_Device =
                     me.cool = me.wpn.getWarm()==0?"COOL":"WARM";
                     me.eegs = "A-A";
                     me.pre = pylons.fcs.isXfov()?"SCAN":"SPOT";
-                    me.coolFrame = me.wpn.isCooling()==1?1:0;                    
+                    me.coolFrame = me.wpn.isCooling()==1?1:0;
                     me.drop = pylons.bore>0?"BORE":"SLAV";
                     me.ripple = pylons.fcs.isAutocage()?"TD":"BP";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
@@ -3085,8 +3085,8 @@ var MFD_Device =
             } else {
                 me.root.weap.setText("");
             }
-            me.root.pre.setText(me.pre);  
-            me.root.drop.setText(me.drop);  
+            me.root.pre.setText(me.pre);
+            me.root.drop.setText(me.drop);
             me.root.cool.setText(me.cool);
             me.root.eegs.setText(me.eegs);
             me.root.ready.setText(me.ready);
@@ -3098,7 +3098,7 @@ var MFD_Device =
             me.root.rangA.setVisible(me.upA or me.downA);
             #me.root.td_bp.setText(me.td_bp);
             #me.root.td_bp.setVisible(me.wpnType=="heat");
-            
+
             me.root.distDownA.setVisible(me.downAd);
             me.root.distUpA.setVisible(me.upAd);
             me.root.distA.setText(me.rippleDist);
@@ -3109,13 +3109,13 @@ var MFD_Device =
     },
 
 
-#  ██   ██ ███████ ██████      ███████ ███████ ████████ ██    ██ ██████  
+#  ██   ██ ███████ ██████      ███████ ███████ ████████ ██    ██ ██████ 
 #  ██   ██ ██      ██   ██     ██      ██         ██    ██    ██ ██   ██ 
 #  ███████ ███████ ██   ██     ███████ █████      ██    ██    ██ ██████  
-#  ██   ██      ██ ██   ██          ██ ██         ██    ██    ██ ██      
-#  ██   ██ ███████ ██████      ███████ ███████    ██     ██████  ██      
-#                                                                        
-#                                                                        
+#  ██   ██      ██ ██   ██          ██ ██         ██    ██    ██ ██     
+#  ██   ██ ███████ ██████      ███████ ███████    ██     ██████  ██ 
+#                                                                   
+#
     setupHSD: func (svg) {
         svg.p_HSD = me.canvas.createGroup()
                     .set("z-index",2)
@@ -3135,7 +3135,7 @@ var MFD_Device =
         svg.innerRadius  = svg.outerRadius*0.3333;
         #var innerTick    = 0.85*innerRadius*math.cos(45*D2R);
         #var outerTick    = 1.15*innerRadius*math.cos(45*D2R);
-        
+
 
         svg.conc = svg.p_HSDc.createChild("path")
             .moveTo(svg.innerRadius,0)
@@ -3263,7 +3263,7 @@ var MFD_Device =
            .horiz(10)
            .setColor(colorLine1)
            .setStrokeLineWidth(2);
-        
+
         svg.c1 = svg.p_HSDc.createChild("path")
             .moveTo(-50,0)
             .arcSmallCW(50,50, 0,  50*2, 0)
@@ -3332,7 +3332,7 @@ var MFD_Device =
                 .setAlignment("center-center")
                 .setColor(colorCircle2)
                 .set("z-index",2)
-                .setFontSize(15, 1.0);        
+                .setFontSize(15, 1.0);
         svg.ct5 = svg.p_HSDc.createChild("text")
                 .setAlignment("center-center")
                 .setColor(colorCircle3)
@@ -3343,7 +3343,7 @@ var MFD_Device =
                 .setColor(colorCircle3)
                 .set("z-index",2)
                 .setFontSize(15, 1.0);
-        
+
 
         svg.mark = setsize([],10);
         for (var no = 0; no < 10; no += 1) {
@@ -3385,7 +3385,7 @@ var MFD_Device =
                 .setColor(colorBullseye)
                 .setTranslation(-190, -50)
                 .setText("12")
-                .setFontSize(18, 1.0);            
+                .setFontSize(18, 1.0);
         svg.bullOwnDir = svg.buttonView.createChild("text")
                 .setAlignment("center-top")
                 .setColor(colorBullseye)
@@ -3420,7 +3420,7 @@ var MFD_Device =
     addHSD: func {
         var svg = {getElementById: func (id) {return me[id]},};
         me.setupHSD(svg);
-        me.PFD.addHSDPage = func(svg, title, layer_id) {   
+        me.PFD.addHSDPage = func(svg, title, layer_id) {
             var np = PFD_Page.new(svg, title, layer_id, me);
             append(me.pages, np);
             me.page_index[layer_id] = np;
@@ -3534,28 +3534,28 @@ var MFD_Device =
 # Menu Id's
 #  CRM
 #   10  11  12  13  14
-# 0                    5            
-# 1                    6            
-# 2                    7            
-# 3                    8            
-# 4                    9            
+# 0                    5
+# 1                    6
+# 2                    7
+# 3                    8
+# 4                    9
 #   15  16  17  18  19
 #  VSD HSD SMS SIT
         };
 
 #  ██   ██ ███████ ██████      ██    ██ ██████  ██████   █████  ████████ ███████ 
 #  ██   ██ ██      ██   ██     ██    ██ ██   ██ ██   ██ ██   ██    ██    ██      
-#  ███████ ███████ ██   ██     ██    ██ ██████  ██   ██ ███████    ██    █████   
-#  ██   ██      ██ ██   ██     ██    ██ ██      ██   ██ ██   ██    ██    ██      
+#  ███████ ███████ ██   ██     ██    ██ ██████  ██   ██ ███████    ██    █████ 
+#  ██   ██      ██ ██   ██     ██    ██ ██      ██   ██ ██   ██    ██    ██    
 #  ██   ██ ███████ ██████       ██████  ██      ██████  ██   ██    ██    ███████ 
 #                                                                                
-#                                                                                
+#
         me.p_HSD.update = func (noti) {
             if (bottomImages[me.model_index] != nil) bottomImages[me.model_index].hide();
             me.root.conc.setRotation(-radar_system.self.getHeading()*D2R);
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
-				
+
 			if (f16.SOI == 3 and me.model_index == 1) {
                 me.root.notSOI.hide();
             } elsif (f16.SOI == 2 and me.model_index == 0) {
@@ -3598,7 +3598,7 @@ var MFD_Device =
                 } else {
                     me.root.rangUp.show();
                 }
-                
+
                 if (MFD_Device.get_HSD_centered() and MFD_Device.get_HSD_range_cen() == 5) {
                     me.root.rangDown.hide();
                 } elsif (!MFD_Device.get_HSD_centered() and MFD_Device.get_HSD_range_dep() == 8) {
@@ -3614,7 +3614,7 @@ var MFD_Device =
                 me.root.p_HSDc.setTranslation(276*0.795,482*0.75);
                 me.root.rang.setText(""~MFD_Device.get_HSD_range_dep());
             }
-			
+
             me.bullPt = steerpoints.getNumber(555);
             me.bullOn = me.bullPt != nil;
             if (me.bullOn) {
@@ -3629,7 +3629,7 @@ var MFD_Device =
                     me.bullRangePixels = me.root.mediumRadius*(me.bullDistToMe/MFD_Device.get_HSD_range_cen());
                 } else {
                     me.bullRangePixels = me.root.outerRadius*(me.bullDistToMe/MFD_Device.get_HSD_range_dep());
-                }                
+                }
                 me.legX = me.bullRangePixels*math.sin(me.meToBull);
                 me.legY = -me.bullRangePixels*math.cos(me.meToBull);
                 me.root.bullseye.setTranslation(me.legX,me.legY);
@@ -3652,7 +3652,7 @@ var MFD_Device =
             } else {
                 me.rdrRangePixels = me.root.outerRadius*(me.rdrrng/MFD_Device.get_HSD_range_dep());
             }
-            me.az = radar_system.apg68Radar.getAzimuthRadius();
+            me.az = radar_system.apg68Radar.currentMode.az;
             if (noti.FrameCount == 1) {
                 me.root.cone.removeAllChildren();
                 if (radar_system.apg68Radar.enabled) {
@@ -3715,7 +3715,7 @@ var MFD_Device =
                         me.prevY = me.legY;
                     }
                 }
-                
+
                 for (var u = 0;u<2;u+=1) {
                     if (steerpoints.lines[u] != nil) {
                         # lines
@@ -3767,7 +3767,7 @@ var MFD_Device =
                         }
                     }
                 }
-                
+
                 me.root.cone.update();
 
                 for (var mi = 0; mi < 10; mi+=1) {
@@ -3790,7 +3790,7 @@ var MFD_Device =
                         } else {
                             me.legRangePixels = me.root.outerRadius*(me.legDistance/MFD_Device.get_HSD_range_dep());
                         }
-                        
+
                         me.legX = me.legRangePixels*math.sin(me.legBearing*D2R);
                         me.legY = -me.legRangePixels*math.cos(me.legBearing*D2R);
                         me.root.mark[mi].setTranslation(me.legX,me.legY);
@@ -3846,7 +3846,7 @@ var MFD_Device =
                             me.legRangePixels = me.root.outerRadius*(me.legDistance/MFD_Device.get_HSD_range_dep());
                             me.legScale = me.root.outerRadius*(me.legRadius/MFD_Device.get_HSD_range_dep())/50;
                         }
-                        
+
                         me.legX = me.legRangePixels*math.sin(me.legBearing*D2R);
                         me.legY = -me.legRangePixels*math.cos(me.legBearing*D2R);
                         me.ci.setTranslation(me.legX,me.legY);
@@ -3864,20 +3864,20 @@ var MFD_Device =
                     }
                 }
             }
-            
 
-#  ██   ██ ███████ ██████      ██████   █████  ██████   █████  ██████  
+
+#  ██   ██ ███████ ██████      ██████   █████  ██████   █████  ██████ 
 #  ██   ██ ██      ██   ██     ██   ██ ██   ██ ██   ██ ██   ██ ██   ██ 
 #  ███████ ███████ ██   ██     ██████  ███████ ██   ██ ███████ ██████  
 #  ██   ██      ██ ██   ██     ██   ██ ██   ██ ██   ██ ██   ██ ██   ██ 
 #  ██   ██ ███████ ██████      ██   ██ ██   ██ ██████  ██   ██ ██   ██ 
 #                                                                      
-#                                                                      
+#
             if (noti.FrameCount == 3 and me.up == 1) {
                 me.i = 0;#triangles
                 me.ii = 0;#dlink
                 me.selected = 0;
-                
+
                 me.rando = rand();
 
                 if (radar_system.datalink_power.getBoolValue()) {
@@ -3891,14 +3891,14 @@ var MFD_Device =
                 if (radar_system.apg68Radar.enabled) {
                     foreach(contact; radar_system.apg68Radar.getActiveBleps()) {
                         if (contact["rando"] == me.rando) continue;
-                                                
+
                         me.blue = 0;
                         me.blueIndex = -1;
 
                         me.paintBlep(contact);
                     }
                 }
-                
+
                 for (;me.i<me.root.maxB;me.i+=1) {
                     me.root.blepTriangle[me.i].hide();
                 }
@@ -3991,9 +3991,9 @@ var MFD_Device =
 #  ██   ██ ██   ██ ██   ██     ██      ██   ██ ██    ██ ██           ██ 
 #  ██   ██ ██████  ██████      ██      ██   ██  ██████  ███████ ███████ 
 #                                                                       
-#                                                                       
+#
     addPages : func
-    {   
+    {
         me.addVoid();
         me.addGrid();
         me.addCube();
@@ -4004,7 +4004,7 @@ var MFD_Device =
         me.addList();
         me.addRList();
         me.addRMList();
-       
+
         me.mfd_button_pushed = 0;
         # Connect the buttons - using the provided model index to get the right ones from the model binding
         setlistener("controls/MFD["~me.model_index~"]/button-pressed", func(v)
@@ -4016,7 +4016,7 @@ var MFD_Device =
                                 #printf("%s: Button %d",me.designation, me.mfd_button_pushed);
                                 me.PFD.notifyButton(me.mfd_button_pushed);
                                 me.mfd_button_pushed = 0;
-                                
+
                             }
                         }
                     }
@@ -4039,7 +4039,7 @@ var MFD_Device =
                     }
             );
 
-        
+
 
         me.mfd_button_pushed = 0;
         me.setupMenus();
@@ -4065,7 +4065,7 @@ var MFD_Device =
             }
         }, 1, 0);
     },
-    
+
     setSelectionColor : func(text) {
         text.setColor(colorBackground);
     },
@@ -4113,19 +4113,19 @@ var MFD_Device =
 #  ██  ██  ██ ██      ██  ██ ██ ██    ██      ██ 
 #  ██      ██ ███████ ██   ████  ██████  ███████ 
 #                                                
-#                                                
-    # Add the menus to each page. 
+#
+    # Add the menus to each page.
     setupMenus : func
     {
 #
 # Menu Id's
 #  CRM
 #   10  11  12  13  14
-# 0                    5            
-# 1                    6            
-# 2                    7            
-# 3                    8            
-# 4                    9            
+# 0                    5
+# 1                    6
+# 2                    7
+# 3                    8
+# 4                    9
 #   15  16  17  18  19
 #  VSD HSD SMS SIT
 
@@ -4147,7 +4147,7 @@ var MFD_Device =
         me.p_HSD.addMenuItem(17, "SMS", me.p_SMS);
         me.p_HSD.addMenuItem(18, "WPN", me.p_WPN);
         me.p_HSD.addMenuItem(19, "TGP", nil);
-        
+
         me.p_WPN.addMenuItem(10, "FCR", me.p_RDR);
         me.p_WPN.addMenuItem(15, "SWAP", nil);
         me.p_WPN.addMenuItem(16, "HSD", me.p_HSD);
@@ -4162,14 +4162,14 @@ var MFD_Device =
         me.p_SMS.addMenuItem(17, "SMS", me.p_LIST); #selectionColored
         me.p_SMS.addMenuItem(18, "WPN", me.p_WPN);
         me.p_SMS.addMenuItem(19, "TGP", nil);
-        
+
         #  CRM
 #   10  11  12  13  14
-# 0                    5            
-# 1                    6            
-# 2                    7            
-# 3                    8            
-# 4                    9            
+# 0                    5
+# 1                    6
+# 2                    7
+# 3                    8
+# 4                    9
 #   15  16  17  18  19
 #  VSD HSD SMS SIT
 
@@ -4199,7 +4199,7 @@ var MFD_Device =
         me.rm_LIST.addMenuItem(13, "CNTL", me.p_RDR);
 
 
-        
+
         me.setFontSizeMFDEdgeButton(0, 18);
         me.setFontSizeMFDEdgeButton(1, 18);
         me.setFontSizeMFDEdgeButton(2, 18);
@@ -4236,7 +4236,7 @@ var MFD_Device =
 #                 me.PFD.selectPage(me.p_spin_recovery);
 #             }
 #             me.mfd_spin_reset_time = getprop("instrumentation/clock/indicated-sec") + 5;
-#         } 
+#         }
 #         else
 #         {
 #             if (me.mfd_spin_reset_time > 0 and getprop("instrumentation/clock/indicated-sec") > me.mfd_spin_reset_time)
@@ -4258,7 +4258,7 @@ var MFD_Device =
 
 
 
-var F16MfdRecipient = 
+var F16MfdRecipient =
 {
     new: func(_ident)
     {
@@ -4365,7 +4365,7 @@ var swap = func {
     var right_page = f16_mfd.MFDr.PFD.current_page.title;
     var left_button = getMenuButton(left_page);
     var right_button = getMenuButton(right_page);
-    
+
     foreach(var page ; f16_mfd.MFDr.PFD.pages) {
         if (page.title == left_page) {
             f16_mfd.MFDr.PFD.selectPage(page);
@@ -4378,12 +4378,12 @@ var swap = func {
 			break;
         }
     }
-    if (f16.SOI == 2) { 
+    if (f16.SOI == 2) {
         f16.SOI = 3;
     } elsif (f16.SOI == 3) {
         f16.SOI = 2;
     }
-	
+
 	if (right_page == "LIST") { # right page was list
 		f16_mfd.MFDl.selectionBox.hide();
 		f16_mfd.MFDl.resetColorAll();
@@ -4399,7 +4399,7 @@ var swap = func {
 			f16_mfd.MFDl.setSelection(nil, f16_mfd.MFDl.PFD.buttons[right_button], right_button);
 		}
 	}
-	
+
     if (left_button != nil and right_button != nil) {
         f16_mfd.MFDl.setSelection(f16_mfd.MFDl.PFD.buttons[left_button], f16_mfd.MFDl.PFD.buttons[right_button], right_button);
         f16_mfd.MFDr.setSelection(f16_mfd.MFDr.PFD.buttons[right_button], f16_mfd.MFDr.PFD.buttons[left_button], left_button);
@@ -4410,7 +4410,7 @@ var get_intercept = func(bearingToRunner, dist_m, runnerHeading, runnerSpeed, ch
     # from Leto
     # needs: bearingToRunner_deg, dist_m, runnerHeading_deg, runnerSpeed_mps, chaserSpeed_mps, chaserCoord
     #        dist_m > 0 and chaserSpeed > 0
-    
+
     if (dist_m < 500) {
         return nil;
     }
@@ -4431,15 +4431,15 @@ var get_intercept = func(bearingToRunner, dist_m, runnerHeading, runnerSpeed, ch
       # intercept not possible
       return nil;
     }
-    
+
     var t1 = (-b+math.sqrt(b*b-4*a*c))/(2*a);
     var t2 = (-b-math.sqrt(b*b-4*a*c))/(2*a);
-    
+
     if (t1 < 0 and t2 < 0) {
       # intercept not possible
       return nil;
     }
-    
+
     var timeToIntercept = 0;
     if (t1 > 0 and t2 > 0) {
           timeToIntercept = math.min(t1, t2);
@@ -4452,13 +4452,13 @@ var get_intercept = func(bearingToRunner, dist_m, runnerHeading, runnerSpeed, ch
 
     var interceptAngle = vector.Math.angleBetweenVectors([0,1,0], ChaserVelocity);
     var interceptHeading = geo.normdeg(ChaserVelocity[0]<0?-interceptAngle:interceptAngle);
-    
+
     var interceptDist = chaserSpeed*timeToIntercept;
-    
+
     var interceptCoord = geo.Coord.new(chaserCoord);
     interceptCoord = interceptCoord.apply_course_distance(interceptHeading, interceptDist);
     var interceptRelativeBearing = geo.normdeg180(interceptHeading-chaserHeading);
-    
+
     return [timeToIntercept, interceptHeading, interceptCoord, interceptDist, interceptRelativeBearing];
 }
 
@@ -4468,7 +4468,7 @@ var switchTGP = func {
 
 var vector_aicontacts_links = [];
 var DLRecipient = emesary.Recipient.new("DLRecipient");
-var startDLListener = func {    
+var startDLListener = func {
     DLRecipient.radar = radar_system.dlnkRadar;
     DLRecipient.Receive = func(notification) {
         if (notification.NotificationType == "DatalinkNotification") {
