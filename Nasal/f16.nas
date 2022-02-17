@@ -224,10 +224,21 @@ var RWRView = func () {
 # to prevent dynamic view to act like helicopter due to defining <rotors>:
 dynamic_view.register(func {me.default_plane();});
 
-var flareCount = -1;
-var flareStart = -1;
 
+var LOOP_MEDIUM_FAST_RATE = 0.1;
 var medium_fast = {
+    flareCount: -1,
+    flareStart: -1,
+
+    init: func {
+        me.aar_disc_timer = maketimer(3, func() { setprop("controls/lighting/ar-nws", 3); } );
+        me.aar_disc_timer.singleShot = 1;
+
+        me.timer = maketimer(LOOP_MEDIUM_FAST_RATE, me, func me.loop());
+        me.loop();
+        me.timer.start();
+    },
+
     loop: func {
         # Flare/chaff release
         if (getprop("ai/submodels/submodel[0]/flare-release-snd") == nil) {
@@ -241,33 +252,33 @@ var medium_fast = {
         if (flareOn == TRUE and getprop("ai/submodels/submodel[0]/flare-release") == FALSE
                 and getprop("ai/submodels/submodel[0]/flare-release-out-snd") == FALSE
                 and getprop("ai/submodels/submodel[0]/flare-release-snd") == FALSE) {
-            flareCount = getprop("ai/submodels/submodel[0]/count");
-            flareStart = getprop("sim/time/elapsed-sec");
+            me.flareCount = getprop("ai/submodels/submodel[0]/count");
+            me.flareStart = getprop("sim/time/elapsed-sec");
             setprop("ai/submodels/submodel[0]/flare-release-cmd", FALSE);
-            if (flareCount > 0 and getprop("fdm/jsbsim/elec/bus/emergency-dc-2")>20) {
+            if (me.flareCount > 0 and getprop("fdm/jsbsim/elec/bus/emergency-dc-2")>20) {
                 # release a flare
                 setprop("ai/submodels/submodel[0]/flare-release-snd", TRUE);
                 setprop("ai/submodels/submodel[0]/flare-release", TRUE);
-                setprop("rotors/main/blade[3]/flap-deg", flareStart);
-                setprop("rotors/main/blade[3]/position-deg", flareStart);
+                setprop("rotors/main/blade[3]/flap-deg", me.flareStart);
+                setprop("rotors/main/blade[3]/position-deg", me.flareStart);
                 damage.flare_released();
             } else {
                 # play the sound for out of flares
                 setprop("ai/submodels/submodel[0]/flare-release-out-snd", TRUE);
             }
         }
-        if (getprop("ai/submodels/submodel[0]/flare-release-snd") == TRUE and (flareStart + 1) < getprop("sim/time/elapsed-sec")) {
+        if (getprop("ai/submodels/submodel[0]/flare-release-snd") == TRUE and (me.flareStart + 1) < getprop("sim/time/elapsed-sec")) {
             setprop("ai/submodels/submodel[0]/flare-release-snd", FALSE);
             setprop("rotors/main/blade[3]/flap-deg", 0);
             setprop("rotors/main/blade[3]/position-deg", 0);#MP interpolates between numbers, so nil is better than 0.
         }
-        if (getprop("ai/submodels/submodel[0]/flare-release-out-snd") == TRUE and (flareStart + 1.5) < getprop("sim/time/elapsed-sec")) {
+        if (getprop("ai/submodels/submodel[0]/flare-release-out-snd") == TRUE and (me.flareStart + 1.5) < getprop("sim/time/elapsed-sec")) {
             setprop("ai/submodels/submodel[0]/flare-release-out-snd", FALSE);
         }
-        if (flareCount > getprop("ai/submodels/submodel[0]/count")) {
+        if (me.flareCount > getprop("ai/submodels/submodel[0]/count")) {
             # A flare was released in last loop, we stop releasing flares, so user have to press button again to release new.
             setprop("ai/submodels/submodel[0]/flare-release", FALSE);
-            flareCount = -1;
+            me.flareCount = -1;
         }
 
         setprop("instrumentation/mfd-sit-1/inputs/tfc", 0);
@@ -347,22 +358,22 @@ var medium_fast = {
         # AR/NWS status light
         if (getprop("fdm/jsbsim/elec/bus/emergency-dc-2")<20) {
             setprop("controls/lighting/ar-nws", 0);        # Off
-            aar_disc_timer.stop();
+            me.aar_disc_timer.stop();
         } else {
             if (getprop("/systems/refuel/serviceable") == 1) {
                 if (getprop("/systems/refuel/contact") == 1) {
                     setprop("controls/lighting/ar-nws", 2);    # AR/NWS
-                    aar_disc_timer.stop();
+                    me.aar_disc_timer.stop();
                 } else {
                     if (getprop("controls/lighting/ar-nws") == 2) {
                         setprop("controls/lighting/ar-nws", !getprop("gear/gear[0]/wow"));  # DISC / Off
                     }
-                    if ((getprop("controls/lighting/ar-nws") != 3) and (aar_disc_timer.isRunning == 0)) {
-                        aar_disc_timer.start();  # RDY
+                    if ((getprop("controls/lighting/ar-nws") != 3) and (me.aar_disc_timer.isRunning == 0)) {
+                        me.aar_disc_timer.start();  # RDY
                     }
                 }
             } else {
-                aar_disc_timer.stop();
+                me.aar_disc_timer.stop();
                 if ((getprop("controls/gear/nose-wheel-steering") == 1) and
                    (getprop("gear/gear[0]/wow") == 1)) {
                     setprop("controls/lighting/ar-nws", 2); # AR/NWS
@@ -377,18 +388,18 @@ var medium_fast = {
         setprop("f16/external", !getprop("sim/current-view/internal"));
 
         setprop("sim/multiplay/generic/float[19]",  getprop("controls/engines/engine/throttle"));
-
-        settimer(func {me.loop()},LOOP_MEDIUM_FAST_RATE);
     },
 };
-var LOOP_MEDIUM_FAST_RATE = 0.1;
 
-var aar_disc_timer = maketimer(3, func() { setprop("controls/lighting/ar-nws", 3); } );
-aar_disc_timer.singleShot = 1;
-
+var LOOP_MEDIUM_RATE = 0.5;
 var medium = {
-    loop: func {
+    init: func {
+        me.timer = maketimer(LOOP_MEDIUM_RATE, me, func me.loop());
+        me.loop();
+        me.timer.start();
+    },
 
+    loop: func {
         # Store CAT:
         if (pylons.fcs != nil) {
             setprop("f16/stores-cat", pylons.fcs.getCategory());
@@ -465,13 +476,17 @@ var medium = {
         laser();
         buffeting();
         f16_fuel.fuelqty();
-        cockpit_temperature_control.loop();
-        settimer(func {me.loop()},LOOP_MEDIUM_RATE);
     },
 };
-var LOOP_MEDIUM_RATE = 0.5;
 
+var LOOP_SLOW_RATE = 5;
 var slow = {
+    init: func {
+        me.timer = maketimer(LOOP_SLOW_RATE, me, func me.loop());
+        me.loop();
+        me.timer.start();
+    },
+
     loop: func {
         if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1")<20 and getprop("fdm/jsbsim/elec/bus/emergency-dc-2")<20) {
             setprop("sound/rwr-new", -1);#prevent sound from going off whenever it gets elec
@@ -486,11 +501,19 @@ var slow = {
             setprop("fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains", 0);
         }
         setprop("f16/avionics/emer-jett-switch",0);
-        settimer(func {me.loop()},5);
     },
 };
 
+var LOOP_FAST_RATE = 0.05;
 var fast = {
+    last_spd_deg: 0,
+
+    init: func {
+        me.timer = maketimer(LOOP_FAST_RATE, me, func me.loop());
+        me.loop();
+        me.timer.start();
+    },
+
     loop: func {
         # Terrain warning:
         if ((getprop("velocities/speed-east-fps") != 0 or getprop("velocities/speed-north-fps") != 0) and getprop("fdm/jsbsim/gear/unit[0]/WOW") != 1 and
@@ -541,18 +564,15 @@ var fast = {
         var spd_anim = -35;#-35 = closed -165 = stripes -270 = dots
         if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1")<20) {
             spd_anim = -165;
-        } elsif (last_spd_deg != spd_deg) {
+        } elsif (me.last_spd_deg != spd_deg) {
             spd_anim = -165;
         } elsif (spd_deg > 2) {
             spd_anim = -270;
         }
         setprop("surface-positions/speedbrake-pos-anim", spd_anim);
-        last_spd_deg = spd_deg;
-        settimer(func {me.loop()},0.05);
+        me.last_spd_deg = spd_deg;
     },
 };
-
-var last_spd_deg = 0;
 
 var sendABtoMP = func {
     var red = getprop("rendering/scene/diffuse/red");
@@ -774,15 +794,21 @@ var autopilot_inhibit = {
 
 
 var cockpit_temperature_control = {
+    init: func {
+        settimer(func {
+            setprop("environment/aircraft-effects/temperature-inside-degC", getprop("environment/temperature-degc"));
+            if (getprop("environment/temperature-degc") < 0) setprop("/environment/aircraft-effects/frost-outside",1);
+        }, 3);
+
+        me.timer = maketimer(LOOP_MEDIUM_RATE, me, func me.loop());
+        me.loop();
+        me.timer.start();
+    },
+
     loop: func {
         ###########################################################
         #               Aircondition, frost, fog and rain         #
         ###########################################################
-
-        if (me["currentFrost"]==nil) settimer(func {
-            setprop("environment/aircraft-effects/temperature-inside-degC", getprop("environment/temperature-degc"));
-            if (getprop("environment/temperature-degc") < 0) setprop("/environment/aircraft-effects/frost-outside",1);
-        },3);
 
         # auto temp adjust:
         me.currentFrost = getprop("/environment/aircraft-effects/frost-level");
@@ -989,88 +1015,93 @@ var batteryChargeDischarge = func {
 }
 
 
-var LBM2KG = 0.4535;
-var flexer = func {
-    # this function needs to become optimized using Nodes
-    if (getprop("sim/multiplay/generic/float[5]")!=nil) {
-        setprop("surface-positions/leftrad", getprop("sim/multiplay/generic/float[5]")*20*D2R);
-        setprop("surface-positions/leftrad2", -getprop("surface-positions/left-aileron-pos-norm")*21.5*D2R);
-        setprop("surface-positions/rightrad", getprop("sim/multiplay/generic/float[6]")*20*D2R);
-        setprop("surface-positions/rightrad2", getprop("surface-positions/right-aileron-pos-norm")*21.5*D2R);
-        setprop("surface-positions/radlefr", getprop("fdm/jsbsim/fcs/lef-pos-deg")*D2R);
-        setprop("surface-positions/radlefl", -getprop("fdm/jsbsim/fcs/lef-pos-deg")*D2R);
+var flexer = {
+    init: func {
+        me.timer = maketimer(0, me, func me.loop());
+        me.loop();
+        me.timer.start();
+    },
 
-        var wingcontent = 0;
-        if (getprop("consumables/fuel/tank[1]/level-kg")!=nil) {
-            wingcontent += getprop("consumables/fuel/tank[1]/level-kg");
-        }
-        if (getprop("consumables/fuel/tank[2]/level-kg")!=nil) {
-            wingcontent += getprop("consumables/fuel/tank[2]/level-kg");
-        }
-        if (getprop("payload/weight[0]/weight-lb") !=nil
-            and getprop("payload/weight[1]/weight-lb") !=nil
-            and getprop("payload/weight[2]/weight-lb") !=nil
-            and getprop("payload/weight[3]/weight-lb") !=nil
-            and getprop("payload/weight[7]/weight-lb") !=nil
-            and getprop("payload/weight[8]/weight-lb") !=nil
-            and getprop("payload/weight[9]/weight-lb") !=nil
-            and getprop("payload/weight[10]/weight-lb") !=nil ) {
-            setprop("f16/wings/fuel-and-stores-kg",
-                    (getprop("payload/weight[0]/weight-lb")
-                    +getprop("payload/weight[1]/weight-lb")
-                    +getprop("payload/weight[2]/weight-lb")
-                    +getprop("payload/weight[3]/weight-lb")
-                    +getprop("payload/weight[7]/weight-lb")
-                    +getprop("payload/weight[8]/weight-lb")
-                    +getprop("payload/weight[9]/weight-lb")
-                    +getprop("payload/weight[10]/weight-lb"))*LBM2KG
-                    +wingcontent);
-            } elsif (getprop("payload/weight[0]/weight-lb") !=nil
-            and getprop("payload/weight[1]/weight-lb") !=nil) {
-                # for prototype
-                setprop("f16/wings/fuel-and-stores-kg", (getprop("payload/weight[0]/weight-lb")+getprop("payload/weight[1]/weight-lb"))*LBM2KG+wingcontent);
+    loop: func {
+        # this function needs to become optimized using Nodes
+        if (getprop("sim/multiplay/generic/float[5]")!=nil) {
+            setprop("surface-positions/leftrad", getprop("sim/multiplay/generic/float[5]")*20*D2R);
+            setprop("surface-positions/leftrad2", -getprop("surface-positions/left-aileron-pos-norm")*21.5*D2R);
+            setprop("surface-positions/rightrad", getprop("sim/multiplay/generic/float[6]")*20*D2R);
+            setprop("surface-positions/rightrad2", getprop("surface-positions/right-aileron-pos-norm")*21.5*D2R);
+            setprop("surface-positions/radlefr", getprop("fdm/jsbsim/fcs/lef-pos-deg")*D2R);
+            setprop("surface-positions/radlefl", -getprop("fdm/jsbsim/fcs/lef-pos-deg")*D2R);
+
+            var wingcontent = 0;
+            if (getprop("consumables/fuel/tank[1]/level-kg")!=nil) {
+                wingcontent += getprop("consumables/fuel/tank[1]/level-kg");
             }
-            #setprop("f16/wings/fuel-and-stores-kg", ground*(getprop("f16/wings/fuel-and-stores-kg-a")));
+            if (getprop("consumables/fuel/tank[2]/level-kg")!=nil) {
+                wingcontent += getprop("consumables/fuel/tank[2]/level-kg");
+            }
+            if (getprop("payload/weight[0]/weight-lb") !=nil
+                and getprop("payload/weight[1]/weight-lb") !=nil
+                and getprop("payload/weight[2]/weight-lb") !=nil
+                and getprop("payload/weight[3]/weight-lb") !=nil
+                and getprop("payload/weight[7]/weight-lb") !=nil
+                and getprop("payload/weight[8]/weight-lb") !=nil
+                and getprop("payload/weight[9]/weight-lb") !=nil
+                and getprop("payload/weight[10]/weight-lb") !=nil ) {
+                setprop("f16/wings/fuel-and-stores-kg",
+                        (getprop("payload/weight[0]/weight-lb")
+                        +getprop("payload/weight[1]/weight-lb")
+                        +getprop("payload/weight[2]/weight-lb")
+                        +getprop("payload/weight[3]/weight-lb")
+                        +getprop("payload/weight[7]/weight-lb")
+                        +getprop("payload/weight[8]/weight-lb")
+                        +getprop("payload/weight[9]/weight-lb")
+                        +getprop("payload/weight[10]/weight-lb"))*LB2KG
+                        +wingcontent);
+                } elsif (getprop("payload/weight[0]/weight-lb") !=nil
+                and getprop("payload/weight[1]/weight-lb") !=nil) {
+                    # for prototype
+                    setprop("f16/wings/fuel-and-stores-kg", (getprop("payload/weight[0]/weight-lb")+getprop("payload/weight[1]/weight-lb"))*LB2KG+wingcontent);
+                }
+                #setprop("f16/wings/fuel-and-stores-kg", ground*(getprop("f16/wings/fuel-and-stores-kg-a")));
 
-            # since the wingflexer works wrong in air we make the wing more stiff in air:
-            #if (ground) {
-            #setprop("sim/systems/wingflexer/params/K",250);
-            #} else {
-            #setprop("sim/systems/wingflexer/params/K",2500);
-            #}
-    }
-    #setprop("f16/wings/normal-lbf", -getprop("fdm/jsbsim/aero/coefficient/force/Z_t-lbf"));
+                # since the wingflexer works wrong in air we make the wing more stiff in air:
+                #if (ground) {
+                #setprop("sim/systems/wingflexer/params/K",250);
+                #} else {
+                #setprop("sim/systems/wingflexer/params/K",2500);
+                #}
+        }
+        #setprop("f16/wings/normal-lbf", -getprop("fdm/jsbsim/aero/coefficient/force/Z_t-lbf"));
 
-    var errors = [];
-    call(func {var z = getprop("sim/systems/wingflexer/z-m");
-        #var max2 = (9.2-2.84)*0.5;
-        #max2 = max2 * max2;
-        setprop("sim/systems/wingflexer/NaN", z);# this line will fail if NaN, so that an error is raised.
-        #setprop("sim/systems/wingflexer/z-m-tip",z);
-        #setprop("sim/systems/wingflexer/z-m-outer", z*((3.70-1.42)*(3.70-1.42))/(max2));
-        #setprop("sim/systems/wingflexer/z-m-middle",z*((2.88-1.42)*(2.88-1.42))/(max2));
-        #setprop("sim/systems/wingflexer/z-m-inner", z*((1.63-1.42)*(1.63-1.42))/(max2));
-    },nil,nil, errors);
-    if (size(errors)) {
-        fgcommand('reinit', props.Node.new({ subsystem: "xml-autopilot" }));
-    }
-    #if (getprop("/sim/frame-rate-worst")<12) {
-    #  setprop("/sim/systems/property-rule[100]/serviceable",0);
-    #  setprop("sim/systems/wingflexer/z-m",0);
-    #} else {
-    #  setprop("/sim/systems/property-rule[100]/serviceable",1);
-    #}
+        var errors = [];
+        call(func {var z = getprop("sim/systems/wingflexer/z-m");
+            #var max2 = (9.2-2.84)*0.5;
+            #max2 = max2 * max2;
+            setprop("sim/systems/wingflexer/NaN", z);# this line will fail if NaN, so that an error is raised.
+            #setprop("sim/systems/wingflexer/z-m-tip",z);
+            #setprop("sim/systems/wingflexer/z-m-outer", z*((3.70-1.42)*(3.70-1.42))/(max2));
+            #setprop("sim/systems/wingflexer/z-m-middle",z*((2.88-1.42)*(2.88-1.42))/(max2));
+            #setprop("sim/systems/wingflexer/z-m-inner", z*((1.63-1.42)*(1.63-1.42))/(max2));
+        },nil,nil, errors);
+        if (size(errors)) {
+            fgcommand('reinit', props.Node.new({ subsystem: "xml-autopilot" }));
+        }
+        #if (getprop("/sim/frame-rate-worst")<12) {
+        #  setprop("/sim/systems/property-rule[100]/serviceable",0);
+        #  setprop("sim/systems/wingflexer/z-m",0);
+        #} else {
+        #  setprop("/sim/systems/property-rule[100]/serviceable",1);
+        #}
 
-    var mach = getprop("velocities/mach") >= 1;
-    var cam = getprop("sim/current-view/name");
-    var still = cam == "Fly-By View" or cam == "Tower View" or cam == "Tower View Look From";
-    var nofrontsound = still and mach;
+        var mach = getprop("velocities/mach") >= 1;
+        var cam = getprop("sim/current-view/name");
+        var still = cam == "Fly-By View" or cam == "Tower View" or cam == "Tower View Look From";
+        var nofrontsound = still and mach;
 
-    setprop("f16/sound/front-on", !nofrontsound);
-    setprop("f16/sound/front-off", nofrontsound);
-
-    settimer(flexer,0);
-}
+        setprop("f16/sound/front-on", !nofrontsound);
+        setprop("f16/sound/front-off", nofrontsound);
+    },
+};
 
 
 
@@ -1667,12 +1698,13 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
         }
 
         hack.init();
-        medium_fast.loop();
-        slow.loop();
+        medium_fast.init();
+        slow.init();
         #fx = flex.WingFlexer.new(1, 250, 25, 500, 0.375, "f16/wings/fuel-and-stores-kg","f16/wings/fuel-and-stores-kg","sim/systems/wingflexer/","f16/wings/lift-lbf");
-        flexer();
-        medium.loop();
-        fast.loop();
+        flexer.init();
+        medium.init();
+        cockpit_temperature_control.init();
+        fast.init();
         ehsi.init();
         tgp.callInit();
         flooptimer = maketimer(0,func tgp.fast_loop());
