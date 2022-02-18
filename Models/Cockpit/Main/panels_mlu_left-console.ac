@@ -9139,9 +9139,9 @@ refs 4
 1 0.108858 0.175427
 kids 0
 OBJECT poly
-name "flcs-fail"
-data 17
-flcs-run-fail.001
+name "flcs-bit-fail"
+data 13
+flcs-bit-fail
 crease 45.0
 texture "../Textures/panels-B50-left_console.png"
 texrep 1 1
@@ -9213,9 +9213,9 @@ refs 4
 3 0.181663 0.88304
 kids 0
 OBJECT poly
-name "flcs-run"
-data 17
-flcs-run-fail.002
+name "flcs-bit-run"
+data 12
+flcs-bit-run
 crease 45.0
 texture "../Textures/panels-B50-left_console.png"
 texrep 1 1
@@ -9234,9 +9234,9 @@ refs 4
 2 0.306617 0.217394
 kids 0
 OBJECT poly
-name "flcs-run-fail"
-data 13
-flcs-run-fail
+name "flcs-bit"
+data 8
+flcs-bit
 crease 45.0
 texture "../Textures/panels-B50-left_console.png"
 texrep 1 1
@@ -42348,7 +42348,7 @@ refs 3
 10 0.263823 0.765794
 kids 0
 OBJECT poly
-name "SW_FLCS-BIT"
+name "SW_FLCS_BIT"
 data 25
 hud-displ-switch.mesh.009
 crease 45.0

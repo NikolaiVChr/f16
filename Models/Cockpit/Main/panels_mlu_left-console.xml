@@ -27,9 +27,9 @@
         <object-name>flaperons-l</object-name>
         <object-name>flaperons-r</object-name>
         <object-name>flcs-pwr</object-name>
-        <object-name>flcs-run-fail</object-name>
-        <object-name>flcs-run</object-name>
-        <object-name>flcs-fail</object-name>
+        <object-name>flcs-bit</object-name>
+        <object-name>flcs-bit-run</object-name>
+        <object-name>flcs-bit-fail</object-name>
         <object-name>freqDisplay</object-name>
         <object-name>Guards</object-name>
         <object-name>Guards_trim</object-name>
@@ -172,7 +172,7 @@
         <object-name>SW_ECM_XMIT</object-name>
         <object-name>SW_EPU</object-name>
         <object-name>SW_EPU_COVER</object-name>
-        <object-name>SW_FLCS-BIT</object-name>
+        <object-name>SW_FLCS_BIT</object-name>
         <object-name>SW_FLCS-RESET</object-name>
         <object-name>SW_FLCS_TEST</object-name>
         <object-name>SW_FUSELAGE</object-name>
@@ -371,7 +371,7 @@
         <object-name>SW_EPU</object-name>
         <object-name>SW_EPU_COVER</object-name>
         <object-name>SW_FLCS_TEST</object-name>
-        <object-name>SW_FLCS-BIT</object-name>
+        <object-name>SW_FLCS_BIT</object-name>
         <object-name>SW_FLCS_RESET</object-name>
         <object-name>SW_FUSELAGE_50</object-name>
         <object-name>SW_IFF_CODE</object-name>
@@ -422,7 +422,7 @@
         <object-name>eec-cover</object-name>
         <object-name>eec-switch</object-name>
         <object-name>flcs-pwr</object-name>
-        <object-name>flcs-run-fail</object-name>
+        <object-name>flcs-bit</object-name>
         <object-name>horiz-l</object-name>
         <object-name>horiz-r</object-name>
         <object-name>flaperons-l</object-name>
@@ -621,6 +621,7 @@
  </animation>
 
  <animation>
+  <object-name>flcs-bit-fail</object-name>
   <type>material</type>
   <condition>
       <property>controls/test/test-panel/mal-ind-lts</property>
@@ -631,10 +632,10 @@
    <blue>1</blue>
    <factor-prop>controls/lighting/lighting-panel/mal-ind-lts-brightness</factor-prop>
   </emission>
-  <object-name>flcs-fail</object-name>
  </animation>
 
  <animation>
+  <object-name>flcs-bit-run</object-name>
   <type>material</type>
   <condition>
       <property>controls/test/test-panel/mal-ind-lts</property>
@@ -645,9 +646,8 @@
    <blue>1</blue>
    <factor-prop>controls/lighting/lighting-panel/mal-ind-lts-brightness</factor-prop>
   </emission>
-  <object-name>flcs-run</object-name>
  </animation>
- 
+
  <animation>
   <object-name>AVTR_CTVS</object-name>
   <object-name>AVTR_AVTR</object-name>
@@ -3926,7 +3926,7 @@
         <object-name>SW_LE_FLAPS_50</object-name>
         <object-name>SW_MAN_TF_FLYUP</object-name>
         <object-name>SW_DBU</object-name>
-        <object-name>SW_FLCS-BIT</object-name>
+        <object-name>SW_FLCS_BIT</object-name>
         <object-name>SW_FLCS-RESET</object-name>
         <object-name>SW_KNOB_EXT_FORM_LIGHT_50</object-name>
         <object-name>SW_KNOB_REFUEL_50</object-name>
@@ -3950,9 +3950,9 @@
         <object-name>MANUAL_TRIM_50_1</object-name>
         <object-name>pitch-trim-wheel_50</object-name>
         <object-name>roll-trim-wheel_50</object-name>
-        <object-name>flcs-run-fail</object-name>
-        <object-name>flcs-fail</object-name>
-        <object-name>flcs-run</object-name>
+        <object-name>flcs-bit</object-name>
+        <object-name>flcs-bit-fail</object-name>
+        <object-name>flcs-bit-run</object-name>
         <type>select</type>
         <condition>
           <greater-than>
@@ -4118,7 +4118,7 @@
         <object-name>SW_EPU</object-name>
         <object-name>SW_EPU_COVER</object-name>
         <object-name>SW_FLCS_TEST</object-name>
-        <object-name>SW_FLCS-BIT</object-name>
+        <object-name>SW_FLCS_BIT</object-name>
         <object-name>SW_FLCS_RESET</object-name>
         <object-name>SW_FUSELAGE_50</object-name>
         <object-name>SW_IFF_CODE</object-name>
@@ -4169,9 +4169,9 @@
         <object-name>eec-cover</object-name>
         <object-name>eec-switch</object-name>
         <object-name>flcs-pwr</object-name>
-        <object-name>flcs-run-fail</object-name>
-        <object-name>flcs-run</object-name>
-        <object-name>flcs-fail</object-name>
+        <object-name>flcs-bit</object-name>
+        <object-name>flcs-bit-run</object-name>
+        <object-name>flcs-bit-fail</object-name>
         <object-name>horiz-l</object-name>
         <object-name>horiz-r</object-name>
         <object-name>flaperons-l</object-name>
