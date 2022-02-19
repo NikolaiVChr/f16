@@ -42,7 +42,7 @@
       </greater-than>
       <!-- GR1F-16CJ-1 page 1-130 -->
       <or>
-        <not><property>fdm/jsbsim/elec/sources/batt-bus</property><not>
+        <not><property>fdm/jsbsim/elec/sources/batt-bus</property></not>
         <property>f16/fcs/bit-fail</property>
         <not><property>systems/pitot/serviceable</property></not>
         <not><property>systems/static/serviceable</property></not>
