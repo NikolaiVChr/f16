@@ -135,6 +135,11 @@
       <green type="double">0.90</green>
       <blue type="double">0.90</blue>
     </lines>
+    <lines2><!--Pull Up cue color-->
+      <red type="double">1.00</red>
+      <green type="double">0.00</green>
+      <blue type="double">0.00</blue>
+    </lines2>
     <circle1><!--HSD red circles + GM Pic color-->
       <red type="double">1.00</red>
       <green type="double">0.00</green>

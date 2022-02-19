@@ -36,12 +36,13 @@ var colorBullseye = [getprop("/sim/model/MFD-color/bullseye/red"), getprop("/sim
 # Bulleye direction to ownship text
 var colorBetxt = [getprop("/sim/model/MFD-color/betxt/red"), getprop("/sim/model/MFD-color/betxt/green"), getprop("/sim/model/MFD-color/betxt/blue")];
 
-var colorLine1 = [getprop("/sim/model/MFD-color/line1/red"), getprop("/sim/model/MFD-color/line1/green"), getprop("/sim/model/MFD-color/line1/blue")];
-var colorLine2 = [getprop("/sim/model/MFD-color/line2/red"), getprop("/sim/model/MFD-color/line2/green"), getprop("/sim/model/MFD-color/line2/blue")];
-var colorLine3 = [getprop("/sim/model/MFD-color/line3/red"), getprop("/sim/model/MFD-color/line3/green"), getprop("/sim/model/MFD-color/line3/blue")];
-var colorLine4 = [getprop("/sim/model/MFD-color/line4/red"), getprop("/sim/model/MFD-color/line4/green"), getprop("/sim/model/MFD-color/line4/blue")];
-var colorLine5 = [getprop("/sim/model/MFD-color/line5/red"), getprop("/sim/model/MFD-color/line5/green"), getprop("/sim/model/MFD-color/line5/blue")];
-var colorLines = [getprop("/sim/model/MFD-color/lines/red"), getprop("/sim/model/MFD-color/lines/green"), getprop("/sim/model/MFD-color/lines/blue")];
+var colorLine1  = [getprop("/sim/model/MFD-color/line1/red"), getprop("/sim/model/MFD-color/line1/green"), getprop("/sim/model/MFD-color/line1/blue")];
+var colorLine2  = [getprop("/sim/model/MFD-color/line2/red"), getprop("/sim/model/MFD-color/line2/green"), getprop("/sim/model/MFD-color/line2/blue")];
+var colorLine3  = [getprop("/sim/model/MFD-color/line3/red"), getprop("/sim/model/MFD-color/line3/green"), getprop("/sim/model/MFD-color/line3/blue")];
+var colorLine4  = [getprop("/sim/model/MFD-color/line4/red"), getprop("/sim/model/MFD-color/line4/green"), getprop("/sim/model/MFD-color/line4/blue")];
+var colorLine5  = [getprop("/sim/model/MFD-color/line5/red"), getprop("/sim/model/MFD-color/line5/green"), getprop("/sim/model/MFD-color/line5/blue")];
+var colorLines  = [getprop("/sim/model/MFD-color/lines/red"), getprop("/sim/model/MFD-color/lines/green"), getprop("/sim/model/MFD-color/lines/blue")];
+var colorLines2 = [getprop("/sim/model/MFD-color/lines2/red"), getprop("/sim/model/MFD-color/lines2/green"), getprop("/sim/model/MFD-color/lines2/blue")];
 
 
 var colorCubeRed = [255,0,0];
@@ -100,7 +101,7 @@ var MFD_Device =
                .moveTo(0, 482)
                .lineTo(552*0.795, 0)
                .setStrokeLineWidth(3)
-               .setColor(colorCircle1);
+               .setColor(colorLines2);
         } elsif (model_index == 1) {
             pullup_cue_1 = obj.canvas.createGroup().set("z-index", 20000);
             pullup_cue_1.createChild("path")
@@ -109,7 +110,7 @@ var MFD_Device =
                .moveTo(0, 482)
                .lineTo(552*0.795, 0)
                .setStrokeLineWidth(3)
-               .setColor(colorCircle1);
+               .setColor(colorLines2);
         }
 
         # Create a group for the parsed elements
