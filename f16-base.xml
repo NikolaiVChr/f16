@@ -1402,6 +1402,9 @@ value. 18000=standard US transition altitude -->
             <trim-ap-disc-switch type="bool">false</trim-ap-disc-switch>
             <le-flaps-switch type="bool">true</le-flaps-switch>
             <digital-backup type="bool">false</digital-backup>
+            <bit type="bool">false</bit>
+            <bit-run type="bool">false</bit-run>
+            <bit-fail type="bool">false</bit-fail>
         </fcs>
         <engine>
 			<ctl-sec type="bool">false</ctl-sec>

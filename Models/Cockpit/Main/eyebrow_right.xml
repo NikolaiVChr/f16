@@ -34,13 +34,23 @@
   <type>select</type>
   <object-name>flcs</object-name>
   <condition>
-    <!-- GR1F-16CJ-1 page 1-130 -->
-    <or>
-      <not><property>systems/pitot/serviceable</property></not>
-      <not><property>systems/static/serviceable</property></not>
-      <not><property>f16/fcs/le-flaps-switch</property></not>
-      <property>controls/test/test-panel/mal-ind-lts</property>
-    </or>
+   <or>
+    <and>
+      <greater-than>
+        <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+        <value>20</value>
+      </greater-than>
+      <!-- GR1F-16CJ-1 page 1-130 -->
+      <or>
+        <not><property>fdm/jsbsim/elec/sources/batt-bus</property><not>
+        <property>f16/fcs/bit-fail</property>
+        <not><property>systems/pitot/serviceable</property></not>
+        <not><property>systems/static/serviceable</property></not>
+        <not><property>f16/fcs/le-flaps-switch</property></not>
+      </or>
+    </and>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation>
 
@@ -135,7 +145,7 @@
     <or>
         <and>
             <greater-than>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
+                <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
                 <value>20</value>
             </greater-than>
             <property>fdm/jsbsim/fcs/fly-by-wire/digital-backup</property>

@@ -620,11 +620,75 @@
   </emission>
  </animation>
 
+    <animation>
+        <type>knob</type>
+        <object-name>SW_FLCS_BIT</object-name>
+        <property>f16/fcs/bit</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>false</repeatable>
+        <interval-sec>0.2</interval-sec>
+        <factor>40</factor>
+        <offset-deg>-20</offset-deg>
+        <center>
+            <x-m>0.6114</x-m>
+            <y-m>-0.4507</y-m>
+            <z-m>0.00661</z-m>
+        </center>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/fcs/bit</property>
+                <step>1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/fcs/bit</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </decrease>
+        <release>
+            <binding>
+                <command>nasal</command>
+                <script>
+                    <!-- GR1F-16CJ-1 page 1-133 -->
+                    var wow = getprop("/gear/gear[1]/wow");
+                    var spd = getprop("/gear/gear[1]/rollspeed-ms");
+                    if ((!wow) or (spd * MPS2KT >= 28)) {
+                        setprop("/f16/fcs/bit", 0);
+                    }
+                </script>
+            </binding>
+        </release>
+    </animation>
+
  <animation>
   <object-name>flcs-bit-fail</object-name>
   <type>material</type>
   <condition>
-      <property>controls/test/test-panel/mal-ind-lts</property>
+   <or>
+    <and>
+     <greater-than>
+      <property>fdm/jsbsim/elec/bus/batt-1</property>
+      <value>20</value>
+     </greater-than>
+     <property>f16/fcs/bit-fail</property>
+    </and>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
   <emission>
    <red>1</red>
@@ -638,7 +702,16 @@
   <object-name>flcs-bit-run</object-name>
   <type>material</type>
   <condition>
-      <property>controls/test/test-panel/mal-ind-lts</property>
+   <or>
+    <and>
+     <greater-than>
+      <property>fdm/jsbsim/elec/bus/batt-1</property>
+      <value>20</value>
+     </greater-than>
+     <property>f16/fcs/bit-run</property>
+    </and>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
   <emission>
    <red>1</red>

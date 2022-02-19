@@ -279,7 +279,8 @@ var fail_list = [
        [0,">STBY      GAIN<", "!fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains", 1, 0],
        [1," FLCS AOA  FAIL ", "systems/static/serviceable", 1, 0],
        [3," CADC BUS  FAIL ", "systems/vacuum/serviceable", 1, 0],
-       [0,">FLCS LEF  LOCK<", "f16/fcs/le-flaps-switch", 1, 0]
+       [0,">FLCS LEF  LOCK<", "f16/fcs/le-flaps-switch", 1, 0],
+       [0,">FLCS BIT  FAIL<", "!f16/fcs/bit-fail", 1, 0]
 #      [1," FLCS A/P  FAIL ", "???", 1, 0]  if created, contributes to A/P inhibit
 ]; 
 # Systems:
