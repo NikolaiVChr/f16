@@ -1539,39 +1539,41 @@ var flashLoop = func() {
 
 var flashTimer = maketimer(0.15, flashLoop);
 
-var flcs_bit_counter = 0;
+var flcs_bit = {
+    counter: 0,
 
-var flcs_bit_count = func {
-    # Expression MUST match panels_mlu_left-console.xml:SW_FLCS_BIT knob animation
-    if (((getprop("/gear/gear[1]/wow") == 0) or
-        (getprop("/gear/gear[1]/rollspeed-ms") * MPS2KT >= 28)) or
-        (flcs_bit_counter == 45)) {  # GR1F-16CJ-1, page 1-135: the BIT runs for approx. 45 seconds
-        setprop("/f16/fcs/bit", 0);
-    } else {
-        flcs_bit_counter += 1;
-    }
-}
+    init : func {
+        me.timer = maketimer(1, me, me.count);
+        setlistener("/f16/fcs/bit", func(node) {
+            if (node.getValue() == 0) {
+                me.timer.stop();
+                me.counter = 0;
+                setprop("/f16/fcs/bit-run", 0);
+            } else {
+                # Expression MUST match panels_mlu_left-console.xml:SW_FLCS_BIT knob animation
+                if ((getprop("/gear/gear[1]/wow") == 0) or
+                    (getprop("/gear/gear[1]/rollspeed-ms") * MPS2KT >= 28)) {
+                    setprop("/f16/fcs/bit-run", 0);
+                } else {
+                    setprop("/f16/fcs/bit-run", 1);
+                    me.timer.start();
+                }
+            }
+        });
+    },
 
-var flcs_bit_timer = maketimer(1, flcs_bit_count);
-
-var flcs_bit_switch = func(node) {
-    if (node.getValue() == 0) {
-        flcs_bit_timer.stop();
-        flcs_bit_counter = 0;
-        setprop("/f16/fcs/bit-run", 0);
-    } else {
+    count : func {
         # Expression MUST match panels_mlu_left-console.xml:SW_FLCS_BIT knob animation
-        if ((getprop("/gear/gear[1]/wow") == 0) or
-            (getprop("/gear/gear[1]/rollspeed-ms") * MPS2KT >= 28)) {
-            setprop("/f16/fcs/bit-run", 0);
+        if (((getprop("/gear/gear[1]/wow") == 0) or
+            (getprop("/gear/gear[1]/rollspeed-ms") * MPS2KT >= 28)) or
+            (me.counter == 45)) {  # GR1F-16CJ-1, page 1-135: the BIT runs for approx. 45 seconds
+            setprop("/f16/fcs/bit", 0);
         } else {
-            setprop("/f16/fcs/bit-run", 1);
-            flcs_bit_timer.start();
+            me.counter += 1;
         }
-    }
-}
-
-setlistener("/f16/fcs/bit", flcs_bit_switch, 0, 0);
+    },
+};
+flcs_bit.init();
 
 ## Following code adapted from script shared by Warty at https://forum.flightgear.org/viewtopic.php?f=10&t=28665
 ## (C) pinto aka Justin Nicholson - 2016
