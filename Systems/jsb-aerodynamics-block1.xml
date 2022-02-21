@@ -331,6 +331,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             <product>
                 <property>aero/qbar-psf</property>
                 <property>inertia/pointmass-dragarea-sqft[11]</property>
+                <property>aero/function/stores-wave-drag-factor</property>
             </product>
     </function>
 
@@ -339,6 +340,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             <product>
                 <property>aero/qbar-psf</property>
                 <property>inertia/pointmass-dragarea-sqft[12]</property>
+                <property>aero/function/stores-wave-drag-factor</property>
             </product>
     </function>
 
