@@ -116,9 +116,9 @@ var pylonSets = {
     c87:       {name: "2 x CBU-87", pylon: "1 MAU", rack: "1 TER", content: ["CBU-87","CBU-87"], fireOrder: [0,1], launcherDragArea: 0.05, launcherMass: 313, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     c105:      {name: "1 x CBU-105", pylon: "1 MAU", rack: nil, content: ["CBU-105"], fireOrder: [0], launcherDragArea: 0.05, launcherMass: 220, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
 	dumb1:     {name: "CATM-9L", pylon: "1 MRL", content: [catm9], fireOrder: [], launcherDragArea: 0.025, launcherMass: 275, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-	dumb1WT:   {name: "CATM-9L", pylon: "1 MRLW", content: [catm9], fireOrder: [], launcherDragArea: 0, launcherMass: 275, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+	dumb1WT:   {name: "CATM-9L", pylon: "1 MRLW", content: [catm9], fireOrder: [], launcherDragArea: -0.07865, launcherMass: 275, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 	dumb2:     {name: "AN-T-17", pylon: "1 MRL", rack: nil, content: [ant17], fireOrder: [], launcherDragArea: 0.07865, launcherMass: 275, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-	dumb2WT:   {name: "AN-T-17", pylon: "1 MRLW", rack: nil, content: [ant17], fireOrder: [], launcherDragArea: 0, launcherMass: 275, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+	dumb2WT:   {name: "AN-T-17", pylon: "1 MRLW", rack: nil, content: [ant17], fireOrder: [], launcherDragArea: -0.07865, launcherMass: 275, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 	dumb3WT:   {name: "CATM-120B", pylon: "1 MRLW", content: [catm120], fireOrder: [], launcherDragArea: 0, launcherMass: 380, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 	smokeRL:   {name: "Smokewinder Red", pylon: "1 MRLW", content: [smokewinderRed1], fireOrder: [0], launcherDragArea: 0, launcherMass: 293, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 	smokeGL:   {name: "Smokewinder Green", pylon: "1 MRLW", content: [smokewinderGreen1], fireOrder: [0], launcherDragArea: 0, launcherMass: 293, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
@@ -144,14 +144,14 @@ var pylonSets = {
 	podEcm184: {name: "AN/ALQ-184(V) ECM Pod", pylon: "1 MAU", rack: nil, content: [ecm184], fireOrder: [0], launcherDragArea: 0.1, launcherMass: 705, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 2},
 	podEcm188: {name: "AN/ALQ-188(V) EAT Pod", pylon: "1 MAU", rack: nil, content: [ecm188], fireOrder: [0], launcherDragArea: 0.08, launcherMass: 355, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 2},
     podTrvl:   {name: "MXU-648 Cargopod", pylon: "1 MAU", rack: nil, content: [crgpd], fireOrder: [], launcherDragArea: 0.14, launcherMass: 324, launcherJettisonable: 1, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 2},
-    podSAtp:   {name: "AN/AAQ-33 Sniper ATP", content: [atp], fireOrder: [0], launcherDragArea: 0.006, launcherMass: 446, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-    podLTgp:   {name: "AN/AAQ-14 LANTIRN Target Pod", content: [tgp], fireOrder: [0], launcherDragArea: 0.007, launcherMass: 530, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-    podLNav:   {name: "AN/AAQ-13 LANTIRN Nav Pod", content: [nav], fireOrder: [0], launcherDragArea: 0.01, launcherMass: 451.1, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-    podLite:   {name: "AN/AAQ-28 LITENING Advanced Targeting", content: [lite], fireOrder: [0], launcherDragArea: 0.008, launcherMass: 460, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-    podIrst:   {name: "Legion Pod IRST", content: [irst], fireOrder: [0], launcherDragArea: 0.008, launcherMass: 500, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1}, #mass guess based on available data
-    podHarm:   {name: "AN/ASQ-213 HARM TS Pod", content: [harm], fireOrder: [0], launcherDragArea: 0.003, launcherMass: 100, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-    podACMI:   {name: "AN/ASQ-T50(V)2 ACMI Pod", pylon: "1 MRL", content: [acmi], fireOrder: [0], launcherDragArea: 0.015, launcherMass: 234, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-    podACMIWT: {name: "AN/ASQ-T50(V)2 ACMI Pod", pylon: "1 MRLW", content: [acmi], fireOrder: [0], launcherDragArea: 0.0785, launcherMass: 234, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    podSAtp:   {name: "AN/AAQ-33 Sniper ATP", content: [atp], fireOrder: [0], launcherDragArea: 0.06, launcherMass: 446, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    podLTgp:   {name: "AN/AAQ-14 LANTIRN Target Pod", content: [tgp], fireOrder: [0], launcherDragArea: 0.07, launcherMass: 530, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    podLNav:   {name: "AN/AAQ-13 LANTIRN Nav Pod", content: [nav], fireOrder: [0], launcherDragArea: 0.1, launcherMass: 451.1, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    podLite:   {name: "AN/AAQ-28 LITENING Advanced Targeting", content: [lite], fireOrder: [0], launcherDragArea: 0.08, launcherMass: 460, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    podIrst:   {name: "Legion Pod IRST", content: [irst], fireOrder: [0], launcherDragArea: 0.08, launcherMass: 500, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1}, #mass guess based on available data
+    podHarm:   {name: "AN/ASQ-213 HARM TS Pod", content: [harm], fireOrder: [0], launcherDragArea: 0.03, launcherMass: 100, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    podACMI:   {name: "AN/ASQ-T50(V)2 ACMI Pod", pylon: "1 MRL", content: [acmi], fireOrder: [0], launcherDragArea: 0.025, launcherMass: 234, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    podACMIWT: {name: "AN/ASQ-T50(V)2 ACMI Pod", pylon: "1 MRLW", content: [acmi], fireOrder: [0], launcherDragArea: -0.07865, launcherMass: 234, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 };
 
 if (getprop("sim/variant-id")>=5) {
