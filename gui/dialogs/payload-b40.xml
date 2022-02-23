@@ -215,6 +215,17 @@
             <colspan>6</colspan>
         </hrule>
 
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>16</row>
+            <col>0</col>
+            <legend>Air Policing (2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.b50_a2a_ap();</script>
+            </binding>
+        </button>
+
         <hrule>
             <row>11</row>
             <col>0</col>
@@ -223,7 +234,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>16</row>
+            <row>18</row>
             <col>0</col>
             <legend>Ferry Loadout (3 bags)</legend>
             <binding>
@@ -234,7 +245,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>18</row>
+            <row>20</row>
             <col>0</col>
             <legend>Ferry Loadout (2 bags XL)</legend>
             <binding>
