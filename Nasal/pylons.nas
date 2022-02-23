@@ -649,6 +649,7 @@ var ferry2 = func {
 # CAS (1x AGM-65D, 2 bags)
 var a2g_caslt = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+    	damage.damageLog.push("Close air support (light) loadout mounted");
         pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.aim9l);
         pylon3.loadSet(pylonSets.a65d);
@@ -669,6 +670,7 @@ var a2g_caslt = func {
 # CAS (3x AGM-65B, 2 bags)
 var a2g_cas = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+    	damage.damageLog.push("Close air support (heavy) loadout mounted");
         pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.aim9l);
         pylon3.loadSet(pylonSets.a65b);
@@ -1676,6 +1678,7 @@ var b50_a2g_dead2 = func {
 # CAS (1x AGM-65D, 2 bags)
 var b40_a2g_caslt = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+    	damage.damageLog.push("Close air support (light) loadout mounted");
         pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.aim9l);
         pylon3.loadSet(pylonSets.a65d);
@@ -1696,6 +1699,7 @@ var b40_a2g_caslt = func {
 # CAS Mix (GBU-54, Hydra, 2 bags)
 var b40_a2g_casmix = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+    	damage.damageLog.push("Close air support (mixed) loadout mounted");
         pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.empty);
         pylon3.loadSet(pylonSets.g54);
@@ -1717,6 +1721,7 @@ var b40_a2g_casmix = func {
 # CAS Dual (GBU-12, AGM-65D)
 var b40_a2g_casduo = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+    	damage.damageLog.push("Close air support (dual) loadout mounted");
         pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.empty);
         pylon3.loadSet(pylonSets.g12);
@@ -2273,6 +2278,7 @@ var b60_a2g_sfw = func {
 # CAS (1x AGM-65D, 2 bags)
 var b60_a2g_cas = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+    	damage.damageLog.push("Close air support loadout mounted");
         pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.aim9m);
         pylon3.loadSet(pylonSets.a65d);
