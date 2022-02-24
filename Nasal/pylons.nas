@@ -2260,7 +2260,7 @@ var b60_a2g_lgb2 = func {
 # A/G GPS Strike (GBU-31)
 var b60_a2g_gps = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
-    	damage.damageLog.push("A/G GPS JDAM loadout mounted");
+    	damage.damageLog.push("A/G GPS (JDAM) loadout mounted");
         pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.aim9m);
         pylon3.loadSet(pylonSets.g31);
@@ -2281,7 +2281,7 @@ var b60_a2g_gps = func {
 # A/G GPS Strike (GBU-54)
 var b60_a2g_gpslsr = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
-    	damage.damageLog.push("A/G GPS L-JDAM loadout mounted");
+    	damage.damageLog.push("A/G GPS (L-JDAM) loadout mounted");
         pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.aim9m);
         pylon3.loadSet(pylonSets.g54);
