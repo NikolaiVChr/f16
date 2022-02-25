@@ -663,7 +663,7 @@
  <!-- START CAUTION PANEL -->
 
  <!-- light OFF -->
- <!-- unlit condition uses AND logic -->
+ <!-- unlit condition uses NOT OR logic -->
  <!-- lit condition uses OR logic -->
 
  <animation>
@@ -694,7 +694,12 @@
   <type>select</type>
   <object-name>ADC_unlit</object-name>
   <condition>
-   <not><property>f16/avionics/caution/adc</property></not>
+   <not>
+    <or>
+     <property>f16/avionics/caution/adc</property>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -702,7 +707,12 @@
   <type>select</type>
   <object-name>AFT_FUEL_LOW_unlit</object-name>
   <condition>
-   <not><property>f16/avionics/caution/aft-fuel-low</property></not>
+   <not>
+    <or>
+     <property>f16/avionics/caution/aft-fuel-low</property>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -710,7 +720,11 @@
   <type>select</type>
   <object-name>AFT_NOT_ENGAGED_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not>
+    <or>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -718,7 +732,11 @@
   <type>select</type>
   <object-name>ANTI_SKID_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not>
+    <or>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -726,7 +744,12 @@
   <type>select</type>
   <object-name>AVIONICS_unlit</object-name>
   <condition>
-   <not><property>f16/avionics/caution/avionics</property></not>
+   <not>
+    <or>
+     <property>f16/avionics/caution/avionics</property>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -734,7 +757,11 @@
   <type>select</type>
   <object-name>BUC_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not>
+    <or>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -742,7 +769,12 @@
   <type>select</type>
   <object-name>CABIN_PRESS_unlit</object-name>
   <condition>
-   <not><property>f16/avionics/caution/cabin-press</property></not>
+   <not>
+    <or>
+     <property>f16/avionics/caution/cabin-press</property>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -750,7 +782,11 @@
   <type>select</type>
   <object-name>C_ADC_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not>
+    <or>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -758,7 +794,11 @@
   <type>select</type>
   <object-name>ECM_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not>
+    <or>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -766,7 +806,11 @@
   <type>select</type>
   <object-name>EEC_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not>
+    <or>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -774,7 +818,12 @@
   <type>select</type>
   <object-name>ELEC_SYS_unlit</object-name>
   <condition>
-   <not><property>f16/avionics/caution/elec-sys</property></not>
+   <not>
+    <or>
+     <property>f16/avionics/caution/elec-sys</property>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
  
@@ -782,7 +831,11 @@
   <type>select</type>
   <object-name>ENGINE_FAULT_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not>
+    <or>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -790,7 +843,12 @@
   <type>select</type>
   <object-name>EQUIP_HOT_unlit</object-name>
   <condition>
-   <not><property>f16/avionics/caution/equip-hot</property></not>
+   <not>
+    <or>
+     <property>f16/avionics/caution/equip-hot</property>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -798,7 +856,11 @@
   <type>select</type>
   <object-name>FLT_CONT_SYS_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not>
+    <or>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -806,7 +868,11 @@
   <type>select</type>
   <object-name>FUEL_OIL_HOT_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not>
+    <or>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -814,7 +880,12 @@
   <type>select</type>
   <object-name>FWD_FUEL_LOW_unlit</object-name>
   <condition>
-   <not><property>f16/avionics/caution/fwd-fuel-low</property></not>
+   <not>
+    <or>
+     <property>f16/avionics/caution/fwd-fuel-low</property>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -822,7 +893,12 @@
   <type>select</type>
   <object-name>HOOK_unlit</object-name>
   <condition>
-   <not><property>f16/avionics/caution/hook</property></not>
+   <not>
+    <or>
+     <property>f16/avionics/caution/hook</property>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -830,7 +906,11 @@
   <type>select</type>
   <object-name>IFF_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not>
+    <or>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -838,7 +918,11 @@
   <type>select</type>
   <object-name>INLET_ICING_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not>
+    <or>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -846,7 +930,12 @@
   <type>select</type>
   <object-name>LE_FLAPS_unlit</object-name>
   <condition>
-   <not><property>f16/avionics/caution/le-flaps</property></not>
+   <not>
+    <or>
+     <property>f16/avionics/caution/le-flaps</property>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -854,7 +943,11 @@
   <type>select</type>
   <object-name>NUCLEAR_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not>
+    <or>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -862,7 +955,11 @@
   <type>select</type>
   <object-name>NWS_FAIL_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not>
+    <or>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -870,7 +967,12 @@
   <type>select</type>
   <object-name>OVERHEAT_unlit</object-name>
   <condition>
-   <not><property>f16/avionics/caution/overheat</property></not>
+   <not>
+    <or>
+     <property>f16/avionics/caution/overheat</property>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -878,7 +980,12 @@
   <type>select</type>
   <object-name>OXY_LOW_unlit</object-name>
   <condition>
-   <not><property>f16/avionics/caution/oxy-low</property></not>
+   <not>
+    <or>
+     <property>f16/avionics/caution/oxy-low</property>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -887,11 +994,11 @@
   <object-name>PROBE_HEAT_unlit</object-name>
   <condition>
    <not>
-	<or>
-		<property>controls/test/test-panel/mal-ind-lts</property>
-		<property>f16/avionics/caution/probe-heat</property>
-	</or>
-	</not>
+    <or>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+     <property>f16/avionics/caution/probe-heat</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -899,7 +1006,11 @@
   <type>select</type>
   <object-name>RADAR_ALT_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not>
+    <or>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -907,7 +1018,12 @@
   <type>select</type>
   <object-name>SEAT_NOT_ARMED_unlit</object-name>
   <condition>
-   <not><property>f16/avionics/caution/seat-not-armed</property></not>
+   <not>
+    <or>
+     <property>f16/avionics/caution/seat-not-armed</property>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -915,7 +1031,12 @@
   <type>select</type>
   <object-name>SEC_unlit</object-name>
   <condition>
-   <not><property>f16/avionics/caution/sec</property></not>
+   <not>
+    <or>
+     <property>f16/avionics/caution/sec</property>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
@@ -923,12 +1044,17 @@
   <type>select</type>
   <object-name>STORES_CONFIG_unlit</object-name>
   <condition>
-   <not><property>f16/avionics/caution/stores-config</property></not>
+   <not>
+    <or>
+     <property>f16/avionics/caution/stores-config</property>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </not>
   </condition>
  </animation> 
 
  <!-- light ON -->
- <!-- unlit condition uses AND logic -->
+ <!-- unlit condition uses NOT OR logic -->
  <!-- lit condition uses OR logic -->
 
  <animation>
@@ -959,7 +1085,10 @@
   <type>select</type>
   <object-name>ADC_lit</object-name>
   <condition>
-     <property>f16/avionics/caution/adc</property>
+   <or>
+    <property>f16/avionics/caution/adc</property>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -967,7 +1096,10 @@
   <type>select</type>
   <object-name>AFT_FUEL_LOW_lit</object-name>
   <condition>
-   <property>f16/avionics/caution/aft-fuel-low</property>
+   <or>
+    <property>f16/avionics/caution/aft-fuel-low</property>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -975,7 +1107,9 @@
   <type>select</type>
   <object-name>AFT_NOT_ENGAGED_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+   <or>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -983,7 +1117,9 @@
   <type>select</type>
   <object-name>ANTI_SKID_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+   <or>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -991,7 +1127,10 @@
   <type>select</type>
   <object-name>AVIONICS_lit</object-name>
   <condition>
-   <property>f16/avionics/caution/avionics</property>
+   <or>
+    <property>f16/avionics/caution/avionics</property>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -999,7 +1138,9 @@
   <type>select</type>
   <object-name>BUC_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+   <or>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -1007,7 +1148,10 @@
   <type>select</type>
   <object-name>CABIN_PRESS_lit</object-name>
   <condition>
-      <property>f16/avionics/caution/cabin-press</property>
+   <or>
+    <property>f16/avionics/caution/cabin-press</property>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -1015,7 +1159,9 @@
   <type>select</type>
   <object-name>C_ADC_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+   <or>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -1023,7 +1169,9 @@
   <type>select</type>
   <object-name>ECM_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+   <or>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -1031,7 +1179,9 @@
   <type>select</type>
   <object-name>EEC_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+   <or>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -1039,7 +1189,10 @@
   <type>select</type>
   <object-name>ELEC_SYS_lit</object-name>
   <condition>
+   <or>
     <property>f16/avionics/caution/elec-sys</property>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -1047,7 +1200,9 @@
   <type>select</type>
   <object-name>ENGINE_FAULT_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+   <or>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -1055,7 +1210,10 @@
   <type>select</type>
   <object-name>EQUIP_HOT_lit</object-name>
   <condition>
-   <property>f16/avionics/caution/equip-hot</property>
+   <or>
+    <property>f16/avionics/caution/equip-hot</property>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -1063,7 +1221,9 @@
   <type>select</type>
   <object-name>FLT_CONT_SYS_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+   <or>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -1071,7 +1231,9 @@
   <type>select</type>
   <object-name>FUEL_OIL_HOT_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+   <or>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -1079,7 +1241,10 @@
   <type>select</type>
   <object-name>FWD_FUEL_LOW_lit</object-name>
   <condition>
-   <property>f16/avionics/caution/fwd-fuel-low</property>
+   <or>
+    <property>f16/avionics/caution/fwd-fuel-low</property>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -1087,7 +1252,10 @@
   <type>select</type>
   <object-name>HOOK_lit</object-name>
   <condition>
-   <property>f16/avionics/caution/hook</property>
+   <or>
+    <property>f16/avionics/caution/hook</property>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -1095,7 +1263,9 @@
   <type>select</type>
   <object-name>IFF_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+   <or>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -1103,7 +1273,9 @@
   <type>select</type>
   <object-name>INLET_ICING_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+   <or>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -1111,7 +1283,10 @@
   <type>select</type>
   <object-name>LE_FLAPS_lit</object-name>
   <condition>
+   <or>
     <property>f16/avionics/caution/le-flaps</property>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -1119,7 +1294,9 @@
   <type>select</type>
   <object-name>NUCLEAR_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+   <or>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -1127,7 +1304,9 @@
   <type>select</type>
   <object-name>NWS_FAIL_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+   <or>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -1135,7 +1314,10 @@
   <type>select</type>
   <object-name>OVERHEAT_lit</object-name>
   <condition>
-   <property>f16/avionics/caution/overheat</property>
+   <or>
+    <property>f16/avionics/caution/overheat</property>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -1143,7 +1325,10 @@
   <type>select</type>
   <object-name>OXY_LOW_lit</object-name>
   <condition>
-      <property>f16/avionics/caution/oxy-low</property>
+   <or>
+    <property>f16/avionics/caution/oxy-low</property>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -1151,10 +1336,10 @@
   <type>select</type>
   <object-name>PROBE_HEAT_lit</object-name>
   <condition>
-	<or>
-		<property>controls/test/test-panel/mal-ind-lts</property>
-		<property>f16/avionics/caution/probe-heat</property>
-	</or>
+   <or>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+    <property>f16/avionics/caution/probe-heat</property>
+   </or>
   </condition>
  </animation>
  
@@ -1162,7 +1347,9 @@
   <type>select</type>
   <object-name>RADAR_ALT_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+   <or>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -1170,7 +1357,10 @@
   <type>select</type>
   <object-name>SEAT_NOT_ARMED_lit</object-name>
   <condition>
-       <property>f16/avionics/caution/seat-not-armed</property>
+   <or>
+    <property>f16/avionics/caution/seat-not-armed</property>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -1178,7 +1368,10 @@
   <type>select</type>
   <object-name>SEC_lit</object-name>
   <condition>
-       <property>f16/avionics/caution/sec</property>
+   <or>
+    <property>f16/avionics/caution/sec</property>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
 
@@ -1186,7 +1379,10 @@
   <type>select</type>
   <object-name>STORES_CONFIG_lit</object-name>
   <condition>
-      <property>f16/avionics/caution/stores-config</property>
+   <or>
+    <property>f16/avionics/caution/stores-config</property>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
  
