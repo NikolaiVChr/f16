@@ -165,6 +165,17 @@
   </offsets>
  </model>
 
+ <model>
+  <name>Station4_2xCBU105</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/CBU-105/bru-57-4.xml</path>
+  <offsets>
+    <x-m>-0.42</x-m>
+    <y-m>-1.63</y-m>
+    <z-m>-0.252</z-m>
+    <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+</model>
+
 <model>
   <name>Station4_GBU-31</name>
   <path>Aircraft/f16/Models/Armament/Weapons/GBU-31/GBU-31.xml</path>
@@ -336,6 +347,17 @@
    <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>
+
+ <model>
+  <name>Station6_2xCBU105</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/CBU-105/bru-57-6.xml</path>
+  <offsets>
+    <x-m>-0.42</x-m>
+    <y-m>1.63</y-m>
+    <z-m>-0.252</z-m>
+    <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+</model>
  
  <model>
   <name>Station6_GBU-31</name>

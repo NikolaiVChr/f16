@@ -1588,11 +1588,11 @@ var b40_a2g_sfw = func {
     	damage.damageLog.push("A/G Cluster SFW (WCMD) loadout mounted");
         pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.aim9l);
-        pylon3.loadSet(pylonSets.c105);
+        pylon3.loadSet(pylonSets.c105x2);
         pylon4.loadSet(pylonSets.fuel37L);
         pylon5.loadSet(pylonSets.empty);
         pylon6.loadSet(pylonSets.fuel37R);
-        pylon7.loadSet(pylonSets.c105);
+        pylon7.loadSet(pylonSets.c105x2);
         pylon8.loadSet(pylonSets.aim9l);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.podLite);
