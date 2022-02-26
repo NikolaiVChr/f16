@@ -648,25 +648,25 @@ var F16_HMD = {
                                           obj.agl=hdp.altitude_agl_ft;
                                           obj.altScaleMode = 0;#0=baro, 1=radar 2=thermo
                                           if (hdp.altSwitch == 2) {#RDR
-                                                obj.altScaleMode = hdp.cara;
+                                                obj.altScaleMode = (hdp.cara > 0) ? 1 : 0;
                                           } elsif (hdp.altSwitch == 1) {#BARO
                                                 obj.altScaleMode = 0;
                                           } else {#AUTO
                                                 if (obj["altScaleModeOld"] != nil) {
                                                     if (obj.altScaleModeOld == 2) {
-                                                        obj.altScaleMode = (obj.agl < 1500 and hdp.cara and !hdp.dgft and !obj.hidingScales)*2;
+                                                        obj.altScaleMode = (obj.agl < 1500 and hdp.cara > 0 and !hdp.dgft and !obj.hidingScales)*2;
                                                     } else {
-                                                        obj.altScaleMode = (obj.agl < 1200 and hdp.cara and !hdp.dgft and !obj.hidingScales)*2;
+                                                        obj.altScaleMode = (obj.agl < 1200 and hdp.cara > 0 and !hdp.dgft and !obj.hidingScales)*2;
                                                     }
                                                 } else {
-                                                    obj.altScaleMode = (obj.agl < 1300 and hdp.cara and !hdp.dgft and !obj.hidingScales)*2;
+                                                    obj.altScaleMode = (obj.agl < 1300 and hdp.cara > 0 and !hdp.dgft and !obj.hidingScales)*2;
                                                 }
                                           }
                                           obj.altScaleModeOld = obj.altScaleMode;
 
-                                          if(hdp.altSwitch == 0 and hdp.cara and obj.altScaleMode == 0) {
+                                          if(hdp.altSwitch == 0 and hdp.cara > 0 and obj.altScaleMode == 0) {
                                               #obj.ralt.setText(sprintf("AR %s", obj.getAltTxt(obj.agl)));
-                                          } elsif(hdp.cara and obj.altScaleMode == 0) {
+                                          } elsif(hdp.cara > 0 and obj.altScaleMode == 0) {
                                               #obj.ralt.setText(sprintf("R %s", obj.getAltTxt(obj.agl)));
                                           } else {
                                               #obj.ralt.setText("    ,   ");
