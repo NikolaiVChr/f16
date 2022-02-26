@@ -971,19 +971,32 @@ var buffeting = func {
 }
 
 var CARA = func {
+    var caraOn = props.globals.getNode("f16/avionics/cara-on");
+
+    # Inhibit CARA ALOW voice message when initially below CARA ALOW setting, i.e. when taking off
+    if (getprop("position/altitude-agl-ft") > getprop("f16/settings/cara-alow")) {
+        caraOn.setIntValue(0);
+    } else {
+        # Reset inhibit CARA ALOW when lowering gear, e.g. when landing or going around
+        if (getprop("gear/gear/position-norm") > 0) {
+            caraOn.setIntValue(-1);
+            return;
+        }
+    }
     # Tri-service combined altitude radar altimeter
     if (getprop("f16/avionics/power-rdr-alt-warm")<2) {
-        setprop("f16/avionics/cara-on",0);
+        caraOn.setIntValue(-1);
         return;
     }
-    var viewOnGround = 0;
-    var attitudeConv = vector.Math.convertAngles(getprop("orientation/heading-deg"),getprop("orientation/pitch-deg"),getprop("orientation/roll-deg"));
-    var down = vector.Math.eulerToCartesian3Z(attitudeConv[0],attitudeConv[1],attitudeConv[2]);#vector pointing up from aircraft
-    var up = [0,0,1];#vector pointing up from ground
-    var angle = vector.Math.angleBetweenVectors(down,up);
-    setprop("f16/avionics/cara-on",angle<70 and getprop("position/altitude-agl-ft")<50000);#yep, really goes up to 50000 ft!
-}
 
+    if (caraOn.getIntValue() != -1) {
+        var attitudeConv = vector.Math.convertAngles(getprop("orientation/heading-deg"),getprop("orientation/pitch-deg"),getprop("orientation/roll-deg"));
+        var down = vector.Math.eulerToCartesian3Z(attitudeConv[0],attitudeConv[1],attitudeConv[2]);#vector pointing up from aircraft
+        var up = [0,0,1];#vector pointing up from ground
+        var angle = vector.Math.angleBetweenVectors(down,up);
+        caraOn.setIntValue((angle<70 and getprop("position/altitude-agl-ft")<50000) ? 1 : 0);#yep, really goes up to 50000 ft!
+    }
+}
 
 
 var batteryChargeDischarge = func {

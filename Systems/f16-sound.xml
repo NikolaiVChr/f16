@@ -3702,7 +3702,7 @@
         <betty>
             <name>alow</name>
             <path>Aircraft/f16/Sounds/betty/altitude.wav</path>
-            <mode>once</mode>
+            <mode>looped</mode>
             <type>avionics</type>
             <condition>
                 <not><property>f16/avionics/voice-msg-inhibit</property></not>
@@ -3715,7 +3715,10 @@
                     <property>f16/settings/cara-alow</property>
                     <property>position/altitude-agl-ft</property>
                 </greater-than>
-                <property>f16/avionics/cara-on</property>
+                <equals>
+                    <property>f16/avionics/cara-on</property>
+                    <value>1</value>
+                </equals>
                 <greater-than>
                   <property>fdm/jsbsim/elec/bus/batt-1</property>
                   <value>20</value>
