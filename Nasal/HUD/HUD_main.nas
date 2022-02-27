@@ -1572,26 +1572,26 @@ append(obj.total, obj.speed_curr);
                                           obj.altScaleMode = 0;#0=baro, 1=radar 2=thermo
                                           if (!hdp.dgft) {
                                               if (hdp.altSwitch == 2) {#RDR
-                                                    obj.altScaleMode = (hdp.cara > 0) ? 1 : 0;
+                                                    obj.altScaleMode = !!hdp.cara;
                                               } elsif (hdp.altSwitch == 1) {#BARO
                                                     obj.altScaleMode = 0;
                                               } else {#AUTO
                                                     if (obj["altScaleModeOld"] != nil) {
                                                         if (obj.altScaleModeOld == 2) {
-                                                            obj.altScaleMode = (obj.agl < 1500 and hdp.cara > 0 and !hdp.dgft and !obj.hidingScales)*2;
+                                                            obj.altScaleMode = (obj.agl < 1500 and !!hdp.cara and !hdp.dgft and !obj.hidingScales)*2;
                                                         } else {
-                                                            obj.altScaleMode = (obj.agl < 1200 and hdp.cara > 0 and !hdp.dgft and !obj.hidingScales)*2;
+                                                            obj.altScaleMode = (obj.agl < 1200 and !!hdp.cara and !hdp.dgft and !obj.hidingScales)*2;
                                                         }
                                                     } else {
-                                                        obj.altScaleMode = (obj.agl < 1300 and hdp.cara > 0 and !hdp.dgft and !obj.hidingScales)*2;
+                                                        obj.altScaleMode = (obj.agl < 1300 and !!hdp.cara and !hdp.dgft and !obj.hidingScales)*2;
                                                     }
                                               }
                                           }
                                           obj.altScaleModeOld = obj.altScaleMode;
                                           #print("UPDATE "~obj.altScaleMode~"  CARA "~hdp.cara~"  AGL "~obj.agl);
-                                          if(hdp.altSwitch == 0 and hdp.cara > 0 and obj.altScaleMode == 0) {
+                                          if(hdp.altSwitch == 0 and !!hdp.cara and obj.altScaleMode == 0) {
                                               obj.ralt.setText(sprintf("AR %s", obj.getAltTxt(obj.agl)));
-                                          } elsif(hdp.cara > 0 and obj.altScaleMode == 0) {
+                                          } elsif(!!hdp.cara and obj.altScaleMode == 0) {
                                               obj.ralt.setText(sprintf("R %s", obj.getAltTxt(obj.agl)));
                                           } else {
                                               obj.ralt.setText("    ,   ");
@@ -2366,7 +2366,7 @@ append(obj.total, obj.speed_curr);
 			}
 			
             
-            if (hdp.cara < 1) {
+            if (!hdp.cara) {
                 me.alow_text = "AL";
             } elsif (hdp.alow<hdp.altitude_agl_ft or math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0 or hdp.gear_down) {
                 me.alow_text = sprintf("AL%4d",hdp.alow);
