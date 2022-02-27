@@ -977,7 +977,7 @@
         </fcs_function>
 
     </channel>
-	
+
 	<channel name="Aural tones" execrate="8">
 		<switch name="/f16/avionics/gear-horn-cancel">
 			<default value="0"/>
@@ -986,29 +986,19 @@
 				/velocities/speed-down-fps ge 4.17
 				/velocities/airspeed-kt lt 190
 				atmosphere/density-altitude lt 10000
-				/gear/gear[0]/position-norm ne 1
-			</test>
-			<test logic="AND" value="1">
-				/f16/avionics/gear-horn-cancel eq 1
-				/velocities/speed-down-fps ge 4.17
-				/velocities/airspeed-kt lt 190
-				atmosphere/density-altitude lt 10000
-				/gear/gear[1]/position-norm ne 1
-			</test>
-			<test logic="AND" value="1">
-				/f16/avionics/gear-horn-cancel eq 1
-				/velocities/speed-down-fps ge 4.17
-				/velocities/airspeed-kt lt 190
-				atmosphere/density-altitude lt 10000
-				/gear/gear[2]/position-norm ne 1
+				<test logic="OR">
+					/gear/gear[0]/position-norm ne 1
+					/gear/gear[1]/position-norm ne 1
+					/gear/gear[2]/position-norm ne 1
+				</test>
 			</test>
 			<test logic="AND" value="1">
 				/controls/gear/gear-horn-cutout eq 1
 			</test>
 		</switch>
-		
+
 		<switch name="/f16/avionics/gear-horn">
-            <description>Dash-1  1-70 and AD-A145-469</description>
+			<description>Dash-1  1-70 and AD-A145-469</description>
 			<default value="0"/>
 			<test logic="AND" value="0">
 				/f16/avionics/gear-horn-cancel eq 1
@@ -1017,19 +1007,11 @@
 				/velocities/speed-down-fps ge 4.17
 				/velocities/airspeed-kt lt 190
 				atmosphere/density-altitude lt 10000
-				/gear/gear[0]/position-norm ne 1
-			</test>
-			<test logic="AND" value="1">
-				/velocities/speed-down-fps ge 4.17
-				/velocities/airspeed-kt lt 190
-				atmosphere/density-altitude lt 10000
-				/gear/gear[1]/position-norm ne 1
-			</test>
-			<test logic="AND" value="1">
-				/velocities/speed-down-fps ge 4.17
-				/velocities/airspeed-kt lt 190
-				atmosphere/density-altitude lt 10000
-				/gear/gear[2]/position-norm ne 1
+				<test logic="OR">
+					/gear/gear[0]/position-norm ne 1
+					/gear/gear[1]/position-norm ne 1
+					/gear/gear[2]/position-norm ne 1
+				</test>
 			</test>
 		</switch>
 
