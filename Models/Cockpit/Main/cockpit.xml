@@ -810,13 +810,14 @@
  
 <!-- AOA indexer animations -->
  <animation>
+  <description>See 'steady' object animation description</description>
   <type>select</type>
   <object-name>down</object-name>
   <condition>
     <or>
     <greater-than>
      <property>/fdm/jsbsim/fcs/fly-by-wire/pitch/alpha-indicated</property>
-     <value>15.0</value>
+     <value>14.0</value>
     </greater-than>
     <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
@@ -828,6 +829,12 @@
  </animation>
 
  <animation>
+  <description>
+   GR1F-16CJ-1 page 1-138
+   The indexer provides a visual head-up indication of aircraft AOA
+   by illuminating the symbols individually or in combinations as shown.
+   The indexer lights display AOA correction (based on approximately 13 degrees AOA).
+  </description>
   <type>select</type>
   <object-name>steady</object-name>
   <condition>
@@ -852,13 +859,14 @@
  </animation>
 
  <animation>
+  <description>See 'steady' object animation description</description>
   <type>select</type>
   <object-name>up</object-name>
   <condition>
     <or>
     <less-than>
      <property>/fdm/jsbsim/fcs/fly-by-wire/pitch/alpha-indicated</property>
-     <value>11.0</value>
+     <value>12.0</value>
     </less-than>
     <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
