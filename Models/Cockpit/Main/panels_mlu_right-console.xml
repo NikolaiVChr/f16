@@ -1434,6 +1434,31 @@
     </animation>
 
     <animation>
+        <type>pick</type>
+        <visible>true</visible>
+        <object-name>nuke-consent-cover</object-name>
+        <object-name>nuke-consent-switch</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>
+                    <![CDATA[
+                    if (!getprop("payload/armament/msg")) {
+                        setprop("/sim/freeze/master", 1);
+                        setprop("/sim/freeze/clock", 1);
+                        screen.log.write("Sim is paused");
+                    }
+                    ]]></script>
+            </binding>
+            <binding>
+                <command>dialog-show</command>
+                <dialog-name>nuclear-consent</dialog-name>
+            </binding>
+        </action>
+    </animation>
+
+    <animation>
         <object-name>AVIONICS_PWR_B10_1</object-name>
         <type>select</type>
         <condition>

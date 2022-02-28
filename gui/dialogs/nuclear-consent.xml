@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<PropertyList>
+    <name>nuclear-consent</name>
+    <modal>true</modal>
+    <layout>vbox</layout>
+    <draggable>false</draggable>
+    <resizable>false</resizable>
+    <width>350</width>
+    <height>150</height>
+
+    <group>
+        <layout>hbox</layout>
+        <empty><stretch>1</stretch></empty>
+        <text>
+            <label>Nuclear weapons</label>
+        </text>
+        <empty><stretch>1</stretch></empty>
+    </group>
+
+    <hrule/>
+
+    <text>
+        <label>Think about what you are doing...</label>
+    </text>
+    <text>
+        <label>This is not going to be implemented</label>
+    </text>
+
+    <group>
+        <layout>hbox</layout>
+        <empty><stretch>1</stretch></empty>
+        <button>
+            <halign>center</halign>
+            <pref-width>100</pref-width>
+            <pref-height>30</pref-height>
+            <legend>I understand</legend>
+            <binding>
+                <command>dialog-close</command>
+            </binding>
+        </button>
+        <empty><stretch>1</stretch></empty>
+    </group>
+
+</PropertyList>
