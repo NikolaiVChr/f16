@@ -43,6 +43,17 @@
             <pref-height>30</pref-height>
             <legend>I understand</legend>
             <binding>
+                <command>nasal</command>
+                <script>
+                    <![CDATA[
+                    if (!getprop("payload/armament/msg")) {
+                        setprop("/sim/freeze/master", 0);
+                        setprop("/sim/freeze/clock", 0);
+                        screen.log.write("Sim is resumed");
+                    }
+                    ]]></script>
+            </binding>
+            <binding>
                 <command>dialog-close</command>
             </binding>
         </button>
