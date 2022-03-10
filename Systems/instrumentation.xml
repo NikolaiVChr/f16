@@ -38,6 +38,8 @@ This file selects the instrumentation modules that should be available.
 		<name>altimeter</name>
 		<number>0</number>
 		<static-pressure>/systems/static/pressure-inhg</static-pressure>
+		<encode-mode-c>true</encode-mode-c>
+		<encode-mode-s>true</encode-mode-s>
 	</altimeter>
 
 	<attitude-indicator>
@@ -112,7 +114,6 @@ This file selects the instrumentation modules that should be available.
 	<transponder>
 		<name>transponder</name>
 		<number>0</number>
-		<mode-c-altitude>/instrumentation/encoder/mode-c-alt-ft</mode-c-altitude>
 	</transponder>
 
 	<turn-indicator>
