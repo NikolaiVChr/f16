@@ -1231,8 +1231,7 @@
         </sound>
         <settings>
             <bingo type="int">1500</bingo>
-            <msl-floor type="int">18000</msl-floor><!-- Mean Sea Level altitude advisory floor
-value. 18000=standard US transition altitude -->
+            <msl-floor type="int">18000</msl-floor><!-- Mean Sea Level altitude advisory floor value. 18000=standard US transition altitude -->
             <cara-alow type="int">500</cara-alow><!-- Combined Altitude Radar Altimeter Automatic LOw altitude Warning -->
         </settings>
         <ded>

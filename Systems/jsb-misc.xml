@@ -1130,8 +1130,26 @@
 
 	</channel>
 
+    <channel name="MSL floor" execrate="120">
+        <fcs_function name="/f16/avionics/msl-floor-reached">
+            <function>
+                <ifthen>
+                    <lt>
+                        <abs>
+                            <difference>
+                                <property>/f16/settings/msl-floor</property>
+                                <property>/instrumentation/altimeter/indicated-altitude-ft</property>
+                            </difference>
+                        </abs>
+                        <abs><property>/velocities/vertical-speed-fps</property></abs>
+                    </lt>
+                    <v>1</v>
+                    <v>0</v>
+                </ifthen>
+            </function>
+        </fcs_function>
+    </channel>
 
-	
 	<channel name="VVI">
 		
 		<fcs_function name="/f16/avionics/vvi-indicated-speed-fps">

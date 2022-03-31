@@ -3737,13 +3737,10 @@
             <mode>once</mode>
             <type>avionics</type>
             <condition>
+                <property>/f16/avionics/msl-floor-reached</property>
                 <not><property>f16/avionics/voice-msg-inhibit</property></not>
                 <not><property>gear/gear[2]/wow</property></not>
                 <greater-than>
-                    <property>instrumentation/altimeter/indicated-altitude-ft</property>
-                    <property>f16/settings/msl-floor</property>
-                </greater-than>
-                <greater-than>
                   <property>fdm/jsbsim/elec/bus/batt-1</property>
                   <value>20</value>
                 </greater-than>
@@ -3755,37 +3752,6 @@
             <volume>
                 <property>f16/avionics/intercom-volume</property>
                 <factor>1</factor>
-            </volume>
-        </betty>
-        <betty>
-            <name>msl-floor2</name>
-            <path>Aircraft/f16/Sounds/betty/altitude.wav</path>
-            <mode>once</mode>
-            <type>avionics</type>
-            <condition>
-                <not><property>f16/avionics/voice-msg-inhibit</property></not>
-                <greater-than>
-                    <property>f16/settings/msl-floor</property>
-                    <property>instrumentation/altimeter/indicated-altitude-ft</property>
-                </greater-than>
-                <greater-than>
-                  <property>fdm/jsbsim/elec/bus/batt-1</property>
-                  <value>20</value>
-                </greater-than>
-            </condition>
-            <volume>
-                <property>sim/current-view/internal</property>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>f16/avionics/intercom-volume</property>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <!-- placed here to make it sound off silently when spawning -->
-                <property>gear/gear[2]/wow</property>
-                <offset>1</offset>
-                <factor>-1</factor>
             </volume>
         </betty>
         <betty>
