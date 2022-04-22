@@ -4,8 +4,8 @@
  <sim>
   <model>
    <livery>
-    <name type="string">RDAF Esk 730, E-602</name>
-    <texture>Liveries/Block20/80-3602.png</texture>
+    <name type="string">RDAF Esk 727, "Demo scheme 2018"</name>
+    <texture>Liveries/Block20/80-3607.png</texture>
     <owner type="string">RDAF</owner>
    </livery>
    <livery-logo>
@@ -14,15 +14,15 @@
 
    <livery-patch>
       <texture>Liveries/Block20/patch.rdaf.png</texture>
-  </livery-patch>
+   </livery-patch>
 
   <livery-pod>
         <texture>Armament/External-stores/MXU-648.png</texture>
-    </livery-pod>
+  </livery-pod>
 
-  <f16>
-     <dragchute type="bool">false</dragchute>
-  </f16>
+        <f16>
+            <dragchute type="bool">false</dragchute>
+        </f16>
   </model>
  </sim>
 </PropertyList>
