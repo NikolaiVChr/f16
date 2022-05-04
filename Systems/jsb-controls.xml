@@ -437,9 +437,9 @@
                 <table>
                     <independentVar lookup="row">fcs/elevator-cmd-norm</independentVar>
                     <tableData>
-                       -1   31.25
+                       -1   32
                         0    0
-                        1  -31.25
+                        1  -32
                     </tableData>
                 </table>
             </function>
@@ -453,12 +453,12 @@
                 <table>
                     <independentVar lookup="row">fcs/fly-by-wire/pitch/stick-force-lbf</independentVar>
                     <tableData>
-                       -31.25  -10.86
-                        -5.25  -0.44
+                        -32.0   -10.86
+                        -6.0    -0.44
                         -1.75   0.0
-                         1.75   0.0
-                         5.25   0.44 
-                        31.25  10.86
+                        1.75    0.0
+                        6.0     0.44 
+                        32.0    10.86
                     </tableData>
                 </table>
             </function>
