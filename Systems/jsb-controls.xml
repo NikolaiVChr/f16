@@ -862,7 +862,7 @@
         <pure_gain name="fcs/fly-by-wire/pitch/pitch-rate-lower">
 			<description>
                     LJQC: This part not exist in Analog or Digital FLCS.
-					GR1F-16CJ-1: Pitch rate command until 10 deg AOA.
+					1F-16CJ-1: Pitch rate command until 10 deg AOA.
             </description>
             <input>fcs/fly-by-wire/pitch/pitch-rate-gain-sum-gain</input>
             <gain> 0 </gain>
@@ -1504,8 +1504,6 @@
             <description>
                 The -1 factor was removed since it was wrong. When more than
                 5 deg nosedown elev is commanded this comes into effect.
-				
-				LJQC: Should be more than 4.2 deg elev leading edge down. Todo: check.
             </description>
             <function>
                 <product>
@@ -1526,7 +1524,7 @@
 		
 		<switch name="fcs/fly-by-wire/roll/bias-catiii">
             <description>
-                LJQC: 136 deg/s cat-III bias added to roll rate limiter.
+                LJQC: 136 deg/s cat-III bias is actually added to the roll rate limiter, max limited by 244.
             </description>
             <default value="0"/>
             <test logic="OR" value="136">
@@ -1578,17 +1576,31 @@
                 fcs/fly-by-wire/control-c-actual == 1
             </test>
         </switch>
+		
+		<switch name="fcs/fly-by-wire/roll/max-cmd-roll-rate-gain-switch">
+            <description>
+                LJQC: According to 189675, 167deg/s is a direct overriding limit by roll rate command limiter, instead of applying a 0.542208 gain.
+            </description>
+            <default value="fcs/fly-by-wire/roll/max-cmd-roll-rate"/>
+            <test logic="OR" value="167">
+                fcs/fly-by-wire/condition-a == 1
+                fcs/fly-by-wire/digital-backup == 1
+            </test>
+        </switch>
 
         <fcs_function name="fcs/fly-by-wire/roll/min-cmd-roll-rate">
             <function>
                 <quotient>
-                    <p>fcs/fly-by-wire/roll/max-cmd-roll-rate</p>
+                    <p>fcs/fly-by-wire/roll/max-cmd-roll-rate-gain-switch</p>
                     <v>324</v>
                 </quotient>
             </function>
         </fcs_function>
 
         <fcs_function name="fcs/fly-by-wire/roll/command-deg_s">
+			<description>
+                LJQC: command gradient according to 189675.
+            </description>
             <function>
                 <product>
                 <table>
@@ -1622,6 +1634,9 @@
         </switch>
 
         <fcs_function name="fcs/fly-by-wire/roll/command-limited-deg_s">
+			<description>
+                LJQC: Already accounted for at above. No usage here.
+            </description>
             <function>
                 <product>
                     <table>
@@ -1655,22 +1670,14 @@
                 <max>  40 </max>
             </range>
         </aerosurface_scale>
-
-        <switch name="fcs/fly-by-wire/roll/gain-switch">
-            <description>
-                GR1F-16CJ-1 page 120
-                DBU - Maximum roll rate command is a constant 167 degrees per second.
-            </description>
-            <default value="1.0"/>
-            <test logic="OR" value="0.542">
-                fcs/fly-by-wire/condition-a == 1
-                fcs/fly-by-wire/digital-backup == 1
-            </test>
-        </switch>
+		
 
         <pure_gain name="fcs/fly-by-wire/roll/ground-gain">
+			<description>
+                LJQC: Already accounted for at above. No usage here.
+            </description>
             <input>fcs/fly-by-wire/roll/command-limited-deg_s</input>
-            <gain> fcs/fly-by-wire/roll/gain-switch </gain>
+            <gain> 1.0 </gain>
         </pure_gain>
 
         <summer name="fcs/fly-by-wire/roll/loop-sum">
