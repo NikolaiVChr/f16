@@ -993,6 +993,7 @@
 		<pure_gain name="fcs/fly-by-wire/pitch/pitch-rate-cmd-gained">
 			<description>
 				LJQC: (AOA - 10)*0.305, take pos val, and adds to the pitch rate feedback path.
+				Check: 1G stall at 21 deg AOA according to 1F-16CJ-1.
             </description>
             <input>fcs/fly-by-wire/pitch/pitch-rate-cmd-sum</input>
             <gain> 0.305 </gain>
