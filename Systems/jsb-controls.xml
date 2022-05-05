@@ -585,8 +585,18 @@
             <input> fcs/fly-by-wire/pitch/control-c/roll-rate-gain </input>
             <c1> 0.67 </c1>
         </lag_filter>
+		
+		<switch name="fcs/fly-by-wire/pitch/catiii-roll-rate-af-limit">
+            <default value="5.4"/>
+            <test logic="OR" value="2.7">
+                fcs/fly-by-wire/pitch/enable-cat-III == 1
+            </test>
+        </switch>
 
         <fcs_function name="fcs/fly-by-wire/pitch/control-c/roll-rate-schedule">
+			<description>
+				LJQC: Under CAT III it is limited to an output of 2.7, ref 189675.
+			</description>
             <function>
                 <table>
                     <independentVar lookup="row">fcs/fly-by-wire/pitch/control-c/roll-rate-lagged</independentVar>
@@ -597,6 +607,17 @@
                 </table>
             </function>
         </fcs_function>
+		
+		<summer name="fcs/fly-by-wire/pitch/roll-rate-schedule-limited">
+			<description>
+                LJQC: 189675 variable F. This is later used in yaw axis at rudder authority limiter.
+            </description>
+            <input>fcs/fly-by-wire/pitch/control-c/roll-rate-schedule</input>
+            <clipto>
+                <min>0</min>
+                <max>fcs/fly-by-wire/pitch/catiii-roll-rate-af-limit</max>
+            </clipto>
+        </summer>
 
         <switch name="fcs/fly-by-wire/control-c-actual">
             <description>
@@ -619,7 +640,7 @@
                       when rolling at high angle of attack.
                       its not used in yaw, ari or roll.
             </description>
-            <input> fcs/fly-by-wire/pitch/control-c/roll-rate-schedule </input>
+            <input> fcs/fly-by-wire/pitch/roll-rate-schedule-limited </input>
             <gain> fcs/fly-by-wire/control-c-actual </gain>
         </pure_gain>
 
@@ -632,7 +653,9 @@
         </lag_filter>
 
         <summer name="fcs/fly-by-wire/pitch/alpha-sum">
-            <description></description>
+            <description>
+				LJQC: According to 189675, alpha-sum only goes into the 20.4 limiter path. It doesn't goes into the 15.0/0.322 path.
+			</description>
             <input> fcs/fly-by-wire/pitch/a_f </input>
             <input> fcs/fly-by-wire/pitch/control-c/da_p </input>
         </summer>
@@ -688,7 +711,6 @@
         </fcs_function>
 
         <pure_gain name="fcs/fly-by-wire/pitch/high-alpha-cmd-neutralizer">
-            <description></description>
             <input>fcs/fly-by-wire/pitch/alpha-indicated-sum</input>
             <gain> 0.5 </gain>
             <clipto>
@@ -839,8 +861,10 @@
             <description>
                          Since this is part of pitch limiter scheme it
                          uses alpha-sum instead of a_f.
+						 
+						 LJQC: 189675 uses a_f instead of alpha-sum in this path. alpha-sum only used in the 20.4 path.
             </description>
-            <input>fcs/fly-by-wire/pitch/alpha-sum</input>
+            <input>fcs/fly-by-wire/pitch/a_f</input>
             <input> fcs/fly-by-wire/pitch/pitch-rate-gain </input>
             <input> -fcs/fly-by-wire/pitch/bias-final </input>
         </summer>
@@ -1504,6 +1528,8 @@
             <description>
                 The -1 factor was removed since it was wrong. When more than
                 5 deg nosedown elev is commanded this comes into effect.
+				
+				LJQC: 4.2 deg in 189675.
             </description>
             <function>
                 <product>
@@ -1775,6 +1801,8 @@
             <description>
                 Is +8.34 in diagram, but must be negative to really work as flat spin protection.
                 And for slow flat spins it was way too small.
+				
+				LJQC: 1.0 in 189675 (=8.34*0.12). So seems correct.
             </description>
             <input> velocities/r-deg_sec </input>
             <gain> -8.34 </gain>
@@ -2228,6 +2256,16 @@
                 fcs/fly-by-wire/digital-backup == 1
             </test>
         </switch>
+		
+		<pure_gain name="fcs/fly-by-wire/yaw/variable-F-gained">
+            <input>fcs/fly-by-wire/pitch/roll-rate-schedule-limited</input>
+            <gain> 4.0 </gain>
+        </pure_gain>
+		
+		<summer name="fcs/fly-by-wire/yaw/authority-limiter-input">
+            <input>fcs/fly-by-wire/pitch/a_f</input>
+            <input>fcs/fly-by-wire/yaw/variable-F-gained</input>
+        </summer>
 
         <fcs_function name="fcs/fly-by-wire/yaw/command-schedule">
             <description>
@@ -2236,11 +2274,13 @@
 
                 TODO: Consider using aero/alpha-deg here instead of a_f.
                       TP-1538 does say it uses alpha indicated directly.
+					  
+				LJQC: 189675 uses a_f + variable-F * 4.0.
             </description>
             <function>
                 <product>
                     <table>
-                        <independentVar lookup="row">fcs/fly-by-wire/pitch/a_f</independentVar>
+                        <independentVar lookup="row">fcs/fly-by-wire/yaw/authority-limiter-input</independentVar>
                         <independentVar lookup="column">fcs/fly-by-wire/yaw/enable-cat-III</independentVar>
                         <tableData>
                                    0           1
@@ -2256,6 +2296,12 @@
         </fcs_function>
 
         <fcs_function name="fcs/fly-by-wire/yaw/control-c/command-schedule">
+			<description>
+				LJQC: In 189675, it is the variable F (fcs/fly-by-wire/pitch/roll-rate-schedule-limited)
+				multiplied by 4.0 that is added to the rudder authority limiter.
+				
+				This schedule not used in 189675.
+			</description>
             <function>
                 <product>
                     <table>
@@ -2264,7 +2310,7 @@
                         <tableData>
                                    0  1
                             20   1.0 1.0
-                            40   1.0 0.0
+                            40   1.0 1.0
                         </tableData>
                     </table>
                     <p>fcs/fly-by-wire/yaw/command-schedule</p>
@@ -2348,9 +2394,11 @@
             <description>
                 Is +0.75 in diagram.
                 TODO: check the validity
+				
+				LJQC: +0.75 valid in 189675. Rudder against the yaw.
             </description>
             <input> velocities/r-deg_sec </input>
-            <gain> -0.75 </gain>
+            <gain> 0.75 </gain>
         </pure_gain>
 
         <switch name="fcs/fly-by-wire/yaw/schedule-final">
