@@ -992,11 +992,11 @@
 		
 		<pure_gain name="fcs/fly-by-wire/pitch/pitch-rate-cmd-gained">
 			<description>
-				LJQC: (AOA - 10)*0.305, take pos val, and adds to the pitch rate feedback path.
-				Check: 1G stall at 21 deg AOA according to 1F-16CJ-1.
+				LJQC: (AOA - 10)*0.X05, take pos val, and adds to the pitch rate feedback path.
+				Check: 0.X05 too blurry to read. Reference: 1G stall at 21 deg AOA according to 1F-16CJ-1.
             </description>
             <input>fcs/fly-by-wire/pitch/pitch-rate-cmd-sum</input>
-            <gain> 0.305 </gain>
+            <gain> 0.105 </gain>
 			<clipto>
                 <min> 0 </min>
                 <max>10000</max>
@@ -1005,6 +1005,9 @@
         
 
         <summer name="fcs/fly-by-wire/pitch/pitch-rate-gain-path">
+			<description>
+				LJQC: the washed-out pitch rate is not added to this path.
+            </description>
             <input>fcs/fly-by-wire/pitch/q-lagged-gained </input>
 			<input> fcs/fly-by-wire/pitch/pitch-rate-cmd-gained </input>
         </summer>
