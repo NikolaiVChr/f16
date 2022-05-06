@@ -774,16 +774,16 @@
                 7 in flight CAT III at 100 KCAS.
                 DNU
 				
-				LJQC: Fixed 15.0 in 189675, unrelated to CAT I/III or landing gains.
+				LJQC: Fixed 15.8 in 189675, unrelated to CAT I/III or landing gains. Cross checked the value with BMS developer mav-jp.
             </description>
             <function>
                 <table>
                     <independentVar lookup="row">fcs/fly-by-wire/pitch/enable-cat-III</independentVar>
                     <independentVar lookup="column">velocities/vc-kts</independentVar>
                     <tableData>
-                           100 420
-                        0    15   15
-                        1    15   15
+                             100    420
+                        0    15.8   15.8
+                        1    15.8   15.8
                     </tableData>
                 </table>
             </function>
@@ -794,7 +794,7 @@
                 Diagram say condition A, changed so this don't kick in
                 when doing AAR.
 				
-				LJQC: 15 bias no change in AAR.
+				LJQC: 15.8 bias no change in AAR.
             </description>
             <default value="0"/>
             <test logic="OR" value="0">
@@ -992,8 +992,8 @@
 		
 		<pure_gain name="fcs/fly-by-wire/pitch/pitch-rate-cmd-gained">
 			<description>
-				LJQC: (AOA - 10)*0.X05, take pos val, and adds to the pitch rate feedback path.
-				Check: 0.X05 too blurry to read. Reference: 1G stall at 21 deg AOA according to 1F-16CJ-1.
+				LJQC: (AOA - 10)*0.105, take pos val, and adds to the pitch rate feedback path.
+				The gain is 0.105, cross checked with BMS developer mav-jp.
             </description>
             <input>fcs/fly-by-wire/pitch/pitch-rate-cmd-sum</input>
             <gain> 0.105 </gain>
