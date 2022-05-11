@@ -86,6 +86,9 @@ var mainloop = func() {
     writeMyPlanePos();
     writeMyPlaneAttributes();
     foreach (var cx; radar_system.getCompleteList()) {
+        if(cx.getType() == armament.ORDNANCE) {
+            continue;
+        }
         if (cx["prop"] != nil and cx.prop.getName() == "multiplayer" and getprop("sim/multiplay/txhost") == "mpserver.opredflag.com") {
             continue;
         }
@@ -112,7 +115,7 @@ var mainloop = func() {
             pitch = cx.get_Pitch();
             heading = cx.get_heading();
             speed = cx.get_Speed()*KT2MPS;
-            
+
             write(cx.tacobj.tacviewID ~ ",T=");
             if (lon != cx.tacobj.lon) {
                 write(sprintf("%.6f",lon));
@@ -322,7 +325,7 @@ setlistener("/sim/multiplay/chat-history", func(p) {
     var hist_vector = split("\n",p.getValue());
     if (size(hist_vector) > 0) {
         var last = hist_vector[size(hist_vector)-1];
-        last = string.replace(last,",",chr(92)~chr(44));#"\x5C"~"\x2C"   
+        last = string.replace(last,",",chr(92)~chr(44));#"\x5C"~"\x2C"
         thread.lock(mutexWrite);
         write("#" ~ (systime() - tacview.starttime)~"\n");
         write("0,Event=Message|Chat ["~last~"]\n");
@@ -345,7 +348,7 @@ setlistener("damage/sounds/explode-on", func(p) {
     if (!starttime) {
         return;
     }
-    
+
     if (p.getValue()) {
         thread.lock(mutexWrite);
         write("#" ~ (systime() - tacview.starttime)~"\n");
