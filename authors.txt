@@ -157,7 +157,7 @@ Axel Paccalin
 
 Baptiste "Bat" Campion
 - Belgian AF, Hellenic AF, PACAF-USN Aggressors, Dutch AF, PACAF, AFRC Makos, 31FW HGV, FLTS, 480FS, Norwegian AF, Danish AF, Top ACES, 555FS livery packs
-- Portuguese AF, QF-16, Turkish AF, Royal Moroccan AF, Arizona ANG, DC ANG, Texas ANG, Alabama ANG, 89-2068 Special, USAF HGV, Romanian AF liveries
+- Portuguese AF, QF-16, Turkish AF, Royal Moroccan AF, Arizona ANG, DC ANG, Texas ANG, Alabama ANG, 89-2068 Special, USAF HGV, Romanian AF, NJ ANG liveries
 
 Shaymo
 - Exterior and interior 3D model fixes
