@@ -837,6 +837,12 @@ append(obj.total, obj.speed_curr);
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
         append(obj.total, obj.acmBoreSymbol);
+        obj.acmVertSymbol = obj.centerOrigin.createChild("path")
+                .moveTo(0, 10)
+                .vert(1000)
+                .setStrokeLineWidth(1)
+                .setColor(0,1,0);
+        append(obj.total, obj.acmVertSymbol);
         obj.locatorAngle = obj.centerOrigin.createChild("text")
                 .setText("0")
                 .setAlignment("right-center")
@@ -2448,6 +2454,7 @@ append(obj.total, obj.speed_curr);
         me.groundDistanceFT = nil;
         me.u = radar_system.apg68Radar.getPriorityTarget();
         var showACMBore = 0;
+        var showACMVert = 0;
         if (me.u != nil) {
             me.lastCoord = me.u.getLastCoord();
             if (me.lastCoord == nil) {
@@ -2557,6 +2564,10 @@ append(obj.total, obj.speed_curr);
             if (showACMBore) {
                 me.acmBoreSymbol.setTranslation(HudMath.getCenterPosFromDegs(0,-3));
             }
+            showACMVert = radar_system.apg68Radar.currentMode.longName == "Air Combat Mode 10x60" and radar_system.apg68Radar.enabled;
+            if (showACMVert) {
+                me.acmVertSymbol.setTranslation(HudMath.getCenterPosFromDegs(0, 0));
+            }
         }
         for (me.nv = me.target_idx; me.nv < me.max_symbols;me.nv += 1) {
             me.tgt = me.tgt_symbols[me.nv];
@@ -2567,6 +2578,7 @@ append(obj.total, obj.speed_curr);
 
         me.ASC.setVisible(showASC);
         me.acmBoreSymbol.setVisible(showACMBore);
+        me.acmVertSymbol.setVisible(showACMVert);
 
         #print(me.irS~" "~me.irL);
 
