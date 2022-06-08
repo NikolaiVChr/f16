@@ -147,11 +147,11 @@ void main (void)
 	float v      = abs(dot(viewVec, viewN));// Map a rainbowish color
 	vec4 fresnel = texture2D(ReflGradientsTex, vec2(v, 0.75));
 	vec4 rainbow = texture2D(ReflGradientsTex, vec2(v, 0.25));
-	
+
 
 	////  reflection vector /////////////////////////////
 	vec3 wRefVec;//reflect vector in world space
-	if (refl_dynamic > 0){		
+	if (refl_dynamic > 0){
 		vec3 wVertVec	= normalize((osg_ViewMatrixInverse * vec4(viewVec,0.0)).xyz);
 		vec3 wNormal	= normalize((osg_ViewMatrixInverse * vec4(N,0.0)).xyz);
 
@@ -190,7 +190,7 @@ void main (void)
 	float eDotLV = max(0.0, dot(-E,L));
 
 	nDotVP = max(0.0, nDotVP);
-	
+
 	vec4 Diffuse  = gl_LightSource[0].diffuse * nDotVP;
 
 	vec4 metal_specular = ( 1.0 - metallic ) * vec4 (1.0, 1.0, 1.0, 1.0) + metallic * texel;// combineMe
@@ -202,7 +202,7 @@ void main (void)
 
 	vec4 color = Diffuse*gl_FrontMaterial.diffuse + ambient_color;
 	color = clamp( color, 0.0, 1.0 );
-	
+
 	////////////////////////////////////////////////////////////////////
 	//BEGIN reflect
 	////////////////////////////////////////////////////////////////////
@@ -273,7 +273,7 @@ void main (void)
 	ambient_Correction *= ambient_offset;
 	ambient_Correction = clamp(ambient_Correction, -1.0, 1.0);
 */
-	
+
 	vec4 fragColor = vec4(color.rgb * mixedcolor , color.a);//+ ambient_Correction.rgb
 
 	fragColor += Specular * nmap.a;
@@ -285,7 +285,7 @@ void main (void)
 		vec3 lightmapcolor = vec3(0.0);
 		vec4 lightmapFactor = vec4(lightmap_r_factor, lightmap_g_factor,
 								  lightmap_b_factor, lightmap_a_factor);
-		
+
 		if (lightmap_multi > 0 ){
 			lightmapFactor = lightmapFactor * lightmapTexel;
 			lightmapcolor = lightmap_r_color * lightmapFactor.r +
@@ -301,15 +301,15 @@ void main (void)
 	// END lightmap
 	/////////////////////////////////////////////////////////////////////
 
-	
-	fragColor.a = gl_FrontMaterial.diffuse.a * texel.a;//combineMe 
-	
+
+	fragColor.a = gl_FrontMaterial.diffuse.a * texel.a;//combineMe
+
 	// gamma correction
     fragColor.rgb = pow(fragColor.rgb, gamma);
     fragColor.rgb = fog_Func(fragColor.rgb, fogType);
     fragColor.rgb = max(gl_FrontMaterial.emission.rgb*texel.rgb, fragColor.rgb);
-    
-	gl_FragColor = fragColor;
+
+	gl_FragColor = fragColor;//vec4(0.0,1.0,0.0,0.5);
 }
 // TODO: Add compositor shadows
 //       Make it play nicer with the 2 types of transparency:

@@ -42,7 +42,7 @@
     } elsif (left(getprop("sim/version/flightgear"),6) == "2020.3") {
         props.globals.getNode("/sim/version/compositor-support", 1).setBoolValue(0);
     }
-    
+
     # Stores visible over MP:
     var looping = 1;
     var str5 = "";
@@ -53,7 +53,7 @@
     var type = nil;
     var count = nil;
     var set = nil;
-    
+
     var loop = func {
       #print("loop");
       str5 = self.getNode("sim/multiplay/generic/string[5]");
@@ -76,7 +76,7 @@
       setprop("rendering/scene/diffuse/red-unbound", getprop("rendering/scene/diffuse/red"));
       if (looping) settimer(loop, 0.10);
     }
-    
+
     loop();
   ]]></load>
   <unload><![CDATA[
@@ -109,7 +109,7 @@
    <z>0</z>
   </axis>
  </animation>
- 
+
  <animation>
   <type>translate</type>
   <object-name>interior</object-name>
@@ -156,7 +156,7 @@
     </and>
   </condition>
  </animation>
- 
+
  <animation>
   <type>select</type>
   <object-name>Rect</object-name>
@@ -167,7 +167,7 @@
         </not>
   </condition>
  </animation>
- 
+
 
 <model>
   <name>mfd-flir</name>
@@ -177,7 +177,7 @@
         <y-m>0.8536</y-m>
         <z-m>-1.4121</z-m>
   </offsets>
- </model> 
+ </model>
 
 
 
@@ -214,7 +214,7 @@
    <z>0.0</z>
   </axis>
  </animation>
- 
+
  <animation>
     <type>spin</type>
     <object-name>FanRCentre</object-name>
@@ -280,7 +280,7 @@
         <y-m>0</y-m>
         <z-m>0</z-m>
   </offsets>
- </model> 
+ </model>
 
  <animation>
   <type>select</type>
@@ -354,7 +354,7 @@
      <property>sim/model/livery/actype</property>
      <value>F-16C-40</value>
     </equals>
-    <equals> 
+    <equals>
      <property>sim/model/livery/actype</property>
      <value>F-16C-42</value>
     </equals>
@@ -371,7 +371,7 @@
      <property>sim/model/livery/actype</property>
      <value>F-16C-50</value>
     </equals>
-    <equals> 
+    <equals>
      <property>sim/model/livery/actype</property>
      <value>F-16C-52</value>
     </equals>
@@ -459,7 +459,7 @@
             <z>1</z>
         </axis>
     </animation>
-    
+
 
  <animation>
   <type>select</type>
@@ -502,7 +502,7 @@
       <object-name>FuselageLogoRight</object-name>
       <object-name>FuselageLogoLeft</object-name>
   </effect>
-  
+
   <animation>
     <type>noshadow</type>
     <object-name>WinglogoLeftTop</object-name>
@@ -525,7 +525,7 @@
     <object-name>CanopyForwardInside</object-name>
     <object-name>CanopyBackInside</object-name>
   </animation>
-  
+
   <animation>
     <type>select</type>
       <inherits-from>Effects/model-transparent</inherits-from>
@@ -552,7 +552,7 @@
       <object-name>FuselageLogoRight</object-name>
       <object-name>FuselageLogoLeft</object-name>
   </animation>
-  
+
   <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
       <parameters>
@@ -574,23 +574,23 @@
       </parameters>
 
       <object-name>RadarDomeTop</object-name>
-      
-      
-      
+
+
+
       <object-name>WingTips</object-name>
-      
+
       <!--<object-name>LeftUpperFlap</object-name>
       <object-name>LeftLowerFlap</object-name>-->
-      
+
       <!--<object-name>RightUpperFlap</object-name>
       <object-name>RightLowerFlap</object-name>-->
-      
+
       <!--<object-name>LeftUpperAileron</object-name>
       <object-name>LeftLowerAileron</object-name>-->
-      
+
       <!--<object-name>RightUpperAileron</object-name>
       <object-name>RightLowerAileron</object-name>-->
-      
+
   </effect>
 
 <effect>
@@ -627,7 +627,7 @@
           <dirt-factor type="float"><use>f16/effects/dirt-fac</use></dirt-factor>
       </parameters>
       <!-- fuselage -->
-      
+
       <object-name>LeftLowerSpeedbrake</object-name>
       <object-name>RightLowerSpeedbrake</object-name>
       <object-name>RightUpperSpeedbrake</object-name>
@@ -636,7 +636,7 @@
       <object-name>LeftLowerHorizonTail</object-name>
       <object-name>RightUpperHorizonTail</object-name>
       <object-name>RightLowerHorizonTail</object-name>
-      
+
       <object-name>irst</object-name>
 
       <object-name>CanopyFrame</object-name>
@@ -734,7 +734,7 @@
   <object-name>CanopyForwardInside</object-name>
   <object-name>CanopyBackInside</object-name>
  </effect>
- 
+
  <effect>
   <inherits-from>Effects/model-combined-transparent</inherits-from>
   <parameters>
@@ -803,7 +803,7 @@
       <z-m>-0.4</z-m>
       </offsets>
  </model>
- 
+
  <model>
   <name>fli</name>
   <path>Aircraft/f16/Models/frontLights.xml</path>
@@ -821,7 +821,7 @@
   <name>machCone</name>
   <path>Aircraft/f16/Models/Effects/vapour/mach-cone.xml</path>
  </model>
- 
+
  <animation>
     <type>select</type>
     <object-name>machCone</object-name>
@@ -868,7 +868,7 @@
    <z-m>0.0</z-m>
   </offsets>
  </model>
- 
+
  <animation>
     <type>select</type>
     <object-name>right-strake-vortex</object-name>
@@ -922,7 +922,7 @@
    <roll-deg>10</roll-deg>
   </offsets>
  </model>
- 
+
  <animation>
     <type>select</type>
     <object-name>g-vortexL</object-name>
@@ -1041,10 +1041,10 @@
 
 <!-- end submodels -->
 
- 
 
 
- 
+
+
 <!-- ===================== START LIGHTING =========================== -->
   <light>
   <name>taxi-light</name>
@@ -1148,17 +1148,17 @@
 
 <model>
   <name>posleft1</name>
-  <path>Aircraft/f16/Models/Effects/lights/pos-left.xml</path> 
+  <path>Aircraft/f16/Models/Effects/lights/pos-left.xml</path>
   <offsets>
             <x-m> 1.60236 </x-m>
             <y-m> -4.55165 </y-m>
             <z-m> 0.012629 </z-m>
-        </offsets>   
+        </offsets>
  </model>
 
  <model>
   <name>posright1</name>
-  <path>Aircraft/f16/Models/Effects/lights/pos-right.xml</path>    
+  <path>Aircraft/f16/Models/Effects/lights/pos-right.xml</path>
   <offsets>
             <x-m> 1.60236 </x-m>
             <y-m> 4.55165 </y-m>
@@ -1168,22 +1168,22 @@
 
  <model>
   <name>posleft2</name>
-  <path>Aircraft/f16/Models/Effects/lights/pos-left2.xml</path> 
+  <path>Aircraft/f16/Models/Effects/lights/pos-left2.xml</path>
   <offsets>
             <x-m> -3.36687 </x-m>
             <y-m> -0.748387 </y-m>
             <z-m> -0.555937 </z-m>
-        </offsets>   
+        </offsets>
  </model>
 
  <model>
   <name>posright2</name>
-  <path>Aircraft/f16/Models/Effects/lights/pos-right2.xml</path> 
+  <path>Aircraft/f16/Models/Effects/lights/pos-right2.xml</path>
   <offsets>
             <x-m> -3.36687 </x-m>
             <y-m> 0.748387 </y-m>
             <z-m> -0.555937 </z-m>
-        </offsets>   
+        </offsets>
  </model>
 
   <animation>
@@ -1194,10 +1194,10 @@
       <and>
         <!--<property>/sim/rendering/shaders/skydome</property>-->
         <equals>
-        <property>sim/multiplay/generic/bool[40]</property> 
+        <property>sim/multiplay/generic/bool[40]</property>
         <value>1</value>
       </equals>
-      </and> 
+      </and>
     </condition>
   </animation>
 
@@ -1205,21 +1205,21 @@
 
 <model>
   <name>belly</name>
-  <path>Aircraft/f16/Models/Effects/lights/belly-light.xml</path> 
+  <path>Aircraft/f16/Models/Effects/lights/belly-light.xml</path>
   <offsets>
             <x-m> -1.23466 </x-m>
             <y-m> 0 </y-m>
             <z-m> -0.862066 </z-m>
-        </offsets>   
+        </offsets>
  </model>
  <model>
   <name>spine</name>
-  <path>Aircraft/f16/Models/Effects/lights/spine-light.xml</path> 
+  <path>Aircraft/f16/Models/Effects/lights/spine-light.xml</path>
   <offsets>
             <x-m> -2.05409 </x-m>
             <y-m> 0 </y-m>
             <z-m> 0.849391 </z-m>
-        </offsets>   
+        </offsets>
  </model>
  <model>
   <name>ar-flood</name>
@@ -1241,21 +1241,21 @@
  </model>
  <model>
   <name>tl</name>
-  <path>Aircraft/f16/Models/Effects/lights/tail-light.xml</path> 
+  <path>Aircraft/f16/Models/Effects/lights/tail-light.xml</path>
   <offsets>
             <x-m> 5.50707 </x-m>
             <y-m> 0 </y-m>
             <z-m> 1.13691 </z-m>
-        </offsets>   
+        </offsets>
  </model>
  <model>
   <name>tl2</name>
-  <path>Aircraft/f16/Models/Effects/lights/tail-light.xml</path> 
+  <path>Aircraft/f16/Models/Effects/lights/tail-light.xml</path>
   <offsets>
             <x-m> 5.05444 </x-m>
             <y-m> 0 </y-m>
             <z-m> 0.855577 </z-m>
-        </offsets>   
+        </offsets>
  </model>
 
 <animation>
@@ -1265,12 +1265,12 @@
     <condition>
       <!--<property>/sim/rendering/shaders/skydome</property>-->
       <equals>
-        <property>sim/multiplay/generic/bool[41]</property> 
+        <property>sim/multiplay/generic/bool[41]</property>
         <value>1</value>
       </equals>
     </condition>
   </animation>
-  
+
 <animation>
     <type>select</type>
     <object-name>ar-flood</object-name>
@@ -1301,9 +1301,9 @@
     <condition>
       <!--<property>/sim/rendering/shaders/skydome</property>-->
       <equals>
-        <property>sim/multiplay/generic/bool[42]</property> 
+        <property>sim/multiplay/generic/bool[42]</property>
         <value>1</value>
-      </equals> 
+      </equals>
     </condition>
   </animation>
 
@@ -1313,9 +1313,9 @@
     <condition>
       <!--<property>/sim/rendering/shaders/skydome</property>-->
       <equals>
-        <property>sim/multiplay/generic/bool[43]</property> 
+        <property>sim/multiplay/generic/bool[43]</property>
         <value>1</value>
-      </equals> 
+      </equals>
     </condition>
   </animation>
 
@@ -1349,7 +1349,7 @@
     <equals>
      <property>controls/lighting/ext-lighting-panel/wing-tail</property>
      <value>1.0</value>
-    </equals> 
+    </equals>
     <not><property>controls/lighting/ext-lighting-panel/master</property></not>
    </or>
   </condition>
@@ -1369,7 +1369,7 @@
     <property>/sim/rendering/shaders/skydome</property>
   </not>
      <equals>
-        <property>sim/multiplay/generic/bool[41]</property> 
+        <property>sim/multiplay/generic/bool[41]</property>
         <value>1</value>
       </equals>
   </and>
@@ -1385,7 +1385,7 @@
     <property>/sim/rendering/shaders/skydome</property>
   </not>
     <equals>
-        <property>sim/multiplay/generic/bool[42]</property> 
+        <property>sim/multiplay/generic/bool[42]</property>
         <value>1</value>
       </equals>
   </condition>
@@ -1400,9 +1400,9 @@
     <property>/sim/rendering/shaders/skydome</property>
   </not>
     <equals>
-        <property>sim/multiplay/generic/bool[43]</property> 
+        <property>sim/multiplay/generic/bool[43]</property>
         <value>1</value>
-      </equals> 
+      </equals>
   </and>
   </condition>
  </animation>
@@ -1481,7 +1481,7 @@
    <z>0.0</z>
   </axis>
  </animation>
- 
+
  <animation>
   <type>select</type>
   <object-name>CanopyFrame</object-name>
@@ -1499,7 +1499,7 @@
   <type>rotate</type>
   <object-name>ArresterHook</object-name>
   <property>gear/tailhook/position-norm</property>
-  <factor>57.175</factor>              <!-- (tailhook-pos-max-deg - tailhook-pos-min-deg) --> 
+  <factor>57.175</factor>              <!-- (tailhook-pos-max-deg - tailhook-pos-min-deg) -->
   <center>
    <x-m>2.58</x-m>
    <y-m>0</y-m>
@@ -1561,7 +1561,7 @@
    <property>sim/multiplay/generic/bool[39]</property>
   </condition>
  </animation>
- 
+
  <animation>
   <type>material</type>
 <!--  <condition>
@@ -1640,7 +1640,7 @@
    <z-m>0.0</z-m>
   </offsets>
  </model>
- 
+
  <animation>
   <type>select</type>
   <object-name>AB_FlamePW</object-name>
@@ -1662,7 +1662,7 @@
    <z-m>0.0</z-m>
   </offsets>
  </model>
- 
+
  <animation>
   <type>select</type>
   <object-name>AB_FlameGE</object-name>
@@ -1696,7 +1696,7 @@
   </axis>
  </animation>
 
- 
+
  <effect>
   <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
   <parameters>
@@ -1707,7 +1707,7 @@
      <rotation-x2>1.3266</rotation-x2>
      <rotation-y2>1.0652</rotation-y2>
      <rotation-z2>0.170853</rotation-z2>
-  </parameters>  
+  </parameters>
   <object-name>RightUpperFlap</object-name>
   <object-name>RightLowerFlap</object-name>
 </effect>
@@ -1722,11 +1722,11 @@
      <rotation-x2>1.3266</rotation-x2>
      <rotation-y2>1.0652</rotation-y2>
      <rotation-z2>0.170853</rotation-z2>
-  </parameters>  
+  </parameters>
   <object-name>RightUpperAileron</object-name>
   <object-name>RightLowerAileron</object-name>
 </effect>
- 
+
  <effect>
   <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
   <parameters>
@@ -1737,7 +1737,7 @@
      <rotation-x2>1.3266</rotation-x2>
      <rotation-y2>-1.0652</rotation-y2>
      <rotation-z2>0.170853</rotation-z2>
-  </parameters>  
+  </parameters>
   <object-name>LeftUpperFlap</object-name>
   <object-name>LeftLowerFlap</object-name>
 </effect>
@@ -1752,7 +1752,7 @@
      <rotation-x2>1.3266</rotation-x2>
      <rotation-y2>-1.0652</rotation-y2>
      <rotation-z2>0.170853</rotation-z2>
-  </parameters>  
+  </parameters>
   <object-name>LeftUpperAileron</object-name>
   <object-name>LeftLowerAileron</object-name>
 </effect>
@@ -1767,7 +1767,7 @@
      <rotation-x2>1.29425</rotation-x2>
      <rotation-y2>-4.58845</rotation-y2>
      <rotation-z2>-0.006551</rotation-z2>
-  </parameters>  
+  </parameters>
   <object-name>LeftUpperLef</object-name>
   <object-name>LeftLowerLef</object-name>
 </effect>
@@ -1782,7 +1782,7 @@
      <rotation-x2>1.29425</rotation-x2>
      <rotation-y2>4.58845</rotation-y2>
      <rotation-z2>-0.006551</rotation-z2>
-  </parameters>  
+  </parameters>
   <object-name>RightUpperLef</object-name>
   <object-name>RightLowerLef</object-name>
 </effect>
@@ -1966,7 +1966,7 @@
   <object-name>Rudder.003</object-name>
   <object-name>Rudder.004</object-name>
   <object-name>Rudder.005</object-name>
-  <object-name>Rudder.006</object-name>  
+  <object-name>Rudder.006</object-name>
   <object-name>VstabBandLeftAft</object-name>
   <object-name>VstabBandRightAft</object-name>
   <property>surface-positions/rudder-pos-norm</property>
@@ -2022,7 +2022,7 @@
 <!-- ============== START GEAR ================== -->
 
  <!-- front -->
- 
+
  <animation>
   <type>rotate</type>
   <object-name>InternalFrontGearDoor</object-name>
@@ -2068,7 +2068,7 @@
   <type>rotate</type>
   <object-name>FrontTire</object-name>
   <object-name>FrontLowerStrut</object-name>
-  <property>sim/multiplay/generic/float[7]</property> 
+  <property>sim/multiplay/generic/float[7]</property>
   <factor>-32</factor>
   <center>
    <x-m>-2.97</x-m>
@@ -2263,7 +2263,7 @@
    <z>-0.496139</z>
   </axis>
  </animation>
- 
+
  <animation>
   <type>rotate</type>
   <object-name>RightUpperMainStrut</object-name>
@@ -2341,7 +2341,7 @@
     </condition>
     <property>rotors/main/blade[1]/position-deg</property><!-- gear/gear[0]/rollspeed-ms -->
     <factor>33.0666</factor>
-    <axis>   
+    <axis>
      <x1-m>0.563844</x1-m>
      <y1-m> 1.27316</y1-m>
      <z1-m>-1.51444</z1-m>
@@ -2353,7 +2353,7 @@
 
 
  <!-- left gear -->
- 
+
  <animation>
   <type>rotate</type>
   <object-name>ExternalLeftMainDoor</object-name>
@@ -2465,7 +2465,7 @@
    <z>-1.0</z>
   </axis>
  </animation>
- 
+
  <animation>
   <type>rotate</type>
   <object-name>LeftMainTire</object-name>
@@ -2505,7 +2505,7 @@
     </condition>
     <property>rotors/main/blade[2]/position-deg</property><!-- gear/gear[0]/rollspeed-ms -->
     <factor>-33.0666</factor>
-    <axis>   
+    <axis>
      <x1-m>0.563844</x1-m>
      <y1-m>-1.27316</y1-m>
      <z1-m>-1.51444</z1-m>
@@ -2543,7 +2543,7 @@
   <name>brakeL</name>
   <path>Aircraft/f16/Models/InnerBrakeLower.xml</path>
  </model>
- 
+
  <model>
   <name>brakeU</name>
   <path>Aircraft/f16/Models/InnerBrakeUpper.xml</path>
@@ -2808,32 +2808,32 @@
   </and>
   </condition>
  </animation>
- 
+
  <model>
     <name>tip-pay</name>
     <path>Aircraft/f16/Models/Armament/loads-tip.xml</path>
  </model>
- 
+
  <model>
   <name>outer-pay</name>
     <path>Aircraft/f16/Models/Armament/loads-outer.xml</path>
  </model>
- 
+
  <model>
   <name>middle-pay</name>
     <path>Aircraft/f16/Models/Armament/loads-middle.xml</path>
  </model>
- 
+
  <model>
   <name>inner-pay</name>
     <path>Aircraft/f16/Models/Armament/loads-inner.xml</path>
  </model>
- 
+
  <model>
   <name>pay</name>
     <path>Aircraft/f16/Models/Armament/loads.xml</path>
  </model>
-  
+
  <animation>
     <type>translate</type>
     <object-name>tip-pay</object-name>
@@ -2844,10 +2844,8 @@
         <not>
             <property>sim/rendering/rembrandt/enabled</property>
         </not>
-        <property>/sim/rendering/shaders/quality-level</property>
-        <property>/sim/rendering/shaders/model</property>
       </and>
-    </condition>         
+    </condition>
     <property>sim/systems/wingflexer/z-m-tip</property><!-- can be: tip, outer, middle or inner -->
     <factor>1</factor>
     <axis>
@@ -2856,7 +2854,7 @@
       <z>1</z>
     </axis>
   </animation>
-  
+
   <animation>
     <type>translate</type>
     <object-name>outer-pay</object-name>
@@ -2867,10 +2865,8 @@
         <not>
             <property>sim/rendering/rembrandt/enabled</property>
         </not>
-        <property>/sim/rendering/shaders/quality-level</property>
-        <property>/sim/rendering/shaders/model</property>
       </and>
-    </condition> 
+    </condition>
     <property>sim/systems/wingflexer/z-m-outer</property><!-- can be: tip, outer, middle or inner -->
     <factor>1</factor>
     <axis>
@@ -2879,7 +2875,7 @@
       <z>1</z>
     </axis>
   </animation>
-  
+
   <animation>
     <type>translate</type>
     <condition>
@@ -2887,10 +2883,8 @@
         <not>
             <property>sim/rendering/rembrandt/enabled</property>
         </not>
-        <property>/sim/rendering/shaders/quality-level</property>
-        <property>/sim/rendering/shaders/model</property>
       </and>
-    </condition> 
+    </condition>
     <object-name>middle-pay</object-name>
     <object-name>LWStation2</object-name>
     <object-name>RWStation2</object-name>
@@ -2902,7 +2896,7 @@
       <z>1</z>
     </axis>
   </animation>
-  
+
   <animation>
     <type>translate</type>
     <condition>
@@ -2910,10 +2904,8 @@
         <not>
             <property>sim/rendering/rembrandt/enabled</property>
         </not>
-        <property>/sim/rendering/shaders/quality-level</property>
-        <property>/sim/rendering/shaders/model</property>
       </and>
-    </condition> 
+    </condition>
     <object-name>inner-pay</object-name>
     <object-name>LWStation1</object-name>
     <object-name>RWStation1</object-name>

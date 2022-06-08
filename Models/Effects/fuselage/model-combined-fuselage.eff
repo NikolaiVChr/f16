@@ -71,29 +71,33 @@ Modifications author: Nikolai V. Chr.
             </images>
             <filter>linear</filter>
           </texture>
-          
+
         <grain-texture-enabled type="int">0</grain-texture-enabled>
         <grain-magnification type="float">1</grain-magnification>
         <texture n="7">
             <image>Aircraft/f16/Models/Effects/fuselage/rust1.png</image>
             <type>2d</type>
-            <filter>linear-mipmap-linear</filter> 
+            <filter>linear-mipmap-linear</filter>
             <wrap-s>repeat</wrap-s>
             <wrap-t>repeat</wrap-t>
             <internal-format>normalized</internal-format>
         </texture>
-        
+
         <dirt-enabled type="int">0</dirt-enabled>
         <dirt-factor type="float">0.0</dirt-factor>
         <dirt-color type="vec3d">0.5 0.5 0.5</dirt-color>
         <texture n="4">
             <image>Aircraft/f16/Models/Effects/fuselage/dirt.png</image>
             <type>2d</type>
-            <filter>linear-mipmap-linear</filter> 
+            <filter>linear-mipmap-linear</filter>
             <wrap-s>repeat</wrap-s>
             <wrap-t>repeat</wrap-t>
             <internal-format>normalized</internal-format>
         </texture>
+        <render-bin>
+   			<bin-number>1</bin-number>
+    		<bin-name>RenderBin</bin-name>
+    	</render-bin>
         <!-- BEGIN shadows include -->
         <shadows_enabled>
           <use>/sim/rendering/shadows/enabled</use>
@@ -120,11 +124,11 @@ Modifications author: Nikolai V. Chr.
 	-->
 	<technique n="0"><!-- ALS shadows -->
 		<!--<scheme>als-lighting</scheme>-->
-	   <predicate n="0">
+	   <predicate>
 		   <and>
 			   <property>/sim/version/compositor-support</property>
 			   <property>/sim/rendering/shaders/skydome</property>
-			   <property>/sim/rendering/shaders/quality-level</property>
+			   <!--property>/sim/rendering/shaders/quality-level</property-->
 			   <property>/sim/rendering/shaders/model</property>
 			   <or>
 				   <less-equal>
@@ -180,14 +184,14 @@ Modifications author: Nikolai V. Chr.
 				   <use>blend/destination-rgb</use>
 			   </destination-rgb>
 		   </blend>
-		   
+
 		   <shade-model>
 			   <use>shade-model</use>
 		   </shade-model>
 		   <cull-face>
 			   <use>cull-face</use>
 		   </cull-face>
-		   
+
 		   <alpha-test>
 			   <use>alpha-test</use>
 		   </alpha-test>
@@ -382,12 +386,12 @@ Modifications author: Nikolai V. Chr.
 			  		<use>texture[7]/internal-format</use>
 				   </internal-format>
 		  	   </texture-unit>
-			   
+
 			   <vertex-program-two-side>
 				   <use>vertex-program-two-side</use>
 			   </vertex-program-two-side>
-			   
-			
+
+
 			   <!-- BEGIN shadows include -->
                    <uniform>
                      <name>shadow_tex</name>
@@ -414,49 +418,49 @@ Modifications author: Nikolai V. Chr.
 				   <type>sampler-2d</type>
 				   <value type="int">0</value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>ReflNoiseTex</name>
 				   <type>sampler-3d</type>
 				   <value type="int">1</value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>NormalTex</name>
 				   <type>sampler-2d</type>
 				   <value type="int">2</value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>LightMapTex</name>
 				   <type>sampler-2d</type>
 				   <value type="int">3</value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>ReflMapTex</name>
 				   <type>sampler-2d</type>
 				   <value type="int">4</value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>Environment</name>
 				   <type>sampler-cube</type>
 				   <value type="int">5</value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>ReflGradientsTex</name>
 				   <type>sampler-2d</type>
 				   <value type="int">6</value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>GrainTex</name>
 				   <type>sampler-2d</type>
 				   <value type="int">7</value>
 		 	   </uniform>
-			   
+
 			   <!-- 			NORMAL MAP -->
 			   <!-- normalmap is used-->
 			   <uniform>
@@ -466,7 +470,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>normalmap-enabled</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <!-- normalmap is .dds-->
 			   <uniform>
 				   <name>nmap_dds</name>
@@ -475,7 +479,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>normalmap-dds</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>bc3n</name>
 				   <type>int</type>
@@ -483,7 +487,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>normalmap-dds-compression-bc3n</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				  <name>lonDeg</name>
 				  <type>float</type>
@@ -499,7 +503,7 @@ Modifications author: Nikolai V. Chr.
 					  <use>pos-lat</use>
 				  </value>
 			  </uniform>
-		  
+
 			   <!--<uniform>
 				   <name>nmap_tile</name>
 				   <type>float</type>
@@ -507,7 +511,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>normalmap-tiling</use>
 				   </value>
 			   </uniform>-->
-			   
+
 			   <!-- 			LIGHTMAP -->
 			   <!-- lightmap is used -->
 			   <uniform>
@@ -525,7 +529,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>lightmap-multi</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>lightmap_r_factor</name>
 				   <type>float</type>
@@ -533,7 +537,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>lightmap-factor[0]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>lightmap_r_color</name>
 				   <type>float-vec3</type>
@@ -541,7 +545,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>lightmap-color[0]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>lightmap_g_factor</name>
 				   <type>float</type>
@@ -549,7 +553,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>lightmap-factor[1]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>lightmap_g_color</name>
 				   <type>float-vec3</type>
@@ -557,7 +561,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>lightmap-color[1]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>lightmap_b_factor</name>
 				   <type>float</type>
@@ -565,7 +569,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>lightmap-factor[2]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>lightmap_b_color</name>
 				   <type>float-vec3</type>
@@ -573,7 +577,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>lightmap-color[2]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>lightmap_a_factor</name>
 				   <type>float</type>
@@ -581,7 +585,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>lightmap-factor[3]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>lightmap_a_color</name>
 				   <type>float-vec3</type>
@@ -597,7 +601,7 @@ Modifications author: Nikolai V. Chr.
 			 	 <use>darkmap-factor</use>
 				</value>
 		  	</uniform>-->
-			   
+
 			   <!-- reflection is used -->
 			   <uniform>
 				   <name>refl_enabled</name>
@@ -623,7 +627,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>reflection-fresnel-factor</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <!-- use a reflection map-->
 			   <uniform>
 				   <name>refl_map</name>
@@ -651,7 +655,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>reflection-dynamic</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <!-- set the amount of fringing colour 0.0 - 1.0 -->
 			   <uniform>
 				   <name>refl_rainbow</name>
@@ -660,7 +664,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>reflection-rainbow</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <!-- set the amount of fresnel effect colour 0.0 - 1.0 -->
 			   <uniform>
 				   <name>refl_fresnel</name>
@@ -669,7 +673,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>reflection-fresnel</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <!-- set the amount of noisiness 0.0 - 1.0 -->
 			   <uniform>
 				   <name>refl_noise</name>
@@ -678,7 +682,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>reflection-noise</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <!-- dirt -->
 			   <uniform>
 				   <name>dirt_enabled</name>
@@ -687,7 +691,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>dirt-enabled</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>dirt_multi</name>
 				   <type>int</type>
@@ -695,7 +699,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>dirt-multi</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>dirt_r_color</name>
 				   <type>float-vec3</type>
@@ -703,7 +707,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>dirt-color[0]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>dirt_r_factor</name>
 				   <type>float</type>
@@ -711,7 +715,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>dirt-factor[0]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>dirt_g_color</name>
 				   <type>float-vec3</type>
@@ -719,7 +723,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>dirt-color[1]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>dirt_g_factor</name>
 				   <type>float</type>
@@ -727,7 +731,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>dirt-factor[1]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>dirt_b_color</name>
 				   <type>float-vec3</type>
@@ -735,7 +739,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>dirt-color[2]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>dirt_b_factor</name>
 				   <type>float</type>
@@ -759,7 +763,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>dirt-reflection-factor</use>
 				   </value>
 			   </uniform>
-			   
+
 
 			   <!-- use a grain texture map-->
 		  	   <uniform>
@@ -769,7 +773,7 @@ Modifications author: Nikolai V. Chr.
 			  	   	<use>grain-texture-enabled</use>
 				   </value>
 		  	   </uniform>
-		  
+
 		  	   <uniform>
 				   <name>grain_magnification</name>
 				   <type>float</type>
@@ -786,7 +790,7 @@ Modifications author: Nikolai V. Chr.
 			  	   	<use>rain-enabled</use>
 				   </value>
 		  	    </uniform>
-			   
+
 			    <uniform>
 				   <name>snow_enabled</name>
 				   <type>int</type>
@@ -794,7 +798,7 @@ Modifications author: Nikolai V. Chr.
 			  	   	<use>snow-enabled</use>
 				   </value>
 		  	    </uniform>
-			   
+
 			   	<uniform>
         			   <name>snowlevel</name>
         			   <type>float</type>
@@ -815,7 +819,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>ambient-correction</use>
 				   </value>
 			   </uniform>-->
-			   
+
 			   <uniform>
 				   <name>hdg</name>
 				   <type>float</type>
@@ -823,7 +827,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>model-hdg</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>pitch</name>
 				   <type>float</type>
@@ -831,7 +835,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>model-pitch</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>roll</name>
 				   <type>float</type>
@@ -839,7 +843,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>model-roll</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <!-- 	    BEGIN fog include -->
 			   <uniform>
 				   <name>visibility</name>
@@ -1237,7 +1241,7 @@ Modifications author: Nikolai V. Chr.
        				  <name>display_ysize</name>
       				  <type>int</type>
       				  <value><use>display_ysize</use></value>
-    			   </uniform>  
+    			   </uniform>
 			   <uniform>
 				  <name>darkmap_enabled</name>
 	 			  <type>int</type>
@@ -1260,6 +1264,72 @@ Modifications author: Nikolai V. Chr.
 				</value>
 		  	</uniform>
 
+		  	<uniform>
+				   <name>wingflex</name>
+				   <type>int</type>
+				   <value><use>wingflex</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>wingflex_z</name>
+				   <type>float</type>
+				   <value><use>wingflex-z</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>body_width</name>
+				   <type>float</type>
+				   <value><use>body-width</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>wing_span</name>
+				   <type>float</type>
+				   <value><use>wing-span</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_rad</name>
+				   <type>float</type>
+				   <value><use>rotation-rad</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_x1</name>
+				   <type>float</type>
+				   <value><use>rotation-x1</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_y1</name>
+				   <type>float</type>
+				   <value><use>rotation-y1</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_z1</name>
+				   <type>float</type>
+				   <value><use>rotation-z1</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_x2</name>
+				   <type>float</type>
+				   <value><use>rotation-x2</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_y2</name>
+				   <type>float</type>
+				   <value><use>rotation-y2</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_z2</name>
+				   <type>float</type>
+				   <value><use>rotation-z2</use></value>
+			   </uniform>
+
 		  <!-- 			END fog include -->
 		    <!--<uniform>
 		        <name>colorMode</name>
@@ -1275,7 +1345,7 @@ Modifications author: Nikolai V. Chr.
 	  <predicate>
 		<and>
           <property>/sim/version/compositor-support</property>
-		  <property>/sim/rendering/shaders/quality-level</property>
+		  <!--property>/sim/rendering/shaders/quality-level</property-->
 		  <property>/sim/rendering/shaders/model</property>
 		  <or>
 			<less-equal>
@@ -1492,7 +1562,7 @@ Modifications author: Nikolai V. Chr.
 			<use>vertex-program-two-side</use>
 		  </vertex-program-two-side>
 
-		  
+
 
 		  <uniform>
 			<name>BaseTex</name>
@@ -1554,7 +1624,7 @@ Modifications author: Nikolai V. Chr.
 			  <use>normalmap-dds</use>
 			</value>
 		  </uniform>
-		  
+
 		  <uniform>
 			   <name>bc3n</name>
 			   <type>int</type>
@@ -1863,6 +1933,72 @@ Modifications author: Nikolai V. Chr.
 			 	 <use>ambient-factor</use>
 				</value>
 		  	</uniform>
+
+		  	<uniform>
+				   <name>wingflex</name>
+				   <type>int</type>
+				   <value><use>wingflex</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>wingflex_z</name>
+				   <type>float</type>
+				   <value><use>wingflex-z</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>body_width</name>
+				   <type>float</type>
+				   <value><use>body-width</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>wing_span</name>
+				   <type>float</type>
+				   <value><use>wing-span</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_rad</name>
+				   <type>float</type>
+				   <value><use>rotation-rad</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_x1</name>
+				   <type>float</type>
+				   <value><use>rotation-x1</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_y1</name>
+				   <type>float</type>
+				   <value><use>rotation-y1</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_z1</name>
+				   <type>float</type>
+				   <value><use>rotation-z1</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_x2</name>
+				   <type>float</type>
+				   <value><use>rotation-x2</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_y2</name>
+				   <type>float</type>
+				   <value><use>rotation-y2</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_z2</name>
+				   <type>float</type>
+				   <value><use>rotation-z2</use></value>
+			   </uniform>
 		  <!-- 			END fog include -->
 		  <!--<uniform>
 			<name>rembrandt_enabled</name>
@@ -1877,7 +2013,7 @@ Modifications author: Nikolai V. Chr.
 	   <predicate>
 		   <and>
 			   <property>/sim/rendering/shaders/skydome</property>
-			   <property>/sim/rendering/shaders/quality-level</property>
+			   <!--property>/sim/rendering/shaders/quality-level</property-->
 			   <property>/sim/rendering/shaders/model</property>
 			   <or>
 				   <less-equal>
@@ -2116,61 +2252,61 @@ Modifications author: Nikolai V. Chr.
 			  		<use>texture[7]/internal-format</use>
 				   </internal-format>
 		  	   </texture-unit>
-			   
+
 			   <vertex-program-two-side>
 				   <use>vertex-program-two-side</use>
 			   </vertex-program-two-side>
-			   
-			   
-			   
+
+
+
 			   <uniform>
 				   <name>BaseTex</name>
 				   <type>sampler-2d</type>
 				   <value type="int">0</value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>ReflNoiseTex</name>
 				   <type>sampler-3d</type>
 				   <value type="int">1</value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>NormalTex</name>
 				   <type>sampler-2d</type>
 				   <value type="int">2</value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>LightMapTex</name>
 				   <type>sampler-2d</type>
 				   <value type="int">3</value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>ReflMapTex</name>
 				   <type>sampler-2d</type>
 				   <value type="int">4</value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>Environment</name>
 				   <type>sampler-cube</type>
 				   <value type="int">5</value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>ReflGradientsTex</name>
 				   <type>sampler-2d</type>
 				   <value type="int">6</value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>GrainTex</name>
 				   <type>sampler-2d</type>
 				   <value type="int">7</value>
 		 	   </uniform>
-			   
+
 			   <!-- 			NORMAL MAP -->
 			   <!-- normalmap is used-->
 			   <uniform>
@@ -2180,7 +2316,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>normalmap-enabled</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <!-- normalmap is .dds-->
 			   <uniform>
 				   <name>nmap_dds</name>
@@ -2189,7 +2325,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>normalmap-dds</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>bc3n</name>
 				   <type>int</type>
@@ -2197,7 +2333,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>normalmap-dds-compression-bc3n</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				  <name>lonDeg</name>
 				  <type>float</type>
@@ -2213,7 +2349,7 @@ Modifications author: Nikolai V. Chr.
 					  <use>pos-lat</use>
 				  </value>
 			  </uniform>
-		  
+
 			   <!--<uniform>
 				   <name>nmap_tile</name>
 				   <type>float</type>
@@ -2221,7 +2357,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>normalmap-tiling</use>
 				   </value>
 			   </uniform>-->
-			   
+
 			   <!-- 			LIGHTMAP -->
 			   <!-- lightmap is used -->
 			   <uniform>
@@ -2239,7 +2375,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>lightmap-multi</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>lightmap_r_factor</name>
 				   <type>float</type>
@@ -2247,7 +2383,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>lightmap-factor[0]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>lightmap_r_color</name>
 				   <type>float-vec3</type>
@@ -2255,7 +2391,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>lightmap-color[0]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>lightmap_g_factor</name>
 				   <type>float</type>
@@ -2263,7 +2399,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>lightmap-factor[1]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>lightmap_g_color</name>
 				   <type>float-vec3</type>
@@ -2271,7 +2407,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>lightmap-color[1]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>lightmap_b_factor</name>
 				   <type>float</type>
@@ -2279,7 +2415,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>lightmap-factor[2]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>lightmap_b_color</name>
 				   <type>float-vec3</type>
@@ -2287,7 +2423,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>lightmap-color[2]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>lightmap_a_factor</name>
 				   <type>float</type>
@@ -2295,7 +2431,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>lightmap-factor[3]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>lightmap_a_color</name>
 				   <type>float-vec3</type>
@@ -2311,7 +2447,7 @@ Modifications author: Nikolai V. Chr.
 			 	 <use>darkmap-factor</use>
 				</value>
 		  	</uniform>-->
-			   
+
 			   <!-- reflection is used -->
 			   <uniform>
 				   <name>refl_enabled</name>
@@ -2337,7 +2473,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>reflection-fresnel-factor</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <!-- use a reflection map-->
 			   <uniform>
 				   <name>refl_map</name>
@@ -2365,7 +2501,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>reflection-dynamic</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <!-- set the amount of fringing colour 0.0 - 1.0 -->
 			   <uniform>
 				   <name>refl_rainbow</name>
@@ -2374,7 +2510,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>reflection-rainbow</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <!-- set the amount of fresnel effect colour 0.0 - 1.0 -->
 			   <uniform>
 				   <name>refl_fresnel</name>
@@ -2383,7 +2519,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>reflection-fresnel</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <!-- set the amount of noisiness 0.0 - 1.0 -->
 			   <uniform>
 				   <name>refl_noise</name>
@@ -2392,7 +2528,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>reflection-noise</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <!-- dirt -->
 			   <uniform>
 				   <name>dirt_enabled</name>
@@ -2401,7 +2537,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>dirt-enabled</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>dirt_multi</name>
 				   <type>int</type>
@@ -2409,7 +2545,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>dirt-multi</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>dirt_r_color</name>
 				   <type>float-vec3</type>
@@ -2417,7 +2553,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>dirt-color[0]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>dirt_r_factor</name>
 				   <type>float</type>
@@ -2425,7 +2561,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>dirt-factor[0]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>dirt_g_color</name>
 				   <type>float-vec3</type>
@@ -2433,7 +2569,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>dirt-color[1]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>dirt_g_factor</name>
 				   <type>float</type>
@@ -2441,7 +2577,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>dirt-factor[1]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>dirt_b_color</name>
 				   <type>float-vec3</type>
@@ -2449,7 +2585,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>dirt-color[2]</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>dirt_b_factor</name>
 				   <type>float</type>
@@ -2473,7 +2609,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>dirt-reflection-factor</use>
 				   </value>
 			   </uniform>
-			   
+
 
 			   <!-- use a grain texture map-->
 		  	   <uniform>
@@ -2483,7 +2619,7 @@ Modifications author: Nikolai V. Chr.
 			  	   	<use>grain-texture-enabled</use>
 				   </value>
 		  	   </uniform>
-		  
+
 		  	   <uniform>
 				   <name>grain_magnification</name>
 				   <type>float</type>
@@ -2500,7 +2636,7 @@ Modifications author: Nikolai V. Chr.
 			  	   	<use>rain-enabled</use>
 				   </value>
 		  	    </uniform>
-			   
+
 			    <uniform>
 				   <name>snow_enabled</name>
 				   <type>int</type>
@@ -2508,7 +2644,7 @@ Modifications author: Nikolai V. Chr.
 			  	   	<use>snow-enabled</use>
 				   </value>
 		  	    </uniform>
-			   
+
 			   	<uniform>
         			   <name>snowlevel</name>
         			   <type>float</type>
@@ -2529,7 +2665,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>ambient-correction</use>
 				   </value>
 			   </uniform>-->
-			   
+
 			   <uniform>
 				   <name>hdg</name>
 				   <type>float</type>
@@ -2537,7 +2673,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>model-hdg</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>pitch</name>
 				   <type>float</type>
@@ -2545,7 +2681,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>model-pitch</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <uniform>
 				   <name>roll</name>
 				   <type>float</type>
@@ -2553,7 +2689,7 @@ Modifications author: Nikolai V. Chr.
 					   <use>model-roll</use>
 				   </value>
 			   </uniform>
-			   
+
 			   <!-- 	    BEGIN fog include -->
 			   <uniform>
 				   <name>visibility</name>
@@ -2951,7 +3087,7 @@ Modifications author: Nikolai V. Chr.
        				  <name>display_ysize</name>
       				  <type>int</type>
       				  <value><use>display_ysize</use></value>
-    			   </uniform>  
+    			   </uniform>
 			   <uniform>
 				  <name>darkmap_enabled</name>
 	 			  <type>int</type>
@@ -2973,13 +3109,13 @@ Modifications author: Nikolai V. Chr.
 			 	 <use>ambient-factor</use>
 				</value>
 		  	</uniform>
-		  	
+
 		  	<uniform>
 				   <name>wingflex</name>
 				   <type>int</type>
 				   <value><use>wingflex</use></value>
 			   </uniform>
-			   
+
 		   	   <uniform>
 				   <name>wingflex_z</name>
 				   <type>float</type>
@@ -3021,7 +3157,7 @@ Modifications author: Nikolai V. Chr.
 				   <type>float</type>
 				   <value><use>rotation-z1</use></value>
 			   </uniform>
-			   
+
 		   	   <uniform>
 				   <name>rotation_x2</name>
 				   <type>float</type>
@@ -3050,12 +3186,12 @@ Modifications author: Nikolai V. Chr.
 		  </uniform>-->
 		  </pass>
 	</technique>
-	
+
 	<!-- 	Rembrandt rendering -->
-   <technique n="3">
+   <technique n="4">
 	<predicate>
 	  <and>
-		<property>/sim/rendering/rembrandt/enabled</property>
+
 		<or>
 		  <less-equal>
 			<value type="float">2.0</value>
@@ -3290,7 +3426,7 @@ Modifications author: Nikolai V. Chr.
 				<use>vertex-program-two-side</use>
 			</vertex-program-two-side>
 
-	  
+
 
 			<uniform>
 				<name>BaseTex</name>
@@ -3651,11 +3787,16 @@ Modifications author: Nikolai V. Chr.
 
 
 	<!-- Default rendering -->
-	<technique n="4">
+	<technique n="3">
 	  <predicate>
-		<and>
-		  <property>/sim/rendering/shaders/quality-level</property>
-		  <property>/sim/rendering/shaders/model</property>
+		<!--and-->
+		  <!--property>/sim/rendering/shaders/quality-level</property-->
+		  <!--property>/sim/rendering/shaders/model</property-->
+
+		  <less-equal>
+			   <property>/sim/rendering/rembrandt/enabled</property>
+			   <value type="float">1.0</value>
+		  </less-equal>
 		  <or>
 			<less-equal>
 			  <value type="float">2.0</value>
@@ -3668,7 +3809,7 @@ Modifications author: Nikolai V. Chr.
 			  <extension-supported>GL_ARB_fragment_shader</extension-supported>
 			</and>
 		  </or>
-		</and>
+		<!--/and-->
 	  </predicate>
 	  <pass n="0">
 	  	<program n="0">
@@ -3871,7 +4012,7 @@ Modifications author: Nikolai V. Chr.
 			<use>vertex-program-two-side</use>
 		  </vertex-program-two-side>
 
-		  
+
 
 		  <uniform>
 			<name>BaseTex</name>
@@ -3933,7 +4074,7 @@ Modifications author: Nikolai V. Chr.
 			  <use>normalmap-dds</use>
 			</value>
 		  </uniform>
-		  
+
 		  <uniform>
 			   <name>bc3n</name>
 			   <type>int</type>
@@ -4242,13 +4383,13 @@ Modifications author: Nikolai V. Chr.
 			 	 <use>ambient-factor</use>
 				</value>
 		  	</uniform>
-		  	
+
 		  	<uniform>
 				   <name>wingflex</name>
 				   <type>int</type>
 				   <value><use>wingflex</use></value>
 			   </uniform>
-			   
+
 		   	   <uniform>
 				   <name>wingflex_z</name>
 				   <type>float</type>
@@ -4290,7 +4431,7 @@ Modifications author: Nikolai V. Chr.
 				   <type>float</type>
 				   <value><use>rotation-z1</use></value>
 			   </uniform>
-			   
+
 		   	   <uniform>
 				   <name>rotation_x2</name>
 				   <type>float</type>
@@ -4308,7 +4449,7 @@ Modifications author: Nikolai V. Chr.
 				   <type>float</type>
 				   <value><use>rotation-z2</use></value>
 			   </uniform>
-			   
+
 		  <!-- 			END fog include -->
 		  <!--<uniform>
 			<name>rembrandt_enabled</name>
@@ -4319,18 +4460,7 @@ Modifications author: Nikolai V. Chr.
 		  </uniform>-->
 		  </pass>
 		</technique>
-		
-		<technique n="4">
-		  <predicate>
-			<and>
-				<equal>
-				  <value type="float">0.0</value>
-				  <glversion/>
-				</equal>
-			</and>
-		  </predicate>
-		</technique>
-		
+
 		<technique n="5">
 		  <predicate>
 			<and>
@@ -4341,7 +4471,7 @@ Modifications author: Nikolai V. Chr.
 			</and>
 		  </predicate>
 		</technique>
-		
+
 		<technique n="6">
 		  <predicate>
 			<and>
@@ -4352,7 +4482,7 @@ Modifications author: Nikolai V. Chr.
 			</and>
 		  </predicate>
 		</technique>
-		
+
 		<technique n="7">
 		  <predicate>
 			<and>
@@ -4363,7 +4493,7 @@ Modifications author: Nikolai V. Chr.
 			</and>
 		  </predicate>
 		</technique>
-		
+
 		<technique n="8">
 		  <predicate>
 			<and>
@@ -4374,7 +4504,7 @@ Modifications author: Nikolai V. Chr.
 			</and>
 		  </predicate>
 		</technique>
-		
+
 		<technique n="9">
 		  <predicate>
 			<and>
@@ -4385,5 +4515,5 @@ Modifications author: Nikolai V. Chr.
 			</and>
 		  </predicate>
 		</technique>
-		
+
 </PropertyList>
