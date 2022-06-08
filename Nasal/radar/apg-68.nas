@@ -1667,7 +1667,7 @@ var F16TWSMode = {
 	 	me.azimuthTilt = me.cursorAz;
 	 	me.elevationTilt = me.radar.getTiltKnob();
 		if (me.priorityTarget != nil) {
-			if (!size(me.priorityTarget.getBleps()) or !me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, me.priorityTarget) or me.radar.elapsed - me.priorityTarget.getLastBlepTime() > me.radar.timeToKeepBleps) {
+			if (!size(me.priorityTarget.getBleps()) or me.priorityTarget.getLastRangeDirect() == nil or !me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, me.priorityTarget) or me.radar.elapsed - me.priorityTarget.getLastBlepTime() > me.radar.timeToKeepBleps) {
 				me.priorityTarget = nil;
 				me.undesignate();
 				return;
