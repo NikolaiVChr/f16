@@ -3,8 +3,8 @@
 
 <system name="Miscelanous">
 
-    <channel name="Misc" execrate="16">        
-        
+    <channel name="Misc" execrate="16">
+
         <lag_filter name="/surface-positions/speedbrake-pos-anim-lag">
             <input> /surface-positions/speedbrake-pos-anim </input>
             <c1> 2 </c1>
@@ -28,7 +28,7 @@
                 </table>
             </function>
         </fcs_function>
-        
+
         <fcs_function name="systems/buffeting/outputy">
             <function>
                 <product>
@@ -63,7 +63,7 @@
                 </product>
             </function>
         </fcs_function>
-        
+
         <fcs_function name="systems/buffeting/outputz">
             <function>
                 <product>
@@ -101,7 +101,7 @@
                 </product>
             </function>
         </fcs_function>
-        
+
         <switch name="/f16/avionics/power-ufc-warming">
           <time>Could not find which elec source. But DED is powered from emerg ac 1 or 2, so it makes sense that it should work, hence using same source here.</time>
          <default value="0"/>
@@ -114,7 +114,7 @@
            elec/bus/emergency-ac-2 gt 100
          </test>
         </switch>
-        
+
         <kinematic name="/f16/avionics/power-ufc-warm">
             <input>/f16/avionics/power-ufc-warming</input>
             <noscale/>
@@ -161,7 +161,7 @@
                 /sim/variant-id == 3    <!-- Block 30/32 -->
             </test>
         </switch>
-        
+
         <switch name="/f16/avionics/power-mfd-bit">  <!-- 0=void, 1=grid, 2=cube, 3=on -->
          <default value="0"/>
          <!-- The color MFDs -->
@@ -216,10 +216,10 @@
             <clipto>
                 <min>   0 </min>
                 <max>   1 </max>
-            </clipto> 
+            </clipto>
             <output>/f16/avionics/power-rdr-alt-warm</output>
         </kinematic>
-        
+
         <switch name="/f16/avionics/power-fcr-warming">
          <default value="0"/>
          <test  logic="AND" value="1">
@@ -228,7 +228,7 @@
            elec/contactors/main-contactors-1 gt 100
          </test>
         </switch>
-        
+
         <kinematic name="avionics/power-fcr-warm">
             <input>/f16/avionics/power-fcr-warming</input>
             <noscale/>
@@ -248,7 +248,7 @@
             </clipto>
             <output>/f16/avionics/power-fcr-warm</output>
         </kinematic>
-        
+
         <switch name="/f16/avionics/power-fcr-bit">
          <default value="0"/>
          <test logic="AND" value="0">
@@ -262,7 +262,7 @@
            /f16/avionics/power-fcr-warming == 1
          </test>
         </switch>
-        
+
         <switch name="/f16/avionics/power-right-hdpt-warming">
          <default value="0"/>
          <test  logic="AND" value="1">
@@ -271,7 +271,7 @@
            /f16/stores/tgp-mounted gt 0
          </test>
         </switch>
-        
+
         <kinematic name="avionics/power-right-hdpt-warm">
             <input>/f16/avionics/power-right-hdpt-warming</input>
             <noscale/>
@@ -291,17 +291,17 @@
             </clipto>
             <output>/f16/avionics/power-right-hdpt-warm</output>
         </kinematic>
-        
+
         <lag_filter name="/f16/fuel/hand-fwd-lag">
             <input> /f16/fuel/hand-fwd </input>
             <c1> 2 </c1>
         </lag_filter>
-        
+
         <lag_filter name="/f16/fuel/hand-aft-lag">
             <input> /f16/fuel/hand-aft </input>
             <c1> 1 </c1>
         </lag_filter>
-        
+
         <fcs_function name="propulsion/engine[0]/ftit-direct">
             <function>
                 <sum>
@@ -314,7 +314,7 @@
                               20          500    0
                               40          400    0
                               60          300    0
-                              80          300    0 
+                              80          300    0
                              100          300    0
                         </tableData>
                     </table>
@@ -354,7 +354,7 @@
                 </sum>
             </function>
         </fcs_function>
-        
+
         <lag_filter name="names/ftit-c">
             <input> propulsion/engine[0]/ftit-direct </input>
             <c1> 0.35 </c1>
@@ -368,7 +368,7 @@
                 /f16/engine/sec-self-test eq 1
             </test>
         </switch>
-        
+
         <fcs_function name="/f16/cockpit/pressure-ft-pressurized">
             <function>
                 <table>
@@ -422,13 +422,13 @@
         </switch>
 
     </channel>
-    
-    
 
-    
-    
+
+
+
+
     <channel name="oxygen 1" execrate="7200">
-                
+
         <fcs_function name="systems/oxy-mins">
             <function>
                   <product>
@@ -451,7 +451,7 @@
             </function>
             <output>/f16/cockpit/oxygen-minutes</output>
         </fcs_function>
-        
+
         <fcs_function name="systems/oxy-lit">
             <function>
                 <ifthen>
@@ -475,9 +475,9 @@
             <output>/f16/cockpit/oxygen-liters</output>
         </fcs_function>
     </channel>
-    
+
     <channel name="oxygen 2" execrate="8">
-                
+
         <switch name="/f16/avionics/oxy-psi-direct">
          <default value="0"/>
 		 <test  logic="AND" value="150">
@@ -517,28 +517,28 @@
            elec/bus/batt-2 gt 20
          </test>
         </switch>
-        
+
         <lag_filter name="/f16/avionics/oxy-psi">
             <input> /f16/avionics/oxy-psi-direct </input>
             <c1> 2.5 </c1>
         </lag_filter>
-		
+
 		<switch name="/f16/cockpit/oxygen-liters-switch">
 			<default value="/f16/cockpit/oxygen-liters"/>
 			<test value="0">
 				/controls/test/test-panel/oxy-test eq 1
 			</test>
 		</switch>
-		
+
 		<actuator name="/f16/cockpit/oxygen-liters-output">
 			<input>/f16/cockpit/oxygen-liters-switch</input>
 			<rate_limit>1</rate_limit>
 		</actuator>
-                
+
     </channel>
-    
+
     <channel name="hydrazine" execrate="720">
-        
+
         <fcs_function name="systems/hydrazine-mins">
             <function>
               <max>
@@ -554,9 +554,9 @@
             </function>
             <output>/f16/cockpit/hydrazine-minutes</output>
         </fcs_function>
-        
+
     </channel>
-    
+
     <channel name="fuel-flow" execrate="8">
         <!--
           Simulates an oldstyle mechanical drum digit readout. It could use a max speed on digit rotation, but I dont want it to be too complex.
@@ -580,7 +580,7 @@
               </product>
             </function>
         </fcs_function>
-        
+
         <fcs_function name="flow/digit-1">
             <function>
                 <sum>
@@ -603,7 +603,7 @@
             </function>
             <output>/f16/cockpit/fuel-flow-digit-1</output>
         </fcs_function>
-        
+
         <fcs_function name="flow/digit-2-value">
             <function>
               <product>
@@ -623,7 +623,7 @@
               </product>
             </function>
         </fcs_function>
-        
+
         <fcs_function name="flow/digit-2">
             <function>
                 <sum>
@@ -646,7 +646,7 @@
             </function>
             <output>/f16/cockpit/fuel-flow-digit-2</output>
         </fcs_function>
-        
+
         <fcs_function name="flow/digit-3-value">
             <function>
               <product>
@@ -666,7 +666,7 @@
               </product>
             </function>
         </fcs_function>
-        
+
         <fcs_function name="flow/digit-3">
             <function>
                 <sum>
@@ -689,7 +689,7 @@
             </function>
             <output>/f16/cockpit/fuel-flow-digit-3</output>
         </fcs_function>
-        
+
         <fcs_function name="flow/digit-4-value">
             <function>
               <product>
@@ -709,7 +709,7 @@
               </product>
             </function>
         </fcs_function>
-        
+
         <fcs_function name="flow/digit-4">
             <function>
                 <sum>
@@ -732,7 +732,7 @@
             </function>
             <output>/f16/cockpit/fuel-flow-digit-4</output>
         </fcs_function>
-        
+
         <fcs_function name="flow/digit-5-value">
             <function>
               <product>
@@ -752,7 +752,7 @@
               </product>
             </function>
         </fcs_function>
-        
+
         <fcs_function name="flow/digit-5">
             <function>
                 <sum>
@@ -775,11 +775,11 @@
             </function>
             <output>/f16/cockpit/fuel-flow-digit-5</output>
         </fcs_function>
-        
+
     </channel>
 
     <channel name="sound" execrate="8">
-        
+
         <fcs_function name="/engines/engine[0]/sound-n2-low-down">
             <function>
                 <table>
@@ -791,7 +791,7 @@
                 </table>
             </function>
         </fcs_function>
-        
+
         <fcs_function name="/engines/engine[0]/sound-n2-vol-a">
             <function>
                 <sqrt>
@@ -817,7 +817,7 @@
                 </table>
             </function>
         </fcs_function>
-        
+
         <fcs_function name="/engines/engine[0]/sound-n2-vol-b">
             <function>
                 <sqrt>
@@ -843,7 +843,7 @@
                 </table>
             </function>
         </fcs_function>
-        
+
         <fcs_function name="/engines/engine[0]/sound-n2-vol-c">
             <function>
                 <sqrt>
@@ -869,7 +869,7 @@
                 </table>
             </function>
         </fcs_function>
-        
+
         <fcs_function name="/engines/engine[0]/sound-n2-vol-d">
             <function>
                 <sqrt>
@@ -883,7 +883,7 @@
                 </sqrt>
             </function>
         </fcs_function>
-        
+
         <fcs_function name="/engines/engine[0]/n2-low"><!-- replaced with JFS sound -->
             <function>
                 <table>
@@ -898,7 +898,7 @@
                 </table>
             </function>
         </fcs_function>
-        
+
         <fcs_function name="/engines/engine[0]/n1-out1">
             <function>
                 <table>
@@ -907,12 +907,12 @@
                            0.5        0.0
                           15          1.0
                           30          1.0
-                          40          0.0 
+                          40          0.0
                     </tableData>
                 </table>
             </function>
         </fcs_function>
-        
+
         <fcs_function name="/engines/engine[0]/n1-out2">
             <function>
                 <table>
@@ -923,12 +923,12 @@
                           10          0.55
                           15          1.0
                           30          1.0
-                         100          0.3 
+                         100          0.3
                     </tableData>
                 </table>
             </function>
         </fcs_function>
-        
+
         <fcs_function name="/engines/engine[0]/n1-mid">
             <function>
                 <table>
@@ -941,7 +941,7 @@
                 </table>
             </function>
         </fcs_function>
-        
+
         <fcs_function name="/engines/engine[0]/n1-high">
             <function>
                 <table>
@@ -953,7 +953,7 @@
                 </table>
             </function>
         </fcs_function>
-        
+
         <fcs_function name="/engines/engine[0]/n2-60-to-80-log">
             <function>
                 <log10>
@@ -1058,7 +1058,7 @@
                          KIAS=2pitchDeg+40
                          KIAS=-2pitchDeg+400
 
-                         
+
             </description>
             <function>
                 <ifthen>
@@ -1151,7 +1151,7 @@
     </channel>
 
 	<channel name="VVI">
-		
+
 		<fcs_function name="/f16/avionics/vvi-indicated-speed-fps">
 			<function>
 				<ifthen>
@@ -1167,23 +1167,23 @@
 				</ifthen>
 			</function>
 		</fcs_function>
-		
+
 	</channel>
-  
+
   <channel name="Readouts">
-    
+
     <switch name="/engines/engine[0]/nozzle-pos-norm-switch">
      <default value="/engines/engine[0]/nozzle-pos-norm-switch"/>
      <test  logic="AND" value="/engines/engine[0]/nozzle-pos-norm">
         elec/bus/emergency-ac-2 gt 100
      </test>
     </switch>
-    
+
     <lag_filter name="/engines/engine[0]/nozzle-pos-norm-lag">
         <input> /engines/engine[0]/nozzle-pos-norm-switch </input>
         <c1> 10 </c1>
     </lag_filter>
-    
+
   </channel>
 
   <channel name="Cursors" execrate="8">
@@ -1287,6 +1287,22 @@
                 /orientation/alpha-deg gt 15
             </test>
         </switch>
+  </channel>
+
+  <channel name="AAR" execrate="8">
+      <switch name="/systems/refuel/serviceable">
+          <description>
+              T.O. GR1F-16CJ-1 5-9
+          </description>
+          <default value="0"/>
+          <test logic="OR" value="0">
+              velocities/mach gt 0.85
+              velocities/vc-kts gt 400
+          </test>
+          <test logic="AND" value="1">
+              /systems/refuel/switch == 1
+          </test>
+      </switch>
   </channel>
 
 </system>

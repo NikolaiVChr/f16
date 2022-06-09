@@ -40,20 +40,6 @@
             </test>
         </switch>
 
-        <switch name="/systems/refuel/serviceable">
-            <description>
-                T.O. GR1F-16CJ-1 5-9
-            </description>
-            <default value="0"/>
-            <test logic="OR" value="0">
-                velocities/mach gt 0.85
-                velocities/vc-kts gt 400
-            </test>
-            <test logic="AND" value="1">
-                /systems/refuel/switch == 1
-            </test>
-        </switch>
-
         <switch name="fcs/fly-by-wire/condition-b">
             <description>
                 Since this was removed on later blocks,
