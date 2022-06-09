@@ -4,7 +4,8 @@ Modifications author: Nikolai V. Chr.
 -->
 <PropertyList>
 	<name>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</name>
-	<inherits-from>Effects/model-combined-deferred</inherits-from>
+	<!--inherits-from>Effects/model-combined-deferred</inherits-from-->
+	<inherits-from>Aircraft/f16/Models/Effects/fuselage/fuselage-base</inherits-from>
 	<parameters>
 		<!-- Wingflex -->
 		<wingflex type="int">0</wingflex>
@@ -4461,7 +4462,7 @@ Modifications author: Nikolai V. Chr.
 		  </pass>
 		</technique>
 
-		<technique n="5">
+		<!--technique n="5">
 		  <predicate>
 			<and>
 				<equal>
@@ -4514,6 +4515,6 @@ Modifications author: Nikolai V. Chr.
 				</equal>
 			</and>
 		  </predicate>
-		</technique>
+		</technique-->
 
 </PropertyList>

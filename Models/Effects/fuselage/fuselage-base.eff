@@ -1,0 +1,859 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PropertyList>
+	<name>fuselage-base</name>
+
+	<parameters>
+		<texture n ="0">
+			<type>white</type>
+		</texture>
+		<vertex-program-two-side type="bool">false</vertex-program-two-side>
+		<material>
+			<color-mode-uniform>1</color-mode-uniform>
+			<!-- DIFFUSE -->
+		</material>
+		<material-id>0</material-id>
+		<!-- 		BEGIN fog include -->
+		<visibility><use>/environment/ground-visibility-m</use></visibility>
+		<avisibility><use>/environment/visibility-m</use></avisibility>
+		<lthickness><use>/environment/ground-haze-thickness-m</use></lthickness>
+		<scattering><use>/rendering/scene/scattering</use></scattering>
+		<ground_scattering><use>/environment/surface/scattering</use></ground_scattering>
+		<terminator><use>/environment/terminator-relative-position-m</use></terminator>
+		<terrain_alt><use>/environment/mean-terrain-elevation-m</use></terrain_alt>
+		<overcast><use>/rendering/scene/overcast</use></overcast>
+		<eye_alt><use>/sim/rendering/eye-altitude-m</use></eye_alt>
+		<cloud_self_shading><use>/environment/cloud-self-shading</use></cloud_self_shading>
+		<moonlight><use>/environment/moonlight</use></moonlight>
+		<fogtype><use>/sim/rendering/shaders/skydome</use></fogtype>
+		<air_pollution><use>/environment/air-pollution-norm</use></air_pollution>
+		<use_filtering><use>/sim/rendering/als-filters/use-filtering</use></use_filtering>
+    		<gamma><use>/sim/rendering/als-filters/gamma</use></gamma>
+    		<brightness><use>/sim/rendering/als-filters/brightness</use></brightness>
+    		<delta_T><use>/environment/surface/delta-T-structure</use></delta_T>
+		<fact_grey><use>/sim/rendering/als-filters/grey-factor</use></fact_grey>
+    	        <fact_black><use>/sim/rendering/als-filters/black-factor</use></fact_black>
+    		<use_night_vision><use>/sim/rendering/als-filters/use-night-vision</use></use_night_vision>
+    		<use_IR_vision><use>/sim/rendering/als-filters/use-IR-vision</use></use_IR_vision>
+		<display_xsize><use>/sim/startup/xsize</use></display_xsize>
+		<display_ysize><use>/sim/startup/ysize</use></display_ysize>
+		<view_pitch_offset><use>/sim/current-view/pitch-offset-deg</use></view_pitch_offset>
+		<view_heading_offset><use>/sim/current-view/heading-offset-deg</use></view_heading_offset>
+		<view_fov><use>/sim/current-view/field-of-view</use></view_fov>
+		<use_searchlight><use>/sim/rendering/als-secondary-lights/use-searchlight</use></use_searchlight>
+		<use_landing_light><use>/sim/rendering/als-secondary-lights/use-landing-light</use></use_landing_light>
+		<use_alt_landing_light><use>/sim/rendering/als-secondary-lights/use-alt-landing-light</use></use_alt_landing_light>
+		<landing_light1_offset><use>/sim/rendering/als-secondary-lights/landing-light1-offset-deg</use></landing_light1_offset>
+		<landing_light2_offset><use>/sim/rendering/als-secondary-lights/landing-light2-offset-deg</use></landing_light2_offset>
+		<landing_light3_offset><use>/sim/rendering/als-secondary-lights/landing-light3-offset-deg</use></landing_light3_offset>
+		<use_geo_light type="int">0</use_geo_light>
+		<geo_light_r type="float">0.0</geo_light_r>
+		<geo_light_g type="float">0.0</geo_light_g>
+		<geo_light_b type="float">0.0</geo_light_b>
+		<geo_light_x type="float">0.0</geo_light_x>
+		<geo_light_y type="float">0.0</geo_light_y>
+		<geo_light_z type="float">0.0</geo_light_z>
+		<geo_light_radius type="float">0.0</geo_light_radius>
+		<geo_ambience type="float">0.0</geo_ambience>
+		<quality_level><use>/sim/rendering/shaders/landmass</use></quality_level>
+		<tquality_level><use>/sim/rendering/shaders/transition</use></tquality_level>
+		<!-- 		END fog include -->
+
+		<!-- Normal Map -->
+		<normalmap-enabled type="int">0</normalmap-enabled>
+		<normalmap-dds type="int">0</normalmap-dds>
+		<normalmap-tiling type="float">1.0</normalmap-tiling>
+		<texture n="2">
+			<image>Aircraft/Generic/Effects/null_bumpspec.png</image>
+			<type>2d</type>
+			<filter>linear-mipmap-linear</filter>
+			<wrap-s>clamp</wrap-s>
+			<wrap-t>clamp</wrap-t>
+			<internal-format>normalized</internal-format>
+		</texture>
+		<!-- Light Map -->
+		<lightmap-enabled type="int">0</lightmap-enabled>
+		<lightmap-multi type="int">0</lightmap-multi>
+		<lightmap-factor type="float" n="0">1.0</lightmap-factor>
+		<lightmap-color type="vec3d" n="0"> 1.0 1.0 1.0 </lightmap-color>
+		<lightmap-factor type="float" n="1">1.0</lightmap-factor>
+		<lightmap-color type="vec3d" n="1"> 1.0 1.0 1.0 </lightmap-color>
+		<lightmap-factor type="float" n="2">1.0</lightmap-factor>
+		<lightmap-color type="vec3d" n="2"> 1.0 1.0 1.0 </lightmap-color>
+		<lightmap-factor type="float" n="3">1.0</lightmap-factor>
+		<lightmap-color type="vec3d" n="3"> 1.0 1.0 1.0 </lightmap-color>
+		<darkmap-enabled type="int">0</darkmap-enabled>
+		<darkmap-factor type="float">0.0</darkmap-factor>
+		<texture n="3">
+			<image>Aircraft/Generic/Effects/greymap.png</image>
+			<type>2d</type>
+			<filter>linear-mipmap-linear</filter>
+			<wrap-s>clamp</wrap-s>
+			<wrap-t>clamp</wrap-t>
+			<internal-format>normalized</internal-format>
+		</texture>
+		<!-- Reflection -->
+		<reflection-enabled type="int">0</reflection-enabled>
+		<reflection-correction type="float">0.0</reflection-correction>
+		<reflect-map-enabled type="int">0</reflect-map-enabled>
+		<reflection-fresnel-factor type="float">0.0</reflection-fresnel-factor>
+		<reflection-type type="int">1</reflection-type>
+		<reflection-dynamic type="int">0</reflection-dynamic>
+		<texture n="4">
+			<image>Aircraft/Generic/Effects/ReflectMaps/reflectmap.png</image>
+			<type>2d</type>
+			<filter>linear-mipmap-linear</filter>
+			<wrap-s>clamp</wrap-s>
+			<wrap-t>clamp</wrap-t>
+			<internal-format>normalized</internal-format>
+		</texture>
+		<!-- Reflection environment -->
+		<texture n="5">
+			<type>cubemap</type>
+			<!-- use this form for a cube cross -->
+			<!--<image>Aircraft/Generic/Effects/CubeCrosses/blue_sky_big.jpg</image>-->
+			<!-- END CubeCross -->
+			<!-- use this form for a 6 image cube map -->
+			<images>
+				<positive-x>Aircraft/Generic/Effects/CubeMaps/fair-sky/fair-sky_px.png</positive-x>
+				<negative-x>Aircraft/Generic/Effects/CubeMaps/fair-sky/fair-sky_nx.png</negative-x>
+				<positive-y>Aircraft/Generic/Effects/CubeMaps/fair-sky/fair-sky_py.png</positive-y>
+				<negative-y>Aircraft/Generic/Effects/CubeMaps/fair-sky/fair-sky_ny.png</negative-y>
+				<positive-z>Aircraft/Generic/Effects/CubeMaps/fair-sky/fair-sky_pz.png</positive-z>
+				<negative-z>Aircraft/Generic/Effects/CubeMaps/fair-sky/fair-sky_nz.png</negative-z>
+			</images>
+			<!-- END 6 image cube map -->
+		</texture>
+		<!-- Reflection fresnel -->
+		<reflection-fresnel type="float">0.1</reflection-fresnel>
+		<texture n="6">
+			<image>Aircraft/Generic/Effects/Gradients.png</image>
+			<type>2d</type>
+			<filter>linear-mipmap-linear</filter>
+			<wrap-s>repeat</wrap-s>
+			<wrap-t>repeat</wrap-t>
+			<internal-format>normalized</internal-format>
+		</texture>
+		<!-- Reflection rainbow -->
+		<reflection-rainbow type="float">0.01</reflection-rainbow>
+		<reflection-noise type="float">0.25</reflection-noise>
+		<!-- END Reflection -->
+		<!-- grain texture -->
+		<grain-texture-enabled type="int">0</grain-texture-enabled>
+		<grain-magnification type="float">10</grain-magnification>
+		<texture n="7">
+			<image>Textures/Terrain/void.png</image>
+			<type>2d</type>
+			<filter>linear-mipmap-linear</filter>
+			<wrap-s>repeat</wrap-s>
+			<wrap-t>repeat</wrap-t>
+			<internal-format>normalized</internal-format>
+		</texture>
+		<!-- END Grain texture -->
+		<!-- simulate rain effects -->
+		<rain-enabled type="int">0</rain-enabled>
+		<snow-enabled type="int">0</snow-enabled>
+		<!-- 		Dirt -->
+		<dirt-enabled type="int">0</dirt-enabled>
+		<dirt-multi type="int">0</dirt-multi>
+		<dirt-color type="vec3d" n="0">0.0 0.0 0.0</dirt-color>
+		<dirt-factor type="float" n="0">0.0</dirt-factor>
+		<dirt-color type="vec3d" n="1">0.0 0.0 0.0</dirt-color>
+		<dirt-factor type="float" n="1">0.0</dirt-factor>
+		<dirt-color type="vec3d" n="2">0.0 0.0 0.0</dirt-color>
+		<dirt-factor type="float" n="2">0.0</dirt-factor>
+		<dirt-modulates-reflection type="int">0</dirt-modulates-reflection>
+		<dirt-reflection-factor type="double">1.0</dirt-reflection-factor>
+		<!-- ambient correction -->
+		<ambient-correction type="float">0.05</ambient-correction>
+		<rendering-hint>opaque</rendering-hint>
+		<transparent>false</transparent>
+		<render-bin>
+			<bin-number>1</bin-number>
+			<bin-name>RenderBin</bin-name>
+		</render-bin>
+		<!-- 		INTERNAL USE -->
+		<shade-model>smooth</shade-model>
+		<model-hdg>
+			<use>orientation/model/heading-deg</use>
+		</model-hdg>
+		<model-pitch>
+			<use>orientation/model/pitch-deg</use>
+		</model-pitch>
+		<model-roll>
+			<use>orientation/model/roll-deg</use>
+		</model-roll>
+		<pos-lon>
+			<use>position/model/longitude-deg</use>
+		</pos-lon>
+		<pos-lat>
+			<use>position/model/latitude-deg</use>
+		</pos-lat>
+		<!-- 	fog include	 -->
+
+
+
+		<wetness><use>/environment/surface/wetness</use></wetness>
+		<rnorm><use>/environment/rain-norm</use></rnorm>
+		<snow_level><use>/environment/snow-level-m</use></snow_level>
+    		<snow_thickness_factor><use>/environment/surface/snow-thickness-factor</use></snow_thickness_factor>
+		<cloudpos1_x><use>/local-weather/cloud-shadows/cloudpos-x[0]</use></cloudpos1_x>
+		<cloudpos1_y><use>/local-weather/cloud-shadows/cloudpos-y[0]</use></cloudpos1_y>
+		<cloudpos2_x><use>/local-weather/cloud-shadows/cloudpos-x[1]</use></cloudpos2_x>
+		<cloudpos2_y><use>/local-weather/cloud-shadows/cloudpos-y[1]</use></cloudpos2_y>
+		<cloudpos3_x><use>/local-weather/cloud-shadows/cloudpos-x[2]</use></cloudpos3_x>
+		<cloudpos3_y><use>/local-weather/cloud-shadows/cloudpos-y[2]</use></cloudpos3_y>
+		<cloudpos4_x><use>/local-weather/cloud-shadows/cloudpos-x[3]</use></cloudpos4_x>
+		<cloudpos4_y><use>/local-weather/cloud-shadows/cloudpos-y[3]</use></cloudpos4_y>
+		<cloudpos5_x><use>/local-weather/cloud-shadows/cloudpos-x[4]</use></cloudpos5_x>
+		<cloudpos5_y><use>/local-weather/cloud-shadows/cloudpos-y[4]</use></cloudpos5_y>
+		<cloudpos6_x><use>/local-weather/cloud-shadows/cloudpos-x[5]</use></cloudpos6_x>
+		<cloudpos6_y><use>/local-weather/cloud-shadows/cloudpos-y[5]</use></cloudpos6_y>
+		<cloudpos7_x><use>/local-weather/cloud-shadows/cloudpos-x[6]</use></cloudpos7_x>
+		<cloudpos7_y><use>/local-weather/cloud-shadows/cloudpos-y[6]</use></cloudpos7_y>
+		<cloudpos8_x><use>/local-weather/cloud-shadows/cloudpos-x[7]</use></cloudpos8_x>
+		<cloudpos8_y><use>/local-weather/cloud-shadows/cloudpos-y[7]</use></cloudpos8_y>
+		<cloudpos9_x><use>/local-weather/cloud-shadows/cloudpos-x[8]</use></cloudpos9_x>
+		<cloudpos9_y><use>/local-weather/cloud-shadows/cloudpos-y[8]</use></cloudpos9_y>
+		<cloudpos10_x><use>/local-weather/cloud-shadows/cloudpos-x[9]</use></cloudpos10_x>
+		<cloudpos10_y><use>/local-weather/cloud-shadows/cloudpos-y[9]</use></cloudpos10_y>
+		<cloudpos11_x><use>/local-weather/cloud-shadows/cloudpos-x[10]</use></cloudpos11_x>
+		<cloudpos11_y><use>/local-weather/cloud-shadows/cloudpos-y[10]</use></cloudpos11_y>
+		<cloudpos12_x><use>/local-weather/cloud-shadows/cloudpos-x[11]</use></cloudpos12_x>
+		<cloudpos12_y><use>/local-weather/cloud-shadows/cloudpos-y[11]</use></cloudpos12_y>
+		<cloudpos13_x><use>/local-weather/cloud-shadows/cloudpos-x[12]</use></cloudpos13_x>
+		<cloudpos13_y><use>/local-weather/cloud-shadows/cloudpos-y[12]</use></cloudpos13_y>
+		<cloudpos14_x><use>/local-weather/cloud-shadows/cloudpos-x[13]</use></cloudpos14_x>
+		<cloudpos14_y><use>/local-weather/cloud-shadows/cloudpos-y[13]</use></cloudpos14_y>
+		<cloudpos15_x><use>/local-weather/cloud-shadows/cloudpos-x[14]</use></cloudpos15_x>
+		<cloudpos15_y><use>/local-weather/cloud-shadows/cloudpos-y[14]</use></cloudpos15_y>
+		<cloudpos16_x><use>/local-weather/cloud-shadows/cloudpos-x[15]</use></cloudpos16_x>
+		<cloudpos16_y><use>/local-weather/cloud-shadows/cloudpos-y[15]</use></cloudpos16_y>
+		<cloudpos17_x><use>/local-weather/cloud-shadows/cloudpos-x[16]</use></cloudpos17_x>
+		<cloudpos17_y><use>/local-weather/cloud-shadows/cloudpos-y[16]</use></cloudpos17_y>
+		<cloudpos18_x><use>/local-weather/cloud-shadows/cloudpos-x[17]</use></cloudpos18_x>
+		<cloudpos18_y><use>/local-weather/cloud-shadows/cloudpos-y[17]</use></cloudpos18_y>
+		<cloudpos19_x><use>/local-weather/cloud-shadows/cloudpos-x[18]</use></cloudpos19_x>
+		<cloudpos19_y><use>/local-weather/cloud-shadows/cloudpos-y[18]</use></cloudpos19_y>
+		<cloudpos20_x><use>/local-weather/cloud-shadows/cloudpos-x[19]</use></cloudpos20_x>
+		<cloudpos20_y><use>/local-weather/cloud-shadows/cloudpos-y[19]</use></cloudpos20_y>
+		<cloud_shadow_flag><use>/local-weather/cloud-shadows/cloud-shadow-flag</use></cloud_shadow_flag>
+		<rembrandt><use>/sim/rendering/rembrandt/enabled</use></rembrandt>
+		<building-flag type="int">0</building-flag>
+		<!-- 		END fog include -->
+	</parameters>
+
+	<technique n="15">
+    <predicate>
+      <and>
+        <property>/sim/rendering/shaders/skydome</property>
+        <or>
+          <less-equal>
+            <value type="float">2.0</value>
+            <glversion/>
+          </less-equal>
+          <and>
+            <extension-supported>GL_ARB_shader_objects</extension-supported>
+            <extension-supported>GL_ARB_shading_language_100</extension-supported>
+            <extension-supported>GL_ARB_vertex_shader</extension-supported>
+            <extension-supported>GL_ARB_fragment_shader</extension-supported>
+          </and>
+        </or>
+      </and>
+    </predicate>
+    <pass>
+      <lighting>true</lighting>
+      <material>
+        <active><use>material/active</use></active>
+        <ambient><use>material/ambient</use></ambient>
+        <diffuse><use>material/diffuse</use></diffuse>
+        <specular><use>material/specular</use></specular>
+        <emissive><use>material/emissive</use></emissive>
+        <shininess><use>material/shininess</use></shininess>
+        <color-mode><use>material/color-mode</use></color-mode>
+      </material>
+      <blend>
+        <active><use>blend/active</use></active>
+        <source><use>blend/source</use></source>
+        <destination><use>blend/destination</use></destination>
+      </blend>
+      <shade-model><use>shade-model</use></shade-model>
+      <cull-face><use>cull-face</use></cull-face>
+	<!--<render-bin>
+		<bin-number>1</bin-number>
+		<bin-name>RenderBin</bin-name>
+	</render-bin>-->
+      <rendering-hint><use>rendering-hint</use></rendering-hint>
+      <texture-unit>
+        <!-- The texture unit is always active because the shaders expect
+             that. -->
+        <unit>0</unit>
+        <!-- If there is a texture, the type in the derived effect
+        will be "2d". -->
+        <type><use>texture[0]/type</use></type>
+        <image><use>texture[0]/image</use></image>
+        <filter><use>texture[0]/filter</use></filter>
+        <wrap-s><use>texture[0]/wrap-s</use></wrap-s>
+        <wrap-t><use>texture[0]/wrap-t</use></wrap-t>
+        <!--
+        <internal-format>
+          <use>texture[0]/internal-format</use>
+        </internal-format>
+        -->
+      </texture-unit>
+      <vertex-program-two-side>
+        <use>vertex-program-two-side</use>
+      </vertex-program-two-side>
+      <program>
+        <vertex-shader>Shaders/generic-ALS-base.vert</vertex-shader>
+        <fragment-shader>Shaders/model-ALS-base.frag</fragment-shader>
+        <fragment-shader>Shaders/hazes.frag</fragment-shader>
+        <fragment-shader>Shaders/secondary_lights.frag</fragment-shader>
+        <fragment-shader>Shaders/noise.frag</fragment-shader>
+        <fragment-shader>Shaders/filters-ALS.frag</fragment-shader>
+      </program>
+      <uniform>
+        <name>visibility</name>
+        <type>float</type>
+        <value><use>visibility</use></value>
+      </uniform>
+      <uniform>
+        <name>avisibility</name>
+        <type>float</type>
+        <value><use>avisibility</use></value>
+      </uniform>
+       <uniform>
+        <name>hazeLayerAltitude</name>
+        <type>float</type>
+        <value><use>lthickness</use></value>
+      </uniform>
+      <uniform>
+        <name>scattering</name>
+        <type>float</type>
+        <value><use>scattering</use></value>
+      </uniform>
+      <uniform>
+	<name>terminator</name>
+	<type>float</type>
+	<value><use>terminator</use></value>
+      </uniform>
+      <uniform>
+        <name>ground_scattering</name>
+        <type>float</type>
+        <value><use>ground_scattering</use></value>
+      </uniform>
+      <uniform>
+	<name>terminator</name>
+	<type>float</type>
+	<value><use>terminator</use></value>
+      </uniform>
+      <uniform>
+        <name>terrain_alt</name>
+        <type>float</type>
+        <value><use>terrain_alt</use></value>
+      </uniform>
+      <uniform>
+        <name>overcast</name>
+        <type>float</type>
+        <value><use>overcast</use></value>
+      </uniform>
+     <uniform>
+        <name>eye_alt</name>
+        <type>float</type>
+        <value><use>eye_alt</use></value>
+      </uniform>
+      <uniform>
+        <name>cloud_self_shading</name>
+        <type>float</type>
+        <value><use>cloud_self_shading</use></value>
+      </uniform>
+      <uniform>
+        <name>moonlight</name>
+        <type>float</type>
+        <value><use>moonlight</use></value>
+      </uniform>
+      <uniform>
+        <name>air_pollution</name>
+        <type>float</type>
+        <value><use>air_pollution</use></value>
+      </uniform>
+      <uniform>
+        <name>gamma</name>
+        <type>float</type>
+        <value><use>gamma</use></value>
+      </uniform>
+      <uniform>
+        <name>brightness</name>
+        <type>float</type>
+        <value><use>brightness</use></value>
+      </uniform>
+      <uniform>
+        <name>use_filtering</name>
+        <type>bool</type>
+        <value><use>use_filtering</use></value>
+      </uniform>
+      <uniform>
+        <name>use_night_vision</name>
+        <type>bool</type>
+        <value><use>use_night_vision</use></value>
+      </uniform>
+      <uniform>
+        <name>use_IR_vision</name>
+        <type>bool</type>
+        <value><use>use_IR_vision</use></value>
+      </uniform>
+      <uniform>
+        <name>delta_T</name>
+        <type>float</type>
+        <value><use>delta_T</use></value>
+      </uniform>
+      <uniform>
+        <name>fact_grey</name>
+        <type>float</type>
+        <value><use>fact_grey</use></value>
+      </uniform>
+      <uniform>
+        <name>fact_black</name>
+        <type>float</type>
+        <value><use>fact_black</use></value>
+      </uniform>
+      <uniform>
+        <name>view_pitch_offset</name>
+        <type>float</type>
+        <value><use>view_pitch_offset</use></value>
+      </uniform>
+      <uniform>
+        <name>view_heading_offset</name>
+        <type>float</type>
+        <value><use>view_heading_offset</use></value>
+      </uniform>
+      <uniform>
+        <name>field_of_view</name>
+        <type>float</type>
+        <value><use>view_fov</use></value>
+      </uniform>
+      <uniform>
+        <name>landing_light1_offset</name>
+        <type>float</type>
+        <value><use>landing_light1_offset</use></value>
+      </uniform>
+      <uniform>
+        <name>landing_light2_offset</name>
+        <type>float</type>
+        <value><use>landing_light2_offset</use></value>
+      </uniform>
+      <uniform>
+        <name>landing_light3_offset</name>
+        <type>float</type>
+        <value><use>landing_light3_offset</use></value>
+      </uniform>
+  <uniform>
+	<name>geo_light_r</name>
+	<type>float</type>
+	<value><use>geo_light_r</use></value>
+  </uniform>
+  <uniform>
+	<name>geo_light_g</name>
+	<type>float</type>
+	<value><use>geo_light_g</use></value>
+  </uniform>
+  <uniform>
+	<name>geo_light_b</name>
+	<type>float</type>
+	<value><use>geo_light_b</use></value>
+  </uniform>
+  <uniform>
+	<name>geo_light_x</name>
+	<type>float</type>
+	<value><use>geo_light_x</use></value>
+  </uniform>
+  <uniform>
+	<name>geo_light_y</name>
+	<type>float</type>
+	<value><use>geo_light_y</use></value>
+  </uniform>
+  <uniform>
+	<name>geo_light_z</name>
+	<type>float</type>
+	<value><use>geo_light_z</use></value>
+  </uniform>
+  <uniform>
+	<name>geo_light_radius</name>
+	<type>float</type>
+	<value><use>geo_light_radius</use></value>
+  </uniform>
+  <uniform>
+	<name>geo_ambience</name>
+	<type>float</type>
+	<value><use>geo_ambience</use></value>
+  </uniform>
+      <uniform>
+        <name>texture</name>
+        <type>sampler-2d</type>
+        <value type="int">0</value>
+      </uniform>
+      <uniform>
+        <name>colorMode</name>
+        <type>int</type>
+        <value><use>material/color-mode-uniform</use></value>
+      </uniform>
+      <uniform>
+	<name>use_searchlight</name>
+	<type>int</type>
+	<value>	<use>use_searchlight</use></value>
+      </uniform>
+      <uniform>
+	<name>use_landing_light</name>
+	<type>int</type>
+	<value>	<use>use_landing_light</use></value>
+      </uniform>
+      <uniform>
+	<name>use_alt_landing_light</name>
+	<type>int</type>
+	<value>	<use>use_alt_landing_light</use></value>
+      </uniform>
+      <uniform>
+	<name>use_geo_light</name>
+	<type>int</type>
+	<value>	<use>use_geo_light</use></value>
+      </uniform>
+      <uniform>
+        <name>display_xsize</name>
+        <type>int</type>
+        <value><use>display_xsize</use></value>
+      </uniform>
+      <uniform>
+        <name>display_ysize</name>
+        <type>int</type>
+        <value><use>display_ysize</use></value>
+      </uniform>
+      <uniform>
+        <name>quality_level</name>
+        <type>int</type>
+        <value><use>quality_level</use></value>
+      </uniform>
+      <uniform>
+        <name>tquality_level</name>
+        <type>int</type>
+        <value><use>tquality_level</use></value>
+      </uniform>
+    </pass>
+  </technique>
+
+<technique n="20">
+	<predicate>
+		<and>
+			<property>/sim/rendering/rembrandt/enabled</property>
+			<or>
+				<less-equal>
+					<value type="float">2.0</value>
+					<glversion/>
+				</less-equal>
+				<and>
+					<extension-supported>GL_ARB_shader_objects</extension-supported>
+					<extension-supported>GL_ARB_shading_language_100</extension-supported>
+					<extension-supported>GL_ARB_vertex_shader</extension-supported>
+					<extension-supported>GL_ARB_fragment_shader</extension-supported>
+				</and>
+			</or>
+		</and>
+	</predicate>
+	<pass>
+		<lighting>false</lighting>
+		<material>
+			<ambient><use>material/ambient</use></ambient>
+			<diffuse><use>material/diffuse</use></diffuse>
+			<specular><use>material/specular</use></specular>
+			<emissive><use>material/emissive</use></emissive>
+			<shininess><use>material/shininess</use></shininess>
+			<color-mode>ambient-and-diffuse</color-mode>
+		</material>
+		<blend>false</blend>
+		<alpha-test>true</alpha-test>
+		<shade-model>smooth</shade-model>
+		<cull-face><use>cull-face</use></cull-face>
+		<render-bin>
+			<bin-number>1</bin-number>
+			<bin-name>RenderBin</bin-name>
+		</render-bin>
+		<texture-unit>
+			<unit>0</unit>
+			<type><use>texture[0]/type</use></type>
+			<image><use>texture[0]/image</use></image>
+			<filter><use>texture[0]/filter</use></filter>
+			<wrap-s><use>texture[0]/wrap-s</use></wrap-s>
+			<wrap-t><use>texture[0]/wrap-t</use></wrap-t>
+			<internal-format>
+				<use>texture[0]/internal-format</use>
+			</internal-format>
+			<environment>
+				<mode>modulate</mode>
+			</environment>
+		</texture-unit>
+		<vertex-program-two-side>
+			<use>vertex-program-two-side</use>
+		</vertex-program-two-side>
+		<program n="0">
+			<vertex-shader n="0">Shaders/deferred-gbuffer.vert</vertex-shader>
+			<fragment-shader>Shaders/deferred-gbuffer.frag</fragment-shader>
+			<fragment-shader>Shaders/gbuffer-functions.frag</fragment-shader>
+			<fragment-shader>Shaders/gbuffer-encode.frag</fragment-shader>
+		</program>
+		<uniform>
+			<name>texture</name>
+			<type>sampler-2d</type>
+			<value type="int">0</value>
+		</uniform>
+		<!-- uniform>
+			<name>materialID</name>
+			<type>int</type>
+			<value><use>material-id</use></value>
+		</uniform -->
+	</pass>
+</technique>
+
+	<technique n="25">
+		<predicate>
+			<and>
+				<property>/sim/rendering/shaders/quality-level</property>
+				<property>/sim/rendering/shaders/generic</property>
+				<or>
+					<less-equal>
+						<value type="float">2.0</value>
+						<glversion/>
+					</less-equal>
+					<and>
+						<extension-supported>GL_ARB_shader_objects</extension-supported>
+						<extension-supported>GL_ARB_shading_language_100</extension-supported>
+						<extension-supported>GL_ARB_vertex_shader</extension-supported>
+						<extension-supported>GL_ARB_fragment_shader</extension-supported>
+					</and>
+				</or>
+			</and>
+		</predicate>
+		<pass>
+			<lighting>true</lighting>
+			<material>
+				<active>
+					<use>material/active</use>
+				</active>
+				<ambient>
+					<use>material/ambient</use>
+				</ambient>
+				<diffuse>
+					<use>material/diffuse</use>
+				</diffuse>
+				<specular>
+					<use>material/specular</use>
+				</specular>
+				<emissive>
+					<use>material/emissive</use>
+				</emissive>
+				<shininess>
+					<use>material/shininess</use>
+				</shininess>
+				<color-mode>
+					<use>material/color-mode</use>
+				</color-mode>
+			</material>
+			<blend>
+				<active>
+					<use>blend/active</use>
+				</active>
+				<source>
+					<use>blend/source</use>
+				</source>
+				<destination>
+					<use>blend/destination</use>
+				</destination>
+			</blend>
+			<shade-model>
+				<use>shade-model</use>
+			</shade-model>
+			<cull-face>
+				<use>cull-face</use>
+			</cull-face>
+			<rendering-hint>
+				<use>rendering-hint</use>
+			</rendering-hint>
+			<texture-unit>
+				<!-- The texture unit is always active because the shaders expect
+             that. -->
+				<unit>0</unit>
+				<!-- If there is a texture, the type in the derived effect
+        will be "2d". -->
+				<type>
+					<use>texture[0]/type</use>
+				</type>
+				<image>
+					<use>texture[0]/image</use>
+				</image>
+				<filter>
+					<use>texture[0]/filter</use>
+				</filter>
+				<wrap-s>
+					<use>texture[0]/wrap-s</use>
+				</wrap-s>
+				<wrap-t>
+					<use>texture[0]/wrap-t</use>
+				</wrap-t>
+				<!--
+        <internal-format>
+          <use>texture[0]/internal-format</use>
+        </internal-format>
+        -->
+			</texture-unit>
+			<vertex-program-two-side>
+				<use>vertex-program-two-side</use>
+			</vertex-program-two-side>
+			<program n="0">
+<!-- 				<vertex-shader n="0">Shaders/include_fog.vert</vertex-shader> -->			<!--fog include-->
+				<vertex-shader n="1">Shaders/default.vert</vertex-shader>
+				<fragment-shader n="0">Shaders/include_fog.frag</fragment-shader>				<!--fog include-->
+				<fragment-shader n="1">Shaders/default.frag</fragment-shader>
+			</program>
+			<!-- 			BEGIN fog include -->
+			<uniform>
+				<name>visibility</name>
+				<type>float</type>
+				<value>
+					<use>visibility</use>
+				</value>
+			</uniform>
+			<uniform>
+				<name>avisibility</name>
+				<type>float</type>
+				<value>
+					<use>avisibility</use>
+				</value>
+			</uniform>
+			<uniform>
+				<name>hazeLayerAltitude</name>
+				<type>float</type>
+				<value>
+					<use>lthickness</use>
+				</value>
+			</uniform>
+			<uniform>
+				<name>scattering</name>
+				<type>float</type>
+				<value>
+					<use>scattering</use>
+				</value>
+			</uniform>
+			<uniform>
+				<name>terminator</name>
+				<type>float</type>
+				<value>
+					<use>terminator</use>
+				</value>
+			</uniform>
+			<uniform>
+				<name>fogType</name>
+				<type>int</type>
+				<value>
+					<use>fogtype</use>
+				</value>
+			</uniform>
+			<!-- 			END fog include -->
+			<uniform>
+				<name>texture</name>
+				<type>sampler-2d</type>
+				<value type="int">0</value>
+			</uniform>
+			<uniform>
+				<name>colorMode</name>
+				<type>int</type>
+				<value>
+					<use>material/color-mode-uniform</use>
+				</value>
+			</uniform>
+		</pass>
+	</technique>
+	<technique n="13">
+		<pass>
+			<lighting>true</lighting>
+			<material>
+				<active>
+					<use>material/active</use>
+				</active>
+				<ambient>
+					<use>material/ambient</use>
+				</ambient>
+				<diffuse>
+					<use>material/diffuse</use>
+				</diffuse>
+				<specular>
+					<use>material/specular</use>
+				</specular>
+				<emissive>
+					<use>material/emissive</use>
+				</emissive>
+				<shininess>
+					<use>material/shininess</use>
+				</shininess>
+				<color-mode>
+					<use>material/color-mode</use>
+				</color-mode>
+			</material>
+			<blend>
+				<active>
+					<use>blend/active</use>
+				</active>
+				<source>
+					<use>blend/source</use>
+				</source>
+				<destination>
+					<use>blend/destination</use>
+				</destination>
+			</blend>
+			<shade-model>
+				<use>shade-model</use>
+			</shade-model>
+			<cull-face>
+				<use>cull-face</use>
+			</cull-face>
+			<rendering-hint>
+				<use>rendering-hint</use>
+			</rendering-hint>
+			<texture-unit>
+				<active>
+					<use>texture[0]/active</use>
+				</active>
+				<unit>0</unit>
+				<image>
+					<use>texture[0]/image</use>
+				</image>
+                <type>
+                    <use>texture[0]/type</use>
+                </type>
+				<filter>
+					<use>texture[0]/filter</use>
+				</filter>
+				<wrap-s>
+					<use>texture[0]/wrap-s</use>
+				</wrap-s>
+				<wrap-t>
+					<use>texture[0]/wrap-t</use>
+				</wrap-t>
+				<!--
+          <internal-format>
+            <use>texture[0]/internal-format</use>
+          </internal-format>
+          -->
+				<environment>
+					<mode>modulate</mode>
+				</environment>
+			</texture-unit>
+			<!-- A two-sided lighting model is set by default near the root
+           of the scene graph. Perhaps that ought to be set in this
+           effect?
+        -->
+		</pass>
+	</technique>
+
+	<!--<generate>
+		<tangent type="int">6</tangent>
+		<binormal type="int">7</binormal>
+	</generate>-->
+</PropertyList>
