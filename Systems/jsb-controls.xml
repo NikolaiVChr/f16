@@ -46,8 +46,8 @@
             </description>
             <default value="0"/>
             <test logic="OR" value="0">
-                velocities/mach lt 0.85
-                velocities/vc-kts lt 400
+                velocities/mach gt 0.85
+                velocities/vc-kts gt 400
             </test>
             <test logic="AND" value="1">
                 /systems/refuel/switch == 1
