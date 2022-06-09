@@ -3790,14 +3790,14 @@ Modifications author: Nikolai V. Chr.
 	<!-- Default rendering -->
 	<technique n="3">
 	  <predicate>
-		<!--and-->
+		<and>
 		  <!--property>/sim/rendering/shaders/quality-level</property-->
 		  <!--property>/sim/rendering/shaders/model</property-->
 
-		  <less-equal>
-			   <property>/sim/rendering/rembrandt/enabled</property>
-			   <value type="float">1.0</value>
-		  </less-equal>
+		  <equal>
+		  		<value type="float">0.0</value>
+			   	<property>/sim/rendering/rembrandt/enabled</property>
+		  </equal>
 		  <or>
 			<less-equal>
 			  <value type="float">2.0</value>
@@ -3810,7 +3810,7 @@ Modifications author: Nikolai V. Chr.
 			  <extension-supported>GL_ARB_fragment_shader</extension-supported>
 			</and>
 		  </or>
-		<!--/and-->
+		</and>
 	  </predicate>
 	  <pass n="0">
 	  	<program n="0">
