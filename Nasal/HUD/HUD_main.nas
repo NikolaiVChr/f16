@@ -2987,10 +2987,16 @@ append(obj.total, obj.speed_curr);
                 }
                 me.ldr = trgt.getLastAZDeviation();
                 if (me.ldr == nil) {
-                    me.solutionCue.hide();
-                    me.ccrpMarker.hide();
-                    me.bombFallLine.hide();
-                    return 0;
+                    me.blepCoord = trgt.getCoord();
+                    if (trgt == armament.contactPoint and me.blepCoord != nil) {
+                        me.blepHeading = radar_system.self.getCoord().course_to(me.blepCoord);
+                        me.ldr = geo.normdeg180(me.blepHeading-radar_system.self.getHeading());
+                    } else {
+                        me.solutionCue.hide();
+                        me.ccrpMarker.hide();
+                        me.bombFallLine.hide();
+                        return 0;
+                    }
                 }
                 me.bombFallLine.setTranslation(me.ldr*me.texelPerDegreeX,0);
                 me.ccrpMarker.setTranslation(me.ldr*me.texelPerDegreeX,0);
