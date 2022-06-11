@@ -2251,8 +2251,9 @@ append(obj.total, obj.speed_curr);
                         hdp.window6_txt = substr(hdp.window6_txt,0,14);
                     }
                 } elsif (armament.contactPoint != nil) {
-                    me.lard = armament.contactPoint.getRangeDirect();
-                    me.laal = armament.contactPoint.getAltitude();
+                    me.lardC = armament.contactPoint.getCoord();
+                    me.lard = radar_system.self.getCoord().direct_distance_to(me.lardC);
+                    me.laal = armament.contactPoint.get_altitude();
 
                     if (me.lard ==nil or me.laal == nil) {
                         me.TA_text = "TA XX";
@@ -2730,6 +2731,7 @@ append(obj.total, obj.speed_curr);
                 var x = me.clamp(xy[0],-me.sx*0.45,me.sx*0.45);
                 #var y = me.clamp(-p*me.texelPerDegreeY+me.sy-me.texels_up_into_hud,me.sy*0.05,me.sy*0.95);
                 #var x = me.clamp(b*me.texelPerDegreeX+me.sx*0.5,me.sx*0.025,me.sx*0.975);
+                #printf("TGP idle: %.2f,%.2f",xy[2],xy[3]);
                 if (y != xy[1] or x != xy[0]) {
                     if (xy[0] != 0 and xy[1] != 0) {
                         var x_scale = me.sx*0.40/math.abs(xy[0]);
@@ -2754,13 +2756,26 @@ append(obj.total, obj.speed_curr);
             } else {
                 var b = geo.normdeg180(getprop("sim/view[105]/heading-offset-deg"));
                 var p = getprop("sim/view[105]/pitch-offset-deg");
+                #printf("TGP stat: %.2f,%.2f",b,p);
+                var behind = 0;
+                if(b < -90) {
+                    b = -180-b;
+                    p = -p;
+                    behind = 1;
+                } elsif (b > 90) {
+                    b = 180-b;
+                    p = -p;
+                    behind = 1;
+                }
+
                 var xy = HudMath.getCenterPosFromDegs(b,p);
-                var y = me.clamp(xy[1],-me.sy*0.40,me.sy*0.40);
                 var x = me.clamp(xy[0],-me.sx*0.45,me.sx*0.45);
-                if (y != xy[1] or x != xy[0]) {
+                var y = me.clamp(xy[1],-me.sy*0.40,me.sy*0.40);
+
+                if (y != xy[1] or x != xy[0] or behind) {
                     if (xy[0] != 0 and xy[1] != 0) {
-                        var x_scale = me.sx*0.40/math.abs(xy[0]);
-                        var y_scale = me.sy*0.45/math.abs(xy[1]);
+                        var x_scale = me.sx*0.45/math.abs(xy[0]);
+                        var y_scale = me.sy*0.40/math.abs(xy[1]);
                         if (x_scale < y_scale) {
                             x = xy[0] * x_scale;
                             y = xy[1] * x_scale;
@@ -2999,7 +3014,7 @@ append(obj.total, obj.speed_curr);
                 }
                 me.ldr = trgt.getLastAZDeviation();
                 if (me.ldr == nil) {
-                    me.blepCoord = trgt.getCoord();
+                    me.blepCoord = trgt.get_Coord();
                     if (trgt == armament.contactPoint and me.blepCoord != nil) {
                         me.blepHeading = radar_system.self.getCoord().course_to(me.blepCoord);
                         me.ldr = geo.normdeg180(me.blepHeading-radar_system.self.getHeading());
