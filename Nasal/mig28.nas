@@ -125,17 +125,17 @@ var TopGun = {
 		if (me.blufor) {
 			screen.log.write(me.callsign~": Hey, I'll be your wingman.", 0.0, 1.0, 0.0);
 		} else {
-			if (me.callsign == "1Lt.Elmo") {
+			if (me.callsign == "1Lt.Slice") {
 				screen.log.write(me.callsign~": I will go easy on you, try to stay on my six. Have fun.", 1.0, 1.0, 0.0);
 			} elsif (me.callsign == "Cpt.Wild") {
-				screen.log.write(me.callsign~": Nice weather for a fair fight, lets go.", 1.0, 1.0, 0.0);
-			} elsif (me.callsign == "Maj.RED") {
-				screen.log.write(me.callsign~": Lets do this, don't make any mistakes.", 1.0, 1.0, 0.0);
+				screen.log.write(me.callsign~": Nice weather for a fair fight, let's go.", 1.0, 1.0, 0.0);
+			} elsif (me.callsign == "Maj.Fuel") {
+				screen.log.write(me.callsign~": Let's do this, don't make any mistakes.", 1.0, 1.0, 0.0);
 			} elsif (me.callsign == "Maj.SWAT") {
-				screen.log.write(me.callsign~": Fight is on!", 1.0, 1.0, 0.0);
-			} elsif (me.callsign == "Col.Snuff") {
-				screen.log.write(me.callsign~": This is the end-game..", 1.0, 1.0, 0.0);
-			} elsif (me.callsign == "Cpt.Bloody") {
+				screen.log.write(me.callsign~": Fight's on!", 1.0, 1.0, 0.0);
+			} elsif (me.callsign == "LtCol.Snuff") {
+				screen.log.write(me.callsign~": This is the end-game...", 1.0, 1.0, 0.0);
+			} elsif (me.callsign == "Cpt.Guts") {
 				screen.log.write(me.callsign~": Lets do this.", 1.0, 1.0, 0.0);
 			}
 		}
