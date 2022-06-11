@@ -2250,6 +2250,18 @@ append(obj.total, obj.speed_curr);
                     if (size(hdp.window6_txt)>14) {
                         hdp.window6_txt = substr(hdp.window6_txt,0,14);
                     }
+                } elsif (armament.contactPoint != nil) {
+                    me.lard = armament.contactPoint.getRangeDirect();
+                    me.laal = armament.contactPoint.getAltitude();
+
+                    if (me.lard ==nil or me.laal == nil) {
+                        me.TA_text = "TA XX";
+                        hdp.window3_txt = "FXXX.X";#slant range
+                    } else {
+                        me.TA_text = sprintf("TA%3d", me.laal*0.001);
+                        hdp.window3_txt = sprintf("F%05.1f", me.lard*M2NM);#slant range
+                    }
+                    hdp.window6_txt = "";
                 } else {
                     hdp.window3_txt = "";
                     hdp.window6_txt = "";
