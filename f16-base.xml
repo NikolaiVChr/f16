@@ -13,6 +13,9 @@
             <radius-m type="double">10.0</radius-m>
             <parkpos-offset-m type="double">0.0</parkpos-offset-m>
         </dimensions>
+        <version>
+            <compositor-support type="bool">false</compositor-support>
+        </version>
         <aircraft-class type="string">mil-fighter</aircraft-class>
         <aircraft-operator />
         <aircraft-data>
