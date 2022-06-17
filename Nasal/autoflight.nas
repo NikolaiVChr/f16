@@ -99,8 +99,8 @@ var aTF_execute = func {
 	var target = getprop ("/instrumentation/altimeter/mode-c-alt-ft");
     target = 100 * int (target / 100 + 0.5);
     setprop ("/autopilot/settings/target-altitude-ft", target);
-    setprop ("/autopilot/settings/target-tf-altitude-ft", getprop("instrumentation/tfs/ground-altitude-ft")+getprop ("/autopilot/settings/minimums"));
-    #print("TF sending info to A/P: "~(getprop("instrumentation/tfs/ground-altitude-ft")+getprop ("/autopilot/settings/minimums")));
+    setprop ("/autopilot/settings/target-tf-altitude-ft", getprop("instrumentation/tfs/ground-altitude-ft")+getprop ("/autopilot/settings/tf-minimums"));
+    #print("TF sending info to A/P: "~(getprop("instrumentation/tfs/ground-altitude-ft")+getprop ("/autopilot/settings/tf-minimums")));
 };
 
 props.globals.getNode("instrumentation/tfs/malfunction", 1).setBoolValue(0);
@@ -112,5 +112,5 @@ props.globals.getNode("instrumentation/tfs/ground-altitude-ft",1).setDoubleValue
 #screen.property_display.add("instrumentation/tfs/malfunction");
 #screen.property_display.add("instrumentation/tfs/ground-altitude-ft");
 #screen.property_display.add("autopilot/settings/target-tf-altitude-ft");
-#screen.property_display.add("autopilot/settings/minimums");
+#screen.property_display.add("autopilot/settings/tf-minimums");
 #screen.property_display.add("fdm/jsbsim/autoflight/pitch/alt/error-tf");
