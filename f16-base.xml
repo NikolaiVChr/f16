@@ -3,6 +3,7 @@
     <autopilot>
         <settings>
             <icao-aircraft-category type="string">D</icao-aircraft-category>
+            <target-tf-altitude-ft type="double">20000.0</target-tf-altitude-ft>
         </settings>
     </autopilot>
     <sim>
@@ -1668,6 +1669,9 @@
             <file>Aircraft/f16/Nasal/radar/radar-system.nas</file>
             <file>Aircraft/f16/Nasal/radar/apg-68.nas</file>
         </radar_system>
+        <terr_foll>
+            <file>Aircraft/f16/Nasal/terrain_follow.nas</file>
+        </terr_foll>
     </nasal>
 
 

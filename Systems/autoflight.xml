@@ -4,16 +4,16 @@
 <!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
 <system name="F-16: Autoflight">
-	
+
 	<channel name="Autoflight: Interface"> <!-- For differences in block versions -->
-		
+
 		<switch name="autoflight/switch-roll-min"> <!-- Allow STRG SEL on Block 20+ only -->
 			<default value="-1"/>
 			<test value="0">
 				/sim/variant-id lt 4
 			</test>
 		</switch>
-		
+
 		<switch name="autoflight/switch-roll">
 			<default value="/f16/fcs/switch-roll-block20"/>
 			<test value="/f16/fcs/switch-roll-block15">
@@ -24,7 +24,7 @@
 				<max>1</max>
 			</clipto>
 		</switch>
-		
+
 		<switch name="autoflight/switch-pitch"> <!-- /f16/fcs/autopilot-on is ignored on Block 20+ -->
 			<default value="0"/>
 			<test logic="AND" value="/f16/fcs/switch-pitch-block20">
@@ -44,11 +44,11 @@
 				/f16/fcs/switch-pitch-block15 eq 1
 			</test>
 		</switch>
-	
+
 	</channel>
-	
+
 	<channel name="Autoflight: Logic">
-		
+
 		<switch name="position/wow">
 			<default value="0"/>
 			<test logic="OR" value="1">
@@ -57,7 +57,7 @@
 				gear/unit[2]/WOW eq 1
 			</test>
 		</switch>
-		
+
 		<switch name="autoflight/can-engage">
 			<default value="1"/>
 			<test logic="OR" value="0"> <!-- Add conditions where AP fails here -->
@@ -69,7 +69,7 @@
 				elec/bus/emergency-dc-2 lt 20
 			</test>
 		</switch>
-		
+
 		<fcs_function name="autoflight/ss/delay">
 			<function>
 				<table>
@@ -82,22 +82,22 @@
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<lag_filter name="autoflight/ss/roll-input">
 			<input>fcs/fly-by-wire/roll/stick-force-lbf</input>
 			<c1>25.6</c1>
 		</lag_filter>
-		
+
 		<lag_filter name="autoflight/ss/pitch-input">
 			<input>fcs/fly-by-wire/pitch/stick-force-lbf</input>
 			<c1>25.6</c1>
 		</lag_filter>
-		
+
 		<lag_filter name="autoflight/ss/yaw-input">
 			<input>fcs/fly-by-wire/yaw/pedal-force-lbf</input>
 			<c1>25.6</c1>
 		</lag_filter>
-		
+
 		<switch name="autoflight/ss/force">
 			<default value="0"/>
 			<test logic="OR" value="1">
@@ -109,26 +109,26 @@
 				autoflight/ss/yaw-input lt -8
 			</test>
 		</switch>
-		
+
 		<switch name="autoflight/ss/reset-time">
 			<default value="/sim/time/elapsed-sec"/>
 			<test value="autoflight/ss/reset-time">
 				autoflight/ss/force eq 0
 			</test>
 		</switch>
-		
+
 		<summer name="autoflight/ss/reset-time-delay">
 			<input>autoflight/ss/reset-time</input>
 			<input>autoflight/ss/delay</input>
 		</summer>
-		
+
 		<switch name="autoflight/ss/active">
 			<default value="0"/>
 			<test value="1">
 				/sim/time/elapsed-sec lt autoflight/ss/reset-time-delay
 			</test>
 		</switch>
-		
+
 		<switch name="autoflight/output/roll-master">
 			<default value="0"/>
 			<test logic="AND" value="1"> <!-- autoflight/switch-pitch is not a typo -->
@@ -138,7 +138,7 @@
 				position/wow eq 0
 			</test>
 		</switch>
-		
+
 		<switch name="autoflight/output/pitch-master">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -148,11 +148,11 @@
 				position/wow eq 0
 			</test>
 		</switch>
-	
+
 	</channel>
-	
+
 	<channel name="Autoflight: Drivers">
-		
+
 		<!-- Bank Limit Stuff -->
 		<fcs_function name="autoflight/roll/max-bank-deg">
 			<function>
@@ -165,7 +165,7 @@
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="autoflight/roll/max-bank-deg-trigger">
 			<function>
 				<table>
@@ -177,17 +177,17 @@
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<pure_gain name="autoflight/roll/min-bank-deg-trigger">
 			<input>autoflight/roll/max-bank-deg-trigger</input>
 			<gain>-1.0</gain>
 		</pure_gain>
-		
+
 		<pure_gain name="autoflight/roll/max-bank-rad">
 			<input>autoflight/roll/max-bank-deg</input>
 			<gain>0.0174533</gain> <!-- DEG to RAD -->
 		</pure_gain>
-		
+
 		<!-- HDG SEL / STRG SEL -->
 		<fcs_function name="autoflight/roll/heading/hold-target">
 			<function>
@@ -199,7 +199,7 @@
 				</integer>
 			</function>
 		</fcs_function>
-		
+
 		<switch name="autoflight/roll/gain-switch">
 			<default value="1"/>
 			<test logic="AND" value="0">
@@ -207,14 +207,14 @@
 				autoflight/switch-roll ne 0
 			</test>
 		</switch>
-		
+
 		<fcs_function name="autoflight/roll/heading/gain">
 			<function>
 				<table>
 					<independentVar lookup="row">velocities/vc-kts</independentVar>
 					<independentVar lookup="column">autoflight/roll/gain-switch</independentVar>
 					<tableData>
-						     0    1  
+						     0    1
 						200  2.5  0.0
 						600  5.0  0.0
 						950  7.0  0.0
@@ -222,7 +222,7 @@
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<pure_gain name="autoflight/roll/heading/target-roll-deg">
 			<input>autoflight/roll/heading-error-deg</input>
 			<gain>autoflight/roll/heading/gain</gain>
@@ -231,7 +231,7 @@
 				<max>autoflight/roll/max-bank-deg</max>
 			</clipto>
 		</pure_gain>
-		
+
 		<!-- ALT HOLD --> <!-- Note to self: Due to FBW's annoying downward limit of 0.5, we have do some ungood stuff to make it work -->
 		<fcs_function name="autoflight/pitch/alt/predicted-gain">
 			<function>
@@ -244,7 +244,7 @@
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="autoflight/pitch/alt/predicted">
 			<function>
 				<sum>
@@ -259,7 +259,7 @@
 				</sum>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="autoflight/pitch/alt/target">
 			<function>
 				<product>
@@ -293,12 +293,24 @@
 				<max>70000</max>
 			</clipto>
 		</fcs_function>
-		
-		<summer name="autoflight/pitch/alt/error">
+
+		<summer name="autoflight/pitch/alt/error-non-tf">
 			<input>/instrumentation/altimeter/indicated-altitude-ft</input>
 			<input>-autoflight/pitch/alt/target</input>
 		</summer>
-		
+
+		<summer name="autoflight/pitch/alt/error-tf">
+			<input>/position/altitude-agl-ft</input>
+			<input>-/autopilot/settings/target-tf-altitude-ft</input>
+		</summer>
+
+		<switch name="autoflight/pitch/alt/error">
+			<default value="autoflight/pitch/alt/error-non-tf"/>
+			<test logic="AND" value="autoflight/pitch/alt/error-tf">
+				/f16/fcs/adv-mode == 1
+			</test>
+		</switch>
+
 		<pure_gain name="autoflight/pitch/vs/target">
 			<input>autoflight/pitch/alt/error</input>
 			<gain>-7</gain>
@@ -307,11 +319,11 @@
 				<max>3000</max>
 			</clipto>
 		</pure_gain>
-	
+
 	</channel>
-	
+
 	<channel name="Autoflight: Roll Channel">
-		
+
 		<switch name="autoflight/roll/att-hold-active">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -319,7 +331,7 @@
 				autoflight/switch-roll eq 0
 			</test>
 		</switch>
-		
+
 		<switch name="autoflight/roll/att-hold-switch">
 			<default value="autoflight/roll/att-hold-switch"/>
 			<test logic="OR" value="0">
@@ -331,7 +343,7 @@
 				velocities/p-rad_sec lt 0.0174533
 			</test>
 		</switch>
-		
+
 		<fcs_function name="autoflight/roll/roll-hold-target">
 			<function>
 				<ifthen>
@@ -354,7 +366,7 @@
 				<max>autoflight/roll/max-bank-rad</max>
 			</clipto>
 		</fcs_function>
-		
+
 		<switch name="autoflight/roll/target-roll-deg">
 			<default value="/orientation/roll-deg"/>
 			<test logic="AND" value="autoflight/roll/heading/target-roll-deg">
@@ -362,7 +374,7 @@
 				autoflight/switch-roll ne 0
 			</test>
 		</switch>
-		
+
 		<fcs_function name="autoflight/roll/roll-cmd-target">
 			<function>
 				<ifthen>
@@ -383,7 +395,7 @@
 				</ifthen>
 			</function>
 		</fcs_function>
-		
+
 		<switch name="autoflight/roll/roll-rad-input">
 			<default value="attitude/roll-rad"/>
 			<test logic="AND" value="autoflight/roll/roll-cmd-target">
@@ -398,12 +410,12 @@
 				<max>1.0472</max>
 			</clipto>
 		</switch>
-		
+
 		<summer name="autoflight/roll/roll-rad-error">
 			<input>attitude/roll-rad</input>
 			<input>-autoflight/roll/roll-rad-input</input>
 		</summer>
-		
+
 		<pure_gain name="autoflight/roll/roll-rate-p"> <!-- Calculate optimum roll rate -->
 			<input>autoflight/roll/roll-rad-error</input>
 			<gain>-2.5</gain>
@@ -412,7 +424,7 @@
 				<max>0.349066</max>
 			</clipto>
 		</pure_gain>
-		
+
 		<fcs_function name="autoflight/roll/p-rad_sec">
 			<function>
 				<toradians>
@@ -420,7 +432,7 @@
 				</toradians>
 			</function>
 		</fcs_function>
-		
+
 		<summer name="autoflight/roll/roll-rate-error">
 			<input>autoflight/roll/p-rad_sec</input>
 			<input>-autoflight/roll/roll-rate-p</input>
@@ -429,7 +441,7 @@
 				<max>0.349066</max>
 			</clipto>
 		</summer>
-		
+
 		<fcs_function name="autoflight/roll/p-gain-att">
 			<function>
 				<table>
@@ -443,7 +455,7 @@
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="autoflight/roll/i-gain-att">
 			<function>
 				<table>
@@ -457,7 +469,7 @@
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="autoflight/roll/d-gain-att">
 			<function>
 				<table>
@@ -471,28 +483,28 @@
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<switch name="autoflight/roll/p-gain">
 			<default value="0"/>
 			<test logic="AND" value="autoflight/roll/p-gain-att">
 				autoflight/output/roll-master eq 1
 			</test>
 		</switch>
-		
-		<switch name="autoflight/roll/i-gain"> 
+
+		<switch name="autoflight/roll/i-gain">
 			<default value="0"/>
 			<test logic="AND" value="autoflight/roll/i-gain-att">
 				autoflight/output/roll-master eq 1
 			</test>
 		</switch>
-		
+
 		<switch name="autoflight/roll/d-gain">
 			<default value="0"/>
 			<test logic="AND" value="autoflight/roll/d-gain-att">
 				autoflight/output/roll-master eq 1
 			</test>
 		</switch>
-		
+
 		<switch name="autoflight/roll/trigger">
 			<default value="0"/>
 			<test value="-1">
@@ -503,7 +515,7 @@
 				autoflight/roll/master-pid ge 0.348556
 			</test>
 		</switch>
-		
+
 		<pid name="autoflight/roll/master-pid-v"> <!-- Drive the FBW Rate to acheive optimum roll rate -->
 			<input>autoflight/roll/roll-rate-error</input> <!-- Using PID because 0 rate-demand doesn't always equal 0 roll rate in the F-16 -->
 			<kp>autoflight/roll/p-gain</kp>
@@ -516,7 +528,7 @@
 				<max>0.349066</max>
 			</clipto>
 		</pid>
-		
+
 		<fcs_function name="autoflight/roll/roll-rate-deg">
 			<function>
 				<todegrees>
@@ -524,7 +536,7 @@
 				</todegrees>
 			</function>
 		</fcs_function>
-		
+
 		<switch name="autoflight/roll/roll-rate-demand">
 			<default value="0"/>
 			<test logic="AND" value="autoflight/roll/roll-rate-deg">
@@ -535,11 +547,11 @@
 				<max>20</max>
 			</clipto>
 		</switch>
-	
+
 	</channel>
-	
+
 	<channel name="Autoflight: Pitch Channel">
-		
+
 		<switch name="autoflight/pitch/att-hold-active">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -547,7 +559,7 @@
 				autoflight/switch-pitch eq -1
 			</test>
 		</switch>
-		
+
 		<switch name="autoflight/pitch/att-hold-switch">
 			<default value="autoflight/pitch/att-hold-switch"/>
 			<test logic="OR" value="0">
@@ -559,7 +571,7 @@
 				velocities/q-rad_sec lt 0.0174533
 			</test>
 		</switch>
-		
+
 		<fcs_function name="autoflight/pitch/pitch-hold-target">
 			<function>
 				<ifthen>
@@ -578,7 +590,7 @@
 				</ifthen>
 			</function>
 		</fcs_function>
-		
+
 		<switch name="autoflight/pitch/target-pitch-deg">
 			<default value="/orientation/pitch-deg"/>
 			<test logic="AND" value="autoflight/pitch/vs/pid">
@@ -586,7 +598,7 @@
 				autoflight/switch-pitch eq 1
 			</test>
 		</switch>
-		
+
 		<fcs_function name="autoflight/pitch/pitch-cmd-target">
 			<function>
 				<ifthen>
@@ -607,7 +619,7 @@
 				</ifthen>
 			</function>
 		</fcs_function>
-		
+
 		<switch name="autoflight/pitch/pitch-rad-input">
 			<default value="attitude/pitch-rad"/>
 			<test logic="AND" value="autoflight/pitch/pitch-cmd-target">
@@ -622,12 +634,12 @@
 				<max>1.0472</max>
 			</clipto>
 		</switch>
-		
+
 		<summer name="autoflight/pitch/pitch-rad-error">
 			<input>attitude/pitch-rad</input>
 			<input>-autoflight/pitch/pitch-rad-input</input>
 		</summer>
-		
+
 		<pure_gain name="autoflight/pitch/pitch-rate-p"> <!-- Calculate optimum pitch rate -->
 			<input>autoflight/pitch/pitch-rad-error</input>
 			<gain>-1.5</gain>
@@ -636,7 +648,7 @@
 				<max>0.174533</max>
 			</clipto>
 		</pure_gain>
-		
+
 		<fcs_function name="autoflight/pitch/thetadot-rad_sec">
 			<function>
 				<toradians>
@@ -644,7 +656,7 @@
 				</toradians>
 			</function>
 		</fcs_function>
-		
+
 		<summer name="autoflight/pitch/pitch-rate-error">
 			<input>autoflight/pitch/thetadot-rad_sec</input>
 			<input>-autoflight/pitch/pitch-rate-p</input>
@@ -653,30 +665,30 @@
 				<max>0.174533</max>
 			</clipto>
 		</summer>
-		
+
 		<!-- P and I probably need to be scheduled to make it more precise, but that causes problems right now with FBW, for now set by f16-base.xml -->
 		<!--fcs_function name="autoflight/pitch/p-gain-att">
 			<function>
 				<table>
 					<independentVar lookup="row">velocities/vc-kts</independentVar>
 					<tableData>
-						
+
 					</tableData>
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="autoflight/pitch/i-gain-att">
 			<function>
 				<table>
 					<independentVar lookup="row">velocities/vc-kts</independentVar>
 					<tableData>
-						
+
 					</tableData>
 				</table>
 			</function>
 		</fcs_function-->
-		
+
 		<fcs_function name="autoflight/pitch/d-gain-att">
 			<function>
 				<table>
@@ -690,28 +702,28 @@
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<switch name="autoflight/pitch/p-gain">
 			<default value="0"/>
 			<test logic="AND" value="autoflight/pitch/p-gain-att">
 				autoflight/output/pitch-master eq 1
 			</test>
 		</switch>
-		
-		<switch name="autoflight/pitch/i-gain"> 
+
+		<switch name="autoflight/pitch/i-gain">
 			<default value="0"/>
 			<test logic="AND" value="autoflight/pitch/i-gain-att">
 				autoflight/output/pitch-master eq 1
 			</test>
 		</switch>
-		
+
 		<switch name="autoflight/pitch/d-gain">
 			<default value="0"/>
 			<test logic="AND" value="autoflight/pitch/d-gain-att">
 				autoflight/output/pitch-master eq 1
 			</test>
 		</switch>
-		
+
 		<switch name="autoflight/pitch/trigger">
 			<default value="0"/>
 			<test logic="OR" value="-1">
@@ -722,7 +734,7 @@
 				autoflight/pitch/master-pid ge 0.999
 			</test>
 		</switch>
-		
+
 		<pid name="autoflight/pitch/master-pid-v"> <!-- Drive the FBW G to null pitch error -->
 			<input>autoflight/pitch/pitch-rate-error</input>
 			<kp>autoflight/pitch/p-gain</kp>
@@ -735,7 +747,7 @@
 				<max>1.0</max> <!-- 2.0 G -->
 			</clipto>
 		</pid>
-		
+
 		<fcs_function name="autoflight/pitch/g-demand"> <!-- Offset the G demand for rolling, better then integrating -->
 			<function>
 				<sum>
@@ -754,7 +766,7 @@
 				<max>1.0</max> <!-- 2.0 G -->
 			</clipto>
 		</fcs_function>
-		
+
 		<switch name="autoflight/pitch/g-demand-switched">
 			<default value="0"/>
 			<test logic="AND" value="autoflight/pitch/g-demand">
@@ -765,7 +777,7 @@
 				<max>1.0</max> <!-- 2.0 G -->
 			</clipto>
 		</switch>
-	
+
 	</channel>
 
 </system>

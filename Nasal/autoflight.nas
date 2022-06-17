@@ -8,7 +8,7 @@ var apLoop = maketimer(1, func {
 	if (getprop("/autopilot/route-manager/route/num") > 0 and getprop("/autopilot/route-manager/active") == 1 and getprop("f16/avionics/power-mmc") and getprop("/autopilot/route-manager/current-wp") != -1) {
 		if ((getprop("/autopilot/route-manager/current-wp") + 1) < getprop("/autopilot/route-manager/route/num")) {
 			var gnds_kt = getprop("/velocities/groundspeed-kt");
-			var max_wp   = getprop("/autopilot/route-manager/route/num"); 
+			var max_wp   = getprop("/autopilot/route-manager/route/num");
 			var current_course = getprop("/autopilot/route-manager/wp/true-bearing-deg");
 			var wp_fly_to = getprop("/autopilot/route-manager/current-wp") + 1;
 			if (wp_fly_to < 0) {
@@ -31,7 +31,7 @@ var apLoop = maketimer(1, func {
 			}
 
 			setprop("/autopilot/route-manager/advance", turn_dist_nm);
-			
+
 			if (getprop("/autopilot/route-manager/wp/dist") <= turn_dist_nm) {
 				setprop("/autopilot/route-manager/current-wp", getprop("/autopilot/route-manager/current-wp") + 1);
 			}
@@ -39,7 +39,78 @@ var apLoop = maketimer(1, func {
 	}
 });
 
+var apLoopHalf = maketimer(0.5, func {
+	# Terrain follow loop
+	var ready = ready_for_TF();
+	if (!ready) {
+		setprop("f16/fcs/adv-mode", 0);
+		setprop("f16/fcs/stby-mode", 0);
+		return;
+	}
+	if (getprop("instrumentation/tfs/malfunction")) {
+		setprop("f16/fcs/adv-mode", 0);
+		setprop("f16/fcs/stby-mode", ready);
+		print("TF failed");
+		return;
+	}
+	if(getprop("f16/fcs/adv-mode-sel") and !getprop("instrumentation/tfs/malfunction") and ready) {
+        call(terr_foll.tfs_radar,nil,nil,nil, var myErr= []);
+        if(size(myErr)) {
+          	foreach(var i ; myErr) {
+            	print(i);
+        	}
+        	setprop("f16/fcs/adv-mode", 0);
+			setprop("f16/fcs/stby-mode", 1);
+        } else {
+        	aTF_execute();
+        	setprop("f16/fcs/adv-mode", 1);
+        	setprop("f16/fcs/stby-mode", 0);
+        }
+    } else {
+    	setprop("f16/fcs/adv-mode", 0);
+    	setprop("f16/fcs/stby-mode", 1);
+    }
+});
+
 var start = setlistener("/sim/signals/fdm-initialized", func {
 	apLoop.start();
+	apLoopHalf.start();
+	setprop("f16/fcs/adv-mode-sel", 0);
 	removelistener(start);
 });
+
+var ready_for_TF = func {
+	# TODO: check that the TGP is of type LANTIRN
+	return getprop("f16/stores/tgp-mounted") and getprop("f16/stores/nav-mounted") and getprop("sim/variant-id") == 4 and getprop("f16/avionics/power-left-hdpt") and getprop("f16/avionics/power-right-hdpt-warm") >= 1;
+};
+
+var aTF_listen = setlistener("f16/fcs/adv-mode-sel", func {
+	if (getprop("f16/fcs/adv-mode-sel") == 1) {
+		print("TF started");
+		aTF_execute();
+	}
+});
+
+var aTF_execute = func {
+	# Terrain follow starting
+	var target = getprop ("/instrumentation/altimeter/mode-c-alt-ft");
+    target = 100 * int (target / 100 + 0.5);
+    setprop ("/autopilot/settings/target-altitude-ft", target);
+    setprop ("/autopilot/settings/target-tf-altitude-ft", getprop("instrumentation/tfs/ground-altitude-ft")+getprop ("/autopilot/settings/minimums"));
+    setprop ("/autopilot/settings/minimums", 200);
+    #print("TF sending info to A/P: "~(getprop("instrumentation/tfs/ground-altitude-ft")+getprop ("/autopilot/settings/minimums")));
+};
+
+props.globals.getNode("instrumentation/tfs/malfunction", 1).setBoolValue(0);
+props.globals.getNode("instrumentation/tfs/ground-altitude-ft",1).setDoubleValue(0);
+#props.globals.getNode("autopilot/settings/target-tf-altitude-ft").setDoubleValue(20000);
+props.globals.getNode("autopilot/settings/minimums",1).setDoubleValue(200);
+
+#screen.property_display.add("f16/fcs/adv-mode-sel");
+#screen.property_display.add("f16/fcs/adv-mode");
+#screen.property_display.add("f16/fcs/stby-mode");
+#screen.property_display.add("instrumentation/tfs/malfunction");
+#screen.property_display.add("instrumentation/tfs/ground-altitude-ft");
+#screen.property_display.add("autopilot/settings/target-tf-altitude-ft");
+#screen.property_display.add("autopilot/settings/minimums");
+#screen.property_display.add("fdm/jsbsim/autoflight/pitch/alt/error-tf");
