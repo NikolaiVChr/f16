@@ -75,7 +75,7 @@ var tfs_radar_calculation = func(delay_sec) {
 
 
     var speed_kt  = getprop("velocities/groundspeed-kt");
-    var range_m   = (speed_kt * 1852 / 3600) * delay_sec;
+    var range_m   = (speed_kt * NM2M / 3600) * delay_sec;
 
     var speed_east_fps = getprop("velocities/speed-east-fps");
     var speed_north_fps = getprop("velocities/speed-north-fps");
@@ -126,7 +126,8 @@ var tfs_radar_calculation = func(delay_sec) {
 
 
     if((target_altitude_m == nil)
-        or (altitude_m - target_altitude_m > 2000))
+        #or (altitude_m - target_altitude_m > 2000) commented by Nikolai
+        )
     {
       return TF_malfunction();
     }
@@ -141,9 +142,9 @@ var tfs_radar_calculation = func(delay_sec) {
         #print("highest_altitude : " ~ Mylittlealt);
         setprop("instrumentation/tfs/malfunction", 0);
 
-        #Same code, 6 meters left
+        #Same code, 6 meters left CHanged to 20m by Nikolai
         current_pos = geo.aircraft_position();
-        current_pos.apply_course_distance (hdg_deg-90, 6);
+        current_pos.apply_course_distance (hdg_deg-90, 20);
         My_pos.set_latlon(current_pos.lat(), current_pos.lon(), geo.elevation(current_pos.lat(), current_pos.lon())+1);
         target_pos = current_pos.apply_course_distance (hdg_deg, range_m);
         target_pos.set_alt(geo.elevation (target_pos.lat(), target_pos.lon())+1);
@@ -151,7 +152,7 @@ var tfs_radar_calculation = func(delay_sec) {
 
         #Same code, 6 meters right
         current_pos = geo.aircraft_position();
-        current_pos.apply_course_distance (hdg_deg+90, 6);
+        current_pos.apply_course_distance (hdg_deg+90, 20);
         My_pos.set_latlon(current_pos.lat(), current_pos.lon(), geo.elevation(current_pos.lat(), current_pos.lon())+1);
         target_pos = current_pos.apply_course_distance (hdg_deg, range_m);
         target_pos.set_alt(geo.elevation (target_pos.lat(), target_pos.lon())+1);

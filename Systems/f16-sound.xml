@@ -3832,6 +3832,24 @@
                             </less-than>
                         </or>
                     </and>
+                    <and><!-- A/P TF Malfunction -->
+                        <equals>
+                          <property>instrumentation/tfs/malfunction</property>
+                          <value>1</value>
+                        </equals>
+                        <equals>
+                          <property>fdm/jsbsim/autoflight/output/pitch-master</property>
+                          <value>1</value>
+                        </equals>
+                        <equals>
+                          <property>fdm/jsbsim/autoflight/switch-pitch</property>
+                          <value>1</value>
+                        </equals>
+                        <equals>
+                          <property>f16/fcs/adv-mode-sel</property>
+                          <value>1</value>
+                        </equals>
+                    </and>
                 </or>
                 <greater-than>
                   <property>fdm/jsbsim/elec/bus/batt-1</property>

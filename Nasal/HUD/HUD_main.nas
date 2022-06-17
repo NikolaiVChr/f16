@@ -1771,6 +1771,9 @@ append(obj.total, obj.speed_curr);
                                                  } elsif (hdp.warn == 1 and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
                                                          obj.flyup.setText("WARN");
                                                          obj.flyup.show();
+                                                 } elsif (getprop("f16/fcs/adv-mode-sel") and getprop("instrumentation/tfs/malfunction") and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
+                                                         obj.flyup.setText("WARN");
+                                                         obj.flyup.show();
                                                  } elsif (hdp.bingo == 1 and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
                                                          obj.flyup.setText("FUEL");
                                                          obj.flyup.show();

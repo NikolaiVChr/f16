@@ -45,6 +45,7 @@ var apLoopHalf = maketimer(0.5, func {
 	if (!ready) {
 		setprop("f16/fcs/adv-mode", 0);
 		setprop("f16/fcs/stby-mode", 0);
+		setprop("instrumentation/tfs/malfunction", 0);
 		return;
 	}
 	if (getprop("instrumentation/tfs/malfunction")) {
@@ -88,6 +89,8 @@ var aTF_listen = setlistener("f16/fcs/adv-mode-sel", func {
 	if (getprop("f16/fcs/adv-mode-sel") == 1) {
 		print("TF started");
 		aTF_execute();
+	} else {
+		setprop("instrumentation/tfs/malfunction", 0);
 	}
 });
 
@@ -97,14 +100,11 @@ var aTF_execute = func {
     target = 100 * int (target / 100 + 0.5);
     setprop ("/autopilot/settings/target-altitude-ft", target);
     setprop ("/autopilot/settings/target-tf-altitude-ft", getprop("instrumentation/tfs/ground-altitude-ft")+getprop ("/autopilot/settings/minimums"));
-    setprop ("/autopilot/settings/minimums", 200);
     #print("TF sending info to A/P: "~(getprop("instrumentation/tfs/ground-altitude-ft")+getprop ("/autopilot/settings/minimums")));
 };
 
 props.globals.getNode("instrumentation/tfs/malfunction", 1).setBoolValue(0);
-props.globals.getNode("instrumentation/tfs/ground-altitude-ft",1).setDoubleValue(0);
-#props.globals.getNode("autopilot/settings/target-tf-altitude-ft").setDoubleValue(20000);
-props.globals.getNode("autopilot/settings/minimums",1).setDoubleValue(200);
+props.globals.getNode("instrumentation/tfs/ground-altitude-ft",1).setDoubleValue(20000);
 
 #screen.property_display.add("f16/fcs/adv-mode-sel");
 #screen.property_display.add("f16/fcs/adv-mode");
