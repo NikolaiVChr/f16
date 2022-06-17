@@ -81,7 +81,7 @@ var start = setlistener("/sim/signals/fdm-initialized", func {
 
 var ready_for_TF = func {
 	# TODO: check that the TGP is of type LANTIRN
-	return getprop("f16/stores/tgp-mounted") and getprop("f16/stores/nav-mounted") and getprop("sim/variant-id") == 4 and getprop("f16/avionics/power-left-hdpt") and getprop("f16/avionics/power-right-hdpt-warm") >= 1;
+	return getprop("/fdm/jsbsim/autoflight/output/pitch-master") and getprop("/fdm/jsbsim/autoflight/switch-pitch") == 1 and getprop("f16/stores/tgp-mounted") and getprop("f16/stores/nav-mounted") and getprop("sim/variant-id") == 4 and getprop("f16/avionics/power-left-hdpt") and getprop("f16/avionics/power-right-hdpt-warm") >= 1;
 };
 
 var aTF_listen = setlistener("f16/fcs/adv-mode-sel", func {
