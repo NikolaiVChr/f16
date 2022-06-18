@@ -39,22 +39,51 @@ var apLoop = maketimer(1, func {
 	}
 });
 
+var apLoopDelay = maketimer(3, func {
+	if (getprop("f16/fcs/adv-mode")) {
+		#terr_foll.long_view_avoiding();# set the lookahead time depending on how far from target alt we are
+		var agl = getprop("/position/altitude-agl-ft");
+		var delay = 8;
+		if (agl < 350) {
+			delay = 15;
+		} elsif (agl < 700) {
+			delay = 12;
+		} elsif (agl < 1200) {
+			delay = 10;
+		}
+		setprop("instrumentation/tfs/delay-big-sec",delay);
+	}
+});
+
 var apLoopHalf = maketimer(0.5, func {
 	# Terrain follow loop
+	#print("TF Looping");
 	var ready = ready_for_TF();
+	var half =50;
+	var full = 100;
+	var vs = 3000;
 	if (!ready) {
+		#print("Not ready");
 		setprop("f16/fcs/adv-mode", 0);
 		setprop("f16/fcs/stby-mode", 0);
-		setprop("instrumentation/tfs/malfunction", 0);
+		terr_foll.reset_TF_malfunction();
+		if (getprop("f16/fcs/adv-mode-sel")) {
+			setprop("instrumentation/tfs/aft-not-engaged", 1);
+		}
+		setprop("fdm/jsbsim/autoflight/pitch/alt/full", full);
+    	setprop("fdm/jsbsim/autoflight/pitch/alt/half", half);
+    	setprop("fdm/jsbsim/autoflight/pitch/alt/max-vs", vs);
+    	setprop ("instrumentation/tfs/delay-big-sec", terr_foll.minim_delay);
 		return;
 	}
+	setprop("instrumentation/tfs/aft-not-engaged", 0);
 	if (getprop("instrumentation/tfs/malfunction")) {
 		setprop("f16/fcs/adv-mode", 0);
-		setprop("f16/fcs/stby-mode", ready);
-		print("TF failed");
-		return;
+		setprop("f16/fcs/stby-mode", 1);
+		print("TF failed, will retry");
 	}
 	if(getprop("f16/fcs/adv-mode-sel") and !getprop("instrumentation/tfs/malfunction") and ready) {
+
         call(terr_foll.tfs_radar,nil,nil,nil, var myErr= []);
         if(size(myErr)) {
           	foreach(var i ; myErr) {
@@ -62,55 +91,74 @@ var apLoopHalf = maketimer(0.5, func {
         	}
         	setprop("f16/fcs/adv-mode", 0);
 			setprop("f16/fcs/stby-mode", 1);
+			#print("Error in TF Nasal");
         } else {
-        	aTF_execute();
         	setprop("f16/fcs/adv-mode", 1);
         	setprop("f16/fcs/stby-mode", 0);
+        	full = 5;# the higher the smoother. Max 10. Min 1.
+        	half = full * 0.5;
+        	vs = vs + math.min(3000, 3000*getprop("velocities/groundspeed-kt")/400) * (getprop("instrumentation/radar/time-till-crash") < 15);
+        	#print("TF working");
         }
     } else {
     	setprop("f16/fcs/adv-mode", 0);
     	setprop("f16/fcs/stby-mode", 1);
+    	#print("TF not engaged");
     }
+    setprop("fdm/jsbsim/autoflight/pitch/alt/full", full);
+    setprop("fdm/jsbsim/autoflight/pitch/alt/half", half);
+    setprop("fdm/jsbsim/autoflight/pitch/alt/max-vs", vs);
+    aTF_execute();
 });
 
 var start = setlistener("/sim/signals/fdm-initialized", func {
 	apLoop.start();
 	apLoopHalf.start();
+	apLoopDelay.start();
 	setprop("f16/fcs/adv-mode-sel", 0);
 	removelistener(start);
 });
 
 var ready_for_TF = func {
-	# TODO: check that the TGP is of type LANTIRN
-	return getprop("/fdm/jsbsim/autoflight/output/pitch-master") and getprop("/fdm/jsbsim/autoflight/switch-pitch") == 1 and getprop("f16/stores/tgp-mounted") and getprop("f16/stores/nav-mounted") and getprop("sim/variant-id") == 4 and getprop("f16/avionics/power-left-hdpt") and getprop("f16/avionics/power-right-hdpt-warm") >= 1;
+	return getprop("/fdm/jsbsim/autoflight/output/pitch-master") and getprop("/fdm/jsbsim/autoflight/switch-pitch") == 1 and getprop("f16/stores/nav-mounted") and getprop("f16/avionics/power-left-hdpt");# and getprop("f16/avionics/power-right-hdpt-warm") >= 1  and getprop("f16/stores/tgp-mounted");
 };
 
 var aTF_listen = setlistener("f16/fcs/adv-mode-sel", func {
 	if (getprop("f16/fcs/adv-mode-sel") == 1) {
-		print("TF started");
-		aTF_execute();
+		print("TF requested");
 	} else {
-		setprop("instrumentation/tfs/malfunction", 0);
+		terr_foll.reset_TF_malfunction();
 	}
 });
 
 var aTF_execute = func {
 	# Terrain follow starting
-	var target = getprop ("/instrumentation/altimeter/mode-c-alt-ft");
-    target = 100 * int (target / 100 + 0.5);
-    setprop ("/autopilot/settings/target-altitude-ft", target);
-    setprop ("/autopilot/settings/target-tf-altitude-ft", getprop("instrumentation/tfs/ground-altitude-ft")+getprop ("/autopilot/settings/tf-minimums"));
+	if (!getprop("f16/fcs/adv-mode")) {
+		setprop ("instrumentation/tfs/delay-big-sec", terr_foll.minim_delay);
+		return;
+	}
+	#var target = getprop ("/instrumentation/altimeter/mode-c-alt-ft");
+    #target = 100 * int (target / 100 + 0.5);
+    #setprop ("/autopilot/settings/target-altitude-ft", target);
+    setprop ("/autopilot/settings/target-tf-altitude-ft", getprop("instrumentation/tfs/ground-altitude-ft")+getprop ("/autopilot/settings/tf-minimums")+500);
     #print("TF sending info to A/P: "~(getprop("instrumentation/tfs/ground-altitude-ft")+getprop ("/autopilot/settings/tf-minimums")));
 };
 
 props.globals.getNode("instrumentation/tfs/malfunction", 1).setBoolValue(0);
 props.globals.getNode("instrumentation/tfs/ground-altitude-ft",1).setDoubleValue(20000);
+props.globals.getNode("instrumentation/tfs/aft-not-engaged", 1).setBoolValue(0);
 
-#screen.property_display.add("f16/fcs/adv-mode-sel");
-#screen.property_display.add("f16/fcs/adv-mode");
-#screen.property_display.add("f16/fcs/stby-mode");
-#screen.property_display.add("instrumentation/tfs/malfunction");
-#screen.property_display.add("instrumentation/tfs/ground-altitude-ft");
-#screen.property_display.add("autopilot/settings/target-tf-altitude-ft");
-#screen.property_display.add("autopilot/settings/tf-minimums");
-#screen.property_display.add("fdm/jsbsim/autoflight/pitch/alt/error-tf");
+return;
+
+screen.property_display.add("f16/fcs/adv-mode-sel");
+screen.property_display.add("f16/fcs/adv-mode");
+screen.property_display.add("f16/fcs/stby-mode");
+screen.property_display.add("instrumentation/tfs/aft-not-engaged");
+screen.property_display.add("instrumentation/tfs/malfunction");
+screen.property_display.add("instrumentation/tfs/ground-altitude-ft");
+screen.property_display.add("instrumentation/tfs/delay-big-sec");
+screen.property_display.add("autopilot/settings/target-tf-altitude-ft");
+screen.property_display.add("autopilot/settings/tf-minimums");
+screen.property_display.add("fdm/jsbsim/autoflight/pitch/alt/error-tf");
+screen.property_display.add("fdm/jsbsim/autoflight/pitch/g-demand-switched");
+screen.property_display.add("position/altitude-agl-ft");

@@ -38,7 +38,7 @@ var v = nil;
 var distance_Target = nil;
 var terrain = geo.Coord.new();
 var My_pos = geo.Coord.new();
-var minim_delay = 8;
+var minim_delay = 11;
 var maximum_delay = 15;
 
 
@@ -65,7 +65,7 @@ var long_view_avoiding = func(){
     var delay_sec = math.min(math.max(((diff_future)/140),minim_delay),maximum_delay);
 
     #print("Future Altitude:" ~ myAltitude ~";myAircraft:"~ myAircraft.alt() ~";myAltitude - myAircraft.alt():"~ diff_future ~" delay:"~ delay_sec);
-    getprop("instrumentation/tfs/delay-big-sec",delay_sec)
+    setprop("instrumentation/tfs/delay-big-sec",delay_sec)
 
 }
 
@@ -142,9 +142,9 @@ var tfs_radar_calculation = func(delay_sec) {
         #print("highest_altitude : " ~ Mylittlealt);
         setprop("instrumentation/tfs/malfunction", 0);
 
-        #Same code, 6 meters left CHanged to 20m by Nikolai
+        #Same code, 6 meters left CHanged to 15m by Nikolai
         current_pos = geo.aircraft_position();
-        current_pos.apply_course_distance (hdg_deg-90, 20);
+        current_pos.apply_course_distance (hdg_deg-90, 15);
         My_pos.set_latlon(current_pos.lat(), current_pos.lon(), geo.elevation(current_pos.lat(), current_pos.lon())+1);
         target_pos = current_pos.apply_course_distance (hdg_deg, range_m);
         target_pos.set_alt(geo.elevation (target_pos.lat(), target_pos.lon())+1);
@@ -152,7 +152,7 @@ var tfs_radar_calculation = func(delay_sec) {
 
         #Same code, 6 meters right
         current_pos = geo.aircraft_position();
-        current_pos.apply_course_distance (hdg_deg+90, 20);
+        current_pos.apply_course_distance (hdg_deg+90, 15);
         My_pos.set_latlon(current_pos.lat(), current_pos.lon(), geo.elevation(current_pos.lat(), current_pos.lon())+1);
         target_pos = current_pos.apply_course_distance (hdg_deg, range_m);
         target_pos.set_alt(geo.elevation (target_pos.lat(), target_pos.lon())+1);

@@ -752,6 +752,11 @@
                     <vs>
                         <pid type="double">0</pid>
                     </vs>
+                    <alt>
+                        <half type="double">50</half>
+                        <full type="double">100</full>
+                        <max-vs type="double">3000</max-vs>
+                    </alt>
                 </pitch>
                 <roll>
                     <d-gain-att type="double">0</d-gain-att>

@@ -280,12 +280,12 @@
 									<property>autoflight/pitch/alt/target</property>
 									<property>autoflight/pitch/alt/predicted</property>
 								</ifthen>
-								<value>50</value> <!-- Make the integer rounded correctly -->
+								<p>autoflight/pitch/alt/half</p> <!-- Make the integer rounded correctly -->
 							</sum>
-							<value>100</value>
+							<p>autoflight/pitch/alt/full</p>
 						</quotient>
 					</integer>
-					<value>100</value>
+					<p>autoflight/pitch/alt/full</p>
 				</product>
 			</function>
 			<clipto>
@@ -300,7 +300,7 @@
 		</summer>
 
 		<summer name="autoflight/pitch/alt/error-tf">
-			<input>/position/altitude-agl-ft</input>
+			<input>/position/altitude-ft</input>
 			<input>-/autopilot/settings/target-tf-altitude-ft</input>
 		</summer>
 
@@ -316,7 +316,7 @@
 			<gain>-7</gain>
 			<clipto>
 				<min>-3000</min>
-				<max>3000</max>
+				<max>autoflight/pitch/alt/max-vs</max>
 			</clipto>
 		</pure_gain>
 
