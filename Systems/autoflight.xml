@@ -313,9 +313,9 @@
 
 		<pure_gain name="autoflight/pitch/vs/target">
 			<input>autoflight/pitch/alt/error</input>
-			<gain>-7</gain>
+			<gain>autoflight/pitch/alt/gain-vs</gain>
 			<clipto>
-				<min>-3000</min>
+				<min>autoflight/pitch/alt/min-vs</min>
 				<max>autoflight/pitch/alt/max-vs</max>
 			</clipto>
 		</pure_gain>

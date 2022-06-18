@@ -43,13 +43,18 @@ var apLoopDelay = maketimer(3, func {
 	if (getprop("f16/fcs/adv-mode")) {
 		#terr_foll.long_view_avoiding();# set the lookahead time depending on how far from target alt we are
 		var agl = getprop("/position/altitude-agl-ft");
-		var delay = 8;
+		var delay = 14;
 		if (agl < 350) {
-			delay = 15;
+			delay = 20;
 		} elsif (agl < 700) {
-			delay = 12;
+			delay = 18;
 		} elsif (agl < 1200) {
-			delay = 10;
+			delay = 16;
+		}
+		if (getprop("velocities/groundspeed-kt") < 400) {
+			delay += 8;
+		} elsif (getprop("velocities/groundspeed-kt") < 550) {
+			delay += 4;
 		}
 		setprop("instrumentation/tfs/delay-big-sec",delay);
 	}
@@ -62,6 +67,8 @@ var apLoopHalf = maketimer(0.5, func {
 	var half =50;
 	var full = 100;
 	var vs = 3000;
+	var vsd = -3000;
+	var vsg = -7;
 	if (!ready) {
 		#print("Not ready");
 		setprop("f16/fcs/adv-mode", 0);
@@ -73,6 +80,8 @@ var apLoopHalf = maketimer(0.5, func {
 		setprop("fdm/jsbsim/autoflight/pitch/alt/full", full);
     	setprop("fdm/jsbsim/autoflight/pitch/alt/half", half);
     	setprop("fdm/jsbsim/autoflight/pitch/alt/max-vs", vs);
+    	setprop("fdm/jsbsim/autoflight/pitch/alt/min-vs", vsd);
+    	setprop("fdm/jsbsim/autoflight/pitch/alt/gain-vs", vsg);
     	setprop ("instrumentation/tfs/delay-big-sec", terr_foll.minim_delay);
 		return;
 	}
@@ -95,9 +104,11 @@ var apLoopHalf = maketimer(0.5, func {
         } else {
         	setprop("f16/fcs/adv-mode", 1);
         	setprop("f16/fcs/stby-mode", 0);
-        	full = 5;# the higher the smoother. Max 10. Min 1.
-        	half = full * 0.5;
-        	vs = vs + math.min(3000, 3000*getprop("velocities/groundspeed-kt")/400) * (getprop("instrumentation/radar/time-till-crash") < 15);
+        	full = 1;# the higher the smoother. Max 10. Min 1.
+        	half = full * 0.0;
+        	vsg  = -11.5-4*getprop("velocities/groundspeed-kt")/600-(getprop("instrumentation/radar/time-till-crash") < 15)*10;
+        	vs   = vs + math.min(12500, 4000*getprop("velocities/groundspeed-kt")/400+(4000*getprop("velocities/groundspeed-kt")/400) * (getprop("instrumentation/radar/time-till-crash") < 15));
+			vsd  = vsd - math.min(4000, 3500*getprop("velocities/groundspeed-kt")/600);
         	#print("TF working");
         }
     } else {
@@ -108,6 +119,8 @@ var apLoopHalf = maketimer(0.5, func {
     setprop("fdm/jsbsim/autoflight/pitch/alt/full", full);
     setprop("fdm/jsbsim/autoflight/pitch/alt/half", half);
     setprop("fdm/jsbsim/autoflight/pitch/alt/max-vs", vs);
+    setprop("fdm/jsbsim/autoflight/pitch/alt/min-vs", vsd);
+    setprop("fdm/jsbsim/autoflight/pitch/alt/gain-vs", vsg);
     aTF_execute();
 });
 
@@ -140,13 +153,14 @@ var aTF_execute = func {
 	#var target = getprop ("/instrumentation/altimeter/mode-c-alt-ft");
     #target = 100 * int (target / 100 + 0.5);
     #setprop ("/autopilot/settings/target-altitude-ft", target);
-    setprop ("/autopilot/settings/target-tf-altitude-ft", getprop("instrumentation/tfs/ground-altitude-ft")+getprop ("/autopilot/settings/tf-minimums")+500);
+    setprop ("/autopilot/settings/target-tf-altitude-ft", getprop("instrumentation/tfs/ground-altitude-ft")+getprop ("/autopilot/settings/tf-minimums")+getprop("instrumentation/tfs/padding"));
     #print("TF sending info to A/P: "~(getprop("instrumentation/tfs/ground-altitude-ft")+getprop ("/autopilot/settings/tf-minimums")));
 };
 
 props.globals.getNode("instrumentation/tfs/malfunction", 1).setBoolValue(0);
 props.globals.getNode("instrumentation/tfs/ground-altitude-ft",1).setDoubleValue(20000);
 props.globals.getNode("instrumentation/tfs/aft-not-engaged", 1).setBoolValue(0);
+props.globals.getNode("instrumentation/tfs/padding", 1).setDoubleValue(350);
 
 return;
 
@@ -162,3 +176,7 @@ screen.property_display.add("autopilot/settings/tf-minimums");
 screen.property_display.add("fdm/jsbsim/autoflight/pitch/alt/error-tf");
 screen.property_display.add("fdm/jsbsim/autoflight/pitch/g-demand-switched");
 screen.property_display.add("position/altitude-agl-ft");
+screen.property_display.add("fdm/jsbsim/autoflight/pitch/alt/max-vs");
+screen.property_display.add("instrumentation/gps/indicated-vertical-speed");
+screen.property_display.add("instrumentation/tfs/padding");
+screen.property_display.add("fdm/jsbsim/autoflight/pitch/alt/gain-vs");

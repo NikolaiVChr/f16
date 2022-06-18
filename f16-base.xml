@@ -756,6 +756,8 @@
                         <half type="double">50</half>
                         <full type="double">100</full>
                         <max-vs type="double">3000</max-vs>
+                        <min-vs type="double">-3000</min-vs>
+                        <gain-vs type="double">-7</gain-vs>
                     </alt>
                 </pitch>
                 <roll>
