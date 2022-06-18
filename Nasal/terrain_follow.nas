@@ -143,23 +143,23 @@ var tfs_radar_calculation = func(delay_sec) {
         setprop("instrumentation/tfs/malfunction", 0);
 
         #Same code, 6 meters left CHanged to 15m by Nikolai
-        current_pos = geo.aircraft_position();
-        current_pos.apply_course_distance (hdg_deg-90, 15);
-        My_pos.set_latlon(current_pos.lat(), current_pos.lon(), geo.elevation(current_pos.lat(), current_pos.lon())+1);
-        target_pos = current_pos.apply_course_distance (hdg_deg, range_m);
-        target_pos.set_alt(geo.elevation (target_pos.lat(), target_pos.lon())+1);
-        var MyAltLeft = highest_altitude(My_pos,target_pos);
+        #current_pos = geo.aircraft_position();
+        #current_pos.apply_course_distance (hdg_deg-90, 15);
+        #My_pos.set_latlon(current_pos.lat(), current_pos.lon(), geo.elevation(current_pos.lat(), current_pos.lon())+1);
+        #target_pos = current_pos.apply_course_distance (hdg_deg, range_m);
+        #target_pos.set_alt(geo.elevation (target_pos.lat(), target_pos.lon())+1);
+        #var MyAltLeft = highest_altitude(My_pos,target_pos);
 
         #Same code, 6 meters right
-        current_pos = geo.aircraft_position();
-        current_pos.apply_course_distance (hdg_deg+90, 15);
-        My_pos.set_latlon(current_pos.lat(), current_pos.lon(), geo.elevation(current_pos.lat(), current_pos.lon())+1);
-        target_pos = current_pos.apply_course_distance (hdg_deg, range_m);
-        target_pos.set_alt(geo.elevation (target_pos.lat(), target_pos.lon())+1);
-        var MyAltRight = highest_altitude(My_pos,target_pos);
+        #current_pos = geo.aircraft_position();
+        #current_pos.apply_course_distance (hdg_deg+90, 15);
+        #My_pos.set_latlon(current_pos.lat(), current_pos.lon(), geo.elevation(current_pos.lat(), current_pos.lon())+1);
+        #target_pos = current_pos.apply_course_distance (hdg_deg, range_m);
+        #target_pos.set_alt(geo.elevation (target_pos.lat(), target_pos.lon())+1);
+        #var MyAltRight = highest_altitude(My_pos,target_pos);
 
         #print("Mylittlealt:"~ Mylittlealt ~"; MyAltLeft:" ~ MyAltLeft ~ "; MyAltRight:" ~MyAltRight);
-        Mylittlealt = math.max(Mylittlealt,MyAltLeft,MyAltRight);
+        #Mylittlealt = math.max(Mylittlealt,MyAltLeft,MyAltRight);
         #print("Final:"~ Mylittlealt);
 
 
@@ -232,7 +232,7 @@ var highest_altitude = func(backward, forward){
   var i = 0;
   var lastAbove = elevation;
   #print("Launching the while");
-  while(myCheck != 1 and i < 15){
+  while(myCheck != 1 and i < 20){
     i = i + 1;
     #print("in the while");
     if(myCheck == 0){
