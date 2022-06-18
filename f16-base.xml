@@ -910,6 +910,10 @@
                     <lef>
                         <lef-pos-deg type="double">0</lef-pos-deg>
                     </lef>
+                    <tef>
+                        <!-- declaring it here should fix issue #479 -->
+                        <tef-pos-norm type="double">0</tef-pos-norm>
+                    </tef>
                     <digital-backup type="bool">false</digital-backup>
                 </fly-by-wire>
                 <gear-control type="double">1</gear-control>
