@@ -4,7 +4,7 @@
         <settings>
             <icao-aircraft-category type="string">D</icao-aircraft-category>
             <target-tf-altitude-ft type="double">20000.0</target-tf-altitude-ft>
-            <tf-minimums type="int">200</tf-minimums>
+            <tf-minimums type="int">500</tf-minimums>
         </settings>
     </autopilot>
     <sim>

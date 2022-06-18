@@ -130,7 +130,6 @@ var start = setlistener("/sim/signals/fdm-initialized", func {
 	apLoop.start();
 	apLoopHalf.start();
 	apLoopDelay.start();
-	setprop("f16/fcs/adv-mode-sel", 0);
 	removelistener(start);
 });
 
@@ -162,7 +161,7 @@ var aTF_execute = func {
 props.globals.getNode("instrumentation/tfs/malfunction", 1).setBoolValue(0);
 props.globals.getNode("instrumentation/tfs/ground-altitude-ft",1).setDoubleValue(20000);
 props.globals.getNode("instrumentation/tfs/aft-not-engaged", 1).setBoolValue(0);
-props.globals.getNode("instrumentation/tfs/padding", 1).setDoubleValue(350);
+props.globals.getNode("instrumentation/tfs/padding", 1).setDoubleValue(0);
 
 return;
 
