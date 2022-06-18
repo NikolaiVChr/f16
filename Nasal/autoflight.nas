@@ -76,6 +76,8 @@ var apLoopHalf = maketimer(0.5, func {
 		terr_foll.reset_TF_malfunction();
 		if (getprop("f16/fcs/adv-mode-sel")) {
 			setprop("instrumentation/tfs/aft-not-engaged", 1);
+		} else {
+			setprop("instrumentation/tfs/aft-not-engaged", 0);
 		}
 		setprop("fdm/jsbsim/autoflight/pitch/alt/full", full);
     	setprop("fdm/jsbsim/autoflight/pitch/alt/half", half);
