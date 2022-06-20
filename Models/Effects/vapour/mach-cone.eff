@@ -4,17 +4,17 @@
   <name>cone</name>
   <inherits-from>Effects/thrust-flame</inherits-from>
   <parameters>
-      <flame_color_low_r><use>rendering/scene/diffuse/red</use></flame_color_low_r>
-      <flame_color_low_g><use>rendering/scene/diffuse/red</use></flame_color_low_g>
-      <flame_color_low_b><use>rendering/scene/diffuse/red</use></flame_color_low_b>
-      <flame_color_high_r><use>rendering/scene/diffuse/red</use></flame_color_high_r>
-      <flame_color_high_g><use>rendering/scene/diffuse/red</use></flame_color_high_g>
-      <flame_color_high_b><use>rendering/scene/diffuse/red</use></flame_color_high_b>
-      
-      <base_flame_b><use>rendering/scene/diffuse/red</use></base_flame_b>
-      <base_flame_g><use>rendering/scene/diffuse/red</use></base_flame_g>
-      <base_flame_r><use>rendering/scene/diffuse/red</use></base_flame_r>
+      <flame_color_low_r><use>/rendering/scene/diffuse/red-unbound</use></flame_color_low_r>
+      <flame_color_low_g><use>/rendering/scene/diffuse/red-unbound</use></flame_color_low_g>
+      <flame_color_low_b><use>/rendering/scene/diffuse/red-unbound</use></flame_color_low_b>
+      <flame_color_high_r><use>/rendering/scene/diffuse/red-unbound</use></flame_color_high_r>
+      <flame_color_high_g><use>/rendering/scene/diffuse/red-unbound</use></flame_color_high_g>
+      <flame_color_high_b><use>/rendering/scene/diffuse/red-unbound</use></flame_color_high_b>
+
+      <base_flame_b><use>/rendering/scene/diffuse/red-unbound</use></base_flame_b>
+      <base_flame_g><use>/rendering/scene/diffuse/red-unbound</use></base_flame_g>
+      <base_flame_r><use>/rendering/scene/diffuse/red-unbound</use></base_flame_r>
 
   </parameters>
- 
+
 </PropertyList>

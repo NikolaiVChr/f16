@@ -73,7 +73,20 @@
           }
         }
       }
-      setprop("rendering/scene/diffuse/red-unbound", getprop("rendering/scene/diffuse/red"));
+      var red = getprop("rendering/scene/diffuse/red");
+
+      # non-tied property for effect:
+      setprop("rendering/scene/diffuse/red-unbound", red);
+
+      # afterburner density:
+      setprop("sim/multiplay/f16/ab-density",  1-red*0.90);
+
+      # color of afterburner:
+      # *0.5 is to prevent it from getting too white during night
+      setprop("/sim/multiplay/f16/ab-r",  0.75+(0.25-red*0.25)*0.5);#red
+      setprop("/sim/multiplay/f16/ab-g",  0.25+(0.75-red*0.75)*0.5);#green
+      setprop("/sim/multiplay/f16/ab-b",  0.2+(0.4-red*0.4)*0.5);   #blue
+
       if (looping) settimer(loop, 0.10);
     }
 

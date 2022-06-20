@@ -575,22 +575,24 @@ var fast = {
 };
 
 var sendABtoMP = func {
+    # Some of this is duplicated in F16.xml for effects over MP.
+
     var red = getprop("rendering/scene/diffuse/red");
 
     # non-tied property for effect:
     setprop("rendering/scene/diffuse/red-unbound", red);
 
     # afterburner density:
-    setprop("sim/multiplay/generic/float[10]",  1-red*0.90);
+    setprop("sim/multiplay/f16/ab-density",  1-red*0.90);
 
     # turbine emission:
     setprop("sim/multiplay/generic/float[22]",  getprop("sim/multiplay/generic/bool[39]") ? (1.0-red)*(getprop("fdm/jsbsim/fcs/fly-by-wire/throttle/pos-norm")-1.0) : 0.0);
 
     # color of afterburner:
     # *0.5 is to prevent it from getting too white during night
-    setprop("sim/multiplay/generic/float[11]",  0.75+(0.25-red*0.25)*0.5);#red
-    setprop("sim/multiplay/generic/float[12]",  0.25+(0.75-red*0.75)*0.5);#green
-    setprop("sim/multiplay/generic/float[13]",  0.2+(0.4-red*0.4)*0.5);   #blue
+    setprop("sim/multiplay/f16/ab-r",  0.75+(0.25-red*0.25)*0.5);#red
+    setprop("sim/multiplay/f16/ab-g",  0.25+(0.75-red*0.75)*0.5);#green
+    setprop("sim/multiplay/f16/ab-b",  0.2+(0.4-red*0.4)*0.5);   #blue
 
     # scene red inverted:
     setprop("sim/multiplay/generic/float[14]",  (1-red)*0.5);
