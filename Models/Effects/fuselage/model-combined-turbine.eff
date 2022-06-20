@@ -3,7 +3,15 @@
 	<name>Aircraft/f16/Models/Effects/fuselage/model-combined-turbine</name>
 	<inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
 	<parameters>
-		<lightmap-enabled type="int">0</lightmap-enabled>
+		<metallic type="float">1</metallic>
+        <ambient-factor type="float">0.0</ambient-factor>
+        <rain-enabled type="int">0</rain-enabled>
+        <snow-enabled type="int">0</snow-enabled>
+        <ambient-correction type="float">0.00</ambient-correction>
+        <reflection-enabled type="int">0</reflection-enabled>
+
+		<lightmap-enabled type="int">1</lightmap-enabled>
+		<lightmap-multi type="int">1</lightmap-multi>
 		<lightmap-factor n="0"><use>sim/multiplay/generic/float[22]</use></lightmap-factor>
 		<lightmap-color type="vec3d" n="0"> 1.0 0.0 0.0 </lightmap-color>
 		<lightmap-factor n="1"><use>sim/multiplay/generic/float[22]</use></lightmap-factor>
