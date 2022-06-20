@@ -710,6 +710,17 @@
       <object-name>Poly.001</object-name><!-- inner sidewalls of outlet -->
  </effect>
 
+ <animation>
+  <type>material</type>
+  <object-name>Poly.001</object-name>
+  <emission>
+   <red>  1.0000</red>
+   <green>0.8000</green>
+   <blue> 0.3000</blue>
+   <factor-prop>sim/multiplay/generic/float[22]</factor-prop>
+  </emission>
+ </animation>
+
  <!-- glass effects, Cylinder.008 removed as HUD is factored out. -->
  <effect>
   <inherits-from>Aircraft/f16/Models/Effects/glass/glass</inherits-from>
