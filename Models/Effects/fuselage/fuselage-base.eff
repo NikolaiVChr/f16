@@ -594,10 +594,10 @@
 			<use>vertex-program-two-side</use>
 		</vertex-program-two-side>
 		<program n="0">
-			<vertex-shader n="0">Shaders/deferred-gbuffer.vert</vertex-shader>
-			<fragment-shader>Shaders/deferred-gbuffer.frag</fragment-shader>
-			<fragment-shader>Shaders/gbuffer-functions.frag</fragment-shader>
-			<fragment-shader>Shaders/gbuffer-encode.frag</fragment-shader>
+			<vertex-shader n="0">Shaders4/deferred-gbuffer.vert</vertex-shader>
+			<fragment-shader>Shaders4/deferred-gbuffer.frag</fragment-shader>
+			<fragment-shader>Shaders4/gbuffer-functions.frag</fragment-shader>
+			<fragment-shader>Shaders4/gbuffer-encode.frag</fragment-shader>
 		</program>
 		<uniform>
 			<name>texture</name>
