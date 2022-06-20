@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <PropertyList>
-	<name>fuselage-base</name>
+	<name>Aircraft/f16/Models/Effects/fuselage/fuselage-base</name>
 
 	<parameters>
 		<texture n ="0">
@@ -243,7 +243,7 @@
 		<!-- 		END fog include -->
 	</parameters>
 
-	<technique n="15">
+	<technique n="11">
     <predicate>
       <and>
         <property>/sim/rendering/shaders/skydome</property>
@@ -612,7 +612,7 @@
 	</pass>
 </technique>
 
-	<technique n="25">
+	<technique n="10">
 		<predicate>
 			<and>
 				<property>/sim/rendering/shaders/quality-level</property>

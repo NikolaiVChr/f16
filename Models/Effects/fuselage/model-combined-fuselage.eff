@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 The fuselage effect is a modified version of model-combined-deffered.
 Modifications author: Nikolai V. Chr.
@@ -148,7 +149,7 @@ Modifications author: Nikolai V. Chr.
 				<extension-supported>GL_EXT_gpu_shader4</extension-supported>-->
 		   </and>
 	   </predicate>
-	   <pass n="0">
+	   <pass>
 	   		<program>
 				<vertex-shader n="0">Aircraft/f16/Shaders/fuselage/model-combined-fuselage-ALS.vert</vertex-shader>
 			 	<vertex-shader n="1">Aircraft/f16/Shaders/shadows-include.vert</vertex-shader>
@@ -1362,8 +1363,8 @@ Modifications author: Nikolai V. Chr.
 		  </or>
 		</and>
 	  </predicate>
-	  <pass n="0">
-	  	<program n="0">
+	  <pass>
+	  	<program>
 			  <vertex-shader n="0">Aircraft/f16/Shaders/fuselage/model-combined-fuselage.vert</vertex-shader>
 			  <fragment-shader n="0">Shaders/include_fog.frag</fragment-shader>
 			  <fragment-shader n="1">Aircraft/f16/Shaders/fuselage/model-combined-fuselage.frag</fragment-shader>
@@ -3217,8 +3218,8 @@ Modifications author: Nikolai V. Chr.
 		  </or>
 		</and>
 	  </predicate>
-	  <pass n="0">
-	  	<program n="0">
+	  <pass>
+	  	<program>
 			  <vertex-shader n="0">Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage.vert</vertex-shader>
 			  <fragment-shader n="0">Shaders/include_fog.frag</fragment-shader>
 			  <fragment-shader n="1">Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage.frag</fragment-shader>
