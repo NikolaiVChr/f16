@@ -100,6 +100,7 @@ Modifications author: Nikolai V. Chr.
    			<bin-number>1</bin-number>
     		<bin-name>RenderBin</bin-name>
     	</render-bin>
+    	<!--rendering-hint>opaque</rendering-hint--><!-- This will override render-bin, so don't enable -->
         <!-- BEGIN shadows include -->
         <shadows_enabled>
           <use>/sim/rendering/shadows/enabled</use>
@@ -3872,7 +3873,7 @@ Modifications author: Nikolai V. Chr.
 		<!-- Techn 4 is broken somehow -->
 
 			<!-- 	Rembrandt rendering -->
-   <technique n="5">
+   <technique n="7">
 	<predicate>
 		<or>
 		  <less-equal>
