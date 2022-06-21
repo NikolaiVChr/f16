@@ -53,6 +53,7 @@
     <residual-ambience-b type="float">0.0</residual-ambience-b>
     <ra-irradiance-map-type type="int">0</ra-irradiance-map-type>
     <ra-irradiance-map-strength type="float">0.0</ra-irradiance-map-strength>
+    <shadow-mapping-enabled type="bool">0</shadow-mapping-enabled>
     <!-- BEGIN shadows include -->
     <shadows_enabled>
       <use>/sim/rendering/shadows/enabled</use>

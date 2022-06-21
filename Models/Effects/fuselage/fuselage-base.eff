@@ -9,7 +9,7 @@
 		</texture>
 		<vertex-program-two-side type="bool">false</vertex-program-two-side>
 		<material>
-			<color-mode-uniform>1</color-mode-uniform>
+			<color-mode-uniform type="int">1</color-mode-uniform>
 			<!-- DIFFUSE -->
 		</material>
 		<material-id>0</material-id>
@@ -243,7 +243,7 @@
 		<!-- 		END fog include -->
 	</parameters>
 
-	<technique n="11">
+	<technique n="20">
     <predicate>
       <and>
         <property>/sim/rendering/shaders/skydome</property>
@@ -540,7 +540,7 @@
     </pass>
   </technique>
 
-<technique n="20">
+<technique n="25">
 	<predicate>
 		<and>
 			<property>/sim/rendering/rembrandt/enabled</property>

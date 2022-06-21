@@ -64,7 +64,7 @@
   <residual-ambience-b type="float">0.0</residual-ambience-b>
   <ra-irradiance-map-type type="int">0</ra-irradiance-map-type>
   <ra-irradiance-map-strength type="float">0.0</ra-irradiance-map-strength>
-    <shadow-mapping-enabled type="bool">false</shadow-mapping-enabled>
+  <shadow-mapping-enabled type="bool">0</shadow-mapping-enabled>
   </parameters>
 
   <technique n="3">
@@ -289,12 +289,12 @@
         <name>display_ysize</name>
         <type>int</type>
         <value><use>display_ysize</use></value>
-      </uniform>  
+      </uniform>
       <uniform>
   <name>lightmap_r_factor</name>
   <type>float</type>
   <value><use>lightmap-factor[0]</use></value>
-     </uniform>    
+     </uniform>
      <uniform>
   <name>lightmap_r_color</name>
   <type>float-vec3</type>
@@ -304,7 +304,7 @@
   <name>lightmap_g_factor</name>
   <type>float</type>
   <value><use>lightmap-factor[1]</use></value>
-     </uniform>    
+     </uniform>
      <uniform>
   <name>lightmap_g_color</name>
   <type>float-vec3</type>
@@ -314,7 +314,7 @@
   <name>lightmap_b_factor</name>
   <type>float</type>
   <value><use>lightmap-factor[2]</use></value>
-     </uniform>    
+     </uniform>
      <uniform>
   <name>lightmap_b_color</name>
   <type>float-vec3</type>
@@ -324,7 +324,7 @@
   <name>lightmap_a_factor</name>
   <type>float</type>
   <value><use>lightmap-factor[3]</use></value>
-     </uniform>    
+     </uniform>
      <uniform>
   <name>lightmap_a_color</name>
   <type>float-vec3</type>
@@ -334,7 +334,7 @@
   <name>grain_magnification</name>
   <type>float</type>
   <value><use>grain-magnification</use></value>
-     </uniform>  
+     </uniform>
      <uniform>
   <name>irradiance_map_strength</name>
   <type>float</type>
@@ -707,7 +707,7 @@
         <name>display_ysize</name>
         <type>int</type>
         <value><use>display_ysize</use></value>
-      </uniform>  
+      </uniform>
      <!-- filtering -->
      <uniform>
         <name>gamma</name>

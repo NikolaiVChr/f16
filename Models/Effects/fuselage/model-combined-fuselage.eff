@@ -3874,8 +3874,6 @@ Modifications author: Nikolai V. Chr.
 			<!-- 	Rembrandt rendering -->
    <technique n="5">
 	<predicate>
-	  <and>
-
 		<or>
 		  <less-equal>
 			<value type="float">2.0</value>
@@ -3888,7 +3886,6 @@ Modifications author: Nikolai V. Chr.
 			<extension-supported>GL_ARB_fragment_shader</extension-supported>
 		  </and>
 		</or>
-	  </and>
 	</predicate>
 		<pass>
 			<program n="0">
