@@ -4,15 +4,15 @@
   <name>Strake_Vortex</name>
   <inherits-from>Effects/thrust-flame</inherits-from>
   <parameters>
-    <flame_color_low_r><use>rendering/scene/diffuse/red-unbound</use></flame_color_low_r>
-    <flame_color_low_g><use>rendering/scene/diffuse/red-unbound</use></flame_color_low_g>
-    <flame_color_low_b><use>rendering/scene/diffuse/red-unbound</use></flame_color_low_b>
-    <flame_color_high_r><use>rendering/scene/diffuse/red-unbound</use></flame_color_high_r>
-    <flame_color_high_g><use>rendering/scene/diffuse/red-unbound</use></flame_color_high_g>
-    <flame_color_high_b><use>rendering/scene/diffuse/red-unbound</use></flame_color_high_b>
+    <flame_color_low_r><use>/rendering/scene/diffuse/red-unbound</use></flame_color_low_r>
+    <flame_color_low_g><use>/rendering/scene/diffuse/red-unbound</use></flame_color_low_g>
+    <flame_color_low_b><use>/rendering/scene/diffuse/red-unbound</use></flame_color_low_b>
+    <flame_color_high_r><use>/rendering/scene/diffuse/red-unbound</use></flame_color_high_r>
+    <flame_color_high_g><use>/rendering/scene/diffuse/red-unbound</use></flame_color_high_g>
+    <flame_color_high_b><use>/rendering/scene/diffuse/red-unbound</use></flame_color_high_b>
     <use_shocks type="int">0</use_shocks>
     <use_noise type="int">1</use_noise>
-    <thrust_collimation type="float">0.4</thrust_collimation>   
+    <thrust_collimation type="float">0.4</thrust_collimation>
     <thrust_density type="float">1.0</thrust_density>
     <base_flame_density type="float">0.1</base_flame_density>
     <noise_strength type="float">0.5</noise_strength>

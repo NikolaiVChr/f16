@@ -283,5 +283,5 @@ void main (void)
 
 	fragColor.rgb = fog_Func(fragColor.rgb, fogType);
 
-	gl_FragColor = fragColor;
+	gl_FragColor = fragColor;//vec4(1.0,0.0,0.0,0.5);
 }

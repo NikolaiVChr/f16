@@ -16,12 +16,12 @@
   <note>
    This model was created using data that is, or has been, publically
    available by means of technical reports, textbooks, image graphs or
-   published code. This aircraft description file is in no way related 
+   published code. This aircraft description file is in no way related
    to the manufacturer of the real aircraft.
    Neither the name of (any of) the authors nor the names of (any of) the
    manufacturers may be used to endorse or promote products derived from
    this file.
- 
+
    The data is provided ''as is'' and any express or implied
    warranties, including, but not limitted to the implied warranties of
    merchantability and fitness for a particular purpose are disclaimed.
@@ -254,10 +254,8 @@
     <pitch> 0 </pitch>
     <yaw> 0 </yaw>
    </orient>
-   <feed>0</feed>
-   <feed>1</feed>
-   <feed>2</feed>
-   <feed>3</feed>
+   <feed>4</feed>
+   <feed>5</feed>
    <thruster file="direct">
     <location unit="IN">
      <x> 0 </x>
@@ -271,41 +269,117 @@
     </orient>
    </thruster>
   </engine>
-  <tank type="FUEL"> <!-- Tank number 0 -->
+  <refuel-rate unit="LBS/MIN"> 6000 </refuel-rate>
+  <dump-rate unit="LBS/MIN"> 1000 </dump-rate>
+  <tank type="FUEL"> <!-- FWD Tank F-1 / F-2 -->
    <location unit="IN">
-    <x> 5.6 </x>
-    <y> 65.0 </y>
-    <z> 5.0 </z>
+    <x> -51.5 </x>
+   <y> 0 </y>
+   <z> 0 </z>
    </location>
-   <capacity unit="LBS"> 3486 </capacity>
-   <contents unit="LBS"> 1500 </contents>
+   <capacity unit="LBS"> 2550.0 </capacity>
+   <contents unit="LBS"> 2550.0 </contents>
+   <type>JP-8</type>
+   <priority> 5 </priority>
   </tank>
-  <tank type="FUEL"> <!-- Tank number 1 -->
+  <tank type="FUEL"> <!-- Left wing tank -->
    <location unit="IN">
-    <x> 5.6 </x>
-    <y> -65.0 </y>
-    <z> 5.0 </z>
+    <x> 8.5 </x>
+   <y> -80 </y>
+   <z>   0 </z>
    </location>
-   <capacity unit="LBS"> 3486 </capacity>
-   <contents unit="LBS"> 1500 </contents>
+   <capacity unit="LBS"> 550 </capacity>
+   <contents unit="LBS"> 550 </contents>
+   <type>JP-8</type>
+   <priority> 4 </priority>
   </tank>
-  <tank type="FUEL"> <!-- External Tank number 0  (station 4) -->
+  <tank type="FUEL"> <!-- Right wing tank -->
    <location unit="IN">
-    <x> 5.6 </x>
-    <y> 65.0 </y>
-    <z> -15.0 </z>
+    <x> 8.5 </x>
+   <y>  80 </y>
+   <z>   0 </z>
    </location>
-   <capacity unit="LBS"> 2991 </capacity>
+   <capacity unit="LBS"> 550 </capacity>
+   <contents unit="LBS"> 550 </contents>
+   <type>JP-8</type>
+   <priority> 4 </priority>
+  </tank>
+  <tank type="FUEL"> <!-- AFT Tank A-1 -->
+   <location unit="IN">
+    <x> 68.5 </x>
+   <y> 0 </y>
+   <z> 0 </z>
+   </location>
+   <capacity unit="LBS"> 2550.0 </capacity>
+   <contents unit="LBS"> 2550.0 </contents>
+   <type>JP-8</type>
+   <priority> 5 </priority>
+  </tank>
+  <tank type="FUEL"> <!-- FWD Reservoir -->
+    <location unit="IN">
+    <x> -51.5 </x>
+   <y> 0 </y>
+   <z> 0 </z>
+   </location>
+   <capacity unit="LBS"> 480.0 </capacity>
+   <contents unit="LBS"> 480.0 </contents>
+   <type>JP-8</type>
+   <priority> 6 </priority>
+  </tank>
+  <tank type="FUEL"> <!-- AFT Reservoir -->
+    <location unit="IN">
+    <x> 68.5 </x>
+   <y> 0 </y>
+   <z> 0 </z>
+   </location>
+   <capacity unit="LBS"> 480.0 </capacity>
+   <contents unit="LBS"> 480.0 </contents>
+   <type>JP-8</type>
+   <priority> 6 </priority>
+  </tank>
+  <tank type="FUEL"> <!-- Left External Tank -->
+   <location unit="IN">
+    <x> -16.5 </x>
+   <y> -64.129 </y>
+   <z> -40 </z>
+   </location>
+   <capacity unit="LBS"> 3996 </capacity>
    <contents unit="LBS"> 0 </contents>
+   <type>JP-8</type>
+   <priority> 3 </priority>
   </tank>
-  <tank type="FUEL"> <!-- External Tank number 1 (station 6) -->
+  <tank type="FUEL"> <!-- Right External Tank -->
    <location unit="IN">
-    <x> 5.6 </x>
-    <y> -65.0 </y>
-    <z> -15.0 </z>
+    <x> -16.5 </x>
+   <y> 64.129 </y>
+   <z> -40 </z>
    </location>
-   <capacity unit="LBS"> 2991 </capacity>
+   <capacity unit="LBS"> 3996 </capacity>
    <contents unit="LBS"> 0 </contents>
+   <type>JP-8</type>
+   <priority> 3 </priority>
+  </tank>
+  <tank type="FUEL"> <!-- Center External Tank -->
+   <location unit="IN">
+    <x> -16.5 </x>
+   <y>   0 </y>
+   <z> -50 </z>
+   </location>
+   <capacity unit="LBS"> 1998 </capacity>
+   <contents unit="LBS"> 0 </contents>
+   <type>JP-8</type>
+   <priority> 2 </priority>
+  </tank>
+  <tank type="FUEL"> <!-- CFT -->
+   <location unit="IN">
+   <x> 8.5 </x>
+   <y> 0 </y>
+   <z> 8.0 </z>
+   </location>
+   <capacity unit="LBS"> 3050 </capacity>
+   <contents unit="LBS"> 0 </contents>
+   <type>JP-8</type>
+   <priority> 2 </priority>
   </tank>
  </propulsion>
 
@@ -342,6 +416,12 @@
    <pure_gain name="fcs/tef-pos-norm">
      <input>fcs/tef-pos-rad</input>
      <gain>2.864789</gain>
+   </pure_gain>
+
+   <pure_gain name="fcs/fly-by-wire/tef/tef-pos-norm">
+     <description>To make simplified compat with non simplified</description>
+     <input>fcs/tef-pos-norm</input>
+     <gain>1</gain>
    </pure_gain>
 
    <kinematic name="fcs/tef-control">
@@ -418,7 +498,7 @@
     </range>
     <output>fcs/aileron-pos-rad</output>
    </aerosurface_scale>
-   
+
    <!--
      - FBW override swich
      -->
@@ -477,7 +557,7 @@
     <input>fcs/left-flaperon-norm</input>
     <input>fcs/right-flaperon-norm</input>
    </summer>
-   
+
    <pure_gain name="fcs/flaperon-mix-rad">
     <input>fcs/flaperon-summer</input>
     <gain>1.4324</gain>
@@ -533,7 +613,7 @@
    </summer>
 
    <!--
-     - The F-16 has a G limit of 9G positive and 4G negative (44.44% 
+     - The F-16 has a G limit of 9G positive and 4G negative (44.44%
      - of 9G). This section limits the stick output to 100% up and 44%
      - down.
      -->
@@ -635,7 +715,7 @@
     <max>1</max>
      </clipto>
    </summer>
-   
+
    <!--
      - FBW override swich
      -->
@@ -822,7 +902,7 @@
    </scheduled_gain>
 
   </channel>
-   
+
   <channel name="Leading Edge Flap">
 
    <switch name="fcs/lef-pos-rad">
@@ -885,6 +965,12 @@
     <output>fcs/throttle-pos-norm</output>
    </pure_gain>
 
+   <pure_gain name="fcs/fly-by-wire/throttle/pos-norm">
+    <description>To make simplified compat with non simplified</description>
+    <input>fcs/throttle-cmd-norm</input>
+    <gain>1</gain>
+   </pure_gain>
+
   </channel>
 
   <channel name="Speedbrake">
@@ -897,7 +983,7 @@
    <switch name="fcs/speedbrake-alpha-limiter">
     <default value="0"/>
     <test logic="AND" value="1">
-     aero/alpha-deg ge 53 
+     aero/alpha-deg ge 53
      velocities/v-fps le 18
     </test>
    </switch>
@@ -973,7 +1059,7 @@
     </traverse>
     <output>fcs/hook-pos-norm</output>
    </kinematic>
-   
+
   </channel>
 
   <channel name="Canopy">
@@ -1370,7 +1456,7 @@
         <independentVar>aero/alpha-rad</independentVar>
         <tableData>
          -0.1750  0.3645
-         -0.0870  0.3678 
+         -0.0870  0.3678
           0.0000  0.3684
           0.0870  0.2522
           0.1750  0.2710

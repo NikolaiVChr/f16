@@ -4,23 +4,202 @@
   <name>AB-flame</name>
   <inherits-from>Effects/thrust-flame</inherits-from>
   <parameters>
-    <flame_color_low_r type="float"><use>sim/multiplay/generic/float[11]</use></flame_color_low_r>
-    <flame_color_low_g type="float"><use>sim/multiplay/generic/float[12]</use></flame_color_low_g>
-    <flame_color_low_b type="float"><use>sim/multiplay/generic/float[13]</use></flame_color_low_b>
+    <flame_color_low_r type="float"><use>/sim/multiplay/f16/ab-r</use></flame_color_low_r>
+    <flame_color_low_g type="float"><use>/sim/multiplay/f16/ab-g</use></flame_color_low_g>
+    <flame_color_low_b type="float"><use>/sim/multiplay/f16/ab-b</use></flame_color_low_b>
     <flame_color_high_r type="float">1.0</flame_color_high_r>
-    <flame_color_high_g type="float">1.0</flame_color_high_g> 
+    <flame_color_high_g type="float">1.0</flame_color_high_g>
     <flame_color_high_b type="float">1.0</flame_color_high_b>
     <use_shocks type="int">1</use_shocks>
     <use_noise type="int">1</use_noise>
-    <thrust_collimation type="float">0.1</thrust_collimation>   
-    <thrust_density type="float"><use>sim/multiplay/generic/float[10]</use></thrust_density>
+    <thrust_collimation type="float">0.1</thrust_collimation>
+    <thrust_density type="float"><use>/sim/multiplay/f16/ab-density</use></thrust_density>
     <base_flame_density type="float">0.08</base_flame_density>
     <noise_strength type="float">0.2</noise_strength>
     <noise_scale type="float">0.3</noise_scale>
     <deflection_coeff type="float">0.0</deflection_coeff>
     <flame_radius_fraction type="float">0.8</flame_radius_fraction>
-    <base_flame_r type="float"><use>sim/multiplay/generic/float[11]</use></base_flame_r>
-    <base_flame_g type="float"><use>sim/multiplay/generic/float[12]</use></base_flame_g>
-    <base_flame_b type="float"><use>sim/multiplay/generic/float[13]</use></base_flame_b>
+    <base_flame_r type="float"><use>/sim/multiplay/f16/ab-r</use></base_flame_r>
+    <base_flame_g type="float"><use>/sim/multiplay/f16/ab-g</use></base_flame_g>
+    <base_flame_b type="float"><use>/sim/multiplay/f16/ab-b</use></base_flame_b>
   </parameters>
+
+  <technique n="5">
+    <predicate>
+      <and>
+        <or>
+          <less-equal>
+            <value type="float">2.0</value>
+            <glversion/>
+          </less-equal>
+          <and>
+            <extension-supported>GL_ARB_shader_objects</extension-supported>
+            <extension-supported>GL_ARB_shading_language_100</extension-supported>
+            <extension-supported>GL_ARB_vertex_shader</extension-supported>
+            <extension-supported>GL_ARB_fragment_shader</extension-supported>
+          </and>
+        </or>
+      </and>
+    </predicate>
+    <pass>
+      <lighting>true</lighting>
+      <material>
+        <active><use>material/active</use></active>
+        <ambient><use>material/ambient</use></ambient>
+        <diffuse><use>material/diffuse</use></diffuse>
+        <specular><use>material/specular</use></specular>
+        <emissive><use>material/emissive</use></emissive>
+        <shininess><use>material/shininess</use></shininess>
+        <color-mode><use>material/color-mode</use></color-mode>
+      </material>
+      <blend>
+        <active><use>blend/active</use></active>
+        <source><use>blend/source</use></source>
+        <destination><use>blend/destination</use></destination>
+      </blend>
+      <shade-model><use>shade-model</use></shade-model>
+      <cull-face><use>cull-face</use></cull-face>
+      <rendering-hint><use>rendering-hint</use></rendering-hint>
+      <render-bin>
+        <bin-number>111</bin-number>
+        <bin-name>DepthSortedBin</bin-name>
+      </render-bin>
+      <texture-unit>
+        <!-- The texture unit is always active because the shaders expect
+             that. -->
+        <unit>0</unit>
+    <active><use>texture[0]/active</use></active>
+        <type><use>texture[0]/type</use></type>
+        <image><use>texture[0]/image</use></image>
+        <filter><use>texture[0]/filter</use></filter>
+        <wrap-s><use>texture[0]/wrap-s</use></wrap-s>
+        <wrap-t><use>texture[0]/wrap-t</use></wrap-t>
+        <internal-format> <use>texture[0]/internal-format</use> </internal-format>
+      </texture-unit>
+    <depth>
+        <write-mask>false</write-mask>
+      </depth>
+      <vertex-program-two-side>false</vertex-program-two-side>
+      <program>
+        <vertex-shader>Shaders/thrustflame-ALS.vert</vertex-shader>
+        <fragment-shader>Shaders/thrustflame-ALS.frag</fragment-shader>
+        <fragment-shader>Shaders/noise.frag</fragment-shader>
+      </program>
+
+     <uniform>
+        <name>flame_radius_fraction</name>
+        <type>float</type>
+        <value><use>flame_radius_fraction</use></value>
+      </uniform>
+      <uniform>
+        <name>thrust_collimation</name>
+        <type>float</type>
+        <value><use>thrust_collimation</use></value>
+      </uniform>
+      <uniform>
+        <name>thrust_density</name>
+        <type>float</type>
+        <value><use>thrust_density</use></value>
+      </uniform>
+      <uniform>
+        <name>base_flame_density</name>
+        <type>float</type>
+        <value><use>base_flame_density</use></value>
+      </uniform>
+      <uniform>
+        <name>shock_frequency</name>
+        <type>float</type>
+        <value><use>shock_frequency</use></value>
+      </uniform>
+      <uniform>
+        <name>noise_strength</name>
+        <type>float</type>
+        <value><use>noise_strength</use></value>
+      </uniform>
+     <uniform>
+        <name>noise_scale</name>
+        <type>float</type>
+        <value><use>noise_scale</use></value>
+      </uniform>
+     <uniform>
+        <name>random_seed</name>
+        <type>float</type>
+        <value><use>random_seed</use></value>
+      </uniform>
+      <uniform>
+        <name>flame_color_low_r</name>
+        <type>float</type>
+        <value><use>flame_color_low_r</use></value>
+      </uniform>
+      <uniform>
+        <name>flame_color_low_g</name>
+        <type>float</type>
+        <value><use>flame_color_low_g</use></value>
+      </uniform>
+       <uniform>
+        <name>flame_color_low_b</name>
+        <type>float</type>
+        <value><use>flame_color_low_b</use></value>
+      </uniform>
+      <uniform>
+        <name>flame_color_high_r</name>
+        <type>float</type>
+        <value><use>flame_color_high_r</use></value>
+      </uniform>
+      <uniform>
+        <name>flame_color_high_g</name>
+        <type>float</type>
+        <value><use>flame_color_high_g</use></value>
+      </uniform>
+       <uniform>
+        <name>flame_color_high_b</name>
+        <type>float</type>
+        <value><use>flame_color_high_b</use></value>
+      </uniform>
+      <uniform>
+        <name>base_flame_r</name>
+        <type>float</type>
+        <value><use>base_flame_r</use></value>
+      </uniform>
+      <uniform>
+        <name>base_flame_g</name>
+        <type>float</type>
+        <value><use>base_flame_g</use></value>
+      </uniform>
+      <uniform>
+        <name>base_flame_b</name>
+        <type>float</type>
+        <value><use>base_flame_b</use></value>
+      </uniform>
+      <uniform>
+        <name>deflection_coeff</name>
+        <type>float</type>
+        <value><use>deflection_coeff</use></value>
+      </uniform>
+
+      <uniform>
+        <name>use_shocks</name>
+        <type>int</type>
+        <value><use>use_shocks</use></value>
+      </uniform>
+      <uniform>
+        <name>use_noise</name>
+        <type>int</type>
+        <value><use>use_noise</use></value>
+      </uniform>
+
+
+
+      <uniform>
+        <name>texture</name>
+        <type>sampler-2d</type>
+        <value type="int">0</value>
+      </uniform>
+      <uniform>
+        <name>colorMode</name>
+        <type>int</type>
+        <value><use>material/color-mode-uniform</use></value>
+      </uniform>
+    </pass>
+  </technique>
 </PropertyList>

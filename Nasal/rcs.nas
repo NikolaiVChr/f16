@@ -17,7 +17,7 @@ var test = func (echoHeading, echoPitch, echoRoll, bearing, frontRCS) {
 };
 
 var rcs_database = {
-	#REVISION: 2021/04/29
+	#REVISION: 2022/05/29
     "YF-16":                    5,      #higher because earlier blocks had larger RCS
     "F-16CJ":                   2,      #average
     "f16":                      2,      #average
@@ -29,6 +29,7 @@ var rcs_database = {
     "brsq":                     1.5,    #average (multiple sources)
     "FA-18C_Hornet":            3.5,    #later Blocks have 1
     "FA-18D_Hornet":            3.5,
+    "FA-18E_CVW5":              1.0,
     "daVinci_SU-34":            8,      #should be less
     "Su-34":                    8,      #should be less
     "SU-37":                    8,      #wild guess

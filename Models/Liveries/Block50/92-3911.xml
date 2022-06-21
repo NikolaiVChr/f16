@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery>
+    <name type="string">USAF 169FW, 157FS "9/11 Special"</name>
+    <texture>Liveries/Block50/92-3911.png</texture>
+    <owner type="string">USAF</owner>
+   </livery>
+
+   <livery-logo>
+    <texture>Liveries/standard.white.logos.png</texture>
+   </livery-logo>
+   
+
+   <livery-patch>
+      <texture>Liveries/Block50/patch.SwampFox.png</texture>
+   </livery-patch>
+
+  <livery-pod>
+        <texture>Armament/External-stores/MXU-648.png</texture>
+  </livery-pod>
+
+        <f16>
+            <dragchute type="bool">false</dragchute>
+        </f16>
+  </model>
+ </sim>
+</PropertyList>

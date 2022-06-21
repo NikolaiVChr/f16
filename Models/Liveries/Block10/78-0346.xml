@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery>
+    <name type="string">Top ACES, N860TA</name>
+    <texture>Liveries/Block10/78-0346.png</texture>
+    <owner type="string">TopACES</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/standard.logos.color.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block10/patch.topaces.png</texture>
+   </livery-patch>
+
+  <livery-pod>
+        <texture>Armament/External-stores/MXU-648.png</texture>
+  </livery-pod>
+
+        <f16>
+            <dragchute type="bool">false</dragchute>
+        </f16>
+  </model>
+ </sim>
+
+ <f16>
+     <ejected type="bool">false</ejected>
+ </f16>
+</PropertyList>

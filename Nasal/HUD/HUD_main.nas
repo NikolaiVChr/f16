@@ -6,8 +6,8 @@
 # ---------------------------
 # Richard Harrison (rjh@zaretto.com) 2016-07-01  - based on F-15 HUD
 # ---------------------------
-#setprop("a-alt",-10);#13 
-#setprop("a-spd",  0);#5  
+#setprop("a-alt",-10);#13
+#setprop("a-spd",  0);#5
 #setprop("a-rll",  0);#16
 var skew_alt = 0;
 var skew_spd = 0;
@@ -51,20 +51,20 @@ var F16_HUD = {
 
         obj.canvas= canvas.new({
                 "name": "F16 HUD",
-                    "size": [1024,1024], 
+                    "size": [1024,1024],
                     "view": [sx,sy],#340,260
-                    "mipmapping": 0, # mipmapping will make the HUD text blurry on smaller screens     
+                    "mipmapping": 0, # mipmapping will make the HUD text blurry on smaller screens
                     "additive-blend": 1# bool
-                    });  
+                    });
 
-        
-        
+
+
         # Real HUD:
         #
         # F16C: Optics provides a 25degree Total Field of View and a 20o by 13.5o Instantaneous Field of View
         #
         # F16A: Total Field of View of the F-16 A/B PDU is 20deg but the Instantaneous FoV is only 9deg in elevation and 13.38deg in azimuth
-        
+
         if (getprop("sim/variant-id") == 4) {
             setprop("sim/current-view/z-offset-m", -4.075);
             setprop("sim/current-view/pitch-offset-deg", -15.5);
@@ -88,12 +88,12 @@ var F16_HUD = {
             uv_used = uv_x2-uv_x1;
             tran_x = 0;
         }
-        skew_alt = use_war_hud?13:-10; 
+        skew_alt = use_war_hud?13:-10;
         skew_spd = use_war_hud?5:0;
         skew_rll = use_war_hud?16:0;
         skew_hdg = use_war_hud?16:0;
 
-        obj.sy = sy;                        
+        obj.sy = sy;
         obj.sx = sx*uv_used;
 
         obj.canvas.addPlacement({"node": canvas_item});
@@ -102,7 +102,7 @@ var F16_HUD = {
         # Create a group for the parsed elements
         obj.svg = obj.canvas.createGroup().hide();
         obj.main_mask = obj.canvas.createGroup().set("z-index",20000);
- 
+
         # Parse an SVG file and add the parsed elements to the given group
         canvas.parsesvg(obj.svg, svgname);
 
@@ -110,7 +110,7 @@ var F16_HUD = {
 
         obj.canvas._node.setValues({
                 "name": "F16 HUD",
-                    "size": [1024,1024], 
+                    "size": [1024,1024],
                     "view": [sx,sy],
                     "mipmapping": 0,
                     "additive-blend": 1# bool
@@ -188,11 +188,11 @@ var F16_HUD = {
         obj.ralt = obj.get_text("radalt", HUD_FONT,9,1.1);
         obj.ralt.setAlignment("right-bottom-baseline");
         obj.ralt.setTranslation(35,0);
-        
-        
+
+
         #obj.alt_range.set("clip", "rect(75px, 10000px, 10000px, -10000px)"); # top,right,bottom,left
         #obj.ias_range.set("clip", "rect(125px, 10000px, 10000px, -10000px)"); # top,right,bottom,left
-        
+
         #append(obj.total, obj.ladder);
         append(obj.total, obj.heading_tape);
         #append(obj.total, obj.VV);
@@ -219,16 +219,16 @@ var F16_HUD = {
         append(obj.total, obj.window12);
         append(obj.total, obj.ralt);
         append(obj.total, obj.radalt_box);
-        
+
         obj.color = [0,1,0];
 
         obj.layer1 = obj.get_element("layer1");#main svg layer.
 
-        
+
 # A 2D 3x2 matrix with six parameters a, b, c, d, e and f is equivalent to the matrix:
-# a  c  0 e 
+# a  c  0 e
 # b  d  0 f
-# 0  0  1 0 
+# 0  0  1 0
 
 
         obj.flirPicHD = obj.svg.createChild("image")
@@ -244,7 +244,7 @@ var F16_HUD = {
         obj.max_symbols = 10;
         obj.tgt_symbols =  setsize([],obj.max_symbols);
 
-        
+
 #        obj.raltR = obj.svg.createChild("text")
 #                .setText("R")
 #                .setTranslation(sx*1*0.675633-5,sy*0.45)
@@ -262,9 +262,9 @@ var F16_HUD = {
 #                .hide()
 #                .setColor(0,1,0);
 #              append(obj.total, obj.raltFrame);
-        
-            
-            
+
+
+
         obj.speed_indicator = obj.svg.createChild("path")
                 .moveTo(0.25*sx*uv_used,sy*0.245)
                 .horiz(7)
@@ -478,7 +478,7 @@ append(obj.total, obj.speed_curr);
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
                 append(obj.total, obj.ccrpMarker);
-        
+
         var mr = 0.4;#milliradians
         obj.ASEC262 = obj.svg.createChild("path")#rdsearch (Allowable Steering Error Circle (ASEC))
             .moveTo(-262*mr,0)
@@ -542,11 +542,11 @@ append(obj.total, obj.speed_curr);
             #.set("z-index",10500)
             .setTranslation(sx*0.5*uv_used,sy*0.25);
             append(obj.total, obj.ASEC120Aspect);
-        
+
         mr = mr*1.5;#incorrect, but else in FG it will seem too small.
 
         obj.initUpdate =1;
-        
+
         obj.alpha = getprop("f16/avionics/hud-sym");
         obj.power = getprop("f16/avionics/hud-power");
 
@@ -578,13 +578,13 @@ append(obj.total, obj.speed_curr);
                 .setFontSize(8, 1.0);
 
         obj.svg.setColor(0.3,1,0.3);
-        
+
         ############################## new center origin stuff that used hud math #################
-        
-        
+
+
         obj.centerOrigin = obj.canvas.createGroup()
                            .setTranslation(HudMath.getCenterOrigin());
-        
+
 
         obj.rollPos = [0,25];
         var tickShort = 8;
@@ -701,14 +701,14 @@ append(obj.total, obj.speed_curr);
         append(obj.total, obj.flyup);
         obj.stby = obj.centerOrigin.createChild("text")
                 .setText("NO RAD")
-                .setTranslation(0,0)                
+                .setTranslation(0,0)
                 .setAlignment("center-top")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
                 .setFontSize(11, 1.1);
           append(obj.total, obj.stby);
-        
-                            
+
+
         obj.greatCircleSteeringCue = obj.centerOrigin.createChild("path")# nickname: tadpole
             .moveTo(-2.5,0)
             .arcSmallCW(2.5,2.5, 0, 2.5*2, 0)
@@ -718,7 +718,7 @@ append(obj.total, obj.speed_curr);
             .setStrokeLineWidth(1)
             .setColor(0,1,0);
         append(obj.total, obj.greatCircleSteeringCue);
-        
+
         obj.pipperLine = obj.centerOrigin.createChild("group");
         obj.pipperRadius = 15*mr;
         obj.pipper = obj.centerOrigin.createChild("path")
@@ -727,9 +727,9 @@ append(obj.total, obj.speed_curr);
             .arcSmallCW(obj.pipperRadius,obj.pipperRadius, 0, -obj.pipperRadius*2, 0)
             .moveTo(-2*mr,0)
             .arcSmallCW(2*mr,2*mr, 0, 2*mr*2, 0)
-            .arcSmallCW(2*mr,2*mr, 0, -2*mr*2, 0)                   
+            .arcSmallCW(2*mr,2*mr, 0, -2*mr*2, 0)
             .setStrokeLineWidth(1)
-            .setColor(0,1,0);                    
+            .setColor(0,1,0);
         #obj.pipperCross = obj.centerOrigin.createChild("path")
         #    .moveTo(-obj.pipperRadius,0)
         #    .horiz(obj.pipperRadius*2)
@@ -737,7 +737,7 @@ append(obj.total, obj.speed_curr);
         #    .vert(obj.pipperRadius*2)
         #    .setRotation(45*D2R)
         #    .setStrokeLineWidth(1)
-        #    .setColor(0,1,0); 
+        #    .setColor(0,1,0);
         append(obj.total, obj.pipper);
         append(obj.total, obj.pipperLine);
         var boxRadius = 10;
@@ -827,6 +827,22 @@ append(obj.total, obj.speed_curr);
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
         append(obj.total, obj.boreSymbol);
+        var boreY = HudMath.getCenterPosFromDegs(0,-3-4.55*0.5)[1]-HudMath.getCenterPosFromDegs(0,-3+4.55*0.5)[1];
+        var boreX = HudMath.getCenterPosFromDegs(3.25*0.5,-3)[0]-HudMath.getCenterPosFromDegs(-3.25*0.5,-3)[0];
+        obj.acmBoreSymbol = obj.centerOrigin.createChild("path")
+                .moveTo(-boreX/2,0)
+                .horiz(boreX)
+                .moveTo(0,-boreY/2)
+                .vert(boreY)
+                .setStrokeLineWidth(1)
+                .setColor(0,1,0);
+        append(obj.total, obj.acmBoreSymbol);
+        obj.acmVertSymbol = obj.centerOrigin.createChild("path")
+                .moveTo(0, 10)
+                .vert(1000)
+                .setStrokeLineWidth(1)
+                .setColor(0,1,0);
+        append(obj.total, obj.acmVertSymbol);
         obj.locatorAngle = obj.centerOrigin.createChild("text")
                 .setText("0")
                 .setAlignment("right-center")
@@ -841,7 +857,7 @@ append(obj.total, obj.speed_curr);
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
         append(obj.total, obj.locatorLine);
-        
+
         obj.tgpPointF = obj.centerOrigin.createChild("path")
                      .moveTo(-10*mr, -10*mr)
                      .horiz(20*mr)
@@ -863,8 +879,8 @@ append(obj.total, obj.speed_curr);
                      .setColor(0,0,0);
         append(obj.total, obj.tgpPointF);
         append(obj.total, obj.tgpPointC);
-            
-        
+
+
         var bracketsize = HudMath.getPosFromDegs(0,-13)[1]-HudMath.getPosFromDegs(0,-9)[1];#fudge factored for when raising seat it gets higher up in HUD where degrees are less. (is really 11 to 15)
         obj.bracket = obj.centerOrigin.createChild("path")
                 .moveTo(0,0)
@@ -874,7 +890,7 @@ append(obj.total, obj.speed_curr);
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
         append(obj.total, obj.bracket);
-        
+
         obj.cciplow = obj.centerOrigin.createChild("text")
                 .setText("LOW")
                 .setTranslation(0,0)
@@ -884,7 +900,7 @@ append(obj.total, obj.speed_curr);
                 .hide()
                 .setFontSize(11, 1.4);
         append(obj.total, obj.cciplow);
-        
+
         obj.VV = obj.centerOrigin.createChild("path")
             .moveTo(-5*mr,0)
             .arcSmallCW(5*mr,5*mr, 0, 5*mr*2, 0)
@@ -901,7 +917,7 @@ append(obj.total, obj.speed_curr);
             #.setTranslation(sx*0.5*uv_used,sy*0.25);
             append(obj.total, obj.VV);
         obj.localizer = obj.centerOrigin.createChild("group");
-        
+
         obj.ilsGroup  = obj.localizer.createChild("group");
         obj.gsGroup   = obj.localizer.createChild("group");
         obj.ils = obj.ilsGroup.createChild("path")
@@ -964,8 +980,8 @@ append(obj.total, obj.speed_curr);
                 .moveTo(8,0)
                 .horiz(4)
                 .moveTo(16,0)
-                .horiz(4)            
-                
+                .horiz(4)
+
                 .moveTo(-20,-2)
                 .vert(4)
                 .moveTo(20,-2)
@@ -1012,10 +1028,10 @@ append(obj.total, obj.speed_curr);
              .moveTo(-minuso, -i * distance)
              .horiz(-minuss)
              .vert(minuso*0.5)
-             
+
              .setStrokeLineWidth(1)
              .setColor(0,0,0));
-        
+
         for(var i = -17; i <= -1; i += 1) { # stipled lines
           #var rad = me.extrapolate(-i*5,10,90,8,45)*D2R;#as per US manual pitch lines bend down from 8 to 45 degrees
           append(obj.total, obj.ladder_group.createChild("path")
@@ -1038,7 +1054,7 @@ append(obj.total, obj.speed_curr);
                          .setStrokeLineWidth(1)
                          .setColor(0,0,0));
         }
-        
+
         obj.zenith = obj.ladder_group.createChild("path")
                         .setTranslation(0, -18 * distance)
                         .moveTo(0,-minuso*1.25)
@@ -1141,7 +1157,7 @@ append(obj.total, obj.speed_curr);
 
                          .setStrokeLineWidth(1)
                          .setColor(0,0,0);
-        
+
         append(obj.total, obj.appLine);
 
         #Horizon line
@@ -1152,8 +1168,8 @@ append(obj.total, obj.speed_curr);
                          .horiz(0.50*sx*uv_used-20*mr)
                          .setStrokeLineWidth(1)
                          .setColor(0,0,0));
-        
-        
+
+
         obj.thermometerScaleGrp = obj.svg.createChild("group");
         obj.thermoGroup = obj.thermometerScaleGrp.createChild("group");
         obj.thermoXstart = 0.80*sx*uv_used;
@@ -1194,7 +1210,7 @@ append(obj.total, obj.speed_curr);
                 .setFontSize(8,1.1)
                 .setFont(HUD_FONT)
                 .setAlignment("left-center")
-                .setTranslation(obj.thermoXstart+5,sy*0.06);                
+                .setTranslation(obj.thermoXstart+5,sy*0.06);
         obj.thermometerScale = obj.thermometerScaleGrp.createChild("path")
                 .moveTo(obj.thermoXstart,sy*0.39)#0
                 .horiz(5)
@@ -1244,7 +1260,7 @@ append(obj.total, obj.speed_curr);
                 .horiz(5)
                 .setStrokeLineWidth(1)
                 .setColor(1,0,0);
-        
+
         append(obj.total, obj.thermometerScale);
         append(obj.total, obj.thermometerText2);
         append(obj.total, obj.thermometerText4);
@@ -1254,7 +1270,7 @@ append(obj.total, obj.speed_curr);
         append(obj.total, obj.thermometerText15);
         append(obj.scaling, obj.thermometerScaleGrp);
         obj.hidingScales = 0;
-        
+
         input = {
                  IAS                       : "/velocities/airspeed-kt",
                  calibrated                : "/fdm/jsbsim/velocities/vc-kts",
@@ -1488,7 +1504,7 @@ append(obj.total, obj.speed_curr);
                                                     obj.ils.show();
                                                     obj.ilsOff.hide();
                                                 }
-                                                
+
                                                 if (hdp.hasGS and hdp.GSinRange) {
                                                     obj.gsGroup.setTranslation(0,-20*hdp.GSDeg);
                                                     #printf("GS %d", hdp.GSDeg*10);
@@ -1549,7 +1565,7 @@ append(obj.total, obj.speed_curr);
                                             obj.ladder_group.hide();
                                             return;
                                           }
-                                        
+
                                         var result = HudMath.getDynamicHorizon(5,0.5,0.5,0.7,0.5,hdp.drift < 2,-0.25);
                                         if (hdp.servTurn) {
                                             obj.h_rot.setRotation(result[1]);
@@ -1564,7 +1580,7 @@ append(obj.total, obj.speed_curr);
                                         obj.ladder_group.update();
                                         obj.horizon_group.update();
                                         return;
-                                        
+
                                       }),
             props.UpdateManager.FromHashList(["altitude_agl_ft","cara","measured_altitude","altSwitch","alow","dgft"], 1.0, func(hdp)
                                       {
@@ -1611,12 +1627,12 @@ append(obj.total, obj.speed_curr);
                                             obj.thermoEnd2 = 11*obj.thermoY100;
                                             if (obj.agl < 1000) {
                                                 obj.thermoEnd = obj.agl*0.01*obj.thermoY100;
-                                            } else {                                                
+                                            } else {
                                                 obj.thermoEnd = obj.extrapolate(obj.agl, 1000, 1500, obj.thermoEnd1, obj.thermoEnd2);
                                             }
                                             if (hdp.alow < 1000) {
                                                 obj.thermoAlow = hdp.alow*0.01*obj.thermoY100;
-                                            } else {                                                
+                                            } else {
                                                 obj.thermoAlow = obj.extrapolate(hdp.alow, 1000, 1500, obj.thermoEnd1, obj.thermoEnd2);
                                             }
                                             obj.thermoGroup.removeAllChildren();
@@ -1670,7 +1686,7 @@ append(obj.total, obj.speed_curr);
                                       }),
             props.UpdateManager.FromHashList(["HUD_SCA", "DGFT"], 0.5, func(hdp)
                                       {
-                                            
+
                                           if (hdp.HUD_SCA and !hdp.dgft and obj.hidingScales) {
                                             foreach(tck;obj.scaling) {
                                                 tck.show();
@@ -1685,7 +1701,7 @@ append(obj.total, obj.speed_curr);
                                           }
                                       }),
             props.UpdateManager.FromHashList(["calibrated", "GND_SPD", "HUD_VEL", "gear_down"], 0.5, func(hdp)
-                                      {   
+                                      {
                                           # the real F-16 has calibrated airspeed as default in HUD.
                                           var pitot = hdp.servPitot and hdp.servStatic;
                                           if (hdp.HUD_VEL == 1 or hdp.gear_down or hdp.dgft) {
@@ -1702,7 +1718,7 @@ append(obj.total, obj.speed_curr);
                                             obj.speed_type.setText("T");
                                           } else {
                                             if (hdp.servSpeed) {
-                                                obj.ias_range.setTranslation(skew_spd, hdp.GND_SPD * ias_range_factor * pitot);                                            
+                                                obj.ias_range.setTranslation(skew_spd, hdp.GND_SPD * ias_range_factor * pitot);
                                                 obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.GND_SPD));
                                             }
                                             obj.speed_type.setText("G");
@@ -1719,7 +1735,7 @@ append(obj.total, obj.speed_curr);
             props.UpdateManager.FromHashList(["heading", "headingMag", "useMag","gear_down"], 0.1, func(hdp)
                                       {
                                           var head = geo.normdeg(hdp.useMag?hdp.headingMag:hdp.heading);
-                                          
+
                                           if (head < 180)
                                             obj.heading_tape_position = -head*54/10+skew_hdg;
                                           else
@@ -1739,7 +1755,7 @@ append(obj.total, obj.speed_curr);
                                             obj.head_curr.setText(sprintf("%03d",head));
                                             obj.heading_tape.setTranslation (obj.heading_tape_position,obj.heading_tape_positionY);
                                           }
-                                          
+
                                       }
                                             ),
             props.UpdateManager.FromHashList(["time_until_crash","vne","warn", "elapsed", "data"], 0.05, func(hdp)
@@ -1753,6 +1769,9 @@ append(obj.total, obj.speed_curr);
                                                          obj.flyup.setText("LIMIT");
                                                          obj.flyup.show();
                                                  } elsif (hdp.warn == 1 and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
+                                                         obj.flyup.setText("WARN");
+                                                         obj.flyup.show();
+                                                 } elsif (getprop("f16/fcs/adv-mode-sel") and getprop("instrumentation/tfs/malfunction") and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
                                                          obj.flyup.setText("WARN");
                                                          obj.flyup.show();
                                                  } elsif (hdp.bingo == 1 and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
@@ -1832,7 +1851,7 @@ append(obj.total, obj.speed_curr);
                                              }
                                             ),
             props.UpdateManager.FromHashValue("window3_txt", nil, func(txt)
-                                      { 
+                                      {
                                           if (txt != nil and txt != ""){
                                               obj.window3.setText(txt);
                                               obj.window3.show();
@@ -1921,7 +1940,7 @@ append(obj.total, obj.speed_curr);
                                     }),
 
         ];
-        
+
         #EEGS: (other gun sights not made: lcos snap sslc)
         obj.eegsGroup = obj.centerOrigin.createChild("group");
         obj.funnelParts = 17;#number of segments in funnel sides. If increase, remember to increase all relevant vectors also.
@@ -1936,13 +1955,13 @@ append(obj.total, obj.speed_curr);
         obj.eegsLoop = maketimer(obj.averageDt, obj, obj.displayEEGS);
         obj.eegsLoop.simulatedTime = 1;
         obj.resetGunPos();
-        
+
         obj.showmeCCIP = 0;
         obj.NzMax = 1.0;
-        
+
         return obj;
     },
-    
+
     #######################################################################################################
     #######################################################################################################
     ########                                                                                     ##########
@@ -1954,7 +1973,7 @@ append(obj.total, obj.speed_curr);
 
     update : func(hdp) {
         HudMath.reCalc();
-        
+
         if (hdp.nReset) {
             me.NzMax = 1.0;
             setprop("f16/avionics/n-reset",0);
@@ -1980,22 +1999,22 @@ append(obj.total, obj.speed_curr);
         me.Vz   =    hdp.current_view_y_offset_m; # view Z position (0.94 meter per default)
         me.Vx   =    hdp.current_view_z_offset_m; # view X position (0.94 meter per default)
         setprop("f16/hud/texels-up", HudMath.getBorePos()[1]);
-        
+
         me.Vy   =    hdp.current_view_x_offset_m;
-        
+
         me.pixelPerMeterX = HudMath.pixelPerMeterX;
         me.pixelPerMeterY = HudMath.pixelPerMeterY;
-        
+
         me.pixelside = me.pixelPerMeterX*me.Vy;#*!(use_war_hud);# slide whole hud sideways when pilot moves head sideways
-        
+
         me.svg.setTranslation(me.pixelside+tran_x, tran_y);
         me.centerOrigin.setTranslation(HudMath.getCenterOrigin()[0]+me.pixelside, HudMath.getCenterOrigin()[1]);
         me.centerOrigin.update();
         me.svg.update();
-        
-        
+
+
         me.submode = 0;
-        
+
         if (1) {
             var vvpos = HudMath.getFlightPathIndicatorPos();
             if (hdp.drift < 2) {
@@ -2026,13 +2045,13 @@ append(obj.total, obj.speed_curr);
             hdp.VV_x = hdp.beta;
             hdp.VV_y = hdp.alpha;
         }
-        
+
 
         # UV mapped to x: uv_x1 to uv_x2
         me.texelPerDegreeX = HudMath.getPixelPerDegreeXAvg(5);
         me.texelPerDegreeY = HudMath.getPixelPerDegreeYAvg(5);
-        
-        
+
+
         me.xBore = int(me.sx*0.5/(256/flirImageReso));
         me.yBore = flirImageReso-1-int((HudMath.getCenterOrigin()[1]+HudMath.getBorePos()[1])/(256/flirImageReso));
         me.distMin = hdp.groundspeed_kt*getprop("f16/avionics/hud-flir-distance-min");
@@ -2049,7 +2068,7 @@ append(obj.total, obj.speed_curr);
                     me.value = 0;
                     me.start = geo.viewer_position();
                     me.vecto = [math.cos(me.xDevi*D2R)*math.cos(me.yDevi*D2R),math.sin(-me.xDevi*D2R)*math.cos(me.yDevi*D2R),math.sin(me.yDevi*D2R)];
-                    
+
                     me.direction = vector.Math.vectorToGeoVector(vector.Math.rollPitchYawVector(getprop("orientation/roll-deg"),getprop("orientation/pitch-deg"),-getprop("orientation/heading-deg"), me.vecto),me.start);
                     me.intercept = get_cart_ground_intersection({x:me.start.x(),y:me.start.y(),z:me.start.z()}, me.direction);
                     if (me.intercept == nil) {
@@ -2097,19 +2116,19 @@ append(obj.total, obj.speed_curr);
             hdp.window11_txt = "";
             hdp.window12_txt = "";
 
-            
+
             me.asec262 = 0;
             me.asec120 = 0;
             me.asec100 = 0;
             me.asec65  = 0;
             var eegsShow = 0;
             var currASEC = nil;
-            
+
             if(hdp.master_arm != 0 and pylons.fcs != nil)
             {
                 hdp.weapon_selected = pylons.fcs.selectedType;
                 hdp.weapn = pylons.fcs.getSelectedWeapon();
-                
+
                 if (hdp.weapon_selected != nil)
                 {
                     var mr = 0.4;
@@ -2208,10 +2227,10 @@ append(obj.total, obj.speed_curr);
                     } elsif (hdp.weapon_selected == "B61-12") {
                         hdp.window9_txt = sprintf("%d B6112", pylons.fcs.getAmmo());
                     } else hdp.window9_txt = "";
-                    
-                    
+
+
                 }
-                
+
                 if (radar_system.apg68Radar.getPriorityTarget() != nil) {
                     if (radar_system.apg68Radar.getPriorityTarget().get_Callsign() != nil) {
                         hdp.window6_txt = radar_system.apg68Radar.getPriorityTarget().get_Callsign();
@@ -2229,11 +2248,24 @@ append(obj.total, obj.speed_curr);
                         me.TA_text = sprintf("TA%3d", me.laal*0.001);
                         hdp.window3_txt = sprintf("F%05.1f", me.lard*M2NM);#slant range
                     }
-                    
+
                     hdp.window6_txt ~= "/"~radar_system.apg68Radar.getPriorityTarget().getModel();
                     if (size(hdp.window6_txt)>14) {
                         hdp.window6_txt = substr(hdp.window6_txt,0,14);
                     }
+                } elsif (armament.contactPoint != nil) {
+                    me.lardC = armament.contactPoint.getCoord();
+                    me.lard = radar_system.self.getCoord().direct_distance_to(me.lardC);
+                    me.laal = armament.contactPoint.get_altitude();
+
+                    if (me.lard ==nil or me.laal == nil) {
+                        me.TA_text = "TA XX";
+                        hdp.window3_txt = "FXXX.X";#slant range
+                    } else {
+                        me.TA_text = sprintf("TA%3d", me.laal*0.001);
+                        hdp.window3_txt = sprintf("F%05.1f", me.lard*M2NM);#slant range
+                    }
+                    hdp.window6_txt = "";
                 } else {
                     hdp.window3_txt = "";
                     hdp.window6_txt = "";
@@ -2319,18 +2351,18 @@ append(obj.total, obj.speed_curr);
                 } else {
                     hdp.window6_txt = "";
                 }
-                
+
                 var slant = "";
-                
+
                 var r = steerpoints.getCurrentSlantRange();
                 if (r != nil) {
                     if (r >= 1) {
                         slant = sprintf("B %5.1f",r);#tenths of NM.
                     } else {
                         slant = sprintf("B %4.2f",r);#should really be hundreds of feet, but that will confuse everyone.
-                    }                      
+                    }
                 }
-                
+
                 hdp.window3_txt = slant;
             }
             me.ASEC262.setVisible(me.asec262);
@@ -2343,7 +2375,7 @@ append(obj.total, obj.speed_curr);
             } elsif (!eegsShow and me.eegsLoop.isRunning) {
                 me.eegsLoop.stop();
             }
-            
+
             me.bullPt = steerpoints.getNumber(555);
             me.bullOn = me.bullPt != nil;
             if (hdp.bingo and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
@@ -2360,12 +2392,12 @@ append(obj.total, obj.speed_curr);
                 if (me.bullDistToMe > 999) me.bullDistToMe = 999;
                 me.bullDirToMe = sprintf("%03d", me.bullDirToMe);
 				me.bullDistToMe = sprintf("%02d", me.bullDistToMe);
-			    hdp.window11_txt = sprintf("%s %s", me.bullDirToMe, me.bullDistToMe); 
+			    hdp.window11_txt = sprintf("%s %s", me.bullDirToMe, me.bullDistToMe);
 			} else {
                 hdp.window11_txt = "";
 			}
-			
-            
+
+
             if (!hdp.cara) {
                 me.alow_text = "AL";
             } elsif (hdp.alow<hdp.altitude_agl_ft or math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0 or hdp.gear_down) {
@@ -2373,7 +2405,7 @@ append(obj.total, obj.speed_curr);
             } else {
                 me.alow_text = "";
             }
-            
+
             if ((hdp.dgft or me.ALOW_top) and me["altScaleMode"] != 2) {
                 hdp.window1_txt = me.alow_text;
                 hdp.window10_txt = me.TA_text;# Since MLU Tape 2
@@ -2381,18 +2413,18 @@ append(obj.total, obj.speed_curr);
                 hdp.window10_txt = me.alow_text;
                 hdp.window1_txt = "";
             }
-            
+
             hdp.window7_txt = sprintf("  %.2f",hdp.mach);
         }
 
-        
+
 
 
         me.locatorLineShow = 0;
 #        if (hdp.FrameCount == 1 or hdp.FrameCount == 3 or me.initUpdate == 1) {
         me.target_idx = 0;
         me.designated = 0;
-            
+
         me.target_locked.setVisible(0);
 
         me.irL = 0;
@@ -2429,7 +2461,7 @@ append(obj.total, obj.speed_curr);
                         me.submode = 1;
                         me.irCross.setTranslation(HudMath.getCenterPosFromDegs(0,-4));
                         me.irB = 1;
-                        
+
                     }
                 }
             }
@@ -2437,7 +2469,9 @@ append(obj.total, obj.speed_curr);
         me.designatedDistanceFT = nil;
         me.groundDistanceFT = nil;
         me.u = radar_system.apg68Radar.getPriorityTarget();
-        if (me.u != nil) {            
+        var showACMBore = 0;
+        var showACMVert = 0;
+        if (me.u != nil) {
             me.lastCoord = me.u.getLastCoord();
             if (me.lastCoord == nil) {
                 print("HUD lastCoord has no valid bleps! ("~radar_system.apg68Radar.currentMode.longName~") ["~size(me.u.getBleps())~" bleps]");
@@ -2533,13 +2567,22 @@ append(obj.total, obj.speed_curr);
                             me.tgt.update();
                         }
                         if (ht_debug) {
-                            printf("%-10s %f,%f [%f,%f,%f] :: %f,%f",me.callsign,me.xc,me.yc, me.devs[0], me.devs[1], me.devs[2], me.u_dev_rad*D2R, me.u_elev_rad*D2R); 
+                            printf("%-10s %f,%f [%f,%f,%f] :: %f,%f",me.callsign,me.xc,me.yc, me.devs[0], me.devs[1], me.devs[2], me.u_dev_rad*D2R, me.u_elev_rad*D2R);
                         }
                         me.target_idx += 1;
                     }
                 } else {
                     print("[ERROR]: HUD too many targets ",me.target_idx);
                 }
+            }
+        } else {
+            showACMBore = radar_system.apg68Radar.currentMode.longName == "Air Combat Mode Bore" and radar_system.apg68Radar.enabled and !getprop("payload/armament/hmd-active");
+            if (showACMBore) {
+                me.acmBoreSymbol.setTranslation(HudMath.getCenterPosFromDegs(0,-3));
+            }
+            showACMVert = radar_system.apg68Radar.currentMode.longName == "Air Combat Mode 10x60" and radar_system.apg68Radar.enabled;
+            if (showACMVert) {
+                me.acmVertSymbol.setTranslation(HudMath.getCenterPosFromDegs(0, 0));
             }
         }
         for (me.nv = me.target_idx; me.nv < me.max_symbols;me.nv += 1) {
@@ -2550,7 +2593,9 @@ append(obj.total, obj.speed_curr);
         }
 
         me.ASC.setVisible(showASC);
-        
+        me.acmBoreSymbol.setVisible(showACMBore);
+        me.acmVertSymbol.setVisible(showACMVert);
+
         #print(me.irS~" "~me.irL);
 
         me.locatorLine.setVisible(me.locatorLineShow);
@@ -2680,7 +2725,7 @@ append(obj.total, obj.speed_curr);
             me.ded4.hide();
         }
 
-        if (tgp.flir_updater.click_coord_cam != nil and getprop("f16/avionics/tgp-lock")) {# hdp.tgp_mounted and 
+        if (tgp.flir_updater.click_coord_cam != nil and getprop("f16/avionics/tgp-lock")) {# hdp.tgp_mounted and
             if (getprop("sim/view[105]/heading-offset-deg")==0 and getprop("sim/view[105]/pitch-offset-deg")==-30 and armament.contactPoint != nil) {
                 #var b = geo.normdeg180(armament.contactPoint.get_relative_bearing());
                 #var p = armament.contactPoint.getElevation()-hdp.pitch;
@@ -2689,6 +2734,7 @@ append(obj.total, obj.speed_curr);
                 var x = me.clamp(xy[0],-me.sx*0.45,me.sx*0.45);
                 #var y = me.clamp(-p*me.texelPerDegreeY+me.sy-me.texels_up_into_hud,me.sy*0.05,me.sy*0.95);
                 #var x = me.clamp(b*me.texelPerDegreeX+me.sx*0.5,me.sx*0.025,me.sx*0.975);
+                #printf("TGP idle: %.2f,%.2f",xy[2],xy[3]);
                 if (y != xy[1] or x != xy[0]) {
                     if (xy[0] != 0 and xy[1] != 0) {
                         var x_scale = me.sx*0.40/math.abs(xy[0]);
@@ -2713,13 +2759,26 @@ append(obj.total, obj.speed_curr);
             } else {
                 var b = geo.normdeg180(getprop("sim/view[105]/heading-offset-deg"));
                 var p = getprop("sim/view[105]/pitch-offset-deg");
+                #printf("TGP stat: %.2f,%.2f",b,p);
+                var behind = 0;
+                if(b < -90) {
+                    b = -180-b;
+                    p = -p;
+                    behind = 1;
+                } elsif (b > 90) {
+                    b = 180-b;
+                    p = -p;
+                    behind = 1;
+                }
+
                 var xy = HudMath.getCenterPosFromDegs(b,p);
-                var y = me.clamp(xy[1],-me.sy*0.40,me.sy*0.40);
                 var x = me.clamp(xy[0],-me.sx*0.45,me.sx*0.45);
-                if (y != xy[1] or x != xy[0]) {
+                var y = me.clamp(xy[1],-me.sy*0.40,me.sy*0.40);
+
+                if (y != xy[1] or x != xy[0] or behind) {
                     if (xy[0] != 0 and xy[1] != 0) {
-                        var x_scale = me.sx*0.40/math.abs(xy[0]);
-                        var y_scale = me.sy*0.45/math.abs(xy[1]);
+                        var x_scale = me.sx*0.45/math.abs(xy[0]);
+                        var y_scale = me.sy*0.40/math.abs(xy[1]);
                         if (x_scale < y_scale) {
                             x = xy[0] * x_scale;
                             y = xy[1] * x_scale;
@@ -2742,7 +2801,7 @@ append(obj.total, obj.speed_curr);
             me.tgpPointF.hide();
             me.tgpPointC.hide();
         }
-		
+
         if (f16.SOI == 1) {
 		    me.soi_indicator.show();
         } else {
@@ -2753,7 +2812,7 @@ append(obj.total, obj.speed_curr);
         me.initUpdate = 0;
 
         hdp.submode = me.submode;
-        
+
         foreach(var update_item; me.update_items)
         {
             update_item.update(hdp);
@@ -2765,7 +2824,7 @@ append(obj.total, obj.speed_curr);
         transfer_mode = hdp.window2_txt;
         transfer_g    = hdp.window12_txt;
         return;
-        me.window1.setText("window  1").show();        
+        me.window1.setText("window  1").show();
         me.window2.setText("window  2").show();
         me.window3.setText("window  3").show();
         me.window4.setText("window  4").show();
@@ -2776,7 +2835,7 @@ append(obj.total, obj.speed_curr);
         me.window9.setText("window  9").show();
         me.window10.setText("window 10").show();
         me.window11.setText("window 11").show();
-        me.window12.setText("window 12").show();# 
+        me.window12.setText("window 12").show();#
     },
 
 #  12
@@ -2796,20 +2855,20 @@ append(obj.total, obj.speed_curr);
 #
 #
 #   30    32
-#    3    37 
+#    3    37
 #    4      26
 #   7       25
 #  8        10
 # 15        13
 # 35        14
-# 36       
+# 36
 
 #Text windows on the HUD (FG F-16 May 11 2021)
-# 12 currG           1 not used 
+# 12 currG           1 not used
 #                   10 ALOW
 # 2 mode             3 slant            / callsign
 # 7 mach             4 eta              / target angels
-# 8 maxG             5 waypoint         
+# 8 maxG             5 waypoint
 # 9 weap             6 not used
 # 11 fuel
 
@@ -2817,9 +2876,9 @@ append(obj.total, obj.speed_curr);
 # 12 currG           1 ALOW-top
 #
 #                   10 ALOW             / target angels
-# 2 mode             3 slant            
+# 2 mode             3 slant
 # 7 mach             4 eta              / time to go      TODO: CCRP: time to release / closure rate in kt: A/A guns
-# 8 maxG             5 waypoint         
+# 8 maxG             5 waypoint
 # 9 weap             6 callsign
 # 11 fuel
 #
@@ -2837,7 +2896,7 @@ append(obj.total, obj.speed_curr);
           append(me.gunPos, tmp);
         }
     },
-    
+
     makeVector: func (siz,content) {
         var vec = setsize([],siz*2);
         var k = 0;
@@ -2856,7 +2915,7 @@ append(obj.total, obj.speed_curr);
         el.setFont(font).setFontSize(size,ratio);
         return el;
     },
-    
+
     getAltTxt: func (alt) {
         if (alt < 1000) {
             me.txtRAlt = sprintf("%03d",math.round(alt,10));
@@ -2879,7 +2938,7 @@ append(obj.total, obj.speed_curr);
         return me.txtRAlt; # always return 6 char string
     },
 
-    
+
 #
 #
 # Get an element from the SVG; handle errors; and apply clip rectangle
@@ -2895,7 +2954,7 @@ append(obj.total, obj.speed_curr);
         var clip_el = me.svg.getElementById(id ~ "_clip");
         if (clip_el != nil)
         {
-            
+
             var tran_rect = clip_el.getTransformedBounds();
 
             if (use_war_hud and id == "heading-scale") {
@@ -2907,7 +2966,7 @@ append(obj.total, obj.speed_curr);
                 clip_el.setVisible(0);
             #}
 
-            var clip_rect = sprintf("rect(%d,%d, %d,%d)", 
+            var clip_rect = sprintf("rect(%d,%d, %d,%d)",
                                    tran_rect[1], # 0 ys
                                    tran_rect[2],  # 1 xe
                                    tran_rect[3], # 2 ye
@@ -2930,7 +2989,7 @@ append(obj.total, obj.speed_curr);
                 return 0;
             }
             var selW = pylons.fcs.getSelectedWeapon();
-            if (selW != nil and !hdp.CCIP_active and 
+            if (selW != nil and !hdp.CCIP_active and
                 (selW.type=="MK-82" or selW.type=="MK-82AIR" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selW.type=="GBU-54" or selW.type=="GBU-24" or selW.type=="CBU-87" or selW.type=="CBU-105" or selW.type=="AGM-154A" or selW.type=="B61-7" or selW.type=="B61-12") and selW.status == armament.MISSILE_LOCK ) {
 
                 if (selW.guidance == "unguided") {
@@ -2958,10 +3017,16 @@ append(obj.total, obj.speed_curr);
                 }
                 me.ldr = trgt.getLastAZDeviation();
                 if (me.ldr == nil) {
-                    me.solutionCue.hide();
-                    me.ccrpMarker.hide();
-                    me.bombFallLine.hide();
-                    return 0;
+                    me.blepCoord = trgt.get_Coord();
+                    if (trgt == armament.contactPoint and me.blepCoord != nil) {
+                        me.blepHeading = radar_system.self.getCoord().course_to(me.blepCoord);
+                        me.ldr = geo.normdeg180(me.blepHeading-radar_system.self.getHeading());
+                    } else {
+                        me.solutionCue.hide();
+                        me.ccrpMarker.hide();
+                        me.bombFallLine.hide();
+                        return 0;
+                    }
                 }
                 me.bombFallLine.setTranslation(me.ldr*me.texelPerDegreeX,0);
                 me.ccrpMarker.setTranslation(me.ldr*me.texelPerDegreeX,0);
@@ -2983,7 +3048,7 @@ append(obj.total, obj.speed_curr);
             return 0;
         }
     },
-    
+
     CCIP: func (hdp) {
         me.showPipper = 0;
         me.showPipperCross = 0;
@@ -3000,7 +3065,7 @@ append(obj.total, obj.speed_curr);
                         return 0;
                     }
                     me.showme = TRUE;
-                    
+
                     #me.myOwnPos = geo.aircraft_position();
                     #me.xyz = {"x":me.myOwnPos.x(),                  "y":me.myOwnPos.y(),                 "z":me.myOwnPos.z()};
                     #me.dir = {"x":me.ccipPos[0].x()-me.myOwnPos.x(),  "y":me.ccipPos[0].y()-me.myOwnPos.y(), "z":me.ccipPos[0].z()-me.myOwnPos.z()};
@@ -3069,7 +3134,7 @@ append(obj.total, obj.speed_curr);
         me.pipperLine.setVisible(me.showPipper);
         return me.showPipperCross?-1:1;
     },
-    
+
     displayEEGS: func() {
         #note: this stuff is expensive like hell to compute, but..lets do it anyway.
         var strf = getprop("f16/avionics/strf");
@@ -3082,13 +3147,13 @@ append(obj.total, obj.speed_curr);
         } else {
             #printf("dt %05.3f",me.eegsMe.dt);
             me.lastTime = st;
-            
+
             me.eegsMe.hdg   = getprop("orientation/heading-deg");
             me.eegsMe.pitch = getprop("orientation/pitch-deg");
             me.eegsMe.roll  = getprop("orientation/roll-deg");
-            
+
             var hdp = {roll:me.eegsMe.roll,current_view_z_offset_m: getprop("sim/current-view/z-offset-m")};
-            
+
             #var geodPos = aircraftToCart({x:-getprop("sim/current-view/z-offset-m"), y:getprop("sim/current-view/x-offset-m"), z: -getprop("sim/current-view/y-offset-m")});
             #me.eegsMe.ac.set_xyz(geodPos.x, geodPos.y, geodPos.z);#position of pilot eyes in aircraft
             me.eegsMe.ac = geo.aircraft_position();
@@ -3123,7 +3188,7 @@ append(obj.total, obj.speed_curr);
                 }
 
                 # compute display positions of pipper on hud
-                
+
                 if (me.eegsMe.allow and me.groundDistanceFT != nil) {
                     for (var ll = l-1;ll <= l;ll+=1) {
                         var ac    = me.gunPos[ll][0][1];
@@ -3134,7 +3199,7 @@ append(obj.total, obj.speed_curr);
                         me.eegsMe.shellPosDist[ll] = ac.direct_distance_to(pos)*M2FT;
                         me.eegsMe.shellPosX[ll] = me.eegsMe.posTemp[0];#me.eegsMe.xcS;
                         me.eegsMe.shellPosY[ll] = me.eegsMe.posTemp[1];#me.eegsMe.ycS;
-                        
+
                         if (l == ll and me.strfRange < 10000) {
                             var highdist = me.eegsMe.shellPosDist[ll];
                             var lowdist = me.eegsMe.shellPosDist[ll-1];
@@ -3159,7 +3224,7 @@ append(obj.total, obj.speed_curr);
                         me.eegsMe.shellPosDist[l] = ac.direct_distance_to(pos)*M2FT;
                         me.eegsMe.shellPosX[l] = me.eegsMe.posTemp[0];#me.eegsMe.xcS;
                         me.eegsMe.shellPosY[l] = me.eegsMe.posTemp[1];#me.eegsMe.ycS;
-                        
+
                         if (me.designatedDistanceFT != nil and !me.drawEEGSPipper) {
                           if (l != 0 and me.eegsMe.shellPosDist[l] >= me.designatedDistanceFT and me.eegsMe.shellPosDist[l]>me.eegsMe.shellPosDist[l-1]) {
                             var highdist = me.eegsMe.shellPosDist[l];
@@ -3234,19 +3299,19 @@ append(obj.total, obj.speed_curr);
                 }
                 me.eegsGroup.update();
             }
-            
-            
-            
-            
+
+
+
+
             #calc shell positions
-            
+
             # speed = groundspeed vector + aircraftvector with shell speed for magnitude
-            # 
+            #
 
             me.eegs_ac_north_fps = getprop("velocities/speed-north-fps");
             me.eegs_ac_east_fps  = getprop("velocities/speed-east-fps");
             me.eegs_ac_down_fps  = getprop("velocities/speed-down-fps");
-            
+
             me.eegs_sm_down_fps       = -math.sin(me.eegsMe.pitch * D2R) * (me.hydra?2000:3379);# 3379 = muzzle velocity
             me.eegs_sm_horizontal_fps = math.cos(me.eegsMe.pitch * D2R) * (me.hydra?2000:3379);
             me.eegs_sm_north_fps      = math.cos(me.eegsMe.hdg * D2R) * me.eegs_sm_horizontal_fps;
@@ -3266,26 +3331,26 @@ append(obj.total, obj.speed_curr);
                 me.eegsMe.hdg = me.eegs_hdging;
                 me.eegsMe.pitch = me.eegs_ptch;
             }
-            
+
             me.eegsMe.vel = me.eegs_total_fps;#getprop("velocities/uBody-fps")+2041;#2041 = speed
-            
+
             #me.eegsMe.geodPos = aircraftToCart({x:3.16, y:-0.81, z: -0.17});#position of gun in aircraft (x and z inverted)
             #me.eegsMe.eegsPos.set_xyz(me.eegsMe.geodPos.x, me.eegsMe.geodPos.y, me.eegsMe.geodPos.z);
             me.eegsMe.geodPos = aircraftToCart({x:0, y:-0.81, z: -(0.17-getprop("sim/current-view/y-offset-m"))});#position of gun in aircraft (x and z inverted)
             me.eegsMe.eegsPos.set_xyz(me.eegsMe.geodPos.x, me.eegsMe.geodPos.y, me.eegsMe.geodPos.z);
             #me.eegsMe.eegsPos = geo.Coord.new(me.eegsMe.ac);
             me.eegsMe.altC = me.eegsMe.eegsPos.alt();
-            
+
             me.eegsMe.rs = armament.AIM.rho_sndspeed(me.eegsMe.altC*M2FT);#simplified
             me.eegsMe.rho = me.eegsMe.rs[0];
             me.eegsMe.mass =  (me.hydra?23.6:0.226) * armament.LBM2SLUGS;#0.1069=lbs
-            
+
             #print("x,y");
             #printf("%d,%d",0,0);
             #print("-----");
             var multi = (strf or me.hydra)?2:1;
             for (var j = 0;j < me.funnelParts*multi;j+=1) {
-                
+
                 #calc new speed
                 me.eegsMe.Cd = drag(me.eegsMe.vel/ me.eegsMe.rs[1],me.hydra?0:0.09);#0.193=cd
                 me.eegsMe.q = 0.5 * me.eegsMe.rho * me.eegsMe.vel * me.eegsMe.vel;
@@ -3293,44 +3358,44 @@ append(obj.total, obj.speed_curr);
                 me.eegsMe.vel -= me.eegsMe.deacc * me.averageDt;
                 me.eegsMe.speed_down_fps       = -math.sin(me.eegsMe.pitch * D2R) * (me.eegsMe.vel);
                 me.eegsMe.speed_horizontal_fps = math.cos(me.eegsMe.pitch * D2R) * (me.eegsMe.vel);
-                
+
                 me.eegsMe.speed_down_fps += 9.81 *M2FT *me.averageDt;
-                
-                
-                 
+
+
+
                 me.eegsMe.altC -= (me.eegsMe.speed_down_fps*me.averageDt)*FT2M;
-                
-                
+
+
                 #printf("altC %d   vel_z %d   acc_z=%d",me.eegsMe.altC,me.eegsMe.vel_z,me.eegsMe.acc * averageDt);
-                
-                
+
+
                 me.eegsMe.dist = (me.eegsMe.speed_horizontal_fps*me.averageDt)*FT2M;
-                
+
                 #printf("vel_x %d  acc_x %d", me.eegsMe.vel_x,me.eegsMe.acc);
                 #printf("pitch=%.1f  vel=%d  vdown=%.1f",me.eegsMe.pitch, me.eegsMe.vel, me.eegsMe.speed_down_fps, );
                 me.eegsMe.eegsPos.apply_course_distance(me.eegsMe.hdg, me.eegsMe.dist);
                 me.eegsMe.eegsPos.set_alt(me.eegsMe.altC);
-                
+
                 var old = me.gunPos[j];
                 me.gunPos[j] = [[geo.Coord.new(me.eegsMe.eegsPos),me.eegsMe.ac, me.eegsMe.pitch]];
                 for (var m = 0;m<j+1;m+=1) {
                     append(me.gunPos[j], old[m]);
-                } 
-                
+                }
+
                 #print(me.eegsMe.speed_down_fps*me.eegsMe.speed_down_fps+me.eegsMe.speed_horizontal_fps*me.eegsMe.speed_horizontal_fps);
                 #print(me.eegsMe.speed_down_fps*me.eegsMe.speed_down_fps);
                 #print(me.eegsMe.speed_horizontal_fps*me.eegsMe.speed_horizontal_fps);
-                
+
                 #if (j==0) {
                 #    var p = math.atan2(me.eegsMe.altC-me.eegsMe.ac.alt(),me.eegsMe.eegsPos.distance_to(me.eegsMe.ac))*R2D;
                     #printf("next %.2f alt %.2f our-pitch %.2f our-alt %.2f",p-getprop("orientation/pitch-deg"),me.eegsMe.altC,getprop("orientation/pitch-deg"),me.eegsMe.ac.alt());
                 #    printf("shot heading %.2f bearing %.2f", me.eegsMe.hdg, me.eegsMe.ac.course_to(me.eegsMe.eegsPos));
                 #    printf("dist=%d vel=%d realdist=%d",me.eegsMe.dist,me.eegsMe.vel,me.eegsMe.eegsPos.distance_to(me.eegsMe.ac));
                     #me.eegsMe.eegsPos.dump();
-                #}                
+                #}
                 me.eegsMe.vel = math.sqrt(me.eegsMe.speed_down_fps*me.eegsMe.speed_down_fps+me.eegsMe.speed_horizontal_fps*me.eegsMe.speed_horizontal_fps);
                 me.eegsMe.pitch = math.atan2(-me.eegsMe.speed_down_fps,me.eegsMe.speed_horizontal_fps)*R2D;
-            }                        
+            }
         }
     },
     extrapolate: func (x, x1, x2, y1, y2) {
@@ -3340,7 +3405,7 @@ append(obj.total, obj.speed_curr);
     list: [],
 };
 
-var F16HudRecipient = 
+var F16HudRecipient =
 {
     new: func(_ident)
     {
@@ -3359,7 +3424,7 @@ var F16HudRecipient =
 
             if (notification.NotificationType == "FrameNotification")
             {
-                
+
                 me.HUDobj.update(notification);
                 return emesary.Transmitter.ReceiptStatus_OK;
             }
