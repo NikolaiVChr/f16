@@ -4466,65 +4466,10 @@ Modifications author: Nikolai V. Chr.
 		</pass>
 	</technique>
 
-		<!--technique n="5">
-		  <predicate>
-			<and>
-				<equal>
-				  <value type="float">0.0</value>
-				  <glversion/>
-				</equal>
-			</and>
-		  </predicate>
-		</technique>
-
-		<technique n="6">
-		  <predicate>
-			<and>
-				<equal>
-				  <value type="float">0.0</value>
-				  <glversion/>
-				</equal>
-			</and>
-		  </predicate>
-		</technique>
-
-		<technique n="7">
-		  <predicate>
-			<and>
-				<equal>
-				  <value type="float">0.0</value>
-				  <glversion/>
-				</equal>
-			</and>
-		  </predicate>
-		</technique>
-
-		<technique n="8">
-		  <predicate>
-			<and>
-				<equal>
-				  <value type="float">0.0</value>
-				  <glversion/>
-				</equal>
-			</and>
-		  </predicate>
-		</technique>
-
-		<technique n="9">
-		  <predicate>
-			<and>
-				<equal>
-				  <value type="float">0.0</value>
-				  <glversion/>
-				</equal>
-			</and>
-		  </predicate>
-		</technique-->
-
 	<technique n="9">
 	  <predicate>
 		<and>
-		  <property>/sim/rendering/shaders/quality-level</property>
+		  <!--property>/sim/rendering/shaders/quality-level</property-->
 		  <property>/sim/rendering/shaders/model</property>
 		  <or>
 			<less-equal>

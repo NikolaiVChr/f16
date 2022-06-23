@@ -243,7 +243,9 @@
 		<!-- 		END fog include -->
 	</parameters>
 
-	<technique n="20">
+
+
+	<technique n="15">
     <predicate>
       <and>
         <property>/sim/rendering/shaders/skydome</property>
@@ -540,7 +542,9 @@
     </pass>
   </technique>
 
-<technique n="25">
+
+
+<technique n="20">
 	<predicate>
 		<and>
 			<property>/sim/rendering/rembrandt/enabled</property>
@@ -594,10 +598,10 @@
 			<use>vertex-program-two-side</use>
 		</vertex-program-two-side>
 		<program n="0">
-			<vertex-shader n="0">Shaders4/deferred-gbuffer.vert</vertex-shader>
-			<fragment-shader>Shaders4/deferred-gbuffer.frag</fragment-shader>
-			<fragment-shader>Shaders4/gbuffer-functions.frag</fragment-shader>
-			<fragment-shader>Shaders4/gbuffer-encode.frag</fragment-shader>
+			<vertex-shader n="0">Aircraft/f16/Shaders4/deferred-gbuffer.vert</vertex-shader>
+			<fragment-shader>Aircraft/f16/Shaders4/deferred-gbuffer.frag</fragment-shader>
+			<fragment-shader>Aircraft/f16/Shaders4/gbuffer-functions.frag</fragment-shader>
+			<fragment-shader>Aircraft/f16/Shaders4/gbuffer-encode.frag</fragment-shader>
 		</program>
 		<uniform>
 			<name>texture</name>
@@ -612,7 +616,9 @@
 	</pass>
 </technique>
 
-	<technique n="10">
+
+
+	<technique n="25">
 		<predicate>
 			<and>
 				<property>/sim/rendering/shaders/quality-level</property>
@@ -770,7 +776,10 @@
 			</uniform>
 		</pass>
 	</technique>
-	<technique n="13">
+
+
+	<!-- Fixed pipeline is for now the priority fallback -->
+	<technique n="14">
 		<pass>
 			<lighting>true</lighting>
 			<material>
