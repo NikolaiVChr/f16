@@ -100,6 +100,7 @@ Modifications author: Nikolai V. Chr.
    			<bin-number>1</bin-number>
     		<bin-name>RenderBin</bin-name>
     	</render-bin>
+    	<!--rendering-hint>opaque</rendering-hint--><!-- This will override render-bin, so don't enable -->
         <!-- BEGIN shadows include -->
         <shadows_enabled>
           <use>/sim/rendering/shadows/enabled</use>
@@ -3190,20 +3191,608 @@ Modifications author: Nikolai V. Chr.
 	</technique>
 
 
+	<!-- 	Rembrandt rendering -->
+   <technique n="3">
+	<predicate>
+		<and>
+			<property>/sim/rendering/rembrandt/enabled</property>
+			<or>
+			  <less-equal>
+				<value type="float">2.0</value>
+				<glversion/>
+			  </less-equal>
+			  <and>
+				<extension-supported>GL_ARB_shader_objects</extension-supported>
+				<extension-supported>GL_ARB_shading_language_100</extension-supported>
+				<extension-supported>GL_ARB_vertex_shader</extension-supported>
+				<extension-supported>GL_ARB_fragment_shader</extension-supported>
+			  </and>
+			</or>
+		</and>
+	</predicate>
+		<pass>
+			<program n="0">
+				<vertex-shader n="0">Aircraft/f16/Shaders4/ubershader.vert</vertex-shader>
+				<fragment-shader n="0">Aircraft/f16/Shaders4/ubershader-gbuffer.frag</fragment-shader>
+				<fragment-shader n="1">Aircraft/f16/Shaders4/gbuffer-functions.frag</fragment-shader>
+				<fragment-shader n="2">Aircraft/f16/Shaders4/gbuffer-encode.frag</fragment-shader>
+			  </program>
+			<lighting>true</lighting>
+			<material>
+				<active>
+					<use>material/active</use>
+				</active>
+				<ambient>
+					<use>material/ambient</use>
+				</ambient>
+				<diffuse>
+					<use>material/diffuse</use>
+				</diffuse>
+				<specular>
+					<use>material/specular</use>
+				</specular>
+				<emissive>
+					<use>material/emissive</use>
+				</emissive>
+				<shininess>
+					<use>material/shininess</use>
+				</shininess>
+				<color-mode>
+					<use>material/color-mode</use>
+				</color-mode>
+			</material>
+			<blend>
+				<active>
+					<use>blend/active</use>
+				</active>
+				<source>
+					<use>blend/source</use>
+				</source>
+				<destination>
+					<use>blend/destination</use>
+				</destination>
+			</blend>
+			<shade-model>
+				<use>shade-model</use>
+			</shade-model>
+			<cull-face>
+				<use>cull-face</use>
+			</cull-face>
+			<rendering-hint>
+				<use>rendering-hint</use>
+			</rendering-hint>
+			<blend>
+				<use>transparent</use>
+			</blend>
+			<alpha-test>
+				<use>transparent</use>
+			</alpha-test>
+			<render-bin>
+				<bin-number>
+					<use>render-bin/bin-number</use>
+				</bin-number>
+				<bin-name>
+					<use>render-bin/bin-name</use>
+				</bin-name>
+			</render-bin>
+			<!-- Diffuse texture unit-->
+			<texture-unit>
+				<unit>0</unit>
+				<image>
+					<use>texture[0]/image</use>
+				</image>
+                <type>
+                    <use>texture[0]/type</use>
+                </type>
+				<filter>
+					<use>texture[0]/filter</use>
+				</filter>
+				<wrap-s>
+					<use>texture[0]/wrap-s</use>
+				</wrap-s>
+				<wrap-t>
+					<use>texture[0]/wrap-t</use>
+				</wrap-t>
+				<internal-format>
+					<use>texture[0]/internal-format</use>
+				</internal-format>
+			</texture-unit>
+			<!-- Reflection Noise texture unit-->
+			<texture-unit>
+				<unit>1</unit>
+				<type>noise</type>
+			</texture-unit>
+			<!-- NormalMap texture unit-->
+			<texture-unit>
+				<unit>2</unit>
+				<image>
+					<use>texture[2]/image</use>
+				</image>
+                <type>
+                    <use>texture[2]/type</use>
+                </type>
+				<filter>
+					<use>texture[2]/filter</use>
+				</filter>
+				<wrap-s>
+					<use>texture[2]/wrap-s</use>
+				</wrap-s>
+				<wrap-t>
+					<use>texture[2]/wrap-t</use>
+				</wrap-t>
+				<internal-format>
+					<use>texture[2]/internal-format</use>
+				</internal-format>
+			</texture-unit>
+			<!-- LightMap texture unit-->
+			<texture-unit>
+				<unit>3</unit>
+				<image>
+					<use>texture[3]/image</use>
+				</image>
+                <type>
+                    <use>texture[3]/type</use>
+                </type>
+				<filter>
+					<use>texture[3]/filter</use>
+				</filter>
+				<wrap-s>
+					<use>texture[3]/wrap-s</use>
+				</wrap-s>
+				<wrap-t>
+					<use>texture[3]/wrap-t</use>
+				</wrap-t>
+				<internal-format>
+					<use>texture[3]/internal-format</use>
+				</internal-format>
+			</texture-unit>
+			<!-- ReflectMap texture unit-->
+			<texture-unit>
+				<unit>4</unit>
+				<image>
+					<use>texture[4]/image</use>
+				</image>
+                <type>
+                    <use>texture[4]/type</use>
+                </type>
+				<filter>
+					<use>texture[4]/filter</use>
+				</filter>
+				<wrap-s>
+					<use>texture[4]/wrap-s</use>
+				</wrap-s>
+				<wrap-t>
+					<use>texture[4]/wrap-t</use>
+				</wrap-t>
+				<internal-format>
+					<use>texture[4]/internal-format</use>
+				</internal-format>
+			</texture-unit>
+			<!-- Reflection CubeMap texture unit-->
+			<texture-unit>
+				<unit>5</unit>
+				<type>
+					<use>texture[5]/type</use>
+				</type>
+				<!-- use this form for a cube cross -->
+				<!--<image><use>texture[5]/image</use></image>-->
+				<!-- END CubeCross -->
+				<!-- use this form for a 6 image cube map -->
+				<images>
+					<use>texture[5]/images</use>
+				</images>
+				<!-- END 6 image cube map -->
+			</texture-unit>
+			<!-- Reflection fresnel texture unit-->
+			<texture-unit>
+				<unit>6</unit>
+				<image>
+					<use>texture[6]/image</use>
+				</image>
+                <type>
+                    <use>texture[6]/type</use>
+                </type>
+				<filter>
+					<use>texture[6]/filter</use>
+				</filter>
+				<wrap-s>
+					<use>texture[6]/wrap-s</use>
+				</wrap-s>
+				<wrap-t>
+					<use>texture[6]/wrap-t</use>
+				</wrap-t>
+				<internal-format>
+					<use>texture[6]/internal-format</use>
+				</internal-format>
+			</texture-unit>
+			<!-- Reflection rainbow texture unit-->
+<!--			<texture-unit>
+				<unit>7</unit>
+				<image>
+					<use>texture[7]/image</use>
+				</image>
+				<filter>
+					<use>texture[7]/filter</use>
+				</filter>
+				<wrap-s>
+					<use>texture[7]/wrap-s</use>
+				</wrap-s>
+				<wrap-t>
+					<use>texture[7]/wrap-t</use>
+				</wrap-t>
+				<internal-format>
+					<use>texture[7]/internal-format</use>
+				</internal-format>
+			</texture-unit>-->
 
+
+			<vertex-program-two-side>
+				<use>vertex-program-two-side</use>
+			</vertex-program-two-side>
+
+
+
+			<uniform>
+				<name>BaseTex</name>
+				<type>sampler-2d</type>
+				<value type="int">0</value>
+			</uniform>
+
+            <uniform>
+				<name>ReflNoiseTex</name>
+				<type>sampler-3d</type>
+				<value type="int">1</value>
+			</uniform>
+
+			<uniform>
+				<name>NormalTex</name>
+				<type>sampler-2d</type>
+				<value type="int">2</value>
+			</uniform>
+
+			<uniform>
+				<name>LightMapTex</name>
+				<type>sampler-2d</type>
+				<value type="int">3</value>
+			</uniform>
+
+			<uniform>
+				<name>ReflMapTex</name>
+				<type>sampler-2d</type>
+				<value type="int">4</value>
+			</uniform>
+
+			<uniform>
+				<name>Environment</name>
+				<type>sampler-cube</type>
+				<value type="int">5</value>
+			</uniform>
+
+            <uniform>
+                <name>ReflGradientsTex</name>
+                <type>sampler-2d</type>
+                <value type="int">6</value>
+			</uniform>
+
+			<!-- 			NORMAL MAP -->
+			<!-- normalmap is used-->
+			<uniform>
+				<name>nmap_enabled</name>
+				<type>int</type>
+				<value>
+					<use>normalmap-enabled</use>
+				</value>
+			</uniform>
+
+			<!-- normalmap is .dds-->
+			<uniform>
+				<name>nmap_dds</name>
+				<type>int</type>
+				<value>
+					<use>normalmap-dds</use>
+				</value>
+			</uniform>
+
+			<uniform>
+				<name>nmap_tile</name>
+				<type>float</type>
+				<value>
+					<use>normalmap-tiling</use>
+				</value>
+			</uniform>
+
+			<!-- 			LIGHTMAP -->
+			<!-- lightmap is used -->
+			<uniform>
+				<name>lightmap_enabled</name>
+				<type>int</type>
+				<value>
+					<use>lightmap-enabled</use>
+				</value>
+			</uniform>
+			<!-- lightmap is multichannel -->
+			<uniform>
+				<name>lightmap_multi</name>
+				<type>int</type>
+				<value>
+					<use>lightmap-multi</use>
+				</value>
+			</uniform>
+
+			<uniform>
+				<name>lightmap_r_factor</name>
+				<type>float</type>
+				<value>
+					<use>lightmap-factor[0]</use>
+				</value>
+			</uniform>
+
+			<uniform>
+				<name>lightmap_r_color</name>
+				<type>float-vec3</type>
+				<value>
+					<use>lightmap-color[0]</use>
+				</value>
+			</uniform>
+
+			<uniform>
+				<name>lightmap_g_factor</name>
+				<type>float</type>
+				<value>
+					<use>lightmap-factor[1]</use>
+				</value>
+			</uniform>
+
+			<uniform>
+				<name>lightmap_g_color</name>
+				<type>float-vec3</type>
+				<value>
+					<use>lightmap-color[1]</use>
+				</value>
+			</uniform>
+
+			<uniform>
+				<name>lightmap_b_factor</name>
+				<type>float</type>
+				<value>
+					<use>lightmap-factor[2]</use>
+				</value>
+			</uniform>
+
+			<uniform>
+				<name>lightmap_b_color</name>
+				<type>float-vec3</type>
+				<value>
+					<use>lightmap-color[2]</use>
+				</value>
+			</uniform>
+
+			<uniform>
+				<name>lightmap_a_factor</name>
+				<type>float</type>
+				<value>
+					<use>lightmap-factor[3]</use>
+				</value>
+			</uniform>
+
+			<uniform>
+				<name>lightmap_a_color</name>
+				<type>float-vec3</type>
+				<value>
+					<use>lightmap-color[3]</use>
+				</value>
+			</uniform>
+
+			<!-- 			reflection is used -->
+			<uniform>
+				<name>refl_enabled</name>
+				<type>int</type>
+				<value>
+					<use>reflection-enabled</use>
+				</value>
+			</uniform>
+			<!-- reflection correction -->
+			<uniform>
+				<name>refl_correction</name>
+				<type>float</type>
+				<value>
+					<use>reflection-correction</use>
+				</value>
+			</uniform>
+
+			<!-- use a reflection map-->
+			<uniform>
+				<name>refl_map</name>
+				<type>int</type>
+				<value>
+					<use>reflect-map-enabled</use>
+				</value>
+			</uniform>
+			<!-- reflection is dynamic -->
+			<uniform>
+				<name>refl_dynamic</name>
+				<type>int</type>
+				<value>
+					<use>reflection-dynamic</use>
+				</value>
+			</uniform>
+
+			<!-- set the amount of fringing colour 0.0 - 1.0 -->
+			<uniform>
+				<name>refl_rainbow</name>
+				<type>float</type>
+				<value>
+					<use>reflection-rainbow</use>
+				</value>
+			</uniform>
+
+			<!-- set the amount of fresnel effect colour 0.0 - 1.0 -->
+			<uniform>
+				<name>refl_fresnel</name>
+				<type>float</type>
+				<value>
+					<use>reflection-fresnel</use>
+				</value>
+			</uniform>
+
+			<!-- set the amount of noisiness 0.0 - 1.0 -->
+			<uniform>
+				<name>refl_noise</name>
+				<type>float</type>
+				<value>
+					<use>reflection-noise</use>
+				</value>
+			</uniform>
+
+			<!-- dirt -->
+			<uniform>
+				<name>dirt_enabled</name>
+				<type>int</type>
+				<value>
+					<use>dirt-enabled</use>
+				</value>
+			</uniform>
+
+			<uniform>
+				<name>dirt_multi</name>
+				<type>int</type>
+				<value>
+					<use>dirt-multi</use>
+				</value>
+			</uniform>
+
+			<uniform>
+				<name>dirt_r_color</name>
+				<type>float-vec3</type>
+				<value>
+					<use>dirt-color[0]</use>
+				</value>
+			</uniform>
+
+			<uniform>
+				<name>dirt_r_factor</name>
+				<type>float</type>
+				<value>
+					<use>dirt-factor[0]</use>
+				</value>
+			</uniform>
+
+			<uniform>
+				<name>dirt_g_color</name>
+				<type>float-vec3</type>
+				<value>
+					<use>dirt-color[1]</use>
+				</value>
+			</uniform>
+
+			<uniform>
+				<name>dirt_g_factor</name>
+				<type>float</type>
+				<value>
+					<use>dirt-factor[1]</use>
+				</value>
+			</uniform>
+
+			<uniform>
+				<name>dirt_b_color</name>
+				<type>float-vec3</type>
+				<value>
+					<use>dirt-color[2]</use>
+				</value>
+			</uniform>
+
+			<uniform>
+				<name>dirt_b_factor</name>
+				<type>float</type>
+				<value>
+					<use>dirt-factor[2]</use>
+				</value>
+			</uniform>
+
+			<!-- set the amount of ambient light correction 0.0 - 1.0  -->
+			<uniform>
+				<name>amb_correction</name>
+				<type>float</type>
+				<value>
+					<use>ambient-correction</use>
+				</value>
+			</uniform>
+
+			<uniform>
+				<name>lonDeg</name>
+				<type>float</type>
+				<value>
+					<use>pos-lon</use>
+				</value>
+			</uniform>
+
+			<uniform>
+				<name>latDeg</name>
+				<type>float</type>
+				<value>
+					<use>pos-lat</use>
+				</value>
+			</uniform>
+
+			<!-- 	    BEGIN fog include -->
+			<!--<uniform>
+				<name>visibility</name>
+				<type>float</type>
+				<value>
+					<use>visibility</use>
+				</value>
+			</uniform>
+			<uniform>
+				<name>avisibility</name>
+				<type>float</type>
+				<value>
+					<use>avisibility</use>
+				</value>
+			</uniform>
+			<uniform>
+				<name>hazeLayerAltitude</name>
+				<type>float</type>
+				<value>
+					<use>lthickness</use>
+				</value>
+			</uniform>
+			<uniform>
+				<name>scattering</name>
+				<type>float</type>
+				<value>
+					<use>scattering</use>
+				</value>
+			</uniform>
+			<uniform>
+				<name>terminator</name>
+				<type>float</type>
+				<value>
+					<use>terminator</use>
+				</value>
+			</uniform>
+			<uniform>
+				<name>fogType</name>
+				<type>int</type>
+				<value>
+					<use>fogtype</use>
+				</value>
+			</uniform>-->
+			<!-- 			END fog include -->
+			<uniform>
+			  <name>rembrandt_enabled</name>
+			  <type>int</type>
+			  <value>
+				<use>rembrandt</use>
+			  </value>
+			</uniform>
+		</pass>
+	</technique>
 
 
 	<!-- Default rendering -->
-	<technique n="3">
+	<technique n="7">
 	  <predicate>
 		<and>
-		  <!--property>/sim/rendering/shaders/quality-level</property-->
-		  <!--property>/sim/rendering/shaders/model</property-->
-
-		  <equal>
-		  		<value type="float">0.0</value>
-			   	<property>/sim/rendering/rembrandt/enabled</property>
-		  </equal>
 		  <or>
 			<less-equal>
 			  <value type="float">2.0</value>
@@ -3871,656 +4460,6 @@ Modifications author: Nikolai V. Chr.
 
 		<!-- Techn 4 is broken somehow -->
 
-			<!-- 	Rembrandt rendering -->
-   <technique n="5">
-	<predicate>
-	  <and>
 
-		<or>
-		  <less-equal>
-			<value type="float">2.0</value>
-			<glversion/>
-		  </less-equal>
-		  <and>
-			<extension-supported>GL_ARB_shader_objects</extension-supported>
-			<extension-supported>GL_ARB_shading_language_100</extension-supported>
-			<extension-supported>GL_ARB_vertex_shader</extension-supported>
-			<extension-supported>GL_ARB_fragment_shader</extension-supported>
-		  </and>
-		</or>
-	  </and>
-	</predicate>
-		<pass>
-			<program n="0">
-				<vertex-shader n="0">Aircraft/f16/Shaders4/ubershader.vert</vertex-shader>
-				<fragment-shader n="0">Aircraft/f16/Shaders4/ubershader-gbuffer.frag</fragment-shader>
-				<fragment-shader n="1">Aircraft/f16/Shaders4/gbuffer-functions.frag</fragment-shader>
-				<fragment-shader n="2">Aircraft/f16/Shaders4/gbuffer-encode.frag</fragment-shader>
-			  </program>
-			<lighting>true</lighting>
-			<material>
-				<active>
-					<use>material/active</use>
-				</active>
-				<ambient>
-					<use>material/ambient</use>
-				</ambient>
-				<diffuse>
-					<use>material/diffuse</use>
-				</diffuse>
-				<specular>
-					<use>material/specular</use>
-				</specular>
-				<emissive>
-					<use>material/emissive</use>
-				</emissive>
-				<shininess>
-					<use>material/shininess</use>
-				</shininess>
-				<color-mode>
-					<use>material/color-mode</use>
-				</color-mode>
-			</material>
-			<blend>
-				<active>
-					<use>blend/active</use>
-				</active>
-				<source>
-					<use>blend/source</use>
-				</source>
-				<destination>
-					<use>blend/destination</use>
-				</destination>
-			</blend>
-			<shade-model>
-				<use>shade-model</use>
-			</shade-model>
-			<cull-face>
-				<use>cull-face</use>
-			</cull-face>
-			<rendering-hint>
-				<use>rendering-hint</use>
-			</rendering-hint>
-			<blend>
-				<use>transparent</use>
-			</blend>
-			<alpha-test>
-				<use>transparent</use>
-			</alpha-test>
-			<render-bin>
-				<bin-number>
-					<use>render-bin/bin-number</use>
-				</bin-number>
-				<bin-name>
-					<use>render-bin/bin-name</use>
-				</bin-name>
-			</render-bin>
-			<!-- Diffuse texture unit-->
-			<texture-unit>
-				<unit>0</unit>
-				<image>
-					<use>texture[0]/image</use>
-				</image>
-                <type>
-                    <use>texture[0]/type</use>
-                </type>
-				<filter>
-					<use>texture[0]/filter</use>
-				</filter>
-				<wrap-s>
-					<use>texture[0]/wrap-s</use>
-				</wrap-s>
-				<wrap-t>
-					<use>texture[0]/wrap-t</use>
-				</wrap-t>
-				<internal-format>
-					<use>texture[0]/internal-format</use>
-				</internal-format>
-			</texture-unit>
-			<!-- Reflection Noise texture unit-->
-			<texture-unit>
-				<unit>1</unit>
-				<type>noise</type>
-			</texture-unit>
-			<!-- NormalMap texture unit-->
-			<texture-unit>
-				<unit>2</unit>
-				<image>
-					<use>texture[2]/image</use>
-				</image>
-                <type>
-                    <use>texture[2]/type</use>
-                </type>
-				<filter>
-					<use>texture[2]/filter</use>
-				</filter>
-				<wrap-s>
-					<use>texture[2]/wrap-s</use>
-				</wrap-s>
-				<wrap-t>
-					<use>texture[2]/wrap-t</use>
-				</wrap-t>
-				<internal-format>
-					<use>texture[2]/internal-format</use>
-				</internal-format>
-			</texture-unit>
-			<!-- LightMap texture unit-->
-			<texture-unit>
-				<unit>3</unit>
-				<image>
-					<use>texture[3]/image</use>
-				</image>
-                <type>
-                    <use>texture[3]/type</use>
-                </type>
-				<filter>
-					<use>texture[3]/filter</use>
-				</filter>
-				<wrap-s>
-					<use>texture[3]/wrap-s</use>
-				</wrap-s>
-				<wrap-t>
-					<use>texture[3]/wrap-t</use>
-				</wrap-t>
-				<internal-format>
-					<use>texture[3]/internal-format</use>
-				</internal-format>
-			</texture-unit>
-			<!-- ReflectMap texture unit-->
-			<texture-unit>
-				<unit>4</unit>
-				<image>
-					<use>texture[4]/image</use>
-				</image>
-                <type>
-                    <use>texture[4]/type</use>
-                </type>
-				<filter>
-					<use>texture[4]/filter</use>
-				</filter>
-				<wrap-s>
-					<use>texture[4]/wrap-s</use>
-				</wrap-s>
-				<wrap-t>
-					<use>texture[4]/wrap-t</use>
-				</wrap-t>
-				<internal-format>
-					<use>texture[4]/internal-format</use>
-				</internal-format>
-			</texture-unit>
-			<!-- Reflection CubeMap texture unit-->
-			<texture-unit>
-				<unit>5</unit>
-				<type>
-					<use>texture[5]/type</use>
-				</type>
-				<!-- use this form for a cube cross -->
-				<!--<image><use>texture[5]/image</use></image>-->
-				<!-- END CubeCross -->
-				<!-- use this form for a 6 image cube map -->
-				<images>
-					<use>texture[5]/images</use>
-				</images>
-				<!-- END 6 image cube map -->
-			</texture-unit>
-			<!-- Reflection fresnel texture unit-->
-			<texture-unit>
-				<unit>6</unit>
-				<image>
-					<use>texture[6]/image</use>
-				</image>
-                <type>
-                    <use>texture[6]/type</use>
-                </type>
-				<filter>
-					<use>texture[6]/filter</use>
-				</filter>
-				<wrap-s>
-					<use>texture[6]/wrap-s</use>
-				</wrap-s>
-				<wrap-t>
-					<use>texture[6]/wrap-t</use>
-				</wrap-t>
-				<internal-format>
-					<use>texture[6]/internal-format</use>
-				</internal-format>
-			</texture-unit>
-			<!-- Reflection rainbow texture unit-->
-<!--			<texture-unit>
-				<unit>7</unit>
-				<image>
-					<use>texture[7]/image</use>
-				</image>
-				<filter>
-					<use>texture[7]/filter</use>
-				</filter>
-				<wrap-s>
-					<use>texture[7]/wrap-s</use>
-				</wrap-s>
-				<wrap-t>
-					<use>texture[7]/wrap-t</use>
-				</wrap-t>
-				<internal-format>
-					<use>texture[7]/internal-format</use>
-				</internal-format>
-			</texture-unit>-->
-
-
-			<vertex-program-two-side>
-				<use>vertex-program-two-side</use>
-			</vertex-program-two-side>
-
-
-
-			<uniform>
-				<name>BaseTex</name>
-				<type>sampler-2d</type>
-				<value type="int">0</value>
-			</uniform>
-
-            <uniform>
-				<name>ReflNoiseTex</name>
-				<type>sampler-3d</type>
-				<value type="int">1</value>
-			</uniform>
-
-			<uniform>
-				<name>NormalTex</name>
-				<type>sampler-2d</type>
-				<value type="int">2</value>
-			</uniform>
-
-			<uniform>
-				<name>LightMapTex</name>
-				<type>sampler-2d</type>
-				<value type="int">3</value>
-			</uniform>
-
-			<uniform>
-				<name>ReflMapTex</name>
-				<type>sampler-2d</type>
-				<value type="int">4</value>
-			</uniform>
-
-			<uniform>
-				<name>Environment</name>
-				<type>sampler-cube</type>
-				<value type="int">5</value>
-			</uniform>
-
-            <uniform>
-                <name>ReflGradientsTex</name>
-                <type>sampler-2d</type>
-                <value type="int">6</value>
-			</uniform>
-
-			<!-- 			NORMAL MAP -->
-			<!-- normalmap is used-->
-			<uniform>
-				<name>nmap_enabled</name>
-				<type>int</type>
-				<value>
-					<use>normalmap-enabled</use>
-				</value>
-			</uniform>
-
-			<!-- normalmap is .dds-->
-			<uniform>
-				<name>nmap_dds</name>
-				<type>int</type>
-				<value>
-					<use>normalmap-dds</use>
-				</value>
-			</uniform>
-
-			<uniform>
-				<name>nmap_tile</name>
-				<type>float</type>
-				<value>
-					<use>normalmap-tiling</use>
-				</value>
-			</uniform>
-
-			<!-- 			LIGHTMAP -->
-			<!-- lightmap is used -->
-			<uniform>
-				<name>lightmap_enabled</name>
-				<type>int</type>
-				<value>
-					<use>lightmap-enabled</use>
-				</value>
-			</uniform>
-			<!-- lightmap is multichannel -->
-			<uniform>
-				<name>lightmap_multi</name>
-				<type>int</type>
-				<value>
-					<use>lightmap-multi</use>
-				</value>
-			</uniform>
-
-			<uniform>
-				<name>lightmap_r_factor</name>
-				<type>float</type>
-				<value>
-					<use>lightmap-factor[0]</use>
-				</value>
-			</uniform>
-
-			<uniform>
-				<name>lightmap_r_color</name>
-				<type>float-vec3</type>
-				<value>
-					<use>lightmap-color[0]</use>
-				</value>
-			</uniform>
-
-			<uniform>
-				<name>lightmap_g_factor</name>
-				<type>float</type>
-				<value>
-					<use>lightmap-factor[1]</use>
-				</value>
-			</uniform>
-
-			<uniform>
-				<name>lightmap_g_color</name>
-				<type>float-vec3</type>
-				<value>
-					<use>lightmap-color[1]</use>
-				</value>
-			</uniform>
-
-			<uniform>
-				<name>lightmap_b_factor</name>
-				<type>float</type>
-				<value>
-					<use>lightmap-factor[2]</use>
-				</value>
-			</uniform>
-
-			<uniform>
-				<name>lightmap_b_color</name>
-				<type>float-vec3</type>
-				<value>
-					<use>lightmap-color[2]</use>
-				</value>
-			</uniform>
-
-			<uniform>
-				<name>lightmap_a_factor</name>
-				<type>float</type>
-				<value>
-					<use>lightmap-factor[3]</use>
-				</value>
-			</uniform>
-
-			<uniform>
-				<name>lightmap_a_color</name>
-				<type>float-vec3</type>
-				<value>
-					<use>lightmap-color[3]</use>
-				</value>
-			</uniform>
-
-			<!-- 			reflection is used -->
-			<uniform>
-				<name>refl_enabled</name>
-				<type>int</type>
-				<value>
-					<use>reflection-enabled</use>
-				</value>
-			</uniform>
-			<!-- reflection correction -->
-			<uniform>
-				<name>refl_correction</name>
-				<type>float</type>
-				<value>
-					<use>reflection-correction</use>
-				</value>
-			</uniform>
-
-			<!-- use a reflection map-->
-			<uniform>
-				<name>refl_map</name>
-				<type>int</type>
-				<value>
-					<use>reflect-map-enabled</use>
-				</value>
-			</uniform>
-			<!-- reflection is dynamic -->
-			<uniform>
-				<name>refl_dynamic</name>
-				<type>int</type>
-				<value>
-					<use>reflection-dynamic</use>
-				</value>
-			</uniform>
-
-			<!-- set the amount of fringing colour 0.0 - 1.0 -->
-			<uniform>
-				<name>refl_rainbow</name>
-				<type>float</type>
-				<value>
-					<use>reflection-rainbow</use>
-				</value>
-			</uniform>
-
-			<!-- set the amount of fresnel effect colour 0.0 - 1.0 -->
-			<uniform>
-				<name>refl_fresnel</name>
-				<type>float</type>
-				<value>
-					<use>reflection-fresnel</use>
-				</value>
-			</uniform>
-
-			<!-- set the amount of noisiness 0.0 - 1.0 -->
-			<uniform>
-				<name>refl_noise</name>
-				<type>float</type>
-				<value>
-					<use>reflection-noise</use>
-				</value>
-			</uniform>
-
-			<!-- dirt -->
-			<uniform>
-				<name>dirt_enabled</name>
-				<type>int</type>
-				<value>
-					<use>dirt-enabled</use>
-				</value>
-			</uniform>
-
-			<uniform>
-				<name>dirt_multi</name>
-				<type>int</type>
-				<value>
-					<use>dirt-multi</use>
-				</value>
-			</uniform>
-
-			<uniform>
-				<name>dirt_r_color</name>
-				<type>float-vec3</type>
-				<value>
-					<use>dirt-color[0]</use>
-				</value>
-			</uniform>
-
-			<uniform>
-				<name>dirt_r_factor</name>
-				<type>float</type>
-				<value>
-					<use>dirt-factor[0]</use>
-				</value>
-			</uniform>
-
-			<uniform>
-				<name>dirt_g_color</name>
-				<type>float-vec3</type>
-				<value>
-					<use>dirt-color[1]</use>
-				</value>
-			</uniform>
-
-			<uniform>
-				<name>dirt_g_factor</name>
-				<type>float</type>
-				<value>
-					<use>dirt-factor[1]</use>
-				</value>
-			</uniform>
-
-			<uniform>
-				<name>dirt_b_color</name>
-				<type>float-vec3</type>
-				<value>
-					<use>dirt-color[2]</use>
-				</value>
-			</uniform>
-
-			<uniform>
-				<name>dirt_b_factor</name>
-				<type>float</type>
-				<value>
-					<use>dirt-factor[2]</use>
-				</value>
-			</uniform>
-
-			<!-- set the amount of ambient light correction 0.0 - 1.0  -->
-			<uniform>
-				<name>amb_correction</name>
-				<type>float</type>
-				<value>
-					<use>ambient-correction</use>
-				</value>
-			</uniform>
-
-			<uniform>
-				<name>lonDeg</name>
-				<type>float</type>
-				<value>
-					<use>pos-lon</use>
-				</value>
-			</uniform>
-
-			<uniform>
-				<name>latDeg</name>
-				<type>float</type>
-				<value>
-					<use>pos-lat</use>
-				</value>
-			</uniform>
-
-			<!-- 	    BEGIN fog include -->
-			<!--<uniform>
-				<name>visibility</name>
-				<type>float</type>
-				<value>
-					<use>visibility</use>
-				</value>
-			</uniform>
-			<uniform>
-				<name>avisibility</name>
-				<type>float</type>
-				<value>
-					<use>avisibility</use>
-				</value>
-			</uniform>
-			<uniform>
-				<name>hazeLayerAltitude</name>
-				<type>float</type>
-				<value>
-					<use>lthickness</use>
-				</value>
-			</uniform>
-			<uniform>
-				<name>scattering</name>
-				<type>float</type>
-				<value>
-					<use>scattering</use>
-				</value>
-			</uniform>
-			<uniform>
-				<name>terminator</name>
-				<type>float</type>
-				<value>
-					<use>terminator</use>
-				</value>
-			</uniform>
-			<uniform>
-				<name>fogType</name>
-				<type>int</type>
-				<value>
-					<use>fogtype</use>
-				</value>
-			</uniform>-->
-			<!-- 			END fog include -->
-			<uniform>
-			  <name>rembrandt_enabled</name>
-			  <type>int</type>
-			  <value>
-				<use>rembrandt</use>
-			  </value>
-			</uniform>
-		</pass>
-	</technique>
-
-		<!--technique n="5">
-		  <predicate>
-			<and>
-				<equal>
-				  <value type="float">0.0</value>
-				  <glversion/>
-				</equal>
-			</and>
-		  </predicate>
-		</technique>
-
-		<technique n="6">
-		  <predicate>
-			<and>
-				<equal>
-				  <value type="float">0.0</value>
-				  <glversion/>
-				</equal>
-			</and>
-		  </predicate>
-		</technique>
-
-		<technique n="7">
-		  <predicate>
-			<and>
-				<equal>
-				  <value type="float">0.0</value>
-				  <glversion/>
-				</equal>
-			</and>
-		  </predicate>
-		</technique>
-
-		<technique n="8">
-		  <predicate>
-			<and>
-				<equal>
-				  <value type="float">0.0</value>
-				  <glversion/>
-				</equal>
-			</and>
-		  </predicate>
-		</technique>
-
-		<technique n="9">
-		  <predicate>
-			<and>
-				<equal>
-				  <value type="float">0.0</value>
-				  <glversion/>
-				</equal>
-			</and>
-		  </predicate>
-		</technique-->
 
 </PropertyList>
