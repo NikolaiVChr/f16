@@ -204,7 +204,7 @@
    <fcs>
     <fly-by-wire>
       <prototype type="bool">false</prototype>
-      <ada189675 type="bool">false</ada189675>
+      <ada189675 type="bool">true</ada189675>
     </fly-by-wire>
    </fcs>
   </jsbsim>
