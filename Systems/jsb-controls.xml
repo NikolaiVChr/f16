@@ -22,7 +22,7 @@
                 Main landing gear on ground
             </description>
             <default value="0"/>
-            <test logic="AND" value="1">
+            <test logic="OR" value="1">
                 gear/unit[1]/WOW eq 1
                 gear/unit[2]/WOW eq 1
             </test>
@@ -697,10 +697,7 @@
 
         <switch name="fcs/fly-by-wire/pitch/bias-top">
             <description>
-                In documents this is 6 instead of 11.
-                However due to landing AoA should be 11 to 15,
-                The 6 bias is changed to 11.
-                DNU
+                6 will be the AoA it tries to keep on approach with no stick input.
             </description>
             <default value="6"/>
             <test logic="AND" value="0">
@@ -710,12 +707,8 @@
 
         <fcs_function name="fcs/fly-by-wire/pitch/bias-number">
             <description>
-                In documents this is 1 and 9 instead of -4 and 4.
-                However due to landing AoA should be 11 to 15,
-                The 6 bias is changed to 11, and these numbers
-                changed so its still 15 in flight CAT I and
+                This gets added to bias-top so its 15 in flight CAT I and
                 7 in flight CAT III at 100 KCAS.
-                DNU
             </description>
             <function>
                 <table>
@@ -737,6 +730,7 @@
             </description>
             <default value="0"/>
             <test logic="OR" value="fcs/fly-by-wire/pitch/bias-number">
+                <!-- fcs/fly-by-wire/condition-a == 1 -->
                 gear/gear-cmd-norm == 1
             </test>
         </switch>
@@ -749,20 +743,23 @@
             <c1> 10 </c1>
         </lag_filter>
 
-        <!--<actuator name="fcs/fly-by-wire/pitch/bias-top-lag">
+        <!--actuator name="fcs/fly-by-wire/pitch/bias-top-lag">
             <description>
                 In diagram this is 10 lag filter.
 
+                In order not to try and keep 6 deg AoA right
+                after takeoff I have increased the time
+                it takes to grow to 6 after takeoff. ~Nikolai
+
                 DNU
             </description>
-          <input> fcs/fly-by-wire/pitch/bias-top </input>
-          <lag> 10 </lag>
-          <rate_limit sense="incr"> 1 </rate_limit>
-          <rate_limit sense="decr"> 3 </rate_limit>
-          <bias> 0 </bias>
-          <deadband_width> 0 </deadband_width>
-          <hysteresis_width> 0 </hysteresis_width>
-        </actuator>-->
+            <input> fcs/fly-by-wire/pitch/bias-top </input>
+            <rate_limit sense="incr"> 0.01 </rate_limit>
+            <rate_limit sense="decr"> 6 </rate_limit>
+            <bias> 0 </bias>
+            <deadband_width> 0 </deadband_width>
+            <hysteresis_width> 0 </hysteresis_width>
+        </actuator-->
 
         <lag_filter name="fcs/fly-by-wire/pitch/bias-bottom-lag">
             <description>
@@ -771,8 +768,36 @@
                 DNU
             </description>
             <input> fcs/fly-by-wire/pitch/bias-bottom </input>
-            <c1> 1.25 </c1>
+            <c1> 0.125 </c1>
         </lag_filter>
+
+        <!--pure_gain name="fcs/fly-by-wire/pitch/actuator-incr">
+            <input>fcs/fly-by-wire/pitch/bias-number</input>
+            <gain> 0.04 </gain>
+        </pure_gain>
+
+        <pure_gain name="fcs/fly-by-wire/pitch/actuator-decr">
+            <input>fcs/fly-by-wire/pitch/bias-number</input>
+            <gain> 0.5 </gain>
+        </pure_gain>
+
+        <actuator name="fcs/fly-by-wire/pitch/bias-bottom-lag">
+            <description>
+                2 secs to decrease to zero, when retracting gears.
+                25 secs to increase to 0.1, which is time enough to get gear up
+                from take-off.
+
+                In diagram this is 0.125 lag filter. ~Nikolai
+
+                DNU
+            </description>
+          <input> fcs/fly-by-wire/pitch/bias-bottom </input>
+          <rate_limit sense="incr"> fcs/fly-by-wire/pitch/actuator-incr </rate_limit>
+          <rate_limit sense="decr"> fcs/fly-by-wire/pitch/actuator-decr </rate_limit>
+          <bias> 0 </bias>
+          <deadband_width> 0 </deadband_width>
+          <hysteresis_width> 0 </hysteresis_width>
+        </actuator-->
 
         <summer name="fcs/fly-by-wire/pitch/bias1">
             <input> -fcs/fly-by-wire/pitch/bias-bottom-lag </input><!-- bottom bias -->
@@ -831,11 +856,10 @@
 
         <switch name="fcs/fly-by-wire/pitch/pitch-rate-lower-switch">
             <description>
-                Is 1.0 or 10 in diagram. Probably 1.0
                 DNU
 
                 It makes negative pitch rate (washed out) plus alpha (minus a bias)
-                give zero input on FBW when gear is up. And x0.1 influence with gear down.
+                give zero input on FBW when gear is up. And full influence with gear down.
 
                 In diagram relies only on Condition A, but its not helpful during AAR,
                 nor right after take-off, it should really only get into effect when on
@@ -844,19 +868,19 @@
             <default value="0"/>
             <test logic="AND" value="1.0">
                 <!-- fcs/fly-by-wire/condition-a == 1 -->
-                gear/gear-cmd-norm == 1
-                fcs/fly-by-wire/MLG-GND != 1
+                 gear/gear-cmd-norm == 1
+                 fcs/fly-by-wire/MLG-GND != 1
             </test>
         </switch>
 
-        <!--<lag_filter name="fcs/fly-by-wire/pitch/pitch-rate-lower-lag">
+        <!--lag_filter name="fcs/fly-by-wire/pitch/pitch-rate-lower-lag">
             <description>
                 Diagram say 0.125, but that does a pitch up for too long after takeoff
                 DNU
             </description>
             <input> fcs/fly-by-wire/pitch/pitch-rate-lower-switch </input>
             <c1> 1.25 </c1>
-        </lag_filter>-->
+        </lag_filter-->
 
         <actuator name="fcs/fly-by-wire/pitch/pitch-rate-lower-lag">
             <description>
@@ -864,12 +888,11 @@
                 25 secs to increase to 0.1, which is time enough to get gear up
                 from take-off.
 
-                In diagram this is 0.125 lag filter.
+                In diagram this is 0.125 lag filter. ~Nikolai
 
                 DNU
             </description>
           <input> fcs/fly-by-wire/pitch/pitch-rate-lower-switch </input>
-          <lag> 20 </lag>
           <rate_limit sense="incr"> 0.04 </rate_limit>
           <rate_limit sense="decr"> 0.50 </rate_limit>
           <bias> 0 </bias>
@@ -1007,7 +1030,9 @@
 
         <second_order_filter name="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-demand">
             <description>
-                on old diagram looks to be 2.5, not 2 nor 25
+                On old diagram looks to be 25, not 2.5
+                The reason is, if is was 2.5 its usually written as "2. 5" with a space
+                before 5. BUT at high speed there is oscillations with 25, so keeping it 2.5
                 DNU
             </description>
             <input> fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lead-lag-switch </input>
