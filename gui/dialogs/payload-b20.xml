@@ -460,6 +460,17 @@
             <colspan>6</colspan>
         </hrule>
 
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>18</row>
+            <col>4</col>
+            <legend>A/G Anti-Ship (Penguin, 2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2s_antiship2er();</script>
+            </binding>
+        </button>
+
     </group>
 
     <empty><stretch>1</stretch></empty>
