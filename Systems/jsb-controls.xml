@@ -628,7 +628,8 @@
         <switch name="fcs/fly-by-wire/pitch/alpha-indicated-switch">
             <default value="fcs/fly-by-wire/pitch/alpha-indicated-clamp"/>
             <test logic="AND" value="0">
-                fcs/fly-by-wire/MLG-GND == 1
+                <!-- fcs/fly-by-wire/MLG-GND == 1 -->
+                gear/unit[0]/WOW == 1
             </test>
         </switch>
 
