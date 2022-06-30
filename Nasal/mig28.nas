@@ -340,7 +340,7 @@ var TopGun = {
 			me.dist_nm = me.a16Coord.direct_distance_to(me.coord)*M2NM;
 		}
 
-		if (!me.blufor and me.a16Range < 70 and math.abs(me.a16Elev)<25 and me.a16ClockAbs < 55) {
+		if (!me.blufor and me.a16Range < 70 and math.abs(me.a16Elev)<25 and math.abs(me.a16Clock) < 55) {
 			# Mig28 radar has lock on pilot
 			me.lockNode.setValue(left(md5(getprop("sim/multiplay/callsign")), 4));
 		} else {
