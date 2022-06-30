@@ -1814,57 +1814,49 @@
             </test>
         </switch>
 
-        <fcs_function name="fcs/fly-by-wire/roll/min-cmd-roll-rate">
+        <fcs_function name="fcs/fly-by-wire/roll/command-deg_s-input">
             <function>
-                <quotient>
-                    <p>fcs/fly-by-wire/roll/max-cmd-roll-rate</p>
-                    <ifthen>
-                        <p>fcs/fly-by-wire/ada189675</p>
-                        <v>324</v>
-                        <v>308</v>
-                    </ifthen>
-                </quotient>
+				<ifthen>
+					<p>fcs/fly-by-wire/ada189675</p>
+					<table>
+						<independentVar lookup="row">fcs/fly-by-wire/roll/stick-force-lbf</independentVar>
+						<tableData>
+							-17.57  -324
+							-9      -80
+							-5      -20
+							-1      0
+							0       0
+							1       0
+							5       20
+							9       80
+							17.57   324
+						</tableData>
+					</table>
+					<table>
+						<independentVar lookup="row">fcs/fly-by-wire/roll/stick-force-lbf</independentVar>
+						<tableData>
+							 -17  -308
+							 -11   -80
+							  -6   -20
+							  -1     0
+							   0     0
+							   1     0
+							   6    20
+							  11    80
+							  17   308
+						</tableData>
+					</table>
+				</ifthen>
             </function>
         </fcs_function>
-
-        <fcs_function name="fcs/fly-by-wire/roll/command-deg_s">
-            <function>
-                <product>
-                    <ifthen>
-                        <p>fcs/fly-by-wire/ada189675</p>
-                        <table>
-                            <independentVar lookup="row">fcs/fly-by-wire/roll/stick-force-lbf</independentVar>
-                            <tableData>
-                                -17.57  -324
-                                -9      -80
-                                -5      -20
-                                -1      0
-                                0       0
-                                1       0
-                                5       20
-                                9       80
-                                17.57   324
-                            </tableData>
-                        </table>
-                        <table>
-                            <independentVar lookup="row">fcs/fly-by-wire/roll/stick-force-lbf</independentVar>
-                            <tableData>
-                                 -17  -308
-                                 -11   -80
-                                  -6   -20
-                                  -1     0
-                                   0     0
-                                   1     0
-                                   6    20
-                                  11    80
-                                  17   308
-                            </tableData>
-                        </table>
-                    </ifthen>
-                    <p>fcs/fly-by-wire/roll/min-cmd-roll-rate</p>
-                </product>
-            </function>
-        </fcs_function>
+		
+		<summer name="fcs/fly-by-wire/roll/command-deg_s">
+            <input>fcs/fly-by-wire/roll/command-deg_s-input</input>
+            <clipto>
+                <min>-fcs/fly-by-wire/roll/max-cmd-roll-rate</min>
+                <max>fcs/fly-by-wire/roll/max-cmd-roll-rate</max>
+            </clipto>
+        </summer>
 
         <switch name="fcs/fly-by-wire/roll/enable-cat-III">
             <description>
