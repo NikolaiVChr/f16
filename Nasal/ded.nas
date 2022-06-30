@@ -175,6 +175,8 @@ var dataEntryDisplay = {
 			me.updateEWS();
 		} elsif (me.page == pMODE) {
 			me.updateMode();
+		} elsif (me.page == pVRP) {
+			me.updateVRP();
 		} elsif (me.page == pINTG) {
 			me.updateIntg();
 		} elsif (me.page == pDLNK) {
@@ -189,6 +191,8 @@ var dataEntryDisplay = {
 			me.updateINSM();
 		} elsif (me.page == pHMCS) {
 			me.updateHMCS();
+		} elsif (me.page == pHARM) {
+			me.updateHARM();
 		} elsif (me.page == pLASR) {
 			me.updateLaser();
 		} elsif (me.page == pGPS) {
@@ -727,6 +731,14 @@ var dataEntryDisplay = {
 		me.text[4] = sprintf("                        ");
 	},
 
+	updateVRP: func() {
+		me.text[0] = sprintf("       TGT-TO-VRP       ");
+		me.text[1] = sprintf("                        ");
+		me.text[2] = sprintf("                        ");
+		me.text[3] = sprintf("                        ");
+		me.text[4] = sprintf("                        ");
+	},
+
 	updateIntg: func() {
 		me.updateIFF();
 	},
@@ -853,6 +865,13 @@ var dataEntryDisplay = {
 		me.text[3] = sprintf("  DECLUTTER  LVL1       ");
 		me.text[4] = sprintf("  RWR DSPLY  OFF        ");
 	},
+
+	updateHARM: func() {
+		me.text[0] = sprintf("          HARM          ");
+		me.text[1] = sprintf("                        ");
+		me.text[2] = sprintf("                        ");
+		me.text[3] = sprintf("                        ");
+		me.text[4] = sprintf("                        ");
 
 	updateLaser: func() {
 		var code = getprop("f16/avionics/laser-code");
@@ -1032,6 +1051,7 @@ var Routers = {
 		intgRouter: Router.new(pLIST, pINTG),
 		dlnkRouter: Router.new(pLIST, pDLNK),
 		modeRouter: Router.new(pLIST, pMODE),
+		vrpRouter: Router.new(pLIST, pVRP),
 		miscRouter: Router.new(pLIST, pMISC),
 	},
 	Misc: {
@@ -1042,6 +1062,7 @@ var Routers = {
 		gpsRouter: Router.new(pMISC, pGPS),
 		bullRouter: Router.new(pMISC, pBULL),
 		hmcsRouter: Router.new(pMISC, pHMCS),
+		harmRouter: Router.new(pMISC, pHARM),
 	},
 	comm1Router: Router.new(nil, pCOMM1),
 	comm2Router: Router.new(nil, pCOMM2),
@@ -1062,8 +1083,8 @@ var RouterVectors = {
 	button6: [Routers.List.insRouter,Routers.Misc.gpsRouter, Routers.timeRouter],
 	button7: [Routers.List.ewsRouter, Routers.markRouter],
 	button8: [Routers.List.modeRouter,Routers.Misc.bullRouter, Routers.fixRouter],
-	button9: [Routers.acalRouter],
-	button0: [Routers.List.miscRouter],
+	button9: [Routers.acalRouter, Routers.List.vrpRouter],
+	button0: [Routers.List.miscRouter, Routers.Misc.harmRouter],
 	buttonComm1: [Routers.comm1Router2,Routers.comm1Router],
 	buttonComm2: [Routers.comm2Router2,Routers.comm2Router],
 	buttonIFF: [Routers.iffRouter2,Routers.iffRouter],
