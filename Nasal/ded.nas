@@ -65,6 +65,7 @@ var pCNI   = EditableFieldPage.new(30);
 var pCOMM1 = EditableFieldPage.new(31, [com1FrqEF, com1SFrqEF]);
 var pCOMM2 = EditableFieldPage.new(32, [com2FrqEF, com2SFrqEF]);
 var pIFF   = EditableFieldPage.new(33, [transpEF,transpModeTF,iffEF,iffTF]);
+var pHMCS  = EditableFieldPage.new(34);
 
 var wp_num_lastA = nil;
 var wp_num_lastO = nil;
@@ -186,6 +187,8 @@ var dataEntryDisplay = {
 			me.updateOFP();
 		} elsif (me.page == pINSM) {
 			me.updateINSM();
+		} elsif (me.page == pHMCS) {
+			me.updateHMCS();
 		} elsif (me.page == pLASR) {
 			me.updateLaser();
 		} elsif (me.page == pGPS) {
@@ -836,7 +839,15 @@ var dataEntryDisplay = {
 	},
 
 	updateINSM: func() {
-		me.text[0] = sprintf("         INSM           ");
+		me.text[0] = sprintf("          INSM          ");
+		me.text[1] = sprintf("                        ");
+		me.text[2] = sprintf("                        ");
+		me.text[3] = sprintf("                        ");
+		me.text[4] = sprintf("                        ");
+	},
+
+	updateHMCS: func() {
+		me.text[0] = sprintf("          HMCS          ");
 		me.text[1] = sprintf("                        ");
 		me.text[2] = sprintf("                        ");
 		me.text[3] = sprintf("                        ");
@@ -1030,6 +1041,7 @@ var Routers = {
 		laserRouter: Router.new(pMISC, pLASR),
 		gpsRouter: Router.new(pMISC, pGPS),
 		bullRouter: Router.new(pMISC, pBULL),
+		hmcsRouter: Router.new(pMISC, pHMCS),
 	},
 	comm1Router: Router.new(nil, pCOMM1),
 	comm2Router: Router.new(nil, pCOMM2),
@@ -1057,7 +1069,7 @@ var RouterVectors = {
 	buttonIFF: [Routers.iffRouter2,Routers.iffRouter],
 	buttonList: [Routers.listRouter2, Routers.listRouter],
 	buttonEnter: [Routers.List.dlnkRouter],
-	buttonRecall: [Routers.List.intgRouter],
+	buttonRecall: [Routers.List.intgRouter, Routers.Misc.hmcsRouter],
 };
 
 var ActionVectors = {
