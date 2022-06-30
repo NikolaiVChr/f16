@@ -847,11 +847,11 @@ var dataEntryDisplay = {
 	},
 
 	updateHMCS: func() {
-		me.text[0] = sprintf("          HMCS          ");
-		me.text[1] = sprintf("                        ");
-		me.text[2] = sprintf("                        ");
-		me.text[3] = sprintf("                        ");
-		me.text[4] = sprintf("                        ");
+		me.text[0] = sprintf("      HMCS DISPLAY   %s ", me.no);
+		me.text[1] = sprintf("  HUD BLNK              ");
+		me.text[2] = sprintf("  CKPT BLNK             ");
+		me.text[3] = sprintf("  DECLUTTER  LVL1       ");
+		me.text[4] = sprintf("  RWR DSPLY  OFF        ");
 	},
 
 	updateLaser: func() {
