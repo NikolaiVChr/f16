@@ -872,6 +872,7 @@ var dataEntryDisplay = {
 		me.text[2] = sprintf("                        ");
 		me.text[3] = sprintf("                        ");
 		me.text[4] = sprintf("                        ");
+	},
 
 	updateLaser: func() {
 		var code = getprop("f16/avionics/laser-code");
