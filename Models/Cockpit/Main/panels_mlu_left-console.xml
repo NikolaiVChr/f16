@@ -3,7 +3,7 @@
 <PropertyList>
 
  <path>panels_mlu_left-console.ac</path>
- 
+
 <animation>
         <type>noshadow</type>
         <object-name>adv</object-name>
@@ -232,7 +232,7 @@
         <object-name>threat-vol-knob</object-name>
         <object-name>intercom-knob</object-name>
   </animation>
-    
+
 
  <!--<animation>
   <object-name>ANTI_G</object-name>
@@ -449,8 +449,8 @@
     </effect>
 
 
-    
-    
+
+
     <animation>
     <type>pick</type>
     <visible>true</visible>
@@ -514,7 +514,7 @@
    <factor-prop>controls/lighting/lighting-panel/mal-ind-lts-brightness</factor-prop>
   </emission>
  </animation>
- 
+
   <animation>
   <object-name>JFS_RUN_light</object-name>
   <type>material</type>
@@ -531,7 +531,7 @@
         </equals>
       </and>
       <property>controls/test/test-panel/mal-ind-lts</property>
-    </or>    
+    </or>
   </condition>
   <emission>
    <red>1</red>
@@ -569,7 +569,7 @@
    <factor-prop>controls/lighting/lighting-panel/mal-ind-lts-brightness</factor-prop>
   </emission>
  </animation>
- 
+
 <animation>
   <object-name>flcs-pwr</object-name>
   <type>material</type>
@@ -595,7 +595,7 @@
    <factor-prop>controls/lighting/lighting-panel/mal-ind-lts-brightness</factor-prop>
   </emission>
  </animation>
- 
+
  <animation>
   <object-name>mal</object-name>
   <object-name>adv</object-name>
@@ -744,7 +744,7 @@
    <factor-prop>controls/lighting/lighting-panel/mal-ind-lts-brightness</factor-prop>
   </emission>
  </animation>
- 
+
  <animation>
 	<type>pick</type>
 	<object-name>AVTR_TEST</object-name>
@@ -766,7 +766,7 @@
 	  <z>1</z>
 	</axis>
 </animation>
- 
+
  <animation>
   <object-name>light_epu_hydrazine</object-name>
   <type>material</type>
@@ -820,7 +820,7 @@
   <object-name>light_epu_gen</object-name><!-- EPU commanded on, but does not supply power -->
   <type>material</type>
     <condition>
-    
+
     <or>
       <and>
         <greater-than>
@@ -851,7 +851,7 @@
   <object-name>light_epu_pmg</object-name><!-- EPU commanded on, but FBW does not get 28 V -->
   <type>material</type>
   <condition>
-    
+
     <or>
       <and>
         <greater-than>
@@ -1002,7 +1002,7 @@
   <object-name>light_to</object-name><!-- battery goes to fbw and voltage there is less than 25 -->
   <type>material</type>
   <condition>
-    
+
     <or>
           <and>
             <greater-than>
@@ -1024,7 +1024,7 @@
    <factor-prop>controls/lighting/lighting-panel/mal-ind-lts-brightness</factor-prop>
   </emission>
  </animation>
- 
+
  <animation>
   <object-name>horiz-l</object-name>
   <type>material</type>
@@ -1048,7 +1048,7 @@
    <blue>1</blue>
   </emission>
  </animation>
- 
+
  <animation>
   <object-name>horiz-r</object-name>
   <type>material</type>
@@ -1072,7 +1072,7 @@
    <blue>1</blue>
   </emission>
  </animation>
- 
+
  <animation>
   <object-name>flaperons-l</object-name>
   <type>material</type>
@@ -1096,7 +1096,7 @@
    <blue>1</blue>
   </emission>
  </animation>
- 
+
  <animation>
   <object-name>flaperons-r</object-name>
   <type>material</type>
@@ -1120,7 +1120,7 @@
    <blue>1</blue>
   </emission>
  </animation>
- 
+
  <animation>
   <object-name>rudder-dot</object-name>
   <type>material</type>
@@ -1144,7 +1144,7 @@
    <blue>1</blue>
   </emission>
  </animation>
- 
+
  <animation>
   <!-- 1F-16A-1 page 1-136 -->
   <object-name>stbygains-y</object-name>
@@ -1214,7 +1214,7 @@
   </emission>
  </animation>
 
-   
+
     <animation>
         <type>knob</type>
         <object-name>SW_KNOB_ENG_FEED</object-name>
@@ -1257,7 +1257,7 @@
            </binding>
         </decrease>
     </animation>
-   
+
    <!-- Probe Heat Sw -->
    <animation>
         <type>knob</type>
@@ -1285,12 +1285,12 @@
                 <command>property-adjust</command>
                 <property>f16/avionics/probe-heat-switch</property>
                 <min>-1</min>
-                <max>1</max>                
+                <max>1</max>
                 <wrap>false</wrap>
             </binding>
         </action>
     </animation>
-   
+
    <!-- Oxy Test -->
    <animation>
         <type>knob</type>
@@ -1318,12 +1318,12 @@
                 <command>property-adjust</command>
 				<property>controls/test/test-panel/oxy-test</property>
                 <min>0</min>
-                <max>1</max>                
+                <max>1</max>
                 <wrap>false</wrap>
             </binding>
         </action>
     </animation>
-	
+
    <!-- EPU Test -->
    <animation>
         <type>knob</type>
@@ -1373,7 +1373,7 @@
             </binding>
         </action>
     </animation>
-	
+
 	<animation>
         <type>translate</type>
         <object-name>FIRE_OHEAT_DETECT</object-name>
@@ -1383,7 +1383,7 @@
 		  <z>1</z>
 	    </axis>
     </animation>
-	
+
 	<animation>
         <type>pick</type>
         <object-name>HF-PBG_TEST</object-name>
@@ -1395,7 +1395,7 @@
             </binding>
         </action>
     </animation>
-	
+
 	<animation>
         <type>translate</type>
         <object-name>HF-PBG_TEST</object-name>
@@ -1405,7 +1405,7 @@
 		  <z>1</z>
 	    </axis>
     </animation>
-   
+
    <animation>
         <type>knob</type>
         <object-name>SW_FLCS_TEST</object-name>
@@ -1509,7 +1509,7 @@
         <type>knob</type>
         <object-name>SW_AIR_REFUEL</object-name>
         <visible>true</visible>
-        <property>systems/refuel/serviceable</property>
+        <property>systems/refuel/switch</property>
         <drag-direction>vertical</drag-direction>
         <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
         <repeatable>true</repeatable>
@@ -1529,7 +1529,7 @@
         <increase>
             <binding>
                 <command>property-adjust</command>
-                <property>systems/refuel/serviceable</property>
+                <property>systems/refuel/switch</property>
                 <step>1</step>
                 <min>0</min>
                 <max>1</max>
@@ -1539,7 +1539,7 @@
         <decrease>
             <binding>
                 <command>property-adjust</command>
-                <property>systems/refuel/serviceable</property>
+                <property>systems/refuel/switch</property>
                 <step>-1</step>
                 <min>0</min>
                 <max>1</max>
@@ -1547,7 +1547,7 @@
            </binding>
         </decrease>
     </animation>
-  
+
     <animation>
         <type>knob</type>
         <object-name>SW_TANK_INERTING</object-name>
@@ -1590,7 +1590,7 @@
            </binding>
         </decrease>
     </animation>
-  
+
    <animation>
         <type>knob</type>
         <object-name>SW_ALT_FLAPS</object-name>
@@ -1676,7 +1676,7 @@
            </binding>
         </decrease>
     </animation>
-  
+
     <animation>
         <type>knob</type>
         <object-name>SW_DBU</object-name>
@@ -1721,7 +1721,7 @@
     </animation>
 
 	<!-- Trim panel -->
-	
+
 	<animation>
         <type>knob</type>
         <object-name>SW_KNOB_MAN_TRIM_YAW</object-name>
@@ -1805,7 +1805,7 @@
            </binding>
         </decrease>
     </animation>
-	
+
 	<animation>
         <type>knob</type>
         <object-name>roll-trim-wheel</object-name>
@@ -1889,7 +1889,7 @@
            </binding>
         </decrease>
     </animation>
-	
+
 	<animation>
         <type>knob</type>
         <object-name>pitch-trim-wheel</object-name>
@@ -2221,7 +2221,7 @@
            </binding>
         </decrease>
     </animation>
- 
+
     <animation>
         <type>knob</type>
         <object-name>SW_POS_LIGHTS</object-name>
@@ -2307,7 +2307,7 @@
            </binding>
         </decrease>
     </animation>
- 
+
     <animation>
         <type>knob</type>
         <object-name>SW_WING-TAIL</object-name>
@@ -2393,7 +2393,7 @@
            </binding>
         </decrease>
     </animation>
- 
+
     <animation>
         <type>knob</type>
         <object-name>SW_FUSELAGE</object-name>
@@ -2494,7 +2494,7 @@
      </binding>
     </action>
    </animation>
-   
+
    <animation>
     <type>translate</type>
     <object-name>MAL_IND_LTS</object-name>
@@ -2507,8 +2507,8 @@
     </axis>
    </animation>
 
-  
-   
+
+
    <animation>
         <type>knob</type>
         <object-name>SW_LE_FLAPS</object-name>
@@ -2588,7 +2588,7 @@
            </binding>
         </decrease>
     </animation>
-   
+
    <animation>
         <type>knob</type>
         <object-name>SW_SERVO_RUDDER</object-name>
@@ -2628,7 +2628,7 @@
            </binding>
         </decrease>
     </animation>
-    
+
     <animation>
         <type>knob</type>
         <object-name>SW_SERVO_FLAPERON</object-name>
@@ -2668,7 +2668,7 @@
            </binding>
         </decrease>
     </animation>
-    
+
     <animation>
         <type>knob</type>
         <object-name>SW_SERVO_HORIZ</object-name>
@@ -2708,8 +2708,8 @@
            </binding>
         </decrease>
     </animation>
-   
-         
+
+
    <animation>
         <type>knob</type>
         <object-name>SW_JET_FUEL</object-name>
@@ -2749,14 +2749,14 @@
            </binding>
         </decrease>
     </animation>
-   
-   
+
+
 
 
  <!-- SWITCH ANIMATIONS -->
 
-  
-  
+
+
     <animation>
         <type>knob</type>
         <object-name>SW_MPO</object-name>
@@ -2798,8 +2798,8 @@
                 <wrap>false</wrap>
            </binding>
         </decrease>
-    </animation> 
-    
+    </animation>
+
     <animation>
         <type>knob</type>
         <object-name>SW_MAIN_POWER</object-name>
@@ -2841,7 +2841,7 @@
            </binding>
         </decrease>
     </animation>
-  
+
     <animation>
         <type>knob</type>
         <object-name>SW_MAX_POWER</object-name>
@@ -2884,7 +2884,7 @@
            </binding>
         </decrease>
     </animation>
-  
+
     <animation>
         <type>knob</type>
         <object-name>SW_STARTING_FUEL</object-name>
@@ -2953,7 +2953,7 @@
            </binding>
 		</release>
     </animation>
-	
+
   <animation>
         <type>knob</type>
         <object-name>SW_EPU</object-name>
@@ -3016,7 +3016,7 @@
       </binding>
         </decrease>
     </animation>
-    
+
   <animation>
     <type>rotate</type>
     <object-name>SW_EPU_COVER</object-name>
@@ -3034,7 +3034,7 @@
       <z>0</z>
     </axis>
   </animation>
- 
+
   <animation>
         <type>knob</type>
         <object-name>ils-vol-knob</object-name>
@@ -3080,7 +3080,7 @@
             </binding>
         </hovered>
     </animation>
-    
+
     <animation>
         <type>knob</type>
         <object-name>msl-vol-knob</object-name>
@@ -3126,7 +3126,7 @@
             </binding>
         </hovered>
     </animation>
-    
+
     <animation>
         <type>knob</type>
         <object-name>tacan-vol-knob</object-name>
@@ -3172,7 +3172,7 @@
             </binding>
         </hovered>
     </animation>
-    
+
     <animation>
         <type>knob</type>
         <object-name>threat-vol-knob</object-name>
@@ -3218,8 +3218,8 @@
             </binding>
         </hovered>
     </animation>
-    
-          
+
+
   <animation>
         <type>knob</type>
         <object-name>intercom-knob</object-name>
@@ -3264,8 +3264,8 @@
                 <label>INTERCOM VOLUME</label>
             </binding>
         </hovered>
-    </animation>        
-        
+    </animation>
+
  <animation>
         <type>knob</type>
         <object-name>COMM1_KNOB</object-name>
@@ -3311,7 +3311,7 @@
             </binding>
         </hovered>
     </animation>
-    
+
     <animation>
         <type>knob</type>
         <object-name>COMM2_KNOB</object-name>
@@ -3357,7 +3357,7 @@
             </binding>
         </hovered>
     </animation>
- 
+
     <animation>
         <type>knob</type>
         <object-name>SW_KNOB_EXT_FORMATION_LIGHT</object-name>
@@ -3549,14 +3549,14 @@
         <factor>18</factor>
         <offset-deg>0</offset-deg>
         <interval-sec>0.1</interval-sec>
-        <axis>   
+        <axis>
             <x1-m>0.147213</x1-m>
             <y1-m>-0.286018</y1-m>
             <z1-m>0.046072</z1-m>
             <x2-m>0.146013</x2-m>
             <y2-m>-0.286022</y2-m>
             <z2-m>0.032187</z2-m>
-        </axis>       
+        </axis>
         <increase>
             <binding>
                 <command>nasal</command>
@@ -3595,7 +3595,7 @@
             </binding>
         </hovered>
     </animation>
-    
+
     <animation>
         <type>knob</type>
         <object-name>uhf-knob.02</object-name>
@@ -3603,7 +3603,7 @@
         <factor>36</factor>
         <offset-deg>0</offset-deg>
         <interval-sec>0.1</interval-sec>
-        <axis>   
+        <axis>
             <x1-m> 0.146365 </x1-m>
             <y1-m> -0.313225 </y1-m>
             <z1-m> 0.045965 </z1-m>
@@ -3651,7 +3651,7 @@
             </binding>
         </hovered>
     </animation>
-    
+
     <animation>
         <type>knob</type>
         <object-name>uhf-knob.03</object-name>
@@ -3659,14 +3659,14 @@
         <factor>36</factor>
         <offset-deg>0</offset-deg>
         <interval-sec>0.1</interval-sec>
-        <axis>   
+        <axis>
             <x1-m> 0.14627 </x1-m>
             <y1-m> -0.33972 </y1-m>
             <z1-m> 0.04618   </z1-m>
             <x2-m> 0.14507     </x2-m>
             <y2-m> -0.339727 </y2-m>
             <z2-m> 0.03229 </z2-m>
-        </axis>       
+        </axis>
         <increase>
             <binding>
                 <command>nasal</command>
@@ -3703,7 +3703,7 @@
             </binding>
         </hovered>
     </animation>
-    
+
     <animation>
         <type>knob</type>
         <object-name>uhf-knob.04</object-name>
@@ -3711,14 +3711,14 @@
         <factor>36</factor>
         <offset-deg>0</offset-deg>
         <interval-sec>0.1</interval-sec>
-        <axis>   
+        <axis>
             <x1-m> 0.146255 </x1-m>
             <y1-m> -0.36684 </y1-m>
             <z1-m> 0.04626 </z1-m>
             <x2-m> 0.145027 </x2-m>
             <y2-m> -0.36685 </y2-m>
             <z2-m> 0.032375 </z2-m>
-        </axis>       
+        </axis>
         <increase>
             <binding>
                 <command>nasal</command>
@@ -3755,7 +3755,7 @@
             </binding>
         </hovered>
     </animation>
-    
+
     <animation>
         <type>knob</type>
         <object-name>uhf-knob.05</object-name>
@@ -3763,14 +3763,14 @@
         <factor>36</factor>
         <offset-deg>0</offset-deg>
         <interval-sec>0.1</interval-sec>
-        <axis>   
+        <axis>
             <x1-m> 0.14631 </x1-m>
             <y1-m> -0.393555 </y1-m>
             <z1-m> 0.04615 </z1-m>
             <x2-m> 0.145106 </x2-m>
             <y2-m> -0.393567 </y2-m>
             <z2-m> 0.032262 </z2-m>
-        </axis>        
+        </axis>
         <increase>
             <binding>
                 <command>nasal</command>
@@ -3807,7 +3807,7 @@
             </binding>
         </hovered>
     </animation>
-    
+
      <animation>
         <object-name>freqDisplay</object-name>
         <type>material</type>
@@ -3824,7 +3824,7 @@
             <factor-prop>controls/lighting/lighting-panel/mal-ind-lts-brightness</factor-prop>
         </emission>
     </animation>
-    
+
     <animation>
         <type>material</type>
         <object-name>CHAN_CANVAS_DISPLAY</object-name>

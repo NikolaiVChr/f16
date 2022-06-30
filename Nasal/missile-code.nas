@@ -4276,7 +4276,7 @@ var AIM = {
 		# call this only before firing
 		if (!(me.tagt.get_type() == AIR and me.tagt.get_Speed()<15) and ((me.guidance != "semi-radar" or me.is_painted(me.tagt) == TRUE) and (me.guidance !="laser" or me.is_laser_painted(me.tagt) == TRUE))
 						and (me.guidance != "radiation" or me.is_radiating_aircraft(me.tagt) == TRUE)
-					    and me.rng < me.max_fire_range_nm and me.rng > me.getCurrentMinFireRange(me.tagt) and me.FOV_check(OurHdg.getValue(),OurPitch.getValue(),me.total_horiz, me.total_elev, me.slave_to_radar?(me.guidance == "heat" or me.guidance == "vision"?math.min(me.max_seeker_dev, me.fcs_fov):me.fcs_fov):me.max_seeker_dev, vector.Math)
+					    and me.rng < me.max_fire_range_nm and me.rng > me.getCurrentMinFireRange(me.tagt) and me.FOV_check(OurHdg.getValue(),OurPitch.getValue(),me.total_horiz, me.total_elev, me.slave_to_radar or contactPoint==me.tagt?(me.guidance == "heat" or me.guidance == "vision"?math.min(me.max_seeker_dev, me.fcs_fov):me.fcs_fov):me.max_seeker_dev, vector.Math)
 					    and (me.rng < me.detect_range_curr_nm or (me.guidance != "radar" and me.guidance != "semi-radar" and me.guidance != "heat" and me.guidance != "vision" and me.guidance != "heat" and me.guidance != "radiation"))
 					    and (me.guidance != "heat" or (me.all_aspect == TRUE or me.rear_aspect(geo.aircraft_position(), me.tagt) == TRUE))
 					    and me.checkForView()) {

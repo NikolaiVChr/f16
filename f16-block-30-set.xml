@@ -205,11 +205,12 @@
    <fcs>
     <fly-by-wire>
       <prototype type="bool">false</prototype>
+      <ada189675 type="bool">true</ada189675>
     </fly-by-wire>
    </fcs>
   </jsbsim>
  </fdm>
- 
+
  <engines>
     <engine>
       <rated-mil-dry type="double">18330</rated-mil-dry>

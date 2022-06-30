@@ -1301,6 +1301,27 @@ var a2s_antiship2 = func {
     }
 }
 
+# A/S Anti-Ship (AGM-119)
+var a2s_antiship2er = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        damage.damageLog.push("A/G Anti-ship Penguin (ext. range) loadout mounted");
+        pylon1.loadSet(pylonSets.aim120WT);
+        pylon2.loadSet(pylonSets.aim9l);
+        pylon3.loadSet(pylonSets.a119);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel37R);
+        pylon7.loadSet(pylonSets.a119);
+        pylon8.loadSet(pylonSets.aim9l);
+        pylon9.loadSet(pylonSets.aim120WT);
+        pylon10.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
 # Peacetime training configuration 1
 var b20_train_aa = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {

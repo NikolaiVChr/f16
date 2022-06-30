@@ -258,7 +258,7 @@
                     pylons.fcs.toggleCage();
                 </script>
             </binding>
-        </key>      
+        </key>
         <key n="81">
             <name>Q</name>
             <desc>Reset view</desc>
@@ -293,7 +293,7 @@
                   <dialog-name>ignore</dialog-name>
             </binding>
         </key>
-        
+
         <key n="23">
             <name>CTRL-W</name>
             <desc>View HSI</desc>
@@ -309,7 +309,7 @@
           <binding>
                 <command>nasal</command>
                 <script>
-                	controls_f16.emerg_alt();                    
+                	controls_f16.emerg_alt();
                 </script>
             </binding>
          </key>
@@ -331,7 +331,7 @@
                         </and>
                 </condition>
                 <script>
-                	controls_f16.speed_up();                    
+                	controls_f16.speed_up();
                 </script>
             </binding>
          </key>
@@ -517,11 +517,11 @@
             <desc>Toggle refuel door</desc>
             <binding>
                 <command>property-toggle</command>
-                <property>systems/refuel/serviceable</property>
+                <property>systems/refuel/switch</property>
             </binding>
             <binding>
                 <command>nasal</command>
-                <script>screen.log.write("Refuel door "~(getprop("systems/refuel/serviceable")==1?"OPEN":"CLOSED"), 0.5, 0.5, 1);</script>
+                <script>screen.log.write("Refuel door "~(getprop("systems/refuel/switch")==1?"OPEN":"CLOSED"), 0.5, 0.5, 1);</script>
             </binding>
         </key>
         <key n="85">
@@ -837,5 +837,5 @@
                 </binding>
             </mod-ctrl>
         </key>
-    </keyboard>	
+    </keyboard>
 </PropertyList>

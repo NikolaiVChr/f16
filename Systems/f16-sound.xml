@@ -2232,11 +2232,6 @@
                 <property>velocities/airspeed-kt</property>
                 <factor>0.01</factor>
             </volume>
-            <volume>
-                <internal>dt_stop</internal>
-                <factor>0.05</factor>
-                <max>1.0</max>
-            </volume>
             <pitch>
                 <property>velocities/airspeed-kt</property>
                 <factor>0.0025</factor>
@@ -2258,8 +2253,8 @@
                     </less-than>
                 </and>
             </condition>
-            <reference-dist>150</reference-dist>
-            <max-dist>500</max-dist>
+            <!--reference-dist>150</reference-dist>
+            <max-dist>500</max-dist-->
             <position>
                 <x>2.64670</x>
                 <y>0.01</y>
@@ -2267,16 +2262,11 @@
             </position>
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>1</factor>
+                <factor>0.9</factor>
             </volume>
             <volume>
                 <property>velocities/groundspeed-kt</property>
                 <factor>0.01</factor>
-                <max>1.0</max>
-            </volume>
-            <volume>
-                <internal>dt_stop</internal>
-                <factor>0.1</factor>
                 <max>1.0</max>
             </volume>
             <pitch>
@@ -3841,6 +3831,24 @@
                               <value>2000</value>
                             </less-than>
                         </or>
+                    </and>
+                    <and><!-- A/P TF Malfunction -->
+                        <equals>
+                          <property>instrumentation/tfs/malfunction</property>
+                          <value>1</value>
+                        </equals>
+                        <equals>
+                          <property>fdm/jsbsim/autoflight/output/pitch-master</property>
+                          <value>1</value>
+                        </equals>
+                        <equals>
+                          <property>fdm/jsbsim/autoflight/switch-pitch</property>
+                          <value>1</value>
+                        </equals>
+                        <equals>
+                          <property>f16/fcs/adv-mode-sel</property>
+                          <value>1</value>
+                        </equals>
                     </and>
                 </or>
                 <greater-than>

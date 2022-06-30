@@ -60,7 +60,7 @@
             </preview>
   </previews>
 
-  
+
   <model>
     <f16>
       <wingmounts type="bool">false</wingmounts>
@@ -186,12 +186,13 @@
    <fcs>
     <fly-by-wire>
       <prototype type="bool">true</prototype>
+      <ada189675 type="bool">false</ada189675>
       <enable-control-c type="bool">false</enable-control-c>
     </fly-by-wire>
    </fcs>
   </jsbsim>
  </fdm>
- 
+
  <engines>
     <engine>
       <rated-mil-dry type="double">14670</rated-mil-dry>

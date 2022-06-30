@@ -84,7 +84,7 @@ light: ecm lamp off
         <object-name>master-arm-cover-axis</object-name>
         <object-name>master-arm-switch</object-name>
   </animation>
-  
+
     <effect>
         <name>models-effects-f16panel-left</name>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
@@ -463,6 +463,16 @@ light: ecm lamp off
         </condition>
     </animation>
     <animation>
+        <object-name>active-on</object-name>
+        <object-name>stby-on</object-name>
+        <type>material</type>
+        <emission>
+            <red>1</red>
+            <green>1</green>
+            <blue>1</blue>
+        </emission>
+    </animation>
+    <animation>
         <type>select</type>
         <object-name>autopilot-switch</object-name>
         <condition>
@@ -623,9 +633,7 @@ light: ecm lamp off
 
     <animation>
         <type>material</type>
-        <object-name>active-on</object-name>
         <object-name>ecm-enbl-on</object-name>
-        <object-name>stby-on</object-name>
         <emission>
             <red>1</red>
             <green>1</green>

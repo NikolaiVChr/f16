@@ -147,10 +147,12 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
     </function>
 
     <function name="aero/coefficient/CL_g">
-       <description>Change in lift due to ground effect</description>
-          <table>
-              <independentVar>aero/h_b-mac-ft</independentVar>
-              <tableData>
+        <description>Change in lift due to ground effect</description>
+        <product>
+            <value>0.5</value>
+            <table>
+                <independentVar>aero/h_b-mac-ft</independentVar>
+                <tableData>
              0.0000  0.2290
              0.2000  0.1240
              0.3000  0.1160
@@ -164,9 +166,10 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
              1.8000  0.0010
              2.0000  0.0000
              2.2000  0.0000
-              </tableData>
-          </table>
-      </function>
+                </tableData>
+            </table>
+        </product>
+    </function>
 
     <function name="aero/coefficient/Cx_g">
         <sum>

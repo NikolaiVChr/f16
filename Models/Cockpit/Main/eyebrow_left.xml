@@ -29,7 +29,7 @@
     </or>
   </condition>
  </animation>
- 
+
  <animation>
   <type>select</type>
   <object-name>master_caution</object-name>
@@ -40,18 +40,28 @@
     </or>
   </condition>
  </animation>
- 
+
  <animation>
   <object-name>iff</object-name>
   <type>material</type>
+  <condition>
+
+      <or>
+          <and>
+            <greater-than><property>fdm/jsbsim/elec/bus/batt-1</property><value>20</value></greater-than><!-- check elec here, this bus was a guess -->
+            <property>instrumentation/radar/iff</property>
+          </and>
+          <property>controls/test/test-panel/mal-ind-lts</property>
+      </or>
+
+  </condition>
   <emission>
-   <factor-prop>instrumentation/radar/iff</factor-prop>
    <red>1</red>
    <green>1</green>
    <blue>1</blue>
   </emission>
  </animation>
- 
+
  <animation>
     <type>pick</type>
     <visible>true</visible>
@@ -66,7 +76,7 @@
      </binding>
     </action>
    </animation>
-   
+
    <animation>
     <type>pick</type>
     <visible>true</visible>
@@ -92,7 +102,7 @@
       </mod-up>
     </action>
    </animation>
-   
+
    <animation>
     <type>pick</type>
     <visible>true</visible>

@@ -42,7 +42,7 @@ var TopGun = {
 			}
 		}
 		me.model = n.getChild("model", i, 1);
-		
+
 		n = props.globals.getNode("ai/models", 1);
 		for (i = 0; 1==1; i += 1) {
 			if (n.getChild(me.blufor?BLUFOR_AIRCRAFT_TYPE:OPFOR_AIRCRAFT_TYPE, i, 0) == nil) {
@@ -65,8 +65,9 @@ var TopGun = {
 		#me.ai.getNode("gear/gear[1]/position-norm",1).setDoubleValue(0);#gear
 		#me.ai.getNode("gear/gear[1]/position-norm",1).setDoubleValue(0);#gear
 		#me.ai.getNode("sim/multiplay/generic/bool[39]",1).setDoubleValue(1);#aug
-		#me.ai.getNode("sim/multiplay/generic/float[0]",1).setDoubleValue(1);#nozzle
-		
+		me.lockNode = me.ai.getNode("sim/multiplay/generic/string[6]",1);
+		me.lockNode.setValue("");#radar lock
+
 		me.ai.getNode("sim/multiplay/generic/int[2]",1).setBoolValue(0);#radar standby
 		me.model.getNode("path", 1).setValue(model);
 
@@ -96,7 +97,7 @@ var TopGun = {
 
 		TopGun.mig28Score = 0;
 		TopGun.a16Score = 0;
-		
+
 		#print("TopGun: starting");
 		if(me.blufor) {
 			screen.log.write(me.callsign~": Hello.", 0.0, 1.0, 0.0);
@@ -120,22 +121,22 @@ var TopGun = {
 
 	spwn: func {
 		me.ai.getNode("valid").setBoolValue(1);
-		
+
 		me.reset();
 		if (me.blufor) {
 			screen.log.write(me.callsign~": Hey, I'll be your wingman.", 0.0, 1.0, 0.0);
 		} else {
-			if (me.callsign == "1Lt.Elmo") {
+			if (me.callsign == "1Lt.Slice") {
 				screen.log.write(me.callsign~": I will go easy on you, try to stay on my six. Have fun.", 1.0, 1.0, 0.0);
 			} elsif (me.callsign == "Cpt.Wild") {
-				screen.log.write(me.callsign~": Nice weather for a fair fight, lets go.", 1.0, 1.0, 0.0);
-			} elsif (me.callsign == "Maj.RED") {
-				screen.log.write(me.callsign~": Lets do this, don't make any mistakes.", 1.0, 1.0, 0.0);
+				screen.log.write(me.callsign~": Nice weather for a fair fight, let's go.", 1.0, 1.0, 0.0);
+			} elsif (me.callsign == "Maj.Fuel") {
+				screen.log.write(me.callsign~": Let's do this, don't make any mistakes.", 1.0, 1.0, 0.0);
 			} elsif (me.callsign == "Maj.SWAT") {
-				screen.log.write(me.callsign~": Fight is on!", 1.0, 1.0, 0.0);
-			} elsif (me.callsign == "Col.Snuff") {
-				screen.log.write(me.callsign~": This is the end-game..", 1.0, 1.0, 0.0);
-			} elsif (me.callsign == "Cpt.Bloody") {
+				screen.log.write(me.callsign~": Fight's on!", 1.0, 1.0, 0.0);
+			} elsif (me.callsign == "LtCol.Snuff") {
+				screen.log.write(me.callsign~": This is the end-game...", 1.0, 1.0, 0.0);
+			} elsif (me.callsign == "Cpt.Guts") {
 				screen.log.write(me.callsign~": Lets do this.", 1.0, 1.0, 0.0);
 			}
 		}
@@ -272,7 +273,7 @@ var TopGun = {
 			screen.log.write(me.callsign~": Good job! You have a firing solution..("~TopGun.mig28Score~"-"~TopGun.a16Score~")", 1.0, 1.0, 0.0);
 			me.killTime = me.elapsed;
 		}
-		
+
 		if (me.opponent != nil) {
 #			print(me.callsign ~" chasing "~me.opponent.callsign);
 		} else {
@@ -337,6 +338,13 @@ var TopGun = {
 			me.hisBearing = me.a16Coord.course_to(me.coord);
 			me.hisClock = geo.normdeg180(me.hisBearing-me.a16Heading);
 			me.dist_nm = me.a16Coord.direct_distance_to(me.coord)*M2NM;
+		}
+
+		if (!me.blufor and me.a16Range < 70 and math.abs(me.a16Elev)<25 and me.a16ClockAbs < 55) {
+			# Mig28 radar has lock on pilot
+			me.lockNode.setValue(left(md5(getprop("sim/multiplay/callsign")), 4));
+		} else {
+			me.lockNode.setValue("");
 		}
 
 		if(!me.blufor and me.a16Coord.alt()*M2FT < FLOOR-3000 and me.elapsed - TopGun.warnTime > 15) {
@@ -492,7 +500,7 @@ var TopGun = {
 				} elsif (me.elapsed - me.specialTime > 120 and me.alt*M2FT<17500 and me.speed*MPS2KT<600 and me.speed*MPS2KT>450 and (me.random<0.01 or me.elapsed - me.circleTime > 50 or (math.mod(TopGun.a16Score,2) > 0 and me.a16ClockAbs > 140 and math.abs(me.a16Pitch)<15 and me.hisClockAbs < 20 and me.dist_nm < MAX_CANNON_RANGE+1.0))) {
 					# Defensive: bandit has aim on mig28 going fast in low alt, do immelmann
 					me.think = GO_IMMEL;
-					me.thrust = 1; 
+					me.thrust = 1;
 					me.specialMove = 0;
 					me.specialTime = me.elapsed;
 					me.keepDecisionTime = -1;
@@ -506,7 +514,7 @@ var TopGun = {
 				} elsif (math.mod(TopGun.a16Score,2) > 0 and me.alt<9000 and me.a16ClockAbs > 140 and math.abs(me.a16Pitch)<15 and me.hisClockAbs < 20 and me.dist_nm < MAX_CANNON_RANGE+1.0) {
 					# Defensive: bandit has aim on mig28, go up just to do something else
 					me.think = GO_UP;
-					me.thrust = 1; 
+					me.thrust = 1;
 					me.keepDecisionTime = 2.0;
 				} elsif (me.a16ClockAbs > 130 and math.abs(me.a16Pitch)<15 and me.hisClockAbs < 20 and me.dist_nm < MAX_CANNON_RANGE+1.0) {
 					# Defensive: bandit has aim on mig28, do some scissors to not be hit
@@ -518,7 +526,7 @@ var TopGun = {
 					me.scissorPeriod = 1.5;
 					me.keepDecisionTime = 0.15;
 				} elsif (me.a16ClockAbs < 115 and me.a16ClockAbs > 75 and me.hisClockAbs > 75 and me.hisClockAbs < 115 and me.dist_nm < 1.5 and math.abs(geo.normdeg180(me.heading-me.a16Heading))<30) {
-					# Offensive: scissor response to parallel flight 
+					# Offensive: scissor response to parallel flight
 					if (me.think != GO_SCISSOR) {
 						me.scissorTime = me.elapsed;
 					}
@@ -537,7 +545,7 @@ var TopGun = {
 					} else {
 						me.think = GO_BREAK_DOWN;
 						me.thrust = 0.75;
-						me.keepDecisionTime = 6;	
+						me.keepDecisionTime = 6;
 					}
 				} else {
 					# turn fight to try and get bandit in sight
@@ -555,7 +563,7 @@ var TopGun = {
 					} else {
 						me.thrust = 1;
 					}
-					me.keepDecisionTime = 0.15;	
+					me.keepDecisionTime = 0.15;
 				}
 				me.decided();
 			}
@@ -770,14 +778,14 @@ var TopGun = {
 	},
 
 	step: func () {
-		
-		
+
+
 		me.mach = me.machNow(me.speed*M2FT, me.alt*M2FT);
 		me.turn = me.turnMax(me.mach,me.alt*M2FT);
 		me.Gf        = math.min(1, me.extrapolate(me.turn[1], 3, 9, 1, math.max(0.11,(ENDURANCE*4.5*0.75)/math.max(0.00001,me.turnStack))));
 		me.G         = me.Gf*me.turn[1];
 		me.turnSpeed = me.Gf*me.turn[0];
-		
+
 		if (me.rollTarget == nil) {
 			me.rollTarget = me.clamp(me.turnrateTarget/me.turnSpeed,-1,1)*MAX_ROLL;
 		}
@@ -830,7 +838,7 @@ var TopGun = {
 				}
 			}
 		}
-		
+
 		#printf("max turn %.1f  max G %.1f  stack %.1f  turn %.1f  G %.1f", me.turn[0],me.turn[1],me.turnStack,me.rollNorm*(me.rollNorm<0?-1:1)*me.turnSpeed,me.rollNorm*(me.rollNorm<0?-1:1)*me.G*0.8888+1);
 		me.turnStack += (me.rollNorm*(me.rollNorm<0?-1:1)*me.G-4.5)*me.dt;
 		me.turnStack = math.max(0,me.turnStack);
@@ -849,7 +857,7 @@ var TopGun = {
 		me.bleed      = me.extrapolate(me.turnNorm*(me.turnNorm<0?-1:1), 0, 1, 0, 0.75*math.abs(me.deacc*(me.rollNorm*me.turnSpeed))); # turn bleed  #math.abs((me.GStoKIAS(me.speed)*MPS2KT-450)/450)*me.deacc*BLEED_FACTOR+me.deacc*BLEED_FACTOR
 		me.gravity    = 9.80665*me.upFrac;                                                       # gravity acc/deacc
 		me.acc        = me.extrapolate(me.thrust, 0, 1, -me.deaccMax(), me.accMax());            # acc
-		
+
 
 		me.speed += (-me.gravity+me.acc-me.bleed)*me.dt; # the aircraft in level flight is unaffected by gravity drop.
 
@@ -966,22 +974,22 @@ var TopGun = {
 		# taken from Greek F-16 block 52 supplemental manual.
 		#
 		# 00000:
-		# 756/750 19 27  9  4 3 2 2 3 2 3 2 3 200 
+		# 756/750 19 27  9  4 3 2 2 3 2 3 2 3 200
 		#
 		# 10000:
 		# 775/750 50 20 10  8 5 4 4 3 4 3 4 4 200
-		# 
+		#
 		# 20000
 		# 757/750 39 46 17 12  9  8  7  5  6 6 6 7 200
 		#
-		# 
+		#
 		# 30000
 		# 698/650 93 21 16 14 12 13 10 10 11 12 200
 		#
 		# 40000
 		# 614/600 82 60 30 25 24 24 26 21 26 200
 		me.kias = me.GStoKIAS(me.speed*MPS2KT);
-		
+
 		me.a00 = 0;
 		if (me.kias > 750) {
 			me.a00 = 158;#8.33 * 19
@@ -1009,7 +1017,7 @@ var TopGun = {
 			me.a00 = 3;
 		}
 		me.a00 = me.KIAStoGS(50)*KT2MPS/me.a00;
-		
+
 		me.a10 = 0;
 		if (me.kias > 750) {
 			me.a10 = 100;#50 * 2
@@ -1112,7 +1120,7 @@ var TopGun = {
 		}
 		me.a40 = me.KIAStoGS(50)*KT2MPS/me.a40;
 
-		
+
 		if (me.alt*M2FT > 30000) {
 			return me.extrapolate(me.alt*M2FT, 30000, 40000, me.a30, me.a40);
 		} elsif (me.alt*M2FT > 20000) {

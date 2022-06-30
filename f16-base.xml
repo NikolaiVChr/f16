@@ -3,16 +3,21 @@
     <autopilot>
         <settings>
             <icao-aircraft-category type="string">D</icao-aircraft-category>
+            <target-tf-altitude-ft type="double">20000.0</target-tf-altitude-ft>
+            <tf-minimums type="int">500</tf-minimums>
         </settings>
     </autopilot>
     <sim>
-        <aircraft-version>3.55</aircraft-version>
+        <aircraft-version>3.61</aircraft-version>
         <minimum-fg-version>2020.3</minimum-fg-version>
         <!-- enable "parkpos=AVAILABLE" option for the F-16 -->
         <dimensions>
             <radius-m type="double">10.0</radius-m>
             <parkpos-offset-m type="double">0.0</parkpos-offset-m>
         </dimensions>
+        <version>
+            <compositor-support type="bool">false</compositor-support>
+        </version>
         <aircraft-class type="string">mil-fighter</aircraft-class>
         <aircraft-operator />
         <aircraft-data>
@@ -69,7 +74,7 @@
         </previews>
         <hud>
             <visibility n="1">false</visibility>
-            
+
             <path n="1">Aircraft/f16/Systems/nohud.xml</path>
             <path n="2">Aircraft/f16/Systems/nohud.xml</path>
             <path n="3">Aircraft/f16/Systems/nohud.xml</path>
@@ -534,7 +539,7 @@
         </multiplay>
 
         <gui n="0" include="gui/f16-gui.xml"/>
-        
+
         <systems n="0">
             <autopilot n="0">
                 <path>Aircraft/f16/Systems/autoflight-rules.xml</path>
@@ -579,7 +584,7 @@
             <master-arm-switch type="int">0</master-arm-switch>
             <alt-rel-button type="bool">false</alt-rel-button>
         </armament>
-      
+
         <fuel>
             <qty-selector type="int">1</qty-selector>
             <external-transfer type="bool">true</external-transfer>
@@ -612,7 +617,7 @@
             <target-management-switch-x type="float">0</target-management-switch-x>
             <target-management-switch-y type="float">0</target-management-switch-y>
             <target-management-switch-x n="1" type="float">0</target-management-switch-x>
-            <target-management-switch-y n="1" type="float">0</target-management-switch-y>            
+            <target-management-switch-y n="1" type="float">0</target-management-switch-y>
         </displays>
         <indicators />
         <lighting>
@@ -747,6 +752,13 @@
                     <vs>
                         <pid type="double">0</pid>
                     </vs>
+                    <alt>
+                        <half type="double">50</half>
+                        <full type="double">100</full>
+                        <max-vs type="double">3000</max-vs>
+                        <min-vs type="double">-3000</min-vs>
+                        <gain-vs type="double">-7</gain-vs>
+                    </alt>
                 </pitch>
                 <roll>
                     <d-gain-att type="double">0</d-gain-att>
@@ -766,7 +778,7 @@
                     <batt-2 type="double">0</batt-2>
                     <charger type="double">0</charger>
                     <emergency-ac-1 type="double">0</emergency-ac-1>
-                    <emergency-ac-2 type="double">0</emergency-ac-2>            
+                    <emergency-ac-2 type="double">0</emergency-ac-2>
                     <emergency-dc-1 type="double">0</emergency-dc-1>
                     <emergency-dc-2 type="double">0</emergency-dc-2>
                     <ess-ac type="double">0</ess-ac>
@@ -783,11 +795,11 @@
                         <b type="double">0</b>
                         <c type="double">0</c>
                         <d type="double">0</d>
-                        <ab-regulator type="double">0</ab-regulator>            
+                        <ab-regulator type="double">0</ab-regulator>
                         <cd-regulator type="double">0</cd-regulator>
                     </flcc>
                     <switch>
-                        <ab-regulator type="double">0</ab-regulator>            
+                        <ab-regulator type="double">0</ab-regulator>
                         <cd-regulator type="double">0</cd-regulator>
                     </switch>
                 </bus>
@@ -860,7 +872,7 @@
                         <serviceable type="bool">true</serviceable>
                     </edpb-pump>
                     <jfs-running type="double">0</jfs-running>
-                    <sysb-psi type="double">0</sysb-psi>                    
+                    <sysb-psi type="double">0</sysb-psi>
                     <jfs-bleed type="double">0</jfs-bleed>
                     <!-- This is used to ensure the sim starts with util hyds by setting to -ve number -->
                     <util-system-preload-input type="double">0</util-system-preload-input>
@@ -884,7 +896,7 @@
                 <fly-by-wire>
                     <K_A type="double">2</K_A><!-- AFSC 32657C say 50, but that give instability. Another paper said 2000. -->
                     <q_c type="double">0</q_c>
-                    
+
                     <integrator-selftest-value type="double">1</integrator-selftest-value>
                     <enable-standby-gains type="bool">false</enable-standby-gains>
                     <enable-ari type="bool">true</enable-ari>
@@ -947,11 +959,12 @@
         <refuel>
             <type type="string">boom</type>
             <serviceable type="bool">false</serviceable>
+            <switch type="bool">false</switch>
             <offset-x-m>0.26</offset-x-m>
             <offset-y-m>0.00</offset-y-m>
             <offset-z-m>0.68</offset-z-m>
             <max-fuel-transfer-lbs-min>6000</max-fuel-transfer-lbs-min>
-        </refuel>        
+        </refuel>
     </systems>
     <instrumentation>
         <altimeter>
@@ -1023,7 +1036,7 @@
                 <entry type="int">10</entry>
             </rangesDGFT>
             <cycle-range type="bool">false</cycle-range>
-            <scan_visibility_check_interval type="double">1</scan_visibility_check_interval>            
+            <scan_visibility_check_interval type="double">1</scan_visibility_check_interval>
         </radar>
         <radar2>
             <sweep-width-m type="double">0.0844</sweep-width-m>
@@ -1041,7 +1054,7 @@
             <on-off type="bool">true</on-off>
         </ecm>
         <nav n="0">
-            
+
         </nav>
         <heading-indicator>
             <heading-bug-deg type="double">360</heading-bug-deg>
@@ -1247,7 +1260,7 @@
 			<probe-heat-switch type="int">0</probe-heat-switch>
 			<probe-heat-light type="bool">false</probe-heat-light>
             <dgft type="bool">false</dgft>
-            <emer-jett-switch type="bool">false</emer-jett-switch>            
+            <emer-jett-switch type="bool">false</emer-jett-switch>
             <hud-drift type="int">1</hud-drift><!-- 2: drift c/o 0: reset -->
             <hud-flir-distance-min type="double">1.0</hud-flir-distance-min><!-- must be larger than zero -->
             <hud-flir-distance-max type="double">20.0</hud-flir-distance-max><!-- must be larger than min -->
@@ -1342,7 +1355,7 @@
             <power-fcr-warming type="bool">true</power-fcr-warming>
             <power-right-hdpt-warm type="double">0</power-right-hdpt-warm>
             <power-right-hdpt-warming type="bool">true</power-right-hdpt-warming>
-            <ins-knob type="int">0</ins-knob>            
+            <ins-knob type="int">0</ins-knob>
             <ew-disp-switch type="bool">false</ew-disp-switch>
             <ew-rwr-switch type="bool">false</ew-rwr-switch>
             <ew-mws-switch type="bool">false</ew-mws-switch>
@@ -1471,25 +1484,25 @@
         <speedbrake-pos-anim type="double">-35</speedbrake-pos-anim>
     </surface-positions>
 
-    <aircraft> 
-        <flir> 
-            <input> 
-                <yaw-deg type="double">0.0</yaw-deg> 
-                <pitch-deg type="double">0.0</pitch-deg> 
+    <aircraft>
+        <flir>
+            <input>
+                <yaw-deg type="double">0.0</yaw-deg>
+                <pitch-deg type="double">0.0</pitch-deg>
             </input>
-            <swivel> 
-                <roll-deg type="double">0.0</roll-deg> 
-                <pitch-deg type="double">30.0</pitch-deg> 
-            </swivel> 
-            <target> 
-                <yaw-deg type="double">0.0</yaw-deg> 
-                <pitch-deg type="double">0.0</pitch-deg> 
-                <auto-track type="bool">false</auto-track> 
-            </target> 
-            <locks> 
-                <auto-track type="bool">true</auto-track> 
-            </locks> 
-        </flir> 
+            <swivel>
+                <roll-deg type="double">0.0</roll-deg>
+                <pitch-deg type="double">30.0</pitch-deg>
+            </swivel>
+            <target>
+                <yaw-deg type="double">0.0</yaw-deg>
+                <pitch-deg type="double">0.0</pitch-deg>
+                <auto-track type="bool">false</auto-track>
+            </target>
+            <locks>
+                <auto-track type="bool">true</auto-track>
+            </locks>
+        </flir>
     </aircraft>
 
         <!--logging>
@@ -1549,7 +1562,7 @@
         </vector>
         <rcs>
             <file>Aircraft/f16/Nasal/rcs_mand.nas</file><!-- must be before radar -->
-            <file>Aircraft/f16/Nasal/rcs.nas</file><!-- must be before radar -->            
+            <file>Aircraft/f16/Nasal/rcs.nas</file><!-- must be before radar -->
         </rcs>
         <controls>
             <file>Aircraft/f16/Nasal/f16_controls.nas</file>
@@ -1560,7 +1573,7 @@
         <datalink>
             <file>Aircraft/f16/Nasal/datalink.nas</file>
         </datalink>
-        <f16> 
+        <f16>
             <file>Aircraft/f16/Nasal/exec.nas</file>
             <file>Aircraft/f16/Nasal/zoom-views.nas</file>
             <file>Aircraft/f16/Nasal/f16.nas</file>
@@ -1664,7 +1677,10 @@
             <file>Aircraft/f16/Nasal/radar/radar-system.nas</file>
             <file>Aircraft/f16/Nasal/radar/apg-68.nas</file>
         </radar_system>
+        <terr_foll>
+            <file>Aircraft/f16/Nasal/terrain_follow.nas</file>
+        </terr_foll>
     </nasal>
 
-   
+
 </PropertyList>

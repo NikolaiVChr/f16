@@ -3,7 +3,7 @@
 <PropertyList>
 
  <path>panels_mlu_right-aux-console.ac</path>
- 
+
  <animation>
         <type>noshadow</type>
         <object-name>RIGHT_AUX_CONSOLE_GRP</object-name>
@@ -254,14 +254,14 @@
         <object-name>HYD_PRESS_A_needle</object-name>
         <object-name>HYD_PRESS_B_disk</object-name>
         <object-name>HYD_PRESS_B_needle</object-name>
-        
+
         <object-name>LIQ_OXY_disk</object-name>
         <object-name>LIQ_OXY_needle</object-name>
 </effect>
 
-    
-        
-        
+
+
+
 
  <!-- START HYDR GAUGE -->
 <animation>
@@ -311,7 +311,7 @@
    <z>-1</z>
   </axis>
  </animation>
- 
+
   <animation>
   <type>rotate</type>
   <object-name>CAB_PRESS_needle</object-name><!-- could not find which elec this gauge relies on -->
@@ -329,7 +329,7 @@
    <z>-1</z>
   </axis>
  </animation>
- 
+
  <animation>
   <type>rotate</type>
   <object-name>EPU_FUEL_needle</object-name>
@@ -353,7 +353,7 @@
    <z>-1</z>
   </axis>
  </animation>
- 
+
  <animation>
   <type>rotate</type>
   <object-name>LIQ_OXY_needle</object-name>
@@ -556,7 +556,7 @@
                         <z>-1</z>
                 </axis>
         </animation>
-		
+
         <animation>
                 <type>rotate</type>
                 <object-name>ElapsedMinutesHand</object-name>
@@ -658,7 +658,7 @@
 
 
  <!-- END CLOCK -->
- 
+
 
  <!-- START CAUTION PANEL -->
 
@@ -672,7 +672,7 @@
   <condition>
    <not><property>controls/test/test-panel/mal-ind-lts</property></not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -680,7 +680,7 @@
   <condition>
    <not><property>controls/test/test-panel/mal-ind-lts</property></not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -688,7 +688,7 @@
   <condition>
    <not><property>controls/test/test-panel/mal-ind-lts</property></not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -701,7 +701,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -714,7 +714,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -723,10 +723,11 @@
    <not>
     <or>
      <property>controls/test/test-panel/mal-ind-lts</property>
+     <property>instrumentation/tfs/aft-not-engaged</property>
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -738,7 +739,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -751,7 +752,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -763,7 +764,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -776,7 +777,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -788,7 +789,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -800,7 +801,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -812,7 +813,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -825,8 +826,8 @@
     </or>
    </not>
   </condition>
- </animation> 
- 
+ </animation>
+
  <animation>
   <type>select</type>
   <object-name>ENGINE_FAULT_unlit</object-name>
@@ -837,7 +838,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -850,7 +851,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -862,7 +863,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -874,7 +875,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -887,7 +888,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -900,7 +901,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -912,7 +913,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -924,7 +925,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -937,7 +938,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -949,7 +950,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -961,7 +962,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -974,7 +975,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -987,7 +988,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1000,7 +1001,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1012,7 +1013,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1025,7 +1026,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1038,7 +1039,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1051,7 +1052,7 @@
     </or>
    </not>
   </condition>
- </animation> 
+ </animation>
 
  <!-- light ON -->
  <!-- unlit condition uses NOT OR logic -->
@@ -1063,7 +1064,7 @@
   <condition>
    <property>controls/test/test-panel/mal-ind-lts</property>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1071,7 +1072,7 @@
   <condition>
    <property>controls/test/test-panel/mal-ind-lts</property>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1079,7 +1080,7 @@
   <condition>
    <property>controls/test/test-panel/mal-ind-lts</property>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1090,7 +1091,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1101,7 +1102,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1109,9 +1110,10 @@
   <condition>
    <or>
     <property>controls/test/test-panel/mal-ind-lts</property>
+    <property>instrumentation/tfs/aft-not-engaged</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1121,7 +1123,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1132,7 +1134,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1142,7 +1144,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1153,7 +1155,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1163,7 +1165,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1173,7 +1175,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1183,7 +1185,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1194,7 +1196,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1204,7 +1206,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1215,7 +1217,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1225,7 +1227,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1235,7 +1237,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1246,7 +1248,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1257,7 +1259,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1267,7 +1269,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1277,7 +1279,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1288,7 +1290,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1298,7 +1300,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1308,7 +1310,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1319,7 +1321,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1330,7 +1332,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1342,7 +1344,7 @@
    </or>
   </condition>
  </animation>
- 
+
  <animation>
   <type>select</type>
   <object-name>RADAR_ALT_lit</object-name>
@@ -1351,7 +1353,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1362,7 +1364,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1373,7 +1375,7 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1384,9 +1386,9 @@
     <property>controls/test/test-panel/mal-ind-lts</property>
    </or>
   </condition>
- </animation> 
- 
- 
+ </animation>
+
+
 
  <animation>
   <type>material</type>
@@ -1457,7 +1459,7 @@
   <object-name>HYD_PRESS_A_needle</object-name>
   <object-name>HYD_PRESS_B_disk</object-name>
   <object-name>HYD_PRESS_B_needle</object-name>
-  
+
   <object-name>LIQ_OXY_disk</object-name>
   <object-name>LIQ_OXY_needle</object-name>
 

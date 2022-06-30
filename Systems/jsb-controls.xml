@@ -12,8 +12,6 @@
     ICAS-90-5.10.2 - used for MPO switch
     AFSC 32657C - has more clean view of Integrator pitch loop.
  -->
-    
-    <property value="0">fcs/fly-by-wire/diagram1987</property>
 
     <channel execrate="1" name="FCS Lookup">
 
@@ -22,24 +20,53 @@
                 Main landing gear on ground
             </description>
             <default value="0"/>
-            <test logic="AND" value="1">
+            <test logic="OR" value="1">
                 gear/unit[1]/WOW eq 1
                 gear/unit[2]/WOW eq 1
             </test>
         </switch>
 
-        <switch name="fcs/fly-by-wire/condition-a">
+        <switch name="fcs/fly-by-wire/Note-5">
+            <description>
+                LJQC: Note 5 in 189675
+            </description>
             <default value="0"/>
             <test logic="OR" value="1">
                 gear/gear-cmd-norm == 1
                 /controls/flight/flaps gt 0
             </test>
+        </switch>
+
+        <switch name="fcs/fly-by-wire/condition-a">
+            <description>
+                LJQC: According to Note 1 in 189675, condition on q_c is 600.
+            </description>
+            <default value="0"/>
             <test logic="AND" value="1">
+                fcs/fly-by-wire/ada189675 == 1
+                fcs/fly-by-wire/Note-5 == 1
+                fcs/fly-by-wire/q_c lt 600
+            </test>
+            <test logic="AND" value="1">
+                fcs/fly-by-wire/ada189675 == 1
+                /systems/refuel/serviceable == 1
+                fcs/fly-by-wire/q_c lt 600
+            </test>
+            <test logic="AND" value="1">
+                fcs/fly-by-wire/ada189675 == 0
+                /controls/flight/flaps gt 0
+            </test>
+            <test logic="AND" value="1">
+                fcs/fly-by-wire/ada189675 == 0
+                gear/gear-cmd-norm == 1
+            </test>
+            <test logic="AND" value="1">
+                fcs/fly-by-wire/ada189675 == 0
                 /systems/refuel/serviceable == 1
                 fcs/fly-by-wire/q_c lt 646
             </test>
         </switch>
-        
+
         <switch name="fcs/fly-by-wire/condition-b">
             <description>
                 Since this was removed on later blocks,
@@ -56,27 +83,36 @@
                 fcs/fly-by-wire/prototype == 1
             </test>
         </switch>
-        
+
         <switch name="fcs/fly-by-wire/condition-aar">
+            <description>
+                LJQC: According to 189675, condition on q_c is 600.
+            </description>
             <default value="0"/>
             <test logic="AND" value="1">
+                fcs/fly-by-wire/ada189675 == 1
+                /systems/refuel/serviceable == 1
+                fcs/fly-by-wire/q_c lt 600
+            </test>
+            <test logic="AND" value="1">
+                fcs/fly-by-wire/ada189675 == 0
                 /systems/refuel/serviceable == 1
                 fcs/fly-by-wire/q_c lt 646
             </test>
         </switch>
-        
+
         <switch name="fcs/fly-by-wire/condition-z-raw">
             <default value="0"/>
             <test logic="OR" value="1">
                 fcs/fly-by-wire/condition-a == 1
             </test>
         </switch>
-        
+
         <lag_filter name="fcs/fly-by-wire/condition-z">
             <input> fcs/fly-by-wire/condition-z-raw </input>
             <c1> 0.125 </c1>
         </lag_filter>
-        
+
         <fcs_function name="fcs/fly-by-wire/condition-y">
             <function>
                 <sum>
@@ -123,7 +159,7 @@
                 </product>
             </function>
         </fcs_function>
-        
+
         <fcs_function name="fcs/fly-by-wire/P_s">
             <description>
                 Static pressure. Pound per square feet
@@ -210,7 +246,7 @@
 
         <fcs_function name="fcs/fly-by-wire/pitch/F3-rate-alt">
             <description>
-                TP-1538: Pitch rate gain schedule. 
+                TP-1538: Pitch rate gain schedule.
 
                 Not used
             </description>
@@ -245,16 +281,20 @@
         </fcs_function>
 
         <fcs_function name="fcs/fly-by-wire/yaw/F8">
-            <description>Yaw axis
-                         TP-1538 is simplified to 0.5
+            <description>
+                Yaw axis
+                TP-1538 is simplified to 0.5
+                LJQC: Compensate for decrease in directional stability at higher mach. Since aero coeff is only for 0.6 mach, so we only need 0.5.
+
+                Compromising between what we both want; 0.75 is used. ~Nikolai and LJQC
             </description>
             <function>
                 <table>
                     <independentVar lookup="row">fcs/fly-by-wire/qcps-ratio</independentVar>
                     <tableData>
-                        0.0  0.5
-                        2.04 0.5
-                        3.23 1.0
+                        0.0  0.50
+                        2.04 0.50
+                        3.23 0.75
                     </tableData>
                 </table>
             </function>
@@ -414,31 +454,62 @@
         </switch>
 
         <fcs_function name="fcs/fly-by-wire/pitch/stick-force-lbf">
+            <description>
+                LJQC: Stick cmd gradient according to 189675. Stand true for both Analog and Digital FLCS.
+            </description>
             <function>
-                <table>
-                    <independentVar lookup="row">fcs/elevator-cmd-norm</independentVar>
-                    <tableData>
-                       -1   40
-                        0    0
-                        1  -17.65
-                    </tableData>
-                </table>
+                <ifthen>
+                    <p>fcs/fly-by-wire/ada189675</p>
+                    <table>
+                        <independentVar lookup="row">fcs/elevator-cmd-norm</independentVar>
+                        <tableData>
+                           -1   32
+                            0    0
+                            1  -32
+                        </tableData>
+                    </table>
+                    <table>
+                        <independentVar lookup="row">fcs/elevator-cmd-norm</independentVar>
+                        <tableData>
+                           -1   40
+                            0    0
+                            1  -17.65
+                        </tableData>
+                    </table>
+                </ifthen>
             </function>
         </fcs_function>
 
         <fcs_function name="fcs/fly-by-wire/pitch/command-g">
             <function>
-                <table>
-                    <independentVar lookup="row">fcs/fly-by-wire/pitch/stick-force-lbf</independentVar>
-                    <tableData>
-                       -17.65  -4.0
-                        -7.25  -0.44
-                        -1.75   0.0
-                         1.75   0.0
-                         7.25   0.44 
-                        40.00  10.86
-                    </tableData>
-                </table>
+                <description>
+                    LJQC: Stick cmd gradient according to 189675. Stand true for both Analog and Digital FLCS.
+                </description>
+                <ifthen>
+                    <p>fcs/fly-by-wire/ada189675</p>
+                    <table>
+                        <independentVar lookup="row">fcs/fly-by-wire/pitch/stick-force-lbf</independentVar>
+                        <tableData>
+                            -32.0   -10.86
+                            -6.0    -0.44
+                            -1.75   0.0
+                            1.75    0.0
+                            6.0     0.44
+                            32.0    10.86
+                        </tableData>
+                    </table>
+                    <table>
+                        <independentVar lookup="row">fcs/fly-by-wire/pitch/stick-force-lbf</independentVar>
+                        <tableData>
+                           -17.65  -4.0
+                            -7.25  -0.44
+                            -1.75   0.0
+                             1.75   0.0
+                             7.25   0.44
+                            40.00  10.86
+                        </tableData>
+                    </table>
+                </ifthen>
             </function>
         </fcs_function>
 
@@ -472,11 +543,21 @@
             </test>
         </switch>
 
+        <switch name="fcs/fly-by-wire/pitch/g-limit-clip">
+            <description>
+                LJQC: Max g according to 189675.
+            </description>
+            <default value="8.0"/>
+            <test logic="OR" value="8.3">
+                fcs/fly-by-wire/ada189675 == 1
+            </test>
+        </switch>
+
         <summer name="fcs/fly-by-wire/pitch/g-limit">
             <input>fcs/fly-by-wire/pitch/command-sum</input>
             <clipto>
                 <min>fcs/fly-by-wire/pitch/negative-g-limit-final</min>
-                <max>8.0</max>
+                <max>fcs/fly-by-wire/pitch/g-limit-clip</max>
             </clipto>
         </summer>
 
@@ -522,18 +603,37 @@
             </test>
         </switch>
 
+        <switch name="fcs/fly-by-wire/pitch/alpha-indicated-clamp-clip-min">
+            <default value="-5.0"/>
+            <test logic="OR" value="-5.5">
+                fcs/fly-by-wire/ada189675 == 1
+            </test>
+        </switch>
+
+        <switch name="fcs/fly-by-wire/pitch/alpha-indicated-clamp-clip-max">
+            <default value="30"/>
+            <test logic="OR" value="32.5">
+                fcs/fly-by-wire/ada189675 == 1
+            </test>
+        </switch>
+
         <summer name="fcs/fly-by-wire/pitch/alpha-indicated-clamp">
             <input>aero/alpha-deg</input><!-- should really be indicated -->
             <clipto>
-                <min>-5</min>
-                <max>30</max>
+                <min>fcs/fly-by-wire/pitch/alpha-indicated-clamp-clip-min</min>
+                <max>fcs/fly-by-wire/pitch/alpha-indicated-clamp-clip-max</max>
             </clipto>
         </summer>
 
         <switch name="fcs/fly-by-wire/pitch/alpha-indicated-switch">
+            <description>
+                Niko: Using NLG instead of MLG here fixes violent pitch up at touchdown when flaring.
+                        Issue #463
+            </description>
             <default value="fcs/fly-by-wire/pitch/alpha-indicated-clamp"/>
             <test logic="AND" value="0">
-                fcs/fly-by-wire/MLG-GND == 1
+                <!-- fcs/fly-by-wire/NLG-GND == 1 -->
+                gear/unit[0]/WOW == 1
             </test>
         </switch>
 
@@ -558,7 +658,17 @@
             <c1> 0.67 </c1>
         </lag_filter>
 
+        <switch name="fcs/fly-by-wire/pitch/catiii-roll-rate-af-limit">
+            <default value="5.4"/>
+            <test logic="OR" value="2.7">
+                fcs/fly-by-wire/pitch/enable-cat-III == 1
+            </test>
+        </switch>
+
         <fcs_function name="fcs/fly-by-wire/pitch/control-c/roll-rate-schedule">
+            <description>
+                LJQC: Under CAT III it is limited to an output of 2.7, ref 189675.
+            </description>
             <function>
                 <table>
                     <independentVar lookup="row">fcs/fly-by-wire/pitch/control-c/roll-rate-lagged</independentVar>
@@ -569,6 +679,17 @@
                 </table>
             </function>
         </fcs_function>
+
+        <summer name="fcs/fly-by-wire/pitch/control-c/roll-rate-schedule-limited">
+            <description>
+                LJQC: 189675 variable F. This is later used in yaw axis at rudder authority limiter.
+            </description>
+            <input>fcs/fly-by-wire/pitch/control-c/roll-rate-schedule</input>
+            <clipto>
+                <min>0</min>
+                <max>fcs/fly-by-wire/pitch/catiii-roll-rate-af-limit</max>
+            </clipto>
+        </summer>
 
         <switch name="fcs/fly-by-wire/control-c-actual">
             <description>
@@ -591,7 +712,7 @@
                       when rolling at high angle of attack.
                       its not used in yaw, ari or roll.
             </description>
-            <input> fcs/fly-by-wire/pitch/control-c/roll-rate-schedule </input>
+            <input> fcs/fly-by-wire/pitch/control-c/roll-rate-schedule-limited </input>
             <gain> fcs/fly-by-wire/control-c-actual </gain>
         </pure_gain>
 
@@ -604,7 +725,9 @@
         </lag_filter>
 
         <summer name="fcs/fly-by-wire/pitch/alpha-sum">
-            <description></description>
+            <description>
+                LJQC: According to 189675, alpha-sum only goes into the 20.4 limiter path. It doesn't goes into the 15.0/0.322 path.
+            </description>
             <input> fcs/fly-by-wire/pitch/a_f </input>
             <input> fcs/fly-by-wire/pitch/control-c/da_p </input>
         </summer>
@@ -648,7 +771,7 @@
                 </table>
             </function>
         </fcs_function>
- 
+
         <fcs_function name="fcs/fly-by-wire/pitch/alpha-indicated-sum">
             <function>
                 <sum>
@@ -680,6 +803,15 @@
             <gain> 57.2957795 </gain>
         </pure_gain>
 
+        <lag_filter name="fcs/fly-by-wire/pitch/q-lagged">
+            <description>
+                Niko: JSBSim cannot really handle lag filters that is so close to 60 when fdm running at 120Hz.
+                        Therefore this component is bypassed in fcs/fly-by-wire/pitch/q-lagged-gained
+            </description>
+            <input> velocities/q-deg_sec </input>
+            <c1> 50 </c1>
+        </lag_filter>
+
         <washout_filter name="fcs/fly-by-wire/pitch/q-washout">
           <input> velocities/q-deg_sec </input>
           <c1> 1 </c1>
@@ -697,25 +829,18 @@
 
         <switch name="fcs/fly-by-wire/pitch/bias-top">
             <description>
-                In documents this is 6 instead of 11.
-                However due to landing AoA should be 11 to 15,
-                The 6 bias is changed to 11.
-                DNU
+                6 will be the AoA it tries to keep on approach with no stick input.
             </description>
             <default value="6"/>
             <test logic="AND" value="0">
-                fcs/fly-by-wire/MLG-GND == 1                
+                fcs/fly-by-wire/MLG-GND == 1
             </test>
         </switch>
 
         <fcs_function name="fcs/fly-by-wire/pitch/bias-number">
             <description>
-                In documents this is 1 and 9 instead of -4 and 4.
-                However due to landing AoA should be 11 to 15,
-                The 6 bias is changed to 11, and these numbers
-                changed so its still 15 in flight CAT I and
+                This gets added to bias-top so its 15 in flight CAT I and
                 7 in flight CAT III at 100 KCAS.
-                DNU
             </description>
             <function>
                 <table>
@@ -737,6 +862,7 @@
             </description>
             <default value="0"/>
             <test logic="OR" value="fcs/fly-by-wire/pitch/bias-number">
+                <!-- fcs/fly-by-wire/condition-a == 1 -->
                 gear/gear-cmd-norm == 1
             </test>
         </switch>
@@ -748,21 +874,24 @@
             <input> fcs/fly-by-wire/pitch/bias-top </input>
             <c1> 10 </c1>
         </lag_filter>
-        
-        <!--<actuator name="fcs/fly-by-wire/pitch/bias-top-lag">
+
+        <!--actuator name="fcs/fly-by-wire/pitch/bias-top-lag">
             <description>
                 In diagram this is 10 lag filter.
-                
+
+                In order not to try and keep 6 deg AoA right
+                after takeoff I have increased the time
+                it takes to grow to 6 after takeoff. ~Nikolai
+
                 DNU
             </description>
-          <input> fcs/fly-by-wire/pitch/bias-top </input>
-          <lag> 10 </lag>
-          <rate_limit sense="incr"> 1 </rate_limit>
-          <rate_limit sense="decr"> 3 </rate_limit>
-          <bias> 0 </bias>
-          <deadband_width> 0 </deadband_width>
-          <hysteresis_width> 0 </hysteresis_width>
-        </actuator>-->
+            <input> fcs/fly-by-wire/pitch/bias-top </input>
+            <rate_limit sense="incr"> 0.01 </rate_limit>
+            <rate_limit sense="decr"> 6 </rate_limit>
+            <bias> 0 </bias>
+            <deadband_width> 0 </deadband_width>
+            <hysteresis_width> 0 </hysteresis_width>
+        </actuator-->
 
         <lag_filter name="fcs/fly-by-wire/pitch/bias-bottom-lag">
             <description>
@@ -771,21 +900,49 @@
                 DNU
             </description>
             <input> fcs/fly-by-wire/pitch/bias-bottom </input>
-            <c1> 1.25 </c1>
+            <c1> 0.125 </c1>
         </lag_filter>
+
+        <!--pure_gain name="fcs/fly-by-wire/pitch/actuator-incr">
+            <input>fcs/fly-by-wire/pitch/bias-number</input>
+            <gain> 0.04 </gain>
+        </pure_gain>
+
+        <pure_gain name="fcs/fly-by-wire/pitch/actuator-decr">
+            <input>fcs/fly-by-wire/pitch/bias-number</input>
+            <gain> 0.5 </gain>
+        </pure_gain>
+
+        <actuator name="fcs/fly-by-wire/pitch/bias-bottom-lag">
+            <description>
+                2 secs to decrease to zero, when retracting gears.
+                25 secs to increase to 0.1, which is time enough to get gear up
+                from take-off.
+
+                In diagram this is 0.125 lag filter. ~Nikolai
+
+                DNU
+            </description>
+          <input> fcs/fly-by-wire/pitch/bias-bottom </input>
+          <rate_limit sense="incr"> fcs/fly-by-wire/pitch/actuator-incr </rate_limit>
+          <rate_limit sense="decr"> fcs/fly-by-wire/pitch/actuator-decr </rate_limit>
+          <bias> 0 </bias>
+          <deadband_width> 0 </deadband_width>
+          <hysteresis_width> 0 </hysteresis_width>
+        </actuator-->
 
         <summer name="fcs/fly-by-wire/pitch/bias1">
             <input> -fcs/fly-by-wire/pitch/bias-bottom-lag </input><!-- bottom bias -->
             <input> fcs/fly-by-wire/pitch/bias-number </input><!-- middle bias -->
         </summer>
 
-        <summer name="fcs/fly-by-wire/pitch/bias-final">
+        <summer name="fcs/fly-by-wire/pitch/bias-final-1975">
             <description>
                               docs  niko
                 In air:         15    15
                 On approach:     6    11
                 On ground:       0     0
-                
+
                 In air it only react with pitch down when AoA is above 15.
                 With gears down it resist with counter pitch whenever the AoA is
                 above or below 11, to keep it at 11.
@@ -796,12 +953,32 @@
             <input> fcs/fly-by-wire/pitch/bias1 </input>
         </summer>
 
+        <switch name="fcs/fly-by-wire/pitch/bias-final">
+            <description>
+                LJQC: Fixed 15.8 in 189675, unrelated to CAT I/III or landing gains. Cross checked the value with BMS developer mav-jp.
+            </description>
+            <default value="fcs/fly-by-wire/pitch/bias-final-1975"/>
+            <test logic="AND" value="15.8">
+                fcs/fly-by-wire/ada189675 == 1
+            </test>
+        </switch>
+
+        <switch name="fcs/fly-by-wire/pitch/pitch-rate-alpha-input">
+            <description>
+                LJQC: 189675 uses a_f instead of alpha-sum in this path. alpha-sum only used in the 20.4 path.
+            </description>
+            <default value="fcs/fly-by-wire/pitch/alpha-sum"/>
+            <test logic="AND" value="fcs/fly-by-wire/pitch/a_f">
+                fcs/fly-by-wire/ada189675 == 1
+            </test>
+        </switch>
+
         <summer name="fcs/fly-by-wire/pitch/pitch-rate-gain-sum">
             <description>
                          Since this is part of pitch limiter scheme it
                          uses alpha-sum instead of a_f.
             </description>
-            <input>fcs/fly-by-wire/pitch/alpha-sum</input>
+            <input>fcs/fly-by-wire/pitch/pitch-rate-alpha-input</input>
             <input> fcs/fly-by-wire/pitch/pitch-rate-gain </input>
             <input> -fcs/fly-by-wire/pitch/bias-final </input>
         </summer>
@@ -831,45 +1008,47 @@
 
         <switch name="fcs/fly-by-wire/pitch/pitch-rate-lower-switch">
             <description>
-                Is 1.0 or 10 in diagram. Probably 1.0
                 DNU
-                
+
                 It makes negative pitch rate (washed out) plus alpha (minus a bias)
-                give zero input on FBW when gear is up. And x0.1 influence with gear down.
-                
+                give zero input on FBW when gear is up. And full influence with gear down.
+
                 In diagram relies only on Condition A, but its not helpful during AAR,
                 nor right after take-off, it should really only get into effect when on
                 approach, hence that test.
+
+                LJQC: This part not exist in Analog or Digital FLCS.
+                1F-16CJ-1: Pitch rate command until 10 deg AOA.
             </description>
             <default value="0"/>
             <test logic="AND" value="1.0">
                 <!-- fcs/fly-by-wire/condition-a == 1 -->
-                gear/gear-cmd-norm == 1
-                fcs/fly-by-wire/MLG-GND != 1
+                 gear/gear-cmd-norm == 1
+                 fcs/fly-by-wire/MLG-GND != 1
+                 fcs/fly-by-wire/ada189675 == 0
             </test>
         </switch>
 
-        <!--<lag_filter name="fcs/fly-by-wire/pitch/pitch-rate-lower-lag">
+        <!--lag_filter name="fcs/fly-by-wire/pitch/pitch-rate-lower-lag">
             <description>
                 Diagram say 0.125, but that does a pitch up for too long after takeoff
                 DNU
             </description>
             <input> fcs/fly-by-wire/pitch/pitch-rate-lower-switch </input>
             <c1> 1.25 </c1>
-        </lag_filter>-->
-        
+        </lag_filter-->
+
         <actuator name="fcs/fly-by-wire/pitch/pitch-rate-lower-lag">
             <description>
                 2 secs to decrease to zero, when retracting gears.
                 25 secs to increase to 0.1, which is time enough to get gear up
                 from take-off.
-                
-                In diagram this is 0.125 lag filter.
-                
+
+                In diagram this is 0.125 lag filter. ~Nikolai
+
                 DNU
             </description>
           <input> fcs/fly-by-wire/pitch/pitch-rate-lower-switch </input>
-          <lag> 20 </lag>
           <rate_limit sense="incr"> 0.04 </rate_limit>
           <rate_limit sense="decr"> 0.50 </rate_limit>
           <bias> 0 </bias>
@@ -905,112 +1084,139 @@
             <gain> 0.5 </gain>
         </pure_gain>
 
-        <switch name="fcs/fly-by-wire/pitch/q-product-1975">
+        <switch name="fcs/fly-by-wire/pitch/q-product">
             <description></description>
             <default value="0.167"/>
             <test logic="AND" value="0.231">
                 fcs/fly-by-wire/MLG-GND == 1
             </test>
         </switch>
-        
-        <fcs_function name="fcs/fly-by-wire/pitch/q-product-1987">
-            <description>The 1987 diagram has 0.5 gain on condition-z, but its feedback gains is double of the 1975 diagram. So it is halved to 0.25</description>
-            <function>
-                <sum>
-                    <product>
-                        <property> fcs/fly-by-wire/condition-z </property>
-                        <value> 0.25 </value>
-                    </product>
-                    <product>
-                        <property> fcs/fly-by-wire/condition-y </property>
-                        <value> 0.167 </value>
-                    </product>
-                </sum>
-            </function>
-        </fcs_function>
-        
-        <switch name="fcs/fly-by-wire/pitch/q-product">
-            <description></description>
-            <default value="fcs/fly-by-wire/pitch/q-product-1975"/>
-            <test logic="AND" value="fcs/fly-by-wire/pitch/q-product-1987">
-                fcs/fly-by-wire/diagram1987 == 1
-            </test>
-        </switch>
-                
-        <fcs_function name="fcs/fly-by-wire/pitch/q-1987">
-            <function>
-                <sum>
-                    <product>
-                        <property> fcs/fly-by-wire/condition-z </property>
-                        <property> velocities/q-deg_sec </property>
-                    </product>
-                    <product>
-                        <property> fcs/fly-by-wire/condition-y </property>
-                        <property> fcs/fly-by-wire/pitch/q-washout </property>
-                    </product>
-                </sum>
-            </function>
-        </fcs_function>
-        
-        <switch name="fcs/fly-by-wire/pitch/q-washout-final">
-            <description></description>
-            <default value="fcs/fly-by-wire/pitch/q-washout"/>
-            <test logic="AND" value="fcs/fly-by-wire/pitch/q-1987">
-                fcs/fly-by-wire/diagram1987 == 1
-            </test>
-        </switch>
 
-        <pure_gain name="fcs/fly-by-wire/pitch/pitch-rate-second-path">
-            <input>fcs/fly-by-wire/pitch/q-washout-final </input>
-            <gain> fcs/fly-by-wire/pitch/q-product </gain>
+        <pure_gain name="fcs/fly-by-wire/pitch/q-washout-gained-1987">
+            <input>fcs/fly-by-wire/pitch/q-washout</input>
+            <gain> 0.167 </gain>
         </pure_gain>
-        
-        <pure_gain name="fcs/fly-by-wire/pitch/normal-gain-path-1987">
-            <input>fcs/fly-by-wire/pitch/normal-gain </input>
+
+        <pure_gain name="fcs/fly-by-wire/pitch/q-lagged-gained-1987">
+            <description>
+                Niko: See reason for this in q-lagged component.
+            </description>
+            <input>velocities/q-deg_sec</input>
+            <gain> 0.25 </gain>
+        </pure_gain>
+
+        <fcs_function name="fcs/fly-by-wire/pitch/pitch-rate-cmd-sum-1987">
+            <description>
+                LJQC: (AOA - 10)
+            </description>
+            <function>
+                    <difference>
+                        <property> fcs/fly-by-wire/pitch/a_f </property>
+                        <value> 10 </value>
+                    </difference>
+            </function>
+        </fcs_function>
+
+        <pure_gain name="fcs/fly-by-wire/pitch/pitch-rate-cmd-gained-1987">
+            <description>
+                LJQC: (AOA - 10)*0.105, take pos val, and adds to the pitch rate feedback path.
+                The gain is 0.105, cross checked with BMS developer mav-jp.
+            </description>
+            <input>fcs/fly-by-wire/pitch/pitch-rate-cmd-sum-1987</input>
+            <gain> 0.0525 </gain>
+            <clipto>
+                <min> 0 </min>
+                <max>10000</max>
+            </clipto>
+        </pure_gain>
+
+        <summer name="fcs/fly-by-wire/pitch/pitch-rate-gain-path-1987">
+            <description>
+                LJQC: the washed-out pitch rate is not added to this path.
+            </description>
+            <input>fcs/fly-by-wire/pitch/q-lagged-gained-1987 </input>
+            <input> fcs/fly-by-wire/pitch/pitch-rate-cmd-gained-1987 </input>
+        </summer>
+
+        <pure_gain name="fcs/fly-by-wire/pitch/pitch-rate-gain-path-final-1987">
+            <input>fcs/fly-by-wire/pitch/pitch-rate-gain-path-1987 </input>
+            <gain> fcs/fly-by-wire/condition-z </gain>
+        </pure_gain>
+
+        <summer name="fcs/fly-by-wire/pitch/normal-gain-path-1987">
+            <input>fcs/fly-by-wire/pitch/q-washout-gained-1987 </input>
+            <input> fcs/fly-by-wire/pitch/normal-gain </input>
+        </summer>
+
+        <pure_gain name="fcs/fly-by-wire/pitch/normal-gain-path-final-1987">
+            <input>fcs/fly-by-wire/pitch/normal-gain-path-1987 </input>
             <gain> fcs/fly-by-wire/condition-y </gain>
         </pure_gain>
-        
+
+        <pure_gain name="fcs/fly-by-wire/pitch/pitch-rate-second-path">
+            <input>fcs/fly-by-wire/pitch/q-washout </input>
+            <gain> fcs/fly-by-wire/pitch/q-product </gain>
+        </pure_gain>
+
         <switch name="fcs/fly-by-wire/pitch/normal-gain-path">
             <description></description>
             <default value="fcs/fly-by-wire/pitch/normal-gain"/>
-            <test logic="AND" value="fcs/fly-by-wire/pitch/normal-gain-path-1987">
-                fcs/fly-by-wire/diagram1987 == 1
+            <test logic="AND" value="fcs/fly-by-wire/pitch/normal-gain-path-final-1987">
+                fcs/fly-by-wire/ada189675 == 1
             </test>
         </switch>
-        
+
+        <switch name="fcs/fly-by-wire/pitch/pitch-rate-gain-path">
+            <description></description>
+            <default value="fcs/fly-by-wire/pitch/pitch-rate-second-path"/>
+            <test logic="AND" value="fcs/fly-by-wire/pitch/pitch-rate-gain-path-final-1987">
+                fcs/fly-by-wire/ada189675 == 1
+            </test>
+        </switch>
+
         <summer name="fcs/fly-by-wire/pitch/n-and-pitch-rate-combined">
             <input> fcs/fly-by-wire/pitch/normal-gain-path </input>
-            <input> fcs/fly-by-wire/pitch/pitch-rate-second-path </input>
+            <input> fcs/fly-by-wire/pitch/pitch-rate-gain-path </input>
         </summer>
-        
+
         <summer name="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-combined">
             <input> fcs/fly-by-wire/pitch/pitch-rate-upper </input>
             <input> fcs/fly-by-wire/pitch/pitch-rate-lower-gain </input>
             <input> fcs/fly-by-wire/pitch/n-and-pitch-rate-combined </input>
         </summer>
 
-        <lead_lag_filter name="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lead-lagged">
+        <lag_filter name="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lagged">
+            <description>
+                LJQC: Additional lag filter when MLG WOW
+            </description>
             <input> fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-combined </input>
+            <c1> 17.2 </c1>
+        </lag_filter>
+
+        <switch name="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lag-switch">
+            <default value="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-combined"/>
+            <test logic="AND" value="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lagged">
+                fcs/fly-by-wire/MLG-GND == 1
+                fcs/fly-by-wire/ada189675 == 1
+            </test>
+        </switch>
+
+        <lead_lag_filter name="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lead-lagged">
+            <input> fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lag-switch </input>
             <c1> 3 </c1>
             <c2> 12 </c2>
             <c3> 1 </c3>
             <c4> 12 </c4>
         </lead_lag_filter>
-        
-        <switch name="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lead-lag-switch">
-            <default value="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lead-lagged"/>
-            <test logic="AND" value="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-combined">
-                fcs/fly-by-wire/MLG-GND == 0
-                fcs/fly-by-wire/diagram1987 == 1
-            </test>
-        </switch>
 
         <second_order_filter name="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-demand">
             <description>
-                on old diagram looks to be 2.5, not 2 nor 25
+                On old diagram looks to be 25, not 2.5
+                The reason is, if is was 2.5 its usually written as "2. 5" with a space
+                before 5. BUT at high speed there is oscillations with 25, so keeping it 2.5
                 DNU
             </description>
-            <input> fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lead-lag-switch </input>
+            <input> fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lead-lagged </input>
             <c1> 2.5 </c1>
             <c2> 20 </c2>
             <c3> 3500 </c3>
@@ -1018,28 +1224,28 @@
             <c5> 40 </c5>
             <c6> 3500 </c6>
         </second_order_filter>
-        
+
         <summer name="fcs/fly-by-wire/pitch/error">
             <input> fcs/fly-by-wire/pitch/command-neutralized-by-high-alpha </input>
             <input> fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-demand </input>
         </summer>
 
     </channel>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     <channel execrate="1" name="Pitch Integrator loop and surfaces">
@@ -1050,7 +1256,7 @@
         </pure_gain>
 
         <!--<switch name="fcs/fly-by-wire/pitch/loop-schedule">
-            <description>                
+            <description>
             </description>
             <default value="fcs/fly-by-wire/pitch/F3"/>
             <test logic="AND" value="fcs/fly-by-wire/pitch/F3-loop-alt">
@@ -1086,7 +1292,7 @@
         <integrator name="fcs/fly-by-wire/pitch/integrator">
             <description>
                 Main component of pitch FBW system.
-                
+
                 - rect, for a rectangular integrator
                 - trap, for a trapezoidal integrator (default)
                 - ab2, for a second order Adams Bashforth integrator
@@ -1127,7 +1333,7 @@
             <input>fcs/fly-by-wire/pitch/integrator-post</input>
             <gain> fcs/fly-by-wire/integrator-selftest-value </gain>
         </pure_gain>
-        
+
         <summer name="fcs/fly-by-wire/pitch/int-balance-summer">
             <description></description>
             <input> fcs/fly-by-wire/pitch/integrator-post </input>
@@ -1178,7 +1384,7 @@
         </summer>
 
         <switch name="fcs/fly-by-wire/pitch/integrator-final-elec">
-            <description>                
+            <description>
             </description>
             <default value="fcs/fly-by-wire/pitch/integrator-final"/>
             <test logic="AND" value="fcs/fly-by-wire/pitch/integrator-final-elec">
@@ -1188,7 +1394,7 @@
 
         <summer name="fcs/fly-by-wire/pitch/right-sum">
             <input> fcs/fly-by-wire/pitch/integrator-final-elec </input>
-            <input> fcs/fly-by-wire/roll/inter-schedule </input> 
+            <input> fcs/fly-by-wire/roll/inter-schedule </input>
         </summer>
 
         <summer name="fcs/fly-by-wire/pitch/left-sum">
@@ -1198,7 +1404,7 @@
 
         <switch name="fcs/fly-by-wire/pitch/gravity-speed">
             <description>
-                
+
             </description>
             <default value="0.025"/>
             <test  logic="OR" value="5">
@@ -1206,10 +1412,10 @@
                 systems/hydraulics/sysb-psi ge 2000
             </test>
         </switch>
-        
+
         <switch name="fcs/fly-by-wire/pitch/gravity-target-right">
             <description>
-                
+
             </description>
             <default value="0"/>
             <test  logic="OR" value="fcs/fly-by-wire/pitch/right-sum">
@@ -1225,7 +1431,7 @@
 
         <actuator name="fcs/fly-by-wire/pitch/gravity-droop-right">
             <description>
-                
+
             </description>
           <input> fcs/fly-by-wire/pitch/gravity-target-right </input>
           <!--lag> 40 </lag-->
@@ -1238,7 +1444,7 @@
 
         <switch name="fcs/fly-by-wire/pitch/gravity-target-left">
             <description>
-                
+
             </description>
             <default value="0"/>
             <test  logic="OR" value="fcs/fly-by-wire/pitch/left-sum">
@@ -1254,7 +1460,7 @@
 
         <actuator name="fcs/fly-by-wire/pitch/gravity-droop-left">
             <description>
-                
+
             </description>
           <input> fcs/fly-by-wire/pitch/gravity-target-left </input>
           <!--lag> 40 </lag-->
@@ -1406,29 +1612,29 @@
         </fcs_function>
 
     </channel><!-- end of pitch channels -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <channel execrate="1" name="Roll">
-        
+
         <fcs_function name="fcs/aileron-cmd-pow-norm">
             <function>
                     <ifthen>
@@ -1455,14 +1661,25 @@
 
         <fcs_function name="fcs/fly-by-wire/roll/stick-force-lbf">
             <function>
-                <table>
-                    <independentVar lookup="row">fcs/aileron-cmd-pow-norm</independentVar>
-                    <tableData>
-                       -1 -17
-                        0   0
-                        1  17
-                    </tableData>
-                </table>
+                <ifthen>
+                    <p>fcs/fly-by-wire/ada189675</p>
+                    <table>
+                        <independentVar lookup="row">fcs/aileron-cmd-norm</independentVar>
+                        <tableData>
+                           -1 -17.57
+                            0   0
+                            1  17.57
+                        </tableData>
+                    </table>
+                    <table>
+                        <independentVar lookup="row">fcs/aileron-cmd-pow-norm</independentVar>
+                        <tableData>
+                           -1 -17
+                            0   0
+                            1  17
+                        </tableData>
+                    </table>
+                </ifthen>
             </function>
         </fcs_function>
 
@@ -1500,6 +1717,9 @@
             <description>
                 The -1 factor was removed since it was wrong. When more than
                 5 deg nosedown elev is commanded this comes into effect.
+
+                LJQC: 4.2 deg in 189675.
+                Niko: Was -5.0 instead in 1975.
             </description>
             <function>
                 <product>
@@ -1509,7 +1729,11 @@
                                 <p>fcs/fly-by-wire/pitch/integrator-final</p>
                                 <!--<v>-1</v>
                             </product>-->
-                            <v>-5</v>
+                            <ifthen>
+                                <p>fcs/fly-by-wire/ada189675</p>
+                                <v>-4.2</v>
+                                <v>-5.0</v>
+                            </ifthen>
                         </sum>
                         <v>0</v>
                     </max>
@@ -1518,21 +1742,37 @@
             </function>
         </fcs_function>
 
+        <switch name="fcs/fly-by-wire/roll/bias-catiii">
+            <description>
+                LJQC: 136 deg/s cat-III bias is actually added to the roll rate limiter, max limited by 244.
+            </description>
+            <default value="0"/>
+            <test logic="AND" value="136">
+                fcs/fly-by-wire/enable-cat-III == 1
+                fcs/fly-by-wire/ada189675 == 1
+            </test>
+        </switch>
+
         <summer name="fcs/fly-by-wire/roll/control-c/input-sum">
             <input>fcs/fly-by-wire/roll/control-c/pressure-input</input>
             <input>fcs/fly-by-wire/roll/control-c/alpha-input</input>
             <input>fcs/fly-by-wire/roll/control-c/elevator-cmd-input</input>
+            <input>fcs/fly-by-wire/roll/bias-catiii</input>
         </summer>
 
         <fcs_function name="fcs/fly-by-wire/roll/control-c/scheduled-gain-limited">
             <function>
                 <min>
-                    <v>228</v>
+                    <ifthen>
+                        <p>fcs/fly-by-wire/ada189675</p>
+                        <v>244</v>
+                        <v>228</v>
+                    </ifthen>
                     <product>
                         <table>
                             <independentVar lookup="row">fcs/fly-by-wire/pitch/control-c/roll-rate-abs</independentVar>
                             <tableData>
-                                30 1 <!-- changed to 1 due to FG pilots use stick not pressure sticks -->
+                                30 1 <!-- changed to 1 due to FG pilots use stick not pressure sticks. not exist in 189675. -->
                                 50 1
                             </tableData>
                         </table>
@@ -1545,7 +1785,11 @@
         <fcs_function name="fcs/fly-by-wire/roll/control-c/max-cmd-roll-rate">
             <function>
                 <difference>
-                    <v>308</v>
+                    <ifthen>
+                        <p>fcs/fly-by-wire/ada189675</p>
+                        <v>324</v>
+                        <v>308</v>
+                    </ifthen>
                     <p>fcs/fly-by-wire/roll/control-c/scheduled-gain-limited</p>
                 </difference>
             </function>
@@ -1555,10 +1799,18 @@
             <description>
                 GR1F-16CJ-1 page 120
                 DBU - Maximum roll rate command is a constant 167 degrees per second.
+                LJQC: According to 189675, 167deg/s is a direct overriding limit by roll rate command limiter, instead of applying a 0.542208 gain.
             </description>
             <default value="308"/>
+            <test logic="OR" value="167">
+                fcs/fly-by-wire/condition-a == 1
+                fcs/fly-by-wire/digital-backup == 1
+            </test>
             <test logic="OR" value="fcs/fly-by-wire/roll/control-c/max-cmd-roll-rate">
                 fcs/fly-by-wire/control-c-actual == 1
+            </test>
+            <test logic="OR" value="324">
+                fcs/fly-by-wire/ada189675 == 1
             </test>
         </switch>
 
@@ -1566,7 +1818,11 @@
             <function>
                 <quotient>
                     <p>fcs/fly-by-wire/roll/max-cmd-roll-rate</p>
-                    <v>308</v>
+                    <ifthen>
+                        <p>fcs/fly-by-wire/ada189675</p>
+                        <v>324</v>
+                        <v>308</v>
+                    </ifthen>
                 </quotient>
             </function>
         </fcs_function>
@@ -1574,21 +1830,38 @@
         <fcs_function name="fcs/fly-by-wire/roll/command-deg_s">
             <function>
                 <product>
-                <table>
-                    <independentVar lookup="row">fcs/fly-by-wire/roll/stick-force-lbf</independentVar>
-                    <tableData>
-                         -17  -308 
-                         -11   -80 
-                          -6   -20  
-                          -1     0  
-                           0     0  
-                           1     0   
-                           6    20  
-                          11    80  
-                          17   308  
-                    </tableData>
-                </table>
-                <p>fcs/fly-by-wire/roll/min-cmd-roll-rate</p>
+                    <ifthen>
+                        <p>fcs/fly-by-wire/ada189675</p>
+                        <table>
+                            <independentVar lookup="row">fcs/fly-by-wire/roll/stick-force-lbf</independentVar>
+                            <tableData>
+                                -17.57  -324
+                                -9      -80
+                                -5      -20
+                                -1      0
+                                0       0
+                                1       0
+                                5       20
+                                9       80
+                                17.57   324
+                            </tableData>
+                        </table>
+                        <table>
+                            <independentVar lookup="row">fcs/fly-by-wire/roll/stick-force-lbf</independentVar>
+                            <tableData>
+                                 -17  -308
+                                 -11   -80
+                                  -6   -20
+                                  -1     0
+                                   0     0
+                                   1     0
+                                   6    20
+                                  11    80
+                                  17   308
+                            </tableData>
+                        </table>
+                    </ifthen>
+                    <p>fcs/fly-by-wire/roll/min-cmd-roll-rate</p>
                 </product>
             </function>
         </fcs_function>
@@ -1604,28 +1877,6 @@
             </test>
         </switch>
 
-        <fcs_function name="fcs/fly-by-wire/roll/command-limited-deg_s">
-            <function>
-                <product>
-                    <table>
-                        <independentVar lookup="row">fcs/fly-by-wire/roll/enable-cat-III</independentVar>
-                        <tableData>
-                             0  1
-                             1  0.6
-                        </tableData>
-                    </table>
-                    <!--<table>  this is already done in fcs/fly-by-wire/roll/gain-switch
-                        <independentVar lookup="row">gear/gear-pos-norm</independentVar>
-                        <tableData>
-                             0  1
-                             1  0.542208
-                        </tableData>
-                    </table>-->
-                    <p>fcs/fly-by-wire/roll/command-deg_s</p>
-                </product>
-            </function>
-        </fcs_function>
-
         <aerosurface_scale name="fcs/fly-by-wire/roll/trim-scaled">
             <input>fcs/roll-trim-cmd-norm</input>
             <zero_centered> true </zero_centered>
@@ -1639,25 +1890,8 @@
             </range>
         </aerosurface_scale>
 
-        <switch name="fcs/fly-by-wire/roll/gain-switch">
-            <description>
-                GR1F-16CJ-1 page 120
-                DBU - Maximum roll rate command is a constant 167 degrees per second.
-            </description>
-            <default value="1.0"/>
-            <test logic="OR" value="0.542">
-                fcs/fly-by-wire/condition-a == 1
-                fcs/fly-by-wire/digital-backup == 1
-            </test>
-        </switch>
-
-        <pure_gain name="fcs/fly-by-wire/roll/ground-gain">
-            <input>fcs/fly-by-wire/roll/command-limited-deg_s</input>
-            <gain> fcs/fly-by-wire/roll/gain-switch </gain>
-        </pure_gain>
-
         <summer name="fcs/fly-by-wire/roll/loop-sum">
-            <input>fcs/fly-by-wire/roll/ground-gain</input>
+            <input>fcs/fly-by-wire/roll/command-deg_s</input>
             <input>-fcs/fly-by-wire/roll/loop-top-lead</input>
             <input>-fcs/fly-by-wire/roll/loop-bottom-lead</input>
         </summer>
@@ -1751,6 +1985,8 @@
             <description>
                 Is +8.34 in diagram, but must be negative to really work as flat spin protection.
                 And for slow flat spins it was way too small.
+
+                LJQC: 1.0 in 189675 (=8.34*0.12). So seems correct.
             </description>
             <input> velocities/r-deg_sec </input>
             <gain> -8.34 </gain>
@@ -1765,7 +2001,7 @@
         </switch>
 
         <switch name="fcs/fly-by-wire/roll/switch-elec">
-            <description>                
+            <description>
             </description>
             <default value="fcs/fly-by-wire/roll/switch"/>
             <test logic="AND" value="fcs/fly-by-wire/roll/switch-elec">
@@ -1948,7 +2184,7 @@
                 </sum>
             </function>
         </fcs_function>
-        
+
          <switch name="fcs/fly-by-wire/roll/mech-bias-hyd-left">
           <default value="0"/>
           <test  logic="OR" value="fcs/fly-by-wire/roll/mech-bias-left">
@@ -2075,7 +2311,7 @@
                 the result is how much ARI contributes to rudder.
 
                 Notice that in TP-1538 the intergain has not been
-                multiplied by 0.5. But thats fine due to in that 
+                multiplied by 0.5. But thats fine due to in that
                 document it is a single aileron value used,
                 while here we subtract both aileron values, so
                 its double.
@@ -2102,7 +2338,7 @@
 
 
     <channel execrate="1" name="Yaw">
-        
+
         <fcs_function name="fcs/rudder-cmd-pow-norm">
             <function>
                     <ifthen>
@@ -2205,6 +2441,20 @@
             </test>
         </switch>
 
+        <pure_gain name="fcs/fly-by-wire/yaw/variable-F-gained">
+            <description>
+            </description>
+            <input>fcs/fly-by-wire/pitch/control-c/roll-rate-schedule-limited</input>
+            <gain> 4.0 </gain>
+        </pure_gain>
+
+        <summer name="fcs/fly-by-wire/yaw/authority-limiter-input">
+            <description>
+            </description>
+            <input>fcs/fly-by-wire/pitch/a_f</input>
+            <input>fcs/fly-by-wire/yaw/variable-F-gained</input>
+        </summer>
+
         <fcs_function name="fcs/fly-by-wire/yaw/command-schedule">
             <description>
                 In Cat I TP-1538 say 20-30, but modern flight manual say 14-26.
@@ -2212,26 +2462,50 @@
 
                 TODO: Consider using aero/alpha-deg here instead of a_f.
                       TP-1538 does say it uses alpha indicated directly.
+
+                LJQC: 189675 uses a_f + variable-F * 4.0.
             </description>
             <function>
                 <product>
-                    <table>
-                        <independentVar lookup="row">fcs/fly-by-wire/pitch/a_f</independentVar>
-                        <independentVar lookup="column">fcs/fly-by-wire/yaw/enable-cat-III</independentVar>
-                        <tableData>
-                                   0           1
-                             3   1.0         1.0
-                            14   1.0         0.08333
-                            15   0.91666     0.0
-                            26   0.0         0.0
-                        </tableData>
-                    </table>
+                    <ifthen>
+                        <p>fcs/fly-by-wire/ada189675</p>
+                        <table>
+                            <independentVar lookup="row">fcs/fly-by-wire/yaw/authority-limiter-input</independentVar>
+                            <independentVar lookup="column">fcs/fly-by-wire/yaw/enable-cat-III</independentVar>
+                            <tableData>
+                                       0           1
+                                 3   1.0         1.0
+                                14   1.0         0.08333
+                                15   0.91666     0.0
+                                26   0.0         0.0
+                            </tableData>
+                        </table>
+                        <table>
+                            <independentVar lookup="row">fcs/fly-by-wire/pitch/a_f</independentVar>
+                            <independentVar lookup="column">fcs/fly-by-wire/yaw/enable-cat-III</independentVar>
+                            <tableData>
+                                       0           1
+                                 3   1.0         1.0
+                                14   1.0         0.08333
+                                15   0.91666     0.0
+                                26   0.0         0.0
+                            </tableData>
+                        </table>
+                    </ifthen>
                     <p>fcs/fly-by-wire/yaw/command-sum</p>
                 </product>
             </function>
         </fcs_function>
 
         <fcs_function name="fcs/fly-by-wire/yaw/control-c/command-schedule">
+            <description>
+                LJQC: In 189675, it is the variable F (fcs/fly-by-wire/pitch/roll-rate-schedule-limited)
+                multiplied by 4.0 that is added to the rudder authority limiter.
+
+                This schedule not used in 189675.
+
+                Niko: Reverted the values and instead bypassed this component.
+            </description>
             <function>
                 <product>
                     <table>
@@ -2258,7 +2532,7 @@
 
         <switch name="fcs/fly-by-wire/yaw/command-switch">
             <default value="fcs/fly-by-wire/yaw/command-sum"/>
-            <test logic="OR" value="fcs/fly-by-wire/yaw/control-c/command-schedule">
+            <test logic="OR" value="fcs/fly-by-wire/yaw/command-schedule">
                 fcs/fly-by-wire/prototype == 0
                 fcs/fly-by-wire/prototype == 1 <!-- this is to allow prototype FBW to use control-c -->
             </test>
@@ -2324,9 +2598,11 @@
             <description>
                 Is +0.75 in diagram.
                 TODO: check the validity
+
+                LJQC: +0.75 valid in 189675. Rudder against the yaw.
             </description>
             <input> velocities/r-deg_sec </input>
-            <gain> -0.75 </gain>
+            <gain>  0.75 </gain>
         </pure_gain>
 
         <switch name="fcs/fly-by-wire/yaw/schedule-final">
@@ -2343,7 +2619,7 @@
         </summer>
 
         <switch name="fcs/fly-by-wire/yaw/rudder-sum-elec">
-            <description>                
+            <description>
             </description>
             <default value="fcs/fly-by-wire/yaw/rudder-sum"/>
             <test logic="AND" value="fcs/fly-by-wire/yaw/rudder-sum-elec">
@@ -2411,7 +2687,7 @@
                 <max>  30 </max>
             </clipto>
         </kinematic>
-         
+
         <aerosurface_scale name="fcs/fly-by-wire/yaw/rudder-pos-norm">
             <input>fcs/fly-by-wire/yaw/rudder-deflection-deg</input>
             <zero_centered> true </zero_centered>
@@ -2458,23 +2734,23 @@
 
 
     <channel name="Throttle" execrate="1">
-        
+
         <switch name="fcs/fly-by-wire/throttle-limit-ab">
             <description>
-                Don't allow reheat before N2 has reached 96.5% 
+                Don't allow reheat before N2 has reached 96.5%
             </description>
             <default value="1.0"/>
             <test logic="AND" value="2.0">
                 /engines/engine/n2 gt 96.5
             </test>
         </switch>
-        
+
         <!--<switch name="fcs/fly-by-wire/throttle-max-ab">
             <description>
                 MAX POWER switch is solenoid that is held in place at max power when
                 at mach 1.1 or higher and throttle at max AB. For later engines than PW 200
                 is non-functional.
-                
+
                 To switch it OFF is not implemented.
             </description>
             <default value="0"/>
@@ -2487,11 +2763,11 @@
             </test>
             <output>/f16/engine/max-power</output>
         </switch>-->
-        
+
         <aerosurface_scale name="fcs/throttle-cmd-deg">
             <description>
                 F100 PW throttle (power lever angle)
-                
+
                 F100:
                 0 deg - Cutoff
                 16 deg - Idle
@@ -2514,7 +2790,7 @@
         <fcs_function name="fcs/fly-by-wire/throttle/pos-norm">
             <description>
                 Page 153 of secondary doc. And F-16.net. The mach 1.00 column is a guesstimate.
-                
+
                 Thrust is approx linear with PLA.
             </description>
             <function>
@@ -2540,7 +2816,7 @@
             </clipto>
             <output>fcs/throttle-pos-norm</output>
         </fcs_function>
-        
+
         <fcs_function name="/controls/engines/engine[0]/throttle-movement">
             <description>
                 At idle the throttle will be at 12.3% of full throttle movement.
@@ -2548,7 +2824,7 @@
             <function>
                 <table>
                     <independentVar lookup="row">fcs/throttle-cmd-deg</independentVar>
-                    <independentVar lookup="column">/f16/engine/cutoff-release-lever</independentVar>                    
+                    <independentVar lookup="column">/f16/engine/cutoff-release-lever</independentVar>
                     <tableData>
                                   0      1
                        16.0       0.123  0
@@ -2723,7 +2999,7 @@
         <pure_gain name="fcs/fly-by-wire/lef/lef-pos-rad">
             <input>fcs/fly-by-wire/lef/lef-pos-deg</input>
             <gain>0.017453</gain>
-        </pure_gain>        
+        </pure_gain>
 
         <aerosurface_scale name="fcs/fly-by-wire/lef/lef-pos-norm">
             <input>fcs/fly-by-wire/lef/lef-pos-deg</input>
@@ -2733,7 +3009,7 @@
                 <max> 25 </max>
             </domain>
             <range>
-                <min>0</min>                
+                <min>0</min>
                 <max>1</max>
             </range>
         </aerosurface_scale>
@@ -2837,17 +3113,17 @@
         </integrator>
 
         <switch name="fcs/fly-by-wire/tef/braking-help">
-            <description> 
+            <description>
                 The flaps will deploy up to help with braking,
                 it will produce drag, and since they are going up,
-                will also reduce lift.               
+                will also reduce lift.
             </description>
             <default value="fcs/fly-by-wire/tef/int"/>
             <test logic="OR" value="-23">
                 fcs/fly-by-wire/condition-b == 1
             </test>
         </switch>
-        
+
         <switch name="fcs/fly-by-wire/tef/int-elec">
             <description>
             </description>
@@ -2856,7 +3132,7 @@
                 elec/bus/flcc/d lt 20
             </test>
         </switch>
-        
+
         <switch name="fcs/fly-by-wire/tef/hyd">
           <description>
              Since this is going to be fed into Aerodynamics as flaps and HUD as info,
@@ -3010,9 +3286,9 @@
         </fcs_function>
 
     </channel><!-- end of FBW anim channel -->
-    
-    
-    
+
+
+
 <!-- end: FBW control system by Nikolai V. Chr. -->
 
 
@@ -3091,7 +3367,7 @@
         /f16/cockpit/alt-gear-pneu == 1
       </test>
    </switch>
-   
+
    <switch name="systems/cockpit/alt-gear-pneu">
       <default value="/f16/cockpit/alt-gear-pneu"/>
       <test  logic="AND" value="0">
@@ -3100,7 +3376,7 @@
       </test>
       <output>/f16/cockpit/alt-gear-pneu</output>
    </switch>
-         
+
    <kinematic name="fcs/gear-control">
     <input>fcs/gear-hyd</input>
     <traverse>
@@ -3142,7 +3418,7 @@
    </scheduled_gain>
 
   </channel>
-   
+
 
 
   <channel name="Speedbrake">
@@ -3155,7 +3431,7 @@
    <switch name="fcs/speedbrake-alpha-limiter">
     <default value="0"/>
     <test logic="AND" value="1">
-     aero/alpha-deg ge 53 
+     aero/alpha-deg ge 53
      velocities/v-fps le 18
      fcs/fly-by-wire/MLG-GND == 0
     </test>
@@ -3259,7 +3535,7 @@
      </setting>
     </traverse>
    </kinematic>
-   
+
    <switch name="fcs/canopy-control">
     <default value="fcs/canopy-control-1"/>
     <test value="1">
@@ -3270,7 +3546,7 @@
    </switch>
 
   </channel>
-  
+
   <!--<channel name="Gun">
     <switch name="fcs/guntrigger">
     <default value="0"/>

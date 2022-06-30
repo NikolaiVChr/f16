@@ -16,8 +16,7 @@ attribute	vec3	tangent;
 attribute	vec3	binormal;
 
 uniform int  		nmap_enabled;
-
-void setupShadows(vec4 eyeSpacePos);
+uniform int			rembrandt_enabled;
 
 void	main(void)
 {
@@ -55,12 +54,14 @@ void	main(void)
 		if (gl_FrontMaterial.diffuse.a < 1.0)
 			diffuseColor.a = gl_FrontMaterial.diffuse.a;
 
+		if(rembrandt_enabled < 1){
 		gl_FrontColor = gl_FrontMaterial.emission + gl_Color
 					  * (gl_LightModel.ambient + gl_LightSource[0].ambient);
+		} else {
+		  gl_FrontColor = gl_Color;
+		}
 
 		gl_Position = ftransform();
 		gl_ClipVertex = ecPosition;
 		gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;
-
-        setupShadows(ecPosition);
 }

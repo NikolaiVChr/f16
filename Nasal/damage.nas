@@ -23,7 +23,7 @@ var rwr_to_screen=getprop("payload/d-config/rwr_to_screen"); # for aircraft that
 var rwr_audio_extended=getprop("payload/d-config/rwr_audio_extended"); # for aircraft that want seperate audio properties for different radar spikes.
 var tacview_supported=getprop("payload/d-config/tacview_supported"); # For aircraft with tacview support
 var m28_auto=getprop("payload/d-config/m28_auto"); # only used by automats
-var mlw_max=getprop("payload/d-config/mlw_max"); # 
+var mlw_max=getprop("payload/d-config/mlw_max"); #
 var auto_flare_caller = getprop("payload/d-config/auto_flare_caller"); # If damage.nas should detect flare releases, or if function is called from somewhere in aircraft
 ############################################################################################################################
 
@@ -76,12 +76,12 @@ var warheads = {
     "AGM-154A":          [ 5,  493.00,1,0],
     "AGM-158":           [ 6, 1000.00,1,0],
     "ALARM":             [ 7,  450.00,1,0],
-    "AM 39 Exocet":      [ 8,  364.00,1,0], 
-    "AS 37 Martel":      [ 9,  330.00,1,0],# Also : AJ 168 Martel 
+    "AM 39 Exocet":      [ 8,  364.00,1,0],
+    "AS 37 Martel":      [ 9,  330.00,1,0],# Also : AJ 168 Martel
     "AS30L":             [10,  529.00,1,0],
-    "BL755":             [11,  100.00,1,1],# 800lb bomblet warhead. Mix of armour piecing and HE. 100 due to need to be able to kill buk-m2.    
-    "CBU-87":            [12,  100.00,1,1],# bomblet warhead. Mix of armour piecing and HE. 100 due to need to be able to kill buk-m2.    
-    "CBU-105":           [13,  100.00,1,1],# bomblet warhead. Mix of armour piecing and HE. 100 due to need to be able to kill buk-m2.    
+    "BL755":             [11,  100.00,1,1],# 800lb bomblet warhead. Mix of armour piecing and HE. 100 due to need to be able to kill buk-m2.
+    "CBU-87":            [12,  100.00,1,1],# bomblet warhead. Mix of armour piecing and HE. 100 due to need to be able to kill buk-m2.
+    "CBU-105":           [13,  100.00,1,1],# bomblet warhead. Mix of armour piecing and HE. 100 due to need to be able to kill buk-m2.
     "AS 37 Armat":       [14,  330.00,1,0],
     "FAB-100":           [15,   92.59,1,0],
     "FAB-250":           [16,  202.85,1,0],
@@ -131,7 +131,7 @@ var warheads = {
     "Apache AP":         [60,  110.23,0,1],# Real mass of bomblet. (x 10). Anti runway.
     "KN-06":             [61,  315.00,0,0],
     "9M317":             [62,  145.00,0,0],
-    "GEM":               [63,  185.00,0,0],#MIM-104D 
+    "GEM":               [63,  185.00,0,0],#MIM-104D
     "R.550 Magic":       [64,   26.45,0,0],# also called majic
     "5Ya23":             [65,  414.00,0,0],#Volga-M
     "R.550 Magic 2":     [66,   27.00,0,0],
@@ -140,8 +140,8 @@ var warheads = {
     "AIM-9M":            [69,   20.80,0,0],
     "R-73 RMD-1":        [70,   16.31,0,0],# automat Mig29/su27
     "Meteor":            [71,   55.00,0,0],
-    "MICA-EM":           [72,   30.00,0,0], 
-    "MICA-IR":           [73,   30.00,0,0], 
+    "MICA-EM":           [72,   30.00,0,0],
+    "MICA-IR":           [73,   30.00,0,0],
     "R-13M":             [74,   16.31,0,0],
     "R-27R1":            [75,   85.98,0,0],
     "R-27T1":            [76,   85.98,0,0],
@@ -169,6 +169,7 @@ var warheads = {
 var AIR_RADAR = "air";
 
 var radar_signatures = {
+                "unknown-model":            AIR_RADAR,
                 "f-14b":                    AIR_RADAR,
                 "F-14D":                    AIR_RADAR,
                 "F-15C":                    AIR_RADAR,
@@ -257,12 +258,12 @@ var DamageRecipient =
             }
 #
 #
-# This will be where movement and damage notifications are received. 
-# This can replace MP chat for damage notifications 
+# This will be where movement and damage notifications are received.
+# This can replace MP chat for damage notifications
 # and allow missile visibility globally (i.e. all suitable equipped models) have the possibility
 # to receive notifications from all other suitably equipped models.
             if (notification.NotificationType == "ArmamentInFlightNotification" or notification.NotificationType == "ObjectInFlightNotification") {
-#                print("recv(d1): ",notification.NotificationType, " ", notification.Ident, 
+#                print("recv(d1): ",notification.NotificationType, " ", notification.Ident,
 #                      " UniqueIdentity=",notification.UniqueIdentity,
 #                      " Kind=",notification.Kind,
 #                      " SecondaryKind=",notification.SecondaryKind,
@@ -292,7 +293,7 @@ var DamageRecipient =
                 if(getprop("payload/armament/msg") == 0 and getprop("payload/armament/spectator") != 1 and notification.RemoteCallsign != notification.Callsign) {
                   return emesary.Transmitter.ReceiptStatus_NotProcessed;
                 }
-                                
+
                 var elapsed = getprop("sim/time/elapsed-sec");
                 var ownPos = geo.aircraft_position();
                 var bearing = ownPos.course_to(notification.Position);
@@ -300,11 +301,11 @@ var DamageRecipient =
                 var thrustOn = bits.test(notification.Flags, 1);
                 var index = notification.SecondaryKind-21;
                 var typ = id2warhead[index];
-                
+
                 if (notification.Kind == MOVE) {
                   if (thrustOn or index == 93 or index == 95) {
                     # visualize missile smoke trail
-                    
+
                       var smoke = 1;
                       if (index == 93) {
                         smoke = 0;
@@ -322,7 +323,7 @@ var DamageRecipient =
                         }
                       }
                       dynamics["noti_"~notification.Callsign~"_"~notification.UniqueIdentity] = [systime(), notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.u_fps, notification.Heading, notification.Pitch,smoke];
-                                     
+
                   } else {
                     # the +1.5 is the update time that missiles send notifications out in
                     dynamics["noti_"~notification.Callsign~"_"~notification.UniqueIdentity] = [systime()-(time_before_delete-1.6), notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.u_fps, notification.Heading, notification.Pitch,-1]
@@ -330,7 +331,7 @@ var DamageRecipient =
                 } elsif (notification.Kind == DESTROY) {
                   dynamics["noti_"~notification.Callsign~"_"~notification.UniqueIdentity] = [systime()-(time_before_delete-1.6), notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.u_fps, notification.Heading, notification.Pitch,-1]
                 }
-                
+
                 if (tacview_supported and getprop("sim/multiplay/txhost") != "mpserver.opredflag.com") {
                   if (tacview.starttime) {
                     var tacID = left(md5(notification.Callsign~notification.UniqueIdentity),6);
@@ -353,15 +354,15 @@ var DamageRecipient =
                     }
                   }
                 }
-                
+
                 if (notification.Kind == DESTROY) {
                   return emesary.Transmitter.ReceiptStatus_OK;
                 }
-                
+
                 if (index == 95 or index == 93) {
                   return emesary.Transmitter.ReceiptStatus_OK;
                 }
-                
+
                 # Missile launch warning:
                 if (thrustOn) {
                   var launch = launched[notification.Callsign~notification.UniqueIdentity];
@@ -379,7 +380,7 @@ var DamageRecipient =
                     }
                   }
                 }
-                
+
                 # Missile approach warning:
                 var callsign = getprop("sim/multiplay/callsign");
                 callsign = size(callsign) < 8 ? callsign : left(callsign,7);
@@ -426,12 +427,12 @@ var DamageRecipient =
                         }
                         thread.lock(tacview.mutexWrite);
                         tacview.writeExplosion(hitCoord.lat(),hitCoord.lon(),hitCoord.alt(), lbs*0.5);
-                        thread.unlock(tacview.mutexWrite);                      
+                        thread.unlock(tacview.mutexWrite);
                       } elsif (node != nil and notification.SecondaryKind < 0) {
                         # its a cannon or rocket
                         thread.lock(tacview.mutexWrite);
                         tacview.writeExplosion(node.getNode("position/latitude-deg").getValue(), node.getNode("position/longitude-deg").getValue(), node.getNode("position/altitude-ft").getValue()*FT2M, 5);
-                        thread.unlock(tacview.mutexWrite);                      
+                        thread.unlock(tacview.mutexWrite);
                       }
                     }
                     var callsign = getprop("sim/multiplay/callsign");
@@ -480,10 +481,10 @@ var DamageRecipient =
                             }
 
                             var distance = math.max(dist-full_damage_dist_m, 0);
-              
+
                             var maxDist = 0;# distance where the explosion dont hurt us anymore
                             var lbs = 0;
-                            
+
                             if (wh[2] == 1) {
                               lbs = wh[1];
                               maxDist = maxDamageDistFromWarhead(lbs);#3*sqrt(lbs)
@@ -493,15 +494,15 @@ var DamageRecipient =
                             } else {
                               return;
                             }
-                            
+
                             var diff = maxDist-distance;
                             if (diff < 0) {
                               diff = 0;
                             }
                             diff = diff * diff;
-                                          
+
                             var probability = diff / (maxDist*maxDist);
-                            
+
                             if (use_hitpoints_instead_of_failure_modes_bool) {
                               var hpDist = maxDamageDistFromWarhead(hp_max);
                               probability = (maxDist/hpDist)*probability;
@@ -512,7 +513,7 @@ var DamageRecipient =
                             printf("Took %.1f%% damage from %s at %0.1f meters. %s systems was hit", percent,type,dist,failed);
                             damageLog.push(sprintf("%s hit you with %s, %.1f meters distance.", notification.Callsign, type, dist));
                             nearby_explosion();
-                            
+
                             ####
                             # I don't remember all the considerations that went into our original warhead damage model.
                             # But looking at the formula it looks like they all do 100% damage at 0 meter hit,
@@ -523,21 +524,21 @@ var DamageRecipient =
                             # Anyway, for hitpoint based assets, this is now the case. Maybe we should consider to also do something
                             # similar for failure mode based aircraft. ~Nikolai
                             ####
-                            
+
                             ## example 1: ##
                             # 300 lbs warhead, 50 meters distance
                             # maxDist=52
                             # diff = 52-50 = 2
                             # diff^2 = 4
                             # prob = 4/2700 = 0.15%
-                            
+
                             ## example 2: ##
                             # 300 lbs warhead, 25 meters distance
                             # maxDist=52
                             # diff = 52-25 = 27
                             # diff^2 = 729
                             # prob = 729/2700 = 27%
-                        } 
+                        }
                     }
 #                }
                 return emesary.Transmitter.ReceiptStatus_OK;
@@ -663,7 +664,7 @@ var ModelManager = {
           }
         }
         m.model = n.getChild("model", i, 1);
-        
+
         n = props.globals.getNode("sim/emesary-models", 1);
         for (i = 0; 1==1; i += 1) {
           if (n.getChild("dynamic", i, 0) == nil) {
@@ -671,9 +672,9 @@ var ModelManager = {
           }
         }
         m.ai = n.getChild("dynamic", i, 1);
-        
+
         m.model.getNode("path", 1).setValue(path);
-        
+
         # Create the AI position and orientation properties.
         m.lat   = m.ai.getNode("position/latitude-deg", 1);
         m.lon   = m.ai.getNode("position/longitude-deg", 1);
@@ -681,14 +682,14 @@ var ModelManager = {
         m.heading= m.ai.getNode("orientation/true-heading-deg", 1);
         m.pitch = m.ai.getNode("orientation/pitch-deg", 1);
         m.roll  = m.ai.getNode("orientation/roll-deg", 1);
-        
+
         m.lat.setDoubleValue(lat);
         m.lon.setDoubleValue(lon);
         m.alt_ft.setDoubleValue(alt_ft);
         m.heading.setDoubleValue(heading);
         m.pitch.setDoubleValue(para?0:pitch);
         m.roll.setDoubleValue(0);
-        
+
         m.vLat = lat;
         m.vLon = lon;
         m.vAlt_ft = alt_ft;
@@ -700,22 +701,22 @@ var ModelManager = {
         m.pAlt_ft = m.vAlt_ft;
         m.pHeading = m.vHeading;
         m.pPitch = m.vPitch;
-        
-        
+
+
         m.model.getNode("latitude-deg-prop", 1).setValue(m.lat.getPath());
         m.model.getNode("longitude-deg-prop", 1).setValue(m.lon.getPath());
         m.model.getNode("elevation-ft-prop", 1).setValue(m.alt_ft.getPath());
         m.model.getNode("heading-deg-prop", 1).setValue(m.heading.getPath());
         m.model.getNode("pitch-deg-prop", 1).setValue(m.pitch.getPath());
         m.model.getNode("roll-deg-prop", 1).setValue(m.roll.getPath());
-        
+
         m.coord = geo.Coord.new();
         m.uBody_fps = 0;
         m.last = [geo.Coord.new().set_latlon(lat,lon,alt_ft*FT2M).xyz(),systime()];
         m.past = m.last;
         m.frametime = 0;
-        m.delayTime = 0;        
-        
+        m.delayTime = 0;
+
         return m;
     },
     moveRealtime: func (uBody_fps, dt, factor) {
@@ -724,17 +725,17 @@ var ModelManager = {
         me.uBody_fps  = uBody_fps;
         me.alt_dist   = me.slant_ft*math.sin(me.vPitch*D2R);
         me.horiz_dist = me.slant_ft*math.cos(me.vPitch*D2R);
-        
+
         me.coord.set_latlon(me.vLat, me.vLon, (me.vAlt_ft+me.alt_dist) * FT2M);
-        
+
         me.coord = me.coord.apply_course_distance(me.vHeading, me.horiz_dist*FT2M);
-                
+
         me.latlon = me.coord.latlon();
-        
+
         me.vLat    = me.latlon[0];
         me.vLon    = me.latlon[1];
         me.vAlt_ft = me.latlon[2]*M2FT;
-        
+
         me.lat.setDoubleValue(me.vLat);
         me.lon.setDoubleValue(me.vLon);
         me.alt_ft.setDoubleValue(me.vAlt_ft);
@@ -767,20 +768,20 @@ var ModelManager = {
     translateDelayed: func (lat,lon,alt_ft,heading,pitch, para) {
         me.heading.setDoubleValue(heading);
         me.pitch.setDoubleValue(para?0:pitch);
-        
+
         me.pLat = me.vLat;
         me.pLon = me.vLon;
         me.pAlt_ft = me.vAlt_ft;
         me.pHeading = me.vHeading;
         me.pPitch = me.vPitch;
-        
+
         me.vLat = lat;
         me.vLon = lon;
         me.vAlt_ft = alt_ft;
         me.vHeading = heading;
         me.vPitch = pitch;
         #me.vRoll = 0;
-        
+
         me.past = me.last;
         me.last = [geo.Coord.new().set_latlon(lat,lon,alt_ft*FT2M).xyz(),systime()];
         me.delayTime = 0;
@@ -793,7 +794,7 @@ var ModelManager = {
         me.heading.setDoubleValue(heading);
         me.pitch.setDoubleValue(para?0:pitch);
         #me.roll.setDoubleValue(0);
-                
+
         me.vLat = lat;
         me.vLon = lon;
         me.vAlt_ft = alt_ft;
@@ -867,7 +868,7 @@ var flare_sorter = func(a, b) {
     if(a[0] < b[0]){
         return -1; # A should before b in the returned vector
     }elsif(a[0] == b[0]){
-        return 0; # A is equivalent to b 
+        return 0; # A is equivalent to b
     }else{
         return 1; # A should after b in the returned vector
     }
@@ -901,7 +902,7 @@ var animate_flare = func {
       flare = [stime, flare[1], flare[2], flare[3], (flare[4]<flare_terminal_speed)?(flare[4]+flare_dt*9.83*0.5):(flare[4]-flare_dt*3), math.max(0,flare[5]-flare_dt*20), flare[6]];
       flare[2].apply_course_distance(flare[3], flare_dt*flare[5]);
       flare[2].set_alt(flare[2].alt()-flare_dt*flare[4]);
-      
+
       var msg = notifications.ObjectInFlightNotification.new("ffly", flare[6], MOVE, 21+95);
       msg.Flags = 0;
       msg.Position = flare[2];
@@ -920,7 +921,7 @@ var animate_flare = func {
   flare_list = old_flares;
   if(auto_flare_caller) {
     auto_flare_released();
-  }  
+  }
 }
 var flaretimer = maketimer(flare_update_time, animate_flare);
 flaretimer.start();
@@ -1086,7 +1087,7 @@ var fail_systems = func (probability, factor = 100) {#this factor needs tuning a
               }
           }
       }
-      
+
       return failed;
     }
 };
@@ -1120,7 +1121,7 @@ setlistener("/sim/signals/reinit", repairYasim);
 hp_f = [hp_max,hp_max,hp_max,hp_max,hp_max,hp_max,hp_max];
 
 var fail_fleet_systems = func (probability, factor) {
-  
+
   var sinking_ships = (hp_f[0]<0) + (hp_f[1]<0) + (hp_f[2]<0) + (hp_f[3]<0) + (hp_f[4]<0) + (hp_f[5]<0) + (hp_f[6]<0);
   var hit_sinking = 0;
   if (sinking_ships == 0) {
@@ -1134,9 +1135,9 @@ var fail_fleet_systems = func (probability, factor) {
     armament.defeatSpamFilter("You shot one of our already sinking ships, you are just mean.");
     return;
   }
- 
+
   var no = 0;
-  
+
   for (no=0; no < 7; no+=1) {
     if (hp_f[no] > 0) {
       break;
@@ -1159,7 +1160,7 @@ var fail_fleet_systems = func (probability, factor) {
       armament.defeatSpamFilter("S.O.S. Heeelp");
     } else {
       armament.defeatSpamFilter("This is not over yet..");
-    }    
+    }
   }
   return -1;
 };
@@ -1272,7 +1273,7 @@ var remove_suffix = func(str, suffix) {
   else return str;
 };
 var getModel = func (node) {
-  if (node == nil) return "";
+  if (node == nil) return "unknown-model";
   var value = node.getValue();
   if (value == nil or value == "") return "";
   var model = split(".", split("/", value)[-1])[0];
@@ -1299,7 +1300,7 @@ var code_ct = func () {
         call(func{fgcommand('dialog-close', props.Node.new({"dialog-name": "WeightAndFuel"}))},nil,var err2 = []);
         call(func{fgcommand('dialog-close', props.Node.new({"dialog-name": "system-failures"}))},nil,var err2 = []);
         call(func{fgcommand('dialog-close', props.Node.new({"dialog-name": "instrument-failures"}))},nil,var err2 = []);
-      }      
+      }
       setprop("sim/freeze/fuel",0);
       setprop("/sim/speed-up", 1);
       setprop("/gui/map/draw-traffic", 0);
@@ -1308,8 +1309,8 @@ var code_ct = func () {
       #fgcommand("timeofday", props.Node.new({"timeofday": "real"}));
       #setprop("/sim/rendering/als-filters/use-filtering", 1);
       call(func{var interfaceController = fg1000.GenericInterfaceController.getOrCreateInstance();
-      interfaceController.stop();},nil,var err2=[]);      
-  }  
+      interfaceController.stop();},nil,var err2=[]);
+  }
 }
 code_ctTimer = maketimer(1, code_ct);
 code_ctTimer.simulatedTime = 1;
@@ -1327,7 +1328,7 @@ code_ctTimer.start();
 var re_init = func (node) {
   # repair the aircraft
   if (node.getValue() == 0) return;
-  
+
   var failure_modes = FailureMgr._failmgr.failure_modes;
   var mode_list = keys(failure_modes);
 
