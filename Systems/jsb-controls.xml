@@ -626,9 +626,13 @@
         </summer>
 
         <switch name="fcs/fly-by-wire/pitch/alpha-indicated-switch">
+            <description>
+                Niko: Using NLG instead of MLG here fixes violent pitch up at touchdown when flaring.
+                        Issue #463
+            </description>
             <default value="fcs/fly-by-wire/pitch/alpha-indicated-clamp"/>
             <test logic="AND" value="0">
-                <!-- fcs/fly-by-wire/MLG-GND == 1 -->
+                <!-- fcs/fly-by-wire/NLG-GND == 1 -->
                 gear/unit[0]/WOW == 1
             </test>
         </switch>
