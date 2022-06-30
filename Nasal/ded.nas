@@ -185,22 +185,28 @@ var dataEntryDisplay = {
 			me.updateDlnk();
 		} elsif (me.page == pMISC) {
 			me.updateMisc();
+		} elsif (me.page == pCORR) {
+			me.updateCORR();
 		} elsif (me.page == pMAGV) {
 			me.updateMagv();
 		} elsif (me.page == pOFP) {
 			me.updateOFP();
 		} elsif (me.page == pINSM) {
 			me.updateINSM();
-		} elsif (me.page == pHMCS) {
-			me.updateHMCS();
-		} elsif (me.page == pHARM) {
-			me.updateHARM();
 		} elsif (me.page == pLASR) {
 			me.updateLaser();
 		} elsif (me.page == pGPS) {
 			me.updateGPS();
+		} elsif (me.page == pDRNG) {
+			me.updateDRNG();
 		} elsif (me.page == pBULL) {
 			me.updateBull();
+		} elsif (me.page == pWPT) {
+			me.updateWPT();
+		} elsif (me.page == pHMCS) {
+			me.updateHMCS();
+		} elsif (me.page == pHARM) {
+			me.updateHARM();
 		} elsif (me.page == pCNI) {
 			me.updateCNI();
 		} elsif (me.page == pCOMM1) {
@@ -247,7 +253,7 @@ var dataEntryDisplay = {
 	},
 
 	updateAlow: func() {
-		me.text[0] = sprintf("         ALOW       %s  ",me.no);
+		me.text[0] = sprintf("         ALOW        %s ",me.no);
 		me.text[1] = sprintf("                        ");
 		me.text[2] = sprintf("   CARA ALOW %sFT   ", pALOW.vector[0].getText());
 		me.text[3] = sprintf("   MSL FLOOR %sFT   ", pALOW.vector[1].getText());
@@ -260,7 +266,7 @@ var dataEntryDisplay = {
 		me.scrollF += 0.25;
 		if (me.scrollF >= last-2) me.scrollF = 0;
 		var used = subvec(fails,int(me.scrollF),3);
-		me.text[0] = sprintf("       F-ACK     %s     ",me.no);
+		me.text[0] = sprintf("       F-ACK       %s   ",me.no);
 		me.text[1] = sprintf("                        ");
 		if (size(used)>0) me.text[2] = sprintf(" %s ",used[0]);
 		else me.text[2] = "";
@@ -679,11 +685,11 @@ var dataEntryDisplay = {
 	},
 
 	updateVIP: func() {
-		me.text[0] = sprintf("       TGT-TO-VIP       ");
-		me.text[1] = sprintf("                        ");
-		me.text[2] = sprintf("                        ");
-		me.text[3] = sprintf("                        ");
-		me.text[4] = sprintf("                        ");
+		me.text[0] = sprintf("      *VIP-TO-TGT*      ");
+		me.text[1] = sprintf("      VIP      %s       ",me.no);
+		me.text[2] = sprintf("     TBRG      6.9°     ");
+		me.text[3] = sprintf("      RNG        55.5 NM");
+		me.text[4] = sprintf("     ELEV        420FT  ");
 	},
 
 	updateNav: func() {
@@ -706,7 +712,7 @@ var dataEntryDisplay = {
 	},
 
 	updateMan: func() {
-		me.text[0] = sprintf("      MAN        %s",me.no);
+		me.text[0] = sprintf("      MAN       %s ",me.no);
 		me.text[1] = sprintf("WSPAN   %sFT",pMAN.vector[0].getText());
 		me.text[2] = sprintf("      MBAL    ");
 		me.text[3] = sprintf("RNG      2000FT  ");
@@ -716,7 +722,7 @@ var dataEntryDisplay = {
 	updateINS: func() {
 		lat = convertDegreeToStringLat(getprop("position/latitude-deg"));
 		lon = convertDegreeToStringLon(getprop("position/longitude-deg"));
-		me.text[0] = sprintf("  INS   10.2/10  %s",me.no);
+		me.text[0] = sprintf("  INS   10.2/10 RDY  %s",me.no);
 		me.text[1] = sprintf("  LAT  %s",lat);
 		me.text[2] = sprintf("  LNG  %s",lon);
 		me.text[3] = sprintf("  SALT  %5dFT",getprop("position/altitude-ft"));
@@ -743,10 +749,10 @@ var dataEntryDisplay = {
 
 	updateVRP: func() {
 		me.text[0] = sprintf("       TGT-TO-VRP       ");
-		me.text[1] = sprintf("                        ");
-		me.text[2] = sprintf("                        ");
-		me.text[3] = sprintf("                        ");
-		me.text[4] = sprintf("                        ");
+		me.text[1] = sprintf("      TGT               ");
+		me.text[2] = sprintf("     TBRG    0.0°       ");
+		me.text[3] = sprintf("      RNG          0FT  ");
+		me.text[4] = sprintf("     ELEV        0FT    ");
 	},
 
 	updateIntg: func() {
@@ -831,7 +837,7 @@ var dataEntryDisplay = {
 		} else {
 			me.text[2] = sprintf("         GPS OFFLINE");
 		}
-		me.text[0] = sprintf("       MAGV  AUTO   %s  ",me.no);
+		me.text[0] = sprintf("       MAGV  AUTO    %s ",me.no);
 		me.text[1] = sprintf("                        ");
 		me.text[3] = sprintf("                        ");
 		me.text[4] = sprintf("                        ");
@@ -840,19 +846,19 @@ var dataEntryDisplay = {
 	OFPpage: 0,
 	updateOFP: func() {
 		if (me.OFPpage == 0) {
-			me.text[0] = sprintf("         OFP1   ",me.no);
+			me.text[0] = sprintf("         OFP1    %s ",me.no);
 			me.text[1] = sprintf("  UFC  P07A   FCR  7010");
 			me.text[2] = sprintf("  MFD  P07A   FCC  P07B");
 			me.text[3] = sprintf("  SMS  P07A   DTE  P010");
 			me.text[4] = sprintf("  FDR  P30A   HUD  002e");
 		} elsif (me.OFPpage == 1) {
-			me.text[0] = sprintf("         OFP2   ",me.no);
+			me.text[0] = sprintf("         OFP2    %s ",me.no);
 			me.text[1] = sprintf("  GPS  P07B   IFF  P03A");
 			me.text[2] = sprintf("  HK3  P07A   TGP  P07A");
 			me.text[3] = sprintf("  HK7  P07A  BLKR  P07B");
 			me.text[4] = sprintf(" FLCS  7072   NVP  P07A");
 		} else {
-			me.text[0] = sprintf("         OFP3   ",me.no);
+			me.text[0] = sprintf("         OFP3    %s ",me.no);
 			me.text[1] = sprintf("  RWR  P07A  IECM  P07A");
 			me.text[2] = sprintf("  EID  P07B   MDF  M074");
 			me.text[3] = sprintf(" CMDS  P040  DLNK  P07B");
@@ -860,11 +866,27 @@ var dataEntryDisplay = {
 		}
 	},
 
-	updateINSM: func() {
-		me.text[0] = sprintf("          INSM          ");
+	updateCORR: func() {
+		me.text[0] = sprintf("          CORR       %s ", me.no);
 		me.text[1] = sprintf("                        ");
 		me.text[2] = sprintf("                        ");
 		me.text[3] = sprintf("                        ");
+		me.text[4] = sprintf("                        ");
+	},
+
+	updateINSM: func() {
+		me.text[0] = sprintf("          INSM          ");
+		me.text[1] = sprintf("                        ");
+		me.text[2] = sprintf("        *      *        ");
+		me.text[3] = sprintf("                        ");
+		me.text[4] = sprintf("                        ");
+	},
+
+	updateDRNG: func() {
+		me.text[0] = sprintf("          DRNG       %s ", me.no);
+		me.text[1] = sprintf("                        ");
+		me.text[2] = sprintf("    X      FT     LNG   ");
+		me.text[3] = sprintf("    Y      FT     LFT   ");
 		me.text[4] = sprintf("                        ");
 	},
 
@@ -877,7 +899,7 @@ var dataEntryDisplay = {
 	},
 
 	updateHARM: func() {
-		me.text[0] = sprintf(" HARM TBL1     T1 *    *");
+		me.text[0] = sprintf(" HARM TBL1     T1       ");
 		me.text[1] = sprintf("               T2       ");
 		me.text[2] = sprintf("               T3       ");
 		me.text[3] = sprintf("               T4       ");
@@ -886,7 +908,7 @@ var dataEntryDisplay = {
 
 	updateLaser: func() {
 		var code = getprop("f16/avionics/laser-code");
-		me.text[0] = sprintf("         LASER      %s   ",me.no);
+		me.text[0] = sprintf("         LASER        %s ",me.no);
 		me.text[1] = sprintf("   TGP CODE   %s     ",pLASR.vector[0].getText());
 		me.text[2] = sprintf("   LST CODE    %04d     ",code);
 		me.text[3] = sprintf("   A-G: CMBT  A-A: TRNG ");
@@ -919,14 +941,6 @@ var dataEntryDisplay = {
 		}
 	},
 
-	updateDRNG: func() {
-		me.text[0] = sprintf("         DRNG           ");
-		me.text[1] = sprintf("                        ");
-		me.text[2] = sprintf("                        ");
-		me.text[3] = sprintf("                        ");
-		me.text[4] = sprintf("                        ");
-	},
-
 	bullMode: 1,
 	updateBull: func() {
 		if (me.bullMode) {
@@ -939,6 +953,14 @@ var dataEntryDisplay = {
 		me.text[3] = sprintf("                        ");
 		me.text[4] = sprintf("                        ");
 		wp_num_curr = 555;
+	},
+
+	updateWPT: func() {
+		me.text[0] = sprintf("           WPT          ");
+		me.text[1] = sprintf("                        ");
+		me.text[2] = sprintf("                        ");
+		me.text[3] = sprintf("                        ");
+		me.text[4] = sprintf("                        ");
 	},
 
 	CNIshowWind: 0,
@@ -1067,12 +1089,15 @@ var Routers = {
 		miscRouter: Router.new(pLIST, pMISC),
 	},
 	Misc: {
+		corrRouter: Router.new(pMISC, pCORR),
 		magvRouter: Router.new(pMISC, pMAGV),
 		ofpRouter: Router.new(pMISC, pOFP),
 		insmRouter: Router.new(pMISC, pINSM),
 		laserRouter: Router.new(pMISC, pLASR),
 		gpsRouter: Router.new(pMISC, pGPS),
+		drngRouter: Router.new(pMISC, pDRNG),
 		bullRouter: Router.new(pMISC, pBULL),
+		wptRouter: Router.new(pMISC, pWPT),
 		hmcsRouter: Router.new(pMISC, pHMCS),
 		harmRouter: Router.new(pMISC, pHARM),
 	},
@@ -1087,19 +1112,19 @@ var Routers = {
 };
 
 var RouterVectors = {
-	button1: [Routers.List.destRouter, Routers.tacanRouter],
-	button2: [Routers.List.bingoRouter, Routers.Misc.magvRouter,Routers.alowRouter],
-	button3: [Routers.List.vipRouter,Routers.Misc.ofpRouter,Routers.fackRouter],
-	button4: [Routers.List.navRouter,Routers.Misc.insmRouter, Routers.stptRouter],
-	button5: [Routers.List.manRouter,Routers.Misc.laserRouter, Routers.crusRouter],
-	button6: [Routers.List.insRouter,Routers.Misc.gpsRouter, Routers.timeRouter],
-	button7: [Routers.List.ewsRouter, Routers.markRouter],
-	button8: [Routers.List.modeRouter,Routers.Misc.bullRouter, Routers.fixRouter],
-	button9: [Routers.acalRouter, Routers.List.vrpRouter],
+	button1: [Routers.List.destRouter, Routers.tacanRouter, Routers.Misc.corrRouter,],
+	button2: [Routers.List.bingoRouter, Routers.Misc.magvRouter, Routers.alowRouter],
+	button3: [Routers.List.vipRouter, Routers.Misc.ofpRouter, Routers.fackRouter],
+	button4: [Routers.List.navRouter, Routers.Misc.insmRouter, Routers.stptRouter],
+	button5: [Routers.List.manRouter, Routers.Misc.laserRouter, Routers.crusRouter],
+	button6: [Routers.List.insRouter, Routers.Misc.gpsRouter, Routers.timeRouter],
+	button7: [Routers.List.ewsRouter, Routers.markRouter, Routers.Misc.drngRouter],
+	button8: [Routers.List.modeRouter, Routers.Misc.bullRouter, Routers.fixRouter],
+	button9: [Routers.acalRouter, Routers.List.vrpRouter, Routers.Misc.wptRouter],
 	button0: [Routers.List.miscRouter, Routers.Misc.harmRouter],
-	buttonComm1: [Routers.comm1Router2,Routers.comm1Router],
-	buttonComm2: [Routers.comm2Router2,Routers.comm2Router],
-	buttonIFF: [Routers.iffRouter2,Routers.iffRouter],
+	buttonComm1: [Routers.comm1Router2, Routers.comm1Router],
+	buttonComm2: [Routers.comm2Router2, Routers.comm2Router],
+	buttonIFF: [Routers.iffRouter2, Routers.iffRouter],
 	buttonList: [Routers.listRouter2, Routers.listRouter],
 	buttonEnter: [Routers.List.dlnkRouter],
 	buttonRecall: [Routers.List.intgRouter, Routers.Misc.hmcsRouter],
