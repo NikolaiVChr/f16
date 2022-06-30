@@ -165,6 +165,8 @@ var dataEntryDisplay = {
 			me.updateDest();
 		} elsif (me.page == pBINGO) {
 			me.updateBingo();
+		} elsif (me.page == pVIP) {
+			me.updateVIP();
 		} elsif (me.page == pNAV) {
 			me.updateNav();
 		} elsif (me.page == pMAN) {
@@ -623,9 +625,9 @@ var dataEntryDisplay = {
 	acalModeSelected: 1,
 	updateAcal: func() {
 		if (me.acalModeSelected) {
-			me.text[0] = sprintf(" ACAL    *%s* %s", me.acalMode, me.no);
+			me.text[0] = sprintf(" ACAL    *%s*  %s", me.acalMode, me.no);
 		} else {
-			me.text[0] = sprintf(" ACAL     %s  %s", me.acalMode, me.no);
+			me.text[0] = sprintf(" ACAL     %s   %s", me.acalMode, me.no);
 		}
 		me.text[1] = sprintf("          AUTO");
 		me.text[2] = sprintf("                 ");
@@ -673,6 +675,14 @@ var dataEntryDisplay = {
 		me.text[1] = sprintf("                        ");
 		me.text[2] = sprintf("    SET    %sLBS  ",pBINGO.vector[0].getText());
 		me.text[3] = sprintf("  TOTAL    %5dLBS      ",getprop("consumables/fuel/total-fuel-lbs"));
+		me.text[4] = sprintf("                        ");
+	},
+
+	updateVIP: func() {
+		me.text[0] = sprintf("       TGT-TO-VIP       ");
+		me.text[1] = sprintf("                        ");
+		me.text[2] = sprintf("                        ");
+		me.text[3] = sprintf("                        ");
 		me.text[4] = sprintf("                        ");
 	},
 
@@ -867,11 +877,11 @@ var dataEntryDisplay = {
 	},
 
 	updateHARM: func() {
-		me.text[0] = sprintf("          HARM          ");
-		me.text[1] = sprintf("                        ");
-		me.text[2] = sprintf("                        ");
-		me.text[3] = sprintf("                        ");
-		me.text[4] = sprintf("                        ");
+		me.text[0] = sprintf(" HARM TBL1     T1 *    *");
+		me.text[1] = sprintf("               T2       ");
+		me.text[2] = sprintf("               T3       ");
+		me.text[3] = sprintf("               T4       ");
+		me.text[4] = sprintf(" SEQ=MN1       T5       ");
 	},
 
 	updateLaser: func() {
@@ -999,10 +1009,10 @@ var dataEntryDisplay = {
 		}
 		#var pond   = getprop("instrumentation/transponder/inputs/knob-mode")==0?0:1;
 		else pond = "----";
-		me.text[0] = sprintf("IFF        MAN          ");# Should have ON between IFF and MAN. But I moved it beside the channels, until we get more transponder/iff in cockpit.
-		me.text[1] = sprintf("M3    %s  %s         ", pIFF.vector[0].getText(), pIFF.vector[1].getText());
-		me.text[2] = sprintf("M4    %s  %s         ", pIFF.vector[2].getText(), pIFF.vector[3].getText());
-		me.text[3] = sprintf("%s  %s",sign,friend);
+		me.text[0] = sprintf("IFF        MAN      %s ", me.no);# Should have ON between IFF and MAN. But I moved it beside the channels, until we get more transponder/iff in cockpit.
+		me.text[1] = sprintf("M1      M3 %s %s  ", pIFF.vector[0].getText(), pIFF.vector[1].getText());
+		me.text[2] = sprintf("M2      M4 %s %s  ", pIFF.vector[2].getText(), pIFF.vector[3].getText());
+		me.text[3] = sprintf("ID  %s  %s",sign,friend);
 		me.text[4] = sprintf("TYPE    %s",type);
 	},
 };
@@ -1045,6 +1055,7 @@ var Routers = {
 	List: {
 		destRouter: Router.new(pLIST, pDEST),
 		bingoRouter: Router.new(pLIST, pBINGO),
+		vipRouter: Router.new(pLIST, pVIP),
 		navRouter: Router.new(pLIST, pNAV),
 		manRouter: Router.new(pLIST, pMAN),
 		insRouter: Router.new(pLIST, pINS),
@@ -1078,7 +1089,7 @@ var Routers = {
 var RouterVectors = {
 	button1: [Routers.List.destRouter, Routers.tacanRouter],
 	button2: [Routers.List.bingoRouter, Routers.Misc.magvRouter,Routers.alowRouter],
-	button3: [Routers.Misc.ofpRouter,Routers.fackRouter],
+	button3: [Routers.List.vipRouter,Routers.Misc.ofpRouter,Routers.fackRouter],
 	button4: [Routers.List.navRouter,Routers.Misc.insmRouter, Routers.stptRouter],
 	button5: [Routers.List.manRouter,Routers.Misc.laserRouter, Routers.crusRouter],
 	button6: [Routers.List.insRouter,Routers.Misc.gpsRouter, Routers.timeRouter],
