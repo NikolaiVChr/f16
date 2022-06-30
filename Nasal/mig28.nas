@@ -134,7 +134,7 @@ var TopGun = {
 				screen.log.write(me.callsign~": Let's do this, don't make any mistakes.", 1.0, 1.0, 0.0);
 			} elsif (me.callsign == "Maj.SWAT") {
 				screen.log.write(me.callsign~": Fight's on!", 1.0, 1.0, 0.0);
-			} elsif (me.callsign == "LtCol.Snuff") {
+			} elsif (me.callsign == "LtLtCol.Snuff") {
 				screen.log.write(me.callsign~": This is the end-game...", 1.0, 1.0, 0.0);
 			} elsif (me.callsign == "Cpt.Guts") {
 				screen.log.write(me.callsign~": Lets do this.", 1.0, 1.0, 0.0);
@@ -304,7 +304,7 @@ var TopGun = {
 			me.a16Bearing = me.coord.course_to(me.a16Coord);
 			#me.a16BearingRate = me.filterBearing.filter(geo.normdeg180(me.a16Bearing-me.a16BearingOld),me.dt)/me.dt;
 			me.a16BearingRate = geo.normdeg180(me.a16Bearing-me.a16BearingOld)/me.dt;
-			#if (me.callsign=="Col.Snuff") printf("%.1f %.1f", geo.normdeg180(me.a16Bearing-me.a16BearingOld)/me.dt, me.a16BearingRate);
+			#if (me.callsign=="LtCol.Snuff") printf("%.1f %.1f", geo.normdeg180(me.a16Bearing-me.a16BearingOld)/me.dt, me.a16BearingRate);
 			me.a16ClockLast = me.a16Clock;
 			me.a16ClockOld = me.a16Clock;
 			me.a16Clock = geo.normdeg180(me.a16Bearing-me.heading);
@@ -591,7 +591,7 @@ var TopGun = {
 		if(me.think==GO_LOOP)me.prt="does a loop";
 		if(me.think==GO_FLOW_ONE_CIRCLE)me.prt="flows into one circle";
 		if(me.think==GO_FLOW_TWO_CIRCLE)me.prt="flows into two circles";
-		#if (me.callsign=="Maj.Ice") printf(me.callsign~" deciding to %s. Speed %d KIAS/M%.2f at %d ft. Roll %d, pitch %d. Thrust %.1f%%. %.1f NM. %.1f horz G",me.prt,me.GStoKIAS(me.speed*MPS2KT),me.mach,me.alt*M2FT,me.roll,me.pitch,me.thrust*100, me.dist_nm, me.rollNorm*(me.rollNorm<0?-1:1)*me.G*0.8888+1);
+		#if (me.callsign=="Cpt.BEAR") printf(me.callsign~" deciding to %s. Speed %d KIAS/M%.2f at %d ft. Roll %d, pitch %d. Thrust %.1f%%. %.1f NM. %.1f horz G",me.prt,me.GStoKIAS(me.speed*MPS2KT),me.mach,me.alt*M2FT,me.roll,me.pitch,me.thrust*100, me.dist_nm, me.rollNorm*(me.rollNorm<0?-1:1)*me.G*0.8888+1);
 		me.view = getprop("sim/current-view/missile-view");
 		if (me.thinkLast != me.think) {
 			record[me.think] = record[me.think]+1;
@@ -1299,7 +1299,7 @@ var start = func (diff = 1) {
 		MAX_ROLL_SPEED = 25;
 		num_t = "0000";
 		ENDURANCE = 10;
-		tg1.callsign = "1Lt.Elmo";
+		tg1.callsign = "1Lt.Slice";
 		tg2.callsign = "Lt.Ice";
 		setprop("link16/wingman-4", "Lt.Ice");
 		tg1.start([nil,tg2]);
@@ -1314,7 +1314,7 @@ var start = func (diff = 1) {
 		MAX_ROLL_SPEED = 25;
 		num_t = "0000";
 		ENDURANCE = 10;
-		tg1.callsign = "1Lt.Elmo";
+		tg1.callsign = "1Lt.Slice";
 		tg1.start();
 		TopGun.runner = func {
 			tg1.decide();
@@ -1336,7 +1336,7 @@ var start = func (diff = 1) {
 		MAX_ROLL_SPEED = 30;
 		num_t = "-9999";
 		ENDURANCE = 30;
-		tg1.callsign = "Maj.RED";
+		tg1.callsign = "Maj.Fuel";
 		tg1.start();
 		TopGun.runner = func {
 			tg1.decide();
@@ -1347,7 +1347,7 @@ var start = func (diff = 1) {
 		MAX_ROLL_SPEED = 25;
 		num_t = "0000";
 		ENDURANCE = 10;
-		tg1.callsign = "Cpt.Bloody";
+		tg1.callsign = "Cpt.Guts";
 		tg2.callsign = "Cpt.Wild";
 		tg1.start();
 		tg2.start();
@@ -1361,7 +1361,7 @@ var start = func (diff = 1) {
 		MAX_ROLL_SPEED = 30;
 		num_t = "-9999";
 		ENDURANCE = 15;
-		tg1.callsign = "Cpt.Bloody";
+		tg1.callsign = "Cpt.Guts";
 		tg2.callsign = "Maj.SWAT";
 		tg1.start();
 		tg2.start();
@@ -1375,11 +1375,11 @@ var start = func (diff = 1) {
 		MAX_ROLL_SPEED = 30;
 		num_t = "-9999";
 		ENDURANCE = 30;
-		tg1.callsign = "Maj.RED";
-		tg2.callsign = "Maj.Ice";
+		tg1.callsign = "Maj.Fuel";
+		tg2.callsign = "Cpt.BEAR";
 		tg3.callsign = "Maj.SWAT";
-		tg4.callsign = "Col.Snuff";
-		setprop("link16/wingman-4", "Maj.Ice");
+		tg4.callsign = "LtCol.Snuff";
+		setprop("link16/wingman-4", "Cpt.BEAR");
 		tg1.start([nil,tg2]);
 		tg2.start([tg1,tg3,tg4]);
 		tg3.start([nil,tg2]);
@@ -1396,10 +1396,10 @@ var start = func (diff = 1) {
 		MAX_ROLL_SPEED = 30;
 		num_t = "-9999";
 		ENDURANCE = 30;
-		tg1.callsign = "Maj.RED";
-		tg2.callsign = "Maj.Ice";
+		tg1.callsign = "Maj.Fuel";
+		tg2.callsign = "Cpt.BEAR";
 		tg3.callsign = "Maj.SWAT";
-		tg4.callsign = "Col.Snuff";
+		tg4.callsign = "LtCol.Snuff";
 		tg1.start([tg4,tg2],0);
 		tg2.start([tg1,tg3],1);
 		tg3.start([tg4,tg2],0);
