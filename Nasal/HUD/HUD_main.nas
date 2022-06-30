@@ -1544,7 +1544,7 @@ append(obj.total, obj.speed_curr);
                                       }),
             props.UpdateManager.FromHashList(["fpm","texUp","gear_down","VV_x","VV_y", "wow", "ded", "dgft"], 0.01, func(hdp)
                                       {
-                                        if (hdp.gear_down and !hdp.wow) {
+                                        if (hdp.gear_down) {#used to be wow check here, but YT vids show its there all the time
                                           obj.bracket.setTranslation (hdp.VV_x, HudMath.getCenterPosFromDegs(0,-11)[1]);
                                           obj.bracket.show();
                                         } else {
