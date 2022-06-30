@@ -1119,7 +1119,7 @@
                 The gain is 0.105, cross checked with BMS developer mav-jp.
             </description>
             <input>fcs/fly-by-wire/pitch/pitch-rate-cmd-sum-1987</input>
-            <gain> 0.105 </gain>
+            <gain> 0.0525 </gain>
             <clipto>
                 <min> 0 </min>
                 <max>10000</max>
