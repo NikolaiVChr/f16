@@ -1287,30 +1287,30 @@ var printRecord = func {
 }
 
 # Max 7 chars in each callsign:
-var CS_0_friend = "Lt.Ice";
-var CS_0_enemy  = "1Lt.Sli";
+var CS_0_friend = "Pump";
+var CS_0_enemy  = "Slice";
 
-var CS_1_enemy  = "1Lt.Sli";#slice
+var CS_1_enemy  = "Slice";
 
-var CS_2_enemy  = "Cpt.Wil";
+var CS_2_enemy  = "Steel";
 
-var CS_3_enemy  = "Maj.Fue";
+var CS_3_enemy  = "Fuel";
 
-var CS_4_enemy1 = "Cpt.Gut";
-var CS_4_enemy2 = "Cpt.Wil";#wild
+var CS_4_enemy1 = "Guts";
+var CS_4_enemy2 = "Steel";
 
-var CS_5_enemy1 = "Cpt.Gut";#guts
-var CS_5_enemy2 = "Maj.SWA";
+var CS_5_enemy1 = "SWAT";
+var CS_5_enemy2 = "Guts";
 
-var CS_6_friend = "Cpt.BEA";
-var CS_6_enemy1 = "Maj.Fue";
-var CS_6_enemy2 = "Maj.SWA";
-var CS_6_enemy3 = "LtCol.S";
+var CS_6_friend = "Bear";
+var CS_6_enemy1 = "Rock";
+var CS_6_enemy2 = "SWAT";
+var CS_6_enemy3 = "Fuel";
 
-var CS_7_enemy1 = "Maj.Fue";#fuel
-var CS_7_enemy2 = "Maj.SWA";#swat
-var CS_7_friend1= "LtCol.S";#snuff
-var CS_7_friend2= "Cpt.BEA";#bear
+var CS_7_enemy1 = "RED";
+var CS_7_enemy2 = "SWAT";
+var CS_7_friend1= "HAS";
+var CS_7_friend2= "Bear";
 
 var start = func (diff = 1) {
 	if (diff < 0 or diff > 6.5) {
