@@ -1012,7 +1012,7 @@ var dataEntryDisplay = {
 		} else {
 			me.text[3] = sprintf(" ");
 		}
-		me.text[4] = sprintf("M  34  %04d    MAN T%03.0f%s",getprop("instrumentation/transponder/id-code"), getprop("instrumentation/tacan/frequencies/selected-channel"), getprop("instrumentation/tacan/frequencies/selected-channel[4]"));
+		me.text[4] = sprintf("M  34 S %04d   MAN T%03.0f%s",getprop("instrumentation/transponder/id-code"), getprop("instrumentation/tacan/frequencies/selected-channel"), getprop("instrumentation/tacan/frequencies/selected-channel[4]"));
 	},
 
 	updateComm1: func() {
@@ -1031,11 +1031,13 @@ var dataEntryDisplay = {
 		me.text[4] = sprintf("  %s    NB", pCOMM2.vector[1].getText());
 	},
 
+	IFFpage: 0,
 	updateIFF: func() {
 		var target = radar_system.apg68Radar.getPriorityTarget();
 		var sign = "";
 		var type = "";
 		var friend = "";
+		var ownid = getprop("sim/multiplay/callsign");
 		if (target != nil) {
 			sign = target.get_Callsign();
 			type = target.getModel();
@@ -1058,11 +1060,19 @@ var dataEntryDisplay = {
 		}
 		#var pond   = getprop("instrumentation/transponder/inputs/knob-mode")==0?0:1;
 		else pond = "----";
-		me.text[0] = sprintf("IFF        MAN      %s ", me.no);# Should have ON between IFF and MAN. But I moved it beside the channels, until we get more transponder/iff in cockpit.
-		me.text[1] = sprintf("M1      M3 %s %s  ", pIFF.vector[0].getText(), pIFF.vector[1].getText());
-		me.text[2] = sprintf("M2      M4 %s %s  ", pIFF.vector[2].getText(), pIFF.vector[3].getText());
-		me.text[3] = sprintf("ID  %s  %s",sign,friend);
-		me.text[4] = sprintf("TYPE    %s",type);
+		if (me.IFFpage == 0) {
+			me.text[0] = sprintf("IFF        MAN       %s ", me.no);# Should have ON between IFF and MAN. But I moved it beside the channels, until we get more transponder/iff in cockpit.
+			me.text[1] = sprintf("M1      M3 %s %s  ", pIFF.vector[0].getText(), pIFF.vector[1].getText());
+			me.text[2] = sprintf("M2      M4 %s %s  ", pIFF.vector[2].getText(), pIFF.vector[3].getText());
+			me.text[3] = sprintf("ID  %s  %s",sign,friend);
+			me.text[4] = sprintf("TYPE    %s",type);
+		} elsif (me.IFFpage == 1) {
+			me.text[0] = sprintf("         MODE S      %s ", me.no);
+			me.text[1] = sprintf("      ID  %s     ",ownid);
+			me.text[2] = sprintf("                        ");
+			me.text[3] = sprintf("OPER  ADDR   42069      ");
+			me.text[4] = sprintf("PERM  ADDR 2020313  HEX ");
+		}
 	},
 };
 
@@ -1236,6 +1246,11 @@ setlistener("f16/avionics/rtn-seq", func() {
 		
 		if (dataEntryDisplay.page == pHMCS) {
 			dataEntryDisplay.HMCSpage = !dataEntryDisplay.HMCSpage;
+			return;
+		}
+
+		if (dataEntryDisplay.page == pIFF) {
+			dataEntryDisplay.IFFpage = !dataEntryDisplay.IFFpage;
 			return;
 		}
 
