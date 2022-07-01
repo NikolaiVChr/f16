@@ -684,12 +684,21 @@ var dataEntryDisplay = {
 		me.text[4] = sprintf("                        ");
 	},
 
+	VIPpage: 0,
 	updateVIP: func() {
-		me.text[0] = sprintf("      *VIP-TO-TGT*      ");
-		me.text[1] = sprintf("      VIP      %s       ",me.no);
-		me.text[2] = sprintf("     TBRG      6.9°     ");
-		me.text[3] = sprintf("      RNG        55.5 NM");
-		me.text[4] = sprintf("     ELEV        420FT  ");
+		if (me.VIPpage == 0) {
+			me.text[0] = sprintf("      *VIP-TO-TGT*      ");
+			me.text[1] = sprintf("      VIP      %s       ",me.no);
+			me.text[2] = sprintf("     TBRG      6.9°     ");
+			me.text[3] = sprintf("      RNG        55.5 NM");
+			me.text[4] = sprintf("     ELEV        420FT  ");
+		} elsif (me.VIPpage == 1) {
+			me.text[0] = sprintf("      *VIP-TO-PUP*      ");
+			me.text[1] = sprintf("      VIP      %s       ",me.no);
+			me.text[2] = sprintf("     TBRG      69.0°    ");
+			me.text[3] = sprintf("      RNG        51.0 NM");
+			me.text[4] = sprintf("     ELEV       4200FT  ");
+		}
 	},
 
 	updateNav: func() {
@@ -747,12 +756,21 @@ var dataEntryDisplay = {
 		me.text[4] = sprintf("                        ");
 	},
 
+	VRPpage: 0,
 	updateVRP: func() {
-		me.text[0] = sprintf("       TGT-TO-VRP       ");
-		me.text[1] = sprintf("      TGT               ");
-		me.text[2] = sprintf("     TBRG    0.0°       ");
-		me.text[3] = sprintf("      RNG          0FT  ");
-		me.text[4] = sprintf("     ELEV        0FT    ");
+		if (me.VRPpage == 0) {
+			me.text[0] = sprintf("       TGT-TO-VRP       ");
+			me.text[1] = sprintf("      TGT               ");
+			me.text[2] = sprintf("     TBRG    0.0°       ");
+			me.text[3] = sprintf("      RNG          0FT  ");
+			me.text[4] = sprintf("     ELEV        0FT    ");
+		} elsif (me.VRPpage == 1) {
+			me.text[0] = sprintf("       TGT-TO-PUP       ");
+			me.text[1] = sprintf("      TGT               ");
+			me.text[2] = sprintf("     TBRG    0.0°       ");
+			me.text[3] = sprintf("      RNG          0FT  ");
+			me.text[4] = sprintf("     ELEV        0FT    ");
+		}
 	},
 
 	updateIntg: func() {
@@ -998,7 +1016,7 @@ var dataEntryDisplay = {
 	},
 
 	updateComm1: func() {
-		me.text[0] = sprintf("  SEC    UHF MAIN  ");
+		me.text[0] = sprintf("  SEC  UHF   MAIN  ");
 		me.text[1] = sprintf("  %s", pCOMM1.vector[0].getText());
 		me.text[2] = sprintf("               1");
 		me.text[3] = sprintf("  PRE  2");
@@ -1006,7 +1024,7 @@ var dataEntryDisplay = {
 	},
 
 	updateComm2: func() {
-		me.text[0] = sprintf("         VHF ON  ");
+		me.text[0] = sprintf("       VHF   ON  ");
 		me.text[1] = sprintf("  %s", pCOMM2.vector[0].getText());
 		me.text[2] = sprintf("              1");
 		me.text[3] = sprintf("  PRE  2     TOD");
@@ -1203,6 +1221,16 @@ setlistener("f16/avionics/rtn-seq", func() {
 			if (dataEntryDisplay.OFPpage == 3) {
 				dataEntryDisplay.OFPpage = 0;
 			}
+			return;
+		}
+
+		if (dataEntryDisplay.page == pVIP) {
+			dataEntryDisplay.VIPpage = !dataEntryDisplay.VIPpage;
+			return;
+		}
+
+		if (dataEntryDisplay.page == pVRP) {
+			dataEntryDisplay.VRPpage = !dataEntryDisplay.VRPpage;
 			return;
 		}
 		
