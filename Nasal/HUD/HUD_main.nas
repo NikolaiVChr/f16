@@ -576,6 +576,12 @@ append(obj.total, obj.speed_curr);
                 .setColor(0,1,0)
                 .setFont(HUD_FONT)
                 .setFontSize(8, 1.0);
+        obj.dlzFCRRange = obj.dlz.createChild("text")
+                .setText("XX")
+                .setAlignment("center-bottom")
+                .setColor(0,1,0)
+                .setFont(HUD_FONT)
+                .setFontSize(8, 1.0);
 
         obj.svg.setColor(0.3,1,0.3);
 
@@ -2680,6 +2686,13 @@ append(obj.total, obj.speed_curr);
                     .setStrokeLineWidth(me.dlzLW)
                     .setColor(me.color);
             me.dlz2.update();
+            if (me.dlzArray[4] > me.dlzArray[0]*1.25) {# MLU Tape 3 page 29
+                me.dlzFCRRange.setTranslation(me.dlzWidth*0.5, -me.dlzHeight-5);
+                me.dlzFCRRange.setText(""~radar_system.apg68Radar.getRange());
+                me.dlzFCRRange.show();
+            } else {
+                me.dlzFCRRange.hide();
+            }
             me.dlz.show();
             hdp.dlz_show = 1;
         }
