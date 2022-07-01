@@ -994,6 +994,10 @@ var dataEntryDisplay = {
 	updateCNI: func() {
 		winddir = sprintf("%03d\xc2\xb0",getprop("environment/wind-from-heading-deg"));
 		windkts = sprintf("%03d",getprop("environment/wind-speed-kt"));
+		var ms = " ";
+		if (getprop("sim/multiplay/online")) {
+    		ms = "S";
+		}
 
 		me.text[0] = sprintf("UHF   %6.2f    STPT %s",getprop("/instrumentation/comm[0]/frequencies/selected-mhz"), me.no);# removed the 'A' here, as MLU manuals don't show it.
 
@@ -1012,7 +1016,7 @@ var dataEntryDisplay = {
 		} else {
 			me.text[3] = sprintf(" ");
 		}
-		me.text[4] = sprintf("M  34 S %04d   MAN T%03.0f%s",getprop("instrumentation/transponder/id-code"), getprop("instrumentation/tacan/frequencies/selected-channel"), getprop("instrumentation/tacan/frequencies/selected-channel[4]"));
+		me.text[4] = sprintf("M  34 %s %04d   MAN T%03.0f%s",ms,getprop("instrumentation/transponder/id-code"), getprop("instrumentation/tacan/frequencies/selected-channel"), getprop("instrumentation/tacan/frequencies/selected-channel[4]"));
 	},
 
 	updateComm1: func() {
