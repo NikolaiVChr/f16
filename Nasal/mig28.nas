@@ -126,18 +126,20 @@ var TopGun = {
 		if (me.blufor) {
 			screen.log.write(me.callsign~": Hey, I'll be your wingman.", 0.0, 1.0, 0.0);
 		} else {
-			if (me.callsign == "1Lt.Slice") {
+			if (me.callsign == CS_0_enemy) {
 				screen.log.write(me.callsign~": I will go easy on you, try to stay on my six. Have fun.", 1.0, 1.0, 0.0);
-			} elsif (me.callsign == "Cpt.Wild") {
+			} elsif (me.callsign == CS_1_enemy) {
 				screen.log.write(me.callsign~": Nice weather for a fair fight, let's go.", 1.0, 1.0, 0.0);
-			} elsif (me.callsign == "Maj.Fuel") {
+			} elsif (me.callsign == CS_2_enemy) {
 				screen.log.write(me.callsign~": Let's do this, don't make any mistakes.", 1.0, 1.0, 0.0);
-			} elsif (me.callsign == "Maj.SWAT") {
+			} elsif (me.callsign == CS_3_enemy) {
 				screen.log.write(me.callsign~": Fight's on!", 1.0, 1.0, 0.0);
-			} elsif (me.callsign == "LtLtCol.Snuff") {
+			} elsif (me.callsign == CS_4_enemy1) {
 				screen.log.write(me.callsign~": This is the end-game...", 1.0, 1.0, 0.0);
-			} elsif (me.callsign == "Cpt.Guts") {
+			} elsif (me.callsign == CS_5_enemy1) {
 				screen.log.write(me.callsign~": Lets do this.", 1.0, 1.0, 0.0);
+			} elsif (me.callsign == CS_6_enemy1) {
+				screen.log.write(me.callsign~": Bring it on.", 1.0, 1.0, 0.0);
 			}
 		}
 		me.apply();
@@ -591,7 +593,7 @@ var TopGun = {
 		if(me.think==GO_LOOP)me.prt="does a loop";
 		if(me.think==GO_FLOW_ONE_CIRCLE)me.prt="flows into one circle";
 		if(me.think==GO_FLOW_TWO_CIRCLE)me.prt="flows into two circles";
-		#if (me.callsign=="Cpt.BEAR") printf(me.callsign~" deciding to %s. Speed %d KIAS/M%.2f at %d ft. Roll %d, pitch %d. Thrust %.1f%%. %.1f NM. %.1f horz G",me.prt,me.GStoKIAS(me.speed*MPS2KT),me.mach,me.alt*M2FT,me.roll,me.pitch,me.thrust*100, me.dist_nm, me.rollNorm*(me.rollNorm<0?-1:1)*me.G*0.8888+1);
+		#if (me.callsign==CS_6_friend) printf(me.callsign~" deciding to %s. Speed %d KIAS/M%.2f at %d ft. Roll %d, pitch %d. Thrust %.1f%%. %.1f NM. %.1f horz G",me.prt,me.GStoKIAS(me.speed*MPS2KT),me.mach,me.alt*M2FT,me.roll,me.pitch,me.thrust*100, me.dist_nm, me.rollNorm*(me.rollNorm<0?-1:1)*me.G*0.8888+1);
 		me.view = getprop("sim/current-view/missile-view");
 		if (me.thinkLast != me.think) {
 			record[me.think] = record[me.think]+1;
@@ -1284,6 +1286,32 @@ var printRecord = func {
 	print();
 }
 
+# Max 7 chars in each callsign:
+var CS_0_friend = "Lt.Ice";
+var CS_0_enemy  = "1Lt.Sli";
+
+var CS_1_enemy  = "1Lt.Sli";#slice
+
+var CS_2_enemy  = "Cpt.Wil";
+
+var CS_3_enemy  = "Maj.Fue";
+
+var CS_4_enemy1 = "Cpt.Gut";
+var CS_4_enemy2 = "Cpt.Wil";#wild
+
+var CS_5_enemy1 = "Cpt.Gut";#guts
+var CS_5_enemy2 = "Maj.SWA";
+
+var CS_6_friend = "Cpt.BEA";
+var CS_6_enemy1 = "Maj.Fue";
+var CS_6_enemy2 = "Maj.SWA";
+var CS_6_enemy3 = "LtCol.S";
+
+var CS_7_enemy1 = "Maj.Fue";#fuel
+var CS_7_enemy2 = "Maj.SWA";#swat
+var CS_7_friend1= "LtCol.S";#snuff
+var CS_7_friend2= "Cpt.BEA";#bear
+
 var start = func (diff = 1) {
 	if (diff < 0 or diff > 6.5) {
 		print("TopGun: Difficulty goes from 1 (easy), 2 (normal), 3 (hard), 4 (veteran), 5 (master) to 6 (supreme), try again.");
@@ -1296,14 +1324,15 @@ var start = func (diff = 1) {
 	}
 	print("TopGun: Difficulty set to: "~diff);
 	if (diff == 0) {
+		# 1 enemy, 1 friendly
 		MAX_ROLL_SPEED = 25;
 		num_t = "0000";
 		ENDURANCE = 10;
-		tg1.callsign = "1Lt.Slice";
-		tg2.callsign = "Lt.Ice";
-		setprop("link16/wingman-4", "Lt.Ice");
+		tg1.callsign = CS_0_enemy;
+		tg2.callsign = CS_0_friend;
+		setprop("link16/wingman-4", CS_0_friend);
 		tg1.start([nil,tg2]);
-		tg2.start([tg1]);
+		tg2.start([tg1], 1);
 		TopGun.runner = func {
 			tg1.decide();
 			tg2.decide();
@@ -1311,10 +1340,11 @@ var start = func (diff = 1) {
 		};
 		TopGun.runner();
 	} elsif (diff == 1) {
+		# 1 enemy
 		MAX_ROLL_SPEED = 25;
 		num_t = "0000";
 		ENDURANCE = 10;
-		tg1.callsign = "1Lt.Slice";
+		tg1.callsign = CS_1_enemy;
 		tg1.start();
 		TopGun.runner = func {
 			tg1.decide();
@@ -1322,10 +1352,11 @@ var start = func (diff = 1) {
 		};
 		TopGun.runner();
 	} elsif (diff == 2) {
+		# 1 enemy
 		MAX_ROLL_SPEED = 25;
 		num_t = "0000";
 		ENDURANCE = 20;
-		tg1.callsign = "Cpt.Wild";
+		tg1.callsign = CS_2_enemy;
 		tg1.start();
 		TopGun.runner = func {
 			tg1.decide();
@@ -1333,10 +1364,11 @@ var start = func (diff = 1) {
 		};
 		TopGun.runner();
 	} elsif (diff == 3) {
+		# 1 enemy, no transponder.
 		MAX_ROLL_SPEED = 30;
 		num_t = "-9999";
 		ENDURANCE = 30;
-		tg1.callsign = "Maj.Fuel";
+		tg1.callsign = CS_3_enemy;
 		tg1.start();
 		TopGun.runner = func {
 			tg1.decide();
@@ -1344,11 +1376,12 @@ var start = func (diff = 1) {
 		};
 		TopGun.runner();
 	} elsif (diff == 4) {
+		# 2 enemies
 		MAX_ROLL_SPEED = 25;
 		num_t = "0000";
 		ENDURANCE = 10;
-		tg1.callsign = "Cpt.Guts";
-		tg2.callsign = "Cpt.Wild";
+		tg1.callsign = CS_4_enemy1;
+		tg2.callsign = CS_4_enemy2;
 		tg1.start();
 		tg2.start();
 		TopGun.runner = func {
@@ -1358,11 +1391,12 @@ var start = func (diff = 1) {
 		};
 		TopGun.runner();
 	} elsif (diff == 5) {
+		# 2 enemies, no transponder.
 		MAX_ROLL_SPEED = 30;
 		num_t = "-9999";
 		ENDURANCE = 15;
-		tg1.callsign = "Cpt.Guts";
-		tg2.callsign = "Maj.SWAT";
+		tg1.callsign = CS_5_enemy1;
+		tg2.callsign = CS_5_enemy2;
 		tg1.start();
 		tg2.start();
 		TopGun.runner = func {
@@ -1372,14 +1406,15 @@ var start = func (diff = 1) {
 		};
 		TopGun.runner();
 	} elsif (diff == 6) {
+		# 3 enemies, 1 friendly, no transponder.
 		MAX_ROLL_SPEED = 30;
 		num_t = "-9999";
 		ENDURANCE = 30;
-		tg1.callsign = "Maj.Fuel";
-		tg2.callsign = "Cpt.BEAR";
-		tg3.callsign = "Maj.SWAT";
-		tg4.callsign = "LtCol.Snuff";
-		setprop("link16/wingman-4", "Cpt.BEAR");
+		tg1.callsign = CS_6_enemy1;
+		tg2.callsign = CS_6_friend;
+		tg3.callsign = CS_6_enemy2;
+		tg4.callsign = CS_6_enemy3;
+		setprop("link16/wingman-4", CS_6_friend);
 		tg1.start([nil,tg2]);
 		tg2.start([tg1,tg3,tg4]);
 		tg3.start([nil,tg2]);
@@ -1393,13 +1428,14 @@ var start = func (diff = 1) {
 		};
 		TopGun.runner();
 	} elsif (diff == 6.5) {
+		# 2 teams of 2, fight each other, ignore pilot, no transponder.
 		MAX_ROLL_SPEED = 30;
 		num_t = "-9999";
 		ENDURANCE = 30;
-		tg1.callsign = "Maj.Fuel";
-		tg2.callsign = "Cpt.BEAR";
-		tg3.callsign = "Maj.SWAT";
-		tg4.callsign = "LtCol.Snuff";
+		tg1.callsign = CS_7_enemy1;
+		tg2.callsign = CS_7_friend1;
+		tg3.callsign = CS_7_enemy2;
+		tg4.callsign = CS_7_friend2;
 		tg1.start([tg4,tg2],0);
 		tg2.start([tg1,tg3],1);
 		tg3.start([tg4,tg2],0);
