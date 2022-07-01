@@ -431,17 +431,17 @@ var toggleableTransponder = {
 		return;
 	},
 	getText: func() {
-		me.stat = "OFF";
+		me.stat = "OFF ";
 		if (me.value == 1) {
 			me.stat = "STBY";
 		} elsif (me.value == 2) {
 			me.stat = "TEST";
 		} elsif (me.value == 3) {
-			me.stat = "GND";
+			me.stat = "GND ";
 		} elsif (me.value == 4) {
-			me.stat = "ON";
+			me.stat = "ON  ";
 		} elsif (me.value == 5) {
-			me.stat = "ALT";
+			me.stat = "ALT ";
 		}
 		if (me.selected) {
 			return "*" ~ me.stat ~ "*";

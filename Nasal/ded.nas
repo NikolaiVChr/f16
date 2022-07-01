@@ -731,7 +731,11 @@ var dataEntryDisplay = {
 	updateINS: func() {
 		lat = convertDegreeToStringLat(getprop("position/latitude-deg"));
 		lon = convertDegreeToStringLon(getprop("position/longitude-deg"));
-		me.text[0] = sprintf("  INS   10.2/10 RDY  %s",me.no);
+		var rdy = "   ";
+		if (getprop("f16/avionics/ins-knob") == 3) {
+    		rdy = "RDY";
+		}
+		me.text[0] = sprintf("  INS   10.2/10 %s   %s",rdy,me.no);
 		me.text[1] = sprintf("  LAT  %s",lat);
 		me.text[2] = sprintf("  LNG  %s",lon);
 		me.text[3] = sprintf("  SALT  %5dFT",getprop("position/altitude-ft"));
@@ -994,11 +998,22 @@ var dataEntryDisplay = {
 	updateCNI: func() {
 		winddir = sprintf("%03d\xc2\xb0",getprop("environment/wind-from-heading-deg"));
 		windkts = sprintf("%03d",getprop("environment/wind-speed-kt"));
+		var m3 = "3";
+		if (getprop("instrumentation/transponder/inputs/knob-mode") == 0) {
+    		m3 = " ";
+		}
+		var m4 = " ";
+		if (getprop("instrumentation/iff/activate")) {
+    		m4 = "4";
+		}
+		var mc = " ";
+		if (getprop("instrumentation/transponder/inputs/knob-mode") == 5) {
+    		mc = "C";
+		}
 		var ms = " ";
 		if (getprop("sim/multiplay/online")) {
     		ms = "S";
 		}
-
 		me.text[0] = sprintf("UHF   %6.2f    STPT %s",getprop("/instrumentation/comm[0]/frequencies/selected-mhz"), me.no);# removed the 'A' here, as MLU manuals don't show it.
 
 		if (me.CNIshowWind) {
@@ -1016,7 +1031,7 @@ var dataEntryDisplay = {
 		} else {
 			me.text[3] = sprintf(" ");
 		}
-		me.text[4] = sprintf("M  34 %s %04d   MAN T%03.0f%s",ms,getprop("instrumentation/transponder/id-code"), getprop("instrumentation/tacan/frequencies/selected-channel"), getprop("instrumentation/tacan/frequencies/selected-channel[4]"));
+		me.text[4] = sprintf("M  %s%s%s%s %04d   MAN T%03.0f%s",m3,m4,mc,ms,getprop("instrumentation/transponder/id-code"), getprop("instrumentation/tacan/frequencies/selected-channel"), getprop("instrumentation/tacan/frequencies/selected-channel[4]"));
 	},
 
 	updateComm1: func() {
@@ -1042,6 +1057,14 @@ var dataEntryDisplay = {
 		var type = "";
 		var friend = "";
 		var ownid = getprop("sim/multiplay/callsign");
+		var ms1 = "OFF";
+		if (getprop("sim/multiplay/online")) {
+    		ms1 = "ON";
+		}
+		var mc1 = "OFF";
+		if (getprop("instrumentation/transponder/inputs/knob-mode") == 5) {
+    		mc1 = "ON";
+		}
 		if (target != nil) {
 			sign = target.get_Callsign();
 			type = target.getModel();
@@ -1067,9 +1090,9 @@ var dataEntryDisplay = {
 		if (me.IFFpage == 0) {
 			me.text[0] = sprintf("IFF        MAN       %s ", me.no);# Should have ON between IFF and MAN. But I moved it beside the channels, until we get more transponder/iff in cockpit.
 			me.text[1] = sprintf("                        ");
-			me.text[2] = sprintf("M1      M3 %s %s  ", pIFF.vector[0].getText(), pIFF.vector[1].getText());
-			me.text[3] = sprintf("M2      M4 %s %s  ", pIFF.vector[2].getText(), pIFF.vector[3].getText());
-			me.text[4] = sprintf("                        ");
+			me.text[2] = sprintf("M1       OFF M4%s%s ", pIFF.vector[2].getText(), pIFF.vector[3].getText());
+			me.text[3] = sprintf("M2       OFF MC       %s ",mc1);
+			me.text[4] = sprintf("M3%s%s    MS  %s     ", pIFF.vector[0].getText(), pIFF.vector[1].getText(),ms1);
 		} elsif (me.IFFpage == 1) {
 			me.text[0] = sprintf("       SCAN INTG        ");
 			me.text[1] = sprintf("                        ");
