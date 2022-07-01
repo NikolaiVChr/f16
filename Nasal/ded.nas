@@ -1,5 +1,5 @@
 # Setup editable pages:
-var bingoEF = EditableField.new("f16/settings/bingo", "%-d", 5, func (v) {return v<=5700?0:-1;});
+var bingoEF = EditableField.new("f16/settings/bingo", "%4dLBS", 4, func (v) {return v<=5700?0:-1;});
 var tacanChanEF = EditableField.new("instrumentation/tacan/frequencies/selected-channel", "%-3d", 3);
 var tacanBandTF = toggleableField.new(["X", "Y"], "instrumentation/tacan/frequencies/selected-channel[4]");
 var ilsFrqEF = EditableField.new("instrumentation/nav[0]/frequencies/selected-mhz", "%6.2f", 6);
@@ -679,7 +679,7 @@ var dataEntryDisplay = {
 	updateBingo: func() {
 		me.text[0] = sprintf("        BINGO       %s  ",me.no);
 		me.text[1] = sprintf("                        ");
-		me.text[2] = sprintf("    SET    %sLBS  ",pBINGO.vector[0].getText());
+		me.text[2] = sprintf("    SET    %s  ",pBINGO.vector[0].getText());
 		me.text[3] = sprintf("  TOTAL    %5dLBS      ",getprop("consumables/fuel/total-fuel-lbs"));
 		me.text[4] = sprintf("                        ");
 	},
