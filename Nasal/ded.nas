@@ -890,12 +890,21 @@ var dataEntryDisplay = {
 		me.text[4] = sprintf("                        ");
 	},
 
+	HMCSpage: 0,
 	updateHMCS: func() {
-		me.text[0] = sprintf("      HMCS DISPLAY   %s ", me.no);
-		me.text[1] = sprintf("  HUD BLNK              ");
-		me.text[2] = sprintf("  CKPT BLNK             ");
-		me.text[3] = sprintf("  DECLUTTER  LVL1       ");
-		me.text[4] = sprintf("                        ");
+		if (me.HMCSpage == 0) {
+			me.text[0] = sprintf("      HMCS DISPLAY   %s ", me.no);
+			me.text[1] = sprintf("  HUD BLNK              ");
+			me.text[2] = sprintf("  CKPT BLNK             ");
+			me.text[3] = sprintf("  DECLUTTER  LVL1       ");
+			me.text[4] = sprintf("                        ");
+		} elsif (me.HMCSpage == 1) {
+			me.text[0] = sprintf("      HMCS DISPLAY 2 %s ", me.no);
+			me.text[1] = sprintf("  HUD BLNK              ");
+			me.text[2] = sprintf("  CKPT BLNK             ");
+			me.text[3] = sprintf("  DECLUTTER  LVL1       ");
+			me.text[4] = sprintf("                        ");
+		}
 	},
 
 	updateHARM: func() {
@@ -1194,6 +1203,11 @@ setlistener("f16/avionics/rtn-seq", func() {
 			if (dataEntryDisplay.OFPpage == 3) {
 				dataEntryDisplay.OFPpage = 0;
 			}
+			return;
+		}
+		
+		if (dataEntryDisplay.page == pHMCS) {
+			dataEntryDisplay.HMCSpage = !dataEntryDisplay.HMCSpage;
 			return;
 		}
 
