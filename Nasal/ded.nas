@@ -899,11 +899,11 @@ var dataEntryDisplay = {
 			me.text[3] = sprintf("  DECLUTTER  LVL1       ");
 			me.text[4] = sprintf("                        ");
 		} elsif (me.HMCSpage == 1) {
-			me.text[0] = sprintf("      HMCS DISPLAY 2 %s ", me.no);
-			me.text[1] = sprintf("  HUD BLNK              ");
-			me.text[2] = sprintf("  CKPT BLNK             ");
-			me.text[3] = sprintf("  DECLUTTER  LVL1       ");
-			me.text[4] = sprintf("                        ");
+			me.text[0] = sprintf("       HMCS ALIGN    %s ", me.no);
+			me.text[1] = sprintf("  COURSE    UPLKRST     ");
+			me.text[2] = sprintf("  AZ/EL                 ");
+			me.text[3] = sprintf("  ROLL                  ");
+			me.text[4] = sprintf("  UPLK                  ");
 		}
 	},
 
