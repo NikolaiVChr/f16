@@ -895,7 +895,7 @@ var dataEntryDisplay = {
 		me.text[1] = sprintf("  HUD BLNK              ");
 		me.text[2] = sprintf("  CKPT BLNK             ");
 		me.text[3] = sprintf("  DECLUTTER  LVL1       ");
-		me.text[4] = sprintf("  RWR DSPLY  OFF        ");
+		me.text[4] = sprintf("                        ");
 	},
 
 	updateHARM: func() {
