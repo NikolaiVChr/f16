@@ -1066,11 +1066,17 @@ var dataEntryDisplay = {
 		else pond = "----";
 		if (me.IFFpage == 0) {
 			me.text[0] = sprintf("IFF        MAN       %s ", me.no);# Should have ON between IFF and MAN. But I moved it beside the channels, until we get more transponder/iff in cockpit.
-			me.text[1] = sprintf("M1      M3 %s %s  ", pIFF.vector[0].getText(), pIFF.vector[1].getText());
-			me.text[2] = sprintf("M2      M4 %s %s  ", pIFF.vector[2].getText(), pIFF.vector[3].getText());
+			me.text[1] = sprintf("                        ");
+			me.text[2] = sprintf("M1      M3 %s %s  ", pIFF.vector[0].getText(), pIFF.vector[1].getText());
+			me.text[3] = sprintf("M2      M4 %s %s  ", pIFF.vector[2].getText(), pIFF.vector[3].getText());
+			me.text[4] = sprintf("                        ");
+		} elsif (me.IFFpage == 1) {
+			me.text[0] = sprintf("       SCAN INTG        ");
+			me.text[1] = sprintf("                        ");
+			me.text[2] = sprintf("                        ");
 			me.text[3] = sprintf("ID  %s  %s",sign,friend);
 			me.text[4] = sprintf("TYPE    %s",type);
-		} elsif (me.IFFpage == 1) {
+		} elsif (me.IFFpage == 2) {
 			me.text[0] = sprintf("         MODE S      %s ", me.no);
 			me.text[1] = sprintf("      ID  %s     ",ownid);
 			me.text[2] = sprintf("                        ");
@@ -1254,8 +1260,10 @@ setlistener("f16/avionics/rtn-seq", func() {
 		}
 
 		if (dataEntryDisplay.page == pIFF) {
-			dataEntryDisplay.IFFpage = !dataEntryDisplay.IFFpage;
-			return;
+			dataEntryDisplay.IFFpage = dataEntryDisplay.IFFpage + 1;
+			if (dataEntryDisplay.IFFpage == 3) {
+				dataEntryDisplay.IFFpage = 0;
+			}
 		}
 
 		if (dataEntryDisplay.page == pGPS and getprop("f16/avionics/power-gps")) {
