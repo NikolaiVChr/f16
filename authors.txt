@@ -37,8 +37,8 @@ J Maverick 16
 - Research, addition and implementation of weapons, stores, pods
 - 3D works (pilot model, weapons/stores, cockpit, exterior, misc)
 - RWR/RCS data research and update
-- Block-specific changes: panel layouts, CCIP conversion of Block 40/42, stores availability, payload presets
-- MFD updates
+- Block-specific changes: panel layouts, specific systems, CCIP conversion of Block 40/42, stores availability, payload presets
+- MFD, DED updates
 - Effects improvement
 - Systems tweaking
 - GoPro views
@@ -64,7 +64,7 @@ Richard Harrison
 - Avionics communication system (Emessary based)
 
 Justin "pinto" Nicholson
-- Splashes
+- Original splashes
 - AIM-9 growl, lock sounds
 - AIM-9 and AIM-120 original models
 - Radar RCS system
@@ -173,3 +173,6 @@ Pilot2938
 - AF Thunderbirds #1, 111FS, Zeus Demo liveries
 - CFT 3D model
 - Tail rudder UVmap rework
+
+LJQCN101
+ - JSB controls improvements based on AD-A189-675

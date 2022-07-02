@@ -33,11 +33,9 @@ Engine
 
 GUI
 ---
-Too many loadout optios in fuel and payload dialog.
 
 Stores
 ------
-Model conformal fuel tanks.
 Find real positions of payloads, is only approx. positions now.
 Make id-0 be id-000, hmm not sure this is smart, not backwards compatible.
 Should auto missile view work for jettisoned stores as well?
@@ -57,7 +55,6 @@ Add doppler.
 Cockpit
 -------
 Make center mount less deep, so pilot get good view of MFDs and RWR.
-Make warning lights and master warning work.
 Convert all flat 2D panels into 3D.
 Make controls work for STORES CONFIG and STANDBY GAINS.
 Enable masterarm, jettison, trims, ALT FLAPS.
@@ -102,15 +99,8 @@ wheel brakes too weak?
 GUI
 ---
 
-
 A/P
 ---
-
-Walker
-------
-It can not walk forward or left.
-Other issues as well
-key for toggling
 
 Nasal
 -----
