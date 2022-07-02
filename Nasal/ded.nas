@@ -701,6 +701,7 @@ var dataEntryDisplay = {
 		}
 	},
 
+	NAVpage: 0,
 	updateNav: func() {
 		var days = 31 - getprop("/sim/time/utc/day");
 		var GPSstatus = "";
@@ -713,11 +714,19 @@ var dataEntryDisplay = {
 				keyString = "KEY VALID";
 			}
 		}
-		me.text[0] = sprintf("    NAV STATUS        %s",me.no);
-		me.text[1] = sprintf("SYS ACCUR     HIGH");
-		me.text[2] = sprintf("GPS ACCUR     %s", GPSstatus);
-		me.text[3] = sprintf("MSN DUR       %s  DAYS", days);
-		me.text[4] = sprintf("%s", keyString);
+		if (me.NAVpage == 0) {
+			me.text[0] = sprintf("     NAV STATUS      %s  ",me.no);
+			me.text[1] = sprintf(" SYS ACCUR    HIGH       ");
+			me.text[2] = sprintf(" GPS ACCUR    %s         ", GPSstatus);
+			me.text[3] = sprintf(" MSN DUR      %s  DAYS   ", days);
+			me.text[4] = sprintf(" %s", keyString);
+		} elsif (me.NAVpage == 1) {
+			me.text[0] = sprintf("    NAV COMMANDS     %s ",me.no);
+			me.text[1] = sprintf("                        ");
+			me.text[2] = sprintf("FILTER MODES  AUTO      ");
+			me.text[3] = sprintf("     RESET   GPS        ");
+			me.text[4] = sprintf("   ZEROIZE   GPS        ");
+		}
 	},
 
 	updateMan: func() {
@@ -1034,20 +1043,38 @@ var dataEntryDisplay = {
 		me.text[4] = sprintf("M  %s%s%s%s %04d   MAN T%03.0f%s",m3,m4,mc,ms,getprop("instrumentation/transponder/id-code"), getprop("instrumentation/tacan/frequencies/selected-channel"), getprop("instrumentation/tacan/frequencies/selected-channel[4]"));
 	},
 
+	Comm1page: 0,
 	updateComm1: func() {
-		me.text[0] = sprintf("  SEC  UHF   MAIN  ");
-		me.text[1] = sprintf("  %s", pCOMM1.vector[0].getText());
-		me.text[2] = sprintf("               1");
-		me.text[3] = sprintf("  PRE  2");
-		me.text[4] = sprintf("  %s    NB", pCOMM1.vector[1].getText());
+		if (me.Comm1page == 0) {
+			me.text[0] = sprintf("  SEC  UHF   MAIN  ");
+			me.text[1] = sprintf("  %s", pCOMM1.vector[0].getText());
+			me.text[2] = sprintf("               1");
+			me.text[3] = sprintf("  PRE  2");
+			me.text[4] = sprintf("  %s    NB", pCOMM1.vector[1].getText());
+		} elsif (me.Comm1page == 1) {
+			me.text[0] = sprintf("         UHF ON         ");
+			me.text[1] = sprintf("                        ");
+			me.text[2] = sprintf("         GUARD          ");
+			me.text[3] = sprintf("                        ");
+			me.text[4] = sprintf("           243.00       ");
+		}
 	},
 
+	Comm2page: 0,
 	updateComm2: func() {
-		me.text[0] = sprintf("       VHF   ON  ");
-		me.text[1] = sprintf("  %s", pCOMM2.vector[0].getText());
-		me.text[2] = sprintf("              1");
-		me.text[3] = sprintf("  PRE  2     TOD");
-		me.text[4] = sprintf("  %s    NB", pCOMM2.vector[1].getText());
+		if (me.Comm2page == 0) {
+			me.text[0] = sprintf("       VHF   ON  ");
+			me.text[1] = sprintf("  %s", pCOMM2.vector[0].getText());
+			me.text[2] = sprintf("              1");
+			me.text[3] = sprintf("  PRE  2     TOD");
+			me.text[4] = sprintf("  %s    NB", pCOMM2.vector[1].getText());
+		} elsif (me.Comm2page == 1) {
+			me.text[0] = sprintf("         VHF ON         ");
+			me.text[1] = sprintf("                        ");
+			me.text[2] = sprintf("        AM  GUARD       ");
+			me.text[3] = sprintf("                        ");
+			me.text[4] = sprintf("                        ");
+		}
 	},
 
 	IFFpage: 0,
@@ -1096,9 +1123,9 @@ var dataEntryDisplay = {
 		} elsif (me.IFFpage == 1) {
 			me.text[0] = sprintf("       SCAN INTG        ");
 			me.text[1] = sprintf("                        ");
-			me.text[2] = sprintf("                        ");
-			me.text[3] = sprintf("ID  %s  %s",sign,friend);
-			me.text[4] = sprintf("TYPE    %s",type);
+			me.text[2] = sprintf("ID   %s                 ",sign);
+			me.text[3] = sprintf("RESP %s                 ",friend);
+			me.text[4] = sprintf("TYPE %s                 ",type);
 		} elsif (me.IFFpage == 2) {
 			me.text[0] = sprintf("         MODE S      %s ", me.no);
 			me.text[1] = sprintf("      ID  %s     ",ownid);
@@ -1254,8 +1281,23 @@ setlistener("f16/avionics/rtn-seq", func() {
 			return;
 		}
 
+		if (dataEntryDisplay.page == pCOMM1) {
+			dataEntryDisplay.Comm1page = !dataEntryDisplay.Comm1page;
+			return;
+		}
+
+		if (dataEntryDisplay.page == pCOMM2) {
+			dataEntryDisplay.Comm2page = !dataEntryDisplay.Comm2page;
+			return;
+		}
+
 		if (dataEntryDisplay.page == pTACAN) {
 			toggleTACANMode();
+			return;
+		}
+
+		if (dataEntryDisplay.page == pNAV) {
+			dataEntryDisplay.NAVpage = !dataEntryDisplay.NAVpage;
 			return;
 		}
 
