@@ -1084,11 +1084,6 @@ var dataEntryDisplay = {
 	},
 
 	updateIFF1: func() {
-		var target = radar_system.apg68Radar.getPriorityTarget();
-		var sign = "";
-		var type = "";
-		var friend = "";
-		var ownid = getprop("sim/multiplay/callsign");
 		var ms1 = "OFF";
 		if (getprop("sim/multiplay/online")) {
     		ms1 = "ON";
@@ -1097,29 +1092,6 @@ var dataEntryDisplay = {
 		if (getprop("instrumentation/transponder/inputs/knob-mode") == 5) {
     		mc1 = "ON";
 		}
-		if (target != nil) {
-			sign = target.get_Callsign();
-			type = target.getModel();
-		}
-		var frnd = 0;
-		if (sign != nil) {
-			var lnk = datalink.get_data(sign);
-			 if (lnk != nil and lnk.on_link() == 1) {
-			 	frnd = 1;
-			 }
-		}
-		if (getprop("instrumentation/datalink/power") and frnd == 2) {
-			friend = "WINGMAN";
-		} elsif (getprop("instrumentation/datalink/power") and frnd == 1) {
-			friend = "DLINK";
-		} elsif (getprop("instrumentation/datalink/power") and frnd == 3) {
-			friend = "DL-FRND";
-		} elsif (sign != "") {
-			friend = "NO CONN";
-		}
-		#var pond   = getprop("instrumentation/transponder/inputs/knob-mode")==0?0:1;
-		else pond = "----";
-
 		me.text[0] = sprintf("IFF        MAN       %s ", me.no);# Should have ON between IFF and MAN. But I moved it beside the channels, until we get more transponder/iff in cockpit.
 		me.text[1] = sprintf("                        ");
 		me.text[2] = sprintf("M1       OFF M4%s%s ", pIFF1.vector[2].getText(), pIFF1.vector[3].getText());
@@ -1131,15 +1103,6 @@ var dataEntryDisplay = {
 		var sign = "";
 		var type = "";
 		var friend = "";
-		var ownid = getprop("sim/multiplay/callsign");
-		var ms1 = "OFF";
-		if (getprop("sim/multiplay/online")) {
-    		ms1 = "ON";
-		}
-		var mc1 = "OFF";
-		if (getprop("instrumentation/transponder/inputs/knob-mode") == 5) {
-    		mc1 = "ON";
-		}
 		if (target != nil) {
 			sign = target.get_Callsign();
 			type = target.getModel();
@@ -1170,41 +1133,7 @@ var dataEntryDisplay = {
 		me.text[4] = sprintf("TYPE %s                 ",type);
 	},
 	updateIFF3: func() {
-		var target = radar_system.apg68Radar.getPriorityTarget();
-		var sign = "";
-		var type = "";
-		var friend = "";
 		var ownid = getprop("sim/multiplay/callsign");
-		var ms1 = "OFF";
-		if (getprop("sim/multiplay/online")) {
-    		ms1 = "ON";
-		}
-		var mc1 = "OFF";
-		if (getprop("instrumentation/transponder/inputs/knob-mode") == 5) {
-    		mc1 = "ON";
-		}
-		if (target != nil) {
-			sign = target.get_Callsign();
-			type = target.getModel();
-		}
-		var frnd = 0;
-		if (sign != nil) {
-			var lnk = datalink.get_data(sign);
-			 if (lnk != nil and lnk.on_link() == 1) {
-			 	frnd = 1;
-			 }
-		}
-		if (getprop("instrumentation/datalink/power") and frnd == 2) {
-			friend = "WINGMAN";
-		} elsif (getprop("instrumentation/datalink/power") and frnd == 1) {
-			friend = "DLINK";
-		} elsif (getprop("instrumentation/datalink/power") and frnd == 3) {
-			friend = "DL-FRND";
-		} elsif (sign != "") {
-			friend = "NO CONN";
-		}
-		#var pond   = getprop("instrumentation/transponder/inputs/knob-mode")==0?0:1;
-		else pond = "----";
 
 		me.text[0] = sprintf("         MODE S      %s ", me.no);
 		me.text[1] = sprintf("      ID  %s     ",ownid);
