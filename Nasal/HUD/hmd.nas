@@ -11,18 +11,10 @@ var stroke1 = 4;
 var fontSize = 36;
 var fontRatio = 1;
 
-var flirImageReso = 16;
-
 var ht_debug = 0;
 
-var pitch_factor = 14.85;#19.8;
-var pitch_factor_2 = pitch_factor * 180.0 / math.pi;
-var alt_range_factor = (9317-191) / 100000; # alt tape size and max value.
-var ias_range_factor = (694-191) / 1100;
-var use_war_hud = 1;
 var uv_x1 = 0;
 var uv_x2 = 0;
-var semi_width = 0.0;
 var uv_used = uv_x2-uv_x1;
 var tran_x = 0;
 var tran_y = 0;
@@ -56,17 +48,8 @@ var F16_HMD = {
 
 
 
-        # Real HUD:
-        #
-        # F16C: Optics provides a 25degree Total Field of View and a 20o by 13.5o Instantaneous Field of View
-        #
-        # F16A: Total Field of View of the F-16 A/B PDU is 20deg but the Instantaneous FoV is only 9deg in elevation and 13.38deg in azimuth
-
-
-
         uv_x1 = 0;
         uv_x2 = 1;
-        semi_width = center_to_edge_distance;
         uv_used = uv_x2-uv_x1;
         tran_x = 0;
 
@@ -93,7 +76,7 @@ var F16_HMD = {
             .arcSmallCW(500,500, 0, 500*2, 0)
             .arcSmallCW(500,500, 0, -500*2, 0)
             .setStrokeLineWidth(stroke1)
-            #.hide()
+            .hide()
             .setColor(0,0,1);
 
         obj.hydra = 0;
@@ -910,8 +893,6 @@ var F16_HMD = {
 
         me.Vy   =    hdp.current_view_x_offset_m;
 
-        me.pixelPerMeterX = (340*uv_used)/(semi_width*2);
-        me.pixelPerMeterY = 260/(me.Hz_t-me.Hz_b);
 
 
         me.centerOrigin.setTranslation(512, 512);
@@ -923,22 +904,11 @@ var F16_HMD = {
 
 
 
-
-
-# velocity vector
-        #340,260
-        # semi_width*2 = width of HUD  = 0.15627m
-
         me.submode = 0;
 
 
 
 
-        # UV mapped to x: uv_x1 to uv_x2
-        me.averageDegX = math.atan2(semi_width*1.0, me.Vx-me.Hx_m)*R2D;
-        me.averageDegY = math.atan2((me.Hz_t-me.Hz_b)*0.5, me.Vx-me.Hx_m)*R2D;
-        me.texelPerDegreeX = me.pixelPerMeterX*(((me.Vx-me.Hx_m)*math.tan(me.averageDegX*D2R))/me.averageDegX);
-        me.texelPerDegreeY = me.pixelPerMeterY*(((me.Vx-me.Hx_m)*math.tan(me.averageDegY*D2R))/me.averageDegY);
 
         me.hydra = 0;
 
@@ -1090,8 +1060,6 @@ var F16_HMD = {
                                     var coords = aim.getSeekerInfo();
                                     if (coords != nil) {
                                         me.seekPos = hmd.HudMath.getCenterPosFromDegs(coords[0],coords[1]);
-                                        #me.irLock.setTranslation(me.sx/2+me.texelPerDegreeX*coords[0],me.sy-me.texels_up_into_hud-me.texelPerDegreeY*coords[1]);
-                                        #me.radarLock.setTranslation(me.sx/2+me.texelPerDegreeX*coords[0],me.sy-me.texels_up_into_hud-me.texelPerDegreeY*coords[1]);
                                         me.irLock.setTranslation(me.seekPos);
                                         me.radarLock.setTranslation(me.seekPos);
                                     }
