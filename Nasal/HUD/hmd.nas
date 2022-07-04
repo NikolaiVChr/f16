@@ -27,6 +27,9 @@ var uv_used = uv_x2-uv_x1;
 var tran_x = 0;
 var tran_y = 0;
 
+var eye_to_hmcs_distance = 0.1385;#meters
+var center_to_edge_distance = 0.025;#meters
+
 var F16_HMD = {
     map: func (value, leftMin, leftMax, rightMin, rightMax) {
         # Figure out how 'wide' each range is
@@ -45,29 +48,29 @@ var F16_HMD = {
 
         obj.canvas= canvas.new({
                 "name": "F16 HMD",
-                    "size": [1024,1024], 
+                    "size": [1024,1024],
                     "view": [sx,sy],#1024,1024
-                    "mipmapping": 0, # mipmapping will make the HUD text blurry on smaller screens     
+                    "mipmapping": 0, # mipmapping will make the HUD text blurry on smaller screens
                     "additive-blend": 1# bool
-                    });  
+                    });
 
-        
-        
+
+
         # Real HUD:
         #
         # F16C: Optics provides a 25degree Total Field of View and a 20o by 13.5o Instantaneous Field of View
         #
         # F16A: Total Field of View of the F-16 A/B PDU is 20deg but the Instantaneous FoV is only 9deg in elevation and 13.38deg in azimuth
-        
-        
-        
+
+
+
         uv_x1 = 0;
         uv_x2 = 1;
-        semi_width = 0.025;
+        semi_width = center_to_edge_distance;
         uv_used = uv_x2-uv_x1;
         tran_x = 0;
 
-        obj.sy = sy;                        
+        obj.sy = sy;
         obj.sx = sx*uv_used;
 
         obj.canvas.addPlacement({"node": canvas_item});
@@ -90,26 +93,26 @@ var F16_HMD = {
             .arcSmallCW(500,500, 0, 500*2, 0)
             .arcSmallCW(500,500, 0, -500*2, 0)
             .setStrokeLineWidth(stroke1)
-            .hide()
+            #.hide()
             .setColor(0,0,1);
 
         obj.hydra = 0;
 
         obj.canvas._node.setValues({
                 "name": "F16 HMD",
-                    "size": [1024,1024], 
+                    "size": [1024,1024],
                     "view": [sx,sy],
                     "mipmapping": 0,
                     "additive-blend": 1# bool
                     });
 
         obj.svg.setTranslation (tran_x,tran_y);
-        
+
         obj.off = 1;
 
 
         HUD_FONT = "LiberationFonts/LiberationMono-Bold.ttf";#"condensed.txf";  with condensed the FLYUP text was not displayed until minutes into flight, no clue why
-        
+
         obj.window2 = obj.svg.createChild("text")
                 .setText("BRAKES")
                 .setTranslation(240,600)
@@ -138,6 +141,13 @@ var F16_HMD = {
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
                 .setFontSize(fontSize, 1.1);
+        obj.window11 = obj.svg.createChild("text")
+                .setText("FUEL")
+                .setTranslation(240,660)
+                .setAlignment("right-bottom-baseline")
+                .setColor(0,1,0,1)
+                .setFont(HUD_FONT)
+                .setFontSize(fontSize, 1.1);
         obj.window12 = obj.svg.createChild("text")
                 .setText("1.0")
                 .setTranslation(240,240)
@@ -146,26 +156,27 @@ var F16_HMD = {
                 .setFont(HUD_FONT)
                 .setFontSize(fontSize, 1.1);
 
-        obj.total = [];        
-        obj.scaling = [];      
-        
+        obj.total = [];
+        obj.scaling = [];
+
         append(obj.total, obj.window2);
         append(obj.total, obj.window3);
         append(obj.total, obj.window5);
         append(obj.total, obj.window9);
+        append(obj.total, obj.window11);
         append(obj.total, obj.window12);
         append(obj.total, obj.mainCircle);
-        
+
         obj.color = [0,1,0];
 
-        
+
 
 #
 # Load the target symbosl.
         obj.max_symbols = 10;
         obj.tgt_symbols =  setsize([],obj.max_symbols);
 
-        
+
         obj.custom = obj.svg.createChild("group");
         obj.flyup = obj.svg.createChild("text")
                 .setText("FLYUP")
@@ -177,7 +188,7 @@ var F16_HMD = {
         append(obj.total, obj.flyup);
         obj.stby = obj.svg.createChild("text")
                 .setText("NO RAD")
-                .setTranslation(sx*0.5*uv_used,sy*0.15)                
+                .setTranslation(sx*0.5*uv_used,sy*0.15)
                 .setAlignment("center-top")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
@@ -209,9 +220,9 @@ var F16_HMD = {
                 .setStrokeLineWidth(stroke1)
                 .setColor(0,1,0);
             append(obj.total, obj.boreSymbol);
-            
-            
-        
+
+
+
         #obj.speed_type = obj.svg.createChild("text")
         #        .setText("C")
         #        .setTranslation(4+0.25*sx*uv_used,sy*0.49)
@@ -228,8 +239,8 @@ var F16_HMD = {
         #        .setFontSize(fontSize, 1.1);
         #append(obj.total, obj.speed_type);
         #append(obj.total, obj.alt_type);
-        
-        
+
+
         obj.speed_frame = obj.svg.createChild("path")
                 .set("z-index",10001)
                 .moveTo(8+0.20*sx*uv_used,sy*0.5)
@@ -250,7 +261,7 @@ var F16_HMD = {
                 .setFont(HUD_FONT)
                 .setFontSize(fontSize, 1.1);
         append(obj.total, obj.speed_curr);
-        
+
         obj.alt_frame = obj.svg.createChild("path")
                 .set("z-index",10001)
                 .moveTo(32-8+0.80*sx*uv_used-40,sy*0.5)
@@ -271,11 +282,11 @@ var F16_HMD = {
                 .setFont(HUD_FONT)
                 .setFontSize(fontSize, 1.1);
                 append(obj.total, obj.alt_curr);
-        
+
                 #append(obj.total, obj.head_mask);
         obj.head_frame = obj.svg.createChild("path")
                 .set("z-index",10001)
-                .moveTo(40+0.50*sx*uv_used,sy*0.15-40)
+                .moveTo(40+0.50*sx*uv_used,sy*0.85+40)
                 .vert(-40)
                 .horiz(-80)
                 .vert(40)
@@ -286,15 +297,15 @@ var F16_HMD = {
         obj.head_curr = obj.svg.createChild("text")
                 .set("z-index",10002)
                 .setText("360")
-                .setTranslation(0.5*sx*uv_used,sy*0.15-48)
+                .setTranslation(0.5*sx*uv_used,sy*0.85+32)
                 .setAlignment("center-bottom")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
                 .setFontSize(fontSize, 1.1);
                 append(obj.total, obj.head_curr);
-        
-        
-        
+
+
+
         var mr = 0.4;#milliradians
         obj.ASEC262 = obj.svg.createChild("path")#rdsearch (Allowable Steering Error Circle (ASEC))
             .moveTo(-262*mr,0)
@@ -358,16 +369,16 @@ var F16_HMD = {
             #.set("z-index",10500)
             .setTranslation(sx*0.5*uv_used,sy*0.25);
             append(obj.total, obj.ASEC120Aspect);
-        
-        
+
+
         mr = mr*1.5;#incorrect, but else in FG it will seem too small.
 
         obj.initUpdate =1;
-        
+
         obj.alpha = getprop("f16/avionics/hud-sym");
         obj.power = getprop("f16/avionics/hud-power");
 
-        
+
 
         obj.dlzX      = sx*uv_used*0.75-16;
         obj.dlzY      = sy*0.4;
@@ -392,13 +403,13 @@ var F16_HMD = {
                 .setFont(HUD_FONT)
                 .setFontSize(fontSize, 1.0);
 
-        
-        
+
+
         ############################## new center origin stuff that used hud math #################
-        
-        
+
+
         obj.centerOrigin = obj.svg.createChild("group");
-        
+
         obj.flyupLeft    = obj.centerOrigin.createChild("path")
                             .lineTo(-50,-50)
                             .moveTo(0,0)
@@ -413,9 +424,9 @@ var F16_HMD = {
                             .setColor(0,1,0);
         append(obj.total, obj.flyupRight);
         append(obj.total, obj.flyupLeft);
-        
-                            
-        
+
+
+
         var boxRadius = 30;
         var boxRadiusHalf = boxRadius*0.5;
         var hairFactor = 0.8;
@@ -488,7 +499,7 @@ var F16_HMD = {
             .hide()
             .setColor(0,1,0);
         append(obj.total, obj.rdrBore);
-        
+
         obj.target_locked = obj.centerOrigin.createChild("path")
             .moveTo(-boxRadius,-boxRadius)
             .vert(boxRadius*2)
@@ -513,17 +524,17 @@ var F16_HMD = {
                 .setStrokeLineWidth(stroke1)
                 .setColor(0,1,0);
         append(obj.total, obj.locatorLine);
-        
-        
-        
-        
 
-        
 
-        
-        
+
+
+
+
+
+
+
         obj.hidingScales = 0;
-        
+
         input2 = {
                  IAS                       : "/velocities/airspeed-kt",
                  calibrated                : "/fdm/jsbsim/velocities/vc-kts",
@@ -614,7 +625,7 @@ var F16_HMD = {
             props.UpdateManager.FromHashList(["hmcs_sym", "hud_power"], 0.1, func(hdp)#changed to 0.1, this function is VERY heavy to run.
                                       {
 # print("HUD hud_serviceable=", hdp.hud_serviceable," display=", hdp.hud_display, " brt=", hdp.hud_brightness, " power=", hdp.hud_power);
-                                            
+
                                           if (0) {
                                             obj.color = [0.3,1,0.3,0];
                                             foreach(item;obj.total) {
@@ -673,7 +684,7 @@ var F16_HMD = {
                                           }
                                       }),
             props.UpdateManager.FromHashList(["calibrated", "GND_SPD", "HUD_VEL", "gear_down"], 0.5, func(hdp)
-                                      {   
+                                      {
                                           # the real F-16 has calibrated airspeed as default in HUD.
                                           var pitot = hdp.servPitot and hdp.servStatic;
                                             if (hdp.servSpeed) {
@@ -682,11 +693,11 @@ var F16_HMD = {
                                       }),
             props.UpdateManager.FromHashList(["altitude_agl_ft","cara","measured_altitude","altSwitch","alow","dgft"], 1.0, func(hdp)
                                       {
-                                          
+
                                             # baro scale
-                                            
+
                                             obj.alt_curr.setText(obj.getAltTxt(hdp.measured_altitude));
-                                            
+
 
                                       }),
             props.UpdateManager.FromHashList(["Nz","nReset"], 0.1, func(hdp)
@@ -704,23 +715,23 @@ var F16_HMD = {
                                             lookingAt += (hdp.headingMag-hdp.heading);#convert to magn
                                             obj.head_curr.setText(sprintf("%03d",geo.normdeg(lookingAt)));
                                           }
-                                          
+
                                       }
                                             ),
             props.UpdateManager.FromHashList(["hmdH","hmdP"], 0.1, func(hdp)
                                       {
                                           var currLimit = 0;
                                           var hd = math.abs(geo.normdeg180(hdp.hmdH));
-                                          
+
                                           if (hd < 5) currLimit = 1.5;
                                           elsif (hd < 15) currLimit = -17;
                                           elsif (hd < 30) currLimit = -30;
                                           else currLimit = -50;
-                                          
+
                                           if (hdp.hmdP < currLimit) obj.off = 1;
-                                          else 
+                                          else
                                             obj.off = 0;
-                                          
+
                                       }
                                             ),
             props.UpdateManager.FromHashList(["time_until_crash","vne","warn", "elapsed", "data"], 0.05, func(hdp)
@@ -814,17 +825,27 @@ var F16_HMD = {
                                             obj.window9.hide();
 
                                       }),
+                        props.UpdateManager.FromHashValue("window11_txt", nil, func(txt)
+                                      {
+                                          if (txt != nil and txt != ""){
+                                              obj.window11.show();
+                                              obj.window11.setText(txt);
+                                          }
+                                          else
+                                            obj.window11.hide();
+
+                                      }),
 
         ];
-        
-        
-        
+
+
+
         obj.showmeCCIP = 0;
         obj.NzMax = 1.0;
-        
+
         return obj;
     },
-    
+
     #######################################################################################################
     #######################################################################################################
     ########                                                                                     ##########
@@ -856,7 +877,7 @@ var F16_HMD = {
         me.svg.show();
 
         setprop("sim/rendering/als-filters/use-night-vision", 0);# NVG not allowed while using HMD
-        
+
         if (hdp.nReset) {
             me.NzMax = 1.0;
             setprop("f16/avionics/n-reset",0);
@@ -880,38 +901,38 @@ var F16_HMD = {
             me.Hx_m =   (-4.7148+0.013-4.53759+0.013)*0.5;#-4.62737;#-4.65453;#-4.6429;# HUD median X pos
             me.Vz   =    hdp.current_view_y_offset_m; # view Z position (0.94 meter per default)
             me.Vx   =    hdp.current_view_z_offset_m; # view X position (0.94 meter per default)
-            
+
             me.bore_over_bottom = me.Vz - me.Hz_b;
             me.Hz_height        = me.Hz_t-me.Hz_b;
             me.frac_up_the_hud = me.bore_over_bottom / me.Hz_height;
             me.texels_up_into_hud = me.frac_up_the_hud * me.sy;#sy default is 260
         }
-        
+
         me.Vy   =    hdp.current_view_x_offset_m;
-            
+
         me.pixelPerMeterX = (340*uv_used)/(semi_width*2);
         me.pixelPerMeterY = 260/(me.Hz_t-me.Hz_b);
-        
-        
+
+
         me.centerOrigin.setTranslation(512, 512);
         me.custom.update();
         me.centerOrigin.update();
         me.svg.update();
-        
 
 
-        
+
+
 
 
 
 # velocity vector
         #340,260
         # semi_width*2 = width of HUD  = 0.15627m
-        
+
         me.submode = 0;
-        
-        
-        
+
+
+
 
         # UV mapped to x: uv_x1 to uv_x2
         me.averageDegX = math.atan2(semi_width*1.0, me.Vx-me.Hx_m)*R2D;
@@ -945,14 +966,14 @@ var F16_HMD = {
             me.ASEC65.hide();
             var currASEC = nil;
         }
-                   
+
 
 
         me.locatorLineShow = 0;
 #        if (hdp.FrameCount == 1 or hdp.FrameCount == 3 or me.initUpdate == 1) {
             me.target_idx = 0;
             me.designated = 0;
-            
+
         me.target_lock_show = 0;
 
         me.irL = 0;#IR lock
@@ -969,15 +990,15 @@ var F16_HMD = {
                 if (!pylons.fcs.isLock()) {
                     me.radarLock.setTranslation(0, -me.sy*0.25+262*0.3*0.5);
                     me.rdL = 1;
-                }                
+                }
             } elsif (hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "AIM-9M" or hdp.weapon_selected == "IRIS-T") {
                 if (aim != nil and aim.isCaged()) {
                     var coords = aim.getSeekerInfo();
                     if (coords != nil) {
                         me.echoPos = f16.HudMath.getDevFromHMD(coords[0], coords[1], -hdp.hmdH, hdp.hmdP);
                         me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
-                        me.echoPos[0] = (512/0.025)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512 (should be 0.1385 from eye instead to be like real f16)
-                        me.echoPos[1] = -(512/0.025)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512
+                        me.echoPos[0] = (512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512 (should be 0.1385 from eye instead to be like real f16)
+                        me.echoPos[1] = -(512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
                         me.irBore.setTranslation(me.echoPos);
                         me.irB = 1;
                     }#atan((0.025*500)/(0.2*512)) = radius_fg = atan(12.5/102.4) = 6.96 degs => 13.92 deg diam
@@ -987,8 +1008,8 @@ var F16_HMD = {
                     if (coords != nil) {
                         me.echoPos = f16.HudMath.getDevFromHMD(coords[0], coords[1], -hdp.hmdH, hdp.hmdP);
                         me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
-                        me.echoPos[0] = (512/0.025)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512
-                        me.echoPos[1] = -(512/0.025)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512
+                        me.echoPos[0] = (512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
+                        me.echoPos[1] = -(512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
                         me.irLock.setTranslation(me.echoPos);
                         me.irL = 1;
                     }
@@ -1011,9 +1032,9 @@ var F16_HMD = {
                 #print(me.echoPos[0],",",me.echoPos[1],"    ", hdp.hmdH, "," ,hdp.hmdP);
                 me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
                 #print("    ",me.echoPos[0]);
-                me.echoPos[0] = (512/0.025)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512
-                me.echoPos[1] = -(512/0.025)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512
-                
+                me.echoPos[0] = (512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
+                me.echoPos[1] = -(512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
+
                 if (me.target_idx < me.max_symbols) {
                     me.tgt = me.tgt_symbols[me.target_idx];
                 } else {
@@ -1033,14 +1054,14 @@ var F16_HMD = {
                     } else {
                         me.tgt.setStrokeDashArray([1]);
                     }
-                    
+
                     if (radar_system.apg68Radar.getPriorityTarget() != nil and radar_system.apg68Radar.getPriorityTarget().get_Callsign() != nil and me.u.get_Callsign() == radar_system.apg68Radar.getPriorityTarget().get_Callsign()) {
                         me.designatedDistanceFT = radar_system.apg68Radar.getPriorityTarget().getLastRangeDirect()*M2FT;
                         me.target_lock_show = 1;
                         if (me.tgt != nil) {
                             me.tgt.hide();
                         }
-                        
+
                         me.target_locked.setTranslation (me.echoPos);
                         if (me.clamped) {
                             me.target_locked.setStrokeDashArray([7,7]);
@@ -1105,7 +1126,7 @@ var F16_HMD = {
                         me.tgt.update();
                     }
                     if (ht_debug)
-                      printf("%-10s %f,%f [%f,%f,%f] :: %f,%f",me.callsign,me.xc,me.yc, me.devs[0], me.devs[1], me.devs[2], me.u_dev_rad*D2R, me.u_elev_rad*D2R); 
+                      printf("%-10s %f,%f [%f,%f,%f] :: %f,%f",me.callsign,me.xc,me.yc, me.devs[0], me.devs[1], me.devs[2], me.u_dev_rad*D2R, me.u_elev_rad*D2R);
                 } else {
                     print("[ERROR]: HUD too many targets ",me.target_idx);
                 }
@@ -1120,7 +1141,7 @@ var F16_HMD = {
             }
         }
         me.ASC.setVisible(showASC);
-        
+
         #print(me.irS~" "~me.irL);
 
         me.locatorLine.setVisible(me.locatorLineShow);
@@ -1129,8 +1150,8 @@ var F16_HMD = {
 
         if (!me.target_lock_show and !hdp.standby and radar_system.apg68Radar.currentMode.longName == radar_system.acmBoreMode.longName) {
             me.echoPos = f16.HudMath.getDevFromHMD(radar_system.apg68Radar.eulerX, radar_system.apg68Radar.eulerY, -hdp.hmdH, hdp.hmdP);
-            me.echoPos[0] = (512/0.025)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512
-            me.echoPos[1] = -(512/0.025)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*0.2;
+            me.echoPos[0] = (512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
+            me.echoPos[1] = -(512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance;
             me.clamped = math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]) > 500;
             if (!me.clamped) {
                 me.rdrBore.setTranslation(me.echoPos);
@@ -1141,7 +1162,7 @@ var F16_HMD = {
         } else {
             me.rdrBore.hide();
         }
-        
+
         me.dlzArray = pylons.getDLZ();
         #me.dlzArray =[10,8,6,2,9];#test
         if (me.dlzArray == nil or size(me.dlzArray) == 0) {
@@ -1203,9 +1224,9 @@ var F16_HMD = {
         me.irLock.update();
         me.irSearch.update();
 
-        
 
-        
+
+
 
 
         me.initUpdate = 0;
@@ -1216,14 +1237,15 @@ var F16_HMD = {
         hdp.window3_txt = f16.transfer_dist;
         hdp.window9_txt = f16.transfer_arms~(f16.transfer_arms==""?"":"-V");
         hdp.window2_txt = f16.transfer_mode;
+        hdp.window11_txt = f16.transfer_fuel_bullseye;
         hdp.window12_txt = f16.transfer_g;
-        
+
         foreach(var update_item; me.update_items)
         {
             update_item.update(hdp);
         }
         return;
-        me.window1.setText("window  1").show();        
+        me.window1.setText("window  1").show();
         me.window2.setText("window  2").show();
         me.window3.setText("window  3").show();
         me.window4.setText("window  4").show();
@@ -1234,7 +1256,7 @@ var F16_HMD = {
         me.window9.setText("window  9").show();
         me.window10.setText("window 10").show();
         me.window11.setText("window 11").show();
-        me.window12.setText("window 12").show();# 
+        me.window12.setText("window 12").show();#
     },
 
 #  12
@@ -1254,20 +1276,20 @@ var F16_HMD = {
 #
 #
 #   30    32
-#    3    37 
+#    3    37
 #    4      26
 #   7       25
 #  8        10
 # 15        13
 # 35        14
-# 36       
+# 36
 
 #Text windows on the HUD (FG F-16 May 11 2021)
-# 12 currG           1 not used 
+# 12 currG           1 not used
 #                   10 ALOW
 # 2 mode             3 slant            / callsign
 # 7 mach             4 eta              / target angels
-# 8 maxG             5 waypoint         
+# 8 maxG             5 waypoint
 # 9 weap             6 not used
 # 11 fuel
 
@@ -1275,9 +1297,9 @@ var F16_HMD = {
 # 12 currG           1 ALOW-top
 #
 #                   10 ALOW             / target angels
-# 2 mode             3 slant            
+# 2 mode             3 slant
 # 7 mach             4 eta              / time to go      TODO: CCRP: time to release / closure rate in kt: A/A guns
-# 8 maxG             5 waypoint         
+# 8 maxG             5 waypoint
 # 9 weap             6 callsign
 # 11 fuel
 #
@@ -1285,8 +1307,8 @@ var F16_HMD = {
 # slant is F for radar computed, B for steerpoint, R for CARA, X XXX elsewise, empty for no target
 
 
-    
-    
+
+
     makeVector: func (siz,content) {
         var vec = setsize([],siz*2);
         var k = 0;
@@ -1297,7 +1319,7 @@ var F16_HMD = {
         return vec;
     },
 
-    
+
     getAltTxt: func (alt) {
         if (alt < 1000) {
             me.txtRAlt = sprintf("%03d",math.round(alt,10));
@@ -1332,7 +1354,7 @@ var F16_HMD = {
         var h_dev = eye_hud_m / ( math.sin(dev_rad) / math.cos(dev_rad) );
         var v_dev = eye_hud_m / ( math.sin(elev_rad) / math.cos(elev_rad) );
 # Angle between HUD center/top <-> HUD center/symbol position.
-        # -90° left, 0° up, 90° right, +/- 180° down. 
+        # -90° left, 0° up, 90° right, +/- 180° down.
         var dev_deg =  math.atan2( h_dev, v_dev ) * R2D;
 # Correction with own a/c roll.
         var combined_dev_deg = dev_deg - notification.roll;
@@ -1347,7 +1369,7 @@ var F16_HMD = {
 #   if ( abs_combined_dev_deg >= 0 and abs_combined_dev_deg < 90 ) {
 #       var coef = ( 90 - abs_combined_dev_deg ) * 0.00075;
 #       if ( coef > 0.050 ) { coef = 0.050 }
-#       clamp -= coef; 
+#       clamp -= coef;
         #   }
         if ( combined_dev_length > clmp ) {
             #combined_dev_length = clamp;
@@ -1359,7 +1381,7 @@ var F16_HMD = {
 #
 
 
-    
+
     extrapolate: func (x, x1, x2, y1, y2) {
         return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
     },
@@ -1367,7 +1389,7 @@ var F16_HMD = {
     list: [],
 };
 
-var F16HMDRecipient = 
+var F16HMDRecipient =
 {
     new: func(_ident)
     {
@@ -1386,7 +1408,7 @@ var F16HMDRecipient =
 
             if (notification.NotificationType == "FrameNotification")
             {
-                
+
                 me.HUDobj.update(notification);
                 return emesary.Transmitter.ReceiptStatus_OK;
             }
