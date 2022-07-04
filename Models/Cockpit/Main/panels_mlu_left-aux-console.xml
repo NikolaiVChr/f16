@@ -176,7 +176,7 @@
             <blue>0.18</blue>
         </emission>
     </animation>-->
-    
+
     <animation>
         <type>material</type>
         <object-name>EW_CANVAS_DISPLAY</object-name>
@@ -193,7 +193,7 @@
             <blue>1</blue>
         </emission>
     </animation>
-    
+
 
  <animation>
   <type>material</type>
@@ -325,9 +325,9 @@
 			<z>1</z>
 		</axis>
 	</animation>
-    
-   
-   
+
+
+
    <animation>
     <type>pick</type>
     <visible>true</visible>
@@ -339,7 +339,7 @@
       <command>nasal</command>
       <script>
               setprop("f16/avionics/emer-jett-switch",1);
-              if (pylons.fcs != nil and (getprop("f16/avionics/gnd-jett") or !getprop("gear/gear[0]/wow"))) {
+              if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1") >= 20 and (pylons.fcs != nil and (getprop("f16/avionics/gnd-jett") or !getprop("gear/gear[0]/wow")))) {
                 pylons.fcs.jettisonFuelAndAG([0,1,7,8]);#drop all fueltanks, dummies and A/G weapons. Except wingtips.
               }
       </script>
@@ -374,7 +374,7 @@
    </animation>
   <!-- Landing Gear Panel -->
 
-   
+
    <animation>
         <type>knob</type>
         <object-name>SW_HOOK</object-name>
@@ -387,7 +387,7 @@
         <factor>50</factor>
         <offset-deg>10</offset-deg>
         <roll-deg>-10</roll-deg>
-        <heading-deg>7.3</heading-deg> 
+        <heading-deg>7.3</heading-deg>
         <center>
          <x-m>-0.249596</x-m>
          <y-m>-0.281688</y-m>
@@ -420,11 +420,11 @@
         </decrease>
     </animation>
 
-   
 
-     
-   
-   
+
+
+
+
  <animation>
         <type>knob</type>
         <object-name>SW_GND_JETT</object-name>
@@ -437,7 +437,7 @@
         <factor>-50</factor>
         <offset-deg>25</offset-deg>
         <roll-deg>-10</roll-deg>
-        <heading-deg>7.3</heading-deg> 
+        <heading-deg>7.3</heading-deg>
         <center>
          <x-m>-0.190538</x-m>
          <y-m>-0.402386</y-m>
@@ -469,7 +469,7 @@
            </binding>
         </decrease>
     </animation>
-    
+
 
 
 
@@ -486,7 +486,7 @@
         <factor>90</factor>
         <offset-deg>-45</offset-deg>
         <roll-deg>-10</roll-deg>
-        <heading-deg>7.3</heading-deg> 
+        <heading-deg>7.3</heading-deg>
         <center>
          <x-m>-0.18</x-m>
          <y-m>-0.28</y-m>
@@ -518,7 +518,7 @@
            </binding>
         </decrease>
     </animation>
-    
+
     <animation>
         <type>material</type>
         <object-name>gear_lever_light</object-name>
@@ -546,7 +546,7 @@
             <factor-prop>controls/lighting/lighting-panel/mal-ind-lts-brightness</factor-prop>
         </emission>
     </animation>
- 
+
   <animation>
         <type>knob</type>
         <object-name>light-land-switch</object-name>
@@ -560,7 +560,7 @@
         <factor>-25</factor>
         <offset-deg>0</offset-deg>
         <roll-deg>-10</roll-deg>
-        <heading-deg>7.3</heading-deg> 
+        <heading-deg>7.3</heading-deg>
         <center>
          <x-m>-0.143816</x-m>
          <y-m>-0.341516</y-m>
@@ -634,11 +634,11 @@
            </binding>
         </decrease>
     </animation>
- 
- 
- 
- 
- 
+
+
+
+
+
 <!-- -35 = closed -165 = stripes -270 = dots -->
  <animation>
   <type>rotate</type>
@@ -682,7 +682,7 @@
             </binding>
         </action>
     </animation>
-    
+
     <animation>
         <type>knob</type>
         <object-name>DISP_switch</object-name>
@@ -707,7 +707,7 @@
             </binding>
         </action>
     </animation>
-    
+
     <animation>
         <type>knob</type>
         <object-name>RWR_switch</object-name>
@@ -790,7 +790,7 @@
             </binding>
         </action>
     </animation>
-    
+
     <animation>
         <type>knob</type>
         <object-name>MWS_switch</object-name>
@@ -844,7 +844,7 @@
             </binding>
         </action>
     </animation>
-	
+
 	 <animation>
         <type>knob</type>
         <object-name>JETT_50_switch</object-name>
@@ -873,7 +873,7 @@
             </binding>
         </action>
     </animation>
-    
+
     <animation>
         <type>knob</type>
         <object-name>JMR_switch</object-name>
@@ -1041,7 +1041,7 @@
             </binding>
         </action>
     </animation>
-    
+
     <animation>
         <type>knob</type>
         <object-name>EW_KNOB_MODE</object-name>
