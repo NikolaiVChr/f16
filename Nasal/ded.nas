@@ -1108,23 +1108,21 @@ var dataEntryDisplay = {
 			type = target.getModel();
 		}
 		var frnd = 0;
-		if (sign != nil) {
+		if (getprop("instrumentation/datalink/power") and sign != nil) {
 			var lnk = datalink.get_data(sign);
-			 if (lnk != nil and lnk.on_link() == 1) {
-			 	frnd = 1;
-			 }
+			if (lnk != nil and lnk.on_link() == 1) {
+				frnd = 1;
+			}
 		}
-		if (getprop("instrumentation/datalink/power") and frnd == 2) {
+		if (frnd == 2) {
 			friend = "WINGMAN";
-		} elsif (getprop("instrumentation/datalink/power") and frnd == 1) {
+		} elsif (frnd == 1) {
 			friend = "DLINK";
-		} elsif (getprop("instrumentation/datalink/power") and frnd == 3) {
+		} elsif (frnd == 3) {
 			friend = "DL-FRND";
 		} elsif (sign != "") {
 			friend = "NO CONN";
 		}
-		#var pond   = getprop("instrumentation/transponder/inputs/knob-mode")==0?0:1;
-		else pond = "----";
 
 		me.text[0] = sprintf("       SCAN INTG        ");
 		me.text[1] = sprintf("                        ");
