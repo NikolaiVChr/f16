@@ -427,6 +427,16 @@ var F16_HMD = {
             append(obj.tgt_symbols, obj.tgt);
             append(obj.total, obj.tgt);
         }
+        obj.steerPT = obj.centerOrigin.createChild("path")
+                .moveTo(-boxRadius*0.3, 0)
+                .lineTo(0, boxRadiusHalf*0.85)
+                .lineTo(boxRadius*0.3, 0)
+                .lineTo(0, -boxRadiusHalf*0.85)
+                .lineTo(-boxRadius*0.3, 0)
+                .setStrokeLineWidth(stroke1)
+                .hide()
+                .setColor(0,1,0);
+        append(obj.total, obj.steerPT);
         obj.radarLock = obj.centerOrigin.createChild("path")
             .moveTo(-boxRadius*hairFactor,0)
             .horiz(boxRadiusHalf*hairFactor)
@@ -700,6 +710,27 @@ var F16_HMD = {
                                           }
 
                                       }
+                                            ),
+            props.UpdateManager.FromHashList(["roll", "pitch", "heading", "hmdH", "hmdP", "dgft"], 0.01, func(hdp)
+                                             {
+                                                 if (steerpoints.getCurrentNumber() != 0 and !hdp.dgft) {
+                                                    obj.stptPos = f16.HudMath.getDevFromCoord(steerpoints.getCurrentCoordForHUD(), hdp.hmdH, hdp.hmdP, hdp, geo.viewer_position());
+                                                    obj.stptPos[0] = geo.normdeg180(obj.stptPos[0]);
+                                                    obj.stptPos[0] = (512/center_to_edge_distance)*(math.tan(math.clamp(obj.stptPos[0],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
+                                                    obj.stptPos[1] = -(512/center_to_edge_distance)*(math.tan(math.clamp(obj.stptPos[1],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
+
+                                                    obj.clamped = math.sqrt(obj.stptPos[0]*obj.stptPos[0]+obj.stptPos[1]*obj.stptPos[1]) > 500;
+
+                                                    if (!obj.clamped) {
+                                                        obj.steerPT.setTranslation(obj.stptPos);
+                                                        obj.steerPT.show();
+                                                    } else {
+                                                        obj.steerPT.hide();
+                                                    }
+                                                 } else {
+                                                     obj.steerPT.hide();
+                                                 }
+                                             }
                                             ),
             props.UpdateManager.FromHashList(["hmdH","hmdP"], 0.1, func(hdp)
                                       {
