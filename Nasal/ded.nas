@@ -1092,10 +1092,11 @@ var dataEntryDisplay = {
 		if (getprop("instrumentation/transponder/inputs/knob-mode") == 5) {
     		mc1 = "ON";
 		}
+		var mcid = getprop("instrumentation/transponder/id-code");
 		me.text[0] = sprintf("IFF        MAN       %s ", me.no);# Should have ON between IFF and MAN. But I moved it beside the channels, until we get more transponder/iff in cockpit.
 		me.text[1] = sprintf("                        ");
 		me.text[2] = sprintf("M1       OFF M4%s%s ", pIFF1.vector[2].getText(), pIFF1.vector[3].getText());
-		me.text[3] = sprintf("M2       OFF MC       %s ",mc1);
+		me.text[3] = sprintf("M2       OFF MC %s  %s ",mcid,mc1);
 		me.text[4] = sprintf("M3%s%s    MS  %s     ", pIFF1.vector[0].getText(), pIFF1.vector[1].getText(),ms1);
 	},
 	updateIFF2: func() {
