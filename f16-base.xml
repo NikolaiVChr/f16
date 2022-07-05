@@ -8,7 +8,7 @@
         </settings>
     </autopilot>
     <sim>
-        <aircraft-version>3.70</aircraft-version>
+        <aircraft-version>3.71</aircraft-version>
         <minimum-fg-version>2020.3</minimum-fg-version>
         <!-- enable "parkpos=AVAILABLE" option for the F-16 -->
         <dimensions>
