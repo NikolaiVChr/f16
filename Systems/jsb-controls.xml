@@ -6,7 +6,7 @@
     begin: control system by Nikolai V. Chr.
 
     AD-A055-417 - Main source.
-    AD-A189-675 - I wish, too blurred to read.
+    AD-A189-675 - Some parts of this used (except for in the YF-16).
     TP-1538 - used for control system B/C and non-prototype gains.
     TN-D-8176 - used for servodynamic filters. Disabled for now (fdm rate is only 120Hz).
     ICAS-90-5.10.2 - used for MPO switch
@@ -1849,7 +1849,7 @@
 				</ifthen>
             </function>
         </fcs_function>
-		
+
 		<summer name="fcs/fly-by-wire/roll/command-deg_s">
             <input>fcs/fly-by-wire/roll/command-deg_s-input</input>
             <clipto>
