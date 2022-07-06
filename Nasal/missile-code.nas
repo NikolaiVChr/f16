@@ -311,6 +311,7 @@ var AIM = {
 		m.radarY                = getprop(m.nodeString~"FCS-y");                      #    This is handy for SAMs with radar on a mast.
 		m.radarZ                = getprop(m.nodeString~"FCS-z");                      #    In future I will add direction to it also, for now its center gimbal is along -x axis.
 		m.expand_min            = getprop(m.nodeString~"expand-min-fire-range");      # Bool. Default false. If min fire range should expand with closing rate. Mainly use this for A/A missiles.
+		m.asc                   = getprop(m.nodeString~"attack-steering-cue-enabled");# Bool. ASC enabled.
 		# navigation, guiding and seekerhead
 		m.max_seeker_dev        = getprop(m.nodeString~"seeker-field-deg") / 2;       # missiles own seekers total FOV diameter.
 		m.guidance              = getprop(m.nodeString~"guidance");                   # heat/radar/semi-radar/laser/gps/vision/unguided/level/gyro-pitch/radiation/inertial/remote/remote-stable
@@ -408,6 +409,10 @@ var AIM = {
         if (m.rail_forward == TRUE) {
         	m.rail_pitch_deg = 0;
         	m.rail_head_deg  = 0;
+        }
+
+        if (m.asc == nil) {
+        	m.asc = 0;
         }
 
         if (m.wing_aspect_ratio == nil) {
@@ -1209,29 +1214,84 @@ var AIM = {
 	},
 
 	getIdealFireSolution: func {
-		if (me.status != MISSILE_LOCK) return nil;
+		#print("lock:",me.status == MISSILE_LOCK);
+		#print("asc:",me.asc);
+		if (me.status != MISSILE_LOCK or !me.asc) return nil;
 		# do only call this for A/A missiles
-		# range elevDev horizDev angleSpeedHoriz
-		# move 3rd in HUD
-		me.idVec = vector.Math.normalize(vector.Math.eulerToCartesian3X(-me.Tgt.get_heading(), me.Tgt.get_Pitch(), 0));
-		me.planeVec = vector.Math.normalize(vector.Math.eulerToCartesian3X(-OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue()));
-		me.idVec = vector.Math.product(1.5*me.Tgt.get_Speed()*NM2M/3600, me.idVec);#meter/sec 1.5 is factor for HUD
-		#2 deg/s means 2 deg of bore
-		#plus to that the lofting angle:
-		me.idealLoft = me.clamp(me.extrapolate(me.Tgt.get_range(), 15, 40, 0, 10),0,10);
-		me.idVec = vector.Math.plus([0,0,math.tan(me.idealLoft*D2R)*me.Tgt.get_range()*NM2M],me.idVec);
-		me.idHere = vector.Math.projVectorOnPlane(me.planeVec, me.idVec);
-#		if (type(me.idHere[0]) != "scalar" or type(me.idHere[1]) != "scalar" or type(me.idHere[2]) != "scalar") {
-#			print("ASC floating point error");
-#			return nil;
-#		}
-		me.angleFromUp = vector.Math.angleBetweenVectors(me.idHere, vector.Math.eulerToCartesian3Z(-OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue()));
-		me.angleFromRight = 180-vector.Math.angleBetweenVectors(me.idHere, vector.Math.eulerToCartesian3Y(-OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue()));
-		me.angleInHUD = me.angleFromUp>=90?me.angleFromRight:-me.angleFromRight;#0 is up, 180 normalized
-		me.angleInHUD = geo.normdeg180(me.angleInHUD-OurRoll.getValue());
-		me.degOnHUD = math.atan2(vector.Math.magnitudeVector(me.idHere),me.Tgt.get_range()*NM2M)*R2D;#deg/sec
-		#printf("ASC: %.1f deg loft. Inv trigo angle: %d deg. Lead %.1f deg. atan2(%d,%d)", me.idealLoft, me.angleInHUD, me.degOnHUD,vector.Math.magnitudeVector(me.idHere),me.Tgt.get_range()*NM2M);
-		return [me.angleInHUD, me.degOnHUD];# 0,0 is center of ASEC. Thats the origin of ASC (Attack Steering Cue)
+
+		me.asc_av_spd_mps = 900;# should be per missile
+
+		me.horiz_intercept = me.get_intercept(me.Tgt.get_bearing(), me.Tgt.get_range()*NM2M, me.Tgt.get_heading(), me.Tgt.get_Speed()*KT2MPS, me.asc_av_spd_mps, geo.aircraft_position(), OurHdg.getValue());
+		# [me.timeToIntercept, me.interceptHeading, me.interceptCoord, me.interceptDist, me.interceptRelativeBearing
+		if(me.horiz_intercept == nil) {
+			#print("No aim120 intercept");
+			return nil;
+		}
+
+		me.loft_cue = 0;
+		if (me["dlz_opt"] != nil and me["dlz_nez"] != nil) {
+			me.tgtRange = me.Tgt.get_range();
+			me.loft_cue = me.map(me.Tgt.get_range(), me.dlz_nez, (me.dlz_opt+me.max_fire_range_nm)*0.5, 0, 15);
+			me.loft_cue *= me.map(ourAlt.getValue(), 0, 40000, 3, 1);
+		}
+
+		return [me.horiz_intercept[1], math.clamp(me.loft_cue, 0, 45)]; # attack-bearing, loft-cue
+	},
+
+	get_intercept: func (bearingToRunner, dist_m, runnerHeading, runnerSpeed, chaserSpeed, chaserCoord, chaserHeading) {
+	    # from Leto
+	    # needs: bearingToRunner_deg, dist_m, runnerHeading_deg, runnerSpeed_mps, chaserSpeed_mps, chaserCoord
+	    #        dist_m > 0 and chaserSpeed > 0
+
+	    if (dist_m < 500) {
+	        return nil;
+	    }
+
+	    me.trigAngle = 90-bearingToRunner;
+	    me.RunnerPosition = [dist_m*math.cos(me.trigAngle*D2R), dist_m*math.sin(me.trigAngle*D2R),0];
+	    me.ChaserPosition = [0,0,0];
+
+	    me.VectorFromRunner = vector.Math.minus(me.ChaserPosition, me.RunnerPosition);
+	    me.runner_heading = 90-runnerHeading;
+	    me.RunnerVelocity = [runnerSpeed*math.cos(me.runner_heading*D2R), runnerSpeed*math.sin(me.runner_heading*D2R),0];
+
+	    me.a = chaserSpeed * chaserSpeed - runnerSpeed * runnerSpeed;
+	    me.b = 2 * vector.Math.dotProduct(me.VectorFromRunner, me.RunnerVelocity);
+	    me.c = -dist_m * dist_m;
+
+	    if ((me.b*me.b-4*me.a*me.c)<0) {
+	      # intercept not possible
+	      return nil;
+	    }
+
+	    me.t1 = (-me.b+math.sqrt(me.b*me.b-4*me.a*me.c))/(2*me.a);
+	    me.t2 = (-me.b-math.sqrt(me.b*me.b-4*me.a*me.c))/(2*me.a);
+
+	    if (me.t1 < 0 and me.t2 < 0) {
+	      # intercept not possible
+	      return nil;
+	    }
+
+	    me.timeToIntercept = 0;
+	    if (me.t1 > 0 and me.t2 > 0) {
+	          me.timeToIntercept = math.min(me.t1, me.t2);
+	    } else {
+	          me.timeToIntercept = math.max(me.t1, me.t2);
+	    }
+	    me.InterceptPosition = vector.Math.plus(me.RunnerPosition, vector.Math.product(me.timeToIntercept, me.RunnerVelocity));
+
+	    me.ChaserVelocity = vector.Math.product(1/me.timeToIntercept, vector.Math.minus(me.InterceptPosition, me.ChaserPosition));
+
+	    me.interceptAngle = vector.Math.angleBetweenVectors([0,1,0], me.ChaserVelocity);
+	    me.interceptHeading = geo.normdeg(me.ChaserVelocity[0]<0?-me.interceptAngle:me.interceptAngle);
+
+	    me.interceptDist = chaserSpeed*me.timeToIntercept;
+
+	    me.interceptCoord = geo.Coord.new(chaserCoord);
+	    me.interceptCoord = me.interceptCoord.apply_course_distance(me.interceptHeading, me.interceptDist);
+	    me.interceptRelativeBearing = geo.normdeg180(me.interceptHeading-chaserHeading);
+
+	    return [me.timeToIntercept, me.interceptHeading, me.interceptCoord, me.interceptDist, me.interceptRelativeBearing];
 	},
 
 	setContacts: func (vect) {

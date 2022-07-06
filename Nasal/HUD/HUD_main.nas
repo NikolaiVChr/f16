@@ -496,6 +496,7 @@ append(obj.total, obj.speed_curr);
             .setStrokeLineWidth(1)
             .setColor(0,1,0).hide();
             append(obj.total, obj.ASC);
+
         obj.ASEC100 = obj.svg.createChild("path")#irsearch
             .moveTo(-100*mr,0)
             .arcSmallCW(100*mr,100*mr, 0, 100*mr*2, 0)
@@ -592,7 +593,12 @@ append(obj.total, obj.speed_curr);
         obj.centerOrigin = obj.canvas.createGroup()
                            .setTranslation(HudMath.getCenterOrigin());
 
-
+        #obj.ASC2 = obj.centerOrigin.createChild("path")# (Attack Steering Cue (ASC))
+        #    .moveTo(-8*mr,0)
+        #    .arcSmallCW(8*mr,8*mr, 0, 8*mr*2, 0)
+        #    .arcSmallCW(8*mr,8*mr, 0, -8*mr*2, 0)
+        #    .setStrokeLineWidth(1)
+        #    .setColor(1,0,0).hide();
         obj.rollPos = [0,25];
         var tickShort = 8;
         var rollRadius = 50;
@@ -2184,10 +2190,10 @@ append(obj.total, obj.speed_curr);
                         if (hdp.weapn != nil) {
                             if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
                                 me.asec120 = 1;
-                                currASEC = [me.sx*0.5,me.sy*0.25];
+                                currASEC = nil;#[me.sx*0.5,me.sy*0.25];
                             } elsif (!hdp.standby) {
                                 me.asec262 = 1;
-                                currASEC = [me.sx*0.5,me.sy*0.25+262*mr*0.5];
+                                currASEC = nil;#[me.sx*0.5,me.sy*0.25+262*mr*0.5];
                             }
                         }
                         me.ALOW_top = 1;
@@ -2517,18 +2523,40 @@ append(obj.total, obj.speed_curr);
                             me.tgt.hide();
                         }
                         me.target_locked.setTranslation (me.echoPos);
-                        if (0 and currASEC != nil) {
+                        me.loft_cue = 0;
+                        if (currASEC != nil) {
                             # disabled for now as it has issues
                             me.cue = nil;
                             call(func {me.cue = hdp.weapn.getIdealFireSolution();},[], nil, nil, var err = []);
-                            if (me.cue != nil) {
-                                me.ascpixel = me.cue[1]*HudMath.getPixelPerDegreeAvg(2);
-                                me.ascPos = HudMath.getPosFromDegs(me.echoPos[2], me.echoPos[3]);
-                                me.ascDist = math.sqrt(math.pow(me.ascPos[0]+math.cos(me.cue[0]*D2R)*me.ascpixel,2)+math.pow(me.ascPos[1]+math.sin(me.cue[0]*D2R)*me.ascpixel,2));
-                                me.ascReduce = me.ascDist > me.sx*0.20?me.sx*0.20/me.ascDist:1;
-                                me.ASC.setTranslation(currASEC[0]+me.ascReduce*(me.ascPos[0]+math.cos(me.cue[0]*D2R)*me.ascpixel),currASEC[1]+me.ascReduce*(me.ascPos[1]+math.sin(me.cue[0]*D2R)*me.ascpixel));
-                                showASC = 1;
+                            if(size(err)) {
+                                print(err[0]);
+                                print(err[1]);
                             }
+                            if (me.cue != nil) {
+                                me.cueDistDeg = math.sqrt(me.cue[1]*me.cue[1]+me.cue[0]*me.cue[0]);
+                                me.cueXDeg1 = geo.normdeg180(me.cue[0]-hdp.heading);
+                                me.cueYDeg1 = me.cue[1]-hdp.pitch;
+                                #printf("%02d, %02d", me.cueXDeg1, me.cueYDeg1);
+                                me.cueXDeg = me.cueXDeg1*math.cos(-hdp.roll*D2R)+me.cueYDeg1*math.sin(-hdp.roll*D2R);
+                                me.cueYDeg = -me.cueXDeg1*math.sin(-hdp.roll*D2R)+me.cueYDeg1*math.cos(-hdp.roll*D2R);
+
+                                me.ascPos = HudMath.getPosFromDegs(me.cueXDeg, me.cueYDeg);
+                                me.ascpixel = math.sqrt(me.ascPos[0]*me.ascPos[0]+me.ascPos[1]*me.ascPos[1]);
+
+                                if (me.ascpixel > 48) {
+                                    me.ascReduce = 48/me.ascpixel;
+                                } else {
+                                    me.ascReduce = 1;#math.pow(me.ascpixel/48, 2)/(me.ascpixel/48);# soft clamp. ASEC120 is 48 pixel radius.
+                                }
+                                me.ASC.setTranslation(currASEC[0]+me.ascReduce*me.ascPos[0], currASEC[1]+me.ascReduce*me.ascPos[1]);#currASEC = center of ASEC
+                                #me.ASC2.setTranslation(HudMath.getCenterPosFromDegs(me.cueXDeg1, me.cueYDeg1));#currASEC = center of ASEC
+                                me.loft_cue = me.cue[1];
+                                showASC = 1;
+                            } else {
+                                #print("me.cue is nil");
+                            }
+                        } else {
+                            #print("currASEC is nil");
                         }
                         if (pylons.fcs != nil and pylons.fcs.isLock()) {
                             if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7" or hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "AIM-9M" or hdp.weapon_selected == "IRIS-T") {
@@ -2600,6 +2628,7 @@ append(obj.total, obj.speed_curr);
         }
 
         me.ASC.setVisible(showASC);
+        #me.ASC2.setVisible(showASC);
         me.acmBoreSymbol.setVisible(showACMBore);
         me.acmVertSymbol.setVisible(showACMVert);
 
@@ -2690,6 +2719,10 @@ append(obj.total, obj.speed_curr);
             if (me.dlzArray[4] > me.dlzArray[0]*1.25) {# MLU Tape 3 page 29
                 me.dlzFCRRange.setTranslation(me.dlzWidth*0.5, -me.dlzHeight-5);
                 me.dlzFCRRange.setText(""~radar_system.apg68Radar.getRange());
+                me.dlzFCRRange.show();
+            } elsif (me["loft_cue"] != nil and me.loft_cue > 0.999) {
+                me.dlzFCRRange.setTranslation(me.dlzWidth*0.5, -me.dlzHeight-5);
+                me.dlzFCRRange.setText(sprintf("%2d\xc2\xb0", me.loft_cue));
                 me.dlzFCRRange.show();
             } else {
                 me.dlzFCRRange.hide();
