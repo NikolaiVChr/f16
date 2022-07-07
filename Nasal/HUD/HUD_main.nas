@@ -2533,10 +2533,12 @@ append(obj.total, obj.speed_curr);
                                 print(err[1]);
                             }
                             if (me.cue != nil) {
-                                me.cueDistDeg = math.sqrt(me.cue[1]*me.cue[1]+me.cue[0]*me.cue[0]);
                                 me.cueXDeg1 = geo.normdeg180(me.cue[0]-hdp.heading);
                                 me.cueYDeg1 = me.cue[1]-hdp.pitch;
+
                                 #printf("%02d, %02d", me.cueXDeg1, me.cueYDeg1);
+
+                                # account for aircraft roll:
                                 me.cueXDeg = me.cueXDeg1*math.cos(-hdp.roll*D2R)+me.cueYDeg1*math.sin(-hdp.roll*D2R);
                                 me.cueYDeg = -me.cueXDeg1*math.sin(-hdp.roll*D2R)+me.cueYDeg1*math.cos(-hdp.roll*D2R);
 
@@ -2544,13 +2546,17 @@ append(obj.total, obj.speed_curr);
                                 me.ascpixel = math.sqrt(me.ascPos[0]*me.ascPos[0]+me.ascPos[1]*me.ascPos[1]);
 
                                 if (me.ascpixel > 48) {
-                                    me.ascReduce = 48/me.ascpixel;
+                                    me.ascReduce = 48/me.ascpixel;# hard clamp
+                                } elsif (me.ascpixel > 0) {
+                                    me.ascReduce = 1;#math.pow(me.ascpixel/48,0.65) * 48/me.ascpixel;# soft clamp. ASEC120 is 48 pixel radius.
                                 } else {
-                                    me.ascReduce = 1;#math.pow(me.ascpixel/48, 2)/(me.ascpixel/48);# soft clamp. ASEC120 is 48 pixel radius.
+                                    me.ascReduce = 1;
                                 }
+
                                 me.ASC.setTranslation(currASEC[0]+me.ascReduce*me.ascPos[0], currASEC[1]+me.ascReduce*me.ascPos[1]);#currASEC = center of ASEC
                                 #me.ASC2.setTranslation(HudMath.getCenterPosFromDegs(me.cueXDeg1, me.cueYDeg1));#currASEC = center of ASEC
-                                me.loft_cue = me.cue[1];
+
+                                me.loft_cue = me.cue[1];# set loft cue for DLZ
                                 showASC = 1;
                             } else {
                                 #print("me.cue is nil");
