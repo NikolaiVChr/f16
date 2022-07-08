@@ -3530,7 +3530,7 @@ var AIM = {
 		#		me.rotate_token = TRUE;
 		#		me.printGuide("Is last turn, snap-up/PN takes it from here..")
 		#	}
-		} elsif (me.snapUp == TRUE and me.t_elev_deg > me.clamp(-80/me.speed_m,-30,-5) and me.dist_curr * M2NM > me.speed_m * 6
+		} elsif (me.snapUp == TRUE and me.t_elev_deg > me.clamp(-50/me.speed_m,-30,-5) and me.dist_curr * M2NM > me.speed_m * 6
 			 and me.t_elev_deg < me.loft_angle #and me.t_elev_deg > -7.5
 			 and me.dive_token == FALSE) {
 			# lofting: due to target is more than 10 miles out and we havent reached
@@ -3549,7 +3549,7 @@ var AIM = {
 			}
 			me.cruise_or_loft = TRUE;
 		} elsif (me.snapUp == TRUE and me.coord.alt() > me.t_coord.alt() and me.last_cruise_or_loft == TRUE
-		         and me.t_elev_deg > me.clamp(-80/me.speed_m,-30,-5) and me.dist_curr * M2NM > me.speed_m * 5.5) {
+		         and me.t_elev_deg > me.clamp(-50/me.speed_m,-30,-5) and me.dist_curr * M2NM > me.speed_m * 5.5) {
 			# cruising: keeping altitude since target is below and more than -45 degs down
 
 			me.ratio = (g_fps * me.dt)/me.old_speed_fps;
@@ -5565,6 +5565,8 @@ var hud_radius_m       = 0.100;
 
 #was in hud
 var develev_to_devroll = func(dev_rad, elev_rad) {
+	if (math.sin(dev_rad) == 0 or math.sin(elev_rad) == 0) return [0,0,0];
+    if (math.cos(dev_rad) == 0 or math.cos(elev_rad) == 0) return [0,20,1];
 	var clamped = 0;
 	# Deviation length on the HUD (at level flight),
 	# 0.6686m = distance eye <-> virtual HUD screen.
