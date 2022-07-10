@@ -1,7 +1,7 @@
-#
+ #
 # F-16 Steerpoint/route/mark/bulls-eye system.
 #
-
+var lines = [nil,nil];
 var stpt300 = setsize([],6);#Threat circles
 var stpt350 = setsize([],10);#Generic
 var stpt400 = setsize([],5);#Markpoints Own
@@ -644,7 +644,7 @@ var dlnk_timer = maketimer(3.5, dlink_loop);
 dlnk_timer.start();
 
 
-var lines = [nil,nil];
+
 
 var loadLine = func  (no,path) {
     printf("Attempting to load route %s to act as lines %d in HSD.", path, no);
@@ -655,9 +655,30 @@ var loadLine = func  (no,path) {
     }
 };
 
+var EMPTY_ALT = -99999;
+
 var serialize = func() {
-  var ret = "";
-  var iter = 0;
+	var ret = "";
+	var iter = 0;
+	if (lines[0] != nil) {
+		for (var s = 0; s < lines[0].getPlanSize() and s < 100; s+=1) {
+			var key = lines[0].getWP(s);
+		  	ret = ret~sprintf("LINE,%d,%.6f,%.6f|",s+100,key.lat,key.lon);
+	  	}
+	}
+	if (lines[1] != nil) {
+		for (var s = 0; s < lines[1].getPlanSize() and s < 100; s+=1) {
+			var key = lines[1].getWP(s);
+		  	ret = ret~sprintf("LINE,%d,%.6f,%.6f|",s+200,key.lat,key.lon);
+	  	}
+	}
+	if (flightplan() != nil) {
+		var plan = flightplan();
+		for (var s = 0; s < plan.getPlanSize(); s+=1) {
+			var key = plan.getWP(s);
+		  	ret = ret~sprintf("PLAN,%d,%.6f,%.6f,%d|",s+0,key.lat,key.lon,(key.alt_cstr_type!=nil and key.alt_cstr != nil)?key.alt_cstr:EMPTY_ALT);
+	  	}
+	}
   foreach(key;stpt300) {
   	if (key == nil) {
 		ret = ret~sprintf("STPT,%d,nil|",iter+300);
@@ -723,12 +744,32 @@ var serialize = func() {
 
 var unserialize = func(m) {
   var stpts = split("|",m);
+  var planned = nil;
   foreach(item;stpts) {
-    if (size(item)>4) {#why is this chekc even here???!
+    #if (size(item)>4) {#why is this chekc even here???!
       var items = split(",", item);
       var key = items[0];
       
-      if (key == "STPT") {
+      if (key == "PLAN") {
+      	var number = num(items[1]);
+      	if (planned == nil) planned = createFlightplan();
+      	var plan = planned;
+      	var wp = createWP(num(items[2]), num(items[3]), sprintf("STPT-%02d",number+1));
+		plan.insertWP(wp, number);
+		if (num(items[4]) != EMPTY_ALT) {
+			var leg = plan.getWP(plan.getPlanSize()-1);
+			leg.setAltitude(num(items[4]), "at");
+		}
+      } elsif (key == "LINE") {
+      	var number = num(items[1]);
+      	var no = number >= 200;
+      	if (lines[no] == nil) {
+      		lines[no] = createFlightplan();
+      	}
+      	var wp = createWP(num(items[2]), num(items[3]), ""~number);
+      	number = no?number-200:number-100;
+		lines[no].insertWP(wp, number);
+      } elsif (key == "STPT") {
       	var newST = nil;
       	if (items[2]!="nil") {
       		newST = STPT.new();
@@ -772,7 +813,12 @@ var unserialize = func(m) {
       } elsif (key == "COM2S") {
       	setprop("instrumentation/comm[1]/frequencies/standby-mhz", num(items[1]));
       }
-    }
+    #}
+  }
+  if (planned != nil) {
+  	fgcommand("activate-flightplan", props.Node.new({"activate": 0}));
+  	planned.activate();
+  	fgcommand("activate-flightplan", props.Node.new({"activate": 1}));
   }
 }
 
