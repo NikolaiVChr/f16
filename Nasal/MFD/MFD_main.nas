@@ -1848,6 +1848,14 @@ var MFD_Device =
             }
         };
     },
+
+#  ██      ██ ███████ ████████ 
+#  ██      ██ ██         ██    
+#  ██      ██ ███████    ██    
+#  ██      ██      ██    ██    
+#  ███████ ██ ███████    ██    
+#                              
+#                              
     setupList: func(svg) {
         svg.p_LIST = me.canvas.createGroup()
             .set("z-index",2)
@@ -1910,6 +1918,10 @@ var MFD_Device =
                     me.ppp.selectPage(me.my.p_HSD);
                     me.selectionBox.show();
                     me.setSelection(nil, me.ppp.buttons[16], 16);
+                } elsif (eventi == 7) {
+                    me.ppp.selectPage(me.my.p_DTE);
+                    me.selectionBox.show();
+                    me.setSelection(nil, me.ppp.buttons[7], 7);
                 } elsif (eventi == 15) {
                     swap();
                 }
@@ -1920,8 +1932,97 @@ var MFD_Device =
         };
     },
 
+#  ██████  ████████ ███████ 
+#  ██   ██    ██    ██      
+#  ██   ██    ██    █████   
+#  ██   ██    ██    ██      
+#  ██████     ██    ███████ 
+#                           
+#                           
+    setupDTE: func(svg) {
+        svg.p_DTE = me.canvas.createGroup()
+            .set("z-index",2)
+            .setTranslation(276*0.795,482)
+            .set("font","LiberationFonts/LiberationMono-Regular.ttf");#552,482 , 0.795 is for UV map
 
 
+    },
+    addDTE: func {
+        var svg = {getElementById: func (id) {return me[id]},};
+        me.setupDTE(svg);
+        me.PFD.addRListPage = func(svg, title, layer_id) {
+            var np = PFD_Page.new(svg, title, layer_id, me);
+            append(me.pages, np);
+            me.page_index[layer_id] = np;
+            np.setVisible(0);
+            return np;
+        };
+        me.p_DTE = me.PFD.addListPage(svg, "DTE", "p_DTE");
+        me.p_DTE.model_index = me.model_index;
+        me.p_DTE.root = svg;
+        me.p_DTE.wdt = 552*0.795;
+        me.p_DTE.fwd = 0;
+        me.p_DTE.plc = 0;
+        me.p_DTE.ppp = me.PFD;
+        me.p_DTE.my = me;
+        me.p_DTE.selectionBox = me.selectionBox;
+        me.p_DTE.setSelectionColor = me.setSelectionColor;
+        me.p_DTE.resetColor = me.resetColor;
+        me.p_DTE.setSelection = me.setSelection;
+        me.p_DTE.notifyButton = func (eventi) {
+            if (eventi != nil) {
+
+# Menu Id's
+#  CRM
+#   10  11  12  13  14
+# 0                    5
+# 1                    6
+# 2                    7
+# 3                    8
+# 4                    9
+#   15  16  17  18  19
+#  VSD HSD SMS SIT
+                if (eventi == 7) {
+                    me.ppp.selectPage(me.my.p_LIST);
+                    me.resetColor(me.ppp.buttons[7]);
+                    me.selectionBox.hide();
+                } elsif (eventi == 1) {#LOAD
+                    var defaultDirInFileSelector = getprop("/sim/fg-home") ~ "/Export";
+
+                    var load_stpts = func(path) {
+                        steerpoints.loadSTPTs(path.getValue());
+                    }
+
+                    var file_selector_dtc = gui.FileSelector.new(
+                      callback: load_stpts, title: "Load data cartridge", button: "Load",
+                      dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.f16dtc"]);
+
+                    file_selector_dtc.open();
+
+                    file_selector_dtc.del();
+                } elsif (eventi == 3) {#SAVE
+                    var defaultDirInFileSelector = getprop("/sim/fg-home") ~ "/Export";
+
+                    var save_stpts = func(path) {
+                        steerpoints.saveSTPTs(path.getValue());
+                    }
+
+                    var save_selector_dtc = gui.FileSelector.new(
+                      callback: save_stpts, title: "Save data cartridge", button: "Save",
+                      dir: defaultDirInFileSelector, dotfiles: 1, file: "mission-data.f16dtc", pattern: ["*.f16dtc"]);            
+
+                    save_selector_dtc.open();
+            
+                    save_selector_dtc.del();
+                } elsif (eventi == 15) {
+                    swap();
+                }
+            }
+        };
+        me.p_DTE.update = func (noti) {
+            if (bottomImages[me.model_index] != nil) bottomImages[me.model_index].hide();
+        };
+    },
 
 #  ██████   █████  ██████   █████  ██████      ███    ███  ██████  ██████  ███████     ██      ██ ███████ ████████ 
 #  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ████  ████ ██    ██ ██   ██ ██          ██      ██ ██         ██    
@@ -4005,6 +4106,7 @@ var MFD_Device =
         me.addList();
         me.addRList();
         me.addRMList();
+        me.addDTE();
 
         me.mfd_button_pushed = 0;
         # Connect the buttons - using the provided model index to get the right ones from the model binding
@@ -4099,6 +4201,9 @@ var MFD_Device =
         } else if (nextPageIndex == 18) {
             me.selectionBox.setTranslation(272,450);
             me.selectionBox.setScale(1,1);
+        } else if (nextPageIndex == 7) {
+            me.selectionBox.setTranslation(383,219);#dte
+            me.selectionBox.setScale(1,1);
         } else {
             print("Make sure buttons are correctly set in setSelection() in MFD_main.nas");
             return;
@@ -4187,7 +4292,7 @@ var MFD_Device =
         me.p_LIST.addMenuItem(4, "FLIR", nil);
         me.p_LIST.addMenuItem(5, "SMS", me.p_SMS);
         me.p_LIST.addMenuItem(6, "HSD", me.p_HSD);
-        me.p_LIST.addMenuItem(7, "DTE", nil);
+        me.p_LIST.addMenuItem(7, "DTE", me.p_DTE);
         me.p_LIST.addMenuItem(8, "TEST", nil);
         me.p_LIST.addMenuItem(9, "FLCS", nil);
 
@@ -4196,6 +4301,11 @@ var MFD_Device =
         me.r_LIST.addMenuItem(2, "SEA", nil);
         me.r_LIST.addMenuItem(3, "GM", nil);
         me.r_LIST.addMenuItem(4, "GMT", nil);
+
+        me.p_DTE.addMenuItem(1, "LOAD", nil);
+        me.p_DTE.addMenuItem(3, "SAVE", nil);
+        me.p_DTE.addMenuItem(7, "DTE", me.p_LIST);
+        me.p_DTE.addMenuItem(15, "SWAP", nil);
 
         me.rm_LIST.addMenuItem(13, "CNTL", me.p_RDR);
 
@@ -4355,6 +4465,8 @@ var getMenuButton = func (pageName) {
         return nil;
     } elsif (pageName == "CUBE") {
         return nil;
+    } elsif (pageName == "DTE") {
+        return 7;
     } else {
         print("Make sure button assignment is set correctly in getMenuButton() in MFD_main.nas");
         return nil;
