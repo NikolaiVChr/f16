@@ -738,7 +738,9 @@ var serialize = func() {
   ret = ret~sprintf("COM1S,%.2f|",getprop("instrumentation/comm[0]/frequencies/standby-mhz"));
   ret = ret~sprintf("COM2,%.2f|",getprop("instrumentation/comm[1]/frequencies/selected-mhz"));
   ret = ret~sprintf("COM2S,%.2f|",getprop("instrumentation/comm[1]/frequencies/standby-mhz"));
-  
+  ret = ret~sprintf("ALOW,%d|",getprop("f16/settings/cara-alow"));
+  ret = ret~sprintf("BINGO,%d|",getprop("f16/settings/bingo"));
+  ret = ret~sprintf("SQUAWK,%04d|",getprop("instrumentation/transponder/id-code"));
   return ret;
 }
 
@@ -812,6 +814,12 @@ var unserialize = func(m) {
       	setprop("instrumentation/comm[1]/frequencies/selected-mhz", num(items[1]));
       } elsif (key == "COM2S") {
       	setprop("instrumentation/comm[1]/frequencies/standby-mhz", num(items[1]));
+      } elsif (key == "ALOW") {
+      	setprop("f16/settings/cara-alow", num(items[1]));
+      } elsif (key == "BINGO") {
+      	setprop("f16/settings/bingo", num(items[1]));
+      } elsif (key == "SQUAWK") {
+      	setprop("instrumentation/transponder/id-code", num(items[1]));
       }
     #}
   }
