@@ -4,26 +4,46 @@
 var load_knee_l = func(path) {
     path = path.getValue();
     if (io.stat(path) == nil){
+        setprop("f16/preplanning-status", "Loading kneeboard failed");
+        print("Loading kneeboard failed");
+        gui.showDialog("loadfail");
         return;
     }
-    var vi = io.open(path,'r');
-    var data = split("\n",string.replace(io.readfile(path),"\r",""));
-    
+    var vi = nil;
+    var data = nil;
+    call(func{vi = io.open(path,'r'); data = split("\n",string.replace(io.readfile(path),"\r",""));},nil, var err = []);
+    if (size(err) > 0) {
+        setprop("f16/preplanning-status", err[0]);
+        print(err[0]);
+        gui.showDialog("loadfail");
+        return;
+    }
     
     leftK.update_text(path,data);
     
     if (file_selector_l != nil) {
         #file_selector_l.close();
     }
+    setprop("f16/preplanning-status", "Kneeboard loaded");
 }
 
 var load_knee_r = func(path) {
     path = path.getValue();
     if (io.stat(path) == nil){
+        setprop("f16/preplanning-status", "Loading kneeboard failed");
+        print("Loading kneeboard failed");
+        gui.showDialog("loadfail");
         return;
     }
-    var vi = io.open(path,'r');
-    var data = split("\n",string.replace(io.readfile(path),"\r",""));
+    var vi = nil;
+    var data = nil;
+    call(func{vi = io.open(path,'r'); data = split("\n",string.replace(io.readfile(path),"\r",""));},nil, var err = []);
+    if (size(err) > 0) {
+        setprop("f16/preplanning-status", err[0]);
+        print(err[0]);
+        gui.showDialog("loadfail");
+        return;
+    }
 
     
     rightK.update_text(path,data);
@@ -31,6 +51,7 @@ var load_knee_r = func(path) {
     if (file_selector_r != nil) {
         #file_selector_r.close();
     }
+    setprop("f16/preplanning-status", "Kneeboard loaded");
 }
 
 var file_selector_r = nil;

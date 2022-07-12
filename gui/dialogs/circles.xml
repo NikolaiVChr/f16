@@ -10,6 +10,7 @@
     
     <nasal>
         <open><![CDATA[
+        	setprop("f16/preplanning-status", "");
 			var s = steerpoints.getNumber(555);
 			if (s != nil) {
 				setprop("f16/avionics/pilot-aid/bulls-eye-lat", s.lat);
@@ -946,6 +947,13 @@
 			</checkbox>
 		</group>
 	</group>
+
+	<text>
+		<halign>left</halign>
+		<live>true</live>
+		<format>I/O Status: %s</format>
+		<property>f16/preplanning-status</property>
+	</text>
 
 	<empty><stretch>1</stretch></empty>
 

@@ -652,6 +652,10 @@ var loadLine = func  (no,path) {
     call(func {lines[no] = createFlightplan(path);}, nil, var err = []);
     if (size(err) or lines[no] == nil) {
         print(err[0]);
+        setprop("f16/preplanning-status", err[0]);
+        gui.showDialog("loadfail");
+    } else {
+    	setprop("f16/preplanning-status", "HSD lines loaded");
     }
 };
 
@@ -842,11 +846,13 @@ var saveSTPTs = func (path) {
     call(func{var text = io.write(opn,text);},nil, var err = []);
     if (size(err)) {
       print("error writing file with STPTs");
-      gui.showDialog("savefail");
+      setprop("f16/preplanning-status", err[0]);
       io.close(opn);
+      gui.showDialog("savefail");
       return 0;
     } else {
       io.close(opn);
+      setprop("f16/preplanning-status", "DTC data saved");
       return 1;
     }
 }
@@ -856,9 +862,11 @@ var loadSTPTs = func (path) {
     call(func{text=io.readfile(path);},nil, var err = []);
     if (size(err)) {
       print("Loading STPTs failed.");
+      setprop("f16/preplanning-status", err[0]);
       gui.showDialog("loadfail");
     } elsif (text != nil) {
       unserialize(text);
+      setprop("f16/preplanning-status", "DTC data loaded");
     }
 }
 
