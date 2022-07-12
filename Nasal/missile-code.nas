@@ -1235,6 +1235,15 @@ var AIM = {
 			me.loft_cue *= me.map(ourAlt.getValue(), 0, 40000, 3, 1);
 		}
 
+		# Do not find a relative bearing that is so great that radar loses track of target:
+		me.maxBearing = me.fcs_fov - 10;# margin is 10 degrees
+		me.relativeBearing = geo.normdeg180(me.horiz_intercept[1]-me.Tgt.get_bearing());
+		if (me.relativeBearing > me.maxBearing) {
+			me.horiz_intercept[1] = me.Tgt.get_bearing() + me.maxBearing;
+		} elsif (me.relativeBearing < -me.maxBearing) {
+			me.horiz_intercept[1] = me.Tgt.get_bearing() - me.maxBearing;
+		}
+
 		return [me.horiz_intercept[1], math.clamp(me.loft_cue, 0, 45)]; # attack-bearing, loft-cue
 	},
 
