@@ -1999,7 +1999,7 @@ var MFD_Device =
 
                     file_selector_dtc.open();
 
-                    file_selector_dtc.del();
+                    #file_selector_dtc.del();
                 } elsif (eventi == 3) {#SAVE
                     var defaultDirInFileSelector = getprop("/sim/fg-home") ~ "/Export";
 
@@ -2013,7 +2013,7 @@ var MFD_Device =
 
                     save_selector_dtc.open();
             
-                    save_selector_dtc.del();
+                    #save_selector_dtc.del();
                 } elsif (eventi == 15) {
                     swap();
                 }
