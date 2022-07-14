@@ -1268,10 +1268,10 @@ var AIContact = {
 		me.velocityOfOwnship = vector.Math.vectorToGeoVector(self.getSpeedVector(), me.selfCo).vector;
 		me.vectorToOwnship = vector.Math.product(-1, me.vectorToContact);
 
-		me.contactVelocityTowardsOwnship = vector.Math.projVectorOnVector(me.velocityOfContact, me.vectorToOwnship);
-		me.ownshipVelocityTowardsContact = vector.Math.projVectorOnVector(me.velocityOfOwnship, me.vectorToContact);
+		me.contactVelocityTowardsOwnship = vector.Math.scalarProjVectorOnVector(me.velocityOfContact, me.vectorToOwnship);
+		me.ownshipVelocityTowardsContact = vector.Math.scalarProjVectorOnVector(me.velocityOfOwnship, me.vectorToContact);
 
-		return MPS2KT*(vector.Math.magnitudeVector(me.ownshipVelocityTowardsContact) + vector.Math.magnitudeVector(me.contactVelocityTowardsOwnship));
+		return MPS2KT*(me.ownshipVelocityTowardsContact + me.contactVelocityTowardsOwnship);
 	},
 
 

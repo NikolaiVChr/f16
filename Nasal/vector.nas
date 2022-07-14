@@ -329,12 +329,21 @@ var Math = {
 
     # supply a normal to the plane, and a vector. The vector will be projected onto the plane, and that projection is returned as a vector.
     projVectorOnPlane: func (planeNormal, vector) {
+      if (me.magnitudeVector(planeNormal) == 0) return [0,0,0];#safety
       return me.minus(vector, me.product(me.dotProduct(vector,planeNormal)/math.pow(me.magnitudeVector(planeNormal),2), planeNormal));
     },
 
     # Project a onto ontoMe.
     projVectorOnVector: func (a, ontoMe) {
+      if (me.magnitudeVector(ontoMe) == 0) return [0,0,0];#safety
       return me.product(me.dotProduct(a,ontoMe)/me.dotProduct(ontoMe,ontoMe), ontoMe);
+    },
+
+    # Project a onto ontoMe and measure how long along ontoMe it goes, opposite will give negative number.
+    scalarProjVectorOnVector: func (a, ontoMe) {
+      me.ontoMeMag = me.magnitudeVector(ontoMe);
+      if (me.ontoMeMag == 0) return 0;
+      return me.dotProduct(a,ontoMe)/me.ontoMeMag;
     },
     
     # unary - vector
