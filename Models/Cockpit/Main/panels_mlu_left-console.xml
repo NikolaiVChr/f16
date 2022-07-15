@@ -3898,36 +3898,10 @@
         <object-name>JET_FUEL_0</object-name>
         <object-name>JET_FUEL_1</object-name>
         <condition>
-            <or>
-                <equals>
-                    <property>sim/aircraft</property>
-                    <value>YF-16</value>
-                </equals>
-                <equals>
-                    <property>sim/aircraft</property>
-                    <value>f16-block-10</value>
-                </equals>
-                <equals>
-                    <property>sim/aircraft</property>
-                    <value>f16-block-20</value>
-                </equals>
-                <equals>
-                    <property>sim/aircraft</property>
-                    <value>f16-block-32</value>
-                </equals>
-                <equals>
-                    <property>sim/aircraft</property>
-                    <value>f16-block-42</value>
-                </equals>
-                <equals>
-                    <property>sim/aircraft</property>
-                    <value>f16-block-52</value>
-                </equals>
-                <equals>
-                    <property>sim/aircraft</property>
-                    <value>f16-simplified</value>
-                </equals>
-            </or>
+            <equals>
+                <property>sim/variant-engine</property>
+                <value>2</value>
+            </equals>
         </condition>
     </animation>
 
@@ -3936,24 +3910,10 @@
         <object-name>JET_FUEL_50_0</object-name>
         <object-name>JET_FUEL_50_1</object-name>
         <condition>
-            <or>
                 <equals>
-                    <property>sim/aircraft</property>
-                    <value>f16-block-30</value>
+                    <property>sim/variant-engine</property>
+                    <value>0</value>
                 </equals>
-                <equals>
-                    <property>sim/aircraft</property>
-                    <value>f16-block-40</value>
-                </equals>
-                <equals>
-                    <property>sim/aircraft</property>
-                    <value>f16-block-50</value>
-                </equals>
-                <equals>
-                    <property>sim/aircraft</property>
-                    <value>f16-block-60</value>
-                </equals>
-            </or>
         </condition>
     </animation>
 
