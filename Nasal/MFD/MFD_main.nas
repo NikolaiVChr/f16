@@ -1969,6 +1969,19 @@ var MFD_Device =
         me.p_DTE.setSelectionColor = me.setSelectionColor;
         me.p_DTE.resetColor = me.resetColor;
         me.p_DTE.setSelection = me.setSelection;
+        var defaultDirInFileSelector = getprop("/sim/fg-home") ~ "/Export";
+        var load_stpts = func(path) {
+                        steerpoints.loadSTPTs(path.getValue());
+                    };
+        var save_stpts = func(path) {
+                        steerpoints.saveSTPTs(path.getValue());
+                    };
+        me.p_DTE.save_selector_dtc = gui.FileSelector.new(
+                      callback: save_stpts, title: "Save data cartridge", button: "Save",
+                      dir: defaultDirInFileSelector, dotfiles: 1, file: "mission-data.f16dtc", pattern: ["*.f16dtc"]);            
+        me.p_DTE.file_selector_dtc = gui.FileSelector.new(
+                      callback: load_stpts, title: "Load data cartridge", button: "Load",
+                      dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.f16dtc"]);
         me.p_DTE.notifyButton = func (eventi) {
             if (eventi != nil) {
 
@@ -1987,32 +2000,10 @@ var MFD_Device =
                     me.resetColor(me.ppp.buttons[7]);
                     me.selectionBox.hide();
                 } elsif (eventi == 1) {#LOAD
-                    var defaultDirInFileSelector = getprop("/sim/fg-home") ~ "/Export";
-
-                    var load_stpts = func(path) {
-                        steerpoints.loadSTPTs(path.getValue());
-                    }
-
-                    var file_selector_dtc = gui.FileSelector.new(
-                      callback: load_stpts, title: "Load data cartridge", button: "Load",
-                      dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.f16dtc"]);
-
-                    file_selector_dtc.open();
-
+                    me.file_selector_dtc.open();
                     #file_selector_dtc.del();
                 } elsif (eventi == 3) {#SAVE
-                    var defaultDirInFileSelector = getprop("/sim/fg-home") ~ "/Export";
-
-                    var save_stpts = func(path) {
-                        steerpoints.saveSTPTs(path.getValue());
-                    }
-
-                    var save_selector_dtc = gui.FileSelector.new(
-                      callback: save_stpts, title: "Save data cartridge", button: "Save",
-                      dir: defaultDirInFileSelector, dotfiles: 1, file: "mission-data.f16dtc", pattern: ["*.f16dtc"]);            
-
-                    save_selector_dtc.open();
-            
+                    me.save_selector_dtc.open();
                     #save_selector_dtc.del();
                 } elsif (eventi == 15) {
                     swap();
@@ -4417,7 +4408,10 @@ PFD_Device.update = func(notification=nil)
     };
 
 #F16MfdRecipient.new("BAe-F16b-MFD");
-var f16_mfd = F16MfdRecipient.new("F16-MFD");
+var f16_mfd = nil;
+var startupMFD = func {
+    f16_mfd = F16MfdRecipient.new("F16-MFD");
+}
 #UpperMFD = f16_mfd.UpperMFD;
 #LowerMFD = f16_mfd.LowerMFD;
 

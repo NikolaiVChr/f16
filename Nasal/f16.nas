@@ -1744,6 +1744,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
         }
 
         hack.init();
+        startupMFD();
         medium_fast.init();
         slow.init();
         #fx = flex.WingFlexer.new(1, 250, 25, 500, 0.375, "f16/wings/fuel-and-stores-kg","f16/wings/fuel-and-stores-kg","sim/systems/wingflexer/","f16/wings/lift-lbf");
