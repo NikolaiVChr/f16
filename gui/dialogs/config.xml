@@ -138,6 +138,7 @@
   <text><halign>left</halign><label>weapon debriefing from the menu 'Combat event log'.</label></text>
   <text><halign>left</halign><label>There will no longer be visible hit/miss msgs. on screen.</label></text>
   <text><halign>left</halign><label>Avoid using against players without mutual consent.</label></text>
+  <text><halign>left</halign><label>Never use this with MP player collisions enabled.</label></text>
   <text><halign>left</halign><label>- Blackout/Redout will always be on.</label></text>
   <text><halign>left</halign><label>- Simulation rate will be normal.</label></text>
   <text><halign>left</halign><label>- Emergency altitude increase will be disabled.</label></text>
