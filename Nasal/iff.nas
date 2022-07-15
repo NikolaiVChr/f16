@@ -80,8 +80,10 @@ var interrogate = func(tgt) {
 	if ( tgt.getChild("callsign") == nil or tgt.getNode("sim/multiplay/generic/string["~iff_mp_string~"]") == nil ) {
 		return 0;
 	}
-	hash1 = _calculate_hash(int(systime()) - int(math.mod(int(systime()),iff_refresh_rate)), tgt.getChild("callsign").getValue(),node.channel.getValue());
-	hash2 = _calculate_hash(int(systime()) - int(math.mod(int(systime()),iff_refresh_rate)) - iff_refresh_rate, tgt.getChild("callsign").getValue(),node.channel.getValue());
+	var cs = tgt.getChild("callsign").getValue();
+	cs = size(cs) < 8?cs:left(cs, 7);
+	hash1 = _calculate_hash(int(systime()) - int(math.mod(int(systime()),iff_refresh_rate)), cs,node.channel.getValue());
+	hash2 = _calculate_hash(int(systime()) - int(math.mod(int(systime()),iff_refresh_rate)) - iff_refresh_rate, cs,node.channel.getValue());
 	check_hash = tgt.getNode("sim/multiplay/generic/string["~iff_mp_string~"]").getValue();
 	#print("hash1 " ~ hash1);
 	#print("hash2 " ~ hash2);
@@ -98,6 +100,7 @@ var _calculate_hash = func(time, callsign, channel) {
 	#print("callsign|" ~ callsign ~ "|");
 	#print("channel|" ~ channel ~ "|");
 	#print("hash|"~left(md5(time ~ callsign ~ channel ~ iff_unique_id),iff_hash_length)~"|");
+	callsign = size(callsign) < 8?callsign:left(callsign, 7);
 	return left(md5(time ~ callsign ~ channel ~ iff_unique_id),iff_hash_length);
 }
 

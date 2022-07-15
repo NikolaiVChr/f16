@@ -21,6 +21,15 @@
 # * Optional
 #   /instrumentation/datalink/receive_period = 1        receiving loop update rate
 #
+# Optional: Re-define the function
+#   datalink.can_transmit(callsign, mp_prop, mp_index)
+#
+# This function should return 'true' when the given aircraft is able to transmit over datalink to us.
+# For instance, it can be used to check line of sight and maximum range.
+# The default implementation always returns true (always able to transmit).
+# Arguments are callsign, property node /ai/models/multiplayer[i], index of the former node.
+#
+#
 # API:
 # - get_data(callsign)
 #     Returns all datalink information about 'callsign' as an object, or nil if there is none.
@@ -35,9 +44,15 @@
 # - get_connected_callsigns() / get_connected_indices()
 #     Returns a vector containing all callsigns, resp. indices
 #     in /ai/models/multiplayer[i], of aircrafts connected on datalink.
-#     Both vectors use the same indices, i.e. get_connected_callsigns()[i]
+#     Both vectors use the same order, i.e. get_connected_callsigns()[i]
 #     and get_connected_indices()[i] correspond to the same aircraft.
-# 
+#     Furthermore this order is stable (the relative order of two aircrafts
+#     does not change as long as neither disconnects from multiplayer).
+#
+# - get_all_callsigns()
+#     Returns a vector containing all callsigns of aircraft with any associated data.
+#     There is no guarantee on the order of callsigns.
+#
 # - send_data(data, timeout=nil)
 #     Send data on the datalink. 'data' is a hash of the form
 #       {
@@ -75,6 +90,11 @@
 #       tracked_by():       The callsign of the transmitting aircraft ("A"), or nil if tracked() is false.
 #       tracked_by_index(): The index of the transmitting aircraft, or nil if tracked() is false.
 #                           The index refers to property nodes /ai/models/multiplayer[i].
+#       is_known():         Equivalent to (on_link() or tracked()).
+#                           Indicates if the position of this aircraft is supposed to be known
+#                           (i.e. whether or not it should be displayed on a HSD or whatever).
+#       is_friendly():      Equivalent to (on_link() or iff() == IFF_FRIENDLY).
+#       is_hostile():       Equivalent to (!on_link() and iff() == IFF_HOSTILE).
 #
 ## Sending data
 # usage: send_data({ contacts: <contacts>, ...}, ...)
@@ -93,7 +113,7 @@
 #
 ## Sending data
 # Set the identifier with send_data({"identifier": <identifier>, ...});
-# The identifier must be a string.
+# The identifier must be a string. It must not contain '!'.
 
 ### Coordinate transmission (extension name: "point")
 #
@@ -110,7 +130,7 @@
 #### Protocol:
 #
 # Data is transmitted on MP generic string[7], with the following format:
-#   <channel>(|<data>)+
+#   <channel>(!<data>)+
 #
 # <channel> is a hash of the datalink channel. See hash_channel() and check_channel_hash().
 # Each <data> block corresponds to data sent by an extension.
@@ -120,8 +140,9 @@
 # Remark: '!' as separator is specifically chosen to allow encoding with emesary.Transfer<type>.
 #
 # The current extension prefixes are the following:
-#   contacts: C
+#   contacts:   C
 #   identifier: I
+#   point:      P
 
 #### Extensions API
 #
@@ -135,7 +156,7 @@
 #
 # encode(data)              extension encoding function.
 #   Must return the encoding of the extension data (i.e. <data> when calling
-#   send_data({name: <data>})) into a string, which may use any character except '|'.
+#   send_data({name: <data>})) into a string, which may use any character except '!'.
 #   The extension prefix must not be part of the encoded string.
 #
 # decode(aircrafts_data, callsign, index, string)      extension decoding function.
@@ -158,6 +179,27 @@
 #     unless an entry for 'callsign' already exists. Returns the modified hash.
 
 
+
+#### Version and changelog
+# current: v1.1.0, minimum compatible: v1.0.0
+#
+## v1.1.0:
+# Allow external transmission restrictions
+# Make transmitting contact IFF optional
+# Ensure personal identifier has no '!'
+# '\n' is redundant for printf()
+# Fix separator character in documentation
+# Fix error when sending unknown extension
+#
+## v1.0.1:
+# Add is_known(), is_friendly(), is_hostile() helpers to extension "contacts".
+#
+## v1.0.0: Initial version
+# - Core protocol for datalink channel.
+# - Extensions "contacts", "identifier", and "point".
+
+
+
 ### Parameters
 #
 # Remark: most parameters need to be the same on all aircrafts.
@@ -170,6 +212,11 @@ var mp_path = "sim/multiplay/generic/string["~mp_string~"]";
 var channel_hash_period = 600;
 
 var receive_period = getprop("/instrumentation/datalink/receive_period") or 1;
+
+# Should be overwitten to add transmission restrictions.
+var can_transmit = func(contact, mp_prop, mp_index) {
+    return 1;
+}
 
 ### Properties
 
@@ -197,8 +244,7 @@ foreach (var name; keys(input)) {
 # Channel is hashed with current time (rounded to 10min) and own callsign.
 
 var clean_callsign = func(callsign) {
-    if (size(callsign) > 7) return left(callsign, 7);
-    else return callsign;
+    return damage.processCallsign(callsign);
 }
 
 var my_callsign = func {
@@ -283,11 +329,11 @@ var contact_parents = [Contact];
 
 var register_extension = func(name, prefix, class, encode, decode) {
     if (contains(extensions, name)) {
-        printf("Datalink: double registration of extension '%s'. Skipping.\n", name);
+        printf("Datalink: double registration of extension '%s'. Skipping.", name);
         return -1;
     }
     if (contains(extension_prefixes, prefix)) {
-        printf("Datalink: double registration of extension prefix '%s'. Skipping.\n", name);
+        printf("Datalink: double registration of extension prefix '%s'. Skipping.", name);
         return -1;
     }
     extensions[name] = { prefix: prefix, encode: encode, decode: decode, };
@@ -330,7 +376,8 @@ var send_data = func(data, timeout=nil) {
     foreach(var ext; keys(data)) {
         # Skip missing extensions with a warning
         if (!contains(extensions, ext)) {
-            printf("Warning: unknown datalink extension %s in send_data().\n", ext);
+            printf("Warning: unknown datalink extension %s in send_data().", ext);
+            continue;
         }
         str = str ~ data_separator ~ extensions[ext].prefix ~ extensions[ext].encode(data[ext]);
     }
@@ -380,6 +427,10 @@ var get_connected_indices = func {
     return connected_indices;
 }
 
+var get_all_callsigns = func {
+    return keys(aircrafts_data);
+}
+
 # Helper for modifying aircrafts_data.
 var add_if_missing = func(aircrafts_data, callsign) {
     if (!contains(aircrafts_data, callsign)) {
@@ -412,6 +463,10 @@ var receive_loop = func {
 
         # Check channel
         if (!check_channel(tokens[0], callsign, my_channel)) continue;
+
+        # We check this _after_ the channel. Checking the channel is quite cheap,
+        # and we don't know how slow this function is, it might have a get_cart_ground_intersection()
+        if (!can_transmit(callsign, mp, idx)) continue;
 
         # Add to list of connected aircrafts.
         append(connected_callsigns, callsign);
@@ -482,7 +537,14 @@ var ContactIdentifier = {
 
 var encode_identifier = func(ident) {
     # Force string conversion
-    return ""~ident;
+    ident = ""~ident;
+
+    if (find("!", ident) >= 0) {
+        printf("Datalink: Identifier is not allowed to contain '!': %s.", ident);
+        return "";
+    } else {
+        return ident;
+    }
 }
 
 var decode_identifier = func(aircrafts_data, callsign, str) {
@@ -528,6 +590,15 @@ var ContactTracked = {
     iff: func {
         return me._iff;
     },
+    is_known: func {
+        return me.on_link() or me.tracked();
+    },
+    is_friendly: func {
+        return me.on_link() or me.iff() == IFF_FRIENDLY;
+    },
+    is_hostile: func {
+        return !me.on_link() and me.iff() == IFF_HOSTILE;
+    },
 };
 
 # Contact encoding: callsign + bits
@@ -539,7 +610,7 @@ var ContactTracked = {
 
 var encode_contact = func(contact) {
     # Encode bitfield
-    var bits = contact.iff != nil ? contact.iff : IFF_UNKNOWN;
+    var bits = contact["iff"] != nil ? contact.iff : IFF_UNKNOWN;
 
     return emesary.TransferString.encode(clean_callsign(contact.callsign))
         ~ emesary.TransferByte.encode(bits);
