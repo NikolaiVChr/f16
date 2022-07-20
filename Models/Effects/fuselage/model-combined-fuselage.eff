@@ -31,6 +31,7 @@ Modifications author: Nikolai V. Chr.
 		<reflection-enabled type="int">1</reflection-enabled>
         <reflect-map-enabled type="int">0</reflect-map-enabled>
         <reflection-correction type="float">-0.30</reflection-correction>
+        <!--reflection-correction><use>f16/scene/reflection-stuff</use></reflection-correction-->
         <reflection-fresnel type="float">0.0</reflection-fresnel>
         <reflection-rainbow type="float">0.0</reflection-rainbow>
         <reflection-noise type="float">0.0</reflection-noise>
@@ -163,6 +164,27 @@ Modifications author: Nikolai V. Chr.
         		<fragment-shader n="6">Aircraft/f16/Shaders/shadows-include.frag</fragment-shader>
         		<fragment-shader n="7">Aircraft/f16/Shaders/clustered-include.frag</fragment-shader>
 			</program>
+			<!-- BEGIN shadows include -->
+           <uniform>
+             <name>shadow_tex</name>
+             <type>sampler-2d</type>
+             <value type="int">10</value>
+           </uniform>
+           <uniform>
+             <name>shadows_enabled</name>
+             <type>bool</type>
+             <value>
+               <use>shadows_enabled</use>
+             </value>
+           </uniform>
+           <uniform>
+             <name>sun_atlas_size</name>
+             <type>int</type>
+             <value>
+               <use>sun_atlas_size</use>
+             </value>
+           </uniform>
+           <!-- END shadows include -->
 		   <lighting>true</lighting>
 		   <blend>
 			   <active>
@@ -395,27 +417,7 @@ Modifications author: Nikolai V. Chr.
 			   </vertex-program-two-side>
 
 
-			   <!-- BEGIN shadows include -->
-                   <uniform>
-                     <name>shadow_tex</name>
-                     <type>sampler-2d</type>
-                     <value type="int">10</value>
-                   </uniform>
-                   <uniform>
-                     <name>shadows_enabled</name>
-                     <type>bool</type>
-                     <value>
-                       <use>shadows_enabled</use>
-                     </value>
-                   </uniform>
-                   <uniform>
-                     <name>sun_atlas_size</name>
-                     <type>int</type>
-                     <value>
-                       <use>sun_atlas_size</use>
-                     </value>
-                   </uniform>
-                   <!-- END shadows include -->
+			   
 			   <uniform>
 				   <name>BaseTex</name>
 				   <type>sampler-2d</type>
@@ -1343,6 +1345,7 @@ Modifications author: Nikolai V. Chr.
 		      </uniform>-->
 		  </pass>
 	</technique>
+
 	<!-- Default shadow rendering -->
 	<technique n="1">
 	  <predicate>
@@ -1367,9 +1370,33 @@ Modifications author: Nikolai V. Chr.
 	  <pass>
 	  	<program>
 			  <vertex-shader n="0">Aircraft/f16/Shaders/fuselage/model-combined-fuselage.vert</vertex-shader>
+			  <vertex-shader n="1">Aircraft/f16/Shaders/shadows-include.vert</vertex-shader>
 			  <fragment-shader n="0">Shaders/include_fog.frag</fragment-shader>
 			  <fragment-shader n="1">Aircraft/f16/Shaders/fuselage/model-combined-fuselage.frag</fragment-shader>
+			  <fragment-shader n="2">Aircraft/f16/Shaders/shadows-include.frag</fragment-shader>
+		      <fragment-shader n="3">Aircraft/f16/Shaders/clustered-include.frag</fragment-shader>
 		  </program>
+		  <!-- BEGIN shadows include -->
+           <uniform>
+             <name>shadow_tex</name>
+             <type>sampler-2d</type>
+             <value type="int">10</value>
+           </uniform>
+           <uniform>
+             <name>shadows_enabled</name>
+             <type>bool</type>
+             <value>
+               <use>shadows_enabled</use>
+             </value>
+           </uniform>
+           <uniform>
+             <name>sun_atlas_size</name>
+             <type>int</type>
+             <value>
+               <use>sun_atlas_size</use>
+             </value>
+           </uniform>
+           <!-- END shadows include -->
 		<lighting>true</lighting>
 		<material>
 		  <active>

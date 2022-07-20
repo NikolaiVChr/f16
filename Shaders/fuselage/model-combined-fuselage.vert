@@ -53,6 +53,8 @@ vec2 calc_deflection(float y){
 	return returned;
 }
 
+void setupShadows(vec4 eyeSpacePos);//Compositor
+
 void	main(void)
 {
 		vec4 vertex = gl_Vertex;
@@ -145,4 +147,6 @@ void	main(void)
 		gl_Position = gl_ModelViewProjectionMatrix * vertex;//ftransform();
 		gl_ClipVertex = ecPosition;
 		gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;
+
+		setupShadows(ecPosition);//Compositor
 }

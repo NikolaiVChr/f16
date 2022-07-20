@@ -3001,6 +3001,30 @@
   <texture>f16.png</texture>
  </animation>
 
+ <!--animation>
+  <type>material</type>
+  <object-name>Fuselage</object-name>
+  <object-name>irst</object-name>
+  <diffuse>
+   <red>  1.0000</red>
+   <green>1.0000</green>
+   <blue> 1.0000</blue>
+   <factor-prop>f16/scene/diffuse</factor-prop>
+  </diffuse>
+  <ambient>
+   <red>  1.0000</red>
+   <green>1.0000</green>
+   <blue> 1.0000</blue>
+   <factor-prop>f16/scene/ambient</factor-prop>
+  </ambient>
+  <specular>
+   <red>  1.0000</red>
+   <green>1.0000</green>
+   <blue> 1.0000</blue>
+   <factor-prop>f16/scene/specular</factor-prop>
+  </specular>
+  <shininess-prop>f16/scene/shininess</shininess-prop>
+ </animation-->
 
  <animation>
   <type>material</type>

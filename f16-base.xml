@@ -1470,6 +1470,15 @@
         <vne-exceed type="double">0</vne-exceed>
         <crs-ils type="double">0.0</crs-ils>
         <crs-non-ils type="double">0.0</crs-non-ils>
+        <scene>
+            <ambient type="double">1.0</ambient>
+            <diffuse type="double">1.0</diffuse>
+            <specular type="double">0.8</specular>
+            <shininess type="int">60</shininess>
+            <reflection-fuselage type="double">-0.45</reflection-fuselage>
+            <reflection-stuff type="double">-0.30</reflection-stuff>
+            <ambient-occlusion type="double">0.35</ambient-occlusion>
+        </scene>
     </f16>
     <damage>
         <sound>

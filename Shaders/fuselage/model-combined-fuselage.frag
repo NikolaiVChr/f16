@@ -110,6 +110,9 @@ mat3 rotZ(in float angle)
 ////////////////////////////////////////////////////////////////////////////////
 
 
+float getShadowing();//Compositor
+vec3 getClusteredLightsContribution(vec3 p, vec3 n, vec3 texel);//Compositor
+
 void main (void)
 {
 	vec3 gamma      = vec3(1.0/2.2);// standard monitor gamma correction
@@ -191,11 +194,12 @@ void main (void)
 
 	nDotVP = max(0.0, nDotVP);
 
-	vec4 Diffuse  = gl_LightSource[0].diffuse * nDotVP;
+	float shadowmap = getShadowing();
+	vec4 Diffuse  = shadowmap * gl_LightSource[0].diffuse * nDotVP;
 
 	vec4 metal_specular = ( 1.0 - metallic ) * vec4 (1.0, 1.0, 1.0, 1.0) + metallic * texel;// combineMe
     metal_specular.a = 1.0;// combineMe
-	vec4 Specular = metal_specular * gl_FrontMaterial.specular * gl_LightSource[0].diffuse * phong;
+	vec4 Specular = metal_specular * gl_FrontMaterial.specular * gl_LightSource[0].diffuse * shadowmap * phong;
 
 	// still too much ambient at evening, but at least its pitch black at night:
     vec4 ambient_color = gl_FrontMaterial.ambient * gl_LightSource[0].ambient * gl_LightSource[0].ambient * 2 * ((1.0-ambient_factor)+occlusion.a*ambient_factor);//combineMe
@@ -277,6 +281,8 @@ void main (void)
 	vec4 fragColor = vec4(color.rgb * mixedcolor , color.a);//+ ambient_Correction.rgb
 
 	fragColor += Specular * nmap.a;
+
+	fragColor.rgb += getClusteredLightsContribution(eyeVec, N, texel.rgb);
 
 	//////////////////////////////////////////////////////////////////////
 	// BEGIN lightmap
