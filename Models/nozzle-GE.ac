@@ -1,6 +1,6 @@
 AC3Db
 MATERIAL "TopBottom1.20" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 0 trans 0.000
-MATERIAL "ac3dmat23" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 1.000 1.000 1.000  shi 0 trans 0.000
+MATERIAL "ac3dmat23" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 40 trans 0.000
 OBJECT world
 name "Blender_exporter_v2.26__nozzle-GE-3.ac"
 kids 1
