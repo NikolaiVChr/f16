@@ -141,10 +141,11 @@ float light_func (in float x, in float a, in float b, in float c, in float d, in
 
 void main (void)
 {
-    vec3 gamma      = vec3(1.0/2.2);// standard monitor gamma correction
+    float gammaFloat= 1.0/2.2;
+    vec3 gamma      = vec3(gammaFloat);// standard monitor gamma correction
     vec3 gammaInv   = vec3(2.2);
     vec4 texel      = texture2D(BaseTex, gl_TexCoord[0].st);
-    texel.rgb = pow(texel.rgb, gammaInv);
+    //texel.rgb = pow(texel.rgb, gammaInv);
     vec4 nmap;
     if (nmap_dds > 0)
         nmap       = texture2D(NormalTex, vec2(gl_TexCoord[0].s,1.0-gl_TexCoord[0].t));
@@ -189,10 +190,12 @@ void main (void)
     float mie_angle;
     if (lightArg < 10.0)
     {
-        mie_angle = (0.5 *  dot(normalize(vertVec), normalize(gl_LightSource[0].position.xyz)) ) + 0.5;}
+        mie_angle = (0.5 *  dot(normalize(vertVec), normalize(gl_LightSource[0].position.xyz)) ) + 0.5;
+    }
     else
     {
-        mie_angle = 1.0;}
+        mie_angle = 1.0;
+    }
 
     float fog_vertex_alt = max(vertex_alt,hazeLayerAltitude);
     float fog_yprime_alt = yprime_alt;
@@ -232,16 +235,16 @@ void main (void)
     light_diffuse.a = 1.0;
     light_diffuse = light_diffuse * vertex_scattering;
 
-    light_ambient.r = 0.0;//light_func(lightArg, 0.236, 0.253, 1.073, 0.572, 0.33);
-    light_ambient.g = 0.0;//light_ambient.r * 0.4/0.33;
-    light_ambient.b = 0.0;//light_ambient.r * 0.5/0.33;
+    light_ambient.r = light_func(lightArg, 0.236, 0.253, 1.073, 0.572, 0.33);
+    light_ambient.g = light_ambient.r * 0.4/0.33; 
+    light_ambient.b = light_ambient.r * 0.5/0.33;
     light_ambient.a = 1.0;
 
     if (earthShade < 0.5)
     {
         intensity = length(light_ambient.rgb);
         light_ambient.rgb = intensity * normalize(mix(light_ambient.rgb,  shadedFogColor, 1.0 -smoothstep(0.1, 0.8,earthShade) ));
-        light_ambient.rgb =    moonLightColor *  (1.0 - smoothstep(0.4, 0.5, earthShade));//light_ambient.rgb +             combineme
+        light_ambient.rgb = light_ambient.rgb + moonLightColor *  (1.0 - smoothstep(0.4, 0.5, earthShade));//light_ambient.rgb +             combineme
 
         intensity = length(light_diffuse.rgb);
         light_diffuse.rgb = intensity * normalize(mix(light_diffuse.rgb,  shadedFogColor, 1.0 -smoothstep(0.1, 0.7,earthShade) ));
@@ -250,7 +253,6 @@ void main (void)
     vec4 ep = gl_ModelViewMatrixInverse * vec4(0.0,0.0,0.0,1.0);
     vec3 ecViewDir = (gl_ModelViewMatrix * (ep - vec4(rawpos, 1.0))).xyz;
     vec3 HV = normalize(normalize(gl_LightSource[0].position.xyz) + normalize(ecViewDir));
-
     /// END light
 
     /// BEGIN grain overlay
@@ -264,15 +266,13 @@ void main (void)
         grainTexel = texture2D(GrainTex, rawpos.xy * grain_magnification);
         texel.rgb = mix(texel.rgb, grainTexel.rgb,  grainTexel.a );
     }
-
     /// END grain overlay
 
     /// BEGIN snowcover
-
-    vec4 snow_texel = vec4 (0.95, 0.95, 0.95, 1.0);
-
     if (snow_enabled == 1)
     {
+        vec4 snow_texel = vec4 (0.95, 0.95, 0.95, 1.0);
+
         float noise_1m = Noise2D(rawpos.xy, 1.0);
         float noise_5m = Noise2D(rawpos.xy, 5.0);
 
@@ -289,7 +289,6 @@ void main (void)
 
         texel.rgb = mix(texel.rgb, snow_texel.rgb, snow_texel.a* smoothstep(snowlevel, snowlevel+200.0,  1.0 * (relPos.z + eye_alt)+ (noise_2000m + 0.1 * noise_10m -0.55) *400.0));
     }
-
     /// END snowcover
 
     vec3 reflVecN;
@@ -330,6 +329,7 @@ void main (void)
         vec3 Rphong = normalize(-reflect(Lphong,N));
         phong = pow(max(dot(Rphong,Ephong),0.0),gl_FrontMaterial.shininess);
         phong = clamp(phong, 0.0, 1.0);
+        //phong = pow(phong, 2.2);
     }
 
     // try specular reflection of sky irradiance
@@ -377,17 +377,18 @@ void main (void)
 
     vec4 metal_specular = ( 1.0 - metallic ) * vec4 (1.0, 1.0, 1.0, 1.0) + metallic * texel;// combineMe
     metal_specular.a = 1.0;// combineMe
-    vec4 Specular = metal_specular * gl_FrontMaterial.specular * light_diffuse * phong;// + metal_specular * gl_FrontMaterial.specular * light_ambient * pf1;// combineMe
-    Specular+=  metal_specular * gl_FrontMaterial.specular * pow(max(0.0,-dot(N,normalize(vertVec))),gl_FrontMaterial.shininess) * vec4(secondary_light,1.0);// combineMe
+    vec4 Specular = metal_specular * light_diffuse * phong;// + metal_specular * gl_FrontMaterial.specular * light_ambient * pf1;// combineMe
+    Specular+=  metal_specular * pow(max(0.0,-dot(N,normalize(vertVec))),gl_FrontMaterial.shininess) * vec4(secondary_light,1.0);// combineMe
+    Specular *= min(gl_FrontMaterial.specular, 0.5);
 
     Specular *= refl_d;
 
     // kind of a hack but its now pitch black at night without moon.
-    light_ambient.rgb = (1-gl_LightSource[0].ambient.r)*light_ambient.rgb;//no moon contribution at noon.
-    vec4 ambient_color = gl_FrontMaterial.ambient * (gl_LightSource[0].ambient * gl_LightSource[0].ambient+light_ambient*light_ambient) * 2 * ((1.0-ambient_factor)+occlusion.a*ambient_factor);//combineMe //light_ambient is only moonlight
-    // gl_LightModel.ambient gl_LightSource[0].ambient light_ambient
+    //light_ambient.rgb = (1-gl_LightSource[0].ambient.r)*light_ambient.rgb;//no moon contribution at noon.
+    vec3 ambient_color  = gl_LightModel.ambient.rgb + min(gl_FrontMaterial.ambient.rgb, 0.8) * light_ambient.rgb;
+    ambient_color      *= texel.rgb * ((1.0-ambient_factor)+occlusion.a*ambient_factor);//combineMe
 
-    vec4 color = Diffuse * gl_FrontMaterial.diffuse + ambient_color;
+    vec4 color = Diffuse * min(gl_FrontMaterial.diffuse, 0.8);// + ambient_color;
     color = clamp( color, 0.0, 1.0 );
 
     ////////////////////////////////////////////////////////////////////
@@ -493,7 +494,7 @@ void main (void)
 
 
     //color.a = alpha;//combineMe
-    vec4 fragColor = vec4(color.rgb * mixedcolor.rgb, color.a);//CombineMe  + ambient_Correction.rgb
+    vec4 fragColor = vec4(color.rgb * mixedcolor.rgb + ambient_color.rgb, color.a);//CombineMe  + ambient_Correction.rgb
 
     fragColor += Specular * nmap.a;
 
@@ -649,7 +650,7 @@ void main (void)
     hazeColor = clamp(hazeColor, 0.0, 1.0);
 
     // gamma correction
-    fragColor.rgb = pow(fragColor.rgb, gamma);
+    //fragColor.rgb = pow(fragColor.rgb, gamma);
 
     ///BEGIN Rayleigh fog ///
 

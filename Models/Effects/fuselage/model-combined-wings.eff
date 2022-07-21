@@ -15,7 +15,7 @@
           <rain-enabled type="int">2</rain-enabled>
           <snow-enabled type="int">0</snow-enabled>
           <reflection-enabled type="int">1</reflection-enabled>
-          <reflection-correction type="float">-0.45</reflection-correction>
+          <reflection-correction type="float">-0.40</reflection-correction>
           <!--reflection-correction><use>f16/scene/reflection-fuselage</use></reflection-correction-->
           <grain-texture-enabled type="int"><use>f16/effects/rust</use></grain-texture-enabled>
         <grain-magnification type="float"><use>f16/effects/rust-mag</use></grain-magnification>

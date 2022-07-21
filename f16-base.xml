@@ -1475,7 +1475,7 @@
             <diffuse type="double">1.0</diffuse>
             <specular type="double">0.8</specular>
             <shininess type="int">60</shininess>
-            <reflection-fuselage type="double">-0.45</reflection-fuselage>
+            <reflection-fuselage type="double">-0.40</reflection-fuselage>
             <reflection-stuff type="double">-0.30</reflection-stuff>
             <ambient-occlusion type="double">0.35</ambient-occlusion>
         </scene>
