@@ -1478,6 +1478,7 @@
             <reflection-fuselage type="double">-0.40</reflection-fuselage>
             <reflection-stuff type="double">-0.30</reflection-stuff>
             <ambient-occlusion type="double">0.35</ambient-occlusion>
+            <version type="bool">1</version>
         </scene>
     </f16>
     <damage>
