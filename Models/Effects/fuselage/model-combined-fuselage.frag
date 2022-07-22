@@ -195,7 +195,8 @@ void main (void)
 
 	vec4 metal_specular = ( 1.0 - metallic ) * vec4 (1.0, 1.0, 1.0, 1.0) + metallic * texel;// combineMe
     metal_specular.a = 1.0;// combineMe
-	vec4 Specular = metal_specular * gl_FrontMaterial.specular * gl_LightSource[0].diffuse * phong;
+	vec4 Specular = metal_specular * gl_LightSource[0].diffuse * phong;
+	Specular *= 0.5 * specularMaterialIgnore + gl_FrontMaterial.specular * (1.0 - specularMaterialIgnore);
 
 	// still too much ambient at evening, but at least its pitch black at night:
     vec4 ambient_color = gl_FrontMaterial.ambient * gl_LightSource[0].ambient * gl_LightSource[0].ambient * 2 * ((1.0-ambient_factor)+occlusion.a*ambient_factor);//combineMe

@@ -27,6 +27,7 @@ Modifications author: Nikolai V. Chr.
 		<!-- END Wingflex -->
 		<metallic type="float">0.80</metallic><!-- 0-1 -->
 		<ambient-factor type="float">0.0</ambient-factor><!-- 0-1 -->
+		<specular-material-ignore type="int">1</specular-material-ignore><!-- 0 or 1 -->
 		<normalmap-dds-compression-bc3n>0</normalmap-dds-compression-bc3n>
 		<reflection-enabled type="int">1</reflection-enabled>
         <reflect-map-enabled type="int">0</reflect-map-enabled>
@@ -186,6 +187,13 @@ Modifications author: Nikolai V. Chr.
              </value>
            </uniform>
            <!-- END shadows include -->
+           <uniform>
+             <name>specularMaterialIgnore</name>
+             <type>int</type>
+             <value>
+               <use>specular-material-ignore</use>
+             </value>
+           </uniform>
 		   <lighting>true</lighting>
 		   <blend>
 			   <active>
@@ -1406,6 +1414,13 @@ Modifications author: Nikolai V. Chr.
              </value>
            </uniform>
            <!-- END shadows include -->
+           <uniform>
+             <name>specularMaterialIgnore</name>
+             <type>int</type>
+             <value>
+               <use>specular-material-ignore</use>
+             </value>
+           </uniform>
 		   <lighting>true</lighting>
 		   <blend>
 			   <active>
@@ -2618,6 +2633,13 @@ Modifications author: Nikolai V. Chr.
              </value>
            </uniform>
            <!-- END shadows include -->
+           <uniform>
+             <name>specularMaterialIgnore</name>
+             <type>int</type>
+             <value>
+               <use>specular-material-ignore</use>
+             </value>
+           </uniform>
 		<lighting>true</lighting>
 		<material>
 		  <active>
@@ -3291,6 +3313,13 @@ Modifications author: Nikolai V. Chr.
 					<fragment-shader n="4">Shaders/noise.frag</fragment-shader>
 					<fragment-shader n="5">Shaders/filters-ALS.frag</fragment-shader>
 			   </program>
+			   <uniform>
+             <name>specularMaterialIgnore</name>
+             <type>int</type>
+             <value>
+               <use>specular-material-ignore</use>
+             </value>
+           </uniform>
 		   <lighting>true</lighting>
 		   <material>
 			   <active>
@@ -5061,6 +5090,13 @@ Modifications author: Nikolai V. Chr.
 			  <fragment-shader n="0">Shaders/include_fog.frag</fragment-shader>
 			  <fragment-shader n="1">Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage.frag</fragment-shader>
 		  </program>
+		  <uniform>
+             <name>specularMaterialIgnore</name>
+             <type>int</type>
+             <value>
+               <use>specular-material-ignore</use>
+             </value>
+           </uniform>
 		<lighting>true</lighting>
 		<material>
 		  <active>

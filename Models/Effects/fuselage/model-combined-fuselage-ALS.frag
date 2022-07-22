@@ -85,6 +85,7 @@ uniform float snow_thickness_factor;
 
 uniform float metallic;
 uniform float ambient_factor;
+uniform int specularMaterialIgnore;
 
 uniform float osg_SimulationTime;
 
@@ -167,7 +168,7 @@ void main (void)
     vec3 moonLightColor = vec3 (0.095, 0.095, 0.15) * moonlight * moonlight;//can be 0.1 even when not in sky .. combineme
     moonLightColor = moonlight_perception(moonLightColor);
     moonLightColor *= moonLightColor;
-    moonLightColor *= 2;
+    moonLightColor *= 2.0;
     float alt = eye_alt;
     float effective_scattering = min(scattering, cloud_self_shading);
 
@@ -381,7 +382,7 @@ void main (void)
     metal_specular.a = 1.0;// combineMe
     vec4 Specular = metal_specular * light_diffuse * phong;// + metal_specular * gl_FrontMaterial.specular * light_ambient * pf1;// combineMe
     Specular+=  metal_specular * pow(max(0.0,-dot(N,normalize(vertVec))),gl_FrontMaterial.shininess) * vec4(secondary_light,1.0);// combineMe
-    Specular *= min(gl_FrontMaterial.specular, 0.6);
+    Specular *= 0.5 * specularMaterialIgnore + gl_FrontMaterial.specular * (1.0 - specularMaterialIgnore);
 
     Specular *= refl_d;
 
