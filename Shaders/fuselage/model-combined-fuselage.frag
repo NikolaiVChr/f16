@@ -50,6 +50,7 @@ uniform float	refl_rainbow;
 
 uniform float metallic;
 uniform float ambient_factor;
+uniform int specularMaterialIgnore;
 
 uniform vec3	lightmap_r_color;
 uniform vec3	lightmap_g_color;

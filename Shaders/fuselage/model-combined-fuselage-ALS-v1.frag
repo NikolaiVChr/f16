@@ -85,6 +85,7 @@ uniform float snow_thickness_factor;
 
 uniform float metallic;
 uniform float ambient_factor;
+uniform int specularMaterialIgnore;
 
 uniform float osg_SimulationTime;
 
