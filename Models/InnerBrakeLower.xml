@@ -13,6 +13,7 @@
           <snow-enabled type="int">0</snow-enabled>
           <reflection-enabled type="int">1</reflection-enabled>
           <reflection-correction type="float">-0.45</reflection-correction>
+          <specular-material-ignore type="int">0</specular-material-ignore>
       </parameters>
       <!-- fuselage -->
       <object-name>LeftLowerSpeedbrake.001</object-name>

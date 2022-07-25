@@ -14,6 +14,7 @@
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">1</reflection-enabled>
           <reflection-correction type="float">-0.46</reflection-correction>
+          <specular-material-ignore type="int">0</specular-material-ignore>
       </parameters>
       <!-- outer plates -->
       <object-name>Petals-R</object-name>
@@ -40,6 +41,7 @@
           <snow-enabled type="int">0</snow-enabled>
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
+          <specular-material-ignore type="int">0</specular-material-ignore>
       </parameters>
       <!-- inner plates -->
       <object-name>InNozzleROpen</object-name>

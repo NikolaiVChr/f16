@@ -12,6 +12,7 @@
           <rain-enabled type="int">0</rain-enabled>
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
+          <specular-material-ignore type="int">0</specular-material-ignore>
       </parameters>
       <object-name>LandL1</object-name>
       <object-name>LandL2</object-name>

@@ -67,6 +67,7 @@
           <rain-enabled type="int">0</rain-enabled>
           <snow-enabled type="int">0</snow-enabled>
           <reflection-enabled type="int">0</reflection-enabled>
+          <specular-material-ignore type="int">0</specular-material-ignore>
       </parameters>
       <!-- non metal -->
       <object-name>chair</object-name>
@@ -97,6 +98,7 @@
           <rain-enabled type="int">0</rain-enabled>
           <snow-enabled type="int">0</snow-enabled>
           <reflection-enabled type="int">0</reflection-enabled>
+          <specular-material-ignore type="int">0</specular-material-ignore>
       </parameters>
       <!-- metal -->
       <object-name>eject-handle</object-name>
