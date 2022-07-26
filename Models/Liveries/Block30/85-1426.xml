@@ -20,8 +20,9 @@
         <texture>Armament/External-stores/MXU-648.png</texture>
     </livery-pod>
     <f16>
-            <dragchute type="bool">false</dragchute>
-        </f16>
+        <dragchute type="bool">false</dragchute>
+    </f16>
+    <livery-specular type="double">0.25</livery-specular>
   </model>
  </sim>
 </PropertyList>

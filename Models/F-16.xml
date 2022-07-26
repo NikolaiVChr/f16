@@ -584,7 +584,7 @@
       <parameters>
           <lightmap-enabled type="int">1</lightmap-enabled>
           <lightmap-multi type="int">1</lightmap-multi>
-          <specular-material-ignore type="int">1</specular-material-ignore><!-- 0 or 1 -->
+          <specular-material-ignore type="int">0</specular-material-ignore><!-- 0 or 1 -->
       </parameters>
 
       <object-name>RadarDomeTop</object-name>
@@ -691,7 +691,7 @@
  <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
       <parameters>
-          <specular-material-ignore type="int">1</specular-material-ignore><!-- 0 or 1 -->
+          <specular-material-ignore type="int">0</specular-material-ignore><!-- 0 or 1 -->
           <metallic type="float">0.80</metallic>
           <ambient-factor type="float">0.35</ambient-factor>
           <rain-enabled type="int">2</rain-enabled>
@@ -1716,7 +1716,7 @@
  <effect>
   <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
   <parameters>
-    <specular-material-ignore type="int">1</specular-material-ignore><!-- 0 or 1 -->
+    <specular-material-ignore type="int">0</specular-material-ignore><!-- 0 or 1 -->
     <rotation-rad><use>surface-positions/rightrad</use></rotation-rad>
      <rotation-x1>1.71989</rotation-x1>
      <rotation-y1>3.5817</rotation-y1>
@@ -1732,7 +1732,7 @@
 <effect>
   <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
   <parameters>
-    <specular-material-ignore type="int">1</specular-material-ignore><!-- 0 or 1 -->
+    <specular-material-ignore type="int">0</specular-material-ignore><!-- 0 or 1 -->
     <rotation-rad><use>surface-positions/rightrad2</use></rotation-rad>
      <rotation-x1>1.71989</rotation-x1>
      <rotation-y1>3.5817</rotation-y1>
@@ -1748,7 +1748,7 @@
  <effect>
   <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
   <parameters>
-    <specular-material-ignore type="int">1</specular-material-ignore><!-- 0 or 1 -->
+    <specular-material-ignore type="int">0</specular-material-ignore><!-- 0 or 1 -->
     <rotation-rad><use>surface-positions/leftrad</use></rotation-rad>
      <rotation-x1>1.71989</rotation-x1>
      <rotation-y1>-3.5817</rotation-y1>
@@ -1764,7 +1764,7 @@
 <effect>
   <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
   <parameters>
-    <specular-material-ignore type="int">1</specular-material-ignore><!-- 0 or 1 -->
+    <specular-material-ignore type="int">0</specular-material-ignore><!-- 0 or 1 -->
     <rotation-rad><use>surface-positions/leftrad2</use></rotation-rad>
      <rotation-x1>1.71989</rotation-x1>
      <rotation-y1>-3.5817</rotation-y1>
@@ -1780,7 +1780,7 @@
 <effect>
   <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
   <parameters>
-    <specular-material-ignore type="int">1</specular-material-ignore><!-- 0 or 1 -->
+    <specular-material-ignore type="int">0</specular-material-ignore><!-- 0 or 1 -->
     <rotation-rad><use>surface-positions/radlefl</use></rotation-rad>
      <rotation-x1>-0.813197</rotation-x1>
      <rotation-y1>-1.41659</rotation-y1>
@@ -1796,7 +1796,7 @@
 <effect>
   <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
   <parameters>
-    <specular-material-ignore type="int">1</specular-material-ignore><!-- 0 or 1 -->
+    <specular-material-ignore type="int">0</specular-material-ignore><!-- 0 or 1 -->
     <rotation-rad><use>surface-positions/radlefr</use></rotation-rad>
      <rotation-x1>-0.813197</rotation-x1>
      <rotation-y1>1.41659</rotation-y1>

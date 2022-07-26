@@ -24,6 +24,7 @@
   <f16>
      <dragchute type="bool">false</dragchute>
   </f16>
+  <livery-specular type="double">0.25</livery-specular>
   </model>
  </sim>
 

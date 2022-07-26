@@ -6,12 +6,25 @@
    <livery>
     <name type="string">YF-16 Prototype</name>
     <texture>Liveries/yf/75-0745.png</texture>
-    
     <owner type="string">USAF</owner>
    </livery>
+
    <livery-logo>
     <texture>Liveries/yf/yf16-transp.png</texture>
    </livery-logo>
+
+   <livery-patch>
+            <texture>Liveries/patch.default.png</texture>
+    </livery-patch>
+
+    <livery-pod>
+        <texture>Armament/External-stores/MXU-648.png</texture>
+    </livery-pod>
+
+    <f16>
+        <dragchute type="bool">false</dragchute>
+    </f16>
+    <livery-specular type="double">0.4</livery-specular>
   </model>
  </sim>
 </PropertyList>
