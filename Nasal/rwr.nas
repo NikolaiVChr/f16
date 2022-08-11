@@ -216,13 +216,14 @@ RWRCanvas = {
 #                   .hide();
 #        }
 # Threat list ID:
-        #REVISION: 2022/07/20
+        #REVISION: 2022/08/11
         #OPRF Fleet
         rwr.AIRCRAFT_WARTHOG  = "10";
         rwr.AIRCRAFT_TOMCAT   = "14";
         rwr.AIRCRAFT_EAGLE    = "15";
         rwr.AIRCRAFT_FALCON   = "16";
         rwr.AIRCRAFT_FISHBED  = "21";
+        rwr.AIRCRAFT_FLOGGER  = "23";
         rwr.AIRCRAFT_FLANKER  = "27";
         rwr.AIRCRAFT_FULCRUM  = "29";
         rwr.AIRCRAFT_VIGGEN   = "37";
@@ -240,7 +241,6 @@ RWRCanvas = {
         #MISC
         rwr.AIRCRAFT_FAGOT    = "MG";
         rwr.AIRCRAFT_FOXBAT   = "FB";
-        rwr.AIRCRAFT_FLOGGER  = "23";
         rwr.AIRCRAFT_FULLBACK = "34";
         rwr.AIRCRAFT_PAKFA    = "57";
         rwr.AIRCRAFT_TYPHOON  = "EF";
@@ -285,6 +285,8 @@ RWRCanvas = {
                 "m2000-5B":                 rwr.AIRCRAFT_MIRAGE,
                 "MiG-21bis":                rwr.AIRCRAFT_FISHBED,
                 "MiG-21MF-75":              rwr.AIRCRAFT_FISHBED,
+                "MiG-23ML":                 rwr.AIRCRAFT_FLOGGER,
+                "MiG-23MLD":                rwr.AIRCRAFT_FLOGGER,
                 "MiG-29":                   rwr.AIRCRAFT_FULCRUM,
                 "SU-27":                    rwr.AIRCRAFT_FLANKER,
                 "EC-137R":                  rwr.AIRCRAFT_SEARCH,
@@ -326,6 +328,7 @@ RWRCanvas = {
                 "FA-18C_Hornet":            rwr.AIRCRAFT_HORNET,
                 "FA-18D_Hornet":            rwr.AIRCRAFT_HORNET,
                 "FA-18E_CVW5":              rwr.AIRCRAFT_HORNET,
+                "FA-18":                    rwr.AIRCRAFT_HORNET,
                 "f18":                      rwr.AIRCRAFT_HORNET,
                 "F-111C":                   rwr.AIRCRAFT_AARDVARK,
                 "daVinci_F-111G":           rwr.AIRCRAFT_AARDVARK,
@@ -371,9 +374,7 @@ RWRCanvas = {
                 "mb339":                    rwr.AIRCRAFT_MB339,
                 "mb339pan":                 rwr.AIRCRAFT_MB339,
                 "alphajet":                 rwr.AIRCRAFT_ALPHAJET,
-                "MiG-15bis":                rwr.AIRCRAFT_FAGOT,
-                "MiG-23ML":                 rwr.AIRCRAFT_FLOGGER,
-                "MiG-23MLD":                rwr.AIRCRAFT_FLOGGER,
+                #"MiG-15bis":               rwr.AIRCRAFT_FAGOT,
                 "Su-25":                    rwr.AIRCRAFT_FROGFOOT,
                 "MiG-25":                   rwr.AIRCRAFT_FOXBAT,
                 "A-6E-model":               rwr.AIRCRAFT_INTRUDER,
