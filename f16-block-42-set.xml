@@ -81,7 +81,7 @@
    <path archive="y">Aircraft/f16/Models/F-16.xml</path>
    <livery>
     <file type="string"/>
-    <name type="string">USAF 57FW, 64AS WA "Wraith"</name>
+    <name type="string">USAF 57WG, 64AS WA "Wraith"</name>
     <folder type="string">Aircraft/f16/Models/Liveries/Block40</folder>
    </livery>
    <MFD-color>
