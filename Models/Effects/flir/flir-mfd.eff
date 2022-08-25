@@ -234,7 +234,7 @@ please see Docs/README.model-combined.eff for documentation
 		  </vertex-program-two-side>
 
 		  <program n="0">
-			  <vertex-shader n="0">Shaders/ubershader.vert</vertex-shader>
+			  <vertex-shader n="0">Aircraft/f16/Shaders/ubershader.vert</vertex-shader>
 			  <fragment-shader n="0">Shaders/include_fog.frag</fragment-shader>
 			  <fragment-shader n="1">Shaders/ubershader.frag</fragment-shader>
 		  </program>
