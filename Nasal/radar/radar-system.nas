@@ -883,7 +883,7 @@ var AIContact = {
 		me.virtTGP.getType = func {
 			return POINT;
 		};
-		me.virtTGP.callsign = "On "~me.get_Callsign();
+		me.virtTGP.callsign = me.get_Callsign();
 		return me.virtTGP;
 	},
 
