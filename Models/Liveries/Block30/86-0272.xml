@@ -4,7 +4,7 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">USAF 57FW, 64AS WA "Ghost scheme"</name>
+    <name type="string">USAF 57WG, 64AS WA "Ghost scheme"</name>
     <texture>Liveries/Block30/86-0272.png</texture>
     <owner type="string">USAF</owner>
    </livery>

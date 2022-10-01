@@ -4,13 +4,13 @@
  <sim> 
   <model>
    <livery>
-    <name type="string">USAF 31FW, 555FS AV "NATO"</name>
-    <texture>Liveries/Block40/88-0435.png</texture>
+    <name type="string">USAF 31FW, 555FS AV HGV #023</name>
+    <texture>Liveries/Block40/89-2023.png</texture>
     <owner type="string">USAF</owner>
    </livery>
    
    <livery-logo>
-    <texture>Liveries/standard.logos.black2.png</texture>
+    <texture>Liveries/standard.white.logos.png</texture>
    </livery-logo>
 
    <livery-patch>
@@ -24,7 +24,7 @@
   <f16>
     <dragchute type="bool">false</dragchute>
   </f16>
-  <livery-specular type="double">0.25</livery-specular>
+  <livery-specular type="double">0.6</livery-specular>
   </model>
  </sim>
 </PropertyList>
