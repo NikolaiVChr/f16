@@ -1056,7 +1056,7 @@ var F16_HMD = {
                         me.tgt.setStrokeDashArray([1]);
                     }
 
-                    if (radar_system.apg68Radar.getPriorityTarget() != nil and radar_system.apg68Radar.getPriorityTarget().getLastBlep() != nil and radar_system.apg68Radar.getPriorityTarget().get_Callsign() != nil and me.u.get_Callsign() == radar_system.apg68Radar.getPriorityTarget().get_Callsign()) {
+                    if (radar_system.apg68Radar.getPriorityTarget() != nil and radar_system.apg68Radar.getPriorityTarget().getLastBlep() != nil and radar_system.apg68Radar.getPriorityTarget().getLastRangeDirect() != nil and radar_system.apg68Radar.getPriorityTarget().get_Callsign() != nil and me.u.get_Callsign() == radar_system.apg68Radar.getPriorityTarget().get_Callsign()) {
                         me.designatedDistanceFT = radar_system.apg68Radar.getPriorityTarget().getLastRangeDirect()*M2FT;
                         me.target_lock_show = 1;
                         if (me.tgt != nil) {
