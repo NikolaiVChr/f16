@@ -890,14 +890,15 @@ var FireControl = {
 				}
 			}
 		}
-		if (me.rippleCount > 30) {
+		var delayTimer = me.rippleInterval == RIPPLE_INTERVAL_METERS?0.25:0.025;
+		if (me.rippleCount > 7.5/delayTimer) {
 			# after 7.5 seconds if its not finished rippling, cancel it. Might happen if the aircraft is still.
 			me.isRippling = 0;
 			setprop("payload/armament/gravity-dropping", 0);
 			screen.log.write("Cancelled ripple", 0.5, 0.5, 1);
 			return;
 		}
-		settimer(func me.rippleTest(), 0.25);
+		settimer(func me.rippleTest(), delayTimer);
 	},
 
 	triggerHold: func (aimer) {
