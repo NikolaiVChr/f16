@@ -9,6 +9,8 @@ var VectorNotification = {
         return new_class;
     },
 };
+var RIPPLE_INTERVAL_METERS = 0;
+var RIPPLE_INTERVAL_SECONDS = 1;
 var FireControl = {
 	new: func (pylons, pylonOrder, typeOrder) {
 		var fc = {parents:[FireControl]};
@@ -25,6 +27,8 @@ var FireControl = {
 		fc.gunTriggerTime = 0;    # a timer for how often to use gun brevity
 		fc.ripple = 1;            # ripple setting, from 1 to x.
 		fc.rippleDist = 150*FT2M; # ripple setting, in meters.
+		fc.rippleDelay = 2.0;     # ripple setting, in seconds.
+		fc.rippleInterval = RIPPLE_INTERVAL_METERS;
 		fc.isRippling = 0;        # is in ripple progress
 		fc.WeaponNotification = VectorNotification.new("WeaponNotification");
 		fc.setupMFDObservers();
@@ -155,6 +159,14 @@ var FireControl = {
 			me.ripple = int(ripple);
 		}
 	},
+
+	setRippleIntervalType: func (type) {
+		if (type == RIPPLE_INTERVAL_METERS) {
+			me.rippleInterval = type;
+		} elsif (type == RIPPLE_INTERVAL_SECONDS) {
+			me.rippleInterval = type;
+		}
+	},
 	
 	getRippleDist: func {
 		me.rippleDist;
@@ -163,6 +175,16 @@ var FireControl = {
 	setRippleDist: func (rippleDist) {
 		if (rippleDist >= 0) {
 			me.rippleDist = rippleDist;
+		}
+	},
+
+	getRippleDelay: func {
+		me.rippleDelay;
+	},
+	
+	setRippleDelay: func (rippleDelay) {
+		if (rippleDelay >= 0) {
+			me.rippleDelay = rippleDelay;
 		}
 	},
 	
@@ -837,6 +859,7 @@ var FireControl = {
 		# First has been fired, now start system to fire the ripple ones.
 		if (me.getSelectedWeapon() != nil) {
 			me.rippleCoord = geo.aircraft_position();
+			me.rippleTime  = getprop("sim/time/elapsed-sec");
 			me.rippleCount = 0;
 			me.rippleTest();
 		}
@@ -845,7 +868,9 @@ var FireControl = {
 	rippleTest: func {
 		# test for distance if we should fire ripple bombs. And do so if distance is great enough.
 		me.rippleCount += 1;
-		if (geo.aircraft_position().distance_to(me.rippleCoord) > me.rippleDist*(me.rippleThis-1)) {
+		if (me.rippleInterval == RIPPLE_INTERVAL_METERS and geo.aircraft_position().distance_to(me.rippleCoord) > me.rippleDist*(me.rippleThis-1) or
+			me.rippleInterval == RIPPLE_INTERVAL_SECONDS and getprop("sim/time/elapsed-sec") > me.rippleTime + me.rippleDelay*(me.rippleThis-1)
+			) {
 			me.aim = me.getSelectedWeapon();
 			if (me.aim != nil and me.aim.parents[0] == armament.AIM and (me.aim.status == armament.MISSILE_LOCK or me.aim.guidance=="unguided")) {
 				me.fireAIM(me.selected[0],me.selected[1],me.guidanceEnabled);
