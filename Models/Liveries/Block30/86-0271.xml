@@ -4,12 +4,12 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">USAF 57WG, 64AS WA "Aggressor"</name>
-    <texture>Liveries/Block30/86-0269.png</texture>
+    <name type="string">USAF 57WG, 64AS WA "Flanker"</name>
+    <texture>Liveries/Block30/86-0271.png</texture>
     <owner type="string">USAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/yf/yf16-transp.png</texture>
+    <texture>Liveries/standard.logos.black.png</texture>
    </livery-logo>
 
    <livery-patch>
