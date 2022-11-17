@@ -1287,7 +1287,8 @@ var AIContact = {
 		me.getType();
 	},
 	getUnique: func {
-		return me.callsign ~ me.model ~ me.ainame ~ me.sign ~ me.aitype ~ me.subid ~ me.prop.getName();
+		# The isVirtual at the end, is so multiexplosion in missile-code can tell apart a virtual from the real thing.
+		return me.callsign ~ me.model ~ me.ainame ~ me.sign ~ me.aitype ~ me.subid ~ me.prop.getName() ~ me.isVirtual();
 	},
 	isValid: func {
 		if (!me.valid.getValue() and me["dlinkNode"] != nil) {
