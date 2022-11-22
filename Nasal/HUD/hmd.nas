@@ -437,6 +437,29 @@ var F16_HMD = {
                 .hide()
                 .setColor(0,1,0);
         append(obj.total, obj.steerPT);
+        obj.tgpPointF = obj.centerOrigin.createChild("path")
+                     .moveTo(-boxRadiusHalf*0.75, -boxRadiusHalf*0.75)
+                     .horiz(boxRadius*0.75)
+                     .vert(boxRadius*0.75)
+                     .horiz(-boxRadius*0.75)
+                     .vert(-boxRadius*0.75)
+                     .moveTo(-stroke1,-stroke1)
+                     .horiz(2*stroke1)
+                     .moveTo(-1*stroke1,0*stroke1)
+                     .horiz(2*stroke1)
+                     .setStrokeLineWidth(stroke1)
+                     .setColor(0,0,0)
+                     .hide();
+        obj.tgpPointC = obj.centerOrigin.createChild("path")
+                     .moveTo(-boxRadiusHalf*0.75, -boxRadiusHalf*0.75)
+                     .lineTo(boxRadiusHalf*0.75, boxRadiusHalf*0.75)
+                     .moveTo(boxRadiusHalf*0.75, -boxRadiusHalf*0.75)
+                     .lineTo(-boxRadiusHalf*0.75, boxRadiusHalf*0.75)
+                     .setStrokeLineWidth(stroke1)
+                     .setColor(0,0,0)
+                     .hide();
+        append(obj.total, obj.tgpPointF);
+        append(obj.total, obj.tgpPointC);
         obj.radarLock = obj.centerOrigin.createChild("path")
             .moveTo(-boxRadius*hairFactor,0)
             .horiz(boxRadiusHalf*hairFactor)
@@ -1161,6 +1184,67 @@ var F16_HMD = {
         } else {
             me.rdrBore.hide();
         }
+
+        var showtgpTD = 0;
+        var showtgpTDcross = 0;
+        if (tgp.flir_updater.click_coord_cam != nil and getprop("f16/avionics/tgp-lock")) {# hdp.tgp_mounted and
+            if (getprop("sim/view[105]/heading-offset-deg")==0 and getprop("sim/view[105]/pitch-offset-deg")==-30 and armament.contactPoint != nil) {
+                # Programmed GPS target
+                me.echoPos = f16.HudMath.getDevFromCoord(armament.contactPoint.get_Coord(), hdp.hmdH, hdp.hmdP, hdp, geo.viewer_position());
+                #print(me.echoPos[0],",",me.echoPos[1],"    ", hdp.hmdH, "," ,hdp.hmdP);
+                me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
+                #print("    ",me.echoPos[0]);
+                me.echoPos[0] = (512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
+                me.echoPos[1] = -(512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
+
+                me.clamped = math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]) > 500;
+
+                if (me.clamped) {
+                    me.clampAmount = 500/math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]);
+                    me.echoPos[0] *= me.clampAmount;
+                    me.echoPos[1] *= me.clampAmount;
+                    showtgpTDcross = 1;
+                    me.tgpPointC.setTranslation(me.echoPos);
+                }
+                                
+                #printf("TGP idle: %.2f,%.2f",me.echoPos[0],me.echoPos[1]);
+                me.tgpPointF.setTranslation(me.echoPos);
+                showtgpTD = 1;
+            } else {
+                # TGP target
+                var b = geo.normdeg180(getprop("sim/view[105]/heading-offset-deg"));
+                var p = getprop("sim/view[105]/pitch-offset-deg");
+                #printf("TGP stat: %.2f,%.2f",b,p);
+                var behind = 0;
+                if(b < -90) {
+                    b = -180-b;
+                    p = -p;
+                    behind = 1;
+                } elsif (b > 90) {
+                    b = 180-b;
+                    p = -p;
+                    behind = 1;
+                }
+
+                me.echoPos = f16.HudMath.getDevFromHMD(b, p, -hdp.hmdH, hdp.hmdP);
+                me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
+                me.echoPos[0] = (512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512 (should be 0.1385 from eye instead to be like real f16)
+                me.echoPos[1] = -(512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
+                me.clamped = math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]) > 500;
+
+                if (me.clamped) {
+                    me.clampAmount = 500/math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]);
+                    me.echoPos[0] *= me.clampAmount;
+                    me.echoPos[1] *= me.clampAmount;
+                    me.tgpPointC.setTranslation(me.echoPos);
+                    showtgpTDcross = 1;
+                }
+                me.tgpPointF.setTranslation(me.echoPos);
+                showtgpTD = 1;
+            }
+        }
+        me.tgpPointF.setVisible(showtgpTD);
+        me.tgpPointC.setVisible(showtgpTDcross);
 
         me.dlzArray = pylons.getDLZ();
         #me.dlzArray =[10,8,6,2,9];#test
