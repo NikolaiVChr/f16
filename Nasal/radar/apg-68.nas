@@ -2528,8 +2528,10 @@ var RWR = {
                 me.danger = 50;# within this range he is most dangerous
                 if (me.u.getModel() == "missile_frigate" or me.u.getModel() == "fleet" or me.u.getModel() == "s-300") {
                     me.danger = 80;
-                } elsif (me.u.getModel() == "buk-m2" or me.u.getModel() == "SA-6" or me.u.getModel() == "S-75") {
+                } elsif (me.u.getModel() == "buk-m2" or me.u.getModel() == "S-75") {
                     me.danger = 35;
+                } elsif (me.u.getModel() == "SA-6") {
+                    me.danger = 15;
                 } elsif (me.u.getModel() == "MIM104D") {
                     me.danger = 45;
                 } elsif (me.u.getModel() == "ZSU-23-4M") {
