@@ -61,6 +61,7 @@ var rcs_oprf_database = {
 # Notice that the non-SEA of these have been very reduced to simulate hard to find in ground clutter
     "depot":                    1,
     "ZSU-23-4M":                0.04,
+    "SA-6":                     0.10,
     "buk-m2":                   0.08,
     "S-75":                     0.12,
     "s-300":                    0.16,
@@ -74,7 +75,6 @@ var rcs_oprf_database = {
     "rig":                      500,
     "point":                    0.7,
     "hunter":                   0.10,    #sea assets, Hunter
-    "SA-6":                     0.10,
 # Automats:
     "MiG-29":                   6,
     "SU-27":                    15,
