@@ -599,11 +599,11 @@
       <!--<object-name>RightUpperFlap</object-name>
       <object-name>RightLowerFlap</object-name>-->
 
-      <!--<object-name>LeftUpperAileron</object-name>
+      <object-name>LeftUpperAileron</object-name>
       <object-name>LeftLowerAileron</object-name>-->
 
-      <!--<object-name>RightUpperAileron</object-name>
-      <object-name>RightLowerAileron</object-name>-->
+      <object-name>RightUpperAileron</object-name>
+      <object-name>RightLowerAileron</object-name>
 
   </effect>
 
@@ -1729,10 +1729,10 @@
   <object-name>RightLowerFlap</object-name>
 </effect>
 
-<effect>
+<!--effect>
   <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
   <parameters>
-    <specular-material-ignore type="int">0</specular-material-ignore><!-- 0 or 1 -->
+    <specular-material-ignore type="int">0</specular-material-ignore>
     <rotation-rad><use>surface-positions/rightrad2</use></rotation-rad>
      <rotation-x1>1.71989</rotation-x1>
      <rotation-y1>3.5817</rotation-y1>
@@ -1743,7 +1743,7 @@
   </parameters>
   <object-name>RightUpperAileron</object-name>
   <object-name>RightLowerAileron</object-name>
-</effect>
+</effect-->
 
  <effect>
   <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
@@ -1761,10 +1761,10 @@
   <object-name>LeftLowerFlap</object-name>
 </effect>
 
-<effect>
+<!--effect>
   <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
   <parameters>
-    <specular-material-ignore type="int">0</specular-material-ignore><!-- 0 or 1 -->
+    <specular-material-ignore type="int">0</specular-material-ignore>
     <rotation-rad><use>surface-positions/leftrad2</use></rotation-rad>
      <rotation-x1>1.71989</rotation-x1>
      <rotation-y1>-3.5817</rotation-y1>
@@ -1775,7 +1775,7 @@
   </parameters>
   <object-name>LeftUpperAileron</object-name>
   <object-name>LeftLowerAileron</object-name>
-</effect>
+</effect-->
 
 <effect>
   <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
@@ -1809,7 +1809,7 @@
   <object-name>RightLowerLef</object-name>
 </effect>
 
-<animation>
+<!--animation>
   <type>rotate</type>
   <object-name>RightUpperAileron</object-name>
   <object-name>RightLowerAileron</object-name>
@@ -1836,9 +1836,9 @@
    <y>0.985090</y>
    <z>-0.039404</z>
   </axis>
- </animation>
+ </animation-->
 
- <animation>
+ <!--animation>
   <type>rotate</type>
   <object-name>LeftUpperAileron</object-name>
   <object-name>LeftLowerAileron</object-name>
@@ -1863,7 +1863,7 @@
    <y2-m>-1.0652</y2-m>
    <z2-m>0.170853</z2-m>
   </axis>
- </animation>
+ </animation-->
 
  <animation>
   <type>rotate</type>
