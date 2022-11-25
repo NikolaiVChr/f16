@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery>
+    <name type="string">USAF 169FW, 157FS "Swamp"</name>
+    <texture>Liveries/Block50/92-3916.png</texture>
+    <owner type="string">USAF</owner>
+   </livery>
+
+   <livery-logo>
+    <texture>Liveries/Block50/Swamp.logos.png</texture>
+   </livery-logo>
+   
+
+   <livery-patch>
+      <texture>Liveries/Block50/patch.Swamp.png</texture>
+   </livery-patch>
+
+  <livery-pod>
+        <texture>Liveries/Block50/pod.Swamp.png</texture>
+  </livery-pod>
+
+        <f16>
+            <dragchute type="bool">false</dragchute>
+            <cft type="bool">false</cft>
+        </f16>
+        <livery-specular type="double">0.6</livery-specular>
+  </model>
+ </sim>
+</PropertyList>
