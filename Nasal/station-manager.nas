@@ -564,7 +564,7 @@ var Pylon = {
 		if (me.currentSet.showLongTypeInsteadOfCount) {
 			foreach(me.wapny;me.weapons) {
 				if (me.wapny != nil) {
-					me.nameS = me.wapny.typeShort;
+					me.nameS = "1 "~me.wapny.typeShort;
 				}
 			}
 		} else {
@@ -572,8 +572,8 @@ var Pylon = {
 			foreach(me.weapon;me.weapons) {
 				if(me.weapon != nil) {
 					me.type = me.weapon.typeShort;
-					if (me.calcName[me.type]==nil) {
-						me.calcName[me.type]=1;
+					if (me.calcName[me.type] == nil) {
+						me.calcName[me.type] = 1;
 					} else {
 						me.calcName[me.type] += 1;
 					}
@@ -584,9 +584,11 @@ var Pylon = {
 			}
 			me.nameS = right(me.nameS, size(me.nameS)-2);#remove initial comma
 		}
-		if(me.nameS == "" and me.currentSet != nil and size(me.currentSet.content)!=0) {
+		if(me.nameS == "" and me.currentSet != nil and size(me.currentSet.content) != 0) {
+			# all launched or jettisoned
 			me.nameS = nil;
-		} elsif (me.nameS == "" and me.currentSet != nil and size(me.currentSet.content)==0) {
+		} elsif (me.nameS == "" and me.currentSet != nil and size(me.currentSet.content) == 0) {
+			# No launchable weapons
 			me.nameS = me.currentSet.name;
 		}
 		if(me.nameS == "" or me.nameS == "Empty") {

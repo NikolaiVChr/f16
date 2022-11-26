@@ -3166,8 +3166,8 @@ var MFD_Device =
                     if (me.myammo ==0) me.myammo = "0";
                     elsif (me.myammo <10) me.myammo = "1";
                     else me.myammo = ""~int(me.myammo*0.1);
-                } elsif (me.myammo==1) {
-                    me.myammo = "";
+                #} elsif (me.myammo==1) {
+                #    me.myammo = "";
                 } else {
                     me.myammo = ""~me.myammo;
                 }
