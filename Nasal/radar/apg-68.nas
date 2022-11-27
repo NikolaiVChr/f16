@@ -950,7 +950,7 @@ DatalinkRadar = {
 		dlnk.DatalinkNotification = VectorNotification.new("DatalinkNotification");
 		dlnk.DatalinkNotification.updateV(dlnk.vector_aicontacts_for);
 		dlnk.timer.start();
-		return omni;
+		return dlnk;
 	},
 
 	scan: func () {
