@@ -334,7 +334,7 @@ var DamageRecipient =
                   dynamics["noti_"~notification.Callsign~"_"~notification.UniqueIdentity] = [systime()-(time_before_delete-1.6), notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.u_fps, notification.Heading, notification.Pitch,-1]
                 }
 
-                if (tacview_supported and getprop("sim/multiplay/txhost") != "mpserver.opredflag.com") {
+                if (tacview_supported and (getprop("sim/multiplay/txhost") != "mpserver.opredflag.com" or m28_auto)) {
                   if (tacview.starttime) {
                     var tacID = left(md5(notification.Callsign~notification.UniqueIdentity),6);
                     if (notification.Kind == DESTROY) {
@@ -379,6 +379,7 @@ var DamageRecipient =
                       if (rwr_to_screen) screen.log.write(out, 1,1,0);# temporary till someone models a RWR in RIO seat
                       print(out);
                       damageLog.push(sprintf("Missile Launch Warning from %03d degrees from %s.", bearing, notification.Callsign));
+                      if (m28_auto) mig28.missileLaunch();
                     }
                   }
                 }
@@ -398,7 +399,7 @@ var DamageRecipient =
                   damageLog.push(sprintf("Missile Approach Warning from %03d degrees from %s.", bearing, notification.Callsign));
                   if (rwr_to_screen) screen.log.write(sprintf("Missile Approach Warning from %03d degrees.", bearing), 1,1,0);# temporary till someone models a RWR in RIO seat
                   approached[notification.Callsign~notification.UniqueIdentity] = elapsed;
-                  if (m28_auto) mig28.engagedBy(notification.Callsign);
+                  if (m28_auto) mig28.engagedBy(notification.Callsign, 1);
                 }
                 return emesary.Transmitter.ReceiptStatus_OK;
             }
@@ -415,7 +416,7 @@ var DamageRecipient =
 #                    debug.dump(notification);
                     #
                     #
-                    if (tacview_supported and tacview.starttime and getprop("sim/multiplay/txhost") != "mpserver.opredflag.com") {
+                    if (tacview_supported and tacview.starttime and (getprop("sim/multiplay/txhost") != "mpserver.opredflag.com" or m28_auto)) {
                     var node = getCallsign(notification.RemoteCallsign);
                       if (node != nil and notification.SecondaryKind > 20) {
                         # its a warhead
@@ -439,9 +440,10 @@ var DamageRecipient =
                     var callsign = processCallsign(getprop("sim/multiplay/callsign"));
                     if (notification.RemoteCallsign == callsign and getprop("payload/armament/msg") == 1) {
                         #damage enabled and were getting hit
-                        if (m28_auto) mig28.engagedBy(notification.Callsign);
+                        
                         if (notification.SecondaryKind < 0 and hitable_by_cannon) {
                             # cannon hit
+                            if (m28_auto) mig28.engagedBy(notification.Callsign, 0);
                             var probability = id2shell[-1*notification.SecondaryKind-1][1];
                             var typ = id2shell[-1*notification.SecondaryKind-1][2];
                             var hit_count = notification.Distance;
@@ -457,6 +459,7 @@ var DamageRecipient =
                             }
                         } elsif (notification.SecondaryKind > 20) {
                             # its a warhead
+                            if (m28_auto) mig28.engagedBy(notification.Callsign, 1);
                             var dist     = notification.Distance;
                             var wh = id2warhead[notification.SecondaryKind - 21];
                             var type = wh[4];#test code
