@@ -866,6 +866,7 @@ var flare_update_time = 0.4;
 var flare_duration = 8;
 var flare_terminal_speed = 50;#m/s
 var flares_max_process_per_loop = 4;
+var flare_sequencer = -120;
 
 var flare_sorter = func(a, b) {
     if(a[0] < b[0]){
@@ -948,7 +949,9 @@ var flare_released = func {
                 getprop("orientation/heading-deg"),
                 FT2M*getprop("velocities/speed-down-fps"),
                 FT2M*math.sqrt(getprop("velocities/speed-north-fps")*getprop("velocities/speed-north-fps")+getprop("velocities/speed-east-fps")*getprop("velocities/speed-east-fps")),
-                int(rand()*240)-120];
+                flare_sequencer];
+    flare_sequencer += 1;
+    if (flare_sequencer > 120) flare_sequencer = -120;
     append(flare_list, flare);
     var msg = notifications.ObjectInFlightNotification.new("ffly", flare[6], MOVE, 21+95);
     msg.Flags = 0;
