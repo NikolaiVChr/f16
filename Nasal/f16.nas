@@ -1,4 +1,4 @@
-
+srand();# to avoid picking the same suspect numbers
 var TRUE = 1;
 var FALSE = 0;
 
