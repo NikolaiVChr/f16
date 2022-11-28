@@ -263,6 +263,7 @@
             <property>f16/avionics/pilot-aid/c1-typ</property>
             <value type="string">   </value>
             <value type="string"> 2 </value>
+            <value type="string"> 6 </value>
             <value type="string"> 11</value>
             <value type="string"> 20</value>
             <value type="string">AAA</value>
@@ -349,6 +350,7 @@
             <property>f16/avionics/pilot-aid/c2-typ</property>
             <value type="string">   </value>
             <value type="string"> 2 </value>
+            <value type="string"> 6 </value>
             <value type="string"> 11</value>
             <value type="string"> 20</value>
             <value type="string">AAA</value>
@@ -436,6 +438,7 @@
             <property>f16/avionics/pilot-aid/c3-typ</property>
             <value type="string">   </value>
             <value type="string"> 2 </value>
+            <value type="string"> 6 </value>
             <value type="string"> 11</value>
             <value type="string"> 20</value>
             <value type="string">AAA</value>
@@ -523,6 +526,7 @@
             <property>f16/avionics/pilot-aid/c4-typ</property>
             <value type="string">   </value>
             <value type="string"> 2 </value>
+            <value type="string"> 6 </value>
             <value type="string"> 11</value>
             <value type="string"> 20</value>
             <value type="string">AAA</value>
@@ -610,6 +614,7 @@
             <property>f16/avionics/pilot-aid/c5-typ</property>
             <value type="string">   </value>
             <value type="string"> 2 </value>
+            <value type="string"> 6 </value>
             <value type="string"> 11</value>
             <value type="string"> 20</value>
             <value type="string">AAA</value>
@@ -697,6 +702,7 @@
             <property>f16/avionics/pilot-aid/c6-typ</property>
             <value type="string">   </value>
             <value type="string"> 2 </value>
+            <value type="string"> 6 </value>
             <value type="string"> 11</value>
             <value type="string"> 20</value>
             <value type="string">AAA</value>
