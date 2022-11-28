@@ -165,7 +165,7 @@ var warheads = {
     "BETAB-500ShP":      [94, 1160.00,1,0],
     "Flare":             [95,    0.00,0,0],
     "3M9":               [96,  125.00,0,0],# 3M9M3 Missile used with 2K12/SA-6
-    "5V28V":             [97,  125.00,0,0],# Missile used with S-200D/SA-5
+    "5V28V":             [97,  478.00,0,0],# Missile used with S-200D/SA-5
 };
 
 var AIR_RADAR = "air";
@@ -1303,14 +1303,14 @@ var code_ct = func () {
   if (getprop("payload/armament/msg")) {
       setprop("sim/rendering/redout/enabled", TRUE);
       #call(func{fgcommand('dialog-close', multiplayer.dialog.dialog.prop())},nil,var err= []);# props.Node.new({"dialog-name": "location-in-air"}));
-      call(func{multiplayer.dialog.del();},nil,var err= []);
+      if (!m28_auto) call(func{multiplayer.dialog.del();},nil,var err= []);
       if (!getprop("gear/gear[0]/wow")) {
         call(func{fgcommand('dialog-close', props.Node.new({"dialog-name": "WeightAndFuel"}))},nil,var err2 = []);
         call(func{fgcommand('dialog-close', props.Node.new({"dialog-name": "system-failures"}))},nil,var err2 = []);
         call(func{fgcommand('dialog-close', props.Node.new({"dialog-name": "instrument-failures"}))},nil,var err2 = []);
       }
       setprop("sim/freeze/fuel",0);
-      setprop("/sim/speed-up", 1);
+      if (!m28_auto) setprop("/sim/speed-up", 1);
       setprop("/gui/map/draw-traffic", 0);
       setprop("/sim/marker-pins/traffic", 0);
       setprop("/sim/gui/dialogs/map-canvas/draw-TFC", 0);
