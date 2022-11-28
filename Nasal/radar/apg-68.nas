@@ -2516,7 +2516,7 @@ var RWR = {
                     }
                 }
                 me.threat = 0;
-                if (me.u.getModel() != "missile_frigate" and me.u.getModel() != "S-75" and me.u.getModel() != "SA-6" and me.u.getModel() != "buk-m2" and me.u.getModel() != "MIM104D" and me.u.getModel() != "s-300" and me.u.getModel() != "fleet" and me.u.getModel() != "ZSU-23-4M") {
+                if (me.u.getModel() != "missile_frigate" and me.u.getModel() != "S-75" and me.u.getModel() != "SA-6" and me.u.getModel() != "buk-m2" and me.u.getModel() != "MIM104D" and me.u.getModel() != "s-200" and me.u.getModel() != "s-300" and me.u.getModel() != "fleet" and me.u.getModel() != "ZSU-23-4M") {
                     me.threat += ((180-me.dev)/180)*0.30;# most threat if I am in front of his nose
                     me.spd = (60-me.threatDB[8])/60;
                     #me.threat -= me.spd>0?me.spd:0;# if his speed is lower than 60kt then give him minus threat else positive
@@ -2532,6 +2532,8 @@ var RWR = {
                     me.danger = 35;
                 } elsif (me.u.getModel() == "SA-6") {
                     me.danger = 15;
+                } elsif (me.u.getModel() == "s-200") {
+                    me.danger = 150;
                 } elsif (me.u.getModel() == "MIM104D") {
                     me.danger = 45;
                 } elsif (me.u.getModel() == "ZSU-23-4M") {

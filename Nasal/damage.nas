@@ -164,7 +164,8 @@ var warheads = {
     "pilot":             [93,    0.00,1,0],# ejected pilot
     "BETAB-500ShP":      [94, 1160.00,1,0],
     "Flare":             [95,    0.00,0,0],
-    "3M9":               [96,  125.00,0,0],# 3M9 Missile used with 2K12/SA-6
+    "3M9":               [96,  125.00,0,0],# 3M9M3 Missile used with 2K12/SA-6
+    "5V28V":             [97,  125.00,0,0],# Missile used with S-200D/SA-5
 };
 
 var AIR_RADAR = "air";
@@ -189,7 +190,8 @@ var radar_signatures = {
                 "E-8R":                     AIR_RADAR,
                 "EC-137D":                  AIR_RADAR,
                 "Mig-28":                   AIR_RADAR,
-                "SA-6":                     AIR_RADAR,#Air radar tone chosen so that there is at least some lock tone until asset-specific is created
+                "SA-6":                     "gnd-11",#Air radar tone chosen so that there is at least some lock tone until asset-specific is created
+                "s-200":                    "gnd-20",#Air radar tone chosen so that there is at least some lock tone until asset-specific is created
                 "ZSU-23-4M":                "gnd-23",
                 "S-75":                     "gnd-02",
                 "buk-m2":                   "gnd-11",
@@ -203,7 +205,7 @@ var radar_signatures = {
 var id2warhead = [];
 var launched = {};# callsign: elapsed-sec
 var approached = {};# callsign: uniqueID
-var heavy_smoke = [61,62,63,65,92,96];
+var heavy_smoke = [61,62,63,65,92,96,97];
 
 var k = keys(warheads);
 

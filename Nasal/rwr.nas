@@ -233,6 +233,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_SEARCH   = "S";
         rwr.ASSET_AAA         = "A";
         rwr.ASSET_VOLGA       = "2";
+        rwr.ASSET_DUBNA       = "5";
         rwr.ASSET_2K12        = "6";
         rwr.ASSET_BUK         = "11";
         rwr.ASSET_GARGOYLE    = "20"; # Other namings for tracking and radar: BB, CS.
@@ -305,6 +306,7 @@ RWRCanvas = {
                 "S-75":                     rwr.ASSET_VOLGA,
                 "buk-m2":                   rwr.ASSET_BUK,
                 "SA-6":                     rwr.ASSET_2K12,
+                "s-200":                    rwr.ASSET_DUBNA,
                 "s-300":                    rwr.ASSET_GARGOYLE,
                 "MIM104D":                  rwr.ASSET_PAC2,
                 "missile_frigate":          rwr.ASSET_FRIGATE,
