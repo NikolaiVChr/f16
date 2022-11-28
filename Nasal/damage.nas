@@ -190,8 +190,8 @@ var radar_signatures = {
                 "E-8R":                     AIR_RADAR,
                 "EC-137D":                  AIR_RADAR,
                 "Mig-28":                   AIR_RADAR,
-                "SA-6":                     "gnd-11",#Air radar tone chosen so that there is at least some lock tone until asset-specific is created
-                "s-200":                    "gnd-20",#Air radar tone chosen so that there is at least some lock tone until asset-specific is created
+                "SA-6":                     "gnd-06",#Air radar tone chosen so that there is at least some lock tone until asset-specific is created
+                "s-200":                    "gnd-05",
                 "ZSU-23-4M":                "gnd-23",
                 "S-75":                     "gnd-02",
                 "buk-m2":                   "gnd-11",
@@ -1420,6 +1420,8 @@ setlistener("sim/signals/exit", writeDamageLog, 0, 0);
 #screen.property_display.add("payload/armament/spike-air");
 #screen.property_display.add("payload/armament/spike-gnd-20");
 #screen.property_display.add("payload/armament/spike-gnd-02");
+#screen.property_display.add("payload/armament/spike-gnd-05");
+#screen.property_display.add("payload/armament/spike-gnd-06");
 #screen.property_display.add("payload/armament/spike-gnd-11");
 #screen.property_display.add("payload/armament/spike-gnd-23");
 #screen.property_display.add("payload/armament/spike-gnd-p2");

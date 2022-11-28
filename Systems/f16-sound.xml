@@ -3304,7 +3304,7 @@
         </rwr>-->
         <rwr>
             <name>rwr-spike-air</name>
-            <path>Aircraft/f16/Sounds/rwr-lock-01.wav</path>
+            <path>Aircraft/f16/Sounds/rwr/rwr-lock-01.wav</path>
             <mode>looped</mode>
             <type>avionics</type>
             <condition>
@@ -3320,6 +3320,64 @@
                 </or>
                 <equals>
                     <property>payload/armament/spike-air</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <volume>
+                <property>/sim/current-view/internal</property>
+                <factor>0.70</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/rwr-volume</property>
+            </volume>
+        </rwr>
+        <rwr>
+            <name>rwr-spike-05</name>
+            <path>Aircraft/f16/Sounds/rwr/rwr-lock-02.wav</path>
+            <mode>looped</mode>
+            <type>avionics</type>
+            <condition>
+                <or>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                        <value>20</value>
+                    </greater-than>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                        <value>20</value>
+                    </greater-than>
+                </or>
+                <equals>
+                    <property>payload/armament/spike-gnd-05</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <volume>
+                <property>/sim/current-view/internal</property>
+                <factor>0.70</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/rwr-volume</property>
+            </volume>
+        </rwr>
+        <rwr>
+            <name>rwr-spike-06</name>
+            <path>Aircraft/f16/Sounds/rwr/rwr-lock-03.wav</path>
+            <mode>looped</mode>
+            <type>avionics</type>
+            <condition>
+                <or>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                        <value>20</value>
+                    </greater-than>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                        <value>20</value>
+                    </greater-than>
+                </or>
+                <equals>
+                    <property>payload/armament/spike-gnd-06</property>
                     <value>1</value>
                 </equals>
             </condition>
