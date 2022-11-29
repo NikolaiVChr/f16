@@ -2903,7 +2903,7 @@ var AIM = {
 	},
 
 	setFirst: func() {
-		if (me.smoke_prop.getValue() == TRUE) {
+		if (me.smoke_prop.getValue() == TRUE and me.life_time < 20) {
 			if (me.first == TRUE or first_in_air == FALSE) {
 				# report position over MP for MP animation of smoke trail.
 				me.first = TRUE;
@@ -3136,7 +3136,7 @@ var AIM = {
 						me.chaffLast = me.chaffNumber;
 						me.chaffTime = getprop("sim/time/elapsed-sec");
 						me.aspectDeg = me.aspectToExhaust(me.coord, me.Tgt) / 180;# 0 = viewing engine, 1 = front
-						me.semi = me.guidance == "semi-radar"?0.5:1;
+						me.semi = me.guidance == "semi-radar"?1:1;
 						me.chaffChance = (1-me.chaffResistance)*me.semi;
 						me.chaffLock = rand() < (me.chaffChance - (me.chaffChance * 0.5 * me.aspectDeg));# 50% less chance to be fooled if front aspect
 
