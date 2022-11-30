@@ -325,8 +325,8 @@ var dataEntryDisplay = {
 			me.text[3] = sprintf("     ELEV  % 5dFT",alt);
 			me.text[1] = sprintf("      LAT  %s", lat);
 			me.text[2] = sprintf("      LNG  %s", lon);
-		} elsif (wp_num != nil and wp_num < 306 and wp_num >= 300) {
-			# Threat circles 300 to 305
+		} elsif (wp_num != nil and wp_num < 300+steerpoints.number_of_threat_circles and wp_num >= 300) {
+			# Threat circles 300 to 314
 			var stpt = steerpoints.getNumber(wp_num);
 			if 	(stpt != nil) {
 				wp_num_curr = wp_num;

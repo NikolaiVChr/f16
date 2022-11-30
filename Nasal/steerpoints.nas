@@ -2,7 +2,8 @@
 # F-16 Steerpoint/route/mark/bulls-eye system.
 #
 var lines = [nil,nil];
-var stpt300 = setsize([],6);#Threat circles
+var number_of_threat_circles = 15;
+var stpt300 = setsize([],number_of_threat_circles);#Threat circles
 var stpt350 = setsize([],10);#Generic
 var stpt400 = setsize([],5);#Markpoints Own
 var stpt450 = setsize([],5);#Markpoints DL
@@ -550,7 +551,7 @@ var applyToWPN = func {
 
 var _isValidNumber = func (number) {
 	# Is the number a valid possible steerpoint number?
-	if (number >= 300 and number <= 305) {
+	if (number >= 300 and number < 300+number_of_threat_circles) {
 		return 1;
 	} elsif (number >= 350 and number <= 359) {
 		return 1;

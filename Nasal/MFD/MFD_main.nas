@@ -3357,86 +3357,23 @@ var MFD_Device =
            .setColor(colorLine1)
            .setStrokeLineWidth(2);
 
-        svg.c1 = svg.p_HSDc.createChild("path")
-            .moveTo(-50,0)
-            .arcSmallCW(50,50, 0,  50*2, 0)
-            .arcSmallCW(50,50, 0, -50*2, 0)
-            .setStrokeLineWidth(3)
-            .set("z-index",2)
-            .hide()
-            .setColor(colorCircle1);
-        svg.c2 = svg.p_HSDc.createChild("path")
-            .moveTo(-50,0)
-            .arcSmallCW(50,50, 0,  50*2, 0)
-            .arcSmallCW(50,50, 0, -50*2, 0)
-            .setStrokeLineWidth(3)
-            .set("z-index",2)
-            .hide()
-            .setColor(colorCircle1);
-        svg.c3 = svg.p_HSDc.createChild("path")
-            .moveTo(-50,0)
-            .arcSmallCW(50,50, 0,  50*2, 0)
-            .arcSmallCW(50,50, 0, -50*2, 0)
-            .setStrokeLineWidth(3)
-            .set("z-index",2)
-            .hide()
-            .setColor(colorCircle2);
-        svg.c4 = svg.p_HSDc.createChild("path")
-            .moveTo(-50,0)
-            .arcSmallCW(50,50, 0,  50*2, 0)
-            .arcSmallCW(50,50, 0, -50*2, 0)
-            .setStrokeLineWidth(3)
-            .set("z-index",2)
-            .hide()
-            .setColor(colorCircle2);
-        svg.c5 = svg.p_HSDc.createChild("path")
-            .moveTo(-50,0)
-            .arcSmallCW(50,50, 0,  50*2, 0)
-            .arcSmallCW(50,50, 0, -50*2, 0)
-            .setStrokeLineWidth(3)
-            .set("z-index",2)
-            .hide()
-            .setColor(colorCircle3);
-        svg.c6 = svg.p_HSDc.createChild("path")
-            .moveTo(-50,0)
-            .arcSmallCW(50,50, 0,  50*2, 0)
-            .arcSmallCW(50,50, 0, -50*2, 0)
-            .setStrokeLineWidth(3)
-            .set("z-index",2)
-            .hide()
-            .setColor(colorCircle3);
-
-        svg.ct1 = svg.p_HSDc.createChild("text")
+        svg.threat_c = [];
+        svg.threat_t = [];
+        for (var g = 0; g < steerpoints.number_of_threat_circles; g+=1) {
+            append(svg.threat_c, svg.p_HSDc.createChild("path")
+                .moveTo(-50,0)
+                .arcSmallCW(50,50, 0,  50*2, 0)
+                .arcSmallCW(50,50, 0, -50*2, 0)
+                .setStrokeLineWidth(3)
+                .set("z-index",2)
+                .hide()
+                .setColor(colorCircle1));
+            append(svg.threat_t, svg.p_HSDc.createChild("text")
                 .setAlignment("center-center")
                 .setColor(colorCircle1)
                 .set("z-index",2)
-                .setFontSize(15, 1.0);
-        svg.ct2 = svg.p_HSDc.createChild("text")
-                .setAlignment("center-center")
-                .setColor(colorCircle1)
-                .set("z-index",2)
-                .setFontSize(15, 1.0);
-        svg.ct3 = svg.p_HSDc.createChild("text")
-                .setAlignment("center-center")
-                .setColor(colorCircle2)
-                .set("z-index",2)
-                .setFontSize(15, 1.0);
-        svg.ct4 = svg.p_HSDc.createChild("text")
-                .setAlignment("center-center")
-                .setColor(colorCircle2)
-                .set("z-index",2)
-                .setFontSize(15, 1.0);
-        svg.ct5 = svg.p_HSDc.createChild("text")
-                .setAlignment("center-center")
-                .setColor(colorCircle3)
-                .set("z-index",2)
-                .setFontSize(15, 1.0);
-        svg.ct6 = svg.p_HSDc.createChild("text")
-                .setAlignment("center-center")
-                .setColor(colorCircle3)
-                .set("z-index",2)
-                .setFontSize(15, 1.0);
-
+                .setFontSize(15, 1.0));
+        }
 
         svg.mark = setsize([],10);
         for (var no = 0; no < 10; no += 1) {
@@ -3891,27 +3828,10 @@ var MFD_Device =
                     }
                 }
                 #print("");print("");print("");
-                for (var l = 0; l<6;l+=1) {
+                for (var l = 0; l<steerpoints.number_of_threat_circles;l+=1) {
                     # threat circles
-                    if (l==0) {
-                        me.ci = me.root.c1;
-                        me.cit = me.root.ct1;
-                    } elsif (l==1) {
-                        me.ci = me.root.c2;
-                        me.cit = me.root.ct2;
-                    } elsif (l==2) {
-                        me.ci = me.root.c3;
-                        me.cit = me.root.ct3;
-                    } elsif (l==3) {
-                        me.ci = me.root.c4;
-                        me.cit = me.root.ct4;
-                    } elsif (l==4) {
-                        me.ci = me.root.c5;
-                        me.cit = me.root.ct5;
-                    } elsif (l==5) {
-                        me.ci = me.root.c6;
-                        me.cit = me.root.ct6;
-                    }
+                    me.ci = me.root.threat_c[l];
+                    me.cit = me.root.threat_t[l];
 
                     me.cnu = steerpoints.getNumber(300+l);
                     if (me.cnu == nil) {
