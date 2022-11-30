@@ -1302,7 +1302,7 @@
                 <c1-lon type="double">0</c1-lon>
                 <c1-rad type="double">0</c1-rad>
                 <c1-typ type="string">   </c1-typ>
-                <c1-col type="string">RED</c1-col>
+                <!--c1-col type="string">RED</c1-col-->
                 <bulls-eye-defined type="bool">true</bulls-eye-defined>
                 <bulls-eye-lat type="double">37.20</bulls-eye-lat>
                 <bulls-eye-lon type="double">-115.60</bulls-eye-lon>

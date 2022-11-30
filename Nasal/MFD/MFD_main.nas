@@ -3844,8 +3844,8 @@ var MFD_Device =
                     me.lo = me.cnu.lon;
                     me.ra = me.cnu.radius;
                     me.ty = me.cnu.type;
-                    me.co = me.cnu.color == 0?colorCircle1:(me.cnu.color == 1?colorCircle2:colorCircle3);
-                    #print("Painting ", 300+l," in ", me.cnu.color == 0?"red":(me.cnu.color == 1?"yellow":"green"));
+                    
+                    
                     if (me.la != nil and me.lo != nil and me.ra != nil and me.ra > 0) {
                         me.wpC = geo.Coord.new();
                         me.wpC.set_latlon(me.la,me.lo);
@@ -3865,6 +3865,8 @@ var MFD_Device =
                         me.ci.setTranslation(me.legX,me.legY);
                         me.ci.setScale(me.legScale);
                         me.ci.setStrokeLineWidth(1/me.legScale);
+                        me.co = me.ra > me.legDistance?colorCircle1:colorCircle2;
+                        #print("Painting ", 300+l," in ", me.ra > me.legDistance?"red":"yellow");
                         me.ci.setColor(me.co);
                         me.ci.show();
                         me.cit.setText(me.ty);

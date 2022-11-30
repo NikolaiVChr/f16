@@ -23,13 +23,13 @@
 				setprop("f16/avionics/pilot-aid/c1-lon", s.lon);
 				setprop("f16/avionics/pilot-aid/c1-rad", s.radius);
 				setprop("f16/avionics/pilot-aid/c1-typ", s.type);
-				setprop("f16/avionics/pilot-aid/c1-col", s.color==0?"RED":(s.color==1?"YEL":"GRN"));
+				#setprop("f16/avionics/pilot-aid/c1-col", s.color==0?"RED":(s.color==1?"YEL":"GRN"));
 			} else {
 				setprop("f16/avionics/pilot-aid/c1-lat", 0);
 				setprop("f16/avionics/pilot-aid/c1-lon", 0);
 				setprop("f16/avionics/pilot-aid/c1-rad", 40);
 				setprop("f16/avionics/pilot-aid/c1-typ", " 11");
-				setprop("f16/avionics/pilot-aid/c1-col", "YEL");
+				#setprop("f16/avionics/pilot-aid/c1-col", "YEL");
 			}
 			
             var load_line1 = func(path) {
@@ -214,22 +214,22 @@
             </binding>
             <binding>
                 <command>nasal</command>
-                <script>
+                <script><![CDATA[
                 	s = steerpoints.getNumber(getprop("f16/avionics/pilot-aid/c1-stpt"));# 
 					if (s != nil) {
 						setprop("f16/avionics/pilot-aid/c1-lat", s.lat);
 						setprop("f16/avionics/pilot-aid/c1-lon", s.lon);
 						setprop("f16/avionics/pilot-aid/c1-rad", s.radius);
 						setprop("f16/avionics/pilot-aid/c1-typ", s.type);
-						setprop("f16/avionics/pilot-aid/c1-col", s.color==0?"RED":(s.color==1?"YEL":"GRN"));
+						#setprop("f16/avionics/pilot-aid/c1-col", s.color==0?"RED":(s.color==1?"YEL":"GRN"));
 					} else {
 						setprop("f16/avionics/pilot-aid/c1-lat", 0);
 						setprop("f16/avionics/pilot-aid/c1-lon", 0);
 						setprop("f16/avionics/pilot-aid/c1-rad", 40);
 						setprop("f16/avionics/pilot-aid/c1-typ", " 11");
-						setprop("f16/avionics/pilot-aid/c1-col", "YEL");
+						#setprop("f16/avionics/pilot-aid/c1-col", "YEL");
 					}
-                </script>
+                ]]></script>
             </binding>
         </combo>
     </group>    
@@ -292,7 +292,7 @@
                 <object-name>typ1</object-name>
             </binding>
         </combo>
-        <combo>
+        <!--combo>
             <halign>left</halign>
             <name>col1</name>
             <label></label>
@@ -306,7 +306,7 @@
                 <command>dialog-apply</command>
                 <object-name>col1</object-name>
             </binding>
-        </combo>
+        </combo-->
 		<button>
 			<legend>Apply</legend>
 			<binding>
@@ -317,7 +317,7 @@
 					s.lon = getprop("f16/avionics/pilot-aid/c1-lon");
 					s.radius = getprop("f16/avionics/pilot-aid/c1-rad");
 					s.type= getprop("f16/avionics/pilot-aid/c1-typ");
-					s.color= getprop("f16/avionics/pilot-aid/c1-col")=="RED"?0:(getprop("f16/avionics/pilot-aid/c1-col")=="YEL"?1:2);
+					#s.color= getprop("f16/avionics/pilot-aid/c1-col")=="RED"?0:(getprop("f16/avionics/pilot-aid/c1-col")=="YEL"?1:2);
 					var number = getprop("f16/avionics/pilot-aid/c1-stpt");
 					steerpoints.setNumber(number, s);
 				]]></script>

@@ -19,7 +19,7 @@ var STPTnumFE = EditableField.new("f16/ded/stpt-edit", "%3d", 3);
 var STPTradFE = EditableField.new("f16/ded/stpt-rad", "%2d", 2);
 var STPTaltFE = EditableField.new("f16/ded/alt", "%5d", 5);
 var STPTtypeTF = toggleableField.new(["   ", " 2 ", " 5 ", " 6 ", " 11", " 20", " SH", " P ", " AAA"], "f16/ded/stpt-type");
-var STPTcolorTF = toggleableField.new(["RED", "YEL", "GRN"], "f16/ded/stpt-color");
+#var STPTcolorTF = toggleableField.new(["RED", "YEL", "GRN"], "f16/ded/stpt-color");
 var dlinkEF   = EditableField.new("instrumentation/datalink/channel", "%4d", 4);
 var com1FrqEF = EditableField.new("instrumentation/comm[0]/frequencies/selected-mhz", "%6.2f", 6);
 var com2FrqEF = EditableField.new("instrumentation/comm[1]/frequencies/selected-mhz", "%6.2f", 6);
@@ -29,7 +29,7 @@ var com2SFrqEF = EditableField.new("instrumentation/comm[1]/frequencies/standby-
 var pTACAN = EditableFieldPage.new(0, [tacanChanEF,tacanBandTF,ilsFrqEF,ilsCrsEF]);
 var pALOW  = EditableFieldPage.new(1, [alowEF,mslFloorEF,tfEF]);
 var pFACK  = EditableFieldPage.new(2);
-var pSTPT  = EditableFieldPage.new(3, [STPTnumFE,STPTlatFE,STPTlonFE,STPTradFE,STPTaltFE,STPTtypeTF,STPTcolorTF]);
+var pSTPT  = EditableFieldPage.new(3, [STPTnumFE,STPTlatFE,STPTlonFE,STPTradFE,STPTaltFE,STPTtypeTF]);#,STPTcolorTF
 var pCRUS  = EditableFieldPage.new(4);
 var pTIME  = EditableFieldPage.new(5);
 var pMARK  = EditableFieldPage.new(6);
@@ -72,7 +72,7 @@ var pHMCS  = EditableFieldPage.new(36);
 var wp_num_lastA = nil;
 var wp_num_lastO = nil;
 var wp_num_lastR = nil;
-var wp_num_lastC = nil;
+#var wp_num_lastC = nil;
 var wp_num_lastT = nil;
 var wp_num_curr = 0;
 
@@ -311,14 +311,14 @@ var dataEntryDisplay = {
 				pSTPT.vector[3].skipMe = 1;#radius
 				pSTPT.vector[4].skipMe = 0;#alt
 				pSTPT.vector[5].skipMe = 1;#type
-				pSTPT.vector[6].skipMe = 1;#color
+				#pSTPT.vector[6].skipMe = 1;#color
 			} else {
 				pSTPT.vector[1].skipMe = 1;
 				pSTPT.vector[2].skipMe = 1;
 				pSTPT.vector[3].skipMe = 1;
 				pSTPT.vector[4].skipMe = 1;
 				pSTPT.vector[5].skipMe = 1;
-				pSTPT.vector[6].skipMe = 1;
+				#pSTPT.vector[6].skipMe = 1;
 				wp_num_curr = 0;
 			}
 			me.text[4] = sprintf("      TOS  %s",TOS);
@@ -346,12 +346,12 @@ var dataEntryDisplay = {
 				} else {
 					stpt.radius = getprop("f16/ded/stpt-rad");
 				}
-				var colNum = wp_num_lastC=="RED"?0:(wp_num_lastC=="YEL"?1:2);
-				if (colNum != stpt.color) {
-					setprop("f16/ded/stpt-color", stpt.color==0?"RED":(stpt.color==1?"YEL":"GRN"));
-				} else {
-					stpt.color = getprop("f16/ded/stpt-color")=="RED"?0:(getprop("f16/ded/stpt-color")=="YEL"?1:2);
-				}
+				#var colNum = wp_num_lastC=="RED"?0:(wp_num_lastC=="YEL"?1:2);
+				#if (colNum != stpt.color) {
+				#	setprop("f16/ded/stpt-color", stpt.color==0?"RED":(stpt.color==1?"YEL":"GRN"));
+				#} else {
+				#	stpt.color = getprop("f16/ded/stpt-color")=="RED"?0:(getprop("f16/ded/stpt-color")=="YEL"?1:2);
+				#}
 				if (wp_num_lastT != stpt.type) {
 					setprop("f16/ded/stpt-type", stpt.type);
 				} else {
@@ -362,14 +362,14 @@ var dataEntryDisplay = {
 				pSTPT.vector[3].skipMe = 0;#radius
 				pSTPT.vector[4].skipMe = 1;#alt
 				pSTPT.vector[5].skipMe = 0;#type
-				pSTPT.vector[6].skipMe = 0;#color
+				#pSTPT.vector[6].skipMe = 0;#color
 			} elsif (stpt == nil and (getprop("f16/ded/lat") != 0 or getprop("f16/ded/lon") != 0 or getprop("f16/ded/stpt-rad") != 10 or getprop("f16/ded/stpt-type") != "   " or getprop("f16/ded/stpt-color") != 0)) {
 				stpt = steerpoints.STPT.new();
 				stpt.lat = getprop("f16/ded/lat");
 				stpt.lon = getprop("f16/ded/lon");
 				stpt.radius = getprop("f16/ded/stpt-rad");
 				stpt.type = getprop("f16/ded/stpt-type");
-				stpt.color = getprop("f16/ded/stpt-color")=="RED"?0:(getprop("f16/ded/stpt-color")=="YEL"?1:2);
+				#stpt.color = getprop("f16/ded/stpt-color")=="RED"?0:(getprop("f16/ded/stpt-color")=="YEL"?1:2);
 				steerpoints.setNumber(wp_num, stpt);
 				wp_num_curr = wp_num;
 				pSTPT.vector[1].skipMe = 0;#lat
@@ -377,26 +377,26 @@ var dataEntryDisplay = {
 				pSTPT.vector[3].skipMe = 0;#radius
 				pSTPT.vector[4].skipMe = 1;#alt
 				pSTPT.vector[5].skipMe = 0;#type
-				pSTPT.vector[6].skipMe = 0;#color
+				#pSTPT.vector[6].skipMe = 0;#color
 			} else {
 				setprop("f16/ded/lat", 0);
 				setprop("f16/ded/lon", 0);
 				setprop("f16/ded/stpt-rad", 10);
 				setprop("f16/ded/stpt-type", "   ");
-				setprop("f16/ded/stpt-color", "RED");
+				#setprop("f16/ded/stpt-color", "RED");
 				wp_num_curr = 0;
 				pSTPT.vector[1].skipMe = 0;#lat
 				pSTPT.vector[2].skipMe = 0;#lon
 				pSTPT.vector[3].skipMe = 0;#radius
 				pSTPT.vector[4].skipMe = 1;#alt
 				pSTPT.vector[5].skipMe = 0;#type
-				pSTPT.vector[6].skipMe = 0;#color
+				#pSTPT.vector[6].skipMe = 0;#color
 			}
 
 			me.text[1] = sprintf("      LAT  %s", pSTPT.vector[1].getText());
 			me.text[2] = sprintf("      LNG  %s", pSTPT.vector[2].getText());
 			me.text[3] = sprintf("      RAD  %sNM", pSTPT.vector[3].getText());
-			me.text[4] = sprintf("  TYP  %s   COL  %s", pSTPT.vector[5].getText(), pSTPT.vector[6].getText());
+			me.text[4] = sprintf("      TYP  %s", pSTPT.vector[5].getText());
 
 
 
@@ -404,13 +404,13 @@ var dataEntryDisplay = {
 				wp_num_lastA = stpt.lat;
 				wp_num_lastO = stpt.lon;
 				wp_num_lastR = stpt.radius;
-				wp_num_lastC = stpt.color==0?"RED":(stpt.color==1?"YEL":"GRN");
+				#wp_num_lastC = stpt.color==0?"RED":(stpt.color==1?"YEL":"GRN");
 				wp_num_lastT = stpt.type;
 			} else {
 				wp_num_lastA = 0;
 				wp_num_lastO = 0;
 				wp_num_lastR = 10;
-				wp_num_lastC = "RED";
+				#wp_num_lastC = "RED";
 				wp_num_lastT = "   ";
 			}
 		} elsif (wp_num != nil and ((wp_num < 359 and wp_num >= 350) or (wp_num < 405 and wp_num >= 400) or (wp_num < 455 and wp_num >= 450) or (wp_num == 500) or (wp_num == 555))) {
@@ -439,7 +439,7 @@ var dataEntryDisplay = {
 				pSTPT.vector[3].skipMe = 1;#radius
 				pSTPT.vector[4].skipMe = 0;#alt
 				pSTPT.vector[5].skipMe = 1;#type
-				pSTPT.vector[6].skipMe = 1;#color
+				#pSTPT.vector[6].skipMe = 1;#color
 			} elsif (stpt == nil and (getprop("f16/ded/alt")!=0 or getprop("f16/ded/lat") != 0 or getprop("f16/ded/lon") != 0)) {
 				stpt = steerpoints.STPT.new();
 				stpt.lat = getprop("f16/ded/lat");
@@ -452,7 +452,7 @@ var dataEntryDisplay = {
 				pSTPT.vector[3].skipMe = 1;#radius
 				pSTPT.vector[4].skipMe = 0;#alt
 				pSTPT.vector[5].skipMe = 1;#type
-				pSTPT.vector[6].skipMe = 1;#color
+				#pSTPT.vector[6].skipMe = 1;#color
 			} else {
 				setprop("f16/ded/lat", 0);
 				setprop("f16/ded/lon", 0);
@@ -463,7 +463,7 @@ var dataEntryDisplay = {
 				pSTPT.vector[3].skipMe = 1;#radius
 				pSTPT.vector[4].skipMe = 0;#alt
 				pSTPT.vector[5].skipMe = 1;#type
-				pSTPT.vector[6].skipMe = 1;#color
+				#pSTPT.vector[6].skipMe = 1;#color
 			}
 
 			me.text[1] = sprintf("      LAT  %s", pSTPT.vector[1].getText());
@@ -500,7 +500,7 @@ var dataEntryDisplay = {
 			pSTPT.vector[3].skipMe = 1;#radius
 			pSTPT.vector[4].skipMe = 1;#alt
 			pSTPT.vector[5].skipMe = 1;#type
-			pSTPT.vector[6].skipMe = 1;#color
+			#pSTPT.vector[6].skipMe = 1;#color
 		}
 		me.text[0] = sprintf("      STPT %s  AUTO %s", pSTPT.vector[0].getText(), me.no);
 	},

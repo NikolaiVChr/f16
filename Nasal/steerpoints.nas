@@ -11,6 +11,10 @@ var stpt500 = setsize([],1);#Weapon
 var stpt555 = setsize([],1);#Bullseye
 var current = nil;#Current STPT number, nil for route/nothing.
 
+var colorRed = 0;
+var colorYellow = 1;
+var colorGreen = 2;
+
 var STPT = {
 	# stored in the above vectors for non-route steerpoints
 	lon: 0,
@@ -18,7 +22,7 @@ var STPT = {
 	alt: 0,
 	type: "   ",
 	radius: 10,
-	color: 0,
+	color: colorYellow,
 	
 	new: func {
 		var n = {parents: [STPT]};
@@ -37,9 +41,7 @@ var STPT = {
 	},
 };
 
-var colorRed = 0;
-var colorYellow = 1;
-var colorGreen = 2;
+
 
 var getCurrentNumber = func {
 	# Get current steerpoint. The first is #1. Return 0 for no current steerpoint.
