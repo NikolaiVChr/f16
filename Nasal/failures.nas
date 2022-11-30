@@ -177,14 +177,14 @@ var init = func {
     prop = "gear/gear[1]/position-norm";
     var trigger_gear1 = RandSpeedTrigger.new(300, 500, prop);
     var actuator_gear1 = set_value("fdm/jsbsim/gear/unit[1]/z-position", 0.001);
-    FailureMgr.add_failure_mode("controls/gear1", "Right gear locking mechanism", actuator_gear1);
+    FailureMgr.add_failure_mode("controls/gear1", "Left gear locking mechanism", actuator_gear1);
     FailureMgr.set_trigger("controls/gear1", trigger_gear1);
     trigger_gear1.arm();
 
     prop = "gear/gear[2]/position-norm";
     var trigger_gear2 = RandSpeedTrigger.new(300, 500, prop);
     var actuator_gear2 = set_value("fdm/jsbsim/gear/unit[2]/z-position", 0.001);
-    FailureMgr.add_failure_mode("controls/gear2", "Left gear locking mechanism", actuator_gear2);
+    FailureMgr.add_failure_mode("controls/gear2", "Right gear locking mechanism", actuator_gear2);
     FailureMgr.set_trigger("controls/gear2", trigger_gear2);
     trigger_gear2.arm();
 
