@@ -216,7 +216,7 @@ RWRCanvas = {
 #                   .hide();
 #        }
 # Threat list ID:
-        #REVISION: 2022/11/23
+        #REVISION: 2022/11/28
         #OPRF Fleet
         rwr.AIRCRAFT_WARTHOG  = "10";
         rwr.AIRCRAFT_TOMCAT   = "14";

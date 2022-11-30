@@ -135,7 +135,7 @@
   <text><halign>left</halign><label>WARNING: You will be able to both inflict and receive</label></text>
   <text><halign>left</halign><label>damage from compatible aircraft (with Emesary damage system).</label></text>
   <text><halign>left</halign><label>Once you land or crash you can check your</label></text>
-  <text><halign>left</halign><label>weapon debriefing from the menu 'Combat event log'.</label></text>
+  <text><halign>left</halign><label>weapon debriefing from the 'Combat event log' menu.</label></text>
   <text><halign>left</halign><label>There will no longer be visible hit/miss msgs. on screen.</label></text>
   <text><halign>left</halign><label>Avoid using against players without mutual consent.</label></text>
   <text><halign>left</halign><label>Never use this with MP player collisions enabled.</label></text>
@@ -152,7 +152,7 @@
   <group>
     <layout>vbox</layout>
     <checkbox>
-      <label>Wear newer, more capable 1997 G-suit</label>
+      <label>Wear newer, more capable 1997 G-suit (Default means 1979)</label>
       <halign>left</halign>
       <property>sim/rendering/redout/new</property>
       <live>true</live>
@@ -161,12 +161,11 @@
           <property>sim/rendering/redout/new</property>
         </binding>
     </checkbox>
-  <text><halign>left</halign><label>Disabled means G-suit year 1979.</label></text>
 
   <hrule/>
   
 	  <button>
-		<legend>Ask crew chief to charge JFS accumulators</legend>
+		<legend>Recharge JFS accumulators</legend>
 		<binding>
 		  <command>nasal</command>
 		  <script>
@@ -184,7 +183,7 @@
   <empty><stretch>1</stretch></empty>
 
     <checkbox>
-      <label>Connect -60 Ground Power Unit</label>
+      <label>Connect Dash 60 Ground Power Unit</label>
       <halign>left</halign>
       <property>fdm/jsbsim/elec/sources/external-pwr</property>
       <live>true</live>

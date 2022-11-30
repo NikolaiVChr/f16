@@ -535,6 +535,8 @@
 		</group>
 	</group>
 
+	<hrule/>
+
 	<text>
 		<halign>left</halign>
 		<live>true</live>
