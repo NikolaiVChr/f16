@@ -63,7 +63,7 @@
               dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.f16dtc"]);
             var save_selector_dtc = gui.FileSelector.new(
               callback: save_stpts, title: "Save data", button: "Save",
-              dir: defaultDirInFileSelector, dotfiles: 1, file: "f16-stpt-iff-and-dl.f16dtc", pattern: ["*.f16dtc"]);
+              dir: defaultDirInFileSelector, dotfiles: 1, file: "f16-dtc-data.f16dtc", pattern: ["*.f16dtc"]);
             
         ]]></open>
 
