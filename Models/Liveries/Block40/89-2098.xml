@@ -4,13 +4,13 @@
  <sim>
   <model>
    <livery>
-    <name type="string">USAF 180FW, 112FS OH Wing Flagship</name>
+    <name type="string">USAF 180FW, 112FS OH "Wing Flagship"</name>
     <texture>Liveries/Block40/89-2098.png</texture>
     <owner type="string">USAF</owner>
    </livery>
 
    <livery-logo>
-    <texture>Liveries/standard.white.logos.png</texture>
+    <texture>Liveries/Block40/OH-098.png</texture>
    </livery-logo>
    
 
