@@ -564,7 +564,11 @@ var Pylon = {
 		if (me.currentSet.showLongTypeInsteadOfCount) {
 			foreach(me.wapny;me.weapons) {
 				if (me.wapny != nil) {
-					me.nameS = "1 "~me.wapny.typeShort;
+					if (me.wapny.typeShort != nil) {
+						me.nameS = "1 "~me.wapny.typeShort;
+					} else {
+						me.nameS = "1 "~me.wapny.type;
+					}
 				}
 			}
 		} else {
