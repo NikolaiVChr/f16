@@ -154,6 +154,7 @@ var LBM2SLUGS = 1/SLUGS2LBM;
 var slugs_to_lbm = SLUGS2LBM;# since various aircraft use this from outside missile, leaving it for backwards compat.
 
 var first_in_air = FALSE;# first missile is in the air, other missiles should not write to MP.
+var first_in_air_max_sec = 30;
 
 var versionString = getprop("sim/version/flightgear");
 var version = split(".", versionString);
@@ -212,6 +213,7 @@ var contactPoint = nil;
 # isPainted()     - Tells if this target is still being radar tracked by the launch platform, only used in semi-radar guided missiles.
 # isLaserPainted()     - Tells if this target is still being tracked by the launch platform, only used by laser guided ordnance.
 # isRadiating(coord) - Tell if anti-radiation missile is hit by radiation from target. coord is the weapon position.
+# isCommandActive()
 # isVirtual()     - Tells if the target is just a position, and should not be considered for damage.
 # get_closure_rate()  -  closure rate in kt
 
@@ -314,8 +316,8 @@ var AIM = {
 		m.asc                   = getprop(m.nodeString~"attack-steering-cue-enabled");# Bool. ASC enabled.
 		# navigation, guiding and seekerhead
 		m.max_seeker_dev        = getprop(m.nodeString~"seeker-field-deg") / 2;       # missiles own seekers total FOV diameter.
-		m.guidance              = getprop(m.nodeString~"guidance");                   # heat/radar/semi-radar/laser/gps/vision/unguided/level/gyro-pitch/radiation/inertial/remote/remote-stable
-		m.guidanceLaw           = getprop(m.nodeString~"navigation");                 # guidance-law: direct/OPN/PN/APN/PNxxyy/APNxxyy (use direct for pure pursuit, use PN for A/A missiles, use APN for modern SAM missiles PN for older, use PNxxyy/APNxxyy for surface to air where xx is degrees to aim above target, yy is seconds it will do that). GPN is APN for winged glidebombs.
+		m.guidance              = getprop(m.nodeString~"guidance");                   # heat/radar/semi-radar/laser/gps/vision/unguided/level/gyro-pitch/radiation/inertial/remote/remote-stable/command
+		m.guidanceLaw           = getprop(m.nodeString~"navigation");                 # guidance-law: direct/OPN/PN/APN/PNxxyy/APNxxyy/LOS (use direct for pure pursuit, use PN for A/A missiles, use APN for modern SAM missiles PN for older, use PNxxyy/APNxxyy for surface to air where xx is degrees to aim above target, yy is seconds it will do that). GPN is APN for winged glidebombs.
 		m.guidanceLawHorizInit  = getprop(m.nodeString~"navigation-init-pure-15");    # Bool. Guide in horizontal plane using pure pursuit until target with 15 deg of nose, before switching to <navigation>
 		m.pro_constant          = getprop(m.nodeString~"proportionality-constant");   # Constant for how sensitive proportional navigation is to target speed/acc. Normally between 3-6. [optional]
 		m.all_aspect            = getprop(m.nodeString~"all-aspect");                 # bool. set to false if missile only locks on reliably to rear of target aircraft
@@ -336,9 +338,11 @@ var AIM = {
 		# engine
 		m.force_lbf_1           = getprop(m.nodeString~"thrust-lbf-stage-1");         # stage 1 thrust [optional]
 		m.force_lbf_2           = getprop(m.nodeString~"thrust-lbf-stage-2");         # stage 2 thrust [optional]
+		m.force_lbf_3           = getprop(m.nodeString~"thrust-lbf-stage-3");         # stage 3 thrust [optional]
 		m.stage_1_duration      = getprop(m.nodeString~"stage-1-duration-sec");       # stage 1 duration [optional]
 		m.stage_gap_duration    = getprop(m.nodeString~"stage-gap-duration-sec");     # gap duration between stage 1 and 2 [optional]
 		m.stage_2_duration      = getprop(m.nodeString~"stage-2-duration-sec");       # stage 2 duration [optional]
+		m.stage_3_duration      = getprop(m.nodeString~"stage-3-duration-sec");       # stage 3 duration [optional]
 		m.weight_fuel_lbm       = getprop(m.nodeString~"weight-fuel-lbm");            # fuel weight [optional]. If this property is not present, it won't lose weight as the fuel is used.
 		m.vector_thrust         = getprop(m.nodeString~"vector-thrust");              # Boolean. This will make less drag due to high G turns while engine is running. [optional]
 		m.engineEnabled         = getprop(m.nodeString~"engine-enabled");             # Boolean. If engine will start at all. [optional]
@@ -531,6 +535,9 @@ var AIM = {
         if (m.force_lbf_2 == nil) {
         	m.force_lbf_2 = 0;
         }
+        if (m.force_lbf_3 == nil) {
+        	m.force_lbf_3 = 0;
+        }
         if(m.stage_gap_duration == nil) {
 			m.stage_gap_duration = 0;
 		}
@@ -539,6 +546,9 @@ var AIM = {
 		}
 		if(m.stage_2_duration == nil) {
 			m.stage_2_duration = 0;
+		}
+		if(m.stage_3_duration == nil) {
+			m.stage_3_duration = 0;
 		}
 		if (m.destruct_when_free == nil) {
 			m.destruct_when_free = FALSE;
@@ -783,6 +793,8 @@ var AIM = {
 		m.vert_closing_rate_fps = -1;
 		m.usingTGPPoint = 0;
 		m.rotate_token = 0;
+		m.CREv = 0;
+		m.CREh = 0;
 
 		#
 		# Terrain following
@@ -810,7 +822,8 @@ var AIM = {
 		m.maxMach      = 0;
 		m.maxMach1     = 0;#stage 1
 		m.maxMach2     = 0;#stage 2
-		m.maxMach3     = 0;#stage 2 end
+		m.maxMach3     = 0;#stage 3
+		m.maxMach4     = 0;#stage 3 end
 		m.energyBleedKt = 0;
 
 		#
@@ -1422,6 +1435,8 @@ var AIM = {
 		me.force_lbf_1      = 0;
 		me.stage_2_duration = 0;
 		me.force_lbf_2      = 0;
+		me.stage_3_duration = 0;
+		me.force_lbf_3      = 0;
 		me.stage_gap_duration = 0;
 		me.drop_time        = 10000;
 		me.inert            = TRUE;
@@ -1649,10 +1664,12 @@ var AIM = {
 		# find the fuel consumption - lbm/sec
 		var impulse1 = me.force_lbf_1 * me.stage_1_duration; # lbf*s
 		var impulse2 = me.force_lbf_2 * me.stage_2_duration; # lbf*s
-		me.impulseT = impulse1 + impulse2;                  # lbf*s
+		var impulse3 = me.force_lbf_3 * me.stage_3_duration; # lbf*s
+		me.impulseT = impulse1 + impulse2 + impulse3;                  # lbf*s
 		me.fuel_per_impulse = me.weight_fuel_lbm / me.impulseT;# lbm/(lbf*s)
-		me.fuel_per_sec_1  = (me.fuel_per_impulse * impulse1) / me.stage_1_duration;# lbm/s
-		me.fuel_per_sec_2  = (me.fuel_per_impulse * impulse2) / me.stage_2_duration;# lbm/s
+		me.fuel_per_sec_1  = me.stage_1_duration == 0?0:(me.fuel_per_impulse * impulse1) / me.stage_1_duration;# lbm/s
+		me.fuel_per_sec_2  = me.stage_2_duration == 0?0:(me.fuel_per_impulse * impulse2) / me.stage_2_duration;# lbm/s
+		me.fuel_per_sec_3  = me.stage_3_duration == 0?0:(me.fuel_per_impulse * impulse3) / me.stage_3_duration;# lbm/s
 
 		me.printExtendedStats();
 
@@ -1720,7 +1737,9 @@ var AIM = {
 		}
 		var nav = "";
 		var nav2 = "";
-		if (me.guidanceLaw == "direct") {
+		if (me.guidanceLaw == "LOS") {
+			nav = "Line-of-sight";
+		} elsif (me.guidanceLaw == "direct") {
 			nav = "Pure pursuit."
 		} elsif (me.guidanceLaw == "OPN") {
 			nav = "Original Proportional navigation. Proportionality constant is "~me.pro_constant;
@@ -1744,7 +1763,9 @@ var AIM = {
 			nav2 = sprintf("Before APN it will aim %d degrees above target for %d seconds.",xx,yy);
 		}
 		var stages = 0;
-		if (me.force_lbf_1 > 0 and me.stage_1_duration > 0 and me.force_lbf_2 > 0 and me.stage_2_duration > 0) {
+		if (me.force_lbf_1 > 0 and me.stage_1_duration > 0 and me.force_lbf_2 > 0 and me.stage_2_duration > 0 and me.force_lbf_3 > 0 and me.stage_3_duration > 0) {
+			stages = 3;
+		} elsif (me.force_lbf_1 > 0 and me.stage_1_duration > 0 and me.force_lbf_2 > 0 and me.stage_2_duration > 0) {
 			stages = 2;
 		} elsif (me.force_lbf_1 > 0 and me.stage_1_duration > 0) {
 			stages = 1;
@@ -1865,6 +1886,9 @@ var AIM = {
 				me.printStats("Stage 2: %d lbf for %.1f seconds.", me.force_lbf_2, me.stage_2_duration);
 				if (me.stage_gap_duration > 0) {
 					me.printStats("Stage 1 to 2 time gap: %.1f seconds.", me.stage_gap_duration);
+				}
+				if (stages > 2) {
+					me.printStats("Stage 3: %d lbf for %.1f seconds.", me.force_lbf_3, me.stage_3_duration);
 				}
 			}
 			me.printStats("%s",vector);
@@ -2137,8 +2161,11 @@ var AIM = {
 		if (me.speed_m > me.maxMach2 and me.life_time > (me.drop_time + me.stage_1_duration) and me.life_time <= (me.drop_time + me.stage_1_duration + me.stage_gap_duration+me.stage_2_duration)) {
 			me.maxMach2 = me.speed_m;
 		}
-		if (me.maxMach3 == 0 and me.life_time > (me.drop_time + me.stage_1_duration + me.stage_gap_duration+me.stage_2_duration)) {
+		if (me.speed_m > me.maxMach3 and me.life_time > (me.drop_time + me.stage_1_duration + me.stage_gap_duration + me.stage_2_duration) and me.life_time <= (me.drop_time + me.stage_1_duration + me.stage_gap_duration+me.stage_2_duration+me.stage_3_duration)) {
 			me.maxMach3 = me.speed_m;
+		}
+		if (me.maxMach4 == 0 and me.life_time > (me.drop_time + me.stage_1_duration + me.stage_gap_duration+me.stage_2_duration+me.stage_3_duration)) {
+			me.maxMach4 = me.speed_m;
 		}
 
 		me.Cd = me.drag(me.speed_m,me.myG);
@@ -2448,7 +2475,10 @@ var AIM = {
 			if (me.exploded == TRUE) {
 				me.printStats("%s max absolute %.2f Mach. Max relative %.2f Mach. Max alt %6d ft. Terminal %.2f mach.", me.type, me.maxMach, me.maxMach-me.startMach, me.maxAlt, me.speed_m);
 				me.printStats("%s max relative %d ft/s.", me.type, me.maxFPS-me.startFPS);
-				me.printStats(" Absolute %.2f Mach in stage 1. Absolute %.2f Mach in stage 2. Absolute %.2f mach propulsion end.", me.maxMach1, me.maxMach2, me.maxMach3);
+				me.printStats(" Absolute %.2f Mach in stage 1.", me.maxMach1);
+				if (me.force_lbf_2 > 0) me.printStats(" Absolute %.2f Mach in stage 2.", me.maxMach2);
+				if (me.force_lbf_3 > 0) me.printStats(" Absolute %.2f Mach in stage 3.", me.maxMach3);
+				if (me.maxMach4 > 0) me.printStats(" Absolute %.2f mach propulsion end.", me.maxMach4);
 				me.printStats(" Fired at %s from %.2f Mach, %5d ft at %3d NM distance. Flew %.1f NM.", me.callsign, me.startMach, me.startAlt, me.startDist * M2NM, me.ac_init.direct_distance_to(me.coord)*M2NM);
 				# We exploded, and start the sound propagation towards the plane
 				me.sndSpeed = me.sound_fps;
@@ -2523,8 +2553,10 @@ var AIM = {
 
 
 		# consume fuel
-		if (me.life_time > (me.drop_time + me.stage_1_duration + me.stage_gap_duration+me.stage_2_duration)) {
+		if (me.life_time > (me.drop_time + me.stage_1_duration + me.stage_gap_duration+me.stage_2_duration+me.stage_3_duration)) {
 			me.weight_current = me.weight_launch_lbm - me.weight_fuel_lbm;
+		} elsif (me.life_time > (me.drop_time + me.stage_1_duration+me.stage_gap_duration + me.stage_2_duration)) {
+			me.weight_current = me.weight_current - me.fuel_per_sec_3 * me.dt;
 		} elsif (me.life_time > (me.drop_time + me.stage_1_duration+me.stage_gap_duration)) {
 			me.weight_current = me.weight_current - me.fuel_per_sec_2 * me.dt;
 		} elsif (me.life_time > me.drop_time and me.life_time < (me.drop_time + me.stage_1_duration)) {
@@ -2534,59 +2566,7 @@ var AIM = {
 		me.mass = me.weight_current * LBM2SLUGS;
 
 		# telemetry
-		if (me.data == TRUE) {
-
-			me.eta = me.free == TRUE or me.vert_closing_rate_fps == -1?-1:(me["t_go"]!=nil?me.t_go:(me.dist_curr*M2FT)/me.vert_closing_rate_fps);
-			if (me.eta < 0) me.eta = -1;
-			me.hit = 50;# in percent
-			if (me.life_time > me.drop_time+me.stage_1_duration + me.gnd_launch?(me.stage_2_duration + me.stage_gap_duration):0) {
-				# little less optimistic after reaching topspeed
-				if (me.selfdestruct_time-me.life_time < me.eta) {
-					# reduce alot if eta later than lifespan
-					me.hit -= 75;
-				} elsif (me.eta != -1 and (me.selfdestruct_time-me.life_time) != 0) {
-					# if its hitting late in life, then reduce
-					me.hit -= (me.eta / (me.selfdestruct_time-me.life_time)) * 25;
-				}
-				if (me.eta > 0) {
-					# penalty if eta is high
-					me.hit -= me.clamp(40*me.eta/(me.life_time*0.85), 0, 40);
-				}
-				if (me.eta < 0) {
-					# penalty if eta is incomputable
-					me.hit -= 75;
-				}
-			}
-			if (me.curr_deviation_h != nil and me.dist_curr > 50) {
-				# penalty for target being off-bore
-				me.hit -= math.abs(me.curr_deviation_h)/2.5;
-			}
-			if (me.guiding == TRUE and me.t_speed_fps != nil and me.old_speed_fps > me.t_speed_fps and me.t_speed_fps != 0) {
-				# bonus for traveling faster than target
-				me.hit += me.clamp((me.old_speed_fps / me.t_speed_fps)*15,-25,50);
-			}
-			if (me.free == TRUE or (me.gnd_launch and (me.chaffLock or me.flareLock))) {
-				# penalty for not longer guiding
-				me.hit -= 75;
-			}
-			me.hit = int(me.clamp(me.hit, 0, 90));
-			me.ai.getNode("ETA").setIntValue(me.eta);
-			me.ai.getNode("hit").setIntValue(me.hit);
-
-			if (me.gnd_launch) {
-				setprop("sam/impact"~me.ID,me.eta);
-				setprop("sam/hit"~me.ID,me.hit);
-			}
-
-			if (me["prevETA"] != nil) {
-				if (me.prevETA < me.eta) {
-					# reset the lowest eta to allow it to increase.
-					AIM.setETA(nil);
-				}
-				AIM.setETA(me.eta, me["prevETA"]);
-			}
-			me.prevETA = me["eta"];
-		}
+		me.sendTelemetry();
 
         if (me.life_time - me.last_noti > me.noti_time and getprop("payload/armament/msg")) {
             # notify in flight using Emesary.
@@ -2677,6 +2657,62 @@ var AIM = {
 			if (me.settings["abort_midflight_function"] != nil) {
 				me.mfFunction = nil;
 			}
+		}
+	},
+
+	sendTelemetry: func {
+		if (me.data == TRUE) {
+
+			me.eta = me.free == TRUE or me.vert_closing_rate_fps == -1?-1:(me["t_go"]!=nil?me.t_go:(me.dist_curr*M2FT)/me.vert_closing_rate_fps);
+			if (me.eta < 0) me.eta = -1;
+			me.hit = 50;# in percent
+			if (me.life_time > me.drop_time+me.stage_1_duration + me.gnd_launch?(me.stage_2_duration + me.stage_gap_duration):0) {
+				# little less optimistic after reaching topspeed
+				if (me.selfdestruct_time-me.life_time < me.eta) {
+					# reduce alot if eta later than lifespan
+					me.hit -= 75;
+				} elsif (me.eta != -1 and (me.selfdestruct_time-me.life_time) != 0) {
+					# if its hitting late in life, then reduce
+					me.hit -= (me.eta / (me.selfdestruct_time-me.life_time)) * 25;
+				}
+				if (me.eta > 0) {
+					# penalty if eta is high
+					me.hit -= me.clamp(40*me.eta/(me.life_time*0.85), 0, 40);
+				}
+				if (me.eta < 0) {
+					# penalty if eta is incomputable
+					me.hit -= 75;
+				}
+			}
+			if (me.curr_deviation_h != nil and me.dist_curr > 50) {
+				# penalty for target being off-bore
+				me.hit -= math.abs(me.curr_deviation_h)/2.5;
+			}
+			if (me.guiding == TRUE and me.t_speed_fps != nil and me.old_speed_fps > me.t_speed_fps and me.t_speed_fps != 0) {
+				# bonus for traveling faster than target
+				me.hit += me.clamp((me.old_speed_fps / me.t_speed_fps)*15,-25,50);
+			}
+			if (me.free == TRUE or (me.gnd_launch and (me.chaffLock or me.flareLock))) {
+				# penalty for not longer guiding
+				me.hit -= 75;
+			}
+			me.hit = int(me.clamp(me.hit, 0, 90));
+			me.ai.getNode("ETA").setIntValue(me.eta);
+			me.ai.getNode("hit").setIntValue(me.hit);
+
+			if (me.gnd_launch) {
+				setprop("sam/impact"~me.ID,me.eta);
+				setprop("sam/hit"~me.ID,me.hit);
+			}
+
+			if (me["prevETA"] != nil) {
+				if (me.prevETA < me.eta) {
+					# reset the lowest eta to allow it to increase.
+					AIM.setETA(nil);
+				}
+				AIM.setETA(me.eta, me["prevETA"]);
+			}
+			me.prevETA = me["eta"];
 		}
 	},
 
@@ -2816,8 +2852,10 @@ var AIM = {
 		#
 		me.thrust_lbf = 0;# pounds force (lbf)
 		if (me.engineEnabled) {
-			if (me.life_time > (me.drop_time + me.stage_1_duration + me.stage_gap_duration + me.stage_2_duration)) {
+			if (me.life_time > (me.drop_time + me.stage_1_duration + me.stage_gap_duration + me.stage_2_duration + me.stage_3_duration)) {
 				me.thrust_lbf = 0;
+			} elsif (me.life_time > me.stage_1_duration + me.stage_gap_duration + me.drop_time + me.stage_2_duration) {
+				me.thrust_lbf = me.force_lbf_3;
 			} elsif (me.life_time > me.stage_1_duration + me.stage_gap_duration + me.drop_time) {
 				me.thrust_lbf = me.force_lbf_2;
 			} elsif (me.life_time > me.drop_time and me.life_time < me.drop_time+me.stage_1_duration) {
@@ -2903,7 +2941,7 @@ var AIM = {
 	},
 
 	setFirst: func() {
-		if (me.smoke_prop.getValue() == TRUE and me.life_time < 20) {
+		if (me.smoke_prop.getValue() == TRUE and me.life_time < first_in_air_max_sec) {
 			if (me.first == TRUE or first_in_air == FALSE) {
 				# report position over MP for MP animation of smoke trail.
 				me.first = TRUE;
@@ -2915,7 +2953,7 @@ var AIM = {
 					me.mpAltft.setDoubleValue(me.coord.alt()*M2FT);
 				}
 			}
-		} elsif (me.first == TRUE and me.life_time > me.drop_time + me.stage_1_duration + me.stage_gap_duration + me.stage_2_duration) {
+		} elsif (me.first == TRUE and (me.life_time >= first_in_air_max_sec or me.life_time > me.drop_time + me.stage_1_duration + me.stage_gap_duration + me.stage_2_duration)) {
 			# this weapon was reporting its position over MP, but now its fuel has used up. So allow for another to do that.
 			me.resetFirst();
 		}
@@ -3224,6 +3262,11 @@ var AIM = {
 				me.printStats(me.type~": Not guiding (lost radar reflection, gave up)");
 				me.free = TRUE;
 			}
+		} elsif (me.guidance == "command" and (me.Tgt == nil or !me.Tgt.isCommandActive())) {
+			# if its command guided and the control no longer sends commands
+			me.guiding = FALSE;
+			me.printStats(me.type~": Not guiding (no commands from controller, gave up)");
+			me.free = TRUE;
 		} elsif (me.guidance == "radiation" and me.is_radiating_me(me.Tgt) == FALSE) {
 			# if its radiation guided and the target is not illuminating us with radiation
 			me.guiding = FALSE;
@@ -3639,7 +3682,7 @@ var AIM = {
 			# augmented proportional navigation for heading #
 			#################################################
 
-			if (me.guidanceLaw == "direct") {
+			if (me.guidanceLaw == "direct" or (me.guidanceLaw == "LOS" and me.life_time < 4)) {
 				# pure pursuit
 				me.raw_steer_signal_head = me.curr_deviation_h;
 				if (me.cruise_or_loft == FALSE) {
@@ -3738,8 +3781,30 @@ var AIM = {
 			me.t_go = me.myMath.dotProduct(me.R_tm,me.R_tm)/me.myMath.dotProduct(me.R_tm, me.V_tm);
 			#printf("time_to_go %.1f, closing %d",me.t_go,me.vert_closing_rate_fps);
 
-			# Horizontal PN:
-			if (me.apn == 1) {
+			
+
+			# Horizontal homing:
+			if (me.guidanceLaw == "LOS") {
+				
+				me.K1 =    2.5;
+				me.K2 =   10.0;
+
+				me.R_m = me.ac_init.distance_to(me.coord)*M2FT;
+	    		me.course_to_missile = me.ac_init.course_to(me.coord);
+				me.course_to_target  = me.ac_init.course_to(me.t_coord);
+				me.CREh_old = me.CREh;
+				# cross range error:
+				me.CREh = me.R_m*math.sin(me.clamp(geo.normdeg180(me.course_to_target - me.course_to_missile),-89,89)*D2R);
+				me.CREh_dot = (me.CREh - me.CREh_old)/me.dt;
+				me.acc_lateral_fps2 = me.K1*me.CREh_dot + me.K2*me.CREh;
+				me.toBody = math.cos(geo.normdeg180(me.hdg-me.course_to_target)*D2R);
+				if (me.toBody==0) me.toBody=0.0001;
+				me.acc_lateral_fps2 /= me.toBody;
+				me.velocity_vector_length_fps = me.clamp(me.old_speed_horz_fps, 0.0001, 1000000);
+				me.commanded_lateral_vector_length_fps = me.acc_lateral_fps2*me.dt;
+				me.raw_steer_signal_head  = R2D*me.commanded_lateral_vector_length_fps/me.velocity_vector_length_fps;
+				#me.raw_steer_signal_head = me.curr_deviation_h;
+			} elsif (me.apn == 1) {
 				# APN (constant best at 5, but the higher value the more sensitive to noise)
 				# Augmented proportional navigation. Takes target acc. into account. Invented for SAMs.
 				me.toBody = math.cos(me.curr_deviation_h*D2R);#convert perpendicular LOS acc. to perpendicular body acc.
@@ -3823,8 +3888,26 @@ var AIM = {
 					me.last_t_elev_norm_speed          = me.t_LOS_elev_norm_speed;
 					#printf("Target acc. perpendicular to LOS (positive up): %.1f G.", me.t_LOS_elev_norm_acc/g_fps);
 
-					# Vertical PN:
-					if (me.apn == 1) {
+					# Vertical homing:
+					if (me.guidanceLaw == "LOS") {
+			    		me.R_m = me.ac_init.direct_distance_to(me.coord)*M2FT;
+			    		me.pitch_to_missile = me.myMath.getPitch(me.ac_init,me.coord);
+						me.pitch_to_target  = me.myMath.getPitch(me.ac_init,me.t_coord);
+
+						me.CREv_old = me.CREv;
+						# Cross range error
+						me.CREv = me.R_m*math.sin((me.pitch_to_target - me.pitch_to_missile)*D2R);
+						me.CREv_dot = (me.CREv - me.CREv_old)/me.dt;
+						me.acc_upwards_fps2 = me.K1*me.CREv_dot + me.K2*me.CREv;
+						# Convert perpendicular LOS acc. to perpendicular body acc.
+						me.toBody = math.cos((me.pitch - me.pitch_to_target)*D2R);
+						if (me.toBody==0) me.toBody=0.00001;
+						me.acc_upwards_fps2 /= me.toBody;
+						# Apply the acc.
+						me.velocity_vector_length_fps = me.clamp(me.old_speed_fps, 0.0001, 1000000);
+						me.commanded_upwards_vector_length_fps = me.acc_upwards_fps2*me.dt;
+						me.raw_steer_signal_elev  = R2D*me.commanded_upwards_vector_length_fps/me.velocity_vector_length_fps;
+					} elsif (me.apn == 1) {
 						# APN (constant best at 5, but the higher value the more sensitive to noise)
 						# Augmented proportional navigation. Takes target acc. into account. Invented for SAMs.
 						me.toBody = math.cos(me.curr_deviation_e*D2R);#convert perpendicular LOS acc. to perpendicular body acc.
