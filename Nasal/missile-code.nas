@@ -795,6 +795,11 @@ var AIM = {
 		m.rotate_token = 0;
 		m.CREv = 0;
 		m.CREh = 0;
+		m.CREv_old = 0;
+		m.CREh_old = 0;
+		m.CRE_old_dt = 0.05;
+
+
 
 		#
 		# Terrain following
@@ -835,6 +840,7 @@ var AIM = {
 		m.chaffLast = 0;
 		m.chaffTime = 0;
 		m.chaffLock = FALSE;
+		m.chaffLockTime = -1000;
 		m.flarespeed_fps = nil;
 
 		#
@@ -3127,7 +3133,7 @@ var AIM = {
 		#
 		# Check for being fooled by flare.
 		#
-		if (me.Tgt != nil and me.fovLost != TRUE and me.guidance == "heat" and me.flareLock == FALSE and (getprop("sim/time/elapsed-sec")-me.flareTime) > 1) {
+		if (me.Tgt != nil and me.fovLost != TRUE and me.guidance == "heat" and me.flareLock == FALSE and (me.life_time-me.flareTime) > 1) {
 			# the fov check is for loal missiles that should not lock onto flares from aircraft not in view.
 			#
 			# TODO: Use Richards Emissary for this.
@@ -3138,7 +3144,7 @@ var AIM = {
 				if (me.flareNumber != nil and me.flareNumber != 0) {
 					if (me.flareNumber != me.flareLast) {
 						# target has released a new flare, lets check if it fools us
-						me.flareTime = getprop("sim/time/elapsed-sec");
+						me.flareTime = me.life_time;
 						me.flareLast = me.flareNumber;
 						me.aspectDeg = me.aspectToExhaust(me.coord, me.Tgt) / 180;
 						me.flareLock = rand() < (1-me.flareResistance + ((1-me.flareResistance) * 0.5 * me.aspectDeg));# 50% extra chance to be fooled if front aspect
@@ -3161,7 +3167,7 @@ var AIM = {
 		#
 		# Check for being fooled by chaff.
 		#
-		if (me.Tgt != nil and me.fovLost != TRUE and (me.guidance == "radar" or me.guidance == "semi-radar") and me.chaffLock == FALSE and (getprop("sim/time/elapsed-sec")-me.chaffTime) > 1) {
+		if (me.Tgt != nil and me.fovLost != TRUE and (me.guidance == "radar" or me.guidance == "semi-radar" or me.guidance == "command") and me.chaffLock == FALSE and (me.life_time-me.chaffTime) > 1) {
 			#
 			# TODO: Use Richards Emissary for this.
 			#
@@ -3172,10 +3178,10 @@ var AIM = {
 					if (me.chaffNumber != me.chaffLast) {# problem here is MP interpolates to new values. Hence the timer.
 						# target has released a new chaff, lets check if it blinds us
 						me.chaffLast = me.chaffNumber;
-						me.chaffTime = getprop("sim/time/elapsed-sec");
+						me.chaffTime = me.life_time;
 						me.aspectDeg = me.aspectToExhaust(me.coord, me.Tgt) / 180;# 0 = viewing engine, 1 = front
-						me.semi = me.guidance == "semi-radar"?1:1;
-						me.chaffChance = (1-me.chaffResistance)*me.semi;
+						me.redux = me.guidance == "semi-radar" or me.guidance == "command"?(me.gnd_launch?0.5:0.75):1;
+						me.chaffChance = (1-me.chaffResistance)*me.redux;
 						me.chaffLock = rand() < (me.chaffChance - (me.chaffChance * 0.5 * me.aspectDeg));# 50% less chance to be fooled if front aspect
 
 						if (me.chaffLock == TRUE) {
@@ -3183,6 +3189,7 @@ var AIM = {
 							me.flarespeed_fps = me.Tgt.get_Speed()*KT2FPS;
 							me.flare_hdg      = me.Tgt.get_heading();
 							me.flare_pitch    = me.Tgt.get_Pitch();
+							me.chaffLockTime  = me.life_time;
 						} else {
 							me.printStats(me.type~": Missile ignored chaff from "~me.callsign);
 						}
@@ -3265,8 +3272,7 @@ var AIM = {
 		} elsif (me.guidance == "command" and (me.Tgt == nil or !me.Tgt.isCommandActive())) {
 			# if its command guided and the control no longer sends commands
 			me.guiding = FALSE;
-			me.printStats(me.type~": Not guiding (no commands from controller, gave up)");
-			me.free = TRUE;
+			me.printStats(me.type~": Not guiding (no commands from controller)");
 		} elsif (me.guidance == "radiation" and me.is_radiating_me(me.Tgt) == FALSE) {
 			# if its radiation guided and the target is not illuminating us with radiation
 			me.guiding = FALSE;
@@ -3328,6 +3334,10 @@ var AIM = {
 				me.normFOV = me.FOV_check_norm(me.hdg, me.pitch, me.curr_deviation_h, me.curr_deviation_e, me.max_seeker_dev, me.myMath);
 				me.printStats(me.type~": Passed minimum speed for guiding after %.1f seconds. Target %d%% inside view.", me.life_time, me.normFOV*100);
 			}
+		}
+		if (me.chaffLock and (me.guidance == "command" or me.guidance == "semi-radar") and me.life_time - me.chaffLockTime > me.gnd_launch?4:6) {
+			me.chaffLock = 0;
+			me.printStats(me.type~": Chaff dissipated, regained track.");
 		}
 	},
 
@@ -3792,10 +3802,11 @@ var AIM = {
 				me.R_m = me.ac_init.distance_to(me.coord)*M2FT;
 	    		me.course_to_missile = me.ac_init.course_to(me.coord);
 				me.course_to_target  = me.ac_init.course_to(me.t_coord);
+				me.CREh_old_old = me.CREh_old;
 				me.CREh_old = me.CREh;
 				# cross range error:
 				me.CREh = me.R_m*math.sin(me.clamp(geo.normdeg180(me.course_to_target - me.course_to_missile),-89,89)*D2R);
-				me.CREh_dot = (me.CREh - me.CREh_old)/me.dt;
+				me.CREh_dot = (me.CREh - me.CREh_old_old)/(me.dt+me.CRE_old_dt);
 				me.acc_lateral_fps2 = me.K1*me.CREh_dot + me.K2*me.CREh;
 				me.toBody = math.cos(geo.normdeg180(me.hdg-me.course_to_target)*D2R);
 				if (me.toBody==0) me.toBody=0.0001;
@@ -3893,11 +3904,11 @@ var AIM = {
 			    		me.R_m = me.ac_init.direct_distance_to(me.coord)*M2FT;
 			    		me.pitch_to_missile = me.myMath.getPitch(me.ac_init,me.coord);
 						me.pitch_to_target  = me.myMath.getPitch(me.ac_init,me.t_coord);
-
+						me.CREv_old_old = me.CREv_old;
 						me.CREv_old = me.CREv;
 						# Cross range error
 						me.CREv = me.R_m*math.sin((me.pitch_to_target - me.pitch_to_missile)*D2R);
-						me.CREv_dot = (me.CREv - me.CREv_old)/me.dt;
+						me.CREv_dot = (me.CREv - me.CREv_old_old)/(me.dt+me.CRE_old_dt);
 						me.acc_upwards_fps2 = me.K1*me.CREv_dot + me.K2*me.CREv;
 						# Convert perpendicular LOS acc. to perpendicular body acc.
 						me.toBody = math.cos((me.pitch - me.pitch_to_target)*D2R);
@@ -3946,6 +3957,7 @@ var AIM = {
 					#printf("Proportional lead: %0.1f deg elev", -(me.curr_deviation_e-me.raw_steer_signal_elev));
 				}
 			}
+			me.CRE_old_dt = me.dt;
 		}
 	},
 
