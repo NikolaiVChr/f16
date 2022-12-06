@@ -313,7 +313,7 @@ var medium_fast = {
             call(func{var interfaceController = fg1000.GenericInterfaceController.getOrCreateInstance();
             interfaceController.stop();},nil,var err2=[]);
         }
-        setprop("/sim/multiplay/visibility-range-nm", 160);
+        setprop("/sim/multiplay/visibility-range-nm", 256);
         if (getprop("payload/armament/es/flags/deploy-id-10")!= nil) {
             # ejection chute force
             setprop("f16/force", 7-5*getprop("payload/armament/es/flags/deploy-id-10"));

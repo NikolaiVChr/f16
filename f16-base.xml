@@ -984,7 +984,7 @@
             <ho-field type="int">120</ho-field><!-- bars -->
             <az-field-std type="int">120</az-field-std>
             <ho-field-std type="int">120</ho-field-std><!-- bars -->
-            <range type="double">160</range>
+            <range type="double">256</range><!-- HSD max range ring -->
             <mode-hd-switch type="int">-1</mode-hd-switch>
             <range-selected type="double">40</range-selected>
             <display-rdr type="bool">true</display-rdr>

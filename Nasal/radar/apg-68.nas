@@ -981,15 +981,11 @@ DatalinkRadar = {
 			}
 		} else {
 
-
-			if (me.contact.getRangeDirect()*M2NM > me.max_dist_nm) {me.index += 1;return;}
-
-
 	        me.lnk = datalink.get_data(me.cs);
 	        if (!me.contact.isValid()) {
 	        	me.lnk = nil;
 	        }
-	        if (me.lnk != nil and me.lnk.on_link() == 1) {
+	        if (me.lnk != nil and me.lnk.on_link() == 1 and me.contact.getRangeDirect()*M2NM < me.max_dist_nm) {
 	            me.blue = 1;
 	            me.blueIndex = me.lnk.index()+1;
 	        } elsif (me.cs == getprop("link16/wingman-4")) { # Hack that the F16 need. Just ignore it, as nil wont cause expection.
@@ -1000,8 +996,14 @@ DatalinkRadar = {
 	            me.blueIndex = -1;
 	        }
 	        if (!me.blue and me.lnk != nil and me.lnk.tracked() == 1) {
-	            me.blue = 2;
-	            me.blueIndex = me.lnk.tracked_by_index()+1;
+	        	me.dl_idx = me.lnk.tracked_by_index();
+	        	if (me.dl_idx != nil and me.dl_idx > -1) {
+		        	me.dl_rng = getprop("ai/models/multiplayer["~me.dl_idx~"]/radar/range-nm");
+		        	if (me.dl_rng != nil and me.dl_rng < me.max_dist_nm) {
+			            me.blue = 2;
+			            me.blueIndex = me.dl_idx+1;
+			        }
+			    }
 	        }
 
 	        me.contact.blue = me.blue;
