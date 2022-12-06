@@ -296,6 +296,7 @@ RWRCanvas = {
                 "E-8R":                     rwr.AIRCRAFT_SEARCH,
                 "EC-137D":                  rwr.AIRCRAFT_SEARCH,
                 "gci":                      rwr.AIRCRAFT_SEARCH,
+                "A-50":                     rwr.AIRCRAFT_SEARCH,
                 "Blackbird-SR71A":          rwr.AIRCRAFT_BLACKBIRD,
                 "Blackbird-SR71A-BigTail":  rwr.AIRCRAFT_BLACKBIRD,
                 "Blackbird-SR71B":          rwr.AIRCRAFT_BLACKBIRD,
@@ -470,7 +471,7 @@ RWRCanvas = {
             #print("show "~me.i~" "~me.typ~" "~contact[0].getModel()~"  "~contact[1]);
             me.threat = me.contact[1];#print(me.threat);
             
-            if (me.threat > 0.5 and me.typ != me.AIRCRAFT_UNKNOWN and me.typ != me.ASSET_AI) {
+            if (me.threat > 0.5 and me.typ != me.AIRCRAFT_UNKNOWN and me.typ != me.ASSET_AI and me.typ != me.AIRCRAFT_SEARCH) {
                 me.threat = me.inner_radius;# inner circle
             } elsif (me.threat > 0 and me.typ != me.ASSET_AI) {
                 me.threat = me.outer_radius;# outer circle
@@ -487,7 +488,7 @@ RWRCanvas = {
             me.texts[me.i].setText(me.typ);
             me.texts[me.i].show();
             
-            if (me.prio == 0 and me.typ != me.ASSET_AI and me.typ != me.AIRCRAFT_UNKNOWN) {# 
+            if (me.prio == 0 and me.typ != me.ASSET_AI and me.typ != me.AIRCRAFT_UNKNOWN and me.typ != me.AIRCRAFT_SEARCH) {# 
                 me.symbol_priority.setTranslation(me.x,me.y);
                 me.symbol_priority.show();
                 me.prio = 1;
