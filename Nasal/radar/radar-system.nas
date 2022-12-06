@@ -2311,6 +2311,24 @@ var isOmniRadiating = func (model) {
 
 var getRadarFieldRadius = func (model) {
 	# Override this method in your aircraft to do this in another way
+	if (model == "A-50" or model == "EC-137R") {
+		return 180;
+	}
+	if (model == "S-75" or model == "s-200") {
+		return 180;
+	}
+	if (model == "SA-6" or model == "buk-m2") {
+		return 180;
+	}
+	if (model == "s-300" or model == "MIM104D") {
+		return 180;
+	}
+	if (model == "gci" or model == "ZSU-23-4M") {
+		return 180;
+	}
+	if (model == "fleet" or model == "missile-frigate") {
+		return 180;
+	}
 	return 60;
 }
 
