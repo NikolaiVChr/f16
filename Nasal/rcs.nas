@@ -30,7 +30,6 @@ var rcs_database = {
     "FA-18C_Hornet":            3.5,    #later Blocks have 1
     "FA-18D_Hornet":            3.5,
     "FA-18E_CVW5":              1.0,
-    "daVinci_SU-34":            8,      #should be less
     "Su-34":                    8,      #should be less
     "SU-37":                    8,      #wild guess
     "F-5E-TigerII":             4,      #close to actual

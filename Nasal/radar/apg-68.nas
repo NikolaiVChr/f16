@@ -2522,7 +2522,7 @@ var RWR = {
                     me.threat += ((180-me.dev)/180)*0.30;# most threat if I am in front of his nose
                     me.spd = (60-me.threatDB[8])/60;
                     #me.threat -= me.spd>0?me.spd:0;# if his speed is lower than 60kt then give him minus threat else positive
-                } elsif (me.u.getModel == "missile_frigate" or me.u.getModel() == "fleet") {
+                } elsif (me.u.getModel() == "missile_frigate" or me.u.getModel() == "fleet") {
                     me.threat += 0.30;
                 } else {
                     me.threat += 0.30;

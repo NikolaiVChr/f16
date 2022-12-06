@@ -1,5 +1,5 @@
 var rcs_oprf_database = {
-    #Revision NOV 28 2022
+    #Revision DEC 06 2022
     # This list contains the mandatory RCS frontal values for OPRF (anno 1997), feel free to add non-OPRF to your aircraft, we don't care.
     "default":                  150,    #default value if target's model isn't listed
     "f-14b":                    12,     
@@ -79,6 +79,8 @@ var rcs_oprf_database = {
 # Automats:
     "MiG-29":                   6,
     "SU-27":                    15,
+    "daVinci_SU-34":            8,
+    "A-50":                     150,
 # Hunter ships
     "USS-NORMANDY":             450,    
     "USS-LakeChamplain":        450,    
