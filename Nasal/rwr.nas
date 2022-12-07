@@ -216,7 +216,7 @@ RWRCanvas = {
 #                   .hide();
 #        }
 # Threat list ID:
-        #REVISION: 2022/12/06
+        #REVISION: 2022/12/07
         #OPRF Fleet
         rwr.AIRCRAFT_WARTHOG  = "10";
         rwr.AIRCRAFT_TOMCAT   = "14";
@@ -346,13 +346,18 @@ RWRCanvas = {
                 "onox-awacs":               rwr.AIRCRAFT_SEARCH,
                 "u-2s":                     rwr.AIRCRAFT_SEARCH,
                 "U-2S-model":               rwr.AIRCRAFT_SEARCH,
-                "F-4S":                     rwr.AIRCRAFT_PHANTOM,
-                "F-4EJ_ADTW":               rwr.AIRCRAFT_PHANTOM,
-                "FGR2-Phantom":             rwr.AIRCRAFT_PHANTOM,
-                "F4J":                      rwr.AIRCRAFT_PHANTOM,
+                "F-4C":                     rwr.AIRCRAFT_PHANTOM,
                 "F-4D":                     rwr.AIRCRAFT_PHANTOM,
                 "F-4E":                     rwr.AIRCRAFT_PHANTOM,
+                "F-4EJ":                    rwr.AIRCRAFT_PHANTOM,
+                "F-4EJ_ADTW":               rwr.AIRCRAFT_PHANTOM,
+                "F-4F":                     rwr.AIRCRAFT_PHANTOM,
+                "F-4J":                     rwr.AIRCRAFT_PHANTOM,
+                "F4J":                      rwr.AIRCRAFT_PHANTOM,
                 "F-4N":                     rwr.AIRCRAFT_PHANTOM,
+                "F-4S":                     rwr.AIRCRAFT_PHANTOM,
+                "FGR2":                     rwr.AIRCRAFT_PHANTOM,
+                "FGR2-Phantom":             rwr.AIRCRAFT_PHANTOM,
                 "a4f":                      rwr.AIRCRAFT_SKYHAWK,
                 "A-4K":                     rwr.AIRCRAFT_SKYHAWK,
                 "F-5E":                     rwr.AIRCRAFT_TIGER,
