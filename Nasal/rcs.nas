@@ -17,7 +17,7 @@ var test = func (echoHeading, echoPitch, echoRoll, bearing, frontRCS) {
 };
 
 var rcs_database = {
-	#REVISION: 2022/05/29
+	#REVISION: 2022/12/06
     "YF-16":                    5,      #higher because earlier blocks had larger RCS
     "F-16CJ":                   2,      #average
     "f16":                      2,      #average
@@ -25,10 +25,12 @@ var rcs_database = {
     "J-11A":                    15,     #same as Su-27
     "jaguar":                   6,      #guess
     "onox-tanker":              100,    #guess
+    "A-6E":                     9,      #average
     "EF2000":                   0.5,
     "brsq":                     1.5,    #average (multiple sources)
     "FA-18C_Hornet":            3.5,    #later Blocks have 1
     "FA-18D_Hornet":            3.5,
+    "FA-18":                    3.5,
     "FA-18E_CVW5":              1.0,
     "Su-34":                    8,      #should be less
     "SU-37":                    8,      #wild guess
@@ -39,12 +41,18 @@ var rcs_database = {
     "f-20prototype":            2.5,
     "f-20bmw":                  2.5,
     "f-20-dutchdemo":           2.5,
+    "t38talon":                 4,
     "MiG-15bis":                6,     #guess
     "MiG-21Bison":              3.5,
     "MiG-25":                   30,    #guess
     "Su-25":                    7,     #guess
     "G91-R1B":                  6,     #guess
+    "mb339":                    4,     #guess
+    "mb339pan":                 4,     #guess
+    "alphajet":                 4.5,   #average
     "Tu-160-Blackjack":         15,
+    "E-2C-Hawkeye":             60,    #guess
+    "c-2a":                     50,    #guess
     # Helis:
     "uh60_Blackhawk":           10,     #guess
     "AH-1W":                    7,      #guess
@@ -59,14 +67,14 @@ var rcs_database = {
     "Merlin-HM1":               14,     #guess
     "OH-58D":                   7,      #guess
     #Stealth
-    "b2-spirit":                0.001,  #actual: 0.0001
-    "B-2A":                     0.001,  #actual: 0.0001
-    "F-22-Raptor":				0.001,	#actual: 0.0001
-    "F-35A":					0.0005,
-    "F-35B":					0.0005,
-    "F-35C":                    0.0005,
-    "daVinci_F-35A":            0.0005,
-    "daVinci_F-35B":            0.0005,
+    "b2-spirit":                0.0001,  #actual: 0.0001
+    "B-2A":                     0.0001,  #actual: 0.0001
+    "F-22-Raptor":				0.0001,	#actual: 0.0001
+    "F-35A":					0.0015,
+    "F-35B":					0.0015,
+    "F-35C":                    0.0015,
+    "daVinci_F-35A":            0.0015,
+    "daVinci_F-35B":            0.0015,
     "F-117":                    0.003,
     "T-50":                     0.5,    #low end of sources
     "u-2s":                     0.01,
