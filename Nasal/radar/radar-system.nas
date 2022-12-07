@@ -2412,7 +2412,7 @@ var knownCarriers = {
 
 var knownAwacs = {
 	"A-50": nil,
-	"EC_137R": nil,
+	"EC-137R": nil,
 };
 
 var knownShips = {
