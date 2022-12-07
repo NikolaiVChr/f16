@@ -2391,6 +2391,10 @@ var isKnownSurface = func (model) {
 	contains(knownSurface, model);
 }
 
+var isKnownAwacs = func (model) {
+	contains(knownAwacs, model);
+}
+
 var isKnownHeli = func (model) {
 	contains(knownHelis, model);
 }
@@ -2404,6 +2408,11 @@ var knownCarriers = {
 	"mp-eisenhower": nil,
 	"mp-nimitz": nil,
 	"mp-vinson": nil,
+};
+
+var knownAwacs = {
+	"A-50": nil,
+	"EC_137R": nil,
 };
 
 var knownShips = {
