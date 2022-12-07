@@ -348,7 +348,7 @@ var AIToNasal = {
 			me.lookupCallsignNew[callsignKey] = callsignsRaw;
 			foreach(me.newContact; callsignsRaw) {
 				append(me.vector_aicontacts, me.newContact);
-				me.newContact.init();
+				me.newContact.init();				
 			}
 		}		
 	},
@@ -400,6 +400,51 @@ var Contact = {
 	},
 };
 
+
+#   ██████  █████  ██      ██      ███████ ██  ██████  ███    ██     ██       ██████   ██████  ██   ██ ██    ██ ██████  
+#  ██      ██   ██ ██      ██      ██      ██ ██       ████   ██     ██      ██    ██ ██    ██ ██  ██  ██    ██ ██   ██ 
+#  ██      ███████ ██      ██      ███████ ██ ██   ███ ██ ██  ██     ██      ██    ██ ██    ██ █████   ██    ██ ██████  
+#  ██      ██   ██ ██      ██           ██ ██ ██    ██ ██  ██ ██     ██      ██    ██ ██    ██ ██  ██  ██    ██ ██      
+#   ██████ ██   ██ ███████ ███████ ███████ ██  ██████  ██   ████     ███████  ██████   ██████  ██   ██  ██████  ██      
+#                                                                                                                       
+#                                                                                                                       
+var CallsignToContact = {
+	# 
+	new: func () {
+		var ctc = {parents: [CallsignToContact, Radar]};
+				
+		ctc.struct_csContact = {};
+
+		ctc.CallsignToContactRecipient = emesary.Recipient.new("CallsignToContactRecipient");
+		ctc.CallsignToContactRecipient.radar = ctc;
+		ctc.CallsignToContactRecipient.Receive = func(notification) {
+	        if (notification.NotificationType == "AINotification") {
+	        	#printf("OmniRadar recv: %s", notification.NotificationType);
+	            if (me.radar.enabled == 1) {
+	    		    me.radar.struct_csContact = {};
+	    		    foreach(contact ; notification.vector) {
+	    		    	var cs = contact.getCallsign();
+	    		    	if (cs == nil or cs == "") continue;
+	    		    	me.radar.struct_csContact[cs] = contact;
+	    		    }
+	    	    }
+	            return emesary.Transmitter.ReceiptStatus_OK;
+	        }
+	        return emesary.Transmitter.ReceiptStatus_NotProcessed;
+	    };
+		emesary.GlobalTransmitter.Register(ctc.CallsignToContactRecipient);
+		return ctc;
+	},
+
+	get: func (cs) {
+		if (!me.enabled) return nil;
+		return me.struct_csContact[cs];
+	},
+
+	del: func {
+        emesary.GlobalTransmitter.DeRegister(me.CallsignToContactRecipient);
+    },
+};
 
 
 #   ██████  ██     ██ ███    ██ ███████ ██   ██ ██ ██████  
