@@ -17,11 +17,12 @@ var test = func (echoHeading, echoPitch, echoRoll, bearing, frontRCS) {
 };
 
 var rcs_database = {
-	#REVISION: 2022/12/06
+	#REVISION: 2022/12/11
     "YF-16":                    5,      #higher because earlier blocks had larger RCS
     "F-16CJ":                   2,      #average
     "f16":                      2,      #average
     "jaguar":                   6,      #guess
+    "KC135":                    100,    #guess
     "onox-tanker":              100,    #guess
     "A-6E":                     9,      #average
     "EF2000":                   0.5,
@@ -54,32 +55,40 @@ var rcs_database = {
     "daVinci_F-111G":           11,
     "MiG-15bis":                6,     #guess
     "MiG-21Bison":              3.5,
-    "MiG-25":                   30,    #guess
-    "Mig-29":                   6,      #guess
+    "MiG-25":                   9,     #average
+    "Mig-29":                   6,     #guess
+    "Su-15":                    6.5,   #guess
     "Su-25":                    7,     #guess
     "Su-34":                    8,     #should be less
-    "SU-37":                    8,     #wild guess
+    "SU-37":                    6,     #wild guess
     "J-11A":                    15,    #same as Su-27
+    "tu95":                     20,    #average
+    "Tu-95MR":                  20,    #average
     "Tu-160-Blackjack":         15,
     "G91-R1B":                  6,     #guess
     "mb339":                    4,     #guess
     "mb339pan":                 4,     #guess
     "alphajet":                 4.5,   #average
-    "E-2C-Hawkeye":             60,    #guess
-    "c-2a":                     50,    #guess
+    "E-2C-Hawkeye":             22,    #average
+    "c-2a":                     20,    #average
+    "ac130":                    32,    #average
+    "C130J":                    32,    #average
+    "c130k":                    32,    #average
+    "kc130":                    32,    #average
+    "XB-70":                    21,    #average
     # Helis:
-    "uh60_Blackhawk":           10,     #guess
-    "AH-1W":                    7,      #guess
-    "WAH-64_Apache":            5,      #guess
-    "rah-66":                   0.8,    #wild guess
-    "Gazelle":                  7,      #guess
-    "Westland_Gazelle":         7,      #guess
-    "AS532-Cougar":             9,      #guess
-    "Westland_SeaKing-HAR3":    10,     #guess
-    "Lynx-HMA8":                8,      #guess
-    "Lynx_Wildcat":             8,      #guess
-    "Merlin-HM1":               14,     #guess
-    "OH-58D":                   7,      #guess
+    "uh60_Blackhawk":           4,      #average
+    "AH-1W":                    4,      #average
+    "WAH-64_Apache":            5,      #average
+    "rah-66":                   1,      #wild guess
+    "Gazelle":                  1.5,    #guess
+    "Westland_Gazelle":         1.5,    #guess
+    "AS532-Cougar":             3,      #guess
+    "Westland_SeaKing-HAR3":    3.5,    #average
+    "Lynx-HMA8":                1,      #average
+    "Lynx_Wildcat":             1,      #average
+    "Merlin-HM1":               5,      #average
+    "OH-58D":                   0.5,    #average
     #Stealth
     "b2-spirit":                0.0001,  #actual: 0.0001
     "B-2A":                     0.0001,  #actual: 0.0001
