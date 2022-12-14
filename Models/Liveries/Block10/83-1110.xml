@@ -23,6 +23,7 @@
 
   <f16>
      <dragchute type="bool">false</dragchute>
+     <link16 type="bool">false</link16>
   </f16>
   <livery-specular type="double">0.35</livery-specular>
   </model>
