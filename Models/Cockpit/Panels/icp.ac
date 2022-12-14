@@ -40859,7 +40859,7 @@ refs 3
 66 0.928615 0.098487
 kids 0
 OBJECT poly
-name "vx"
+name "wx"
 data 8
 Cylinder
 crease 30.0

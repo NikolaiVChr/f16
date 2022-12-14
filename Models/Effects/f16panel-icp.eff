@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PropertyList>
+    <name>Effects/f16panel-left</name>
+    <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
+    <parameters>
+        <light-filter-one type="vec3d">0.5 0.5 0.5</light-filter-one>
+        <light-filter-two type="vec3d">0.9 0.2 0.2</light-filter-two>
+        <implicit-lightmap-enabled type="int">1</implicit-lightmap-enabled>
+        <implicit-lightmap-tag-color type="vec3d">1 1 1</implicit-lightmap-tag-color>
+        <implicit-lightmap-emit-color type="vec3d">0.476 0.9 0.161</implicit-lightmap-emit-color>
+        <implicit-lightmap-threshold-low type="float">0.1</implicit-lightmap-threshold-low>
+        <implicit-lightmap-threshold-high type="float">0.3</implicit-lightmap-threshold-high>
+        <implicit-lightmap-intensity>
+            <use>controls/lighting/lighting-panel/console-primary</use>
+        </implicit-lightmap-intensity>
+        <!--<residual-ambience-r><use>rendering/scene/diffuse/red</use></residual-ambience-r>
+            <residual-ambience-g><use>rendering/scene/diffuse/red</use></residual-ambience-g>
+            <residual-ambience-b><use>rendering/scene/diffuse/red</use></residual-ambience-b>-->
+        <light-radius type="float">9.6</light-radius>
+        <lightmap-enabled type="int">1</lightmap-enabled>
+        <lightmap-multi type="int">0</lightmap-multi>
+        <lightmap-factor n="0"><use>controls/lighting/lighting-panel/flood-inst-pnl</use></lightmap-factor>
+        <lightmap-color type="vec3d" n="0"> 0.45 0.34 0.18 </lightmap-color>
+    </parameters>
+</PropertyList>

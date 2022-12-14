@@ -9,11 +9,10 @@
     
 
     <effect>
-        <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
+        <inherits-from>Aircraft/f16/Models/Effects/f16panel-icp</inherits-from>
         <parameters>
-            <implicit-lightmap-threshold-low type="float">0</implicit-lightmap-threshold-low>
-            <implicit-lightmap-threshold-high type="float">0.5</implicit-lightmap-threshold-high>
-            <!--<implicit-lightmap-intensity><use>controls/lighting/lighting-panel/data-entry-display</use></implicit-lightmap-intensity> this is ICP not DED panel, so should not have DED control -->
+            <implicit-lightmap-threshold-low type="float">0.025</implicit-lightmap-threshold-low>
+            <implicit-lightmap-threshold-high type="float">1</implicit-lightmap-threshold-high>
             <lightmap-enabled type="int">1</lightmap-enabled>
         </parameters>
         <object-name>ICP_panel</object-name>
@@ -576,13 +575,13 @@
                 <script>ded.Buttons.button1.doAction();</script>
             </binding>
         </action>
-        <hovered>
+        <!--hovered>
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>button-1</tooltip-id>
                 <label>TACAN-ILS / 1</label>
             </binding>
-        </hovered>
+        </hovered-->
     </animation>
     <animation>
         <type>pick</type>
@@ -594,13 +593,13 @@
                 <script>ded.Buttons.button2.doAction();</script>
             </binding>
         </action>
-        <hovered>
+        <!--hovered>
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>button-2</tooltip-id>
                 <label>ALOW / 2</label>
             </binding>
-        </hovered>
+        </hovered-->
     </animation>
     <animation>
         <type>pick</type>
@@ -612,13 +611,13 @@
                 <script>ded.Buttons.button3.doAction();</script>
             </binding>
         </action>
-        <hovered>
+        <!--hovered>
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>button-3</tooltip-id>
                 <label>F-ACK / 3</label>
             </binding>
-        </hovered>
+        </hovered-->
     </animation>
     <animation>
         <type>pick</type>
@@ -630,13 +629,13 @@
                 <script>ded.Buttons.button4.doAction();</script>
             </binding>
         </action>
-        <hovered>
+        <!--hovered>
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>button-4</tooltip-id>
                 <label>Steerpoint / 4</label>
             </binding>
-        </hovered>
+        </hovered-->
     </animation>
     <animation>
         <type>pick</type>
@@ -648,13 +647,13 @@
                 <script>ded.Buttons.button5.doAction();</script>
             </binding>
         </action>
-        <hovered>
+        <!--hovered>
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>button-5</tooltip-id>
                 <label>Cruise / 5</label>
             </binding>
-        </hovered>
+        </hovered-->
     </animation>
     <animation>
         <type>pick</type>
@@ -666,13 +665,13 @@
                 <script>ded.Buttons.button6.doAction();</script>
             </binding>
         </action>
-        <hovered>
+        <!--hovered>
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>button-6</tooltip-id>
                 <label>Time / 6</label>
             </binding>
-        </hovered>
+        </hovered-->
     </animation>
     <animation>
         <type>pick</type>
@@ -684,13 +683,13 @@
                 <script>ded.Buttons.button7.doAction();</script>
             </binding>
         </action>
-        <hovered>
+        <!--hovered>
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>button-l16</tooltip-id>
                 <label>Mark / 7</label>
             </binding>
-        </hovered>
+        </hovered-->
     </animation>
     <animation>
         <type>pick</type>
@@ -702,13 +701,13 @@
                 <script>ded.Buttons.button8.doAction();</script>
             </binding>
         </action>
-        <hovered>
+        <!--hovered>
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>button-8</tooltip-id>
                 <label>Fix / 8</label>
             </binding>
-        </hovered>
+        </hovered-->
     </animation>
     <animation>
         <type>pick</type>
@@ -720,13 +719,13 @@
                 <script>ded.Buttons.button9.doAction();</script>
             </binding>
         </action>
-        <hovered>
+        <!--hovered>
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>button-9</tooltip-id>
                 <label>Altitude Calibration / 9</label>
             </binding>
-        </hovered>
+        </hovered-->
     </animation>
     <animation>
         <type>pick</type>
@@ -738,13 +737,13 @@
                 <script>ded.Buttons.button0.doAction();</script>
             </binding>
         </action>
-        <hovered>
+        <!--hovered>
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>button-0</tooltip-id>
                 <label>Mode Select / 0</label>
             </binding>
-        </hovered>
+        </hovered-->
     </animation>
 	
     <animation>
