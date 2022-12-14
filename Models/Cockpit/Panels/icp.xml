@@ -16,7 +16,7 @@
             <!--<implicit-lightmap-intensity><use>controls/lighting/lighting-panel/data-entry-display</use></implicit-lightmap-intensity> this is ICP not DED panel, so should not have DED control -->
             <lightmap-enabled type="int">1</lightmap-enabled>
         </parameters>
-        <object-name>DED_panel</object-name>
+        <object-name>ICP_panel</object-name>
         <object-name>com1</object-name>
         <object-name>0</object-name>
         <object-name>9</object-name>
@@ -40,6 +40,23 @@
         <object-name>plrt</object-name>
         <object-name>rcl</object-name>
         <object-name>wx</object-name>
+    </effect>
+
+    <effect>
+        <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+        <parameters>
+            <metallic type="float">1</metallic>
+            <reflection-enabled type="int">1</reflection-enabled>
+            <reflection-correction type="float">1.0</reflection-correction>
+            <specular-material-ignore type="int">0</specular-material-ignore>
+            <reflection-rainbow type="float">0.75</reflection-rainbow>
+        </parameters>
+        <object-name>driftRing</object-name>
+        <object-name>gainRing</object-name>
+        <object-name>Bolt1</object-name>
+        <object-name>Bolt2</object-name>
+        <object-name>Bolt3</object-name>
+        <object-name>Bolt4</object-name>
     </effect>
     
     <animation>
@@ -115,7 +132,7 @@
             <lightmap-enabled type="int">1</lightmap-enabled>
             <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
         </parameters>
-        <object-name>DED_panel</object-name>
+        <object-name>ICP_panel</object-name>
     </effect>
 
     <effect>
@@ -781,7 +798,7 @@
         <hovered>
             <binding>
                 <command>set-tooltip</command>
-                <tooltip-id>button-wx</tooltip-id>
+                <tooltip-id>button-wx1</tooltip-id>
                 <label>DLNK send</label>
             </binding>
         </hovered>
@@ -800,7 +817,7 @@
         <hovered>
             <binding>
                 <command>set-tooltip</command>
-                <tooltip-id>button-wx</tooltip-id>
+                <tooltip-id>button-wx2</tooltip-id>
                 <label>DLNK send</label>
             </binding>
         </hovered>
@@ -847,12 +864,12 @@
     </animation>
     
 	
-	<animation>
+	<!--animation>
         <type>knob</type>
         <object-name>rtn_seq</object-name>
         <property>f16/avionics/rtn-seq</property>
         <drag-direction>horizontal</drag-direction>
-        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <drag-scale-px>10</drag-scale-px>
         <factor>30</factor>
         <offset-deg>0</offset-deg>
         <center>
@@ -906,9 +923,27 @@
                 <value>0</value>
             </binding>
 		</release>
-    </animation>
+    </animation-->
 	
 	<animation>
+        <type>rotate</type>
+        <object-name>rtn_seq</object-name>
+        <property>f16/avionics/rtn-seq</property>
+        <factor>30</factor>
+        <offset-deg>0</offset-deg>
+        <center>
+            <x-m>  -0.000881 </x-m>
+            <y-m>  -0.016331 </y-m>
+            <z-m>  -0.039963 </z-m>
+        </center>
+        <axis>
+            <x> 0.0 </x>
+            <y> 0.0 </y>
+            <z> 1.0 </z>
+        </axis>
+	</animation>
+
+    <animation>
         <type>rotate</type>
         <object-name>rtn_seq</object-name>
         <property>f16/avionics/ded-up-down</property>
@@ -924,11 +959,66 @@
             <y> 1.0 </y>
             <z> 0.0 </z>
         </axis>
-	</animation>
+    </animation>
+
+    <animation>
+        <type>pick</type>
+        <visible>false</visible>
+        <object-name>switchSquareLeft</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/ded-up-down</property>
+                        <value>0</value>
+                    </equals>
+                </condition>
+                <command>property-assign</command>
+                <property>f16/avionics/rtn-seq</property>
+                <value>-1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/avionics/rtn-seq</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
+        </action>
+    </animation>
+
+    <animation>
+        <type>pick</type>
+        <visible>false</visible>
+        <object-name>switchSquareRight</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/ded-up-down</property>
+                        <value>0</value>
+                    </equals>
+                </condition>
+                <command>property-assign</command>
+                <property>f16/avionics/rtn-seq</property>
+                <value>1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/avionics/rtn-seq</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
+        </action>
+    </animation>
 	
 	<animation>
         <type>pick</type>
-        <object-name>upDED</object-name>
+        <visible>false</visible>
+        <object-name>switchSquareUp</object-name>
 		<action>
 			<button>0</button>
 			<binding>
@@ -954,7 +1044,8 @@
 	
 	<animation>
         <type>pick</type>
-        <object-name>downDED</object-name>
+        <visible>false</visible>
+        <object-name>switchSquareDown</object-name>
 		<action>
 			<button>0</button>
 			<binding>
@@ -979,7 +1070,7 @@
 	</animation>
     
     <animation>
-        <object-name>DED_panel</object-name>
+        <object-name>ICP_panel</object-name>
         <object-name>com1</object-name>
         <object-name>0</object-name>
         <object-name>9</object-name>
