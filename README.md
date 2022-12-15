@@ -37,10 +37,6 @@ For the full list of contributors see authors.txt.
 
 Useful links:
 -----------
-Hangar: https://sourceforge.net/p/flightgear/fgaddon/HEAD/tree/trunk/Aircraft/f16/
-
-Wiki: http://wiki.flightgear.org/General_Dynamics_F-16_Fighting_Falcon  (not up-to date)
-
 Manual: https://github.com/NikolaiVChr/f16/wiki
 
 GitHub: https://github.com/NikolaiVChr/f16
