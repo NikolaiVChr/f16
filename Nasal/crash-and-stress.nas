@@ -205,6 +205,16 @@ var CrashAndStress = {
 	    }
 	    me.wingsAttached = FALSE;
 	},
+	eject: func {
+		me.failure_modes = FailureMgr._failmgr.failure_modes;
+	    me.mode_list = keys(me.failure_modes);
+
+	    foreach(var failure_mode_id; me.mode_list) {
+	    	if (failure_mode_id != me.fdm.wingsFailureID and failure_mode_id != "damage/fire") {
+      			FailureMgr.set_failure_level(failure_mode_id, 1);
+      		}
+	    }
+	},
 	_finishRepair: func () {
 		me.repairing = FALSE;
 	},
@@ -585,4 +595,8 @@ var repair = func {
 
 var exp = func {
 	crashCode.abandon();
+};
+
+var eject = func {
+	crashCode.eject();
 };
