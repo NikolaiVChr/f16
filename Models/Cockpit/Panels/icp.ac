@@ -1,7 +1,7 @@
 AC3Db
-MATERIAL "shinyMetalMat" rgb 1.000 1.000 1.000  amb 0.700 0.700 0.700  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 100 trans 0.000
+MATERIAL "shinyMetalMat" rgb 1.000 1.000 1.000  amb 0.300 0.300 0.300  emis 0.000 0.000 0.000  spec 1.000 1.000 1.000  shi 100 trans 0.000
 MATERIAL "controlMat"    rgb 0.640 0.640 0.640  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 012 trans 0.000
-MATERIAL "panelMat"      rgb 1.000 1.000 1.000  amb 0.700 0.700 0.700  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 032 trans 0.000
+MATERIAL "panelMat"      rgb 1.000 1.000 1.000  amb 0.700 0.700 0.700  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 064 trans 0.000
 MATERIAL "plateMat"      rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 000 trans 1.000
 OBJECT world
 name "Blender_exporter_v2.27__icp.ac"

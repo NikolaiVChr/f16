@@ -48,7 +48,14 @@
             <reflection-enabled type="int">1</reflection-enabled>
             <reflection-correction type="float">1.0</reflection-correction>
             <specular-material-ignore type="int">0</specular-material-ignore>
-            <reflection-rainbow type="float">0.75</reflection-rainbow>
+            <reflection-rainbow type="float">0.1</reflection-rainbow>
+            <texture n="6">
+                <image>Aircraft/Generic/Effects/Rainbow.png</image>
+                <filter>linear-mipmap-linear</filter>
+                <wrap-s>repeat</wrap-s>
+                <wrap-t>repeat</wrap-t>
+                <internal-format>normalized</internal-format>
+            </texture>
         </parameters>
         <object-name>driftRing</object-name>
         <object-name>gainRing</object-name>
@@ -118,6 +125,139 @@
         <object-name>com1</object-name>
         <factor>-0.005</factor>
         <property>controls/icp/button-com1</property>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+
+    <animation>
+        <type>translate</type>
+        <object-name>0</object-name>
+        <factor>-0.0015</factor>
+        <property>controls/icp/key[0]</property>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>1</object-name>
+        <factor>-0.0015</factor>
+        <property>controls/icp/key[1]</property>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>2</object-name>
+        <factor>-0.0015</factor>
+        <property>controls/icp/key[2]</property>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>3</object-name>
+        <factor>-0.0015</factor>
+        <property>controls/icp/key[3]</property>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>4</object-name>
+        <factor>-0.0015</factor>
+        <property>controls/icp/key[4]</property>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>5</object-name>
+        <factor>-0.0015</factor>
+        <property>controls/icp/key[5]</property>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>6</object-name>
+        <factor>-0.0015</factor>
+        <property>controls/icp/key[6]</property>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>7</object-name>
+        <factor>-0.0015</factor>
+        <property>controls/icp/key[7]</property>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>8</object-name>
+        <factor>-0.0015</factor>
+        <property>controls/icp/key[8]</property>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>9</object-name>
+        <factor>-0.0015</factor>
+        <property>controls/icp/key[9]</property>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>entr</object-name>
+        <factor>-0.0015</factor>
+        <property>controls/icp/key[10]</property>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>rcl</object-name>
+        <factor>-0.0015</factor>
+        <property>controls/icp/key[11]</property>
         <axis>
             <x>1</x>
             <y>0</y>
@@ -574,6 +714,18 @@
                 <command>nasal</command>
                 <script>ded.Buttons.button1.doAction();</script>
             </binding>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/icp/key[1]</property>
+                <value>1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/icp/key[1]</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
         <!--hovered>
             <binding>
@@ -592,6 +744,18 @@
                 <command>nasal</command>
                 <script>ded.Buttons.button2.doAction();</script>
             </binding>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/icp/key[2]</property>
+                <value>1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/icp/key[2]</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
         <!--hovered>
             <binding>
@@ -610,6 +774,18 @@
                 <command>nasal</command>
                 <script>ded.Buttons.button3.doAction();</script>
             </binding>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/icp/key[3]</property>
+                <value>1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/icp/key[3]</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
         <!--hovered>
             <binding>
@@ -628,6 +804,18 @@
                 <command>nasal</command>
                 <script>ded.Buttons.button4.doAction();</script>
             </binding>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/icp/key[4]</property>
+                <value>1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/icp/key[4]</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
         <!--hovered>
             <binding>
@@ -646,6 +834,18 @@
                 <command>nasal</command>
                 <script>ded.Buttons.button5.doAction();</script>
             </binding>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/icp/key[5]</property>
+                <value>1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/icp/key[5]</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
         <!--hovered>
             <binding>
@@ -664,6 +864,18 @@
                 <command>nasal</command>
                 <script>ded.Buttons.button6.doAction();</script>
             </binding>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/icp/key[6]</property>
+                <value>1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/icp/key[6]</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
         <!--hovered>
             <binding>
@@ -682,6 +894,18 @@
                 <command>nasal</command>
                 <script>ded.Buttons.button7.doAction();</script>
             </binding>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/icp/key[7]</property>
+                <value>1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/icp/key[7]</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
         <!--hovered>
             <binding>
@@ -700,6 +924,18 @@
                 <command>nasal</command>
                 <script>ded.Buttons.button8.doAction();</script>
             </binding>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/icp/key[8]</property>
+                <value>1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/icp/key[8]</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
         <!--hovered>
             <binding>
@@ -718,6 +954,18 @@
                 <command>nasal</command>
                 <script>ded.Buttons.button9.doAction();</script>
             </binding>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/icp/key[9]</property>
+                <value>1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/icp/key[9]</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
         <!--hovered>
             <binding>
@@ -736,6 +984,18 @@
                 <command>nasal</command>
                 <script>ded.Buttons.button0.doAction();</script>
             </binding>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/icp/key[0]</property>
+                <value>1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/icp/key[0]</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
         <!--hovered>
             <binding>
@@ -755,6 +1015,18 @@
                 <command>nasal</command>
                 <script>ded.Buttons.rcl.doAction();</script>
             </binding>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/icp/key[11]</property>
+                <value>1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/icp/key[11]</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
         <hovered>
             <binding>
@@ -774,6 +1046,18 @@
                 <command>nasal</command>
                 <script>ded.Buttons.entr.doAction();</script>
             </binding>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/icp/key[10]</property>
+                <value>1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/icp/key[10]</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
         <hovered>
             <binding>
