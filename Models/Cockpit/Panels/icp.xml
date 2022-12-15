@@ -499,7 +499,7 @@
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>button-cu</tooltip-id>
-                <label>Cursor up (next stpt)</label>
+                <label>DED Increment (next stpt)</label>
             </binding>
         </hovered>
     </animation>
@@ -517,7 +517,7 @@
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>button-cd</tooltip-id>
-                <label>Cursor down (prev stpt)</label>
+                <label>DED Decrement (prev stpt)</label>
             </binding>
         </hovered>
     </animation>
@@ -1244,6 +1244,18 @@
         </axis>
     </animation>
 
+    <!--animation>
+        <type>pick</type>
+        <object-name>rtn_seq</object-name>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>dcs</tooltip-id>
+                <label>Data Control Switch (click above, below or to the side)</label>
+            </binding>
+        </hovered>
+    </animation-->
+
     <animation>
         <type>pick</type>
         <visible>false</visible>
@@ -1269,6 +1281,13 @@
                 </binding>
             </mod-up>
         </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>rtn</tooltip-id>
+                <label>Return</label>
+            </binding>
+        </hovered>
     </animation>
 
     <animation>
@@ -1296,6 +1315,13 @@
                 </binding>
             </mod-up>
         </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>seq</tooltip-id>
+                <label>Sequence</label>
+            </binding>
+        </hovered>
     </animation>
 	
 	<animation>
@@ -1323,6 +1349,13 @@
 				</binding>
 			</mod-up>
 		</action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>upS</tooltip-id>
+                <label>Data Control Switch Up</label>
+            </binding>
+        </hovered>
 	</animation>
 	
 	<animation>
@@ -1350,6 +1383,13 @@
 				</binding>
 			</mod-up>
 		</action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>downS</tooltip-id>
+                <label>Data Control Switch Down</label>
+            </binding>
+        </hovered>
 	</animation>
     
     <animation>
