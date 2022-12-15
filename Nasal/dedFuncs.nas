@@ -544,6 +544,7 @@ var EditableLAT = {
 	append: func(letter) {
 		me.editing = 1;
 		#print("append "~letter);
+		if (me.index == 0 and letter != "2" and letter != "8") return;
 		if (me.index == 2 and letter != "0" and me.value[1] == "9") return;
 		if (me.index == 3 and (letter == "6" or letter == "7" or letter == "8" or letter == "9")) return;
 		if (me.index == 1 and letter == "9") {
@@ -589,8 +590,12 @@ var EditableLAT = {
 	valueToLat: func {
 		var sign = 1;
 		if (me.value[0] != nil) {
-			if (me.value[0] != "2") {
+			if (me.value[0] == "2") {
+				sign = 1;
+			} elsif (me.value[0] == "8") {
 				sign = -1;
+			} else {
+				return 0;
 			}
 		} else {
 			return 0;
@@ -631,7 +636,7 @@ var EditableLAT = {
 		if (me.value[0] != nil) {
 			if (me.value[0] == "2") {
 				txt ~= "N";
-			} else {
+			} elsif (me.value[0] == "8") {
 				txt ~= "S";
 			}
 		} else {
@@ -719,6 +724,7 @@ var EditableLON = {
 	append: func(letter) {
 		me.editing = 1;
 		#print("append "~letter);
+		if (me.index == 0 and letter != "4" and letter != "6") return;
 		if (me.index == 1 and letter != "0" and letter != "1") return;
 		if (me.index == 2 and letter == "8" and me.value[1] == "1") {
 			if(me.value[3] != nil) me.value[3] = "0";
@@ -766,8 +772,12 @@ var EditableLON = {
 	valueToLat: func {
 		var sign = -1;
 		if (me.value[0] != nil) {
-			if (me.value[0] != "4") {
+			if (me.value[0] == "4") {
+				sign = -1;
+			} elsif (me.value[0] == "6") {
 				sign = 1;
+			} else {
+				return 0;
 			}
 		} else {
 			return 0;
@@ -811,7 +821,7 @@ var EditableLON = {
 		if (me.value[0] != nil) {
 			if (me.value[0] == "4") {
 				txt ~= "W";
-			} else {
+			} elsif (me.value[0] == "6") {
 				txt ~= "E";
 			}
 		} else {
