@@ -158,9 +158,9 @@ var HudMath = {
         var ym = vector.Math.yawMatrix(-viewh);
         var pm = vector.Math.pitchMatrix(-viewp);
         var vm = vector.Math.multiplyMatrices(pm, ym);
-        me.rollM  = vector.Math.rollMatrix(-hdp.roll);
-        me.pitchM = vector.Math.pitchMatrix(-hdp.pitch);
-        me.yawM   = vector.Math.yawMatrix(hdp.heading);
+        me.rollM  = vector.Math.rollMatrix(-hdp.getproper("roll"));
+        me.pitchM = vector.Math.pitchMatrix(-hdp.getproper("pitch"));
+        me.yawM   = vector.Math.yawMatrix(hdp.getproper("heading"));
         me.rotation = vector.Math.multiplyMatrices(me.rollM, vector.Math.multiplyMatrices(me.pitchM, me.yawM));
         me.rotation = vector.Math.multiplyMatrices(vm, me.rotation);
 
