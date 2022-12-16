@@ -985,7 +985,7 @@ var MFD_Device =
         me.p_RDR.update = func (noti) {
 
             me.root.p_RDR_image.setVisible(radar_system.apg68Radar.enabled);
-            me.DGFT = getprop("f16/avionics/dgft");
+            me.DGFT = noti.getproper("dgft");
 			if (f16.SOI == 3 and me.model_index == 1) {
 				me.root.notSOI.hide();
 			} elsif (f16.SOI == 2 and me.model_index == 0) {
@@ -994,13 +994,11 @@ var MFD_Device =
 				me.root.notSOI.show();
 			}
 
-            me.ver = num(split(".", getprop("sim/version/flightgear"))[0]) >= 2020;
-
-            me.modeSw = getprop("instrumentation/radar/mode-switch");
+            me.modeSw = noti.getproper("rdrMode");
 
             setprop("instrumentation/radar/mode-switch", 0);
 
-            me.modeSwHD = getprop("instrumentation/radar/mode-hd-switch");
+            me.modeSwHD = noti.getproper("rdrHD");
 
 
             me.root.acm.setText(radar_system.apg68Radar.currentMode.shortName);
@@ -1037,7 +1035,7 @@ var MFD_Device =
                 me.bullCoord = geo.Coord.new().set_latlon(me.bullLat,me.bullLon);
                 me.ownCoord = geo.aircraft_position();
                 me.bullDirToMe = me.bullCoord.course_to(me.ownCoord);
-                me.meToBull = ((me.bullDirToMe+180)-noti.heading)*D2R;
+                me.meToBull = ((me.bullDirToMe+180)-noti.getproper("heading"))*D2R;
                 me.root.bullOwnRing.setRotation(me.meToBull);
                 me.bullDistToMe = me.bullCoord.distance_to(me.ownCoord)*M2NM;
                 me.distPixels = me.bullDistToMe*(482/radar_system.apg68Radar.getRange());
@@ -1114,19 +1112,19 @@ var MFD_Device =
                     me.root.ant_side.hide();
                 }
                 me.root.silent.hide();
-            } elsif (getprop("/f16/avionics/power-fcr-bit") == 2) {
+            } elsif (noti.getproper("fcrBit") == 2) {
                 me.root.silent.setText("SILENT");
                 me.root.silent.setVisible(!getprop("/fdm/jsbsim/gear/unit[0]/WOW") or !getprop("instrumentation/radar/radar-enable"));
-            } elsif (getprop("/f16/avionics/power-fcr-bit") == 1) {
-                me.fcrBITsecs = (1.0-getprop("/f16/avionics/power-fcr-warm"))*120;
+            } elsif (noti.getproper("fcrBit") == 1) {
+                me.fcrBITsecs = (1.0-noti.getproper("fcrWarm"))*120;
                 me.root.silent.setText(sprintf("  BIT TIME REMAINING IS %-3d SEC", me.fcrBITsecs));
                 me.root.silent.show();
-            } elsif (getprop("/f16/avionics/power-fcr-bit") == 0) {
+            } elsif (noti.getproper("fcrBit") == 0) {
                 me.root.silent.setText("  OFF  ");
                 me.root.silent.show();
             }
 
-            if (getprop("/f16/avionics/power-fcr-bit") == 1) {
+            if (noti.getproper("fcrBit") == 1) {
                 me.root.silent.setTranslation(0, -482*0.825);
                 me.root.bitText.show();
             } else {
@@ -1146,14 +1144,14 @@ var MFD_Device =
             me.slew_x = getprop("controls/displays/target-management-switch-x[" ~ me.model_index ~ "]")*me.exp_modi;
             me.slew_y = -getprop("controls/displays/target-management-switch-y[" ~ me.model_index ~ "]")*me.exp_modi;
 
-            if (getprop("/sim/current-view/name") != "TGP") {
+            if (noti.getproper("viewName") != "TGP") {
                 f16.resetSlew();
             }
 
-            #me.dt = math.min(noti.ElapsedSeconds - me.elapsed, 0.05);
-            me.dt = noti.ElapsedSeconds - me.elapsed;
+            #me.dt = math.min(noti.getproper("elapsed") - me.elapsed, 0.05);
+            me.dt = noti.getproper("elapsed") - me.elapsed;
 
-            if ((me.slew_x != 0 or me.slew_y != 0 or slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.root.index) and getprop("/sim/current-view/name") != "TGP") {
+            if ((me.slew_x != 0 or me.slew_y != 0 or slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.root.index) and noti.getproper("viewName") != "TGP") {
                 cursor_destination = nil;
                 cursor_pos[0] += me.slew_x*175;
                 cursor_pos[1] -= me.slew_y*175;
@@ -1195,7 +1193,7 @@ var MFD_Device =
                     cursor_click = me.root.index;
                 }
             }
-            me.elapsed = noti.ElapsedSeconds;
+            me.elapsed = noti.getproper("elapsed");
 
             if (radar_system.apg68Radar.currentMode.detectAIR) {
                 radar_system.apg68Radar.setCursorDeviation(cursor_pos[0]*60/(me.wdt*0.5));
@@ -1257,7 +1255,7 @@ var MFD_Device =
                     me.cursorDev   = -math.atan2(-cursor_pos[0]/(482), -cursor_pos[1]/482)*R2D;
                     me.cursorDist  = NM2M*(math.sqrt(cursor_pos[0]*cursor_pos[0]+cursor_pos[1]*cursor_pos[1])/(482/radar_system.apg68Radar.getRange()));
                 }
-                me.ownCoord.apply_course_distance(noti.heading+me.cursorDev, me.cursorDist);
+                me.ownCoord.apply_course_distance(noti.getproper("heading")+me.cursorDev, me.cursorDist);
                 me.cursorBullDist = me.ownCoord.distance_to(me.bullCoord);
                 me.cursorBullCrs  = me.bullCoord.course_to(me.ownCoord);
                 me.root.cursorLoc.setText(sprintf("%03d %03d",me.cursorBullCrs, me.cursorBullDist*M2NM));
@@ -1340,9 +1338,9 @@ var MFD_Device =
             if (steerpoints.getCurrentNumber() != 0) {
                 me.wpC = steerpoints.getCurrentCoord();
                 if (me.wpC == nil) {
-                    printf("Error occured in FCR steerpoint system: STPT:%d WAYP:%d NUM:%d - please report this error to F16 devs:",steerpoints.getCurrentNumber(),getprop("autopilot/route-manager/current-wp"),getprop("autopilot/route-manager/route/num"));
+                    printf("Error occured in FCR steerpoint system: STPT:%d WAYP:%d NUM:%d - please report this error to F16 devs:",steerpoints.getCurrentNumber(),noti.getproper("currentWP"),noti.getproper("maxWP"));
                 }
-                me.legBearing = geo.normdeg180(geo.aircraft_position().course_to(me.wpC)-noti.heading);#relative
+                me.legBearing = geo.normdeg180(geo.aircraft_position().course_to(me.wpC)-noti.getproper("heading"));#relative
                 me.legDistance = geo.aircraft_position().distance_to(me.wpC)*M2NM;
                 me.distPixels = me.legDistance*(482/radar_system.apg68Radar.getRange());
                 me.steerPos = me.calcPos(me.wdt, me.legBearing, me.distPixels);
@@ -1374,7 +1372,7 @@ var MFD_Device =
             me.showDLT = 0;
             me.prio = radar_system.apg68Radar.getPriorityTarget();
             me.tracks = [];
-            me.elapsed = getprop("sim/time/elapsed-sec");
+            me.elapsed = noti.getproper("elapsed");
             me.selectShow = 0;
             me.selectShowGM = 0;
             me.lockInfo = 0;
@@ -1443,7 +1441,7 @@ var MFD_Device =
                     me.intercept = get_intercept(radar_system.apg68Radar.getPriorityTarget().get_bearing(),
                      radar_system.apg68Radar.getPriorityTarget().get_range()*NM2M, me.lastHead,
                       radar_system.apg68Radar.getPriorityTarget().get_Speed()*KT2MPS,
-                       getprop("velocities/groundspeed-kt")*KT2MPS, geo.aircraft_position(), radar_system.self.getHeading());
+                       noti.getproper("groundspeed_kt")*KT2MPS, geo.aircraft_position(), radar_system.self.getHeading());
                 }
             }
             if (me.intercept != nil) {
@@ -1524,7 +1522,7 @@ var MFD_Device =
                         #.setTranslation(-512*0.5,-512)
                         #.setScale(8,8)
                         .set("z-index",0);#TODO: lower than GM text background
-                    var vari = getprop("sim/variant-id");
+                    var vari = noti.getproper("variantID");
                     me.mono = (vari<2 or vari ==3)?0.4:1;
                     me.gainNode = me.model_index?props.globals.getNode("f16/avionics/mfd-l-gain",0):props.globals.getNode("f16/avionics/mfd-l-gain",0);
                     radar_system.mapper.setImage(me.gmImage, sized*0.5, 0, sized, me.mono, me.gainNode);
@@ -1584,7 +1582,7 @@ var MFD_Device =
                 me.root.lnkT[me.iii].show();
                 me.root.lnk[me.iii].setColor(colorDot4);
                 me.root.lnk[me.iii].setTranslation(me.echoPos);
-                me.root.lnk[me.iii].setRotation(D2R*22.5*math.round( geo.normdeg(contact.get_heading()-getprop("orientation/heading-deg")-me.blueBearing)/22.5 ));#Show rotation in increments of 22.5 deg
+                me.root.lnk[me.iii].setRotation(D2R*22.5*math.round( geo.normdeg(contact.get_heading()-noti.getproper("heading")-me.blueBearing)/22.5 ));#Show rotation in increments of 22.5 deg
                 me.root.lnk[me.iii].show();
                 me.root.lnk[me.iii].update();
                 if (contact.equalsFast(radar_system.apg68Radar.getPriorityTarget())) {
@@ -1902,7 +1900,7 @@ var MFD_Device =
                     me.selectionBox.show();
                     me.setSelection(nil, me.ppp.buttons[10], 10);
                 } elsif (eventi == 1) {
-                    if(getprop("f16/stores/tgp-mounted") and !getprop("/fdm/jsbsim/gear/unit[0]/WOW")) {
+                    if(noti.getproper("tgpMount") and !noti.getproper("wow0")) {
                         screen.log.write("Click BACK to get back to cockpit view",1,1,1);
                         switchTGP();
                     }
@@ -2657,7 +2655,7 @@ var MFD_Device =
                 else gunAmmo = ""~int(gunAmmo*0.1);
             }
             me.root.gun.setText(gunAmmo~"GUN");
-            if (getprop("sim/variant-id") == 0 or getprop("sim/variant-id") == 1 or getprop("sim/variant-id") == 3) {
+            if (noti.getproper("variantID") == 0 or noti.getproper("variantID") == 1 or noti.getproper("variantID") == 3) {
                 me.root.gun2.setText("M56");
             } else {
                 me.root.gun2.setText("PGU28");
@@ -3652,7 +3650,7 @@ var MFD_Device =
                 me.bullLon = me.bullPt.lon;
                 me.bullCoord = geo.Coord.new().set_latlon(me.bullLat,me.bullLon);
                 me.bullDirToMe = me.bullCoord.course_to(me.selfCoord);
-                me.meToBull = ((me.bullDirToMe+180)-noti.heading)*D2R;
+                me.meToBull = ((me.bullDirToMe+180)-noti.getproper("heading"))*D2R;
                 me.root.bullOwnRing.setRotation(me.meToBull);
                 me.bullDistToMe = me.bullCoord.distance_to(me.selfCoord)*M2NM;
                 if (MFD_Device.get_HSD_centered()) {

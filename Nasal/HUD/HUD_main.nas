@@ -1284,100 +1284,14 @@ append(obj.total, obj.speed_curr);
         append(obj.scaling, obj.thermometerScaleGrp);
         obj.hidingScales = 0;
 
-        input = {
-                 IAS                       : "/velocities/airspeed-kt",
-                 calibrated                : "/fdm/jsbsim/velocities/vc-kts",
-                 TAS                       : "/fdm/jsbsim/velocities/vtrue-kts",
-                 GND_SPD                   : "/velocities/groundspeed-kt",
-                 HUD_VEL                   : "/f16/avionics/hud-velocity",
-                 HUD_SCA                   : "/f16/avionics/hud-scales",
-                 Nz                        : "/accelerations/pilot-gdamped",
-                 nReset                    : "f16/avionics/n-reset",
-                 alpha                     : "/fdm/jsbsim/aero/alpha-deg",
-                 altitude_ft               : "/position/altitude-ft",
-                 beta                      : "/orientation/side-slip-deg",
-                 brake_parking             : "/controls/gear/brake-parking",
-                 flap_pos_deg              : "/fdm/jsbsim/fcs/flap-pos-deg",
-                 gear_down                 : "/controls/gear/gear-down",
-                 heading                   : "/orientation/heading-deg",
-                 headingMag                : "/orientation/heading-magnetic-deg",
-                 useMag:                     "/instrumentation/heading-indicator/use-mag-in-hud",
-                 mach                      : "/instrumentation/airspeed-indicator/indicated-mach",
-                 measured_altitude         : "/instrumentation/altimeter/indicated-altitude-ft",
-                 pitch                     : "/orientation/pitch-deg",
-                 roll                      : "/orientation/roll-deg",
-                 speed                     : "/fdm/jsbsim/velocities/vt-fps",
-                 symbol_reject             : "/controls/HUD/sym-rej",
-                 target_display            : "/sim/model/f16/instrumentation/radar-awg-9/hud/target-display",
-                 wow                       : "/fdm/jsbsim/gear/wow",
-                 wow0                      : "/fdm/jsbsim/gear/unit[0]/WOW",
-                 current_view_x_offset_m   : "sim/current-view/x-offset-m",
-                 current_view_y_offset_m   : "sim/current-view/y-offset-m",
-                 current_view_z_offset_m   : "sim/current-view/z-offset-m",
-                 master_arm                : "controls/armament/master-arm-switch",
-                 groundspeed_kt            : "velocities/groundspeed-kt",
-                 density_altitude          : "fdm/jsbsim/atmosphere/density-altitude",
-                 speed_down_fps            : "velocities/speed-down-fps",
-                 speed_east_fps            : "velocities/speed-east-fps",
-                 speed_north_fps           : "velocities/speed-north-fps",
-                 hud_brightness            : "f16/avionics/hud-sym",
-                 hud_power                 : "f16/avionics/hud-power",
-                 hud_display               : "controls/HUD/display-on",
-                 hud_serviceable           : "instrumentation/hud/serviceable",
-                 time_until_crash          : "instrumentation/radar/time-till-crash",
-                 vne                       : "f16/vne",
-                 texUp                     : "f16/hud/texels-up",
-                 bingo                     : "f16/avionics/bingo",
-                 alow                      : "f16/settings/cara-alow",
-                 altitude_agl_ft           : "position/altitude-agl-ft",
-                 approach_speed            : "fdm/jsbsim/systems/approach-speed",
-                 standby                   : "instrumentation/radar/radar-standby",
-                 elapsed                   : "sim/time/elapsed-sec",
-                 cara                      : "f16/avionics/cara-on",
-                 altSwitch                 : "f16/avionics/hud-alt",
-                 drift                     : "f16/avionics/hud-drift",
-                 fpm                       : "f16/avionics/hud-fpm",
-                 ded                       : "f16/avionics/hud-ded",
-                 dgft                      : "f16/avionics/dgft",
-                 tgp_mounted               : "f16/stores/tgp-mounted",
-                 view_number               : "sim/current-view/view-number",
-                 rotary                    : "sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob",
-                 hasGS                     : "instrumentation/nav[0]/has-gs",
-                 GSinRange                 : "instrumentation/nav[0]/gs-in-range",
-                 GSDeg                     : "instrumentation/nav[0]/gs-needle-deflection-norm",
-                 ILSDeg                    : "instrumentation/nav[0]/heading-needle-deflection",
-                 ILSinRange                : "instrumentation/nav[0]/in-range",
-                 GSdist                    : "instrumentation/nav[0]/gs-distance",
-                 #cross                     : "instrumentation/nav[0]/crosstrack-heading-error-deg",
-                 #cross                     : "instrumentation/nav[0]/heading-deg",
-                 cross                     : "instrumentation/nav[0]/radials/target-auto-hdg-deg",
-                 ins_knob                  : "f16/avionics/ins-knob",
-                 servAtt                   : "instrumentation/attitude-indicator/serviceable",
-                 servHead                  : "instrumentation/heading-indicator/serviceable",
-                 servTurn                  : "instrumentation/turn-indicator/serviceable",
-                 servSpeed                 : "instrumentation/airspeed-indicator/serviceable",
-                 servStatic                : "systems/static/serviceable",
-                 servPitot                 : "systems/pitot/serviceable",
-                 warn                      : "f16/avionics/fault-warning",
-                 strf                      : "f16/avionics/strf",
-                 data                      : "instrumentation/datalink/data",
-                 hmdH:                       "sim/current-view/heading-offset-deg",
-                 hmdP:                       "sim/current-view/pitch-offset-deg",
-                 hmcs_sym:                  "f16/avionics/hmd-sym-int-knob",
-                 vSpeed:                    "velocities/vertical-speed-fps",
-                };
-
-        foreach (var name; keys(input)) {
-            emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("HUD", name, input[name]));
-        }
-
+        
         #
         # set the update list - using the update manager to improve the performance
         # of the HUD update - without this there was a drop of 20fps (when running at 60fps)
         obj.update_items = [
             props.UpdateManager.FromHashList(["hud_serviceable", "hud_display", "hud_brightness", "hud_power"], 0.1, func(hdp)#changed to 0.1, this function is VERY heavy to run.
                                       {
-# print("HUD hud_serviceable=", hdp.hud_serviceable," display=", hdp.hud_display, " brt=", hdp.hud_brightness, " power=", hdp.hud_power);
+# print("HUD hud_serviceable=", hdp.getproper("hud_serviceable," display=", hdp.getproper("hud_display, " brt=", hdp.getproper("hud_brightness, " power=", hdp.getproper("hud_power);
 
                                           if (!hdp.hud_display or !hdp.hud_serviceable) {
                                             obj.color = [0.3,1,0.3,0];
@@ -1395,10 +1309,12 @@ append(obj.total, obj.speed_curr);
                                             obj.ASEC65Aspect.setColorFill(obj.color);
                                           }
                                       }),
-            props.UpdateManager.FromHashList([], 0.01, func(hdp)
+            #props.UpdateManager.FromHashList([], 0.01,
+             func(hdp)
                                       {
-                                      }),
-            props.UpdateManager.FromHashList(["master_arm", "altitude_ft", "roll", "groundspeed_kt", "density_altitude", "mach", "speed_down_fps", "speed_east_fps", "speed_north_fps"], 0.01, func(hdp)
+                                      },
+            #props.UpdateManager.FromHashList(["master_arm", "altitude_ft", "roll", "groundspeed_kt", "density_altitude", "mach", "speed_down_fps", "speed_east_fps", "speed_north_fps"], 0.01,
+             func(hdp)
                                       {
                                           if (hdp.fcs_available) {
                                             if (pylons.fcs.getDropMode() == 1) {
@@ -1409,7 +1325,7 @@ append(obj.total, obj.speed_curr);
                                           } else {
                                               hdp.CCIP_active = 0;
                                           }
-                                          hdp.timeToRelease = nil;
+                                          obj.timeToRelease = nil;
                                           hdp.CCRP_active = obj.CCRP(hdp);
                                           var lw = obj.CCIP(hdp);
                                           if (lw==-1) {
@@ -1418,15 +1334,16 @@ append(obj.total, obj.speed_curr);
                                           } else {
                                             obj.cciplow.hide();
                                           }
-                                      }),
-            props.UpdateManager.FromHashList(["texUp", "heading","VV_x","VV_y", "dgft"], 0.01, func(hdp)
+                                      },
+            #props.UpdateManager.FromHashList(["texUp", "heading","VV_x","VV_y", "dgft"], 0.01,
+             func(hdp)
                                              {
                                                  # the Y position is still not accurate due to HUD being at an angle, but will have to do.
-                                                 if (steerpoints.getCurrentNumber() != 0 and !hdp.dgft) {
+                                                 if (steerpoints.getCurrentNumber() != 0 and !hdp.getproper("dgft")) {
                                                      obj.steerDir = steerpoints.getCurrentDirectionForHUD();
                                                      obj.wpbear = obj.steerDir[0];
                                                      if (obj.wpbear!=nil) {
-                                                         obj.wpbear=geo.normdeg180(obj.wpbear-hdp.heading);
+                                                         obj.wpbear=geo.normdeg180(obj.wpbear-hdp.getproper("heading"));
                                                          obj.tadpoleX = HudMath.getCenterPosFromDegs(obj.wpbear,0)[0];
 
                                                          if (obj.tadpoleX>obj.sx*0.20) {
@@ -1439,7 +1356,7 @@ append(obj.total, obj.speed_curr);
                                                          obj.greatCircleSteeringCue.show();
                                                          if (obj.steerDir[1] != nil) {
                                                             obj.steerCart = vector.Math.eulerToCartesian2(-obj.steerDir[0], obj.steerDir[1]);
-                                                            obj.steerLocal = vector.Math.yawPitchRollVector(hdp.heading, -hdp.pitch, -hdp.roll, obj.steerCart);
+                                                            obj.steerLocal = vector.Math.yawPitchRollVector(hdp.getproper("heading"), -hdp.getproper("pitch"), -hdp.getproper("roll"), obj.steerCart);
                                                             obj.steerLocalEuler = vector.Math.cartesianToEuler(obj.steerLocal);
                                                             obj.steerHUD = HudMath.getCenterPosFromDegs(obj.steerLocalEuler[0]==nil?0:geo.normdeg180(obj.steerLocalEuler[0]),obj.steerLocalEuler[1]);
                                                             obj.steerPT.setTranslation(obj.steerHUD);
@@ -1456,32 +1373,35 @@ append(obj.total, obj.speed_curr);
                                                      obj.steerPT.hide();
                                                  }
                                              }
-                                            ),
+                                            ,
 
-            props.UpdateManager.FromHashList(["texUp","gear_down"], 0.01, func(val)
+            #props.UpdateManager.FromHashList(["texUp","gear_down"], 0.01,
+             func(hdp)
                                              {
-                                                 if (val.gear_down) {
+                                                 if (hdp.getproper("gear_down")) {
                                                      obj.boreSymbol.hide();
                                                  } else {
                                                      obj.boreSymbol.setTranslation(HudMath.getBorePos());
                                                      obj.locatorAngle.setTranslation(HudMath.getBorePos()[0]-10, HudMath.getBorePos()[1]);
                                                      obj.boreSymbol.show();
                                                  }
-                                      }),
-            props.UpdateManager.FromHashList(["gear_down"], 0.5, func(val)
+                                      },
+            #props.UpdateManager.FromHashList(["gear_down"], 0.5,
+             func(hdp)
                                              {
-                                                 if (val.gear_down) {
+                                                 if (hdp.getproper("gear_down")) {
                                                      obj.appLine.show();
                                                  } else {
                                                      obj.appLine.hide();
                                                  }
-                                      }),
-            props.UpdateManager.FromHashList(["VV_x","VV_y","fpm","HUD_SCA","ded","dgft","gear_down","wow","fpm"], 0.001, func(hdp)
+                                      },
+            #props.UpdateManager.FromHashList(["VV_x","VV_y","fpm","HUD_SCA","ded","dgft","gear_down","wow","fpm"], 0.001,
+             func(hdp)
                                       {
                                         obj.r_show = 1;
-                                        if (hdp.fpm > 0 and !hdp.dgft and (!obj.showmeCCIP or !isDropping or math.mod(int(8*(systime()-int(systime()))),2)>0)) {
+                                        if (hdp.getproper("fpm") > 0 and !hdp.getproper("dgft") and (!obj.showmeCCIP or !isDropping or math.mod(int(8*(systime()-int(systime()))),2)>0)) {
                                             obj.VV.setTranslation (hdp.VV_x, hdp.VV_y);
-                                            if (hdp.HUD_SCA == 2) {
+                                            if (hdp.getproper("HUD_SCA") == 2) {
                                                 obj.bank_angle_indicator.setTranslation (hdp.VV_x, hdp.VV_y);
                                                 obj.r_show = 0;
                                             }
@@ -1491,26 +1411,27 @@ append(obj.total, obj.speed_curr);
                                             obj.VV.hide();
                                         }
                                         obj.bank_angle_indicator.setVisible(!obj.r_show);
-                                        obj.vertical_pointer.setVisible(hdp.HUD_SCA == 2 and hdp["dlz_show"] != 1);
-                                        obj.vertical_scale.setVisible(hdp.HUD_SCA == 2 and hdp["dlz_show"] != 1);
-                                        if (obj.r_show and hdp.fpm==2 and hdp.ded == 0 and !hdp.dgft and !(hdp.gear_down and !hdp.wow)) {
+                                        obj.vertical_pointer.setVisible(hdp.getproper("HUD_SCA") == 2 and hdp["dlz_show"] != 1);
+                                        obj.vertical_scale.setVisible(hdp.getproper("HUD_SCA") == 2 and hdp["dlz_show"] != 1);
+                                        if (obj.r_show and hdp.getproper("fpm")==2 and hdp.getproper("ded") == 0 and !hdp.getproper("dgft") and !(hdp.getproper("gear_down") and !hdp.getproper("wow"))) {
                                               obj.roll_pointer.setTranslation(obj.rollPos);
                                               obj.roll_lines.show();
-                                              obj.roll_pointer.setVisible(math.abs(hdp.roll) <= 45);
+                                              obj.roll_pointer.setVisible(math.abs(hdp.getproper("roll")) <= 45);
                                           } else {
                                               obj.roll_lines.hide();
                                               obj.roll_pointer.hide();
                                           }
                                         obj.localizer.setTranslation (hdp.VV_x, hdp.VV_y);
-                                      }),
-            props.UpdateManager.FromHashList(["rotary","hasGS","GSDeg","GSinRange","ILSDeg", "ILSinRange", "GSdist", "DGFT"], 0.01, func(hdp)
+                                      },
+            #props.UpdateManager.FromHashList(["rotary","hasGS","GSDeg","GSinRange","ILSDeg", "ILSinRange", "GSdist", "DGFT"], 0.01,
+             func(hdp)
                                       {
-                                        if (hdp.rotary == 0 or hdp.rotary == 3 or hdp.rotary == 5) {
-                                            #printf("ILSinRange %d GSdist %d", hdp.ILSinRange, hdp.GSdist == nil);
-                                            if (hdp.ILSinRange) {
-                                                #printf("ILS %d", hdp.ILSDeg);
-                                                obj.ilsGroup.setTranslation(4*obj.clamp(hdp.ILSDeg,-5,5),0);
-                                                if (math.abs(hdp.ILSDeg)>5) {
+                                        if (hdp.getproper("rotary") == 0 or hdp.getproper("rotary") == 3 or hdp.getproper("rotary") == 5) {
+                                            #printf("ILSinRange %d GSdist %d", hdp.getproper("ILSinRange"), hdp.getproper("GSdist") == nil);
+                                            if (hdp.getproper("ILSinRange")) {
+                                                #printf("ILS %d", hdp.getproper("ILSDeg"));
+                                                obj.ilsGroup.setTranslation(4*obj.clamp(hdp.getproper("ILSDeg"),-5,5),0);
+                                                if (math.abs(hdp.getproper("ILSDeg"))>5) {
                                                     obj.ils.hide();
                                                     obj.ilsOff.show();
                                                 } else {
@@ -1518,10 +1439,10 @@ append(obj.total, obj.speed_curr);
                                                     obj.ilsOff.hide();
                                                 }
 
-                                                if (hdp.hasGS and hdp.GSinRange) {
-                                                    obj.gsGroup.setTranslation(0,-20*hdp.GSDeg);
-                                                    #printf("GS %d", hdp.GSDeg*10);
-                                                    if (math.abs(hdp.GSDeg)>0.99) {
+                                                if (hdp.getproper("hasGS") and hdp.getproper("GSinRange")) {
+                                                    obj.gsGroup.setTranslation(0,-20*hdp.getproper("GSDeg"));
+                                                    #printf("GS %d", hdp.getproper("GSDeg")*10);
+                                                    if (math.abs(hdp.getproper("GSDeg"))>0.99) {
                                                         obj.gs.hide();
                                                         obj.gsOff.show();
                                                     } else {
@@ -1534,8 +1455,8 @@ append(obj.total, obj.speed_curr);
                                                     obj.gsOff.show();
                                                 }
                                                 if (obj["heading_tape_positionY"]!=nil) {
-                                                    #obj.inv_v.setTranslation(obj.sx*0.5+5.4*hdp.cross, 20+obj.heading_tape_positionY);
-                                                    obj.heading_tape_pointer.setTranslation (5.4*obj.clamp(geo.normdeg180(hdp.cross-hdp.heading),-10,10), obj.heading_tape_positionY);
+                                                    #obj.inv_v.setTranslation(obj.sx*0.5+5.4*hdp.getproper("cross"), 20+obj.heading_tape_positionY);
+                                                    obj.heading_tape_pointer.setTranslation (5.4*obj.clamp(geo.normdeg180(hdp.getproper("cross")-hdp.getproper("heading")),-10,10), obj.heading_tape_positionY);
                                                     obj.heading_tape_pointer.show();
                                                 } else {
                                                     obj.heading_tape_pointer.hide();
@@ -1554,39 +1475,42 @@ append(obj.total, obj.speed_curr);
                                             obj.localizer.hide();
                                             obj.heading_tape_pointer.hide();
                                         }
-                                      }),
-            props.UpdateManager.FromHashList(["fpm","texUp","gear_down","VV_x","VV_y", "wow", "ded", "dgft"], 0.01, func(hdp)
+                                      },
+            #props.UpdateManager.FromHashList(["fpm","texUp","gear_down","VV_x","VV_y", "wow", "ded", "dgft"], 0.01,
+             func(hdp)
                                       {
-                                        if (hdp.gear_down) {#used to be wow check here, but YT vids show its there all the time
+                                        if (hdp.getproper("gear_down")) {#used to be wow check here, but YT vids show its there all the time
                                           obj.bracket.setTranslation (hdp.VV_x, HudMath.getCenterPosFromDegs(0,-11)[1]);
                                           obj.bracket.show();
                                         } else {
                                           obj.bracket.hide();
                                         }
-                                      }),
-            props.UpdateManager.FromHashList(["vSpeed"], 0.10, func(hdp)
+                                      },
+            #props.UpdateManager.FromHashList(["vSpeed"], 0.10,
+             func(hdp)
                                       {
-                                        obj.vertical_pointer.setTranslation(0.25*sx*uv_used-4*1.5-8,sy*0.245-sy*0.5-6*hdp.vSpeed/500);
-                                      }),
-            props.UpdateManager.FromHashList(["texUp","pitch","roll","fpm","VV_x","VV_y","gear_down", "dgft", "drift"], 0.001, func(hdp)
+                                        obj.vertical_pointer.setTranslation(0.25*sx*uv_used-4*1.5-8,sy*0.245-sy*0.5-6*hdp.getproper("vSpeed")/500);
+                                      },
+            #props.UpdateManager.FromHashList(["texUp","pitch","roll","fpm","VV_x","VV_y","gear_down", "dgft", "drift"], 0.001,
+             func(hdp)
                                       {
-                                          if (hdp.servTurn) {
-                                            obj.roll_pointer.setRotation (math.clamp(hdp.roll,-45,45)*D2R);
+                                          if (hdp.getproper("servTurn")) {
+                                            obj.roll_pointer.setRotation (math.clamp(hdp.getproper("roll"),-45,45)*D2R);
                                             obj.bank_angle_indicator.setRotation(hdp.roll_rad);
                                           }
-                                          if ((hdp.fpm != 2 and !hdp.gear_down) or hdp.dgft) {
+                                          if ((hdp.getproper("fpm") != 2 and !hdp.getproper("gear_down")) or hdp.getproper("dgft")) {
                                             obj.ladder_group.hide();
                                             return;
                                           }
 
-                                        var result = HudMath.getDynamicHorizon(5,0.5,0.5,0.7,0.5,hdp.drift < 2,-0.25);
-                                        if (hdp.servTurn) {
+                                        var result = HudMath.getDynamicHorizon(5,0.5,0.5,0.7,0.5,hdp.getproper("drift") < 2,-0.25);
+                                        if (hdp.getproper("servTurn")) {
                                             obj.h_rot.setRotation(result[1]);
                                             obj.zenith.setRotation(-result[1]);
                                             obj.nadir.setRotation(-result[1]);
                                         }
                                         obj.horizon_group.setTranslation(result[0]);#place it on bore
-                                        if (hdp.servAtt) {
+                                        if (hdp.getproper("servAtt")) {
                                             obj.ladder_group.setTranslation(result[2]);
                                         }
                                         obj.ladder_group.show();
@@ -1594,33 +1518,34 @@ append(obj.total, obj.speed_curr);
                                         obj.horizon_group.update();
                                         return;
 
-                                      }),
-            props.UpdateManager.FromHashList(["altitude_agl_ft","cara","measured_altitude","altSwitch","alow","dgft"], 1.0, func(hdp)
+                                      },
+            #props.UpdateManager.FromHashList(["altitude_agl_ft","cara","measured_altitude","altSwitch","alow","dgft"], 1.0,
+             func(hdp)
                                       {
-                                          obj.agl=hdp.altitude_agl_ft;
+                                          obj.agl=hdp.getproper("altitude_agl_ft");
                                           obj.altScaleMode = 0;#0=baro, 1=radar 2=thermo
-                                          if (!hdp.dgft) {
-                                              if (hdp.altSwitch == 2) {#RDR
-                                                    obj.altScaleMode = hdp.cara;
-                                              } elsif (hdp.altSwitch == 1) {#BARO
+                                          if (!hdp.getproper("dgft")) {
+                                              if (hdp.getproper("altSwitch") == 2) {#RDR
+                                                    obj.altScaleMode = hdp.getproper("cara");
+                                              } elsif (hdp.getproper("altSwitch") == 1) {#BARO
                                                     obj.altScaleMode = 0;
                                               } else {#AUTO
                                                     if (obj["altScaleModeOld"] != nil) {
                                                         if (obj.altScaleModeOld == 2) {
-                                                            obj.altScaleMode = (obj.agl < 1500 and hdp.cara and !hdp.dgft and !obj.hidingScales)*2;
+                                                            obj.altScaleMode = (obj.agl < 1500 and hdp.getproper("cara") and !hdp.getproper("dgft") and !obj.hidingScales)*2;
                                                         } else {
-                                                            obj.altScaleMode = (obj.agl < 1200 and hdp.cara and !hdp.dgft and !obj.hidingScales)*2;
+                                                            obj.altScaleMode = (obj.agl < 1200 and hdp.getproper("cara") and !hdp.getproper("dgft") and !obj.hidingScales)*2;
                                                         }
                                                     } else {
-                                                        obj.altScaleMode = (obj.agl < 1300 and hdp.cara and !hdp.dgft and !obj.hidingScales)*2;
+                                                        obj.altScaleMode = (obj.agl < 1300 and hdp.getproper("cara") and !hdp.getproper("dgft") and !obj.hidingScales)*2;
                                                     }
                                               }
                                           }
                                           obj.altScaleModeOld = obj.altScaleMode;
-                                          #print("UPDATE "~obj.altScaleMode~"  CARA "~hdp.cara~"  AGL "~obj.agl);
-                                          if(hdp.altSwitch == 0 and hdp.cara and obj.altScaleMode == 0) {
+                                          #print("UPDATE "~obj.altScaleMode~"  CARA "~hdp.getproper("cara")~"  AGL "~obj.agl);
+                                          if(hdp.getproper("altSwitch") == 0 and hdp.getproper("cara") and obj.altScaleMode == 0) {
                                               obj.ralt.setText(sprintf("AR %s", obj.getAltTxt(obj.agl)));
-                                          } elsif(hdp.cara and obj.altScaleMode == 0) {
+                                          } elsif(hdp.getproper("cara") and obj.altScaleMode == 0) {
                                               obj.ralt.setText(sprintf("R %s", obj.getAltTxt(obj.agl)));
                                           } else {
                                               obj.ralt.setText("    ,   ");
@@ -1643,10 +1568,10 @@ append(obj.total, obj.speed_curr);
                                             } else {
                                                 obj.thermoEnd = obj.extrapolate(obj.agl, 1000, 1500, obj.thermoEnd1, obj.thermoEnd2);
                                             }
-                                            if (hdp.alow < 1000) {
-                                                obj.thermoAlow = hdp.alow*0.01*obj.thermoY100;
+                                            if (hdp.getproper("alow") < 1000) {
+                                                obj.thermoAlow = hdp.getproper("alow")*0.01*obj.thermoY100;
                                             } else {
-                                                obj.thermoAlow = obj.extrapolate(hdp.alow, 1000, 1500, obj.thermoEnd1, obj.thermoEnd2);
+                                                obj.thermoAlow = obj.extrapolate(hdp.getproper("alow"), 1000, 1500, obj.thermoEnd1, obj.thermoEnd2);
                                             }
                                             obj.thermoGroup.removeAllChildren();
                                             obj.thermoBar = obj.thermoGroup.createChild("path")
@@ -1656,7 +1581,7 @@ append(obj.total, obj.speed_curr);
                                                 .horiz(5)
                                                 .setStrokeLineWidth(1)
                                                 .setColor(obj.color);
-                                            if (hdp.gear_down or (obj.agl > hdp.alow or math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0)) {
+                                            if (hdp.getproper("gear_down") or (obj.agl > hdp.getproper("alow") or math.mod(int(4*(hdp.getproper("elapsed")-int(hdp.getproper("elapsed")))),2)>0)) {
                                                 obj.thermoBar.moveTo(obj.thermoXstart-5, obj.thermoYstart-obj.thermoAlow)
                                                 .horiz(-4)
                                                 .moveTo(obj.thermoXstart-9, obj.thermoYstart-obj.thermoAlow-2)
@@ -1682,8 +1607,8 @@ append(obj.total, obj.speed_curr);
                                           } else {
                                             #print("baro");
                                             # baro scale
-                                            obj.alt_range.setTranslation(skew_alt, hdp.measured_altitude * alt_range_factor);
-                                            obj.alt_curr.setText(obj.getAltTxt(hdp.measured_altitude));
+                                            obj.alt_range.setTranslation(skew_alt, hdp.getproper("measured_altitude") * alt_range_factor);
+                                            obj.alt_curr.setText(obj.getAltTxt(hdp.getproper("measured_altitude")));
                                             obj.alt_type.setText("");
                                             obj.ralt.show();
                                             obj.radalt_box.show();
@@ -1696,64 +1621,68 @@ append(obj.total, obj.speed_curr);
                                                 obj.alt_range.show();
                                             }
                                           }
-                                      }),
-            props.UpdateManager.FromHashList(["HUD_SCA", "DGFT"], 0.5, func(hdp)
+                                      },
+            #props.UpdateManager.FromHashList(["HUD_SCA", "DGFT"], 0.5,
+             func(hdp)
                                       {
 
-                                          if (hdp.HUD_SCA and !hdp.dgft and obj.hidingScales) {
+                                          if (hdp.getproper("HUD_SCA") and !hdp.getproper("dgft") and obj.hidingScales) {
                                             foreach(tck;obj.scaling) {
                                                 tck.show();
                                               }
                                             obj.hidingScales = 0;
-                                          } elsif (!obj.hidingScales and !(hdp.HUD_SCA and !hdp.dgft)) {
+                                          } elsif (!obj.hidingScales and !(hdp.getproper("HUD_SCA") and !hdp.getproper("dgft"))) {
                                               foreach(tck;obj.scaling) {
                                                 tck.hide();
                                               }
                                               obj.heading_tape_pointer.hide();
                                               obj.hidingScales = 1;
                                           }
-                                      }),
-            props.UpdateManager.FromHashList(["calibrated", "GND_SPD", "HUD_VEL", "gear_down"], 0.5, func(hdp)
+                                      },
+            #props.UpdateManager.FromHashList(["calibrated", "GND_SPD", "HUD_VEL", "gear_down"], 0.5,
+             func(hdp)
                                       {
                                           # the real F-16 has calibrated airspeed as default in HUD.
-                                          var pitot = hdp.servPitot and hdp.servStatic;
-                                          if (hdp.HUD_VEL == 1 or hdp.gear_down or hdp.dgft) {
-                                            if (hdp.servSpeed) {
-                                                obj.ias_range.setTranslation(skew_spd, hdp.calibrated * ias_range_factor * pitot);
-                                                obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.calibrated));
+                                          var pitot = hdp.getproper("servPitot") and hdp.getproper("servStatic");
+                                          if (hdp.getproper("HUD_VEL") == 1 or hdp.getproper("gear_down") or hdp.getproper("dgft")) {
+                                            if (hdp.getproper("servSpeed")) {
+                                                obj.ias_range.setTranslation(skew_spd, hdp.getproper("calibrated") * ias_range_factor * pitot);
+                                                obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.getproper("calibrated")));
                                             }
                                             obj.speed_type.setText("C");
-                                          } elsif (hdp.HUD_VEL == 0) {
-                                            if (hdp.servSpeed) {
-                                                obj.ias_range.setTranslation(skew_spd, hdp.TAS * ias_range_factor * pitot);
-                                                obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.TAS));
+                                          } elsif (hdp.getproper("HUD_VEL") == 0) {
+                                            if (hdp.getproper("servSpeed")) {
+                                                obj.ias_range.setTranslation(skew_spd, hdp.getproper("TAS") * ias_range_factor * pitot);
+                                                obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.getproper("TAS")));
                                             }
                                             obj.speed_type.setText("T");
                                           } else {
-                                            if (hdp.servSpeed) {
-                                                obj.ias_range.setTranslation(skew_spd, hdp.GND_SPD * ias_range_factor * pitot);
-                                                obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.GND_SPD));
+                                            if (hdp.getproper("servSpeed")) {
+                                                obj.ias_range.setTranslation(skew_spd, hdp.getproper("groundspeed_kt") * ias_range_factor * pitot);
+                                                obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.getproper("groundspeed_kt")));
                                             }
                                             obj.speed_type.setText("G");
                                           }
-                                      }),
-            props.UpdateManager.FromHashList(["Nz","nReset"], 0.1, func(hdp)
+                                      },
+            #props.UpdateManager.FromHashList(["Nz","nReset"], 0.1,
+             func(hdp)
                                       {
-                                          obj.window12.setText(sprintf("%.1f", hdp.Nz));
+                                          obj.window12.setText(sprintf("%.1f", hdp.getproper("Nz")));
                                           obj.window12.show();
-                                          obj.NzMax = math.max(hdp.Nz, obj.NzMax);
+                                          obj.NzMax = math.max(hdp.getproper("Nz"), obj.NzMax);
                                           obj.window8.setText(sprintf("%.1f", obj.NzMax));
                                           obj.window8.show();
-                                      }),
-            props.UpdateManager.FromHashList(["heading", "headingMag", "useMag","gear_down"], 0.1, func(hdp)
+                                      },
+            #props.UpdateManager.FromHashList(["heading", "headingMag", "useMag","gear_down"], 0.1,
+             func(hdp)
                                       {
-                                          var head = geo.normdeg(hdp.useMag?hdp.headingMag:hdp.heading);
+                                          var head = geo.normdeg(hdp.getproper("useMag")?hdp.getproper("headingMag"):hdp.getproper("heading"));
 
                                           if (head < 180)
                                             obj.heading_tape_position = -head*54/10+skew_hdg;
                                           else
                                             obj.heading_tape_position = (360-head)*54/10+skew_hdg;
-                                          if (hdp.gear_down) {
+                                          if (hdp.getproper("gear_down")) {
                                               obj.heading_tape_positionY = -10;
                                               obj.head_curr.setTranslation(0.5*sx*uv_used,sy*0.1-12);
                                               obj.head_mask.setTranslation(-10+0.5*sx*uv_used,sy*0.1-20);
@@ -1764,33 +1693,34 @@ append(obj.total, obj.speed_curr);
                                               obj.head_mask.setTranslation(-10+0.5*sx*uv_used,sy*0.1-20+105);
                                               obj.head_frame.setTranslation(0,105);
                                           }
-                                          if (hdp.servHead) {
+                                          if (hdp.getproper("servHead")) {
                                             obj.head_curr.setText(sprintf("%03d",head));
                                             obj.heading_tape.setTranslation (obj.heading_tape_position,obj.heading_tape_positionY);
                                           }
 
                                       }
-                                            ),
-            props.UpdateManager.FromHashList(["time_until_crash","vne","warn", "elapsed", "data"], 0.05, func(hdp)
+                                            ,
+            #props.UpdateManager.FromHashList(["time_until_crash","vne","warn", "elapsed", "data"], 0.05,
+             func(hdp)
                                              {
-                                                 obj.ttc = hdp.time_until_crash;
+                                                 obj.ttc = hdp.getproper("time_until_crash");
                                                  #obj.flyup.setTranslation(0, 0);
                                                  if (obj.ttc != nil and obj.ttc>0 and obj.ttc<8) {
                                                      obj.flyup.setText("FLYUP");
                                                      obj.flyup.show();
-                                                 } elsif (hdp.vne) {
+                                                 } elsif (hdp.getproper("vne")) {
                                                          obj.flyup.setText("LIMIT");
                                                          obj.flyup.show();
-                                                 } elsif (hdp.warn == 1 and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
+                                                 } elsif (hdp.getproper("warn") == 1 and math.mod(int(4*(hdp.getproper("elapsed")-int(hdp.getproper("elapsed")))),2)>0) {
                                                          obj.flyup.setText("WARN");
                                                          obj.flyup.show();
-                                                 } elsif (getprop("f16/fcs/adv-mode-sel") and getprop("instrumentation/tfs/malfunction") and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
+                                                 } elsif (getprop("f16/fcs/adv-mode-sel") and getprop("instrumentation/tfs/malfunction") and math.mod(int(4*(hdp.getproper("elapsed")-int(hdp.getproper("elapsed")))),2)>0) {
                                                          obj.flyup.setText("WARN");
                                                          obj.flyup.show();
-                                                 } elsif (hdp.bingo == 1 and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
+                                                 } elsif (hdp.getproper("bingo") == 1 and math.mod(int(4*(hdp.getproper("elapsed")-int(hdp.getproper("elapsed")))),2)>0) {
                                                          obj.flyup.setText("FUEL");
                                                          obj.flyup.show();
-                                                 } elsif (hdp.data != 0) {
+                                                 } elsif (hdp.getproper("data") != 0) {
                                                          obj.flyup.setText("DATA");
                                                          obj.flyup.show();
                                                  } else {
@@ -1808,14 +1738,15 @@ append(obj.total, obj.speed_curr);
                                                     obj.flyupRight.hide();
                                                 }
                                              }
-                                            ),
-            props.UpdateManager.FromHashList(["wow0","standby", "data"], 0.5, func(hdp)
+                                            ,
+            #props.UpdateManager.FromHashList(["wow0","standby", "data"], 0.5,
+             func(hdp)
                                              {
-                                                 if (hdp.data != 0) {
-                                                     obj.stby.setText("MKPT"~sprintf("%03d",hdp.data));
+                                                 if (hdp.getproper("data") != 0) {
+                                                     obj.stby.setText("MKPT"~sprintf("%03d",hdp.getproper("data")));
                                                      obj.stby.setTranslation(0,HudMath.getBorePos()[1]+7+75);
                                                      obj.stby.show();
-                                                 } elsif (hdp.standby and !hdp.wow0) {
+                                                 } elsif (hdp.getproper("standby") and !hdp.getproper("wow0")) {
                                                      obj.stby.setText("NO RAD");
                                                      obj.stby.setTranslation(0,HudMath.getBorePos()[1]+7);
                                                      obj.stby.show();
@@ -1824,133 +1755,46 @@ append(obj.total, obj.speed_curr);
                                                  }
                                                  obj.stby.update();
                                              }
-                                            ),
-            props.UpdateManager.FromHashList(["brake_parking", "gear_down", "flap_pos_deg", "CCRP_active", "master_arm","submode","VV_x","DGFT","rotary"], 0.1, func(hdp)
+                                            ,
+            #props.UpdateManager.FromHashList(["brake_parking", "gear_down", "flap_pos_deg", "CCRP_active", "master_arm","submode","VV_x","DGFT","rotary"], 0.1,
+             func(hdp)
                                              {
-                                                 if (hdp.brake_parking) {
-                                                     hdp.window2_txt = "  BRAKES";
-                                                 } elsif (hdp.flap_pos_deg > 0 or hdp.gear_down) {
+                                                 if (hdp.getproper("brake_parking")) {
+                                                     obj.window2_txt = "  BRAKES";
+                                                 } elsif (hdp.getproper("flap_pos_deg") > 0 or hdp.getproper("gear_down")) {
                                                      obj.gd = "";
-                                                     if (hdp.gear_down)
+                                                     if (hdp.getproper("gear_down"))
                                                        obj.gd = " G";
-                                                     hdp.window2_txt = sprintf("  F %d%s",hdp.flap_pos_deg,obj.gd);
-                                                 } elsif (hdp.master_arm != 0) {
-                                                     var submode = "";
+                                                     obj.window2_txt = sprintf("  F %d%s",hdp.getproper("flap_pos_deg"),obj.gd);
+                                                 } elsif (hdp.getproper("master_arm") != 0) {
+                                                     var submodeVar = "";
                                                      if (hdp.CCRP_active > 0) {
-                                                        submode = "CCRP";
+                                                        submodeVar = "CCRP";
                                                      } elsif (obj.showmeCCIP) {
-                                                        submode = "CCIP";
+                                                        submodeVar = "CCIP";
                                                      } elsif (obj.eegsLoop.isRunning) {
-                                                        submode = obj.hydra?"CCIP":(hdp.strf?"STRF":"EEGS");
+                                                        submodeVar = obj.hydra?"CCIP":(hdp.getproper("strf")?"STRF":"EEGS");
                                                      } elsif (hdp.submode == 1) {
-                                                        submode = "BORE";
+                                                        submodeVar = "BORE";
                                                      }
-                                                     var dgft = hdp.dgft?"DGFT ":"";
-                                                     var armmode = hdp.master_arm==1?"  ARM ":"  SIM ";
-                                                     hdp.window2_txt = armmode~dgft~submode;
-                                                 } elsif (hdp.rotary == 0 or hdp.rotary == 3) {
-                                                     hdp.window2_txt = "  ILS";
+                                                     var dgft = hdp.getproper("dgft")?"DGFT ":"";
+                                                     var armmode = hdp.getproper("master_arm")==1?"  ARM ":"  SIM ";
+                                                     obj.window2_txt = armmode~dgft~submodeVar;
+                                                 } elsif (hdp.getproper("rotary") == 0 or hdp.getproper("rotary") == 3) {
+                                                     obj.window2_txt = "  ILS";
                                                  } else {
-                                                    if (hdp.ins_knob==3) {
-                                                        hdp.window2_txt = "  NAV";
-                                                    } elsif (hdp.ins_knob==2 or hdp.ins_knob==4) {
-                                                        hdp.window2_txt = "  ALIGN";
+                                                    if (hdp.getproper("ins_knob")==3) {
+                                                        obj.window2_txt = "  NAV";
+                                                    } elsif (hdp.getproper("ins_knob")==2 or hdp.getproper("ins_knob")==4) {
+                                                        obj.window2_txt = "  ALIGN";
                                                     } else {
-                                                        hdp.window2_txt = " ";
+                                                        obj.window2_txt = " ";
                                                     }
                                                  }
-                                                 obj.window2.setText(hdp.window2_txt);
+                                                 obj.window2.setText(obj.window2_txt);
                                                  obj.window2.setVisible(1);
                                              }
-                                            ),
-            props.UpdateManager.FromHashValue("window3_txt", nil, func(txt)
-                                      {
-                                          if (txt != nil and txt != ""){
-                                              obj.window3.setText(txt);
-                                              obj.window3.show();
-                                          }else
-                                            obj.window3.hide();
-
-                                      }),
-            props.UpdateManager.FromHashValue("window4_txt", nil, func(txt)
-                                      {
-                                          if (txt != nil and txt != ""){
-                                              obj.window4.show();
-                                              obj.window4.setText(txt);
-                                          }
-                                          else
-                                            obj.window4.hide();
-
-                                      }),
-            props.UpdateManager.FromHashValue("window5_txt", nil, func(txt)
-                                      {
-                                          if (txt != nil and txt != ""){
-                                              obj.window5.show();
-                                              obj.window5.setText(txt);
-                                          }
-                                          else
-                                            obj.window5.hide();
-
-                                      }),
-            props.UpdateManager.FromHashValue("window6_txt", nil, func(txt)
-                                      {
-                                          if (txt != nil and txt != ""){
-                                              obj.window6.show();
-                                              obj.window6.setText(txt);
-                                          }
-                                          else
-                                            obj.window6.hide();
-
-                                      }),
-            props.UpdateManager.FromHashValue("window7_txt", nil, func(txt)
-                                      {
-                                          if (txt != nil and txt != ""){
-                                              obj.window7.show();
-                                              obj.window7.setText(txt);
-                                          }
-                                          else
-                                            obj.window7.hide();
-
-                                      }),
-            props.UpdateManager.FromHashValue("window9_txt", nil, func(txt)
-                                      {
-                                          if (txt != nil and txt != ""){
-                                              obj.window9.show();
-                                              obj.window9.setText(txt);
-                                          }
-                                          else
-                                            obj.window9.hide();
-
-                                      }),
-            props.UpdateManager.FromHashValue("window10_txt", nil, func(txt)
-                                      {
-                                          if (txt != nil and txt != ""){
-                                              obj.window10.show();
-                                              obj.window10.setText(txt);
-                                          }
-                                          else
-                                            obj.window10.hide();
-
-                                      }),
-            props.UpdateManager.FromHashValue("window11_txt", nil, func(txt)
-                                      {
-                                          if (txt != nil and txt != ""){
-                                              obj.window11.show();
-                                              obj.window11.setText(txt);
-                                          }
-                                          else
-                                            obj.window11.hide();
-
-                                      }),
-            props.UpdateManager.FromHashValue("window1_txt", nil, func(txt)
-                                      {
-                                          if (txt != nil and txt != ""){
-                                              obj.window1.show();
-                                              obj.window1.setText(txt);
-                                          }
-                                          else
-                                            obj.window1.hide();
-                                    }),
+                                            
 
         ];
 
@@ -1987,33 +1831,33 @@ append(obj.total, obj.speed_curr);
     update : func(hdp) {
         HudMath.reCalc();
 
-        if (hdp.nReset) {
+        if (hdp.getproper("nReset")) {
             me.NzMax = 1.0;
             setprop("f16/avionics/n-reset",0);
         }
 
         # part 1. update data items
-        hdp.roll_rad = -hdp.roll*D2R;
+        hdp.roll_rad = -hdp.getproper("roll")*D2R;
         if (me.initUpdate) {
-            hdp.window1_txt = "1";
-            hdp.window2_txt = "2";
-            hdp.window3_txt = "3";
-            hdp.window4_txt = "4";
-            hdp.window5_txt = "5";
-            hdp.window6_txt = "6";
-            hdp.window7_txt = "7";
-            hdp.window8_txt = "8";
-            hdp.window9_txt = "9";
-            hdp.window10_txt = "10";
-            hdp.window11_txt = "11";
-            hdp.window12_txt = "12";
+            me.window1_txt = "1";
+            me.window2_txt = "2";
+            me.window3_txt = "3";
+            me.window4_txt = "4";
+            me.window5_txt = "5";
+            me.window6_txt = "6";
+            me.window7_txt = "7";
+            me.window8_txt = "8";
+            me.window9_txt = "9";
+            me.window10_txt = "10";
+            me.window11_txt = "11";
+            me.window12_txt = "12";
         }
 
-        me.Vz   =    hdp.current_view_y_offset_m; # view Z position (0.94 meter per default)
-        me.Vx   =    hdp.current_view_z_offset_m; # view X position (0.94 meter per default)
+        me.Vz   =    hdp.getproper("current_view_y_offset_m"); # view Z position (0.94 meter per default)
+        me.Vx   =    hdp.getproper("current_view_z_offset_m"); # view X position (0.94 meter per default)
         setprop("f16/hud/texels-up", HudMath.getBorePos()[1]);
 
-        me.Vy   =    hdp.current_view_x_offset_m;
+        me.Vy   =    hdp.getproper("current_view_x_offset_m");
 
         me.pixelPerMeterX = HudMath.pixelPerMeterX;
         me.pixelPerMeterY = HudMath.pixelPerMeterY;
@@ -2030,33 +1874,33 @@ append(obj.total, obj.speed_curr);
 
         if (1) {
             var vvpos = HudMath.getFlightPathIndicatorPos();
-            if (hdp.drift < 2) {
+            if (hdp.getproper("drift") < 2) {
                 hdp.VV_x = vvpos[0];
             } else {
                 hdp.VV_x = 0;
             }
             hdp.VV_y = vvpos[1];
-        } elsif (hdp.wow0) {
-            me.vectorMag = math.sqrt(hdp.speed_east_fps*hdp.speed_east_fps+hdp.speed_north_fps*hdp.speed_north_fps);
+        } elsif (hdp.getproper("wow0")) {
+            me.vectorMag = math.sqrt(hdp.getproper("speed_east_fps")*hdp.getproper("speed_east_fps")+hdp.getproper("speed_north_fps")*hdp.getproper("speed_north_fps"));
             if (me.vectorMag == 0) {
                 me.vectorMag = 0.0001;
             }
             if (me.vectorMag<0.5) {
                 hdp.VV_x = 0;
             } else {
-                me.headingvv = -math.asin(hdp.speed_north_fps/me.vectorMag)*R2D+90;#divide by vector mag, to get normalized unit vector length
-                if (hdp.speed_east_fps/me.vectorMag < 0) {
+                me.headingvv = -math.asin(hdp.getproper("speed_north_fps")/me.vectorMag)*R2D+90;#divide by vector mag, to get normalized unit vector length
+                if (hdp.getproper("speed_east_fps")/me.vectorMag < 0) {
                   me.headingvv = -me.headingvv;
                 }
                 if (me.vectorMag < 0.1) {
-                    me.headingvv = hdp.heading;
+                    me.headingvv = hdp.getproper("heading");
                 }
-                hdp.VV_x = geo.normdeg180(me.headingvv-hdp.heading);
+                hdp.VV_x = geo.normdeg180(me.headingvv-hdp.getproper("heading"));
             }
             hdp.VV_y = 0;
         } else {
-            hdp.VV_x = hdp.beta;
-            hdp.VV_y = hdp.alpha;
+            hdp.VV_x = hdp.getproper("beta");
+            hdp.VV_y = hdp.getproper("alpha");
         }
 
 
@@ -2067,8 +1911,8 @@ append(obj.total, obj.speed_curr);
 
         me.xBore = int(me.sx*0.5/(256/flirImageReso));
         me.yBore = flirImageReso-1-int((HudMath.getCenterOrigin()[1]+HudMath.getBorePos()[1])/(256/flirImageReso));
-        me.distMin = hdp.groundspeed_kt*getprop("f16/avionics/hud-flir-distance-min");
-        me.distMax = hdp.groundspeed_kt*getprop("f16/avionics/hud-flir-distance-max");
+        me.distMin = hdp.getproper("groundspeed_kt")*getprop("f16/avionics/hud-flir-distance-min");
+        me.distMax = hdp.getproper("groundspeed_kt")*getprop("f16/avionics/hud-flir-distance-max");
         me.gain = 1+getprop("f16/avionics/hud-cont")*2.5;
         me.symb = getprop("f16/avionics/hud-depr-ret");
         if (me.symb > 0 and getprop("f16/stores/nav-mounted")==1 and getprop("f16/avionics/power-left-hdpt")==1 and me.color[3] != 0) {
@@ -2091,7 +1935,7 @@ append(obj.total, obj.speed_curr);
                         me.terrain.set_latlon(me.intercept.lat, me.intercept.lon ,me.intercept.elevation);
                         me.value = math.min(1,((math.max(me.distMin-me.distMax, me.distMin-me.start.direct_distance_to(me.terrain))+(me.distMax-me.distMin))/me.distMax));
                     }
-                    me.flirPicHD.setPixel(me.x, me.y, [me.color[0],me.color[1],me.color[2],hdp.hud_power*me.symb*math.pow(me.value, me.gain)]);
+                    me.flirPicHD.setPixel(me.x, me.y, [me.color[0],me.color[1],me.color[2],hdp.getproper("hud_power")*me.symb*math.pow(me.value, me.gain)]);
                 }
             }
             me.scanY+=me.scans;if (me.scanY>flirImageReso-me.scans) me.scanY=0;
@@ -2115,19 +1959,19 @@ append(obj.total, obj.speed_curr);
         var showASC = 0;
         me.ALOW_top = 0;
         me.TA_text = "";
-        if (1) {#hdp.FrameCount == 2 or me.initUpdate == 1) {
-            hdp.window1_txt = "";
-            hdp.window2_txt = "";
-            hdp.window3_txt = "";
-            hdp.window4_txt = "";
-            hdp.window5_txt = "";
-            hdp.window6_txt = "";
-            hdp.window7_txt = "";
-            hdp.window8_txt = "";
-            hdp.window9_txt = "";
-            hdp.window10_txt = "";
-            hdp.window11_txt = "";
-            hdp.window12_txt = "";
+        if (1) {#hdp.getproper("FrameCount == 2 or me.initUpdate == 1) {
+            me.window1_txt = "";
+            me.window2_txt = "";
+            me.window3_txt = "";
+            me.window4_txt = "";
+            me.window5_txt = "";
+            me.window6_txt = "";
+            me.window7_txt = "";
+            me.window8_txt = "";
+            me.window9_txt = "";
+            me.window10_txt = "";
+            me.window11_txt = "";
+            me.window12_txt = "";
 
 
             me.asec262 = 0;
@@ -2137,7 +1981,7 @@ append(obj.total, obj.speed_curr);
             var eegsShow = 0;
             var currASEC = nil;
 
-            if(hdp.master_arm != 0 and pylons.fcs != nil)
+            if(hdp.getproper("master_arm") != 0 and pylons.fcs != nil)
             {
                 hdp.weapon_selected = pylons.fcs.selectedType;
                 hdp.weapn = pylons.fcs.getSelectedWeapon();
@@ -2146,109 +1990,109 @@ append(obj.total, obj.speed_curr);
                 {
                     var mr = 0.4;
                     if (hdp.weapon_selected == "20mm Cannon") {
-                        hdp.window9_txt = sprintf("%3d", pylons.fcs.getAmmo());
+                        me.window9_txt = sprintf("%3d", pylons.fcs.getAmmo());
                         eegsShow = 1;
                         me.ALOW_top = 1;
                     } elsif (hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "AIM-9M") {
-                        hdp.window9_txt = sprintf("%d SRM", pylons.fcs.getAmmo());#short range missile
+                        me.window9_txt = sprintf("%d SRM", pylons.fcs.getAmmo());#short range missile
                         if (hdp.weapn != nil) {
-                            if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
+                            if (hdp.getproper("weapn.status") == armament.MISSILE_LOCK and !hdp.getproper("standby")) {
                                 me.asec65 = 1;
                                 currASEC = nil;#[me.sx*0.5,me.sy*0.25];
-                            } elsif (!hdp.standby) {
+                            } elsif (!hdp.getproper("standby")) {
                                 me.asec100 = 1;
                                 currASEC = nil;#[me.sx*0.5,me.sy*0.25];
                             }
                         }
                         me.ALOW_top = 1;
                     } elsif (hdp.weapon_selected == "IRIS-T") {
-                        hdp.window9_txt = sprintf("%d ASM", pylons.fcs.getAmmo());#short range missile
+                        me.window9_txt = sprintf("%d ASM", pylons.fcs.getAmmo());#short range missile
                         if (hdp.weapn != nil) {
-                            if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
+                            if (hdp.getproper("weapn.status") == armament.MISSILE_LOCK and !hdp.getproper("standby")) {
                                 me.asec65 = 1;
                                 currASEC = nil;#[me.sx*0.5,me.sy*0.25];
-                            } elsif (!hdp.standby) {
+                            } elsif (!hdp.getproper("standby")) {
                                 me.asec100 = 1;
                                 currASEC = nil;#[me.sx*0.5,me.sy*0.25];
                             }
                         }
                         me.ALOW_top = 1;
                     } elsif (hdp.weapon_selected == "AIM-120") {
-                        hdp.window9_txt = sprintf("%d AMM", pylons.fcs.getAmmo());#adv. medium range missile
+                        me.window9_txt = sprintf("%d AMM", pylons.fcs.getAmmo());#adv. medium range missile
                         if (hdp.weapn != nil) {
-                            if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
+                            if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.getproper("standby")) {
                                 me.asec120 = 1;
                                 currASEC = [me.sx*0.5,me.sy*0.25];
-                            } elsif (!hdp.standby) {
+                            } elsif (!hdp.getproper("standby")) {
                                 me.asec262 = 1;
                                 currASEC = [me.sx*0.5,me.sy*0.25+262*mr*0.5];
                             }
                         }
                         me.ALOW_top = 1;
                     } elsif (hdp.weapon_selected == "AIM-7") {
-                        hdp.window9_txt = sprintf("%d MRM", pylons.fcs.getAmmo());#medium range missile
+                        me.window9_txt = sprintf("%d MRM", pylons.fcs.getAmmo());#medium range missile
                         if (hdp.weapn != nil) {
-                            if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
+                            if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.getproper("standby")) {
                                 me.asec120 = 1;
                                 currASEC = nil;#[me.sx*0.5,me.sy*0.25];
-                            } elsif (!hdp.standby) {
+                            } elsif (!hdp.getproper("standby")) {
                                 me.asec262 = 1;
                                 currASEC = nil;#[me.sx*0.5,me.sy*0.25+262*mr*0.5];
                             }
                         }
                         me.ALOW_top = 1;
                     } elsif (hdp.weapon_selected == "GBU-12") {
-                        hdp.window9_txt = sprintf("%d GB12", pylons.fcs.getAmmo());
+                        me.window9_txt = sprintf("%d GB12", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "AGM-65B") {
-                        hdp.window9_txt = sprintf("%d AG65", pylons.fcs.getAmmo());
+                        me.window9_txt = sprintf("%d AG65", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "AGM-65D") {
-                        hdp.window9_txt = sprintf("%d AG65", pylons.fcs.getAmmo());
+                        me.window9_txt = sprintf("%d AG65", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "AGM-84") {
-                        hdp.window9_txt = sprintf("%d AG84", pylons.fcs.getAmmo());
+                        me.window9_txt = sprintf("%d AG84", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "AGM-119") {
-                        hdp.window9_txt = sprintf("%d AG119", pylons.fcs.getAmmo());
+                        me.window9_txt = sprintf("%d AG119", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "MK-82") {
-                        hdp.window9_txt = sprintf("%d B82", pylons.fcs.getAmmo());
+                        me.window9_txt = sprintf("%d B82", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "MK-82AIR") {
-                        hdp.window9_txt = sprintf("%d B82A", pylons.fcs.getAmmo());
+                        me.window9_txt = sprintf("%d B82A", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "MK-83") {
-                        hdp.window9_txt = sprintf("%d B83", pylons.fcs.getAmmo());
+                        me.window9_txt = sprintf("%d B83", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "MK-84") {
-                        hdp.window9_txt = sprintf("%d B84", pylons.fcs.getAmmo());
+                        me.window9_txt = sprintf("%d B84", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "AGM-88") {
-                        hdp.window9_txt = sprintf("%d AG88", pylons.fcs.getAmmo());
+                        me.window9_txt = sprintf("%d AG88", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "GBU-31") {
-                        hdp.window9_txt = sprintf("%d GB31", pylons.fcs.getAmmo());
+                        me.window9_txt = sprintf("%d GB31", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "GBU-54") {
-                        hdp.window9_txt = sprintf("%d GB54", pylons.fcs.getAmmo());
+                        me.window9_txt = sprintf("%d GB54", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "GBU-24") {
-                        hdp.window9_txt = sprintf("%d GB24", pylons.fcs.getAmmo());
+                        me.window9_txt = sprintf("%d GB24", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "AGM-158") {
-                        hdp.window9_txt = sprintf("%d AG158", pylons.fcs.getAmmo());
+                        me.window9_txt = sprintf("%d AG158", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "AGM-154A") {
-                        hdp.window9_txt = sprintf("%d AG154", pylons.fcs.getAmmo());
+                        me.window9_txt = sprintf("%d AG154", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "CBU-87") {
-                        hdp.window9_txt = sprintf("%d CB87", pylons.fcs.getAmmo());
+                        me.window9_txt = sprintf("%d CB87", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "CBU-105") {
-                        hdp.window9_txt = sprintf("%d CB105", pylons.fcs.getAmmo());
+                        me.window9_txt = sprintf("%d CB105", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "LAU-68") {
-                        hdp.window9_txt = sprintf("%d M151", pylons.fcs.getAmmo());
+                        me.window9_txt = sprintf("%d M151", pylons.fcs.getAmmo());
                         eegsShow = 1;
                         me.hydra = 1;
                     } elsif (hdp.weapon_selected == "B61-7") {
-                        hdp.window9_txt = sprintf("%d B617", pylons.fcs.getAmmo());
+                        me.window9_txt = sprintf("%d B617", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "B61-12") {
-                        hdp.window9_txt = sprintf("%d B6112", pylons.fcs.getAmmo());
-                    } else hdp.window9_txt = "";
+                        me.window9_txt = sprintf("%d B6112", pylons.fcs.getAmmo());
+                    } else me.window9_txt = "";
 
 
                 }
 
                 if (radar_system.apg68Radar.getPriorityTarget() != nil) {
                     if (radar_system.apg68Radar.getPriorityTarget().get_Callsign() != nil) {
-                        hdp.window6_txt = radar_system.apg68Radar.getPriorityTarget().get_Callsign();
+                        me.window6_txt = radar_system.apg68Radar.getPriorityTarget().get_Callsign();
                     } else {
-                        hdp.window6_txt = "";
+                        me.window6_txt = "";
                     }
 
                     me.lard = radar_system.apg68Radar.getPriorityTarget().getLastRangeDirect();
@@ -2256,15 +2100,15 @@ append(obj.total, obj.speed_curr);
 
                     if (me.lard ==nil or me.laal == nil) {
                         me.TA_text = "TA XX";
-                        hdp.window3_txt = "FXXX.X";#slant range
+                        me.window3_txt = "FXXX.X";#slant range
                     } else {
                         me.TA_text = sprintf("TA%3d", me.laal*0.001);
-                        hdp.window3_txt = sprintf("F%05.1f", me.lard*M2NM);#slant range
+                        me.window3_txt = sprintf("F%05.1f", me.lard*M2NM);#slant range
                     }
 
-                    hdp.window6_txt ~= "/"~radar_system.apg68Radar.getPriorityTarget().getModel();
-                    if (size(hdp.window6_txt)>14) {
-                        hdp.window6_txt = substr(hdp.window6_txt,0,14);
+                    me.window6_txt ~= "/"~radar_system.apg68Radar.getPriorityTarget().getModel();
+                    if (size(me.window6_txt)>14) {
+                        me.window6_txt = substr(me.window6_txt,0,14);
                     }
                 } elsif (armament.contactPoint != nil) {
                     me.lardC = armament.contactPoint.getCoord();
@@ -2273,15 +2117,15 @@ append(obj.total, obj.speed_curr);
 
                     if (me.lard ==nil or me.laal == nil) {
                         me.TA_text = "TA XX";
-                        hdp.window3_txt = "FXXX.X";#slant range
+                        me.window3_txt = "FXXX.X";#slant range
                     } else {
                         me.TA_text = sprintf("TA%3d", me.laal*0.001);
-                        hdp.window3_txt = sprintf("F%05.1f", me.lard*M2NM);#slant range
+                        me.window3_txt = sprintf("F%05.1f", me.lard*M2NM);#slant range
                     }
-                    hdp.window6_txt = "";
+                    me.window6_txt = "";
                 } else {
-                    hdp.window3_txt = "";
-                    hdp.window6_txt = "";
+                    me.window3_txt = "";
+                    me.window6_txt = "";
                 }
                 me.etaS = armament.AIM.getETA();
                 if (hdp["CCRP_active"] == 2 and me["timeToRelease"] != nil) {
@@ -2290,9 +2134,9 @@ append(obj.total, obj.speed_curr);
                     me.timeToReleaseM = int(me.timeToRelease/60);
                     me.timeToRelease = me.timeToRelease-me.timeToReleaseM*60;
                     if (me.timeToReleaseH < 1) {
-                        hdp.window4_txt = sprintf("%03d:%02d",me.timeToReleaseM,me.timeToRelease);# 3 digits so pilot can tell it apart from time to steerpoint.
+                        me.window4_txt = sprintf("%03d:%02d",me.timeToReleaseM,me.timeToRelease);# 3 digits so pilot can tell it apart from time to steerpoint.
                     } else {
-                        hdp.window4_txt = "XXX";
+                        me.window4_txt = "XXX";
                     }
                 } elsif (me.etaS != nil and me.etaS != -1) {
                     me.etaH = int(me.etaS/3600);
@@ -2300,26 +2144,26 @@ append(obj.total, obj.speed_curr);
                     me.etaM = int(me.etaS/60);
                     me.etaS = me.etaS-me.etaM*60;
                     if (me.etaH < 1) {
-                        hdp.window4_txt = sprintf("%03d:%02d",me.etaM,me.etaS);# 3 digits so pilot can tell it apart from time to steerpoint.
+                        me.window4_txt = sprintf("%03d:%02d",me.etaM,me.etaS);# 3 digits so pilot can tell it apart from time to steerpoint.
                     } else {
-                        hdp.window4_txt = "XXX";
+                        me.window4_txt = "XXX";
                     }
                 } else {
-                    hdp.window4_txt = "";
+                    me.window4_txt = "";
                 }
                 me.scurr = steerpoints.getCurrentNumber();
                 if (me.scurr != 0) {
                     me.navRange = steerpoints.getCurrentRange();
-                    hdp.window5_txt = sprintf("%d>%02d", me.navRange, me.scurr);# as per MLU tape 3 manual
+                    me.window5_txt = sprintf("%d>%02d", me.navRange, me.scurr);# as per MLU tape 3 manual
                 } else {
-                    hdp.window5_txt = "";
+                    me.window5_txt = "";
                 }
             } else # weapons not armed
             {
                 me.scurr = steerpoints.getCurrentNumber();
                 if (me.scurr != 0) {
                     me.navRange = steerpoints.getCurrentRange();
-                    hdp.window5_txt = sprintf("%d>%02d", me.navRange, me.scurr);# as per MLU tape 3 manual
+                    me.window5_txt = sprintf("%d>%02d", me.navRange, me.scurr);# as per MLU tape 3 manual
                     me.etaS = steerpoints.getCurrentETA();
                     if (me.etaS != nil) {
                         me.etaH = int(me.etaS/3600);
@@ -2327,20 +2171,20 @@ append(obj.total, obj.speed_curr);
                         me.etaM = int(me.etaS/60);
                         me.etaS = me.etaS-me.etaM*60;
                         if (me.etaH < 100) {
-                            hdp.window4_txt = sprintf("%02d:%02d",me.etaH,me.etaM);
+                            me.window4_txt = sprintf("%02d:%02d",me.etaH,me.etaM);
                         } else {
-                            hdp.window4_txt = "99:99";
+                            me.window4_txt = "99:99";
                         }
                     } else {
-                        hdp.window4_txt = "XX:XX";
+                        me.window4_txt = "XX:XX";
                     }
                 } else {
-                    hdp.window4_txt = "";
-                    hdp.window5_txt = "";
+                    me.window4_txt = "";
+                    me.window5_txt = "";
                 }
                 var knob = getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob");
-                if (hdp.gear_down and !hdp.wow) {
-                    hdp.window6_txt = "";#sprintf("A%d", hdp.approach_speed);
+                if (hdp.getproper("gear_down") and !hdp.getproper("wow")) {
+                    me.window6_txt = "";#sprintf("A%d", hdp.getproper("approach_speed"));
                 } elsif (0 and (knob==0 or knob == 1) and getprop("instrumentation/tacan/in-range")) {
                     # show tacan distance and mag heading. (not authentic like this, saw a paper on putting Tacan in hud, but not sure if it was done for F16)
                     if (getprop("f16/avionics/tacan-receive-only")) {
@@ -2354,15 +2198,15 @@ append(obj.total, obj.speed_curr);
 							tcnDist = sprintf("%.1f", tcnDist);
 						}
 					}
-                    hdp.window6_txt = sprintf("%s TCN%03d",tcnDist,geo.normdeg(hdp.headingMag+getprop("instrumentation/tacan/bearing-relative-deg")));
+                    me.window6_txt = sprintf("%s TCN%03d",tcnDist,geo.normdeg(hdp.getproper("headingMag")+getprop("instrumentation/tacan/bearing-relative-deg")));
                 } elsif (0 and (knob==2 or knob == 3) and getprop("instrumentation/adf/in-range")) {
                     # show adf mag heading.
-                    hdp.window6_txt = sprintf("ADF%03d",geo.normdeg(hdp.headingMag+getprop("instrumentation/adf/indicated-bearing-deg")));
+                    me.window6_txt = sprintf("ADF%03d",geo.normdeg(hdp.getproper("headingMag")+getprop("instrumentation/adf/indicated-bearing-deg")));
                 } elsif (0 and (knob==2 or knob == 3) and getprop("instrumentation/nav[0]/in-range") and !getprop("instrumentation/nav[0]/nav-loc")) {
                     # show vor mag heading.
-                    hdp.window6_txt = sprintf("VOR%03d",geo.normdeg(getprop("orientation/heading-deg")-getprop("orientation/heading-magnetic-deg")+getprop("instrumentation/nav[0]/radials/target-auto-hdg-deg")));
+                    me.window6_txt = sprintf("VOR%03d",geo.normdeg(getprop("orientation/heading-deg")-getprop("orientation/heading-magnetic-deg")+getprop("instrumentation/nav[0]/radials/target-auto-hdg-deg")));
                 } else {
-                    hdp.window6_txt = "";
+                    me.window6_txt = "";
                 }
 
                 var slant = "";
@@ -2376,7 +2220,7 @@ append(obj.total, obj.speed_curr);
                     }
                 }
 
-                hdp.window3_txt = slant;
+                me.window3_txt = slant;
             }
             me.ASEC262.setVisible(me.asec262);
             me.ASEC100.setVisible(me.asec100);
@@ -2391,10 +2235,10 @@ append(obj.total, obj.speed_curr);
 
             me.bullPt = steerpoints.getNumber(555);
             me.bullOn = me.bullPt != nil;
-            if (hdp.bingo and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
-              hdp.window11_txt = "FUEL";
-            } elsif (hdp.bingo) {
-              hdp.window11_txt = "";
+            if (hdp.getproper("bingo") and math.mod(int(4*(hdp.getproper("elapsed")-int(hdp.getproper("elapsed")))),2)>0) {
+              me.window11_txt = "FUEL";
+            } elsif (hdp.getproper("bingo")) {
+              me.window11_txt = "";
             } elsif (me.bullOn) {
                 me.bullLat = me.bullPt.lat;
                 me.bullLon = me.bullPt.lon;
@@ -2405,36 +2249,36 @@ append(obj.total, obj.speed_curr);
                 if (me.bullDistToMe > 999) me.bullDistToMe = 999;
                 me.bullDirToMe = sprintf("%03d", me.bullDirToMe);
 				me.bullDistToMe = sprintf("%02d", me.bullDistToMe);
-			    hdp.window11_txt = sprintf("%s %s", me.bullDirToMe, me.bullDistToMe);
+			    me.window11_txt = sprintf("%s %s", me.bullDirToMe, me.bullDistToMe);
 			} else {
-                hdp.window11_txt = "";
+                me.window11_txt = "";
 			}
 
 
-            if (!hdp.cara) {
+            if (!hdp.getproper("cara")) {
                 me.alow_text = "AL";
-            } elsif (hdp.alow<hdp.altitude_agl_ft or math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0 or hdp.gear_down) {
-                me.alow_text = sprintf("AL%4d",hdp.alow);
+            } elsif (hdp.getproper("alow")<hdp.getproper("altitude_agl_ft") or math.mod(int(4*(hdp.getproper("elapsed")-int(hdp.getproper("elapsed")))),2)>0 or hdp.getproper("gear_down")) {
+                me.alow_text = sprintf("AL%4d",hdp.getproper("alow"));
             } else {
                 me.alow_text = "";
             }
 
-            if ((hdp.dgft or me.ALOW_top) and me["altScaleMode"] != 2) {
-                hdp.window1_txt = me.alow_text;
-                hdp.window10_txt = me.TA_text;# Since MLU Tape 2
+            if ((hdp.getproper("dgft") or me.ALOW_top) and me["altScaleMode"] != 2) {
+                me.window1_txt = me.alow_text;
+                me.window10_txt = me.TA_text;# Since MLU Tape 2
             } else {
-                hdp.window10_txt = me.alow_text;
-                hdp.window1_txt = "";
+                me.window10_txt = me.alow_text;
+                me.window1_txt = "";
             }
 
-            hdp.window7_txt = sprintf("  %.2f",hdp.mach);
+            me.window7_txt = sprintf("  %.2f",hdp.getproper("mach"));
         }
 
 
 
 
         me.locatorLineShow = 0;
-#        if (hdp.FrameCount == 1 or hdp.FrameCount == 3 or me.initUpdate == 1) {
+#        if (hdp.getproper("FrameCount == 1 or hdp.getproper("FrameCount == 3 or me.initUpdate == 1) {
         me.target_idx = 0;
         me.designated = 0;
 
@@ -2446,8 +2290,8 @@ append(obj.total, obj.speed_curr);
         me.irT = 0;
         me.rdT = 0;
         me.irB = 0;
-        #printf("%d %d %d %s",hdp.master_arm,pylons.fcs != nil,pylons.fcs.getAmmo(),hdp.weapon_selected);
-        if(hdp.master_arm != 0 and pylons.fcs != nil and pylons.fcs.getAmmo() > 0) {
+        #printf("%d %d %d %s",hdp.getproper("master_arm"),pylons.fcs != nil,pylons.fcs.getAmmo(),hdp.weapon_selected);
+        if(hdp.getproper("master_arm") != 0 and pylons.fcs != nil and pylons.fcs.getAmmo() > 0) {
             hdp.weapon_selected = pylons.fcs.selectedType;
             var aim = pylons.fcs.getSelectedWeapon();
             if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
@@ -2533,14 +2377,14 @@ append(obj.total, obj.speed_curr);
                                 print(err[1]);
                             }
                             if (me.cue != nil) {
-                                me.cueXDeg1 = geo.normdeg180(me.cue[0]-hdp.heading);
-                                me.cueYDeg1 = me.cue[1]-hdp.pitch;
+                                me.cueXDeg1 = geo.normdeg180(me.cue[0]-hdp.getproper("heading"));
+                                me.cueYDeg1 = me.cue[1]-hdp.getproper("pitch");
 
                                 #printf("%02d, %02d", me.cueXDeg1, me.cueYDeg1);
 
                                 # account for aircraft roll:
-                                me.cueXDeg = me.cueXDeg1*math.cos(-hdp.roll*D2R)+me.cueYDeg1*math.sin(-hdp.roll*D2R);
-                                me.cueYDeg = -me.cueXDeg1*math.sin(-hdp.roll*D2R)+me.cueYDeg1*math.cos(-hdp.roll*D2R);
+                                me.cueXDeg = me.cueXDeg1*math.cos(-hdp.getproper("roll")*D2R)+me.cueYDeg1*math.sin(-hdp.getproper("roll")*D2R);
+                                me.cueYDeg = -me.cueXDeg1*math.sin(-hdp.getproper("roll")*D2R)+me.cueYDeg1*math.cos(-hdp.getproper("roll")*D2R);
 
                                 me.ascPos = HudMath.getPosFromDegs(me.cueXDeg, me.cueYDeg);
                                 me.ascpixel = math.sqrt(me.ascPos[0]*me.ascPos[0]+me.ascPos[1]*me.ascPos[1]);
@@ -2583,11 +2427,11 @@ append(obj.total, obj.speed_curr);
                                 me.lastH = nil;
                             }
                             if (me.lastH != nil and (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7")) {
-                                me.ASEC120Aspect.setRotation(D2R*(me.lastH-hdp.heading+180));
+                                me.ASEC120Aspect.setRotation(D2R*(me.lastH-hdp.getproper("heading")+180));
                                 me.rdL = 1;
                                 me.rdT = 1;
                             } elsif (me.lastH != nil and (hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "AIM-9M" or hdp.weapon_selected == "IRIS-T")) {
-                                me.ASEC65Aspect.setRotation(D2R*(me.lastH-hdp.heading+180));
+                                me.ASEC65Aspect.setRotation(D2R*(me.lastH-hdp.getproper("heading")+180));
                                 me.irT = 1;
                             }
                         } else {
@@ -2598,7 +2442,7 @@ append(obj.total, obj.speed_curr);
                         if (me.clamped and me.dr != nil and me.drE != nil and math.abs(me.dr) < 90) {
                             me.locatorLine.setTranslation(HudMath.getBorePos());
                             me.veccy = vector.Math.pitchYawVector(me.u.getLastElev(),-me.dr, [1,0,0]);# There is probably simpler ways to do this, but at least I know this works well at great angles.
-                            me.veccy = vector.Math.yawPitchRollVector(0, -hdp.pitch, -hdp.roll, me.veccy);
+                            me.veccy = vector.Math.yawPitchRollVector(0, -hdp.getproper("pitch"), -hdp.getproper("roll"), me.veccy);
                             me.locatorLine.setRotation(math.atan2(-me.veccy[1],me.veccy[2]));
                             me.locatorAngle.setText(sprintf("%d", vector.Math.angleBetweenVectors([1,0,0], vector.Math.pitchYawVector(me.drE,-me.dr, [1,0,0]))));
                             me.locatorLineShow = 1;
@@ -2643,9 +2487,9 @@ append(obj.total, obj.speed_curr);
         me.locatorLine.setVisible(me.locatorLineShow);
         me.locatorAngle.setVisible(me.locatorLineShow);
 
-        if (hdp.dgft) {
+        if (hdp.getproper("dgft")) {
             me.ALOW_top = 1;# thsi line is AFTER the code that needs it
-            me.peelDeg = 90-hdp.pitch;
+            me.peelDeg = 90-hdp.getproper("pitch");
             me.peelRadius = 0.25*me.sx;
             me.peelTickRadius = me.peelRadius+8;
             me.orangePeelGroup.removeAllChildren();
@@ -2658,8 +2502,8 @@ append(obj.total, obj.speed_curr);
                 .lineTo(me.peelTickRadius*math.sin(me.peelDeg*D2R), me.peelTickRadius*math.cos(me.peelDeg*D2R))
                 .setStrokeLineWidth(1)
                 .setColor(me.color);
-            if (hdp.servTurn) {
-                me.orangePeelGroup.setRotation(-hdp.roll*D2R);
+            if (hdp.getproper("servTurn")) {
+                me.orangePeelGroup.setRotation(-hdp.getproper("roll")*D2R);
             }
             me.orangePeelGroup.show();
             me.orangePeelGroup.update();
@@ -2686,7 +2530,7 @@ append(obj.total, obj.speed_curr);
             if (me.dlzClos != nil) {
                 me.dlzClo.setTranslation(0,-me.dlzArray[4]/me.dlzArray[0]*me.dlzHeight);
                 me.dlzClo.setText(sprintf("%+d ",me.dlzClos));
-                if (pylons.fcs.isLock() and me.dlzArray[4] < me.dlzArray[2] and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
+                if (pylons.fcs.isLock() and me.dlzArray[4] < me.dlzArray[2] and math.mod(int(4*(hdp.getproper("elapsed")-int(hdp.getproper("elapsed")))),2)>0) {
                     #me.irL = 0;
                     me.rdL = 0;
                 }
@@ -2748,7 +2592,7 @@ append(obj.total, obj.speed_curr);
         me.irDiamondSmall.update();
 
 
-        if (hdp.ded == 2 and !hdp.dgft) {
+        if (hdp.getproper("ded") == 2 and !hdp.getproper("dgft")) {
             me.ded0.setText(ded.dataEntryDisplay.text[0]);
             me.ded1.setText(ded.dataEntryDisplay.text[1]);
             me.ded2.setText(ded.dataEntryDisplay.text[2]);
@@ -2759,7 +2603,7 @@ append(obj.total, obj.speed_curr);
             me.ded2.show();
             me.ded3.show();
             me.ded4.show();
-        } elsif (hdp.ded == 1 and !hdp.dgft) {
+        } elsif (hdp.getproper("ded") == 1 and !hdp.getproper("dgft")) {
             me.ded0.setText(pfd.text[0]);
             me.ded1.setText(pfd.text[1]);
             me.ded2.setText(pfd.text[2]);
@@ -2778,10 +2622,10 @@ append(obj.total, obj.speed_curr);
             me.ded4.hide();
         }
 
-        if (tgp.flir_updater.click_coord_cam != nil and getprop("f16/avionics/tgp-lock")) {# hdp.tgp_mounted and
+        if (tgp.flir_updater.click_coord_cam != nil and getprop("f16/avionics/tgp-lock")) {# hdp.getproper("tgp_mounted") and
             if (getprop("sim/view[105]/heading-offset-deg")==0 and getprop("sim/view[105]/pitch-offset-deg")==-30 and armament.contactPoint != nil) {
                 #var b = geo.normdeg180(armament.contactPoint.get_relative_bearing());
-                #var p = armament.contactPoint.getElevation()-hdp.pitch;
+                #var p = armament.contactPoint.getElevation()-hdp.getproper("pitch");
                 var xy = HudMath.getPosFromCoord(armament.contactPoint.get_Coord());
                 var y = me.clamp(xy[1],-me.sy*0.40,me.sy*0.40);
                 var x = me.clamp(xy[0],-me.sx*0.45,me.sx*0.45);
@@ -2866,17 +2710,85 @@ append(obj.total, obj.speed_curr);
 
         hdp.submode = me.submode;
 
+        me.old_hdp = {
+        "hud_serviceable":hdp.getproper("hud_serviceable"),
+        "hud_display":hdp.getproper("hud_display"),
+        "hud_brightness":hdp.getproper("hud_brightness"),
+        "hud_power":hdp.getproper("hud_power")};
+        me.firstOne = 1;
         foreach(var update_item; me.update_items)
         {
-            update_item.update(hdp);
+            if(me.firstOne) {update_item.update(me.old_hdp);me.firstOne = 0;}
+            else update_item(hdp);
         }
+          if (me.window3_txt != nil and me.window3_txt != ""){
+              me.window3.setText(me.window3_txt);
+              me.window3.show();
+          }else
+            me.window3.hide();
+
+          if (me.window4_txt != nil and me.window4_txt != ""){
+              me.window4.show();
+              me.window4.setText(me.window4_txt);
+          }
+          else
+            me.window4.hide();
+
+          if (me.window5_txt != nil and me.window5_txt != ""){
+              me.window5.show();
+              me.window5.setText(me.window5_txt);
+          }
+          else
+            me.window5.hide();
+
+          if (me.window6_txt != nil and me.window6_txt != ""){
+              me.window6.show();
+              me.window6.setText(me.window6_txt);
+          }
+          else
+            me.window6.hide();
+
+          if (me.window7_txt != nil and me.window7_txt != ""){
+              me.window7.show();
+              me.window7.setText(me.window7_txt);
+          }
+          else
+            me.window7.hide();
+
+          if (me.window9_txt != nil and me.window9_txt != ""){
+              me.window9.show();
+              me.window9.setText(me.window9_txt);
+          }
+          else
+            me.window9.hide();
+
+          if (me.window10_txt != nil and me.window10_txt != ""){
+              me.window10.show();
+              me.window10.setText(me.window10_txt);
+          }
+          else
+            me.window10.hide();
+
+          if (me.window11_txt != nil and me.window11_txt != ""){
+              me.window11.show();
+              me.window11.setText(me.window11_txt);
+          }
+          else
+            me.window11.hide();
+
+          if (me.window1_txt != nil and me.window1_txt != ""){
+              me.window1.show();
+              me.window1.setText(me.window1_txt);
+          }
+          else
+            me.window1.hide();
         me.svg.show();
-        transfer_stpt = hdp.window5_txt;
-        transfer_dist = hdp.window3_txt;
-        transfer_arms = hdp.window9_txt;
-        transfer_mode = hdp.window2_txt;
-        transfer_fuel_bullseye = hdp.window11_txt;
-        transfer_g    = hdp.window12_txt;
+        transfer_stpt = me.window5_txt;
+        transfer_dist = me.window3_txt;
+        transfer_arms = me.window9_txt;
+        transfer_mode = me.window2_txt;
+        transfer_fuel_bullseye = me.window11_txt;
+        transfer_g    = me.window12_txt;
         return;
         me.window1.setText("window  1").show();
         me.window2.setText("window  2").show();
@@ -3035,7 +2947,7 @@ append(obj.total, obj.speed_curr);
     },
 
     CCRP: func(hdp) {
-        if (hdp.fcs_available and hdp.master_arm != 0) {
+        if (hdp.fcs_available and hdp.getproper("master_arm") != 0) {
             var trgt = armament.contactPoint;
             if(trgt == nil and radar_system.apg68Radar.getPriorityTarget() != nil) {
                 trgt = radar_system.apg68Radar.getPriorityTarget();
@@ -3050,7 +2962,7 @@ append(obj.total, obj.speed_curr);
                     me.dt = 0.1;
                     me.maxFallTime = 20;
                 } else {
-                    me.agl = (hdp.altitude_ft-trgt.get_altitude())*FT2M;
+                    me.agl = (hdp.getproper("altitude_ft")-trgt.get_altitude())*FT2M;
                     me.dt = me.agl*0.000025;#4000 ft = ~0.1
                     if (me.dt < 0.1) me.dt = 0.1;
                     me.maxFallTime = 45;
@@ -3062,8 +2974,8 @@ append(obj.total, obj.speed_curr);
                     me.bombFallLine.hide();
                     return 0;
                 }
-                if (hdp.groundspeed_kt > 0) {
-                    me.timeToRelease = me.distCCRP/hdp.groundspeed_kt;
+                if (hdp.getproper("groundspeed_kt") > 0) {
+                    me.timeToRelease = me.distCCRP/hdp.getproper("groundspeed_kt");
                 }
                 me.distCCRP/=4000;
                 if (me.distCCRP > 0.75) {
@@ -3108,7 +3020,7 @@ append(obj.total, obj.speed_curr);
         me.showPipperCross = 0;
         me.showmeCCIP = 0;
         if(hdp.CCIP_active) {
-            if (hdp.fcs_available and hdp.master_arm != 0) {
+            if (hdp.fcs_available and hdp.getproper("master_arm") != 0) {
                 var selW = pylons.fcs.getSelectedWeapon();
                 if (selW != nil and (selW.type=="MK-82" or selW.type=="MK-82AIR" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selW.type=="GBU-54" or selW.type=="GBU-24" or selW.type=="CBU-87" or selW.type=="CBU-105" or selW.type=="B61-12")) {
                     me.showmeCCIP = 1;
@@ -3140,7 +3052,7 @@ append(obj.total, obj.speed_curr);
                         me.pos_x = me.hud_pos[0];
                         me.pos_y = me.hud_pos[1];
                         #printf("HUDMath  %.1f", HudMath.dir_x);
-                        #printf("Aircraft %.1f", hdp.heading);
+                        #printf("Aircraft %.1f", hdp.getproper("heading"));
                         #printf("dist=%0.1f (%3d , %3d)", dist, pos_x, pos_y);
 
                         #if(me.pos_x > (512/1024)*canvasWidth) {

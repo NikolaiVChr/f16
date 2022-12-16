@@ -34,7 +34,7 @@ var FrameNotification =
         new_class.FrameCount = 0;
         new_class.ElapsedSeconds = 0;
         new_class.monitored_properties = {};
-
+        new_class.vars = {};
         #
         # embed a recipient within this notification to allow the monitored property
         # mapping list to be modified.
@@ -69,6 +69,20 @@ var FrameNotification =
                     new_class[mp] = new_class.monitored_properties[mp].getValue();
                 }
             }
+        };
+        new_class.clearvars = func() {
+            new_class.vars = {};
+        };
+        new_class.getproper = func(name) {
+            var propName = new_class.monitored_properties;
+            if (propName == nil) {
+                print("NASAL PROP ERROR: ", name);
+                return nil;
+            }
+            if (!contains(new_class.vars, name)) {
+                new_class.vars[name] = new_class.monitored_properties[name].getValue();
+            }
+            return new_class.vars[name];
         };
         emesary.GlobalTransmitter.Register(new_class.Recipient);
         return new_class;

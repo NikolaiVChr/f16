@@ -551,88 +551,7 @@ var F16_HMD = {
 
         obj.hidingScales = 0;
 
-        input2 = {
-                 IAS                       : "/velocities/airspeed-kt",
-                 calibrated                : "/fdm/jsbsim/velocities/vc-kts",
-                 TAS                       : "/fdm/jsbsim/velocities/vtrue-kts",
-                 GND_SPD                   : "/velocities/groundspeed-kt",
-                 HUD_VEL                   : "/f16/avionics/hud-velocity",
-                 HUD_SCA                   : "/f16/avionics/hud-scales",
-                 Nz                        : "/accelerations/pilot-gdamped",
-                 nReset                    : "f16/avionics/n-reset",
-                 alpha                     : "/fdm/jsbsim/aero/alpha-deg",
-                 altitude_ft               : "/position/altitude-ft",
-                 beta                      : "/orientation/side-slip-deg",
-                 brake_parking             : "/controls/gear/brake-parking",
-                 flap_pos_deg              : "/fdm/jsbsim/fcs/flap-pos-deg",
-                 gear_down                 : "/controls/gear/gear-down",
-                 heading                   : "/orientation/heading-deg",
-                 headingMag                : "/orientation/heading-magnetic-deg",
-                 useMag:                     "/instrumentation/heading-indicator/use-mag-in-hud",
-                 mach                      : "/instrumentation/airspeed-indicator/indicated-mach",
-                 measured_altitude         : "/instrumentation/altimeter/indicated-altitude-ft",
-                 pitch                     : "/orientation/pitch-deg",
-                 roll                      : "/orientation/roll-deg",
-                 speed                     : "/fdm/jsbsim/velocities/vt-fps",
-                 symbol_reject             : "/controls/HUD/sym-rej",
-                 target_display            : "/sim/model/f16/instrumentation/radar-awg-9/hud/target-display",
-                 wow                       : "/fdm/jsbsim/gear/wow",
-                 wow0                      : "/fdm/jsbsim/gear/unit[0]/WOW",
-                 current_view_x_offset_m   : "sim/current-view/x-offset-m",
-                 current_view_y_offset_m   : "sim/current-view/y-offset-m",
-                 current_view_z_offset_m   : "sim/current-view/z-offset-m",
-                 master_arm                : "controls/armament/master-arm-switch",
-                 groundspeed_kt            : "velocities/groundspeed-kt",
-                 density_altitude          : "fdm/jsbsim/atmosphere/density-altitude",
-                 speed_down_fps            : "velocities/speed-down-fps",
-                 speed_east_fps            : "velocities/speed-east-fps",
-                 speed_north_fps           : "velocities/speed-north-fps",
-                 hud_brightness            : "f16/avionics/hud-sym",
-                 hud_power                 : "f16/avionics/hud-power",
-                 hud_display               : "controls/HUD/display-on",
-                 hud_serviceable           : "instrumentation/hud/serviceable",
-                 time_until_crash          : "instrumentation/radar/time-till-crash",
-                 vne                       : "f16/vne",
-                 texUp                     : "f16/hud/texels-up",
-                 bingo                     : "f16/avionics/bingo",
-                 alow                      : "f16/settings/cara-alow",
-                 altitude_agl_ft           : "position/altitude-agl-ft",
-                 approach_speed            : "fdm/jsbsim/systems/approach-speed",
-                 standby                   : "instrumentation/radar/radar-standby",
-                 elapsed                   : "sim/time/elapsed-sec",
-                 cara                      : "f16/avionics/cara-on",
-                 altSwitch                 : "f16/avionics/hud-alt",
-                 drift                     : "f16/avionics/hud-drift",
-                 fpm                       : "f16/avionics/hud-fpm",
-                 ded                       : "f16/avionics/hud-ded",
-                 dgft                      : "f16/avionics/dgft",
-                 tgp_mounted               : "f16/stores/tgp-mounted",
-                 view_number               : "sim/current-view/view-number",
-                 rotary                    : "sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob",
-                 hasGS                     : "instrumentation/nav[0]/has-gs",
-                 GSinRange                 : "instrumentation/nav[0]/gs-in-range",
-                 GSDeg                     : "instrumentation/nav[0]/gs-needle-deflection-norm",
-                 ILSDeg                    : "instrumentation/nav[0]/heading-needle-deflection",
-                 ILSinRange                : "instrumentation/nav[0]/in-range",
-                 GSdist                    : "instrumentation/nav[0]/gs-distance",
-                 #cross                     : "instrumentation/nav[0]/crosstrack-heading-error-deg",
-                 #cross                     : "instrumentation/nav[0]/heading-deg",
-                 cross                     : "instrumentation/nav[0]/radials/target-auto-hdg-deg",
-                 ins_knob                  : "f16/avionics/ins-knob",
-                 servAtt                   : "instrumentation/attitude-indicator/serviceable",
-                 servHead                  : "instrumentation/heading-indicator/serviceable",
-                 servTurn                  : "instrumentation/turn-indicator/serviceable",
-                 servSpeed                 : "instrumentation/airspeed-indicator/serviceable",
-                 servStatic                : "systems/static/serviceable",
-                 servPitot                 : "systems/pitot/serviceable",
-                 warn                      : "f16/avionics/fault-warning",
-                 strf                      : "f16/avionics/strf",
-                 data                      : "instrumentation/datalink/data",
-                };
-
-        #foreach (var name; keys(input)) {
-        #    emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("HUD", name, input[name]));
-        #}
+        
 
         #
         # set the update list - using the update manager to improve the performance
@@ -658,9 +577,10 @@ var F16_HMD = {
                                             obj.ASEC65Aspect.setColorFill(obj.color);
                                           }
                                       }),
-            props.UpdateManager.FromHashList(["texUp","gear_down"], 0.01, func(val)
+            #props.UpdateManager.FromHashList(["texUp","gear_down"], 0.01,
+             func(hdp)
                                              {
-                                                 if (val.gear_down) {
+                                                 if (hdp.getproper("gear_down")) {
                                                      #obj.boreSymbol.hide();
                                                  } else {
                                                      #obj.boreSymbol.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud);
@@ -669,75 +589,81 @@ var F16_HMD = {
                                                      #obj.locatorAngle.setTranslation(obj.sx/2-10,obj.sy-obj.texels_up_into_hud);
                                                      #obj.boreSymbol.show();
                                                  }
-                                      }),
-            props.UpdateManager.FromHashList(["altitude_agl_ft","cara","measured_altitude","altSwitch","alow","dgft"], 1.0, func(hdp)
+                                      },
+            #props.UpdateManager.FromHashList(["altitude_agl_ft","cara","measured_altitude","altSwitch","alow","dgft"], 1.0,
+             func(hdp)
                                       {
-                                          obj.agl=hdp.altitude_agl_ft;
+                                          obj.agl=hdp.getproper("altitude_agl_ft");
                                           obj.altScaleMode = 0;#0=baro, 1=radar 2=thermo
-                                          if (hdp.altSwitch == 2) {#RDR
-                                                obj.altScaleMode = hdp.cara;
-                                          } elsif (hdp.altSwitch == 1) {#BARO
+                                          if (hdp.getproper("altSwitch") == 2) {#RDR
+                                                obj.altScaleMode = hdp.getproper("cara");
+                                          } elsif (hdp.getproper("altSwitch") == 1) {#BARO
                                                 obj.altScaleMode = 0;
                                           } else {#AUTO
                                                 if (obj["altScaleModeOld"] != nil) {
                                                     if (obj.altScaleModeOld == 2) {
-                                                        obj.altScaleMode = (obj.agl < 1500 and hdp.cara and !hdp.dgft and !obj.hidingScales)*2;
+                                                        obj.altScaleMode = (obj.agl < 1500 and hdp.getproper("cara") and !hdp.getproper("dgft") and !obj.hidingScales)*2;
                                                     } else {
-                                                        obj.altScaleMode = (obj.agl < 1200 and hdp.cara and !hdp.dgft and !obj.hidingScales)*2;
+                                                        obj.altScaleMode = (obj.agl < 1200 and hdp.getproper("cara") and !hdp.getproper("dgft") and !obj.hidingScales)*2;
                                                     }
                                                 } else {
-                                                    obj.altScaleMode = (obj.agl < 1300 and hdp.cara and !hdp.dgft and !obj.hidingScales)*2;
+                                                    obj.altScaleMode = (obj.agl < 1300 and hdp.getproper("cara") and !hdp.getproper("dgft") and !obj.hidingScales)*2;
                                                 }
                                           }
                                           obj.altScaleModeOld = obj.altScaleMode;
 
-                                          if(hdp.altSwitch == 0 and hdp.cara and obj.altScaleMode == 0) {
+                                          if(hdp.getproper("altSwitch") == 0 and hdp.getproper("cara") and obj.altScaleMode == 0) {
                                               #obj.ralt.setText(sprintf("AR %s", obj.getAltTxt(obj.agl)));
-                                          } elsif(hdp.cara and obj.altScaleMode == 0) {
+                                          } elsif(hdp.getproper("cara") and obj.altScaleMode == 0) {
                                               #obj.ralt.setText(sprintf("R %s", obj.getAltTxt(obj.agl)));
                                           } else {
                                               #obj.ralt.setText("    ,   ");
                                           }
-                                      }),
-            props.UpdateManager.FromHashList(["calibrated", "GND_SPD", "HUD_VEL", "gear_down"], 0.5, func(hdp)
+                                      },
+            #props.UpdateManager.FromHashList(["calibrated", "GND_SPD", "HUD_VEL", "gear_down"], 0.5,
+             func(hdp)
                                       {
                                           # the real F-16 has calibrated airspeed as default in HUD.
-                                          var pitot = hdp.servPitot and hdp.servStatic;
-                                            if (hdp.servSpeed) {
-                                                obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.calibrated));
+                                          var pitot = hdp.getproper("servPitot") and hdp.getproper("servStatic");
+                                            if (hdp.getproper("servSpeed")) {
+                                                obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.getproper("calibrated")));
                                             }
-                                      }),
-            props.UpdateManager.FromHashList(["altitude_agl_ft","cara","measured_altitude","altSwitch","alow","dgft"], 1.0, func(hdp)
+                                      },
+            #props.UpdateManager.FromHashList(["altitude_agl_ft","cara","measured_altitude","altSwitch","alow","dgft"], 1.0,
+             func(hdp)
                                       {
 
                                             # baro scale
 
-                                            obj.alt_curr.setText(obj.getAltTxt(hdp.measured_altitude));
+                                            obj.alt_curr.setText(obj.getAltTxt(hdp.getproper("measured_altitude")));
 
 
-                                      }),
-            props.UpdateManager.FromHashList(["Nz","nReset"], 0.1, func(hdp)
+                                      },
+            #props.UpdateManager.FromHashList(["Nz","nReset"], 0.1,
+             func(hdp)
                                       {
-                                          obj.window12.setText(sprintf("%.1f", hdp.Nz));
+                                          obj.window12.setText(sprintf("%.1f", hdp.getproper("Nz")));
                                           obj.window12.show();
-                                      }),
-            props.UpdateManager.FromHashList(["heading", "headingMag", "useMag","gear_down","hmdH","hmdP","roll","pitch"], 0.1, func(hdp)
+                                      },
+            #props.UpdateManager.FromHashList(["heading", "headingMag", "useMag","gear_down","hmdH","hmdP","roll","pitch"], 0.1,
+             func(hdp)
                                       {
-                                          if (hdp.servHead) {
-                                            var lookDir = vector.Math.pitchYawVector(hdp.hmdP,hdp.hmdH,[1,0,0]);
-                                            lookDir = vector.Math.rollPitchYawVector(hdp.roll, hdp.pitch, -hdp.heading, lookDir);
+                                          if (hdp.getproper("servHead")) {
+                                            var lookDir = vector.Math.pitchYawVector(hdp.getproper("hmdP"),hdp.getproper("hmdH"),[1,0,0]);
+                                            lookDir = vector.Math.rollPitchYawVector(hdp.getproper("roll"), hdp.getproper("pitch"), -hdp.getproper("heading"), lookDir);
                                             obj.lookEuler = vector.Math.cartesianToEuler(lookDir);
-                                            var lookingAt = obj.lookEuler[0]==nil?hdp.heading:obj.lookEuler[0];
-                                            lookingAt += (hdp.headingMag-hdp.heading);#convert to magn
+                                            var lookingAt = obj.lookEuler[0]==nil?hdp.getproper("heading"):obj.lookEuler[0];
+                                            lookingAt += (hdp.getproper("headingMag")-hdp.getproper("heading"));#convert to magn
                                             obj.head_curr.setText(sprintf("%03d",geo.normdeg(lookingAt)));
                                           }
 
                                       }
-                                            ),
-            props.UpdateManager.FromHashList(["roll", "pitch", "heading", "hmdH", "hmdP", "dgft"], 0.01, func(hdp)
+                                            ,
+            #props.UpdateManager.FromHashList(["roll", "pitch", "heading", "hmdH", "hmdP", "dgft"], 0.01,
+             func(hdp)
                                              {
-                                                 if (steerpoints.getCurrentNumber() != 0 and !hdp.dgft) {
-                                                    obj.stptPos = f16.HudMath.getDevFromCoord(steerpoints.getCurrentCoordForHUD(), hdp.hmdH, hdp.hmdP, hdp, geo.viewer_position());
+                                                 if (steerpoints.getCurrentNumber() != 0 and !hdp.getproper("dgft")) {
+                                                    obj.stptPos = f16.HudMath.getDevFromCoord(steerpoints.getCurrentCoordForHUD(), hdp.getproper("hmdH"), hdp.getproper("hmdP"), hdp, geo.viewer_position());
                                                     obj.stptPos[0] = geo.normdeg180(obj.stptPos[0]);
                                                     obj.stptPos[0] = (512/center_to_edge_distance)*(math.tan(math.clamp(obj.stptPos[0],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
                                                     obj.stptPos[1] = -(512/center_to_edge_distance)*(math.tan(math.clamp(obj.stptPos[1],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
@@ -754,40 +680,42 @@ var F16_HMD = {
                                                      obj.steerPT.hide();
                                                  }
                                              }
-                                            ),
-            props.UpdateManager.FromHashList(["hmdH","hmdP"], 0.1, func(hdp)
+                                            ,
+            #props.UpdateManager.FromHashList(["hmdH","hmdP"], 0.1,
+             func(hdp)
                                       {
                                           var currLimit = 0;
-                                          var hd = math.abs(geo.normdeg180(hdp.hmdH));
+                                          var hd = math.abs(geo.normdeg180(hdp.getproper("hmdH")));
 
                                           if (hd < 5) currLimit = 1.5;
                                           elsif (hd < 15) currLimit = -17;
                                           elsif (hd < 30) currLimit = -30;
                                           else currLimit = -50;
 
-                                          if (hdp.hmdP < currLimit) obj.off = 1;
+                                          if (hdp.getproper("hmdP") < currLimit) obj.off = 1;
                                           else
                                             obj.off = 0;
 
                                       }
-                                            ),
-            props.UpdateManager.FromHashList(["time_until_crash","vne","warn", "elapsed", "data"], 0.05, func(hdp)
+                                            ,
+            #props.UpdateManager.FromHashList(["time_until_crash","vne","warn", "elapsed", "data"], 0.05,
+             func(hdp)
                                              {
-                                                 obj.ttc = hdp.time_until_crash;
+                                                 obj.ttc = hdp.getproper("time_until_crash");
                                                  if (obj.ttc != nil and obj.ttc>0 and obj.ttc<8) {
                                                      obj.flyup.setText("FLYUP");
                                                      #obj.flyup.setColor(1,0,0,1);
                                                      obj.flyup.show();
-                                                 } elsif (hdp.vne) {
+                                                 } elsif (hdp.getproper("vne")) {
                                                          obj.flyup.setText("LIMIT");
                                                          obj.flyup.show();
-                                                 } elsif (hdp.warn == 1 and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
+                                                 } elsif (hdp.getproper("warn") == 1 and math.mod(int(4*(hdp.getproper("elapsed")-int(hdp.getproper("elapsed")))),2)>0) {
                                                          obj.flyup.setText("WARN");
                                                          obj.flyup.show();
-                                                 } elsif (hdp.bingo == 1 and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
+                                                 } elsif (hdp.getproper("bingo") == 1 and math.mod(int(4*(hdp.getproper("elapsed")-int(hdp.getproper("elapsed")))),2)>0) {
                                                          obj.flyup.setText("FUEL");
                                                          obj.flyup.show();
-                                                 } elsif (hdp.data != 0) {
+                                                 } elsif (hdp.getproper("data") != 0) {
                                                          obj.flyup.setText("DATA");
                                                          obj.flyup.show();
                                                  } else {
@@ -805,14 +733,15 @@ var F16_HMD = {
                                                     obj.flyupRight.hide();
                                                 }
                                              }
-                                            ),
-            props.UpdateManager.FromHashList(["standby", "data", "wow0"], 0.5, func(hdp)
+                                            ,
+            #props.UpdateManager.FromHashList(["standby", "data", "wow0"], 0.5,
+             func(hdp)
                                              {
-                                                 if (hdp.data != 0) {
-                                                     obj.stby.setText("MKPT"~sprintf("%03d",hdp.data));
+                                                 if (hdp.getproper("data") != 0) {
+                                                     obj.stby.setText("MKPT"~sprintf("%03d",hdp.getproper("data")));
                                                      obj.stby.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud+7+100);
                                                      obj.stby.show();
-                                                 } elsif (hdp.standby and !hdp.wow0) {
+                                                 } elsif (hdp.getproper("standby") and !hdp.getproper("wow0")) {
                                                      obj.stby.setText("NO RAD");
                                                      obj.stby.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud+7+75);
                                                      obj.stby.show();
@@ -821,57 +750,9 @@ var F16_HMD = {
                                                  }
                                                  obj.stby.update();
                                              }
-                                            ),
-                                    props.UpdateManager.FromHashValue("window5_txt", nil, func(txt)
-                                      {
-                                          if (txt != nil and txt != ""){
-                                              obj.window5.show();
-                                              obj.window5.setText(txt);
-                                          }
-                                          else
-                                            obj.window5.hide();
+                                         
+                                          
 
-                                      }),
-                        props.UpdateManager.FromHashValue("window3_txt", nil, func(txt)
-                                      {
-                                          if (txt != nil and txt != ""){
-                                              obj.window3.show();
-                                              obj.window3.setText(txt);
-                                          }
-                                          else
-                                            obj.window3.hide();
-
-                                      }),
-                        props.UpdateManager.FromHashValue("window2_txt", nil, func(txt)
-                                      {
-                                          if (txt != nil and txt != ""){
-                                              obj.window2.show();
-                                              obj.window2.setText(txt);
-                                          }
-                                          else
-                                            obj.window2.hide();
-
-                                      }),
-                        props.UpdateManager.FromHashValue("window9_txt", nil, func(txt)
-                                      {
-                                          if (txt != nil and txt != ""){
-                                              obj.window9.show();
-                                              obj.window9.setText(txt);
-                                          }
-                                          else
-                                            obj.window9.hide();
-
-                                      }),
-                        props.UpdateManager.FromHashValue("window11_txt", nil, func(txt)
-                                      {
-                                          if (txt != nil and txt != ""){
-                                              obj.window11.show();
-                                              obj.window11.setText(txt);
-                                          }
-                                          else
-                                            obj.window11.hide();
-
-                                      }),
 
         ];
 
@@ -893,40 +774,45 @@ var F16_HMD = {
     #######################################################################################################
 
     update : func(hdp) {
-        if (hdp.hmcs_sym == 0 or hdp.view_number != 0) {
+        if (hdp.getproper("hmcs_sym") == 0 or hdp.getproper("view_number") != 0) {
             me.svg.hide();
             setprop("payload/armament/hmd-active", 0);
             return;
         }
         if (me.off and !me.initUpdate) {
             me.svg.hide();
+            me.old_hdp = {
+                "hmcs_sym":hdp.getproper("hmcs_sym"),
+                "hud_power":hdp.getproper("hud_power")};
+            me.firstOne = 1;
             foreach(var update_item; me.update_items)
             {
-                update_item.update(hdp);
+                if(me.firstOne) {update_item.update(me.old_hdp);me.firstOne = 0;}
+                else update_item(hdp);
             }
             setprop("payload/armament/hmd-active", 0);
             return;
         }
         setprop("payload/armament/hmd-active", 1);
-        setprop("payload/armament/hmd-horiz-deg", geo.normdeg180(-hdp.hmdH));
-        setprop("payload/armament/hmd-vert-deg", hdp.hmdP);
+        setprop("payload/armament/hmd-horiz-deg", geo.normdeg180(-hdp.getproper("hmdH")));
+        setprop("payload/armament/hmd-vert-deg", hdp.getproper("hmdP"));
 
         me.svg.show();
 
         setprop("sim/rendering/als-filters/use-night-vision", 0);# NVG not allowed while using HMD
 
-        if (hdp.nReset) {
+        if (hdp.getproper("nReset")) {
             me.NzMax = 1.0;
             setprop("f16/avionics/n-reset",0);
         }
 #
 # short cut the whole thing if the display is turned off
-#        if (!hdp.hud_display or !hdp.hud_serviceable) {
+#        if (!hdp.getproper("hud_display or !hdp.getproper("hud_serviceable) {
 #            me.svg.setColor(0.3,1,0.3,0);
 #            return;
 #        }
         # part 1. update data items
-        hdp.roll_rad = -hdp.roll*D2R;
+        #hdp.roll_rad = -hdp.getproper("roll")*D2R;
         if (me.initUpdate) {
             hdp.window12_txt = "12";
         }
@@ -936,8 +822,8 @@ var F16_HMD = {
             me.Hz_b =    0.66213+0.010;#0.676226;#0.663711;#0.801701;# HUD position inside ac model after it is loaded, translated (0.08m) and rotated (0.7d).
             me.Hz_t =    0.85796+0.010;#0.86608;#0.841082;#0.976668;
             me.Hx_m =   (-4.7148+0.013-4.53759+0.013)*0.5;#-4.62737;#-4.65453;#-4.6429;# HUD median X pos
-            me.Vz   =    hdp.current_view_y_offset_m; # view Z position (0.94 meter per default)
-            me.Vx   =    hdp.current_view_z_offset_m; # view X position (0.94 meter per default)
+            me.Vz   =    hdp.getproper("current_view_y_offset_m"); # view Z position (0.94 meter per default)
+            me.Vx   =    hdp.getproper("current_view_z_offset_m"); # view X position (0.94 meter per default)
 
             me.bore_over_bottom = me.Vz - me.Hz_b;
             me.Hz_height        = me.Hz_t-me.Hz_b;
@@ -945,7 +831,7 @@ var F16_HMD = {
             me.texels_up_into_hud = me.frac_up_the_hud * me.sy;#sy default is 260
         }
 
-        me.Vy   =    hdp.current_view_x_offset_m;
+        me.Vy   =    hdp.getproper("current_view_x_offset_m");
 
 
 
@@ -1007,7 +893,7 @@ var F16_HMD = {
         me.rdT = 0;
         me.irB = 0;#IR search bore
         #printf("%d %d %d %s",hdp.master_arm,pylons.fcs != nil,pylons.fcs.getAmmo(),hdp.weapon_selected);
-        if(hdp.master_arm != 0 and pylons.fcs != nil and pylons.fcs.getAmmo() > 0) {
+        if(hdp.getproper("master_arm") != 0 and pylons.fcs != nil and pylons.fcs.getAmmo() > 0) {
             hdp.weapon_selected = pylons.fcs.selectedType;
             var aim = pylons.fcs.getSelectedWeapon();
             if (0 and hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
@@ -1019,7 +905,7 @@ var F16_HMD = {
                 if (aim != nil and aim.isCaged()) {
                     var coords = aim.getSeekerInfo();
                     if (coords != nil) {
-                        me.echoPos = f16.HudMath.getDevFromHMD(coords[0], coords[1], -hdp.hmdH, hdp.hmdP);
+                        me.echoPos = f16.HudMath.getDevFromHMD(coords[0], coords[1], -hdp.getproper("hmdH"), hdp.getproper("hmdP"));
                         me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
                         me.echoPos[0] = (512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512 (should be 0.1385 from eye instead to be like real f16)
                         me.echoPos[1] = -(512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
@@ -1030,7 +916,7 @@ var F16_HMD = {
                 } elsif (aim != nil) {
                     var coords = aim.getSeekerInfo();
                     if (coords != nil) {
-                        me.echoPos = f16.HudMath.getDevFromHMD(coords[0], coords[1], -hdp.hmdH, hdp.hmdP);
+                        me.echoPos = f16.HudMath.getDevFromHMD(coords[0], coords[1], -hdp.getproper("hmdH"), hdp.getproper("hmdP"));
                         me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
                         me.echoPos[0] = (512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
                         me.echoPos[1] = -(512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
@@ -1052,8 +938,8 @@ var F16_HMD = {
               me.model = me.u.getModel();
             me.lastCoord = me.u.getLastCoord();
             if ((me.target_idx < me.max_symbols or me.designatedDistanceFT == nil) and me.lastCoord != nil and me.lastCoord.is_defined()) {
-                me.echoPos = f16.HudMath.getDevFromCoord(me.lastCoord, hdp.hmdH, hdp.hmdP, hdp, geo.viewer_position());
-                #print(me.echoPos[0],",",me.echoPos[1],"    ", hdp.hmdH, "," ,hdp.hmdP);
+                me.echoPos = f16.HudMath.getDevFromCoord(me.lastCoord, hdp.getproper("hmdH"), hdp.getproper("hmdP"), hdp, geo.viewer_position());
+                #print(me.echoPos[0],",",me.echoPos[1],"    ", hdp.getproper("hmdH"), "," ,hdp.getproper("hmdP"));
                 me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
                 #print("    ",me.echoPos[0]);
                 me.echoPos[0] = (512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
@@ -1121,12 +1007,12 @@ var F16_HMD = {
                             }
                             if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
                                 #me.radarLock.setTranslation(me.xcS, me.ycS); too perfect
-                                me.ASEC120Aspect.setRotation(D2R*(radar_system.apg68Radar.getPriorityTarget().get_heading()-hdp.heading+180));
+                                me.ASEC120Aspect.setRotation(D2R*(radar_system.apg68Radar.getPriorityTarget().get_heading()-hdp.getproper("heading")+180));
                                 me.rdL = 1;
                                 me.rdT = 1;
                             } elsif (hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "AIM-9M" or hdp.weapon_selected == "IRIS-T") {
                                 #me.irLock.setTranslation(me.xcS, me.ycS);
-                                me.ASEC65Aspect.setRotation(D2R*(radar_system.apg68Radar.getPriorityTarget().get_heading()-hdp.heading+180));
+                                me.ASEC65Aspect.setRotation(D2R*(radar_system.apg68Radar.getPriorityTarget().get_heading()-hdp.getproper("heading")+180));
                                 me.irL = 1;
                                 me.irT = 1;
                             }
@@ -1139,7 +1025,7 @@ var F16_HMD = {
                     } else {
                         #
                         # if in symbol reject mode then only show the active target.
-                        if (hdp.symbol_reject and me.tgt != nil) {
+                        if (hdp.getproper("symbol_reject") and me.tgt != nil) {
                           me.tgt.setVisible(0);
                         }
                     }
@@ -1170,8 +1056,8 @@ var F16_HMD = {
         me.locatorAngle.setVisible(me.locatorLineShow);
         me.target_locked.setVisible(me.target_lock_show);
 
-        if (!me.target_lock_show and !hdp.standby and radar_system.apg68Radar.currentMode.longName == radar_system.acmBoreMode.longName) {
-            me.echoPos = f16.HudMath.getDevFromHMD(radar_system.apg68Radar.eulerX, radar_system.apg68Radar.eulerY, -hdp.hmdH, hdp.hmdP);
+        if (!me.target_lock_show and !hdp.getproper("standby") and radar_system.apg68Radar.currentMode.longName == radar_system.acmBoreMode.longName) {
+            me.echoPos = f16.HudMath.getDevFromHMD(radar_system.apg68Radar.eulerX, radar_system.apg68Radar.eulerY, -hdp.getproper("hmdH"), hdp.getproper("hmdP"));
             me.echoPos[0] = (512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
             me.echoPos[1] = -(512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance;
             me.clamped = math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]) > 500;
@@ -1187,10 +1073,10 @@ var F16_HMD = {
 
         var showtgpTD = 0;
         var showtgpTDcross = 0;
-        if (tgp.flir_updater.click_coord_cam != nil and getprop("f16/avionics/tgp-lock")) {# hdp.tgp_mounted and
+        if (tgp.flir_updater.click_coord_cam != nil and getprop("f16/avionics/tgp-lock")) {# hdp.getproper("tgp_mounted and
             if (getprop("sim/view[105]/heading-offset-deg")==0 and getprop("sim/view[105]/pitch-offset-deg")==-30 and armament.contactPoint != nil) {
                 # Programmed GPS target
-                me.echoPos = f16.HudMath.getDevFromCoord(armament.contactPoint.get_Coord(), hdp.hmdH, hdp.hmdP, hdp, geo.viewer_position());
+                me.echoPos = f16.HudMath.getDevFromCoord(armament.contactPoint.get_Coord(), hdp.getproper("hmdH"), hdp.getproper("hmdP"), hdp, geo.viewer_position());
                 #print(me.echoPos[0],",",me.echoPos[1],"    ", hdp.hmdH, "," ,hdp.hmdP);
                 me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
                 #print("    ",me.echoPos[0]);
@@ -1226,7 +1112,7 @@ var F16_HMD = {
                     behind = 1;
                 }
 
-                me.echoPos = f16.HudMath.getDevFromHMD(b, p, -hdp.hmdH, hdp.hmdP);
+                me.echoPos = f16.HudMath.getDevFromHMD(b, p, -hdp.getproper("hmdH"), hdp.getproper("hmdP"));
                 me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
                 me.echoPos[0] = (512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512 (should be 0.1385 from eye instead to be like real f16)
                 me.echoPos[1] = -(512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
@@ -1258,7 +1144,7 @@ var F16_HMD = {
                 me.dlzClo.setTranslation(0,-me.dlzArray[4]/me.dlzArray[0]*me.dlzHeight);
                 me.lcr = radar_system.apg68Radar.getPriorityTarget().getLastClosureRate();
                 me.dlzClo.setText(me.lcr!=0?sprintf("%+d ",me.lcr):"XXX");
-                if (pylons.fcs.isLock() and me.dlzArray[4] < me.dlzArray[2] and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
+                if (pylons.fcs.isLock() and me.dlzArray[4] < me.dlzArray[2] and math.mod(int(4*(hdp.getproper("elapsed")-int(hdp.getproper("elapsed")))),2)>0) {
                     me.irL = 0;
                     me.rdL = 0;
                 }
@@ -1323,10 +1209,49 @@ var F16_HMD = {
         hdp.window11_txt = f16.transfer_fuel_bullseye;
         hdp.window12_txt = f16.transfer_g;
 
+        me.old_hdp = {
+        "hmcs_sym":hdp.getproper("hmcs_sym"),
+        "hud_power":hdp.getproper("hud_power")};
+        me.firstOne = 1;
         foreach(var update_item; me.update_items)
         {
-            update_item.update(hdp);
+            if(me.firstOne) {update_item.update(me.old_hdp);me.firstOne = 0;}
+            else update_item(hdp);
         }
+          if (hdp.window5_txt != nil and hdp.window5_txt != ""){
+              me.window5.show();
+              me.window5.setText(hdp.window5_txt);
+          }
+          else
+            me.window5.hide();
+
+          if (hdp.window3_txt != nil and hdp.window3_txt != ""){
+              me.window3.show();
+              me.window3.setText(hdp.window3_txt);
+          }
+          else
+            me.window3.hide();
+
+          if (hdp.window2_txt != nil and hdp.window2_txt != ""){
+              me.window2.show();
+              me.window2.setText(hdp.window2_txt);
+          }
+          else
+            me.window2.hide();
+
+          if (hdp.window9_txt != nil and hdp.window9_txt != ""){
+              me.window9.show();
+              me.window9.setText(hdp.window9_txt);
+          }
+          else
+            me.window9.hide();
+
+          if (hdp.window11_txt != nil and hdp.window11_txt != ""){
+              me.window11.show();
+              me.window11.setText(hdp.window11_txt);
+          }
+          else
+            me.window11.hide();
         return;
         me.window1.setText("window  1").show();
         me.window2.setText("window  2").show();

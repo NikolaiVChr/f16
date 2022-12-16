@@ -34,7 +34,8 @@ var cur_frame_inc = 0.05;
 var rtExec_loop = func
 {
     #    
-    notifications.frameNotification.fetchvars();
+    #notifications.frameNotification.fetchvars();
+    notifications.frameNotification.clearvars();
     if (notifications.frameNotification.FrameCount >= 4) {
         notifications.frameNotification.FrameCount = 0;
     }
@@ -49,15 +50,15 @@ var rtExec_loop = func
     # 2: HUD targets, HUD trig, HUD text
     # 3: HUD targets, VSD, RDR
     # 
-    if (notifications.frameNotification.frame_rate_worst < 5) {
+    if (notifications.frameNotification.getproper("frame_rate_worst") < 5) {
         frame_inc = 0.25;#3.3
-    } elsif (notifications.frameNotification.frame_rate_worst < 10) {
+    } elsif (notifications.frameNotification.getproper("frame_rate_worst") < 10) {
         frame_inc = 0.125;#6.6
-    } elsif (notifications.frameNotification.frame_rate_worst < 15) {
+    } elsif (notifications.frameNotification.getproper("frame_rate_worst") < 15) {
         frame_inc = 0.10;#8.3
-    } elsif (notifications.frameNotification.frame_rate_worst < 20) {
+    } elsif (notifications.frameNotification.getproper("frame_rate_worst") < 20) {
         frame_inc = 0.075;#12.5
-    } elsif (notifications.frameNotification.frame_rate_worst < 40) {
+    } elsif (notifications.frameNotification.getproper("frame_rate_worst") < 40) {
         frame_inc = 0.05;#14.3
     } else {
         frame_inc = 0.05;#20.0
