@@ -1386,7 +1386,7 @@ var MFD_Device =
             if (radar_system.datalink_power.getBoolValue() and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName and radar_system.apg68Radar.currentMode["painter"] != 1) {
                 foreach(contact; vector_aicontacts_links) {
                     if (contact["blue"] != 1) continue;
-                    me.paintDL(contact);
+                    me.paintDL(contact, noti);
                     contact.randoo = me.randoo;
                 }
             }
@@ -1554,7 +1554,7 @@ var MFD_Device =
 #  ██      ██   ██ ██ ██   ████    ██        ██   ██ ██████  ██   ██     ██████  ███████ ███████ ██      ███████ 
 #                                                                                                                
 #
-        me.p_RDR.paintDL = func (contact) {
+        me.p_RDR.paintDL = func (contact, noti) {
             if (contact.blue != 1) return;
             if (contact["iff"] != nil) {
                 if (contact.iff > 0 and me.elapsed-contact.iff < 3.5) {
