@@ -905,7 +905,7 @@
             <seeker-field-deg type="int">270</seeker-field-deg>
             <reaquire type="bool">true</reaquire>
             <switch-time-sec type="double">0.5</switch-time-sec>
-            <auto-switch-target-allowed type="bool">true</auto-switch-target-allowed>
+            <auto-switch-target-allowed type="bool">false</auto-switch-target-allowed>
             <prowl-flight type="string">5</prowl-flight>
             <max-g type="double">3.5</max-g>
             <max-launch-g type="int">7</max-launch-g>
