@@ -754,6 +754,18 @@ var serialize = func() {
 var unserialize = func(m) {
   var stpts = split("|",m);
   var planned = nil;
+
+  # clear memory:
+  lines = [nil,nil];
+  stpt300 = setsize([],number_of_threat_circles);#Threat circles
+  stpt350 = setsize([],10);#Generic
+  stpt400 = setsize([],5);#Markpoints Own
+  stpt450 = setsize([],5);#Markpoints DL
+  stpt500 = setsize([],1);#Weapon
+  stpt555 = setsize([],1);#Bullseye
+  ded.dataEntryDisplay.page = ded.pCNI;
+  current = nil;
+
   foreach(item;stpts) {
     #if (size(item)>4) {#why is this chekc even here???!
       var items = split(",", item);
