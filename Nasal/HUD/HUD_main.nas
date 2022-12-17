@@ -1996,7 +1996,7 @@ append(obj.total, obj.speed_curr);
                     } elsif (hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "AIM-9M") {
                         me.window9_txt = sprintf("%d SRM", pylons.fcs.getAmmo());#short range missile
                         if (hdp.weapn != nil) {
-                            if (hdp.getproper("weapn.status") == armament.MISSILE_LOCK and !hdp.getproper("standby")) {
+                            if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.getproper("standby")) {
                                 me.asec65 = 1;
                                 currASEC = nil;#[me.sx*0.5,me.sy*0.25];
                             } elsif (!hdp.getproper("standby")) {
@@ -2008,7 +2008,7 @@ append(obj.total, obj.speed_curr);
                     } elsif (hdp.weapon_selected == "IRIS-T") {
                         me.window9_txt = sprintf("%d ASM", pylons.fcs.getAmmo());#short range missile
                         if (hdp.weapn != nil) {
-                            if (hdp.getproper("weapn.status") == armament.MISSILE_LOCK and !hdp.getproper("standby")) {
+                            if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.getproper("standby")) {
                                 me.asec65 = 1;
                                 currASEC = nil;#[me.sx*0.5,me.sy*0.25];
                             } elsif (!hdp.getproper("standby")) {
