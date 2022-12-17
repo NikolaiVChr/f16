@@ -933,7 +933,7 @@
             <terminal-alt-factor type="double">2</terminal-alt-factor>
             <terminal-rise-time type="double">15.0</terminal-rise-time>
             <terminal-dive-time type="double">9.0</terminal-dive-time>
-            <seeker-angular-speed-dps type="double">0</seeker-angular-speed-dps>
+            <seeker-angular-speed-dps type="double">45</seeker-angular-speed-dps>
             <ready-time type="double">3.5</ready-time>
             <ejector-speed-fps type="double">5</ejector-speed-fps>
             <telemetry type="bool">true</telemetry>
