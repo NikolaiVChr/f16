@@ -3335,7 +3335,7 @@ var AIM = {
 				me.printStats(me.type~": Passed minimum speed for guiding after %.1f seconds. Target %d%% inside view.", me.life_time, me.normFOV*100);
 			}
 		}
-		if (me.chaffLock and (me.guidance == "command" or me.guidance == "semi-radar") and me.life_time - me.chaffLockTime > me.gnd_launch?4:6) {
+		if (me.chaffLock and (me.guidance == "command" or me.guidance == "semi-radar") and (me.life_time - me.chaffLockTime) > (me.gnd_launch?4:6)) {
 			me.chaffLock = 0;
 			me.printStats(me.type~": Chaff dissipated, regained track.");
 		}
