@@ -2151,7 +2151,7 @@ var AIM = {
 		
 
 		# Jmav remove the # from the line below for cruise missile adjustment:
-		#me.printAlways("guiding=%d  time=%d:  mach=%.3f  alt=%d  %s",me.guiding, me.life_time, me.speed_m, me.alt_ft, me.observing);
+		me.printAlways("guiding=%d  time=%d:  mach=%.3f  alt=%d  %s",me.guiding, me.life_time, me.speed_m, me.alt_ft, me.observing);
 
 
 		# Get total old speed, thats what we will use in next loop.
