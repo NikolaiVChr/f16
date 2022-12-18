@@ -907,7 +907,7 @@
             <switch-time-sec type="double">1</switch-time-sec>
             <auto-switch-target-allowed type="bool">true</auto-switch-target-allowed>
             <prowl-flight type="string">5</prowl-flight>
-            <max-g type="double">3.2</max-g>
+            <max-g type="double">3.0</max-g>
             <max-launch-g type="int">7</max-launch-g>
             <thrust-lbf-stage-1 type="double">680</thrust-lbf-stage-1> <!-- Teledyne J402-CA-100 -->
             <stage-1-jet type="bool">true</stage-1-jet>
