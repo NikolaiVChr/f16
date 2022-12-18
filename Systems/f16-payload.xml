@@ -932,8 +932,8 @@
             <deploy-time type="double">1.0</deploy-time>
             <hit-everything-nearby type="bool">true</hit-everything-nearby>
             <terminal-alt-factor type="double">2</terminal-alt-factor>
-            <terminal-rise-time type="double">15.0</terminal-rise-time>
-            <terminal-dive-time type="double">9.0</terminal-dive-time>
+            <terminal-rise-time type="double">20.0</terminal-rise-time>
+            <terminal-dive-time type="double">12.0</terminal-dive-time>
             <seeker-angular-speed-dps type="double">45</seeker-angular-speed-dps>
             <ready-time type="double">3.5</ready-time>
             <ejector-speed-fps type="double">5</ejector-speed-fps>
