@@ -343,6 +343,9 @@ var AIM = {
 		m.stage_gap_duration    = getprop(m.nodeString~"stage-gap-duration-sec");     # gap duration between stage 1 and 2 [optional]
 		m.stage_2_duration      = getprop(m.nodeString~"stage-2-duration-sec");       # stage 2 duration [optional]
 		m.stage_3_duration      = getprop(m.nodeString~"stage-3-duration-sec");       # stage 3 duration [optional]
+		m.stage_1_jet           = getprop(m.nodeString~"stage-1-jet");                # Boolean. If stage 1 is a jet engine [optional]
+		m.stage_2_jet           = getprop(m.nodeString~"stage-2-jet");                # Boolean. If stage 2 is a jet engine [optional]
+		m.stage_3_jet           = getprop(m.nodeString~"stage-3-jet");                # Boolean. If stage 3 is a jet engine [optional]
 		m.weight_fuel_lbm       = getprop(m.nodeString~"weight-fuel-lbm");            # fuel weight [optional]. If this property is not present, it won't lose weight as the fuel is used.
 		m.vector_thrust         = getprop(m.nodeString~"vector-thrust");              # Boolean. This will make less drag due to high G turns while engine is running. [optional]
 		m.engineEnabled         = getprop(m.nodeString~"engine-enabled");             # Boolean. If engine will start at all. [optional]
@@ -510,6 +513,15 @@ var AIM = {
 		}
 		if (m.data == nil) {
         	m.data = FALSE;
+        }
+        if (m.stage_1_jet == nil) {
+        	m.stage_1_jet = 0;
+        }
+        if (m.stage_2_jet == nil) {
+        	m.stage_2_jet = 0;
+        }
+        if (m.stage_3_jet == nil) {
+        	m.stage_3_jet = 0;
         }
         if (m.vector_thrust == nil) {
         	m.vector_thrust = FALSE;
@@ -1887,14 +1899,14 @@ var AIM = {
 		}
 		if (stages > 0) {
 			me.printStats("PROPULSION:");
-			me.printStats("Stage 1: %d lbf for %.1f seconds.", me.force_lbf_1, me.stage_1_duration);
+			me.printStats("Stage 1: %d lbf for %.1f seconds. Is %s engine.", me.force_lbf_1, me.stage_1_duration, me.stage_1_jet?"jet":"rocket");
 			if (stages > 1) {
-				me.printStats("Stage 2: %d lbf for %.1f seconds.", me.force_lbf_2, me.stage_2_duration);
+				me.printStats("Stage 2: %d lbf for %.1f seconds. Is %s engine.", me.force_lbf_2, me.stage_2_duration, me.stage_2_jet?"jet":"rocket");
 				if (me.stage_gap_duration > 0) {
 					me.printStats("Stage 1 to 2 time gap: %.1f seconds.", me.stage_gap_duration);
 				}
 				if (stages > 2) {
-					me.printStats("Stage 3: %d lbf for %.1f seconds.", me.force_lbf_3, me.stage_3_duration);
+					me.printStats("Stage 3: %d lbf for %.1f seconds. Is %s engine.", me.force_lbf_3, me.stage_3_duration, me.stage_3_jet?"jet":"rocket");
 				}
 			}
 			me.printStats("%s",vector);
@@ -2136,6 +2148,10 @@ var AIM = {
 		me.deploy_prop.setDoubleValue(me.deploy);
 
 		me.thrust_lbf = me.thrust();# pounds force (lbf)
+		
+
+		# Jmav remove the # from the line below for cruise missile adjustment:
+		#me.printAlways("guiding=%d  time=%d:  mach=%.3f  alt=%d  %s",me.guiding, me.life_time, me.speed_m, me.alt_ft, me.observing);
 
 
 		# Get total old speed, thats what we will use in next loop.
@@ -2861,11 +2877,11 @@ var AIM = {
 			if (me.life_time > (me.drop_time + me.stage_1_duration + me.stage_gap_duration + me.stage_2_duration + me.stage_3_duration)) {
 				me.thrust_lbf = 0;
 			} elsif (me.life_time > me.stage_1_duration + me.stage_gap_duration + me.drop_time + me.stage_2_duration) {
-				me.thrust_lbf = me.force_lbf_3;
+				me.thrust_lbf = me.getMilThrust(me.force_lbf_3, 3);
 			} elsif (me.life_time > me.stage_1_duration + me.stage_gap_duration + me.drop_time) {
-				me.thrust_lbf = me.force_lbf_2;
+				me.thrust_lbf = me.getMilThrust(me.force_lbf_2, 2);
 			} elsif (me.life_time > me.drop_time and me.life_time < me.drop_time+me.stage_1_duration) {
-				me.thrust_lbf = me.force_lbf_1;
+				me.thrust_lbf = me.getMilThrust(me.force_lbf_1, 1);
 			}else {
 				me.thrust_lbf = 0;
 			}
@@ -2882,6 +2898,23 @@ var AIM = {
 			me.smoke_prop.setBoolValue(1);
 		}
 		return me.thrust_lbf;
+	},
+
+	getMilThrust: func (staticSealevel, stage) {
+		if (stage == 1 and !me.stage_1_jet) return staticSealevel;# Its a rocket engine
+		if (stage == 2 and !me.stage_2_jet) return staticSealevel;
+		if (stage == 3 and !me.stage_3_jet) return staticSealevel;
+
+		# Its a jet engine:
+		me.staticLevel = staticSealevel*math.pow(0.75,me.alt_ft/10000);# for every 10000 ft reduce by 75%
+		if (me.speed_m > 0.5) {
+			me.lvl = me.staticLevel*me.extrapolate(me.speed_m, 0.5, 1.5, 0.9, 1.5);
+		} elsif (me.speed_m > 0.2) {
+			me.lvl = me.staticLevel*0.9;
+		} else {
+			me.lvl = me.staticLevel*me.extrapolate(me.speed_m, 0.0, 0.2, 1, 0.9);
+		}
+		return me.lvl;
 	},
 
 	speedChange: func (thrust_lbf, rho, Cd) {
@@ -4976,7 +5009,7 @@ var AIM = {
 			return;
 		} elsif (me.deleted == TRUE) {
 			return;
-		} elsif (me.slave_to_radar and me.caged and me.getContact() != me.Tgt) {
+		} elsif (me.slave_to_radar and me.caged and me.getContact() != me.Tgt and !me.noCommonTarget) {
 			me.printSearch("target switch");
 			me.return_to_search();
 			return;
@@ -5537,6 +5570,12 @@ var AIM = {
 			append(AIM.timerQueue, [nil, printff, arg, -1]);
 			thread.unlock(mutexTimer);
 		}
+	},
+
+	printAlways: func {
+		thread.lock(mutexTimer);
+		append(AIM.timerQueue, [nil, printff, arg, -1]);
+		thread.unlock(mutexTimer);
 	},
 
 	timerLoop: func {
