@@ -109,7 +109,7 @@ var Station = {
 								}
 								if (M2FT*struct.dist_m/struct.speed_fps < 8 and (struct.guidance == "gps" or struct.guidance == "gps-altitude")) {
 									# 8s authentic value
-									return {"guidance":"heat","class":"GM","target":"nil","guidanceLaw":"APN","abort_midflight_function":1};
+									return {"guidance":"heat","guidanceLaw":"APN","abort_midflight_function":1};
 								}
 								if (struct.dist_m*M2NM > 10) {
 									# 22000 ft authentic value
