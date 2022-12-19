@@ -102,8 +102,16 @@ var Station = {
 						};
 					} elsif (me.weaponName == "AGM-158") {
 						mf = func (struct) {
-							if (struct.dist_m != -1 and struct.dist_m*M2NM < 0.25 and struct.guidance == "gps") {
-								return {"guidance":"vision","class":"GM","target":"nil","guidanceLaw":"PN","abort_midflight_function":1};
+							if (struct.dist_m != -1 and struct.speed_fps != 0) {
+								if (M2FT*struct.dist_m/struct.speed_fps < 8 and struct.guidance == "gps-altitude") {
+									return {"guidance":"heat","class":"GM","guidanceLaw":"PN","abort_midflight_function":1};
+								}
+								if (struct.dist_m*M2NM > 2) {
+									return {"altitude": 22000};
+								}
+								if (struct.hasTarget) {
+									return {"altitude_at": 5000};
+								}
 							}
 							return {};
 						};

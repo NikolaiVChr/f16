@@ -897,17 +897,17 @@
             <class type="string">P</class>
             <max-fire-range-nm type="double">199.9</max-fire-range-nm>  <!--now matching actual range-->
             <min-fire-range-nm type="double">2.0</min-fire-range-nm>
-            <guidance type="string">gps</guidance>
+            <guidance type="string">gps-altitude</guidance>
             <navigation type="string">direct</navigation>
-            <loft-altitude type="int">1000</loft-altitude>
-            <terrain-follow type="bool">true</terrain-follow>
+            <loft-altitude type="int">22000</loft-altitude>
+            <terrain-follow type="bool">false</terrain-follow>
             <FCS-field-deg type="int">120</FCS-field-deg>
             <seeker-field-deg type="int">240</seeker-field-deg>
             <reaquire type="bool">true</reaquire>
             <switch-time-sec type="double">1</switch-time-sec>
             <auto-switch-target-allowed type="bool">true</auto-switch-target-allowed>
             <prowl-flight type="string">5</prowl-flight>
-            <max-g type="double">3.0</max-g>
+            <max-g type="double">3.5</max-g>
             <max-launch-g type="int">7</max-launch-g>
             <thrust-lbf-stage-1 type="double">680</thrust-lbf-stage-1> <!-- Teledyne J402-CA-100 -->
             <stage-1-jet type="bool">true</stage-1-jet>
@@ -917,13 +917,14 @@
             <weight-launch-lbs type="double">2150</weight-launch-lbs> <!-- source -->
             <weight-warhead-lbs type="double">1000</weight-warhead-lbs>
             <weight-fuel-lbm type="double">269</weight-fuel-lbm> <!-- source: approx 40 gal JP-10 -->
-            <drag-coeff type="double">0.04</drag-coeff><!-- subsonic, except when diving to cruise altitude -->
+            <drag-coeff type="double">0.015</drag-coeff><!-- subsonic, except when diving to cruise altitude -->
             <cross-section-sqft type="double">2.55732153</cross-section-sqft><!-- 0.55 meter diam -->
             <arming-time-sec type="double">2.0</arming-time-sec>
             <min-speed-for-guiding-mach type="double">0.24</min-speed-for-guiding-mach>
             <self-destruct-time-sec type="double">3000</self-destruct-time-sec>
             <all-aspect type="bool">true</all-aspect>
             <rail type="bool">false</rail>
+            <lock-on-sun-deg type="double">2</lock-on-sun-deg>
             <no-common-target type="bool">true</no-common-target>
             <max-report-distance type="double">250</max-report-distance>
             <vol-search type="double">0.075</vol-search>
@@ -937,7 +938,7 @@
             <seeker-angular-speed-dps type="double">45</seeker-angular-speed-dps>
             <ready-time type="double">3.5</ready-time>
             <ejector-speed-fps type="double">5</ejector-speed-fps>
-            <telemetry type="bool">true</telemetry>
+            <telemetry type="bool">false</telemetry>
         </agm-158>
         <cbu-87>
             <type-id type="int">12</type-id>
