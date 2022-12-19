@@ -911,7 +911,7 @@
             <max-launch-g type="int">7</max-launch-g>
             <thrust-lbf-stage-1 type="double">680</thrust-lbf-stage-1> <!-- Teledyne J402-CA-100 -->
             <stage-1-jet type="bool">true</stage-1-jet>
-            <jet-effectiveness-10000ft type="double">0.80</jet-effectiveness-10000ft>
+            <jet-effectiveness-10000ft type="double">0.81</jet-effectiveness-10000ft>
             <thrust-lbf-stage-2 type="double">0.0</thrust-lbf-stage-2>
             <stage-1-duration-sec type="double">2750</stage-1-duration-sec>
             <stage-2-duration-sec type="double">0.0</stage-2-duration-sec>
