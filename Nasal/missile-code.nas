@@ -3451,15 +3451,19 @@ var AIM = {
 		if (me.loft_alt != 0 and me.guidance == "gps-altitude") {
 			me.t_alt_delta_ft = me.loft_alt - me.alt_ft;
             if(me.t_alt_delta_ft < 0) {
-                #me.printAlways("Moving down %5d ft  M%.2f %.2fNM     %d",-me.t_alt_delta_ft, me.speed_m, me.dist_curr*M2NM,me.alt_ft);
+                me.printAlways("Moving down %5d ft  M%.3f %.2fNM     %d",-me.t_alt_delta_ft, me.speed_m, me.dist_curr*M2NM,me.alt_ft);
                 me.slope = me.clamp(me.t_alt_delta_ft / 300, -30, 0);# the lower the desired alt is, the steeper the slope, but not steeper than 30
                 me.raw_steer_signal_elev = -me.pitch + me.clamp(math.atan2(me.t_alt_delta_ft, me.old_speed_fps * 15) * R2D, me.slope, 0);
             } elsif (me.speed_m > 0.6) {
-            	#me.printAlways("Moving up   %5d ft  M%.2f %.2fNM     %d", me.t_alt_delta_ft, me.speed_m, me.dist_curr*M2NM,me.alt_ft);
-                me.raw_steer_signal_elev = -me.pitch + math.atan2(me.t_alt_delta_ft, me.old_speed_fps * 30) * R2D;
+            	me.printAlways("Moving up   %5d ft  M%.3f %.2fNM     %d", me.t_alt_delta_ft, me.speed_m, me.dist_curr*M2NM,me.alt_ft);
+                me.raw_steer_signal_elev = -me.pitch + math.atan2(me.t_alt_delta_ft, me.old_speed_fps * 75) * R2D;
             } else {
-            	me.raw_steer_signal_elev = 0;
-            	#me.printAlways("   no move        M%.2f %.2fNM     %d", me.speed_m, me.dist_curr*M2NM,me.alt_ft);
+            	#me.raw_steer_signal_elev = 0;
+            	me.printAlways("   no move            M%.3f %.2fNM     %d", me.speed_m, me.dist_curr*M2NM,me.alt_ft);
+            	me.attitudePN = (math.atan2(-(me.speed_down_fps+g_fps * me.dt), me.speed_horizontal_fps ) - math.atan2(-me.speed_down_fps, me.speed_horizontal_fps )) * R2D;
+	            me.gravComp = - me.attitudePN;
+	            #printf("Gravity compensation %0.2f degs", me.gravComp);
+	            me.raw_steer_signal_elev = me.gravComp;
             }
 			me.cruise_or_loft = 1;
         } elsif(me.loft_alt != 0 and me.snapUp == FALSE) {
