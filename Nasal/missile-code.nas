@@ -346,6 +346,7 @@ var AIM = {
 		m.stage_1_jet           = getprop(m.nodeString~"stage-1-jet");                # Boolean. If stage 1 is a jet engine [optional]
 		m.stage_2_jet           = getprop(m.nodeString~"stage-2-jet");                # Boolean. If stage 2 is a jet engine [optional]
 		m.stage_3_jet           = getprop(m.nodeString~"stage-3-jet");                # Boolean. If stage 3 is a jet engine [optional]
+		m.jet_effectiveness     = getprop(m.nodeString~"jet-effectiveness-10000ft");  # Effectiveness of the turnine at 10000 ft compared to sealevel [optional]
 		m.weight_fuel_lbm       = getprop(m.nodeString~"weight-fuel-lbm");            # fuel weight [optional]. If this property is not present, it won't lose weight as the fuel is used.
 		m.vector_thrust         = getprop(m.nodeString~"vector-thrust");              # Boolean. This will make less drag due to high G turns while engine is running. [optional]
 		m.engineEnabled         = getprop(m.nodeString~"engine-enabled");             # Boolean. If engine will start at all. [optional]
@@ -522,6 +523,9 @@ var AIM = {
         }
         if (m.stage_3_jet == nil) {
         	m.stage_3_jet = 0;
+        }
+        if (m.jet_effectiveness == nil) {
+        	m.jet_effectiveness = 0.75;
         }
         if (m.vector_thrust == nil) {
         	m.vector_thrust = FALSE;
@@ -2917,7 +2921,7 @@ var AIM = {
 		if (stage == 3 and !me.stage_3_jet) return staticSealevel;
 
 		# Its a jet engine:
-		me.staticLevel = staticSealevel*math.pow(0.75,me.alt_ft/10000);# for every 10000 ft reduce by 75%
+		me.staticLevel = staticSealevel*math.pow(me.jet_effectiveness,me.alt_ft/10000);# for every 10000 ft reduce by 75%
 		if (me.speed_m > 0.5) {
 			me.lvl = me.staticLevel*me.extrapolate(me.speed_m, 0.5, 1.5, 0.9, 1.5);
 		} elsif (me.speed_m > 0.2) {
@@ -3447,15 +3451,15 @@ var AIM = {
 		if (me.loft_alt != 0 and me.guidance == "gps-altitude") {
 			me.t_alt_delta_ft = me.loft_alt - me.alt_ft;
             if(me.t_alt_delta_ft < 0) {
-                #me.printAlways("Moving down %5d ft  M%.2f %.2fNM",-me.t_alt_delta_ft, me.speed_m, me.dist_curr*M2NM);
+                #me.printAlways("Moving down %5d ft  M%.2f %.2fNM     %d",-me.t_alt_delta_ft, me.speed_m, me.dist_curr*M2NM,me.alt_ft);
                 me.slope = me.clamp(me.t_alt_delta_ft / 300, -30, 0);# the lower the desired alt is, the steeper the slope, but not steeper than 30
                 me.raw_steer_signal_elev = -me.pitch + me.clamp(math.atan2(me.t_alt_delta_ft, me.old_speed_fps * 15) * R2D, me.slope, 0);
             } elsif (me.speed_m > 0.6) {
-            	#me.printAlways("Moving up   %5d ft  M%.2f %.2fNM", me.t_alt_delta_ft, me.speed_m, me.dist_curr*M2NM);
+            	#me.printAlways("Moving up   %5d ft  M%.2f %.2fNM     %d", me.t_alt_delta_ft, me.speed_m, me.dist_curr*M2NM,me.alt_ft);
                 me.raw_steer_signal_elev = -me.pitch + math.atan2(me.t_alt_delta_ft, me.old_speed_fps * 30) * R2D;
             } else {
             	me.raw_steer_signal_elev = 0;
-            	#me.printAlways("   no move   M%.2f %.2fNM", me.speed_m, me.dist_curr*M2NM);
+            	#me.printAlways("   no move        M%.2f %.2fNM     %d", me.speed_m, me.dist_curr*M2NM,me.alt_ft);
             }
 			me.cruise_or_loft = 1;
         } elsif(me.loft_alt != 0 and me.snapUp == FALSE) {

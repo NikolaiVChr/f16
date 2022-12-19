@@ -104,9 +104,11 @@ var Station = {
 						mf = func (struct) {
 							if (struct.dist_m != -1 and struct.speed_fps != 0) {
 								if (M2FT*struct.dist_m/struct.speed_fps < 8 and struct.guidance == "gps-altitude") {
+									# 8s authentic value
 									return {"guidance":"heat","class":"GM","guidanceLaw":"PN","abort_midflight_function":1};
 								}
-								if (struct.dist_m*M2NM > 2) {
+								if (struct.dist_m*M2NM > 5.0) {
+									# 22000 ft authentic value
 									return {"altitude": 22000};
 								}
 								if (struct.hasTarget) {
