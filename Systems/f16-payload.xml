@@ -918,7 +918,7 @@
             <weight-launch-lbs type="double">2150</weight-launch-lbs> <!-- source -->
             <weight-warhead-lbs type="double">1000</weight-warhead-lbs>
             <weight-fuel-lbm type="double">269</weight-fuel-lbm> <!-- source: approx 40 gal JP-10 -->
-            <drag-coeff type="double">0.025</drag-coeff><!-- subsonic, except when diving to cruise altitude -->
+            <drag-coeff type="double">0.020</drag-coeff><!-- subsonic, except when diving to cruise altitude -->
             <cross-section-sqft type="double">2.55732153</cross-section-sqft><!-- 0.55 meter diam -->
             <arming-time-sec type="double">2.0</arming-time-sec>
             <min-speed-for-guiding-mach type="double">0.24</min-speed-for-guiding-mach>
