@@ -814,6 +814,7 @@ var AIM = {
 		m.CREv_old = 0;
 		m.CREh_old = 0;
 		m.CRE_old_dt = 0.05;
+		m.steer_for_free = 0;
 
 
 
@@ -1794,7 +1795,7 @@ var AIM = {
 		}
 		var vector = "No vectored thrust.";
 		if (me.vector_thrust) {
-			vector = "Vectored thrust."
+			vector = "Vectored thrust.";
 		}
 
 
@@ -2947,6 +2948,7 @@ var AIM = {
 
     energyBleed: func (gForce, altitude) {
     	if (!me.simple_drag) return 0;
+    	if (me.steer_for_free) gForce = 0;
         # Bleed of energy from pulling Gs.
         # This is very inaccurate, but better than nothing.
         #
@@ -2971,6 +2973,7 @@ var AIM = {
         me.speedLoss = math.min(me.speedLoss, 0);
         me.energyBleedKt += me.speedLoss * FPS2KT;
         me.speedLoss = me.speedLoss*(me.thrust_lbf>0 and me.vector_thrust?0.333:1);# vector thrust will only bleed 1/3 of the calculated loss.
+        me.steer_for_free = 0;
         return me.speedLoss;
     },
 
@@ -3464,6 +3467,7 @@ var AIM = {
 	            me.gravComp = - me.attitudePN;
 	            #printf("Gravity compensation %0.2f degs", me.gravComp);
 	            me.raw_steer_signal_elev = me.gravComp;
+	            me.steer_for_free = 1;#due to having wings
             }
 			me.cruise_or_loft = 1;
         } elsif(me.loft_alt != 0 and me.snapUp == FALSE) {
