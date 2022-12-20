@@ -37,6 +37,16 @@ var apLoop = maketimer(1, func {
 			}
 		}
 	}
+	if (steerpoints.getCurrentNumber() != 0) {
+	  var bearing = steerpoints.getCurrentDirection()[0];
+	  if (bearing != nil) {
+	      setprop("autopilot/route-manager/custom/bearing-deg", bearing);
+	  } else {
+	      setprop("autopilot/route-manager/custom/bearing-deg", -1);
+	  }
+	} else {
+		setprop("autopilot/route-manager/custom/bearing-deg", -1);
+	}
 });
 
 var apLoopDelay = maketimer(3, func {
