@@ -907,7 +907,7 @@
             <switch-time-sec type="double">1</switch-time-sec>
             <auto-switch-target-allowed type="bool">true</auto-switch-target-allowed>
             <prowl-flight type="string">5</prowl-flight>
-            <max-g type="double">3.5</max-g>
+            <max-g type="double">4</max-g>
             <max-launch-g type="int">7</max-launch-g>
             <thrust-lbf-stage-1 type="double">680</thrust-lbf-stage-1> <!-- Teledyne J402-CA-100 -->
             <stage-1-jet type="bool">true</stage-1-jet>
@@ -918,7 +918,7 @@
             <weight-launch-lbs type="double">2150</weight-launch-lbs> <!-- source -->
             <weight-warhead-lbs type="double">1000</weight-warhead-lbs>
             <weight-fuel-lbm type="double">269</weight-fuel-lbm> <!-- source: approx 40 gal JP-10 -->
-            <drag-coeff type="double">0.020</drag-coeff><!-- subsonic, except when diving to cruise altitude -->
+            <drag-coeff type="double">0.025</drag-coeff><!-- subsonic, except when diving to cruise altitude -->
             <cross-section-sqft type="double">2.55732153</cross-section-sqft><!-- 0.55 meter diam -->
             <arming-time-sec type="double">2.0</arming-time-sec>
             <min-speed-for-guiding-mach type="double">0.24</min-speed-for-guiding-mach>

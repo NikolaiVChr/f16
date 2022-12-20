@@ -103,13 +103,13 @@ var Station = {
 					} elsif (me.weaponName == "AGM-158") {
 						mf = func (struct) {
 							if (struct.dist_m != -1 and struct.speed_fps != 0) {
-								if (M2FT*struct.dist_m < 1.25 and struct.guidance == "gps-altitude") {
+								if (M2FT*struct.dist_m < 1.5 and struct.guidance == "gps-altitude") {
 									# start diving
 									return {"guidance":"gps"};
 								}
 								if (M2FT*struct.dist_m/struct.speed_fps < 8 and (struct.guidance == "gps" or struct.guidance == "gps-altitude")) {
 									# 8s authentic value
-									return {"guidance":"heat","guidanceLaw":"APN","abort_midflight_function":1};
+									return {"guidance":"heat","guidanceLaw":"direct","abort_midflight_function":1};
 								}
 								if (struct.dist_m*M2NM > 10) {
 									# 22000 ft authentic value
