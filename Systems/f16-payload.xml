@@ -907,7 +907,7 @@
             <switch-time-sec type="double">1</switch-time-sec>
             <auto-switch-target-allowed type="bool">true</auto-switch-target-allowed>
             <prowl-flight type="string">5</prowl-flight>
-            <max-g type="double">4</max-g>
+            <max-g type="double">6</max-g>
             <max-launch-g type="int">7</max-launch-g>
             <thrust-lbf-stage-1 type="double">680</thrust-lbf-stage-1> <!-- Teledyne J402-CA-100 -->
             <stage-1-jet type="bool">true</stage-1-jet>
@@ -936,7 +936,7 @@
             <terminal-alt-factor type="double">2</terminal-alt-factor>
             <terminal-rise-time type="double">20.0</terminal-rise-time>
             <terminal-dive-time type="double">12.0</terminal-dive-time>
-            <seeker-angular-speed-dps type="double">45</seeker-angular-speed-dps>
+            <seeker-angular-speed-dps type="double">150</seeker-angular-speed-dps>
             <ready-time type="double">3.5</ready-time>
             <ejector-speed-fps type="double">5</ejector-speed-fps>
             <telemetry type="bool">false</telemetry>
