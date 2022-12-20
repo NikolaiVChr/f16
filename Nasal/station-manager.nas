@@ -103,7 +103,7 @@ var Station = {
 					} elsif (me.weaponName == "AGM-158") {
 						mf = func (struct) {
 							if (struct.dist_m != -1 and struct.speed_fps != 0) {
-								if (M2FT*struct.dist_m < 1.5 and struct.guidance == "gps-altitude") {
+								if (M2NM*struct.dist_m < 1.5 and struct.guidance == "gps-altitude") {
 									# start diving
 									return {"altitude":0,"guidance":"gps"};
 								}
@@ -115,7 +115,7 @@ var Station = {
 									# 22000 ft authentic value
 									return {"altitude": 22000};
 								}
-								if (struct.hasTarget) {
+								if (M2NM*struct.dist_m > 1.5 and struct.hasTarget) {
 									return {"altitude_at": 5000};
 								}
 							}
