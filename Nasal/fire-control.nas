@@ -345,7 +345,7 @@ var FireControl = {
 				}
 				me.class = getprop("payload/armament/"~string.lc(me.typeTest)~"/class");
 				if (me.class != nil) {
-					me.isAG = find("G", me.class)!=-1 or find("M", me.class)!=-1;
+					me.isAG = find("G", me.class)!=-1 or find("M", me.class)!=-1 or find("P", me.class)!=-1;
 					if (me.isAG) {
 						me.selType = me.nextWeapon(me.typeTest);
 						if (me.selType != nil) {
