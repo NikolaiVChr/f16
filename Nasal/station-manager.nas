@@ -104,18 +104,19 @@ var Station = {
 						mf = func (struct) {
 							if (struct.dist_m != -1 and struct.speed_fps != 0) {
 								if (M2NM*struct.dist_m < 1.5 and struct.guidance == "gps-altitude") {
-									# start diving
+									# start terminal diving
 									return {"altitude":0,"guidance":"gps"};
 								}
 								if (M2FT*struct.dist_m/struct.speed_fps < 8 and (struct.guidance == "gps" or struct.guidance == "gps-altitude")) {
-									# 8s authentic value
-									return {"guidance":"heat","guidanceLaw":"APN","altitude":0,"abort_midflight_function":1};
+									# 8s before impact switch to IR, authentic value
+									return {"guidance":"heat","guidanceLaw":"APN","altitude":0,"class":"GM","target":"closest","abort_midflight_function":1};
 								}
 								if (struct.dist_m*M2NM > 10) {
-									# 22000 ft authentic value
+									# 22000 ft above sealevel, authentic value
 									return {"altitude": 22000};
 								}
 								if (M2NM*struct.dist_m > 1.5 and struct.hasTarget) {
+									# Lower altitude to 5000 ft above target
 									return {"altitude_at": 5000};
 								}
 							}

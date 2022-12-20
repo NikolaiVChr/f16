@@ -2021,6 +2021,19 @@ var AIM = {
 	},
 
 	setNewTargetInFlight: func (tagt) {
+		if (tagt == "closest") {
+			tagt = nil;
+			me.closest = 1000000;
+			if (me.Tgt != nil) {
+				foreach(me.test_tgt ; me.contacts) {
+					me.test_dist = me.Tgt.get_Coord().distance_to(me.test_tgt.get_Coord());
+					if (me.test_dist < me.closest and me.checkForClassInFlight(me.test_tgt)) {
+						me.closest = me.test_dist;
+						tagt = me.test_tgt;
+					}
+				}
+			}
+		}
 		me.Tgt = tagt;
 		me.callsign = tagt==nil?"Unknown":damage.processCallsign(me.Tgt.get_Callsign());
 		me.printStatsDetails("Target set to %s", me.callsign);
@@ -2675,6 +2688,9 @@ var AIM = {
 				if (me.settings.target == "nil") {
 					me.setNewTargetInFlight(nil);
 					me.printStats("Target removed");
+				} elsif (me.settings.target == "closest") {
+					me.setNewTargetInFlight("closest");
+					me.printStats("Seeker finding closest target to the GPS");
 				} elsif (me.newLock(me.settings.target)) {
 					me.setNewTargetInFlight(me.settings.target);
 					me.printStats("Target switched to %s",me.callsign);
@@ -4585,6 +4601,19 @@ var AIM = {
 			return FALSE;
 		}
 		return TRUE;
+	},
+
+	checkForClassInFlight: func (newtgt) {
+		# call this only after firing
+		if(newtgt != nil and newtgt.isValid() == TRUE and
+					(  (newtgt.get_type() == SURFACE and me.target_gnd == TRUE)
+	                or (newtgt.get_type() == AIR and me.target_air == TRUE)
+	                or (newtgt.get_type() == POINT and me.target_pnt == TRUE)
+	                or (newtgt.get_type() == MARINE and me.target_sea == TRUE))) {
+			return TRUE;
+		}
+		#if(me.slaveContact != nil) printf("class failed %d %d %d",me.slaveContact.isValid() == TRUE,me.slaveContact.get_type() == AIR,me.target_air == TRUE);
+		return FALSE;
 	},
 
 	checkForClass: func {
