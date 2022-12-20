@@ -2519,6 +2519,7 @@ var AIM = {
 				if (me.force_lbf_2 > 0) me.printStats(" Absolute %.2f Mach in stage 2.", me.maxMach2);
 				if (me.force_lbf_3 > 0) me.printStats(" Absolute %.2f Mach in stage 3.", me.maxMach3);
 				if (me.maxMach4 > 0) me.printStats(" Absolute %.2f mach propulsion end.", me.maxMach4);
+				me.printStats("%d seconds from launch to end", me.life_time);
 				me.printStats(" Fired at %s from %.2f Mach, %5d ft at %3d NM distance. Flew %.1f NM.", me.callsign, me.startMach, me.startAlt, me.startDist * M2NM, me.ac_init.direct_distance_to(me.coord)*M2NM);
 				# We exploded, and start the sound propagation towards the plane
 				me.sndSpeed = me.sound_fps;
