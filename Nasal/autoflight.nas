@@ -37,16 +37,6 @@ var apLoop = maketimer(1, func {
 			}
 		}
 	}
-	if (steerpoints.getCurrentNumber() != 0) {
-	  var bearing = steerpoints.getCurrentDirection()[0];
-	  if (bearing != nil) {
-	      setprop("autopilot/route-manager/custom/bearing-deg", bearing);
-	  } else {
-	      setprop("autopilot/route-manager/custom/bearing-deg", -1);
-	  }
-	} else {
-		setprop("autopilot/route-manager/custom/bearing-deg", -1);
-	}
 });
 
 var apLoopDelay = maketimer(3, func {
@@ -136,9 +126,25 @@ var apLoopHalf = maketimer(0.5, func {
     aTF_execute();
 });
 
+var apLoopFast = maketimer(0.1, func {
+	# Steerpoint bearing loop
+	 
+    if (steerpoints.getCurrentNumber() != 0) {
+	  var bearing = steerpoints.getCurrentDirection()[0];
+	  if (bearing != nil) {
+	      setprop("autopilot/route-manager/custom/bearing-deg", bearing);
+	  } else {
+	      setprop("autopilot/route-manager/custom/bearing-deg", -1);
+	  }
+	} else {
+		setprop("autopilot/route-manager/custom/bearing-deg", -1);
+	}
+});
+
 var start = setlistener("/sim/signals/fdm-initialized", func {
 	apLoop.start();
 	apLoopHalf.start();
+	apLoopFast.start();
 	apLoopDelay.start();
 	removelistener(start);
 });
