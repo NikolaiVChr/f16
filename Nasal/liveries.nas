@@ -38,10 +38,10 @@ var diag = {
                 var index = n.getNode(me.sortprop, 1).getValue();
                 var owner = n.getNode(me.ownerprop, 1).getValue();
                 var pilot = n.getNode(me.pilotprop, 1).getValue() or "";
-                var scheme = n.getNode(me.schemeprop, 1).getValue() or "";
+                var scheme = n.getNode(me.schemeprop, 1).getValue() or "Two-tone gray";
                 var engine = n.getNode(me.engineprop, 1).getValue();
                 var squad = n.getNode(me.squadprop, 1).getValue() or "";
-                var serial = n.getNode(me.serialprop, 1).getValue() or "";
+                var serial = n.getNode(me.serialprop, 1).getValue() or substr(file, 0, size(file) - 4);
                 var year = n.getNode(me.yearprop, 1).getValue() or "";
 
                 if (name == nil or index == nil or owner == nil)
@@ -260,12 +260,13 @@ var diag = {
 		me.infoLivery.setText("Livery: "~livery[0]);
 		me.infoYear.setText(livery[10]);
     	me.infoOwner.setText( "Airforce: "~livery[4]);
-    	me.infoPilot.setText( "Pilot: "~livery[5]);
     	me.infoScheme.setText("Scheme: "~livery[6]);
     	me.infoSquad.setText( "Squadron: "~livery[8]);
     	me.infoSerial.setText("Serial: "~livery[9]);
     	if (livery[7] != nil) me.infoEngine.setText("Block: "~livery[7]);
-    	else me.infoEngine.setText("");
+    	else me.infoEngine.setText(" ");
+    	if (livery[5] != "") me.infoPilot.setText( "Pilot: "~livery[5]);
+    	else me.infoPilot.setText(" ");
 	},
 	makeForceButton: func (airforce) {
 		#print("Making button for ", airforce);
