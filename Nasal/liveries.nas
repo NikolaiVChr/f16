@@ -2,6 +2,102 @@ var dialog = nil;
 var sized = [512, 512];
 var position = [100, 100];
 
+
+##############################
+#####  Setup Viper style BEGIN
+##############################
+
+var gui_dir = getprop("/sim/fg-root") ~ "/Nasal/canvas/";
+var loadGUIFile = func(file) io.load_nasal(gui_dir ~ file, "viper");
+
+loadGUIFile("gui/Style.nas");
+loadGUIFile("gui/styles/DefaultStyle.nas");
+#loadGUIFile("gui.nas");
+
+OurStyle = {
+  new: func(name, name_icon_theme)
+  {
+    var root_node = props.globals.getNode("/sim/gui/canvas", 1)
+                                 .addChild("style");
+    var gui_path = getprop("/sim/aircraft-dir") ~ "/gui";
+    var style_path = gui_path ~ "/styles/" ~ name;
+
+    var icn_path = getprop("/sim/fg-root") ~ "/gui/styles/AmbianceClassic";
+
+    var m = {
+      parents: [OurStyle],
+      _path: style_path,
+      _dir_icons: getprop("/sim/fg-root") ~ "/gui/icons/" ~ name_icon_theme,
+      _node: io.read_properties(style_path ~ "/style.xml", root_node),
+      _colors: {}
+    };
+
+    # parse theme colors
+    var comp_names = ["red", "green", "blue", "alpha"];
+    var colors = m._node.getChild("colors");
+    if( colors != nil )
+    {
+      foreach(var color; colors.getChildren())
+      {
+        var str = "rgba(";
+        for(var i = 0; i < size(comp_names); i += 1)
+        {
+          if( i > 0 )
+            str ~= ",";
+          var val = color.getValue(comp_names[i]);
+          if( val == nil )
+            val = 1;
+          if( i < 3 )
+            str ~= int(val * 255 + 0.5);
+          else
+            str ~= int(val * 100) / 100;
+        }
+        m._colors[ color.getName() ] = str ~ ")";
+      }
+    }
+
+    m._dir_decoration =
+      icn_path ~ "/" ~ (m._node.getValue("folders/decoration") or "decoration");
+    m._dir_widgets =
+      icn_path ~ "/" ~ (m._node.getValue("folders/widgets") or "widgets");
+
+
+
+    return m;
+  },
+  getColor: func(name, def = "#00ffff")
+  {
+    return me._colors[name] or def;
+  }
+};
+viper.DefaultStyle.widgets["scroll-area"].new = func(parent, cfg)
+  {
+    me._root = parent.createChild("group", "scroll-area");
+
+    me._bg     = me._root.createChild("path", "background")
+                         .set("fill", "#e0e0e0");
+    me.content = me._root.createChild("group", "scroll-content")
+                         .set("clip-frame", canvas.Element.PARENT);
+    me.vert  = me._newScroll(me._root, "vert");
+    me.horiz = me._newScroll(me._root, "horiz");
+};
+viper.DefaultStyle.new = func(name, name_icon_theme)
+  {
+    return {
+      parents: [ OurStyle.new(name, name_icon_theme),
+                 viper.DefaultStyle ]
+    };
+};
+
+var viperStyle = viper.DefaultStyle.new("ViperModern", "Humanity");
+
+#viper.style = viperStyle;# Sets the viper style on the window itself
+
+##############################
+#####  Setup Viper style END
+##############################
+
+
 var diag = {
 	init: func (dir) {
 		var sortprop = nil;
@@ -19,8 +115,10 @@ var diag = {
         me.cftprop = relpath("sim/model/f16/cft");
         me.chuteprop = relpath("sim/model/f16/dragchute");
         me.sortprop = relpath(sortprop or me.nameprop);
-        if (me.mpprop != nil)
+        if (me.mpprop != nil) {
             aircraft.data.add(me.nameprop);
+            aircraft.data.add(me.mpprop);
+        }
         me.reinit();
 	},
 	rescan: func {
@@ -68,7 +166,9 @@ var diag = {
     reinit: func {
         me.rescan();
         me.current = -1;
-        me.select(getprop(me.nameprop) or "");
+        if (me.mpprop != nil)
+        	if(!me.selectByFile(getprop(me.mpprop) or ""))# filenames change less often, so start by trying that
+        		me.select(getprop(me.nameprop) or "");#filename didn't work, try name
     },
     set: func(index) {
         var last = me.current;
@@ -79,10 +179,20 @@ var diag = {
         if (me.mpprop != nil)
             setprop(me.mpprop, me.data[me.current][2]);
     },
+    selectByFile: func(filename) {
+        forindex (var i; me.data) {
+            if (me.data[i][2] == filename) {
+                me.set(i);
+                return 1;
+            }
+        }
+        return 0;
+    },
     select: func(name) {
         forindex (var i; me.data) {
             if (me.data[i][0] == name) {
                 me.set(i);
+                return;
             }
         }
     },
@@ -95,10 +205,13 @@ var diag = {
 	toggle: func {
 		if (dialog == nil) {
 			#print("  Menu opens dialog:");
-			dialog = canvas.Window.new(sized,"window","f16_livery_dialog").set("title", "Livery selection").setPosition(position).set("resize", 0);
+			dialog = canvas.Window.new(sized,"window","f16_livery_dialog", 1)
+						.set("title", "Livery selection")
+						.setPosition(position)
+						.set("resize", 0);
 			#me.canvas = dialog.createCanvas();
 			me.rooty = dialog.getCanvas(1).createGroup();
-			dialog.getCanvas().setColorBackground([0.8,0.8,0.8]);
+			dialog.getCanvas().setColorBackground(viperStyle.getColor("bg_color_contrast"));
 		 	
 			me.vboxMain = canvas.VBoxLayout.new();
 		 	me.hbox = canvas.HBoxLayout.new();	
@@ -107,7 +220,7 @@ var diag = {
 			#me.vboxLivs.minimumSize([250,25]);
 			#me.vboxLivs.maximumSize([250,256]);
 			
-			me.area = canvas.gui.widgets.ScrollArea.new(me.rooty, canvas.style, {});
+			me.area = canvas.gui.widgets.ScrollArea.new(me.rooty, viperStyle, {});
 			me._area_content = me.area.getContent();
 			me.area.setLayout(vboxLivs);
 
@@ -118,38 +231,38 @@ var diag = {
 
 			# Add info labels:
 			var height = 15;
-            me.infoLivery = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"wordWrap": 0})
+            me.infoLivery = canvas.gui.widgets.Label.new(me.rooty, viperStyle, {"wordWrap": 0})
                     .setFixedSize(400,height)
                     .setText("");
-            me.infoYear = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"wordWrap": 0})
+            me.infoYear = canvas.gui.widgets.Label.new(me.rooty, viperStyle, {"wordWrap": 0})
                     .setFixedSize(50,height)
                     .setText("");
             
-            me.infoEngine = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"wordWrap": 0})
+            me.infoEngine = canvas.gui.widgets.Label.new(me.rooty, viperStyle, {"wordWrap": 0})
                     .setFixedSize(250,height)
                     .setText("");
-			me.infoSerial = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"wordWrap": 0})
+			me.infoSerial = canvas.gui.widgets.Label.new(me.rooty, viperStyle, {"wordWrap": 0})
                     .setFixedSize(150,height)
                     .setText("");
 
-            me.infoOwner = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"wordWrap": 0})
-                    .setFixedSize(250,height)
+            me.infoOwner = canvas.gui.widgets.Label.new(me.rooty, viperStyle, {"wordWrap": 0})
+                    .setFixedSize(150,height)
                     .setText("");            
-            me.infoSquad = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"wordWrap": 0})
+            me.infoSquad = canvas.gui.widgets.Label.new(me.rooty, viperStyle, {"wordWrap": 0})
+                    .setFixedSize(250,height)
+                    .setText("");
+
+            me.infoScheme = canvas.gui.widgets.Label.new(me.rooty, viperStyle, {"wordWrap": 0})
+                    .setFixedSize(250,height)
+                    .setText("");
+            me.infoPilot = canvas.gui.widgets.Label.new(me.rooty, viperStyle, {"wordWrap": 0})
                     .setFixedSize(150,height)
                     .setText("");
 
-            me.infoScheme = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"wordWrap": 0})
+            me.infoCft = canvas.gui.widgets.Label.new(me.rooty, viperStyle, {"wordWrap": 0})
                     .setFixedSize(250,height)
                     .setText("");
-            me.infoPilot = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"wordWrap": 0})
-                    .setFixedSize(150,height)
-                    .setText("");
-
-            me.infoCft = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"wordWrap": 0})
-                    .setFixedSize(250,height)
-                    .setText("");
-            me.infoChute = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"wordWrap": 0})
+            me.infoChute = canvas.gui.widgets.Label.new(me.rooty, viperStyle, {"wordWrap": 0})
                     .setFixedSize(150,height)
                     .setText("");
 
@@ -170,6 +283,7 @@ var diag = {
             me.vboxMain.addItem(me.hbox3);
             me.vboxMain.addItem(me.hbox4);
             me.vboxMain.addItem(me.hbox5);
+            me.vboxMain.addSpacing(5);
 
             me.hbox1.addItem(me.infoLivery);
             me.hbox1.addItem(me.infoYear);
@@ -177,8 +291,9 @@ var diag = {
             me.hbox2.addItem(me.infoEngine);
             me.hbox2.addItem(me.infoSerial);
 
-            me.hbox3.addItem(me.infoOwner);
+            
             me.hbox3.addItem(me.infoSquad);
+            me.hbox3.addItem(me.infoOwner);
 
             me.hbox4.addItem(me.infoScheme);
             me.hbox4.addItem(me.infoPilot);
@@ -245,7 +360,7 @@ var diag = {
 		}
 	},
 	makeLiveryButton: func (livery, idx, vboxLivs) {
-		var newB = canvas.gui.widgets.Button.new(me._area_content, canvas.style, {"flat": 0})
+		var newB = canvas.gui.widgets.Button.new(me._area_content, viperStyle, {"flat": 0})
 	                                    .setCheckable(1)
 	                                    .setFixedSize(375,25)
 	                                    .setText(livery[0]);
@@ -289,7 +404,7 @@ var diag = {
 	},
 	makeForceButton: func (airforce) {
 		#print("Making button for ", airforce);
-		var newF = canvas.gui.widgets.Button.new(me.rooty, canvas.style, {"flat": 0})
+		var newF = canvas.gui.widgets.Button.new(me.rooty, viperStyle, {"flat": 0})
                     .setCheckable(1)
                     .setChecked(0)
                     .setFixedSize(100,25)
