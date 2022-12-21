@@ -7,6 +7,12 @@
     <name type="string">USAF 31FW, 510FS AV "Buzzard 01"</name>
     <texture>Liveries/Block40/88-0413.png</texture>
     <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Two-tone gray, Flagship</scheme>
+    <block type="int">40</block>
+    <serial type="string">88-0413</serial>
+    <squad type="string">510th FS "Buzzards"</squad>
+    <year type="string">1996</year>
    </livery>
    
    <livery-logo>

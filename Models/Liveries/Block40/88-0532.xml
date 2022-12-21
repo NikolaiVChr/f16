@@ -4,7 +4,7 @@
  <sim> 
   <model>
    <livery>
-    <name type="string">USAF 31FW, 555FS AV "31OG, Province of Venezia" (1998)</name>
+    <name type="string">USAF 31FW, 555FS AV "31OG, Province of Venezia"</name>
     <texture>Liveries/Block40/88-0532.png</texture>
     <owner type="string">USAF</owner>
     <pilot type="string"></pilot>
