@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+<!--
+	<folders>
+		<decoration type="string">decoration</decoration>
+		<widgets    type="string">widgets</widgets>
+	</folders>
+-->
+	<colors>
+
+		<!-- Window decoration colors -->
+		<title>
+			<red   type="float">0.275</red>
+			<green type="float">1</green>
+			<blue  type="float">0.251</blue>
+		</title>
+		<title-unfocused>
+			<red   type="float">0.235</red>
+			<green type="float">0.231</green>
+			<blue  type="float">0.216</blue>
+		</title-unfocused>
+		<title-text>
+			<red   type="float">0.875</red>
+			<green type="float">0.859</green>
+			<blue  type="float">0.824</blue>
+		</title-text>
+		<title-text-unfocused>
+			<red   type="float">0.502</red>
+			<green type="float">0.490</green>
+			<blue  type="float">0.471</blue>
+		</title-text-unfocused>
+		<title-highlight>
+			<red   type="float">0.365</red>
+			<green type="float">0.361</green>
+			<blue  type="float">0.341</blue>
+		</title-highlight>
+		<title-highlight-unfocused>
+			<red   type="float">0.278</red>
+			<green type="float">0.275</green>
+			<blue  type="float">0.259</blue>
+		</title-highlight-unfocused>
+
+		<!-- default colors for all GUI objects -->
+		<bg_color>
+			<red   type="float">0.949</red>
+			<green type="float">0.945</green>
+			<blue  type="float">0.941</blue>
+		</bg_color>
+
+		<bg_color_contrast>
+			<red   type="float">0.8</red>
+			<green type="float">0.8</green>
+			<blue  type="float">0.8</blue>
+		</bg_color_contrast>
+
+		<fg_color>
+			<red   type="float">0.298</red>
+			<green type="float">0.298</green>
+			<blue  type="float">0.298</blue>
+		</fg_color>
+
+		<text_color>
+			<red   type="float">0.235</red>
+			<green type="float">0.235</green>
+			<blue  type="float">0.235</blue>
+		</text_color>
+
+		<backdrop_fg_color>
+			<red   type="float">0.428</red>
+			<green type="float">0.427</green>
+			<blue  type="float">0.427</blue>
+		</backdrop_fg_color>
+
+		<button_bg_color>
+			<red   type="float">0.949</red>
+			<green type="float">0.945</green>
+			<blue  type="float">0.941</blue>
+		</button_bg_color>
+
+		<button_backdrop_bg_color>
+			<red   type="float">0.934</red>
+			<green type="float">0.930</green>
+			<blue  type="float">0.926</blue>
+		</button_backdrop_bg_color>
+
+		<button_bg_color_down>
+			<red   type="float">0.88</red>
+			<green type="float">0.87</green>
+			<blue  type="float">0.86</blue>
+		</button_bg_color_down>
+
+		<button_bg_color_hover>
+			<red   type="float">0.996</red>
+			<green type="float">0.992</green>
+			<blue  type="float">0.988</blue>
+		</button_bg_color_hover>
+
+		<button_bg_color_insensitive>
+			<red   type="float">0.89</red>
+			<green type="float">0.89</green>
+			<blue  type="float">0.89</blue>
+		</button_bg_color_insensitive>
+
+	</colors>
+
+</PropertyList>
