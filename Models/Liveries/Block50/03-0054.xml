@@ -7,6 +7,8 @@
     <name type="string">PolAF 31.BLT, #4054</name>
     <texture>Liveries/Block50/03-0054.png</texture>
     <owner type="string">PolAF</owner>
+    <pilot type="string">Me or you?</pilot>
+    <scheme type="string">Classic Gray Camo</scheme>
    </livery>
    
    <livery-logo>

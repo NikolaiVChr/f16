@@ -423,7 +423,7 @@
                         <label>Select Livery</label>
                         <binding>
                             <command>nasal</command>
-                            <script>aircraft.livery.dialog.toggle();</script>
+                            <script>liveries.diag.toggle();</script>
                         </binding>
                     </item>
                     <item>
@@ -1563,7 +1563,6 @@
             <file>Aircraft/f16/Nasal/exec.nas</file>
             <file>Aircraft/f16/Nasal/zoom-views.nas</file>
             <file>Aircraft/f16/Nasal/f16.nas</file>
-            <file>Aircraft/f16/Nasal/liveries.nas</file>
             <file>Aircraft/f16/Nasal/rain.nas</file>
             <file>Aircraft/f16/Nasal/mfd.nas</file>
             <file>Aircraft/f16/Nasal/HUD/hud_math.nas</file>
@@ -1571,6 +1570,9 @@
             <file>Aircraft/f16/Nasal/MFD/MFD_main.nas</file>
             <!--<file>Aircraft/f16/Nasal/blackout.nas</file>-->
         </f16>
+        <liveries>
+            <file>Aircraft/f16/Nasal/liveries.nas</file>
+        </liveries>
         <start>
             <file>Aircraft/f16/Nasal/states_and_autostart.nas</file>
         </start>

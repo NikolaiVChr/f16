@@ -7,6 +7,9 @@
     <name type="string">PolAF 6.ELT, "2015 Demo"</name>
     <texture>Liveries/Block50/03-0052.png</texture>
     <owner type="string">PolAF</owner>
+    <pilot type="string">Ventra</pilot>
+    <scheme type="string">Airshow demo paintjob</scheme>
+    <block type="int">52</block>
    </livery>
    
    <livery-logo>

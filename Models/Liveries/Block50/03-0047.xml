@@ -7,6 +7,11 @@
     <name type="string">PolAF 31.BLT, "100th anniversary"</name>
     <texture>Liveries/Block50/03-0047.png</texture>
     <owner type="string">PolAF</owner>
+    <pilot type="string">Jmav</pilot>
+    <scheme type="string">Have Glass V</scheme>
+    <block type="int">50</block>
+    <serial type="string">03-0047</serial>
+    <squad type="string">31.BLT</squad>
    </livery>
    
    <livery-logo>
