@@ -12,7 +12,7 @@
                 <block type="int">52</block>
                 <serial type="string">02-6032</serial>
                 <squad type="string">121FS</squad>
-                <year type="string">2004</year>
+                <year type="string"></year>
             </livery>
             <livery-logo>
                 <texture>Liveries/standard.logos.png</texture>

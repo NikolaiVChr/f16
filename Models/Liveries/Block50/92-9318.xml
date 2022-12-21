@@ -4,9 +4,15 @@
  <sim>
   <model>
    <livery>
-    <name type="string">USAF 52FW, 480FS SP #918 (2011)</name>
+    <name type="string">52FW, 480FS SP #918 (2011)</name>
     <texture>Liveries/Block50/92-9318.png</texture>
     <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Weathered two-tone gray</scheme>
+    <block type="int">50</block>
+    <serial type="string">92-9318</serial>
+    <squad type="string">480th FS "Warhawks"</squad>
+    <year type="string">2011</year>
    </livery>
 
   <livery-logo>

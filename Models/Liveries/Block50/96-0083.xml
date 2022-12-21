@@ -4,9 +4,15 @@
  <sim>
   <model>
    <livery>
-    <name type="string">USAF 52FW, 480FS SP HGV #083</name>
+    <name type="string">52FW, 480FS SP HGV #083</name>
     <texture>Liveries/Block50/96-0083.png</texture>
     <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Have Glass V</scheme>
+    <block type="int">50</block>
+    <serial type="string">96-0083</serial>
+    <squad type="string">480th FS "Warhawks"</squad>
+    <year type="string">2021</year>
    </livery>
 
    <livery-logo>

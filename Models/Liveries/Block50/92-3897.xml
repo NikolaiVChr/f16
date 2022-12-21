@@ -4,9 +4,15 @@
  <sim>
   <model>
    <livery>
-    <name type="string">USAF 35FW, 14FS WW #897</name>
+    <name type="string">35FW, 14FS WW #897</name>
     <texture>Liveries/Block50/92-3897.png</texture>
     <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string"></scheme>
+    <block type="int">50</block>
+    <serial type="string">92-3897</serial>
+    <squad type="string">14th FS "Samurais"</squad>
+    <year type="string"></year>
    </livery>
    <livery-logo>
     <texture>Liveries/standard.logos.black2.png</texture>

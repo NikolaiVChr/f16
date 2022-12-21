@@ -4,9 +4,15 @@
  <sim>
   <model>
    <livery>
-    <name type="string">TuAF 161 Filo, #1004</name>
+    <name type="string">6.AJU 161 Filo, #1004</name>
     <texture>Liveries/Block50/07-1004.png</texture>
     <owner type="string">TuAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string"></scheme>
+    <block type="int">50</block>
+    <serial type="string">07-1004</serial>
+    <squad type="string">161 Filo</squad>
+    <year type="string"></year>
    </livery>
    <livery-logo>
     <texture>Liveries/Block50/turkish.logos.png</texture>

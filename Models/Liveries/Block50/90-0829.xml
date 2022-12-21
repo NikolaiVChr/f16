@@ -4,9 +4,15 @@
  <sim>
   <model>
    <livery>
-    <name type="string">USAF 52FW, 480FS SP "OG Flagship"</name>
+    <name type="string">52FW, 480FS SP "OG Flagship"</name>
     <texture>Liveries/Block50/90-0829.png</texture>
     <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string"></scheme>
+    <block type="int">50</block>
+    <serial type="string">90-0829</serial>
+    <squad type="string">480th FS "Warhawks"</squad>
+    <year type="string">2017</year>
    </livery>
 
    <livery-logo>

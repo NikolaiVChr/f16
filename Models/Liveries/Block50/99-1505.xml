@@ -4,9 +4,15 @@
  <sim>
   <model>
    <livery> 
-    <name type="string">HAF 343 Mira, "60 years Stars"</name>
+    <name type="string">115PM 343 Mira, "60 years Stars"</name>
     <texture>Liveries/Block50/99-1505.png</texture>
     <owner type="string">HAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Special Color</scheme>
+    <block type="int">52</block>
+    <serial type="string">99-1505</serial>
+    <squad type="string">343 Mira</squad>
+    <year type="string"></year>
    </livery>
 
    <livery-logo>

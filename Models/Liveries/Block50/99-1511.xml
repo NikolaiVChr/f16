@@ -4,9 +4,15 @@
  <sim>
   <model>
    <livery> 
-    <name type="string">HAF 343 Mira, #511</name>
+    <name type="string">115PM 343 Mira, #511</name>
     <texture>Liveries/Block50/99-1511.png</texture>
     <owner type="string">HAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Three-tone camo</scheme>
+    <block type="int">52</block>
+    <serial type="string">99-1511</serial>
+    <squad type="string">343 Mira</squad>
+    <year type="string"></year>
    </livery>
 
    <livery-logo>
