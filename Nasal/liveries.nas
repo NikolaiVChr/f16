@@ -10,7 +10,6 @@ var position = [100, 100];
 var gui_dir = getprop("/sim/fg-root") ~ "/Nasal/canvas/";
 var loadGUIFile = func(file) io.load_nasal(gui_dir ~ file, "viper");
 
-loadGUIFile("gui/Style.nas");
 loadGUIFile("gui/styles/DefaultStyle.nas");
 #loadGUIFile("gui.nas");
 
@@ -219,7 +218,13 @@ var diag = {
     },
 	toggle: func {
 		if (dialog == nil) {
-			#print("  Menu opens dialog:");
+			# Make sure dialog do not pop up outside visible screen
+			var x = getprop("sim/gui/canvas/size[0]")-sized[0];
+        	var y = getprop("sim/gui/canvas/size[1]")-sized[1];
+        	position[0] = math.max(math.min(position[0], x), 0);
+        	position[1] = math.max(math.min(position[1], y), 0);
+
+        	# Make the window
 			dialog = canvas.Window.new(sized,"window","f16_livery_dialog", 1)# 1 means focus allowed
 						.set("title", "Livery selection")
 						.setPosition(position)
