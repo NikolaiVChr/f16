@@ -81,6 +81,12 @@ viper.DefaultStyle.widgets["scroll-area"].new = func(parent, cfg)
     me.vert  = me._newScroll(me._root, "vert");
     me.horiz = me._newScroll(me._root, "horiz");
 };
+viper.DefaultStyle.widgets["scroll-area"]._newScroll = func(el, orient)
+  {
+    return el.createChild("path", "scroll-" ~ orient)
+             .set("stroke", "#f07845")
+             .set("stroke-width", 12);
+};
 viper.DefaultStyle.new = func(name, name_icon_theme)
   {
     return {
