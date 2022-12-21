@@ -344,6 +344,7 @@ var FireControl = {
 					continue;
 				}
 				me.class = getprop("payload/armament/"~string.lc(me.typeTest)~"/class");
+				if (me.typeTest == "LAU-68") me.class = "G";
 				if (me.class != nil) {
 					me.isAG = find("G", me.class)!=-1 or find("M", me.class)!=-1 or find("P", me.class)!=-1;
 					if (me.isAG) {
@@ -371,8 +372,9 @@ var FireControl = {
 					continue;
 				}
 				me.class = getprop("payload/armament/"~string.lc(me.typeTest)~"/class");
+				if (me.typeTest == "LAU-68") me.class = "G";
 				if (me.class != nil) {
-					me.isAG = find("G", me.class)!=-1 or find("M", me.class)!=-1;
+					me.isAG = find("G", me.class)!=-1 or find("M", me.class)!=-1 or find("P", me.class)!=-1;
 					if (me.isAG) {
 						me.selType = me.nextWeapon(me.typeTest);
 						if (me.selType != nil) {
@@ -392,7 +394,7 @@ var FireControl = {
 					}
 					if (me.typeTest == me.selectedType) {
 						me.selType = me.nextWeapon(me.typeTest);
-						if (me.selType != nil and me.selType.parents[0] == armament.AIM and (me.selType.target_gnd == 1 or me.selType.target_sea==1)) {
+						if (me.selType != nil and ((me.selType.parents[0] == armament.AIM and (me.selType.target_gnd == 1 or me.selType.target_sea==1)) or me.typeTest == "LAU-68")) {
 							#me.updateCurrent();
 							me.selectedType = me.selType.type;
 							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
@@ -406,8 +408,9 @@ var FireControl = {
 						return;
 					}
 					me.class = getprop("payload/armament/"~string.lc(me.typeTest)~"/class");
+					if (me.typeTest == "LAU-68") me.class = "G";
 					if (me.class != nil) {
-						me.isAG = find("G", me.class)!=-1 or find("M", me.class)!=-1;
+						me.isAG = find("G", me.class)!=-1 or find("M", me.class)!=-1 or find("P", me.class)!=-1;
 						if (me.isAG) {
 							me.selType = me.nextWeapon(me.typeTest);
 							if (me.selType != nil) {
