@@ -15,6 +15,7 @@ var diag = {
         me.engineprop = relpath("sim/model/livery/block");
         me.squadprop = relpath("sim/model/livery/squad");
         me.serialprop = relpath("sim/model/livery/serial");
+        me.yearprop = relpath("sim/model/livery/year");
         me.sortprop = relpath(sortprop or me.nameprop);
         if (me.mpprop != nil)
             aircraft.data.add(me.nameprop);
@@ -41,10 +42,11 @@ var diag = {
                 var engine = n.getNode(me.engineprop, 1).getValue();
                 var squad = n.getNode(me.squadprop, 1).getValue() or "";
                 var serial = n.getNode(me.serialprop, 1).getValue() or "";
+                var year = n.getNode(me.yearprop, 1).getValue() or "";
 
                 if (name == nil or index == nil or owner == nil)
                     continue;
-                append(me.data, [name, index, substr(file, 0, size(file) - 4), me.dir ~ file, owner, pilot, scheme, engine, squad, serial]);
+                append(me.data, [name, index, substr(file, 0, size(file) - 4), me.dir ~ file, owner, pilot, scheme, engine, squad, serial, year]);
                 me.addOwner(owner);
             }
             me.data = sort(me.data, func(a, b) num(a[1]) == nil or num(b[1]) == nil
@@ -118,6 +120,9 @@ var diag = {
             me.infoLivery = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"flat": 0})
                     .setFixedSize(400,20)
                     .setText("");
+            me.infoYear = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"flat": 0})
+                    .setFixedSize(50,20)
+                    .setText("");
             
             me.infoEngine = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"flat": 0})
                     .setFixedSize(250,20)
@@ -156,6 +161,7 @@ var diag = {
             me.vboxMain.addItem(me.hbox4);
 
             me.hbox1.addItem(me.infoLivery);
+            me.hbox1.addItem(me.infoYear);
 
             me.hbox2.addItem(me.infoEngine);
             me.hbox2.addItem(me.infoSerial);
@@ -210,6 +216,7 @@ var diag = {
 	            me.infoSerial = nil;
 	            me.infoSquad = nil;
 	            me.infoEngine = nil;
+	            me.infoYear = nil;
 	            me.hbox1 = nil;
 	            me.hbox2 = nil;
 	            me.hbox3 = nil;
@@ -229,37 +236,36 @@ var diag = {
         if (me.current == idx) {
 	    	newB.setChecked(1);
 	    	me.activeLiveryButton = newB;
-	    	me.infoLivery.setText("Livery: "~livery[0]);
-        	me.infoOwner.setText("Airforce: "~livery[4]);
-        	me.infoPilot.setText("Pilot: "~livery[5]);
-        	me.infoScheme.setText("Scheme: "~livery[6]);
-        	me.infoSquad.setText("Squadron: "~livery[8]);
-        	me.infoSerial.setText("Serial: "~livery[9]);
-        	if (livery[7] != nil) me.infoEngine.setText("Block: "~livery[7]);
-        	else me.infoEngine.setText("");
+	    	me.setInfoText(livery);
 	    }
-	    #   0     1        2       3     4      5       6     7         8     9
-		# name, index, filename, path, owner, pilot, scheme, engine, squad, serial
+	    
         newB.listen("toggled", func (e) {
         	#print(idx, " Set ",livery[0],", ",livery[1],", ",livery[2],", ",livery[3],", ",livery[4]);
         	if(e.detail.checked) {
 	        	me.set(idx);
 	        	if (me["activeLiveryButton"] != nil) me.activeLiveryButton.setChecked(0);
 	        	me.activeLiveryButton = newB;
-	        	me.infoLivery.setText("Livery: "~livery[0]);
-	        	me.infoOwner.setText("Airforce: "~livery[4]);
-	        	me.infoPilot.setText("Pilot: "~livery[5]);
-	        	me.infoScheme.setText("Scheme: "~livery[6]);
-	        	me.infoSquad.setText("Squadron: "~livery[8]);
-	        	me.infoSerial.setText("Serial: "~livery[9]);
-	        	if (livery[7] != nil) me.infoEngine.setText("Block: "~livery[7]);
-	        	else me.infoEngine.setText("");
+	        	me.setInfoText(livery);
 	        }
 	    });
 	    vboxLivs.addItem(newB);
 	    #print("Making livery button ",livery[0]," for ",livery[4]);
 	    append(me.owners[livery[4]], newB);	
 	    newB.setVisible(0);
+	},
+	setInfoText: func (livery) {
+		#   0     1        2       3     4      5       6     7         8     9      10
+		# name, index, filename, path, owner, pilot, scheme, engine, squad, serial, year
+
+		me.infoLivery.setText("Livery: "~livery[0]);
+		me.infoYear.setText(livery[10]);
+    	me.infoOwner.setText( "Airforce: "~livery[4]);
+    	me.infoPilot.setText( "Pilot: "~livery[5]);
+    	me.infoScheme.setText("Scheme: "~livery[6]);
+    	me.infoSquad.setText( "Squadron: "~livery[8]);
+    	me.infoSerial.setText("Serial: "~livery[9]);
+    	if (livery[7] != nil) me.infoEngine.setText("Block: "~livery[7]);
+    	else me.infoEngine.setText("");
 	},
 	makeForceButton: func (airforce) {
 		#print("Making button for ", airforce);

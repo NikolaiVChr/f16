@@ -12,6 +12,7 @@
     <block type="int">50</block>
     <serial type="string">03-0047</serial>
     <squad type="string">31.BLT</squad>
+    <year type="string">1979</year>
    </livery>
    
    <livery-logo>
