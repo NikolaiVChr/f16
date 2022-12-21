@@ -7,6 +7,12 @@
     <name type="string">USAF 31FW, 555FS AV #772</name>
     <texture>Liveries/Block40/90-0772.png</texture>
     <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string"></scheme>
+    <block type="int">40</block>
+    <serial type="string">90-0772</serial>
+    <squad type="string">555th FS "Triple Nickel"</squad>
+    <year type="string"></year>
    </livery>
    
    <livery-logo>

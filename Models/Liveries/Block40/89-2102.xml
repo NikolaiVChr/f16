@@ -7,6 +7,12 @@
     <name type="string">USAF 31FW, 510FS AV HGV #102</name>
     <texture>Liveries/Block40/89-2102.png</texture>
     <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Have Glass V</scheme>
+    <block type="int">40</block>
+    <serial type="string">89-2102</serial>
+    <squad type="string">510th FS "Buzzards"</squad>
+    <year type="string">2021</year>
    </livery>
    
    <livery-logo>

@@ -8,7 +8,7 @@
     <texture>Liveries/Block40/89-2137.png</texture>
     <owner type="string">USAF</owner>
     <pilot type="string"></pilot>
-    <scheme type="string"></scheme>
+    <scheme type="string">Two-tone gray, Flagship</scheme>
     <block type="int">40</block>
     <serial type="string">89-2137</serial>
     <squad type="string">555th FS "Triple Nickel"</squad>

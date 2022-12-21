@@ -4,9 +4,15 @@
  <sim> 
   <model>
    <livery>
-    <name type="string">USAF 31FW, 555FS AV "Province of Venezia" (1998)</name>
+    <name type="string">USAF 31FW, 555FS AV "31OG, Province of Venezia" (1998)</name>
     <texture>Liveries/Block40/88-0532.png</texture>
     <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Two-tone gray, Flagship</scheme>
+    <block type="int">40</block>
+    <serial type="string">88-0532</serial>
+    <squad type="string">555th FS "Triple Nickel"</squad>
+    <year type="string">1998</year>
    </livery>
 
    <livery-logo>
