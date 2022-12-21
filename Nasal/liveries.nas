@@ -99,6 +99,15 @@ var viperStyle = viper.DefaultStyle.new("ViperModern", "Humanity");
 
 #viper.style = viperStyle;# Sets the viper style on the window itself
 
+var refresh = func {
+	# Call me from Nasal Console to refresh style colors and liveries
+	if (dialog != nil) {
+		diag.toggle();
+	}
+	diag.reinit();
+	viperStyle = viper.DefaultStyle.new("ViperModern", "Humanity");
+};
+
 ##############################
 #####  Setup Viper style END
 ##############################
@@ -211,12 +220,12 @@ var diag = {
 	toggle: func {
 		if (dialog == nil) {
 			#print("  Menu opens dialog:");
-			dialog = canvas.Window.new(sized,"window","f16_livery_dialog", 1)
+			dialog = canvas.Window.new(sized,"window","f16_livery_dialog", 1)# 1 means focus allowed
 						.set("title", "Livery selection")
 						.setPosition(position)
 						.set("resize", 0);
 			#me.canvas = dialog.createCanvas();
-			me.rooty = dialog.getCanvas(1).createGroup();
+			me.rooty = dialog.getCanvas(1).createGroup();# 1 means create if don't exist
 			dialog.getCanvas().setColorBackground(viperStyle.getColor("bg_color_contrast"));
 		 	
 			me.vboxMain = canvas.VBoxLayout.new();
