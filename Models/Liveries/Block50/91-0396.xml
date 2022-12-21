@@ -7,6 +7,12 @@
     <name type="string">USAF 96TW, 40FLTS ET #396</name>
     <texture>Liveries/Block50/91-0396.png</texture>
     <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string"></scheme>
+    <block type="int">50</block>
+    <serial type="string">91-0396</serial>
+    <squad type="string">40th FLTS</squad>
+    <year type="string"></year>
    </livery>
 
    <livery-logo>
