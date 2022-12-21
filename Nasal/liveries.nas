@@ -16,6 +16,8 @@ var diag = {
         me.squadprop = relpath("sim/model/livery/squad");
         me.serialprop = relpath("sim/model/livery/serial");
         me.yearprop = relpath("sim/model/livery/year");
+        me.cftprop = relpath("sim/model/f16/cft");
+        me.chuteprop = relpath("sim/model/f16/dragchute");
         me.sortprop = relpath(sortprop or me.nameprop);
         if (me.mpprop != nil)
             aircraft.data.add(me.nameprop);
@@ -43,10 +45,12 @@ var diag = {
                 var squad = n.getNode(me.squadprop, 1).getValue() or "";
                 var serial = n.getNode(me.serialprop, 1).getValue() or substr(file, 0, size(file) - 4);
                 var year = n.getNode(me.yearprop, 1).getValue() or "";
+                var cft = n.getNode(me.cftprop, 1).getValue() or 0;
+                var chute = n.getNode(me.chuteprop, 1).getValue() or 0;
 
                 if (name == nil or index == nil or owner == nil)
                     continue;
-                append(me.data, [name, index, substr(file, 0, size(file) - 4), me.dir ~ file, owner, pilot, scheme, engine, squad, serial, year]);
+                append(me.data, [name, index, substr(file, 0, size(file) - 4), me.dir ~ file, owner, pilot, scheme, engine, squad, serial, year, chute, cft]);
                 me.addOwner(owner);
             }
             me.data = sort(me.data, func(a, b) num(a[1]) == nil or num(b[1]) == nil
@@ -91,7 +95,7 @@ var diag = {
 	toggle: func {
 		if (dialog == nil) {
 			#print("  Menu opens dialog:");
-			dialog = canvas.Window.new(sized,"window","f16_livery_dialog").set("title", "Livery").setPosition(position).set("resize", 0);
+			dialog = canvas.Window.new(sized,"window","f16_livery_dialog").set("title", "Livery selection").setPosition(position).set("resize", 0);
 			#me.canvas = dialog.createCanvas();
 			me.rooty = dialog.getCanvas(1).createGroup();
 			dialog.getCanvas().setColorBackground([0.8,0.8,0.8]);
@@ -108,57 +112,64 @@ var diag = {
 			me.area.setLayout(vboxLivs);
 
 			me.hbox.addItem(me.vboxForces);
-			me.hbox.addItem(me.area, 1);
+			me.hbox.addItem(me.area, 1);# 1 means stretch
 			me.vboxMain.addItem(me.hbox);
 
-			#me.area.addItem(me.vboxLivs);
 
-			
-
-			# TODO: Add info to vboxMain
-			
-            me.infoLivery = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"flat": 0})
-                    .setFixedSize(400,20)
+			# Add info labels:
+			var height = 15;
+            me.infoLivery = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"wordWrap": 0})
+                    .setFixedSize(400,height)
                     .setText("");
-            me.infoYear = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"flat": 0})
-                    .setFixedSize(50,20)
+            me.infoYear = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"wordWrap": 0})
+                    .setFixedSize(50,height)
                     .setText("");
             
-            me.infoEngine = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"flat": 0})
-                    .setFixedSize(250,20)
+            me.infoEngine = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"wordWrap": 0})
+                    .setFixedSize(250,height)
                     .setText("");
-			me.infoSerial = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"flat": 0})
-                    .setFixedSize(150,20)
+			me.infoSerial = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"wordWrap": 0})
+                    .setFixedSize(150,height)
                     .setText("");
 
-            me.infoOwner = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"flat": 0})
-                    .setFixedSize(250,20)
+            me.infoOwner = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"wordWrap": 0})
+                    .setFixedSize(250,height)
                     .setText("");            
-            me.infoSquad = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"flat": 0})
-                    .setFixedSize(150,20)
+            me.infoSquad = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"wordWrap": 0})
+                    .setFixedSize(150,height)
                     .setText("");
 
-            me.infoScheme = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"flat": 0})
-                    .setFixedSize(250,20)
+            me.infoScheme = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"wordWrap": 0})
+                    .setFixedSize(250,height)
                     .setText("");
-            me.infoPilot = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"flat": 0})
-                    .setFixedSize(150,20)
+            me.infoPilot = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"wordWrap": 0})
+                    .setFixedSize(150,height)
                     .setText("");
-            
 
-            #livery
+            me.infoCft = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"wordWrap": 0})
+                    .setFixedSize(250,height)
+                    .setText("");
+            me.infoChute = canvas.gui.widgets.Label.new(me.rooty, canvas.style, {"wordWrap": 0})
+                    .setFixedSize(150,height)
+                    .setText("");
+
+
+            #livery    year
 			#block     serial
-			#airforce   sqn  
+			#airforce  sqn  
 			#scheme    pilot
+			#chute     cft
 
             me.hbox1 = canvas.HBoxLayout.new();
             me.hbox2 = canvas.HBoxLayout.new();
             me.hbox3 = canvas.HBoxLayout.new();
             me.hbox4 = canvas.HBoxLayout.new();
+            me.hbox5 = canvas.HBoxLayout.new();
             me.vboxMain.addItem(me.hbox1);
             me.vboxMain.addItem(me.hbox2);
             me.vboxMain.addItem(me.hbox3);
             me.vboxMain.addItem(me.hbox4);
+            me.vboxMain.addItem(me.hbox5);
 
             me.hbox1.addItem(me.infoLivery);
             me.hbox1.addItem(me.infoYear);
@@ -171,6 +182,9 @@ var diag = {
 
             me.hbox4.addItem(me.infoScheme);
             me.hbox4.addItem(me.infoPilot);
+
+            me.hbox5.addItem(me.infoCft);
+            me.hbox5.addItem(me.infoChute);
             
 
             # TODO: Refresh button that calls me.reinit()
@@ -217,6 +231,8 @@ var diag = {
 	            me.infoSquad = nil;
 	            me.infoEngine = nil;
 	            me.infoYear = nil;
+	            me.infoCft = nil;
+	            me.infoChute = nil;
 	            me.hbox1 = nil;
 	            me.hbox2 = nil;
 	            me.hbox3 = nil;
@@ -254,8 +270,8 @@ var diag = {
 	    newB.setVisible(0);
 	},
 	setInfoText: func (livery) {
-		#   0     1        2       3     4      5       6     7         8     9      10
-		# name, index, filename, path, owner, pilot, scheme, engine, squad, serial, year
+		#   0     1        2       3     4      5       6     7         8     9      10     11    12
+		# name, index, filename, path, owner, pilot, scheme, engine, squad, serial, year, chute, cft
 
 		me.infoLivery.setText("Livery: "~livery[0]);
 		me.infoYear.setText(livery[10]);
@@ -267,6 +283,8 @@ var diag = {
     	else me.infoEngine.setText(" ");
     	if (livery[5] != "") me.infoPilot.setText( "Pilot: "~livery[5]);
     	else me.infoPilot.setText(" ");
+    	me.infoCft.setText(sprintf("Conformal fuel tanks: %s", livery[12]?"Yes":"No "));
+    	me.infoChute.setText(sprintf("Dragchute: %s", livery[11]?"Yes":"No "));
 	},
 	makeForceButton: func (airforce) {
 		#print("Making button for ", airforce);
