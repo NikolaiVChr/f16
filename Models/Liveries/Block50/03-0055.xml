@@ -4,9 +4,15 @@
  <sim> 
   <model>
    <livery>
-    <name type="string">PolAF 6.ELT, "Tiger Meet '14"</name>
+    <name type="string">31.BLT 6.ELT, "Tiger Meet '14"</name>
     <texture>Liveries/Block50/03-0055.png</texture>
     <owner type="string">PolAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Special Color</scheme>
+    <block type="int">52</block>
+    <serial type="string">03-0055</serial>
+    <squad type="string">6.ELT</squad>
+    <year type="string">2014</year>
    </livery>
 
    <livery-logo>

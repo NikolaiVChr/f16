@@ -4,9 +4,15 @@
  <sim>
   <model>
    <livery> 
-    <name type="string">FACh I BA, Grupo No. 3, #853</name>
+    <name type="string">I BA, Grupo No. 3, #853</name>
     <texture>Liveries/Block50/02-6032.png</texture>
     <owner type="string">FACh</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Two-tone grey camo</scheme>
+    <block type="int">50</block>
+    <serial type="string">02-6032</serial>
+    <squad type="string">Grupo No. 3</squad>
+    <year type="string">2006</year>
    </livery>
    <livery-logo>
     <texture>Liveries/yf/yf16-transp.png</texture>
