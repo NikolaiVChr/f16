@@ -237,6 +237,7 @@ var diag = {
 	            me.hbox2 = nil;
 	            me.hbox3 = nil;
 	            me.hbox4 = nil;
+	            me.hbox5 = nil;
 			}
 		} else {
 			#print("  Menu closes dialog:");
