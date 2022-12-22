@@ -1587,7 +1587,7 @@ var MFD_Device =
                 me.root.lnkT[me.iii].show();
                 me.root.lnkTA[me.iii].setColor(colorDot4);
                 me.root.lnkTA[me.iii].setTranslation(me.echoPos[0],me.echoPos[1]+20);
-                me.root.lnkTA[me.iii].setText(""~math.round(contact.getAltitude()*0.001);
+                me.root.lnkTA[me.iii].setText(""~math.round(contact.getAltitude()*0.001));
                 me.root.lnkTA[me.iii].show();
                 me.root.lnk[me.iii].setColor(colorDot4);
                 me.root.lnk[me.iii].setTranslation(me.echoPos);
