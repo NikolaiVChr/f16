@@ -19,8 +19,10 @@ var uv_used = uv_x2-uv_x1;
 var tran_x = 0;
 var tran_y = 0;
 
-var eye_to_hmcs_distance = 0.1385;#meters
+var eye_to_hmcs_distance = getprop("sim/rendering/camera-group/znear");#0.1385;#meters
 var center_to_edge_distance = 0.025;#meters
+var screen_w=getprop("sim/startup/xsize");
+var screen_h=getprop("sim/startup/ysize");
 
 var F16_HMD = {
     map: func (value, leftMin, leftMax, rightMin, rightMax) {
@@ -38,30 +40,69 @@ var F16_HMD = {
     new : func (canvas_item, sx, sy){
         var obj = {parents : [F16_HMD] };
 
-        obj.canvas= canvas.new({
-                "name": "F16 HMD",
-                    "size": [1024,1024],
-                    "view": [sx,sy],#1024,1024
-                    "mipmapping": 0, # mipmapping will make the HUD text blurry on smaller screens
-                    "additive-blend": 1# bool
-                    });
+        #obj.canvas= canvas.new({
+         #       "name": "F16 HMD",
+          #          "size": [1024,1024],
+           #         "view": [sx,sy],#1024,1024
+            #        "mipmapping": 0, # mipmapping will make the HUD text blurry on smaller screens
+             #       "additive-blend": 1# bool
+              #      });
 
-
+sx=getprop("sim/startup/xsize");
+sy=getprop("sim/startup/ysize");
 
         uv_x1 = 0;
         uv_x2 = 1;
         uv_used = uv_x2-uv_x1;
         tran_x = 0;
 
-        obj.sy = sy;
-        obj.sx = sx*uv_used;
+        obj.sy = 1024;
+        obj.sx = 1024*uv_used;
 
-        obj.canvas.addPlacement({"node": canvas_item});
-        obj.canvas.setColorBackground(0.30, 1, 0.3, 0.00);
+        #obj.canvas.addPlacement({"node": canvas_item});
+        #obj.canvas.setColorBackground(0.30, 1, 0.3, 0.00);
 
 # Create a group for the parsed elements
-        obj.svg = obj.canvas.createGroup().hide();
+        obj.svg = canvas.getDesktop();#obj.canvas.createGroup().hide();
         obj.svg.setColor(0.3,1,0.3);
+
+        
+
+        obj.hydra = 0;
+
+        #obj.canvas._node.setValues({
+         #       "name": "F16 HMD",
+          #          "size": [1024,1024],
+           #         "view": [sx,sy],
+            #        "mipmapping": 0,
+             #       "additive-blend": 1# bool
+              #      });
+
+
+
+# Convert from old HMCS 3D model to new Canvas on Desktop:
+        tran_x = sx*0.5;
+        tran_y = sy*0.5;
+        
+        obj.svg_orig = obj.svg;
+        obj.svg_orig.setTranslation (tran_x,tran_y);
+        obj.svg_orig.setCenter(tran_x,tran_y);
+        obj.svg_orig.setScale(1,-1);
+        
+        obj.svg = obj.svg_orig.createChild("group");
+
+        var degToEdge = math.atan(0.025/0.1385);
+        center_to_edge_distance = math.tan(degToEdge)*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
+#printf("Screen %d,%d  degs2edge %.2f  meter2edge %.2f",sx,sy, degToEdge*R2D, center_to_edge_distance);# Screen 1400,900  centered at 188,-62
+
+        obj.canvasWidth = sx;
+        obj.degToEdge = degToEdge;
+        obj.svg_new = obj.svg;
+        obj.svg = obj.svg_new.createChild("group").hide();
+        sx = 1024;
+        sy = 1024;
+
+# End convert from old HMCS 3D model to new Canvas on Desktop (more code further down)
 
         obj.mainCross = obj.svg.createChild("path")
                 .moveTo(0,0)
@@ -70,7 +111,8 @@ var F16_HMD = {
                 .lineTo(0,1024)
                 .setStrokeLineWidth(stroke1)
                 .setColor(0,0,1)
-                .hide();
+                .hide()
+                ;
         obj.mainCircle = obj.svg.createChild("path")
             .moveTo(12,512)
             .arcSmallCW(500,500, 0, 500*2, 0)
@@ -78,18 +120,6 @@ var F16_HMD = {
             .setStrokeLineWidth(stroke1)
             .hide()
             .setColor(0,0,1);
-
-        obj.hydra = 0;
-
-        obj.canvas._node.setValues({
-                "name": "F16 HMD",
-                    "size": [1024,1024],
-                    "view": [sx,sy],
-                    "mipmapping": 0,
-                    "additive-blend": 1# bool
-                    });
-
-        obj.svg.setTranslation (tran_x,tran_y);
 
         obj.off = 1;
 
@@ -796,6 +826,23 @@ var F16_HMD = {
         setprop("payload/armament/hmd-active", 1);
         setprop("payload/armament/hmd-horiz-deg", geo.normdeg180(-hdp.getproper("hmdH")));
         setprop("payload/armament/hmd-vert-deg", hdp.getproper("hmdP"));
+
+        var screen_w=getprop("sim/startup/xsize");
+        var screen_h=getprop("sim/startup/ysize");
+        me.svg_orig.setTranslation(screen_w*0.5,screen_h*0.5);
+        me.svg_orig.setCenter(screen_w*0.5,screen_h*0.5);
+
+        # degs2edge 10.23  meter2edge 0.02  Convert from old HMCS 3D model to new Canvas on Desktop:
+        me.fov = getprop("sim/current-view/field-of-view");
+        me.pixelsEye2canvas=me.canvasWidth*0.5/math.tan(0.5*me.fov*D2R);
+        me.canvasPixelsToEdge = math.tan(me.degToEdge)*me.pixelsEye2canvas;
+        me.scale = me.canvasPixelsToEdge/512;
+#printf("scale %.2f  canvasPixelsToEdge  %d",scale,canvasPixelsToEdge);#scale 0.36  canvasPixelsToEdge  185
+        
+        me.svg_new.setScale(me.scale, me.scale);
+        #me.svg.setCenter();
+
+        me.svg.setTranslation (-512,-512);
 
         me.svg.show();
 

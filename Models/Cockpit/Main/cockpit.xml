@@ -78,7 +78,7 @@
         <object-name>screws</object-name>
     </effect>
 
- <model>
+ <!--model>
   <name>HMCS-basic</name>
   <path>Aircraft/f16/Models/Cockpit/Avionics/hmcs-basic.xml</path>
   <offsets>
@@ -96,7 +96,7 @@
         <y-m>0</y-m>
         <z-m>0</z-m>
   </offsets>
- </model>
+ </model-->
 
 <animation>
   <type>translate</type>
