@@ -63,8 +63,8 @@ sy=getprop("sim/startup/ysize");
         #obj.canvas.setColorBackground(0.30, 1, 0.3, 0.00);
 
 # Create a group for the parsed elements
-        obj.svg = canvas.getDesktop();#obj.canvas.createGroup().hide();
-        obj.svg.setColor(0.3,1,0.3);
+        obj.svg_canvas = canvas.getDesktop();#obj.canvas.createGroup().hide();
+        obj.svg_canvas.setColor(0.5,1,0.5);
 
         
 
@@ -84,10 +84,10 @@ sy=getprop("sim/startup/ysize");
         tran_x = sx*0.5;
         tran_y = sy*0.5;
         
-        obj.svg_orig = obj.svg;
+        obj.svg_orig = obj.svg_canvas.createChild("group");
         obj.svg_orig.setTranslation (tran_x,tran_y);
         obj.svg_orig.setCenter(tran_x,tran_y);
-        obj.svg_orig.setScale(1,-1);
+        #obj.svg_orig.setScale(1,-1);
         
         obj.svg = obj.svg_orig.createChild("group");
 
