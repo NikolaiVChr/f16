@@ -1137,8 +1137,8 @@ var dataEntryDisplay = {
 		me.text[0] = sprintf("         MODE S      %s ", me.no);
 		me.text[1] = sprintf("      ID  %s     ",ownid);
 		me.text[2] = sprintf("                        ");
-		me.text[3] = sprintf("OPER  ADDR   42069      ");
-		me.text[4] = sprintf("PERM  ADDR 2020313  HEX ");
+		me.text[3] = sprintf("OPER  ADDR   16371      ");
+		me.text[4] = sprintf("PERM  ADDR 2020317  HEX ");
 	},
 };
 
