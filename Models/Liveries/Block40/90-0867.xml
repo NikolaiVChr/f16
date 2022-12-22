@@ -4,9 +4,15 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">IAF 105 Sqn, "Scorpions"</name>
+    <name type="string">Canaf 1 105 Sqn, #535</name>
     <texture>Liveries/Block40/90-0867.png</texture>
     <owner type="string">IAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Desert camo</scheme>
+    <block type="int">40</block>
+    <serial type="string">90-0867</serial>
+    <squad type="string">105 Sqn "Scorpions"</squad>
+    <year type="string"></year>
    </livery>
    
    <livery-logo>

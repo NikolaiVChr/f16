@@ -4,9 +4,15 @@
  <sim>
   <model>
    <livery>
-    <name type="string">USAF USAFWS, 16WPS WA #707</name>
+    <name type="string">USAFWS, 16WPS WA #707</name>
     <texture>Liveries/Block40/90-0707.png</texture>
     <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string"></scheme>
+    <block type="int">42</block>
+    <serial type="string">90-0707</serial>
+    <squad type="string">16th WPS "Tomahawks"</squad>
+    <year type="string"></year>
    </livery>
    
    <livery-logo>

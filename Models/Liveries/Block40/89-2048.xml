@@ -4,9 +4,15 @@
  <sim>
   <model>
    <livery>
-    <name type="string">USAF 57WG, 64AS WA "Wraith"</name>
+    <name type="string">57WG, 64AS WA "Wraith"</name>
     <texture>Liveries/Block40/89-2048.png</texture>
     <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Black aggressor</scheme>
+    <block type="int">42</block>
+    <serial type="string">89-2048</serial>
+    <squad type="string">64th WPS "Gomers"</squad>
+    <year type="string">2019</year>
    </livery>
    
    <livery-logo>
