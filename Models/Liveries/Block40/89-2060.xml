@@ -4,9 +4,15 @@
  <sim> 
   <model>
    <livery>
-    <name type="string">USAF 8FW, 35FS WP "Wolf Pack!"</name>
+    <name type="string">USAF 8FW, 35FS WP "Wing Flagship"</name>
     <texture>Liveries/Block40/89-2060.png</texture>
     <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Two-tone gray, Flagship</scheme>
+    <block type="int">40</block>
+    <serial type="string">89-2060</serial>
+    <squad type="string">35th FS "Pantons"</squad>
+    <year type="string">2021</year>
    </livery>
    
    <livery-logo>

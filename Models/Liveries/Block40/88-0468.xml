@@ -7,6 +7,12 @@
     <name type="string">USAF 8FW, 80FS WP HGV #468</name>
     <texture>Liveries/Block40/88-0468.png</texture>
     <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Have Glass V</scheme>
+    <block type="int">40</block>
+    <serial type="string">88-0468</serial>
+    <squad type="string">80th FS "Juvats"</squad>
+    <year type="string">2021</year>
    </livery>
    
    <livery-logo>

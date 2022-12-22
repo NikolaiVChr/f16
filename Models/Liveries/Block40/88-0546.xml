@@ -7,6 +7,12 @@
     <name type="string">USAF 8FW, 35FS WP HGV #546</name>
     <texture>Liveries/Block40/88-0546.png</texture>
     <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Have Glass V</scheme>
+    <block type="int">40</block>
+    <serial type="string">88-0546</serial>
+    <squad type="string">35th FS "Pantons"</squad>
+    <year type="string">2021</year>
    </livery>
    
    <livery-logo>

@@ -7,6 +7,12 @@
     <name type="string">USAF 8FW, 80FS WP #745</name>
     <texture>Liveries/Block40/90-0745.png</texture>
     <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string"></scheme>
+    <block type="int">40</block>
+    <serial type="string">90-0745</serial>
+    <squad type="string">80th FS "Juvats"</squad>
+    <year type="string"></year>
    </livery>
    
    <livery-logo>

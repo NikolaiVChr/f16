@@ -875,7 +875,7 @@
             <all-aspect type="bool">true</all-aspect>
             <rail type="bool">false</rail>
             <no-common-target type="bool">false</no-common-target>
-            <max-report-distance type="double">325</max-report-distance>
+            <max-report-distance type="double">250</max-report-distance>
             <vol-search type="double">0.075</vol-search>
             <vol-track type="double">0.25</vol-track>
             <drop-time type="double">2.5</drop-time>

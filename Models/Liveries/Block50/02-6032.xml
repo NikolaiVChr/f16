@@ -8,7 +8,7 @@
     <texture>Liveries/Block50/02-6032.png</texture>
     <owner type="string">FACh</owner>
     <pilot type="string"></pilot>
-    <scheme type="string">Two-tone grey camo</scheme>
+    <scheme type="string">Two-tone gray camo</scheme>
     <block type="int">50</block>
     <serial type="string">02-6032</serial>
     <squad type="string">Grupo No. 3</squad>
