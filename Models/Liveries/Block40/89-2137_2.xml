@@ -4,7 +4,7 @@
  <sim> 
   <model>
    <livery>
-    <name type="string">31FW, 510FS AV "31OG Vajont"</name>
+    <name type="string">31FW, 510FS AV "31OG, Vajont"</name>
     <texture>Liveries/Block40/89-2137_2.png</texture>
     <owner type="string">USAF</owner>
     <pilot type="string"></pilot>

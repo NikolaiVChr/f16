@@ -8,7 +8,7 @@
     <texture>Liveries/Block40/89-2048.png</texture>
     <owner type="string">USAF</owner>
     <pilot type="string"></pilot>
-    <scheme type="string">Black aggressor</scheme>
+    <scheme type="string">Single-tone black</scheme>
     <block type="int">42</block>
     <serial type="string">89-2048</serial>
     <squad type="string">64th WPS "Gomers"</squad>
