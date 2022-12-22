@@ -1146,20 +1146,22 @@ var F16_HMD = {
                 # TGP target
                 var b = geo.normdeg180(getprop("sim/view[105]/heading-offset-deg"));
                 var p = getprop("sim/view[105]/pitch-offset-deg");
-                #printf("TGP stat: %.2f,%.2f",b,p);
-                var behind = 0;
-                if(b < -90) {
-                    b = -180-b;
-                    p = -p;
-                    behind = 1;
-                } elsif (b > 90) {
-                    b = 180-b;
-                    p = -p;
-                    behind = 1;
-                }
-
+                #printf("From TGP stat: %.2f,%.2f",b,p);
+                #printf("From HMD stat: %.2f,%.2f",hdp.getproper("hmdH"), hdp.getproper("hmdP"));
                 me.echoPos = f16.HudMath.getDevFromHMD(b, p, -hdp.getproper("hmdH"), hdp.getproper("hmdP"));
                 me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
+                #printf(" Math:    (%.2f,%.2f) degs",me.echoPos[0],me.echoPos[1]);
+                
+                #var behind = 0;
+                #if(0 and b < -90) {
+                #    b = -180-b;
+                #    p = -p;
+                #    behind = 1;
+                #} elsif (0 and b > 90) {
+                #    b = 180-b;
+                #    p = -p;
+                #    behind = 1;
+                #}#printf(" Behind:%d   (%.2f,%.2f)",behind,b,p);
                 me.echoPos[0] = (512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512 (should be 0.1385 from eye instead to be like real f16)
                 me.echoPos[1] = -(512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
                 me.clamped = math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]) > 500;
