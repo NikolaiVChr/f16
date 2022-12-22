@@ -19,8 +19,8 @@ var uv_used = uv_x2-uv_x1;
 var tran_x = 0;
 var tran_y = 0;
 
-var eye_to_hmcs_distance = getprop("sim/rendering/camera-group/znear");#0.1385;#meters
-var center_to_edge_distance = 0.025;#meters
+var eye_to_hmcs_distance_m = getprop("sim/rendering/camera-group/znear");#0.1385;#meters
+var center_to_edge_distance_m = 0.025;#meters
 var screen_w=getprop("sim/startup/xsize");
 var screen_h=getprop("sim/startup/ysize");
 
@@ -48,8 +48,6 @@ var F16_HMD = {
              #       "additive-blend": 1# bool
               #      });
 
-sx=getprop("sim/startup/xsize");
-sy=getprop("sim/startup/ysize");
 
         uv_x1 = 0;
         uv_x2 = 1;
@@ -81,8 +79,8 @@ sy=getprop("sim/startup/ysize");
 
 
 # Convert from old HMCS 3D model to new Canvas on Desktop:
-        tran_x = sx*0.5;
-        tran_y = sy*0.5;
+        tran_x = screen_w*0.5;
+        tran_y = screen_h*0.5;
         
         obj.svg_orig = obj.svg_canvas.createChild("group");
         obj.svg_orig.setTranslation (tran_x,tran_y);
@@ -91,12 +89,10 @@ sy=getprop("sim/startup/ysize");
         
         obj.svg = obj.svg_orig.createChild("group");
 
-        var degToEdge = math.atan(0.025/0.1385);
-        center_to_edge_distance = math.tan(degToEdge)*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
-#printf("Screen %d,%d  degs2edge %.2f  meter2edge %.2f",sx,sy, degToEdge*R2D, center_to_edge_distance);# Screen 1400,900  centered at 188,-62
+#printf("Screen %d,%d  degs512edge %.2f",screen_w,screen_h, degToEdge);# 
 
-        obj.canvasWidth = sx;
-        obj.degToEdge = degToEdge;
+        obj.canvasWidth = screen_w;
+        obj.degToEdge = 10.23;#math.atan(0.025/0.1385); Real is 20 deg diameter, which in old HMCS was 500 pixels.So for 512 its 10.23
         obj.svg_new = obj.svg;
         obj.svg = obj.svg_new.createChild("group").hide();
         sx = 1024;
@@ -695,8 +691,8 @@ sy=getprop("sim/startup/ysize");
                                                  if (steerpoints.getCurrentNumber() != 0 and !hdp.getproper("dgft")) {
                                                     obj.stptPos = f16.HudMath.getDevFromCoord(steerpoints.getCurrentCoordForHUD(), hdp.getproper("hmdH"), hdp.getproper("hmdP"), hdp, geo.viewer_position());
                                                     obj.stptPos[0] = geo.normdeg180(obj.stptPos[0]);
-                                                    obj.stptPos[0] = (512/center_to_edge_distance)*(math.tan(math.clamp(obj.stptPos[0],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
-                                                    obj.stptPos[1] = -(512/center_to_edge_distance)*(math.tan(math.clamp(obj.stptPos[1],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
+                                                    obj.stptPos[0] = (512/center_to_edge_distance_m)*(math.tan(math.clamp(obj.stptPos[0],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
+                                                    obj.stptPos[1] = -(512/center_to_edge_distance_m)*(math.tan(math.clamp(obj.stptPos[1],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
 
                                                     obj.clamped = math.sqrt(obj.stptPos[0]*obj.stptPos[0]+obj.stptPos[1]*obj.stptPos[1]) > 500;
 
@@ -827,17 +823,20 @@ sy=getprop("sim/startup/ysize");
         setprop("payload/armament/hmd-horiz-deg", geo.normdeg180(-hdp.getproper("hmdH")));
         setprop("payload/armament/hmd-vert-deg", hdp.getproper("hmdP"));
 
-        var screen_w=getprop("sim/startup/xsize");
-        var screen_h=getprop("sim/startup/ysize");
-        me.svg_orig.setTranslation(screen_w*0.5,screen_h*0.5);
-        me.svg_orig.setCenter(screen_w*0.5,screen_h*0.5);
+        me.canvasWidth=getprop("sim/startup/xsize");
+        me.canvasHeight=getprop("sim/startup/ysize");
+        eye_to_hmcs_distance_m = getprop("sim/rendering/camera-group/znear");
+        center_to_edge_distance_m = math.tan(me.degToEdge*D2R)*eye_to_hmcs_distance_m;
+
+        me.svg_orig.setTranslation(me.canvasWidth*0.5,me.canvasHeight*0.5);
+        me.svg_orig.setCenter(me.canvasWidth*0.5,me.canvasHeight*0.5);
 
         # degs2edge 10.23  meter2edge 0.02  Convert from old HMCS 3D model to new Canvas on Desktop:
         me.fov = getprop("sim/current-view/field-of-view");
         me.pixelsEye2canvas=me.canvasWidth*0.5/math.tan(0.5*me.fov*D2R);
-        me.canvasPixelsToEdge = math.tan(me.degToEdge)*me.pixelsEye2canvas;
+        me.canvasPixelsToEdge = math.tan(me.degToEdge*D2R)*me.pixelsEye2canvas;
         me.scale = me.canvasPixelsToEdge/512;
-#printf("scale %.2f  canvasPixelsToEdge  %d",scale,canvasPixelsToEdge);#scale 0.36  canvasPixelsToEdge  185
+#printf("scale %.2f  canvasPixelsToEdge  %d  fov %.2f  screen %d",me.scale,me.canvasPixelsToEdge,me.fov,me.canvasWidth);#scale 0.36  canvasPixelsToEdge  185
         
         me.svg_new.setScale(me.scale, me.scale);
         #me.svg.setCenter();
@@ -954,8 +953,8 @@ sy=getprop("sim/startup/ysize");
                     if (coords != nil) {
                         me.echoPos = f16.HudMath.getDevFromHMD(coords[0], coords[1], -hdp.getproper("hmdH"), hdp.getproper("hmdP"));
                         me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
-                        me.echoPos[0] = (512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512 (should be 0.1385 from eye instead to be like real f16)
-                        me.echoPos[1] = -(512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
+                        me.echoPos[0] = (512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512 (should be 0.1385 from eye instead to be like real f16)
+                        me.echoPos[1] = -(512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
                         me.irBore.setTranslation(me.echoPos);
                         me.irB = 1;
                     }#atan((0.025*500)/(0.2*512)) = radius_fg = atan(12.5/102.4) = 6.96 degs => 13.92 deg diam
@@ -965,8 +964,8 @@ sy=getprop("sim/startup/ysize");
                     if (coords != nil) {
                         me.echoPos = f16.HudMath.getDevFromHMD(coords[0], coords[1], -hdp.getproper("hmdH"), hdp.getproper("hmdP"));
                         me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
-                        me.echoPos[0] = (512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
-                        me.echoPos[1] = -(512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
+                        me.echoPos[0] = (512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
+                        me.echoPos[1] = -(512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
                         me.irLock.setTranslation(me.echoPos);
                         me.irL = 1;
                     }
@@ -989,8 +988,8 @@ sy=getprop("sim/startup/ysize");
                 #print(me.echoPos[0],",",me.echoPos[1],"    ", hdp.getproper("hmdH"), "," ,hdp.getproper("hmdP"));
                 me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
                 #print("    ",me.echoPos[0]);
-                me.echoPos[0] = (512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
-                me.echoPos[1] = -(512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
+                me.echoPos[0] = (512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
+                me.echoPos[1] = -(512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
 
                 if (me.target_idx < me.max_symbols) {
                     me.tgt = me.tgt_symbols[me.target_idx];
@@ -1105,8 +1104,8 @@ sy=getprop("sim/startup/ysize");
 
         if (!me.target_lock_show and !hdp.getproper("standby") and radar_system.apg68Radar.currentMode.longName == radar_system.acmBoreMode.longName) {
             me.echoPos = f16.HudMath.getDevFromHMD(radar_system.apg68Radar.eulerX, radar_system.apg68Radar.eulerY, -hdp.getproper("hmdH"), hdp.getproper("hmdP"));
-            me.echoPos[0] = (512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
-            me.echoPos[1] = -(512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance;
+            me.echoPos[0] = (512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
+            me.echoPos[1] = -(512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance_m;
             me.clamped = math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]) > 500;
             if (!me.clamped) {
                 me.rdrBore.setTranslation(me.echoPos);
@@ -1127,8 +1126,8 @@ sy=getprop("sim/startup/ysize");
                 #print(me.echoPos[0],",",me.echoPos[1],"    ", hdp.hmdH, "," ,hdp.hmdP);
                 me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
                 #print("    ",me.echoPos[0]);
-                me.echoPos[0] = (512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
-                me.echoPos[1] = -(512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
+                me.echoPos[0] = (512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
+                me.echoPos[1] = -(512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
 
                 me.clamped = math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]) > 500;
 
@@ -1161,8 +1160,8 @@ sy=getprop("sim/startup/ysize");
 
                 me.echoPos = f16.HudMath.getDevFromHMD(b, p, -hdp.getproper("hmdH"), hdp.getproper("hmdP"));
                 me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
-                me.echoPos[0] = (512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512 (should be 0.1385 from eye instead to be like real f16)
-                me.echoPos[1] = -(512/center_to_edge_distance)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance;#0.2m from eye, 0.025 = 512
+                me.echoPos[0] = (512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512 (should be 0.1385 from eye instead to be like real f16)
+                me.echoPos[1] = -(512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
                 me.clamped = math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]) > 500;
 
                 if (me.clamped) {
