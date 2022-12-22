@@ -366,6 +366,7 @@ var MFD_Device =
         svg.blepTrianglePaths = setsize([],svg.maxT);
         svg.lnk = setsize([],svg.maxT);
         svg.lnkT = setsize([],svg.maxT+1);
+        svg.lnkTA = setsize([],svg.maxT+1);
         svg.iff  = setsize([],svg.maxT);# friendly IFF response
         svg.iffU = setsize([],svg.maxT);# unknown IFF response
         for (var i = 0;i<svg.maxB;i+=1) {
@@ -435,6 +436,9 @@ var MFD_Device =
                 .setColor(colorDot1)
                 .set("z-index",1)
                 .setFontSize(20, 1.0);
+            svg.lnkTA[i] = svg.p_RDR.createChild("text")
+                                .setAlignment("center-top")
+                                .setFontSize(20, 1.0);
         }
         svg.gainGauge = svg.p_RDR.createChild("path")
                     .moveTo(-552*0.5*0.65,-482*0.95)
@@ -1426,6 +1430,7 @@ var MFD_Device =
             for (;me.iii < me.root.maxT;me.iii+=1) {
                 me.root.lnk[me.iii].hide();
                 me.root.lnkT[me.iii].hide();
+                me.root.lnkTA[me.iii].hide();
             }
             for (;me.iiii < me.root.maxT;me.iiii+=1) {
                 me.root.iff[me.iiii].hide();
@@ -1580,6 +1585,10 @@ var MFD_Device =
                 me.root.lnkT[me.iii].setTranslation(me.echoPos[0],me.echoPos[1]-25);
                 me.root.lnkT[me.iii].setText(""~contact.blueIndex);
                 me.root.lnkT[me.iii].show();
+                me.root.lnkTA[me.iii].setColor(colorDot4);
+                me.root.lnkTA[me.iii].setTranslation(me.echoPos[0],me.echoPos[1]+20);
+                me.root.lnkTA[me.iii].setText(""~math.round(contact.getAltitude()*0.001);
+                me.root.lnkTA[me.iii].show();
                 me.root.lnk[me.iii].setColor(colorDot4);
                 me.root.lnk[me.iii].setTranslation(me.echoPos);
                 me.root.lnk[me.iii].setRotation(D2R*22.5*math.round( geo.normdeg(contact.get_heading()-noti.getproper("heading")-me.blueBearing)/22.5 ));#Show rotation in increments of 22.5 deg
