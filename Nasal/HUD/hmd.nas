@@ -592,14 +592,14 @@ sy=getprop("sim/startup/ysize");
 # print("HUD hud_serviceable=", hdp.hud_serviceable," display=", hdp.hud_display, " brt=", hdp.hud_brightness, " power=", hdp.hud_power);
 
                                           if (0) {
-                                            obj.color = [0.3,1,0.3,0];
+                                            obj.color = [0.5,1,0.5,0];
                                             foreach(item;obj.total) {
                                               item.setColor(obj.color);
                                             }
                                             obj.ASEC120Aspect.setColorFill(obj.color);
                                             obj.ASEC65Aspect.setColorFill(obj.color);
                                           } elsif (hdp.hmcs_sym != nil and hdp.hud_power != nil) {
-                                            obj.color = [0.3,1,0.3,hdp.hmcs_sym * hdp.hud_power];
+                                            obj.color = [0.5,1,0.5,hdp.hmcs_sym * hdp.hud_power];
                                             foreach(item;obj.total) {
                                               item.setColor(obj.color);
                                             }
