@@ -76,6 +76,11 @@ var wp_num_lastR = nil;
 var wp_num_lastT = nil;
 var wp_num_curr = 0;
 
+
+var modeSDeci = 65535*rand();
+var modeS_PERM  = "AE"~sprintf("%X", modeSDeci);
+var modeS_OPER  = sprintf("%o", modeSDeci+11403264);
+
 var dataEntryDisplay = {
 	line1: nil,
 	line2: nil,
