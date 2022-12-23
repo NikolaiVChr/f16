@@ -4,7 +4,7 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">Canaf 1 101 Sqn, #547</name>
+    <name type="string">Kanaf 1 101 Sqn, #547</name>
     <texture>Liveries/Block40/90-0874.png</texture>
     <owner type="string">IAF</owner>
     <pilot type="string"></pilot>
