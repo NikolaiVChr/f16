@@ -166,7 +166,7 @@ var F16_HUD = {
         }
 
 
-        var HUD_FONT = "NotoMono-Regular.ttf";#"LiberationFonts/LiberationMono-Regular.ttf";#"condensed.txf";  with condensed the FLYUP text was not displayed until minutes into flight, no clue why
+        var HUD_FONT = "NotoF16HUD-SemiBold.ttf";#"LiberationFonts/LiberationMono-Regular.ttf";#"condensed.txf";  with condensed the FLYUP text was not displayed until minutes into flight, no clue why
         var HUD_FONT_SIZE_TINY     =   8;
         var HUD_FONT_SIZE_SMALL    =   9;
         var HUD_FONT_SIZE_MEDIUM   =  11;
