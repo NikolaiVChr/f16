@@ -29,6 +29,8 @@
     <hud-brightness><use>f16/avionics/hud-sym</use></hud-brightness>
     <rendering-hint>transparent</rendering-hint>
     <transparent>true</transparent>
+    <sample-res>0.0006</sample-res>
+    <sample-far>1.25</sample-far>
     <render-bin>
       <bin-number>111</bin-number>
       <bin-name>DepthSortedBin</bin-name>
