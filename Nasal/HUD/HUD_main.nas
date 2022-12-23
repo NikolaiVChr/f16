@@ -166,30 +166,49 @@ var F16_HUD = {
         }
 
 
-        HUD_FONT = "LiberationFonts/LiberationMono-Bold.ttf";#"condensed.txf";  with condensed the FLYUP text was not displayed until minutes into flight, no clue why
-        obj.window1 = obj.get_text("window1", HUD_FONT,9,1.1).setTranslation(30,-65);
-        obj.window2 = obj.get_text("window2", HUD_FONT,9,1.1);
-        obj.window3 = obj.get_text("window3", HUD_FONT,9,1.1);
-        obj.window4 = obj.get_text("window4", HUD_FONT,9,1.1);
-        obj.window5 = obj.get_text("window5", HUD_FONT,9,1.1);
-        obj.window6 = obj.get_text("window6", HUD_FONT,9,1.1).setAlignment("center-bottom");
-        obj.window7 = obj.get_text("window7", HUD_FONT,9,1.1);
-        obj.window8 = obj.get_text("window8", HUD_FONT,9,1.1);
-        obj.window9 = obj.get_text("window9", HUD_FONT,9,1.1);
-        obj.window10 = obj.get_text("window10", HUD_FONT,9,1.1);
-        obj.window11 = obj.get_text("window11", HUD_FONT,9,1.1);
+        var HUD_FONT = "NotoMono-Regular.ttf";#"LiberationFonts/LiberationMono-Regular.ttf";#"condensed.txf";  with condensed the FLYUP text was not displayed until minutes into flight, no clue why
+        var HUD_FONT_SIZE_TINY     =   8;
+        var HUD_FONT_SIZE_SMALL    =   9;
+        var HUD_FONT_SIZE_MEDIUM   =  11;
+        var HUD_FONT_SIZE_LARGE    =  13;
+        var HUD_FONT_ASPECT_SMALL  = 1.1;
+        var HUD_FONT_ASPECT_NARROW = 1.4;
+        obj.window1 = obj.get_text("window1", HUD_FONT,HUD_FONT_SIZE_SMALL,HUD_FONT_ASPECT_SMALL).setTranslation(30,-65);
+        obj.window2 = obj.get_text("window2", HUD_FONT,HUD_FONT_SIZE_SMALL,HUD_FONT_ASPECT_SMALL);
+        obj.window3 = obj.get_text("window3", HUD_FONT,HUD_FONT_SIZE_SMALL,HUD_FONT_ASPECT_SMALL);
+        obj.window4 = obj.get_text("window4", HUD_FONT,HUD_FONT_SIZE_SMALL,HUD_FONT_ASPECT_SMALL);
+        obj.window5 = obj.get_text("window5", HUD_FONT,HUD_FONT_SIZE_SMALL,HUD_FONT_ASPECT_SMALL);
+        obj.window6 = obj.get_text("window6", HUD_FONT,HUD_FONT_SIZE_SMALL,HUD_FONT_ASPECT_SMALL).setAlignment("center-bottom");
+        obj.window7 = obj.get_text("window7", HUD_FONT,HUD_FONT_SIZE_SMALL,HUD_FONT_ASPECT_SMALL);
+        obj.window8 = obj.get_text("window8", HUD_FONT,HUD_FONT_SIZE_SMALL,HUD_FONT_ASPECT_SMALL);
+        obj.window9 = obj.get_text("window9", HUD_FONT,HUD_FONT_SIZE_SMALL,HUD_FONT_ASPECT_SMALL);
+        obj.window10 = obj.get_text("window10", HUD_FONT,HUD_FONT_SIZE_SMALL,HUD_FONT_ASPECT_SMALL);
+        obj.window11 = obj.get_text("window11", HUD_FONT,HUD_FONT_SIZE_SMALL,HUD_FONT_ASPECT_SMALL);
         obj.window12 = obj.svg.createChild("text")
                 .setText("1.0")
                 .setTranslation(45,20)
                 .setAlignment("right-bottom-baseline")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
-                .setFontSize(9, 1.1);
+                .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL);
 
-        obj.ralt = obj.get_text("radalt", HUD_FONT,9,1.1);
+        obj.ralt = obj.get_text("radalt", HUD_FONT,HUD_FONT_SIZE_SMALL,HUD_FONT_ASPECT_SMALL);
         obj.ralt.setAlignment("right-bottom-baseline");
         obj.ralt.setTranslation(35,0);
-
+        
+        #Replace Font in heading tape
+        obj.headinTexts = obj.svg.getElementById("heading-scale").getChildrenOfType(canvas.Text);
+        foreach(var dir ; obj.headinTexts) {
+            dir.setFont(HUD_FONT).setFontSize(HUD_FONT_SIZE_TINY, HUD_FONT_ASPECT_SMALL);
+        }
+        obj.headinTexts = obj.svg.getElementById("ias_range").getChildrenOfType(canvas.Text);
+        foreach(var dir ; obj.headinTexts) {
+            dir.setFont(HUD_FONT).setFontSize(HUD_FONT_SIZE_TINY, HUD_FONT_ASPECT_SMALL);
+        }
+        obj.headinTexts = obj.svg.getElementById("alt_range").getChildrenOfType(canvas.Text);
+        foreach(var dir ; obj.headinTexts) {
+            dir.setFont(HUD_FONT).setFontSize(HUD_FONT_SIZE_TINY, HUD_FONT_ASPECT_SMALL);
+        }
 
         #obj.alt_range.set("clip", "rect(75px, 10000px, 10000px, -10000px)"); # top,right,bottom,left
         #obj.ias_range.set("clip", "rect(125px, 10000px, 10000px, -10000px)"); # top,right,bottom,left
@@ -252,7 +271,7 @@ var F16_HUD = {
 #                .setAlignment("right-center")
 #                .setColor(0,1,0)
 #                .setFont(HUD_FONT)
-#                .setFontSize(9, 1.1);
+#                .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL);
 #        obj.raltFrame = obj.svg.createChild("path")
 #                .moveTo(sx*1*uv_x2-9,sy*0.45+5)
 #                .horiz(-41)
@@ -286,14 +305,14 @@ var F16_HUD = {
                 .setAlignment("left-bottom")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
-                .setFontSize(9, 1.1);
+                .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL);
         obj.soi_indicator = obj.svg.createChild("text") # SOI indicator on HUD upper left
                 .setText("*")
                 .setTranslation(1+0.25*sx*0.60,sy*0.14)
                 .setAlignment("left-bottom")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
-                .setFontSize(11, 1.1);
+                .setFontSize(HUD_FONT_SIZE_MEDIUM, HUD_FONT_ASPECT_SMALL);
         append(obj.total, obj.soi_indicator);
         obj.alt_type = obj.svg.createChild("text")
                 .setText("R")
@@ -301,7 +320,7 @@ var F16_HUD = {
                 .setAlignment("right-bottom")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
-                .setFontSize(9, 1.1);
+                .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL);
         append(obj.total, obj.speed_type);
         append(obj.total, obj.alt_type);
         obj.super_mask = obj.main_mask.createChild("image")
@@ -349,7 +368,7 @@ var F16_HUD = {
                 .setAlignment("right-center")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
-                .setFontSize(9, 1.1);
+                .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL);
 append(obj.total, obj.speed_curr);
         obj.alt_mask = obj.svg.createChild("image")
                 .setTranslation(5+3+0.79*sx*uv_used-10,sy*0.245-6)
@@ -383,7 +402,7 @@ append(obj.total, obj.speed_curr);
                 .setAlignment("left-bottom-baseline")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
-                .setFontSize(9, 1.1);
+                .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL);
                 append(obj.total, obj.alt_curr);
         obj.head_mask = obj.svg.createChild("image")
                 .setTranslation(-10+0.5*sx*uv_used,sy*0.1-20)
@@ -417,7 +436,7 @@ append(obj.total, obj.speed_curr);
                 .setAlignment("center-bottom")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
-                .setFontSize(9, 1.1);
+                .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL);
                 append(obj.total, obj.head_curr);
         obj.ded0 = obj.svg.createChild("text")
                 .setText("")
@@ -425,7 +444,7 @@ append(obj.total, obj.speed_curr);
                 .setAlignment("left-center")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
-                .setFontSize(9, 1.1);
+                .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL);
                 append(obj.total, obj.ded0);
         obj.ded1 = obj.svg.createChild("text")
                 .setText("")
@@ -433,7 +452,7 @@ append(obj.total, obj.speed_curr);
                 .setAlignment("left-center")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
-                .setFontSize(9, 1.1);
+                .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL);
                 append(obj.total, obj.ded1);
         obj.ded2 = obj.svg.createChild("text")
                 .setText("")
@@ -441,7 +460,7 @@ append(obj.total, obj.speed_curr);
                 .setAlignment("left-center")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
-                .setFontSize(9, 1.1);
+                .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL);
                 append(obj.total, obj.ded2);
         obj.ded3 = obj.svg.createChild("text")
                 .setText("")
@@ -449,7 +468,7 @@ append(obj.total, obj.speed_curr);
                 .setAlignment("left-center")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
-                .setFontSize(9, 1.1);
+                .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL);
                 append(obj.total, obj.ded3);
         obj.ded4 = obj.svg.createChild("text")
                 .setText("")
@@ -457,7 +476,7 @@ append(obj.total, obj.speed_curr);
                 .setAlignment("left-center")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
-                .setFontSize(9, 1.1);
+                .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL);
                 append(obj.total, obj.ded4);
         obj.bombFallLine = obj.svg.createChild("path")
                 .moveTo(sx*0.5*uv_used,0)
@@ -718,7 +737,7 @@ append(obj.total, obj.speed_curr);
                 .setAlignment("center-top")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
-                .setFontSize(11, 1.1);
+                .setFontSize(HUD_FONT_SIZE_MEDIUM, HUD_FONT_ASPECT_SMALL);
           append(obj.total, obj.stby);
 
 
@@ -861,7 +880,7 @@ append(obj.total, obj.speed_curr);
                 .setAlignment("right-center")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
-                .setFontSize(9, 1.1);
+                .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL);
         append(obj.total, obj.locatorAngle);
         obj.locatorLine = obj.centerOrigin.createChild("path")
                 .moveTo(0,0)
@@ -911,7 +930,7 @@ append(obj.total, obj.speed_curr);
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
                 .hide()
-                .setFontSize(11, 1.4);
+                .setFontSize(HUD_FONT_SIZE_MEDIUM, HUD_FONT_ASPECT_NARROW);
         append(obj.total, obj.cciplow);
 
         obj.VV = obj.centerOrigin.createChild("path")
@@ -1120,14 +1139,14 @@ append(obj.total, obj.speed_curr);
           if (i==0) continue;
           append(obj.total, obj.ladder_group.createChild("text")
              .setText(i*-5)
-             .setFontSize(9,1.1)
+             .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL)
              .setFont(HUD_FONT)
              .setAlignment("right-center")
              .setTranslation(-minuso-minuss-minuss*0.2, -i * distance)
              .setColor(0,0,0));
           append(obj.total, obj.ladder_group.createChild("text")
              .setText(i*-5)
-             .setFontSize(9,1.1)
+             .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL)
              .setFont(HUD_FONT)
              .setAlignment("left-center")
              .setTranslation(minuso+minuss+minuss*0.2, -i * distance)
@@ -1137,14 +1156,14 @@ append(obj.total, obj.speed_curr);
           if (i==0) continue;
           append(obj.total, obj.ladder_group.createChild("text")
              .setText(i*5)
-             .setFontSize(9,1.1)
+             .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL)
              .setFont(HUD_FONT)
              .setAlignment("right-center")
              .setTranslation(-minuso-minuss-minuss*0.2, -i * distance)
              .setColor(0,0,0));
           append(obj.total, obj.ladder_group.createChild("text")
              .setText(i*5)
-             .setFontSize(9,1.1)
+             .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL)
              .setFont(HUD_FONT)
              .setAlignment("left-center")
              .setTranslation(minuso+minuss+minuss*0.2, -i * distance)
