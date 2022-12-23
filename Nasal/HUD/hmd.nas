@@ -120,7 +120,11 @@ var F16_HMD = {
         obj.off = 1;
 
 
-        HUD_FONT = "LiberationFonts/LiberationMono-Bold.ttf";#"condensed.txf";  with condensed the FLYUP text was not displayed until minutes into flight, no clue why
+        HUD_FONT = #"LiberationFonts/LiberationMono-Bold.ttf";#"condensed.txf";  with condensed the FLYUP text was not displayed until minutes into flight, no clue why
+        #"monoMMM_5.ttf";
+        #"B612/B612Mono-Regular.ttf";
+        #"LiberationFonts/LiberationMono-Regular.ttf";
+        "NotoMono-Regular.ttf";
 
         obj.window2 = obj.svg.createChild("text")
                 .setText("BRAKES")
