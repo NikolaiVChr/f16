@@ -7,6 +7,12 @@
     <name type="string">USAF 147FW, 111FS EF "90th anniversary"</name>
     <texture>Liveries/Block30/84-1393.png</texture>
     <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Special Color</scheme>
+    <block type="int">32</block>
+    <serial type="string">83-1147</serial>
+    <squad type="string">111th FS "Ace in the Hole"</squad>
+    <year type="string">2007</year>
    </livery>
    <livery-logo>
     <texture>Liveries/yf/yf16-transp.png</texture>
@@ -22,6 +28,7 @@
   
    <f16>
        <dragchute type="bool">false</dragchute>
+       <link16 type="bool">false</link16>
    </f16>
    <livery-specular type="double">0.25</livery-specular>
   </model>

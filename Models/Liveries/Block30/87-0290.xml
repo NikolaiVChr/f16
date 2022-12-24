@@ -4,9 +4,15 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">USAF 482FW, 93FS FM "Makos Tail"</name>
+    <name type="string">USAF 482FW, 93FS FM "Makos Flagship"</name>
     <texture>Liveries/Block30/87-0290.png</texture>
     <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Two-tone gray, Flagship</scheme>
+    <block type="int">30</block>
+    <serial type="string">87-0290</serial>
+    <squad type="string">93rd FS "Makos"</squad>
+    <year type="string">2010</year>
    </livery>
    <livery-logo>
     <texture>Liveries/standard.logos.black2.png</texture>
@@ -21,6 +27,7 @@
     </livery-pod>
     <f16>
         <dragchute type="bool">false</dragchute>
+        <link16 type="bool">true</link16>
     </f16>
     <livery-specular type="double">0.25</livery-specular>
   </model>
