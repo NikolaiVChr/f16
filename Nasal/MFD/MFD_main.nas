@@ -3271,6 +3271,7 @@ var MFD_Device =
         svg.blepTriangleText = setsize([],svg.maxB);
         svg.blepTriangleVelLine = setsize([],svg.maxB);
         svg.blepTrianglePaths = setsize([],svg.maxB);
+        svg.lnkTA= setsize([],svg.maxB);
         svg.lnkT = setsize([],svg.maxB);
         svg.lnk  = setsize([],svg.maxB);
         for (var i = 0;i<svg.maxB;i+=1) {
@@ -3309,6 +3310,11 @@ var MFD_Device =
                                 .setStrokeLineWidth(3);
                 svg.lnkT[i] = svg.p_HSDc.createChild("text")
                                 .setAlignment("center-bottom")
+                                .setColor(colorDot1)
+                                .set("z-index",1)
+                                .setFontSize(20, 1.0);
+                svg.lnkTA[i] = svg.p_HSDc.createChild("text")
+                                .setAlignment("center-top")
                                 .setColor(colorDot1)
                                 .set("z-index",1)
                                 .setFontSize(20, 1.0);
@@ -3927,6 +3933,7 @@ var MFD_Device =
                 for (;me.ii<me.root.maxB;me.ii+=1) {
                     me.root.lnk[me.ii].hide();
                     me.root.lnkT[me.ii].hide();
+                    me.root.lnkTA[me.ii].hide();
                 }
                 me.root.selection.setVisible(me.selected);
             }
@@ -3990,9 +3997,13 @@ var MFD_Device =
                 me.root.lnk[me.ii].setTranslation(me.trans);
                 me.root.lnk[me.ii].setRotation(me.rot);
                 me.root.lnkT[me.ii].setColor(me.color);
+                me.root.lnkTA[me.ii].setColor(me.color);
                 me.root.lnkT[me.ii].setTranslation(me.trans[0],me.trans[1]-25);
+                me.root.lnkTA[me.ii].setTranslation(me.trans[0],me.trans[1]+20);
                 me.root.lnkT[me.ii].setText(""~me.blueIndex);
+                me.root.lnkTA[me.ii].setText(sprintf("%02d", math.round(me.c_alt*0.001)));
                 me.root.lnk[me.ii].show();
+                me.root.lnkTA[me.ii].show();
                 me.root.lnkT[me.ii].show();
                 me.ii += 1;
             }
