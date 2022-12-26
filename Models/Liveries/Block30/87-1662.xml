@@ -4,10 +4,17 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">IAF 117 Sqn, "First Jet"</name>
+    <name type="string">Kanaf 1 117 Sqn, #341</name>
     <texture>Liveries/Block30/87-1662.png</texture>
     <owner type="string">IAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Desert camo</scheme>
+    <block type="int">30</block>
+    <serial type="string">87-1662</serial>
+    <squad type="string">117 Sqn "First Jet"</squad>
+    <year type="string">2018</year>
    </livery>
+   
    <livery-logo>
     <texture>Liveries/standard.logos.color.png</texture>
    </livery-logo>
