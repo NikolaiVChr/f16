@@ -7,6 +7,12 @@
                 <name type="string">Vermont ANG, "Stars and Stripes exhibit"</name>
                 <texture type="string">Liveries/Block10/79-0357.png</texture>
                 <owner type="string">ANG</owner>
+                <pilot type="string"></pilot>
+                <scheme type="string">Special Color</scheme>
+                <block type="int">10</block>
+                <serial type="string">79-0357</serial>
+                <squad type="string">31st MOS</squad>
+                <year type="string">2000</year>
             </livery>
             <livery-logo>
                 <texture>Liveries/yf/yf16-transp.png</texture>

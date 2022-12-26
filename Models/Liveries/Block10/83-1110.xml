@@ -4,9 +4,15 @@
  <sim>
   <model>
    <livery> 
-    <name type="string">USAF 53FW, 82ATRS #QF-004</name>
+    <name type="string">53WG, 82ATRS #QF-004</name>
     <texture>Liveries/Block10/83-1110.png</texture>
     <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string"></scheme>
+    <block type="int">10</block>
+    <serial type="string">83-1110</serial>
+    <squad type="string">82nd ATRS</squad>
+    <year type="string">2013</year>
    </livery>
 
    <livery-logo>

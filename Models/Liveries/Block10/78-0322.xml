@@ -7,6 +7,12 @@
     <name type="string">Top ACES, N854TA</name>
     <texture>Liveries/Block10/78-0322.png</texture>
     <owner type="string">TopACES</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Desert camo</scheme>
+    <block type="int">10</block>
+    <serial type="string">78-0322</serial>
+    <squad type="string">Top ACES</squad>
+    <year type="string">2021</year>
    </livery>
    <livery-logo>
     <texture>Liveries/standard.logos.color.png</texture>

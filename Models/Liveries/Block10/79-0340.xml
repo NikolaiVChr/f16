@@ -7,6 +7,12 @@
     <name type="string">USAF 31FW, 31MOS AV #340</name>
     <texture>Liveries/Block10/79-0340.png</texture>
     <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string"></scheme>
+    <block type="int">10</block>
+    <serial type="string">79-0340</serial>
+    <squad type="string">31st MOS</squad>
+    <year type="string">2006</year>
    </livery>
 
    <livery-logo>
