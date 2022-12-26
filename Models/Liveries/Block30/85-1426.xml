@@ -4,9 +4,15 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">USAF 86TFW, 526TFS RS "Black Knights"</name>
+    <name type="string">86TFW, 526TFS RS #426</name>
     <texture>Liveries/Block30/85-1426.png</texture>
     <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Two-tone gray, Flagship</scheme>
+    <block type="int">30</block>
+    <serial type="string">85-1426</serial>
+    <squad type="string">526th TFS "Black Knights"</squad>
+    <year type="string">1986</year>
    </livery>
    <livery-logo>
     <texture>Liveries/yf/yf16-transp.png</texture>

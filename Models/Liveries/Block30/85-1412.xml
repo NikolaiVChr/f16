@@ -4,9 +4,15 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">USAF 86TFW, 512TFS RS "Dragons"</name>
+    <name type="string">86TFW, 512TFS RS "Unit Flagship"</name>
     <texture>Liveries/Block30/85-1412.png</texture>
     <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Two-tone gray, Flagship</scheme>
+    <block type="int">30</block>
+    <serial type="string">85-1412</serial>
+    <squad type="string">512nd TFS "Dragons"</squad>
+    <year type="string">1987</year>
    </livery>
    <livery-logo>
     <texture>Liveries/yf/yf16-transp.png</texture>

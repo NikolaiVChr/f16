@@ -4,9 +4,15 @@
  <sim> 
   <model>
    <livery>
-    <name type="string">USAF 187FW, 100FS AL "Tuskegee Airmen"</name>
+    <name type="string">187FW, 100FS AL "City of Tuskegee"</name>
     <texture>Liveries/Block30/87-0217.png</texture>
     <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Two-tone gray, Flagship</scheme>
+    <block type="int">30</block>
+    <serial type="string">87-0217</serial>
+    <squad type="string">100th FS "Tuskegee Airmen"</squad>
+    <year type="string">2007</year>
    </livery>
    <livery-logo>
     <texture>Liveries/standard.logos.black2.png</texture>

@@ -8,7 +8,7 @@
     <texture>Liveries/Block50/99-1523.png</texture>
     <owner type="string">HAF</owner>
     <pilot type="string"></pilot>
-    <scheme type="string">Airshow demo scheme</scheme>
+    <scheme type="string">Airshow Special Color</scheme>
     <block type="int">52</block>
     <serial type="string">99-1523</serial>
     <squad type="string">340 Mira</squad>
