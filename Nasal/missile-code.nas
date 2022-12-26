@@ -742,6 +742,7 @@ var AIM = {
 		m.old_speed_fps	     = 0;
 		m.g                  = 0;
 		m.limitGs            = FALSE;
+		m.limitHalfGs        = FALSE;
 		m.speed_down_fps  = nil;
 		m.speed_east_fps  = nil;
 		m.speed_north_fps = nil;
@@ -3053,9 +3054,11 @@ var AIM = {
 		#
         me.myG = me.steering_speed_G(me.hdg, me.pitch, me.track_signal_e, me.track_signal_h, me.old_speed_fps, me.dt);
 
-        if(me.myG > me.max_g_current)
+        me.max_g_current_observing = me.limitHalfGs?me.max_g_current*0.5:me.max_g_current;
+
+        if(me.myG > me.max_g_current_observing)
         {
-            me.MyCoef = me.overload_limiter(me.hdg, me.pitch, me.track_signal_e, me.track_signal_h, me.old_speed_fps, me.dt, me.max_g_current);
+            me.MyCoef = me.overload_limiter(me.hdg, me.pitch, me.track_signal_e, me.track_signal_h, me.old_speed_fps, me.dt, me.max_g_current_observing);
 
             me.track_signal_h =  me.MyCoef[0];
             me.track_signal_e =  me.MyCoef[1];
@@ -3470,6 +3473,7 @@ var AIM = {
 		me.cruise_or_loft = FALSE;# If true then this method handles the vertical component of guiding.
 		me.time_before_snap_up = me.drop_time * 3;
 		me.limitGs = FALSE;
+		me.limitHalfGs = 0;
 
 		if (me.loft_alt != 0 and me.guidanceLaw == "direct-alt") {
 			me.t_alt_delta_ft = me.loft_alt - me.alt_ft;
@@ -3490,6 +3494,7 @@ var AIM = {
 	            me.steer_for_free = 1;#due to having wings
             }
 			me.cruise_or_loft = 1;
+			me.limitHalfGs = 1;
         } elsif(me.loft_alt != 0 and me.snapUp == FALSE) {
         	# this is for Air to ground/sea cruise-missile (SCALP, Sea-Eagle, Taurus, Tomahawk, RB-15...)
 
