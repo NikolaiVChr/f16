@@ -1313,6 +1313,7 @@ append(obj.total, obj.speed_curr);
 # print("HUD hud_serviceable=", hdp.getproper("hud_serviceable," display=", hdp.getproper("hud_display, " brt=", hdp.getproper("hud_brightness, " power=", hdp.getproper("hud_power);
 
                                           if (!hdp.hud_display or !hdp.hud_serviceable) {
+                                            obj.svg.hide();
                                             obj.color = [0.3,1,0.3,0];
                                             foreach(item;obj.total) {
                                               item.setColor(obj.color);
@@ -1320,6 +1321,7 @@ append(obj.total, obj.speed_curr);
                                             obj.ASEC120Aspect.setColorFill(obj.color);
                                             obj.ASEC65Aspect.setColorFill(obj.color);
                                           } elsif (hdp.hud_brightness != nil and hdp.hud_power != nil) {
+                                            obj.svg.show();
                                             obj.color = [0.3,1,0.3,hdp.hud_brightness * hdp.hud_power];
                                             foreach(item;obj.total) {
                                               item.setColor(obj.color);
