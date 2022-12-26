@@ -4,9 +4,15 @@
  <sim>
   <model>
    <livery> 
-    <name type="string">USN VF-45, AD-21</name>
+    <name type="string">VF-45, AD-21</name>
     <texture>Liveries/Block30/86-1688.png</texture>
     <owner type="string">USN</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Three-tone camo</scheme>
+    <block type="int">30</block>
+    <serial type="string">86-1688</serial>
+    <squad type="string">VF-45 "Blackbirds"</squad>
+    <year type="string">1994</year>
    </livery>
 
    <livery-logo>

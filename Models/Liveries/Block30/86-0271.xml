@@ -4,14 +4,14 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">USAF 57WG, 64AS WA "Flanker"</name>
+    <name type="string">57WG, 64AGRS WA "Flanker"</name>
     <texture>Liveries/Block30/86-0271.png</texture>
     <owner type="string">USAF</owner>
     <pilot type="string"></pilot>
     <scheme type="string">Three-tone camo</scheme>
     <block type="int">32</block>
     <serial type="string">86-0271</serial>
-    <squad type="string">64th AS "Gomers"</squad>
+    <squad type="string">64th AGRS "Gomers"</squad>
     <year type="string">2017</year>
    </livery>
    <livery-logo>

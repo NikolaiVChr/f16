@@ -4,14 +4,14 @@
  <sim>
   <model>
    <livery> 
-    <name type="string">USAF 354FW, 18AS AK "Arctic Splinter"</name>
+    <name type="string">354FW, 18AGRS AK "Arctic Splinter"</name>
     <texture>Liveries/Block30/86-0314.png</texture>
     <owner type="string">USAF</owner>
     <pilot type="string"></pilot>
     <scheme type="string">Three-tone camo, Flagship</scheme>
     <block type="int">30</block>
     <serial type="string">86-0314</serial>
-    <squad type="string">18th AS "Blue Foxes"</squad>
+    <squad type="string">18th AGRS "Blue Foxes"</squad>
     <year type="string">2017</year>
    </livery>
 
