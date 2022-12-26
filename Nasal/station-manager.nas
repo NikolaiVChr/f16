@@ -103,11 +103,11 @@ var Station = {
 					} elsif (me.weaponName == "AGM-158") {
 						mf = func (struct) {
 							if (struct.dist_m != -1 and struct.speed_fps != 0) {
-								if (M2NM*struct.dist_m < 1.75 and struct.guidance == "gps-altitude") {
+								if (M2NM*struct.dist_m < 1.75 and struct.guidanceLaw == "direct-alt") {
 									# start terminal diving
-									return {"altitude":0,"guidance":"gps"};
+									return {"altitude":0,"guidanceLaw":"direct"};
 								}
-								if (M2FT*struct.dist_m/struct.speed_fps < 8 and (struct.guidance == "gps" or struct.guidance == "gps-altitude")) {
+								if (M2FT*struct.dist_m/struct.speed_fps < 8 and struct.guidance == "gps") {
 									# 8s before impact switch to IR, authentic value
 									return {"guidance":"heat","guidanceLaw":"APN","altitude":0,"class":"GM","target":"closest","abort_midflight_function":1};
 								}

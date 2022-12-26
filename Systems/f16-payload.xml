@@ -897,8 +897,8 @@
             <class type="string">P</class>
             <max-fire-range-nm type="double">199.9</max-fire-range-nm>  <!--now matching actual range-->
             <min-fire-range-nm type="double">2.0</min-fire-range-nm>
-            <guidance type="string">gps-altitude</guidance>
-            <navigation type="string">direct</navigation>
+            <guidance type="string">gps</guidance>
+            <navigation type="string">direct-alt</navigation>
             <loft-altitude type="int">22000</loft-altitude>
             <terrain-follow type="bool">false</terrain-follow>
             <FCS-field-deg type="int">120</FCS-field-deg>

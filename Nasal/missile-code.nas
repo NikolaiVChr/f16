@@ -316,8 +316,8 @@ var AIM = {
 		m.asc                   = getprop(m.nodeString~"attack-steering-cue-enabled");# Bool. ASC enabled.
 		# navigation, guiding and seekerhead
 		m.max_seeker_dev        = getprop(m.nodeString~"seeker-field-deg") / 2;       # missiles own seekers total FOV diameter.
-		m.guidance              = getprop(m.nodeString~"guidance");                   # heat/radar/semi-radar/laser/gps/vision/unguided/level/gyro-pitch/radiation/inertial/remote/remote-stable/command/gps-altitude
-		m.guidanceLaw           = getprop(m.nodeString~"navigation");                 # guidance-law: direct/OPN/PN/APN/PNxxyy/APNxxyy/LOS (use direct for pure pursuit, use PN for A/A missiles, use APN for modern SAM missiles PN for older, use PNxxyy/APNxxyy for surface to air where xx is degrees to aim above target, yy is seconds it will do that). GPN is APN for winged glidebombs.
+		m.guidance              = getprop(m.nodeString~"guidance");                   # heat/radar/semi-radar/laser/gps/vision/unguided/level/gyro-pitch/radiation/inertial/remote/remote-stable/command/gps
+		m.guidanceLaw           = getprop(m.nodeString~"navigation");                 # guidance-law: direct/direct-alt/OPN/PN/APN/PNxxyy/APNxxyy/LOS (use direct for pure pursuit, use PN for A/A missiles, use APN for modern SAM missiles PN for older, use PNxxyy/APNxxyy for surface to air where xx is degrees to aim above target, yy is seconds it will do that). GPN is APN for winged glidebombs.
 		m.guidanceLawHorizInit  = getprop(m.nodeString~"navigation-init-pure-15");    # Bool. Guide in horizontal plane using pure pursuit until target with 15 deg of nose, before switching to <navigation>
 		m.pro_constant          = getprop(m.nodeString~"proportionality-constant");   # Constant for how sensitive proportional navigation is to target speed/acc. Normally between 3-6. [optional]
 		m.all_aspect            = getprop(m.nodeString~"all-aspect");                 # bool. set to false if missile only locks on reliably to rear of target aircraft
@@ -1763,7 +1763,9 @@ var AIM = {
 		if (me.guidanceLaw == "LOS") {
 			nav = "Line-of-sight";
 		} elsif (me.guidanceLaw == "direct") {
-			nav = "Pure pursuit."
+			nav = "Pure pursuit.";
+		} elsif (me.guidanceLaw == "direct-alt") {
+			nav = "Pure pursuit with altitude hold.";
 		} elsif (me.guidanceLaw == "OPN") {
 			nav = "Original Proportional navigation. Proportionality constant is "~me.pro_constant;
 		} elsif (me.guidanceLaw == "PN") {
@@ -2646,6 +2648,7 @@ var AIM = {
 
 			me.settings = me.mfFunction({   time_s:                 me.life_time,
                                             dist_m:                 me.dist_curr_direct,
+                                            dist_horz_m:             me.dist_curr,
                                             mach:                     me.speed_m,
                                             speed_fps:              me.old_speed_fps,
                                             weapon_position:         me.coord,
@@ -3284,7 +3287,7 @@ var AIM = {
 	},
 
 	checkForLOS: func () {
-		if (pickingMethod == TRUE and me.guidance != "gps" and me.guidance != "gps-altitude" and me.guidance != "unguided" and me.guidance != "inertial") {
+		if (pickingMethod == TRUE and me.guidance != "gps" and me.guidance != "unguided" and me.guidance != "inertial") {
 			me.xyz          = {"x":me.coord.x(),                  "y":me.coord.y(),                 "z":me.coord.z()};
 		    me.directionLOS = {"x":me.t_coord.x()-me.coord.x(),   "y":me.t_coord.y()-me.coord.y(),  "z":me.t_coord.z()-me.coord.z()};
 
@@ -3353,7 +3356,7 @@ var AIM = {
 				me.printStats(me.type~": Not guiding (lost radiation, gave up)");
 				me.free = TRUE;
 			}
-		} elsif ((me.dist_curr_direct*M2NM > me.detect_range_curr_nm or !me.FOV_check(me.hdg, me.pitch, me.curr_deviation_h, me.curr_deviation_e, me.max_seeker_dev, me.myMath)) and me.guidance != "gps" and me.guidance != "inertial" and me.guidance != "gps-altitude") {
+		} elsif ((me.dist_curr_direct*M2NM > me.detect_range_curr_nm or !me.FOV_check(me.hdg, me.pitch, me.curr_deviation_h, me.curr_deviation_e, me.max_seeker_dev, me.myMath)) and me.guidance != "gps" and me.guidance != "inertial") {
 			# target is not in missile seeker view anymore
 
 			if (me.fovLost == FALSE and me.detect_range_curr_nm != 0) {
@@ -3410,7 +3413,7 @@ var AIM = {
 	},
 
 	adjustToKeepLock: func {
-		if (me.guidance != "gps" and me.guidance != "inertial" and me.guidance != "gps-altitude") {
+		if (me.guidance != "gps" and me.guidance != "inertial") {
 			if (!me.FOV_check(me.hdg, me.pitch, me.curr_deviation_h+me.raw_steer_signal_head, me.curr_deviation_e+me.raw_steer_signal_elev, me.max_seeker_dev, me.myMath) and me.fov_radial != 0) {
 				# the commanded steer order will make the missile lose its lock, to prevent that we reduce the steering just enough so lock wont be lost.
 				me.factorKeep = me.max_seeker_dev/me.fov_radial;
@@ -3468,7 +3471,7 @@ var AIM = {
 		me.time_before_snap_up = me.drop_time * 3;
 		me.limitGs = FALSE;
 
-		if (me.loft_alt != 0 and me.guidance == "gps-altitude") {
+		if (me.loft_alt != 0 and me.guidanceLaw == "direct-alt") {
 			me.t_alt_delta_ft = me.loft_alt - me.alt_ft;
             if(me.t_alt_delta_ft < 0) {
                 me.printGuide("Moving down %5d ft  M%.3f %.2fNM     %d",-me.t_alt_delta_ft, me.speed_m, me.dist_curr*M2NM,me.alt_ft);
@@ -3812,7 +3815,7 @@ var AIM = {
 			}
 			if (me.life_time > 6) {
 				me.noise = 1;
-			} elsif (me.seeker_filter > 0 and me.guidance != "gps" and me.guidance != "gps-altitude" and me.life_time-me.last > me.next) {
+			} elsif (me.seeker_filter > 0 and me.guidance != "gps" and me.life_time-me.last > me.next) {
 				# PN noise.
 				me.sign = me.seed>0.85?(rand()>0.75?-1:1):1;
 				me.opnNoiseReduct = me.apn == -1?0.5:1;
@@ -4550,7 +4553,7 @@ var AIM = {
 	},
 
 	checkForView: func {
-		if (me.guidance != "gps" and me.guidance != "gps-altitude" and me.guidance != "inertial") {
+		if (me.guidance != "gps" and me.guidance != "inertial") {
 			me.launchCoord = geo.aircraft_position();
 			if (!me.radarOrigin) {
 				me.geodPos = aircraftToCart({x:-me.radarX, y:me.radarY, z: -me.radarZ});
@@ -4580,7 +4583,7 @@ var AIM = {
 	},
 
 	checkForViewInFlight: func (tagt) {
-		if (me.guidance != "gps" and me.guidance != "gps-altitude" and me.guidance != "inertial") {
+		if (me.guidance != "gps" and me.guidance != "inertial") {
 			me.launchCoord = me.coord;
 			me.potentialCoord = tagt.get_Coord();
 			me.xyz          = {"x":me.launchCoord.x(),                  "y":me.launchCoord.y(),                 "z":me.launchCoord.z()};
@@ -4659,7 +4662,7 @@ var AIM = {
 			me.newlockgained = me.all_aspect == TRUE or me.rear_aspect(me.coord, tagt);
 			if (!me.newlockgained) {me.printStatsDetails("Test: no view of heat source. Rejected.");return 0;}
 		}
-		if (me.guidance != "gps" and me.guidance != "inertial" and me.guidance != "gps-altitude") {
+		if (me.guidance != "gps" and me.guidance != "inertial") {
 			me.new_elev_deg       = me.getPitch(me.coord, me.newCoord);
 			me.new_course         = me.coord.course_to(me.newCoord);
 			me.new_deviation_e    = me.new_elev_deg - me.pitch;
