@@ -1,7 +1,11 @@
 var COLOR_YELLOW     = [1.00,1.00,0.00];
-var COLOR_BLUE_LIGHT = [0.65,0.65,1.00];
+var COLOR_BLUE_LIGHT = [0.30,0.30,1.00];
 var COLOR_RED        = [1.00,0.00,0.00];
 var COLOR_WHITE      = [1.00,1.00,1.00];
+var COLOR_BROWN      = [0.71,0.40,0.11];
+var COLOR_BROWN_DARK = [0.56,0.32,0.09];
+var COLOR_GRAY       = [0.50,0.50,0.50];
+var COLOR_BLUE_DARK  = [0.15,0.15,0.60];
 
 var str = func (d) {return ""~d};
 
@@ -76,7 +80,7 @@ var CLEANMAP = 0;
 var PLACES   = 1;
 
 var COLOR_DAY   = "rgb(255,255,255)";#"rgb(128,128,128)";# color fill behind map which will modulate to make it darker.
-var COLOR_NIGHT = "rgb( 64, 64, 64)";
+var COLOR_NIGHT = "rgb(128,128,128)";
 
 var loopTimer = nil;
 var loopTimerFast = nil;
@@ -118,7 +122,7 @@ var CDU = {
         loopTimerFast = maketimer(0.01, me, me.loopFast);
         loopTimerFast.start();
         #me.loop();
-        print("CDU module started");
+        #print("CDU module started");
     },
 
     del: func {
@@ -133,8 +137,8 @@ var CDU = {
             me.placement.remove();
             me.cduCanvas.del();
         }
-        else print("NO CDU CANVAS");
-        print("Deleted CDU module");
+        #else print("NO CDU CANVAS");
+        #print("Deleted CDU module");
     },
 
     calcGeometry: func {
@@ -147,7 +151,7 @@ var CDU = {
     },
 
     setupSymbols: func {
-        # own symbol
+        # ownship symbol
         me.selfSymbol = me.rootCenter.createChild("path")
                 .moveTo(0, 0)
                 .vert(30)
@@ -162,7 +166,7 @@ var CDU = {
         me.cone = me.rootCenter.createChild("group")
             .set("z-index",11);#radar cone
 
-        me.outerRadius  = 80*NM2M*M2TEX;
+        me.outerRadius  = zoomLevels[zoom_curr]*NM2M*M2TEX;
         #me.mediumRadius = me.outerRadius*0.6666;
         me.innerRadius  = me.outerRadius*0.5;
         #var innerTick    = 0.85*innerRadius*math.cos(45*D2R);
@@ -174,12 +178,12 @@ var CDU = {
             .lineTo(0,0)
             .setStrokeLineWidth(3)
             .set("z-index",7)
-            .setColor([1.0,1.0,0.0])
+            .setColor(COLOR_YELLOW)
             .setTranslation(me.buttonMap.b1.pos[0]+40, me.buttonMap.b1.pos[1]-15);
 
         me.rangeText = me.root.createChild("text")
             .set("z-index",7)
-            .setColor([1.0,1.0,0.0])
+            .setColor(COLOR_YELLOW)
             .setFontSize(30, 1.0)
             .setAlignment("center-center")
             .setTranslation(me.buttonMap.b1.pos[0]+40, (me.buttonMap.b1.pos[1]+me.buttonMap.b2.pos[1])*0.5)
@@ -191,7 +195,7 @@ var CDU = {
             .lineTo(0,0)
             .setStrokeLineWidth(3)
             .set("z-index",7)
-            .setColor([1.0,1.0,0.0])
+            .setColor(COLOR_YELLOW)
             .setTranslation(me.buttonMap.b2.pos[0]+40, me.buttonMap.b2.pos[1]+15);
 
         me.conc = me.rootCenter.createChild("path")
@@ -213,7 +217,7 @@ var CDU = {
             .horiz(15)
             .setStrokeLineWidth(8)
             .set("z-index",7)
-            .setColor([0.5,0.5,0.5]);
+            .setColor(COLOR_GRAY);
         me.bullseyeSize = 50;
         me.bullseye = me.mapCenter.createChild("path")
             .moveTo(-me.bullseyeSize,0)
@@ -356,7 +360,6 @@ var CDU = {
         
         var lat = delta_lat * math.round(me.lat / delta_lat);
         var lon = delta_lon * math.round(me.lon / delta_lon);
-        printf("lat %.2f   lon %.2f", lat, lon);
         
         var range = 0.75*me.max_y*M2NM/M2TEX;#simplified
         #printf("grid range=%d %.3f %.3f",range,me.lat,me.lon);
@@ -581,8 +584,8 @@ var CDU = {
             .vert(me.max_y)
             .horiz(-me.max_x*2)
             .vert(-me.max_y)
-            .setColorFill(0.71,0.40,0.115)
-            .setColor(1,1,0)
+            .setColorFill(COLOR_BROWN)
+            .setColor(COLOR_YELLOW)
             .set("z-index", 20)
             .setStrokeLineWidth(4);
         me.ladderStep = (me.max_y-me.ehsiPosY)/6;# 10 degs
@@ -632,13 +635,13 @@ var CDU = {
         for(me.ladderI = -9;me.ladderI<10;me.ladderI+=1) {
             if (me.ladderI == 0) continue;
             me.pfdLadderGroup.createChild("text")
-                .setColor([1.0,1.0,0.0])
+                .setColor(COLOR_YELLOW)
                 .setFontSize(20, 1.0)
                 .setAlignment("right-center")
                 .setTranslation(-me.ladderWidth, me.ladderStep*me.ladderI)
                 .setText((-me.ladderI*10)~" ");
             me.pfdLadderGroup.createChild("text")
-                .setColor([1.0,1.0,0.0])
+                .setColor(COLOR_YELLOW)
                 .setFontSize(20, 1.0)
                 .setAlignment("left-center")
                 .setTranslation(me.ladderWidth, me.ladderStep*me.ladderI)
@@ -646,25 +649,25 @@ var CDU = {
         }
 
         me.pfdSpeed = me.pfdRoot.createChild("text")
-                .setColor([1.0,1.0,0.0])
+                .setColor(COLOR_YELLOW)
                 .setFontSize(20, 1.0)
                 .setAlignment("left-center")
                 .setTranslation(-me.ehsiPosX*0.5, 0)
                 .setText("425");
         me.pfdAlt = me.pfdRoot.createChild("text")
-                .setColor([1.0,1.0,0.0])
+                .setColor(COLOR_YELLOW)
                 .setFontSize(20, 1.0)
                 .setAlignment("right-center")
                 .setTranslation(me.ehsiPosX*0.5, 0)
                 .setText("18000");
 
-        me.root.createChild("path")
+        me.pfdSky = me.root.createChild("path")
             .horiz(me.ehsiPosX)
             .vert(me.ehsiPosX)
             .horiz(-me.ehsiPosX)
             .vert(-me.ehsiPosX)
-            .setColorFill(0,0,1)
-            .setColor(0,0,1)
+            .setColorFill(COLOR_BLUE_LIGHT)
+            .setColor(COLOR_BLUE_LIGHT)
             .setStrokeLineWidth(1)
             .set("z-index", 19)
             .setTranslation(0,me.ehsiPosY);
@@ -676,6 +679,15 @@ var CDU = {
         me.pfdLadderGroup.setTranslation(0, 0.5*(me.max_y-me.ehsiPosY)*math.clamp(me.input.pitch.getValue()/30, -3, 3));
         me.pfdSpeed.setText(sprintf(" %3d KCAS", me.input.calibrated.getValue()));
         me.pfdAlt.setText(sprintf("%5d FT ", me.input.alt_ft.getValue()));
+        #if (me.day != lastDay) {
+            if (me.day) {
+                me.pfdSky.setColorFill(COLOR_BLUE_LIGHT).setColor(COLOR_BLUE_LIGHT);
+                me.pfdGround.setColorFill(COLOR_BROWN);
+            } else {
+                me.pfdSky.setColorFill(COLOR_BLUE_DARK).setColor(COLOR_BLUE_DARK);
+                me.pfdGround.setColorFill(COLOR_BROWN_DARK);
+            }
+        #}
     },
 
     setupEHSI: func {
@@ -752,7 +764,7 @@ var CDU = {
                             .arcSmallCW(me.rdrRangePixels,me.rdrRangePixels, 0, me.radarX1-me.radarX2, me.radarY1-me.radarY2)
                             .setStrokeLineWidth(3)
                             .set("z-index",9)
-                            .setColor([0.5,0.5,1.0])
+                            .setColor(COLOR_BLUE_LIGHT)
                             .update();
             }
         }

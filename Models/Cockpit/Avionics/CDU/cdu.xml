@@ -6,19 +6,19 @@
 
 
     <animation>
-        <object-name>cdu-canvas</object-name>
+        <object-name>cdu_canvas</object-name>
         <type>material</type>
-        <!--condition>
+        <condition>
             <greater-than-equals>
                 <property>f16/avionics/power-ufc-warm</property>
                 <value>0.90</value>
             </greater-than-equals>
-            <property>f16/avionics/ew-rwr-switch</property>
-        </condition-->
+        </condition>
         <emission>
-            <red>  1</red>
-            <green>1</green>
-            <blue> 1</blue>
+            <factor-prop>fdm/jsbsim/elec/bus/emergency-ac-2</factor-prop>
+            <red>  0.00714</red>
+            <green>0.00714</green>
+            <blue> 0.00714</blue>
         </emission>
     </animation>
 
@@ -83,14 +83,14 @@
         <offset-deg>0</offset-deg>
         <interval-sec>0.075</interval-sec>
         <center>
-            <x-m>0</x-m>
-            <y-m>-0.028996</y-m>
-            <z-m>-0.032472</z-m>
+            <x-m>0.109487</x-m>
+            <y-m>-0.029</y-m>
+            <z-m>0</z-m>
         </center>
         <axis>
-            <x>-1</x>
+            <x>0</x>
             <y>0</y>
-            <z>0</z>
+            <z>-1</z>
         </axis>        
         <increase>
             <binding>
@@ -133,14 +133,14 @@
         <offset-deg>0</offset-deg>
         <interval-sec>0.075</interval-sec>
         <center>
-            <x-m>0</x-m>
-            <y-m>0.028243</y-m>
-            <z-m>-0.032472</z-m>
+            <x-m>0.109487</x-m>
+            <y-m>0.02824</y-m>
+            <z-m>0</z-m>
         </center>
         <axis>
-            <x>-1</x>
+            <x>0</x>
             <y>0</y>
-            <z>0</z>
+            <z>-1</z>
         </axis>        
         <increase>
             <binding>
@@ -340,5 +340,67 @@
                 </binding>
             </hovered>
      </animation>
+
+     <effect>
+        <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
+        <parameters>
+            <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
+        </parameters>
+        <object-name>Mount</object-name>
+        <object-name>HSI_course-knob</object-name>
+        <object-name>HSI_hdg-knob</object-name>
+    </effect>
+    <effect>
+        <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
+        <parameters>
+            <implicit-lightmap-enabled type="int">1</implicit-lightmap-enabled>
+        </parameters>
+        <object-name>button</object-name>
+        <object-name>Cube.000</object-name>
+        <object-name>Cube.001</object-name>
+        <object-name>Cube.002</object-name>
+        <object-name>Cube.003</object-name>
+        <object-name>Cube.004</object-name>
+        <object-name>Cube.005</object-name>
+        <object-name>Cube.006</object-name>
+        <object-name>Cube.007</object-name>
+        <object-name>Cube.008</object-name>
+        <object-name>Cube.009</object-name>
+        <object-name>Cube.010</object-name>
+        <object-name>Cube.011</object-name>
+        <object-name>Cube.012</object-name>
+        <object-name>Cube.013</object-name>
+        <object-name>Cube.014</object-name>
+        <object-name>Cube.015</object-name>
+        <object-name>Cube.016</object-name>
+        <object-name>Cube.017</object-name>
+        <object-name>Cube.018</object-name>
+        <object-name>Cube.019</object-name>
+        <object-name>Cube.020</object-name>
+        <object-name>Cube.021</object-name>
+        <object-name>Cube.022</object-name>
+        <object-name>Cube.023</object-name>
+        <object-name>Cube.024</object-name>
+        <object-name>Cube.025</object-name>
+    </effect>
+    <effect>
+        <inherits-from>Aircraft/f16/Models/Effects/displays/lcd</inherits-from>
+        <parameters>
+            <inner-angle type="float">45</inner-angle><!-- 0-90, use 90 for LED or plasma display-->
+            <outer-angle type="float">60</outer-angle><!-- 0-90, but greater than inner -->
+            <black-angle type="float">80</black-angle><!-- 0-90, but greater than outer -->
+            <contrast>1</contrast> 
+            <texture n="1">
+                <type>2d</type>
+                <filter>linear-mipmap-linear</filter>
+                <wrap-s>clamp</wrap-s>
+                <wrap-t>clamp</wrap-t>
+                <internal-format>normalized</internal-format>
+                <image>Aircraft/f16/Models/Effects/dust3.png</image>
+            </texture>
+            <dirt-factor>0.05</dirt-factor>
+        </parameters>
+        <object-name>cdu_canvas</object-name>
+    </effect>
     
 </PropertyList>
