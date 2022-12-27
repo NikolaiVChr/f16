@@ -642,6 +642,30 @@
     </or>
    </condition>
  </animation>
+
+ <!--model>
+  <name>CDU</name>
+  <path>Aircraft/f16/Models/Cockpit/Avionics/CDU/cdu.xml</path>
+  <offsets>
+   <x-m>-4.643</x-m>
+   <y-m>0</y-m>
+   <z-m>0.40</z-m>
+   <pitch-deg>45</pitch-deg>
+  </offsets>
+ </model>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>CDU</object-name>
+  <condition>
+    <or>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>6</value>
+      </equals>
+    </or>
+   </condition>
+ </animation-->
  
  <animation>
   <type>select</type>
