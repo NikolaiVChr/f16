@@ -303,6 +303,17 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>10</row>
             <col>2</col>
+            <legend>A/G Cluster SFW (WCMD, 2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.b20_a2g_sfw();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>12</row>
+            <col>2</col>
             <legend>A/G LGB Light (PW-II, 2 bags)</legend>
             <binding>
                 <command>nasal</command>
@@ -312,7 +323,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>12</row>
+            <row>14</row>
             <col>2</col>
             <legend>A/G LGB Heavy (PW-III, 2 bags)</legend>
             <binding>
@@ -323,7 +334,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>14</row>
+            <row>16</row>
             <col>2</col>
             <legend>A/G GPS (JDAM, 2 bags)</legend>
             <binding>
@@ -334,7 +345,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>16</row>
+            <row>18</row>
             <col>2</col>
             <legend>A/G Strategic (Unguided, 2 bags)</legend>
             <binding>
@@ -369,10 +380,10 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>4</row>
             <col>4</col>
-            <legend>A/G DEAD CEM (2 bags)</legend>
+            <legend>A/G DEAD SFW (2 bags)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.b30_a2g_dead();</script>
+                <script>pylons.b20_a2g_dead();</script>
             </binding>
         </button>
 
@@ -468,6 +479,23 @@
             <binding>
                 <command>nasal</command>
                 <script>pylons.a2s_antiship2er();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>19</row>
+            <col>0</col>
+            <colspan>6</colspan>
+        </hrule>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>20</row>
+            <col>4</col>
+            <legend>A/G Stand-off (JSOW, 2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_jsow();</script>
             </binding>
         </button>
 
