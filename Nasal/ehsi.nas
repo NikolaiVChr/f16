@@ -608,9 +608,10 @@ EHSI = {
         
         if (!me.elec) {
             settimer(func me.update(),0.2);
+            root.hide();
             return;
         }
-        
+        root.show();
         if (me.mode != me.modeOld) {
             me.modeTime = systime();
         }
