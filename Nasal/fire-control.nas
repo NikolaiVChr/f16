@@ -344,7 +344,7 @@ var FireControl = {
 					continue;
 				}
 				me.class = getprop("payload/armament/"~string.lc(me.typeTest)~"/class");
-				if (me.typeTest == "LAU-68") me.class = "G";
+				if (me.typeTest == defaultRocket) me.class = "G";
 				if (me.class != nil) {
 					me.isAG = find("G", me.class)!=-1 or find("M", me.class)!=-1 or find("P", me.class)!=-1;
 					if (me.isAG) {
@@ -372,7 +372,7 @@ var FireControl = {
 					continue;
 				}
 				me.class = getprop("payload/armament/"~string.lc(me.typeTest)~"/class");
-				if (me.typeTest == "LAU-68") me.class = "G";
+				if (me.typeTest == defaultRocket) me.class = "G";
 				if (me.class != nil) {
 					me.isAG = find("G", me.class)!=-1 or find("M", me.class)!=-1 or find("P", me.class)!=-1;
 					if (me.isAG) {
@@ -394,7 +394,7 @@ var FireControl = {
 					}
 					if (me.typeTest == me.selectedType) {
 						me.selType = me.nextWeapon(me.typeTest);
-						if (me.selType != nil and ((me.selType.parents[0] == armament.AIM and (me.selType.target_gnd == 1 or me.selType.target_sea==1)) or me.typeTest == "LAU-68")) {
+						if (me.selType != nil and ((me.selType.parents[0] == armament.AIM and (me.selType.target_gnd == 1 or me.selType.target_sea==1)) or me.typeTest == defaultRocket)) {
 							#me.updateCurrent();
 							me.selectedType = me.selType.type;
 							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
@@ -408,7 +408,7 @@ var FireControl = {
 						return;
 					}
 					me.class = getprop("payload/armament/"~string.lc(me.typeTest)~"/class");
-					if (me.typeTest == "LAU-68") me.class = "G";
+					if (me.typeTest == defaultRocket) me.class = "G";
 					if (me.class != nil) {
 						me.isAG = find("G", me.class)!=-1 or find("M", me.class)!=-1 or find("P", me.class)!=-1;
 						if (me.isAG) {
@@ -428,7 +428,7 @@ var FireControl = {
 			me.stopCurrent();
 		}
 		
-		me.selectedType = "20mm Cannon";
+		me.selectedType = defaultCannon;
 		me.nextWeapon(me.selectedType);
 		
 		me.selectedAdd = nil;
@@ -531,7 +531,7 @@ var FireControl = {
 			me.stopCurrent();
 		}
 		
-		me.selectedType = "20mm Cannon";
+		me.selectedType = defaultCannon;
 		me.nextWeapon(me.selectedType);
 		
 		me.selectedAdd = nil;
@@ -1212,9 +1212,12 @@ var printDebug = func (msg) {if (debug == 1) print(msg);};
 var printfDebug = func {if (debug == 1) call(printf,arg);};
 
 
+
 # This is non-generic methods, please edit it to fit your radar setup:
 # List of weapons that can be ripple/dual dropped:
 var dualWeapons = ["MK-82","MK-82AIR","MK-83","MK-84","GBU-12","GBU-24","GBU-54","CBU-87","CBU-105","GBU-31","AGM-154A","B61-7","B61-12"];
+var defaultCannon = "20mm Cannon";
+var defaultRocket = "LAU-68";
 var getCompleteRadarTargetsList = func {
 	# A list of all MP/AI aircraft/ships/surface-targets around the aircraft, including those that is outside radar line of sight etc..
 	return radar_system.getCompleteList();
