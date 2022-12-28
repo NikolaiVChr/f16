@@ -1,11 +1,12 @@
 var COLOR_YELLOW     = [1.00,1.00,0.00];
-var COLOR_BLUE_LIGHT = [0.30,0.30,1.00];
+var COLOR_BLUE_LIGHT = [0.50,0.50,1.00];
+var COLOR_SKY_LIGHT  = [0.30,0.30,1.00];
 var COLOR_RED        = [1.00,0.00,0.00];
 var COLOR_WHITE      = [1.00,1.00,1.00];
 var COLOR_BROWN      = [0.71,0.40,0.11];
 var COLOR_BROWN_DARK = [0.56,0.32,0.09];
 var COLOR_GRAY       = [0.50,0.50,0.50];
-var COLOR_BLUE_DARK  = [0.15,0.15,0.60];
+var COLOR_SKY_DARK  = [0.15,0.15,0.60];
 
 var str = func (d) {return ""~d};
 
@@ -23,9 +24,11 @@ var type = "light_nolabels";
 # content = meter per pixel of tiles
 #                   0                             5                               10                               15                      19
 var meterPerPixel = [156412,78206,39103,19551,9776,4888,2444,1222,610.984,305.492,152.746,76.373,38.187,19.093,9.547,4.773,2.387,1.193,0.596,0.298];# at equator
-var zooms      = [6, 7, 8, 9, 10, 12];
-var zoomLevels = [320, 160, 80, 40, 20, 5];
-var zoom_curr  = 2;
+var zoomsSEU      = [6, 7, 8, 9, 10, 13];# south europe
+var zooms         = zoomsSEU;
+var zoomLevels = [320, 160, 80, 40, 20, 2.5];
+var zoom_init = 2;
+var zoom_curr  = zoom_init;
 var zoom = zooms[zoom_curr];
 # display width = 0.3 meter
 # 381 pixels = 0.300 meter   1270 pixels/meter = 1:1
@@ -67,12 +70,12 @@ var providers = {
                 attribution: ""},            
 };
 
-var current_provider = "stamen_terrain_bg";
+var zoom_provider = ["stamen_terrain_bg","stamen_terrain_bg","stamen_terrain_bg","stamen_terrain_bg","stamen_terrain_bg","arcgis_terrain"];
 
-var makeUrl   = string.compileTemplate(providers[current_provider].templateLoad);
+var makeUrl   = string.compileTemplate(providers[zoom_provider[zoom_curr]].templateLoad);
 #var makeUrl   = string.compileTemplate('https://cartodb-basemaps-c.global.ssl.fastly.net/{type}/{z}/{x}/{y}.png');
 #var makePath  = string.compileTemplate(maps_base ~ '/cartoL/{z}/{x}/{y}.png');
-var makePath  = string.compileTemplate(maps_base ~ providers[current_provider].templateStore);
+var makePath  = string.compileTemplate(maps_base ~ providers[zoom_provider[zoom_curr]].templateStore);
 var num_tiles = [7, 7];# must be uneven, 7x7 will ensure we never see edge of map tiles when canvas is 1024px high.
 
 var center_tile_offset = [(num_tiles[0] - 1) / 2,(num_tiles[1] - 1) / 2];#(width/tile_size)/2,(height/tile_size)/2];
@@ -125,6 +128,7 @@ var font = {
 
 var loopTimer = nil;
 var loopTimerFast = nil;
+var loopTimerVerySlow = nil;
 
 
 #   ██████ ██████  ██    ██ 
@@ -155,6 +159,7 @@ var CDU = {
 
         me.setupVariables();
         me.calcGeometry();
+        me.calcZoomLevels();
         me.initMap();
         me.setupProperties();# before setup map
         me.setupMap();
@@ -174,6 +179,8 @@ var CDU = {
         loopTimer.start();
         loopTimerFast = maketimer(0.01, me, me.loopFast);
         loopTimerFast.start();
+        loopTimerVerySlow = maketimer(3600, me, me.calcZoomLevels);
+        loopTimerVerySlow.start();
         #me.loop();
         #print("CDU module started");
     },
@@ -210,7 +217,7 @@ var CDU = {
         if (!me.showPFD and !me.showEHSI) {
             me.ownPosition = 0.60 * me.max_y;
         } else {
-            me.ownPosition = 0.65 * me.ehsiPosY;
+            me.ownPosition = me.defaultOwnPosition;
         }
 
         me.whereIsMap();
@@ -237,7 +244,6 @@ var CDU = {
     setupVariables: func {
         me.mapShowPlaces = 1;
         me.mapSelfCentered = 1;
-        me.ownPosition = 0.50;
         me.day = 1;
         me.mapShowGrid = 0;
         me.showPFD = 1;
@@ -251,6 +257,34 @@ var CDU = {
         me.ehsiCanvas = 512;
         me.ehsiPosX = 0.5 * me.max_x;
         me.ehsiPosY = me.max_y-me.ehsiScale*me.ehsiCanvas;
+        me.defaultOwnPosition = 0.65 * me.ehsiPosY;
+        me.ownPosition = me.defaultOwnPosition;
+    },
+
+    calcZoomLevels: func {
+        me.M2TEXinit = 1/(meterPerPixel[zoomsSEU[zoom_init]]*math.cos(getprop('/position/latitude-deg')*D2R));
+        if (zoomLevels[zoom_init]*NM2M*me.M2TEXinit > me.defaultOwnPosition * 2) {
+            #print("Reduce zoom x4");
+            forindex (var zoomLvl ; zoomLevels) {
+                zooms[zoomLvl] = zoomsSEU[zoomLvl]-2;
+            }
+        } elsif (zoomLevels[zoom_init]*NM2M*me.M2TEXinit > me.defaultOwnPosition) {
+            #print("Reduce zoom x2");
+            forindex (var zoomLvl ; zoomLevels) {
+                zooms[zoomLvl] = zoomsSEU[zoomLvl]-1;
+            }
+        } elsif (zoomLevels[zoom_init]*NM2M*me.M2TEXinit < me.defaultOwnPosition * 0.5) {
+            #print("Increase zoom x2");
+            forindex (var zoomLvl ; zoomLevels) {
+                zooms[zoomLvl] = zoomsSEU[zoomLvl]+1;
+            }
+        } elsif (zoomLevels[zoom_init]*NM2M*me.M2TEXinit < me.defaultOwnPosition * 0.25) {
+            #print("Increase zoom x4");
+            forindex (var zoomLvl ; zoomLevels) {
+                zooms[zoomLvl] = zoomsSEU[zoomLvl]+2;
+            }
+        }
+        me.M2TEXinit = 1/(meterPerPixel[zooms[zoom_init]]*math.cos(getprop('/position/latitude-deg')*D2R));
     },
 
     setupProperties: func {
@@ -297,6 +331,7 @@ var CDU = {
             weight:               "fdm/jsbsim/inertia/weight-lbs",
             max_approach_alpha:   "fdm/jsbsim/systems/flight/approach-alpha-base",
             calibrated:           "fdm/jsbsim/velocities/vc-kts",
+            mach:                 "instrumentation/airspeed-indicator/indicated-mach",
         };
 
         foreach(var name; keys(me.input)) {
@@ -448,6 +483,10 @@ var CDU = {
             me.bullseye.setTranslation(me.laloToTexelMap(me.bullLat,me.bullLon));            
         }
         me.bullseye.setVisible(me.bullOn);
+        me.concScale = zoomLevels[zoom_init]*NM2M*me.M2TEXinit/me.outerRadius;
+        me.conc.setScale(me.concScale);
+        me.conc.setStrokeLineWidth(lineWidth.rangeRings/me.concScale);
+        me.conc.setVisible(zoom_curr != 5);
     },
 
     setupAttr: func {
@@ -463,7 +502,7 @@ var CDU = {
 
     updateAttr: func {
         # every once in a while display attribution for 4 seconds.
-        me.attrText.setText(providers[current_provider].attribution);
+        me.attrText.setText(providers[zoom_provider[zoom_curr]].attribution);
         me.attrText.setVisible(math.mod(int(me.input.timeElapsed.getValue()*0.25), 120) == 0)
     },
 
@@ -560,6 +599,7 @@ var CDU = {
         zoom = zooms[zoom_curr];
         M2TEX = 1/(meterPerPixel[zoom]*math.cos(getprop('/position/latitude-deg')*D2R));
         me.setRangeInfo();
+        me.changeProvider();
     },
 
     zoomOut: func() {
@@ -573,6 +613,12 @@ var CDU = {
         zoom = zooms[zoom_curr];
         M2TEX = 1/(meterPerPixel[zoom]*math.cos(getprop('/position/latitude-deg')*D2R));
         me.setRangeInfo();
+        me.changeProvider();
+    },
+
+    changeProvider: func {
+        makeUrl   = string.compileTemplate(providers[zoom_provider[zoom_curr]].templateLoad);
+        makePath  = string.compileTemplate(maps_base ~ providers[zoom_provider[zoom_curr]].templateStore);
     },
 
     setRangeInfo: func  {
@@ -802,7 +848,7 @@ var CDU = {
                 .setFontSize(font.pfdTapes, 1.0)
                 .setAlignment("left-center")
                 .setTranslation(-me.ehsiPosX*0.5, 0)
-                .setText("425");
+                .setText("425\nM0.94");
         me.pfdAlt = me.pfdRoot.createChild("text")
                 .setColor(COLOR_YELLOW)
                 .setFontSize(font.pfdTapes, 1.0)
@@ -815,8 +861,8 @@ var CDU = {
             .vert(me.ehsiPosX)
             .horiz(-me.ehsiPosX)
             .vert(-me.ehsiPosX)
-            .setColorFill(COLOR_BLUE_LIGHT)
-            .setColor(COLOR_BLUE_LIGHT)
+            .setColorFill(COLOR_SKY_LIGHT)
+            .setColor(COLOR_SKY_LIGHT)
             .setStrokeLineWidth(1)
             .set("z-index", 19)
             .setTranslation(0,me.ehsiPosY);
@@ -826,14 +872,14 @@ var CDU = {
         me.pfdRoot.setRotation(-me.input.roll.getValue()*D2R);
         me.pfdGround.setTranslation(0, 0.5*(me.max_y-me.ehsiPosY)*math.clamp(me.input.pitch.getValue()/30, -3, 3));
         me.pfdLadderGroup.setTranslation(0, 0.5*(me.max_y-me.ehsiPosY)*math.clamp(me.input.pitch.getValue()/30, -3, 3));
-        me.pfdSpeed.setText(sprintf(" %3d KCAS", me.input.calibrated.getValue()));
+        me.pfdSpeed.setText(sprintf(" %3d KCAS\n  M%.2f", me.input.calibrated.getValue(), me.input.mach.getValue()));
         me.pfdAlt.setText(sprintf("%5d FT ", me.input.alt_ft.getValue()));
         #if (me.day != lastDay) {
             if (me.day) {
-                me.pfdSky.setColorFill(COLOR_BLUE_LIGHT).setColor(COLOR_BLUE_LIGHT);
+                me.pfdSky.setColorFill(COLOR_SKY_LIGHT).setColor(COLOR_SKY_LIGHT);
                 me.pfdGround.setColorFill(COLOR_BROWN);
             } else {
-                me.pfdSky.setColorFill(COLOR_BLUE_DARK).setColor(COLOR_BLUE_DARK);
+                me.pfdSky.setColorFill(COLOR_SKY_DARK).setColor(COLOR_SKY_DARK);
                 me.pfdGround.setColorFill(COLOR_BROWN_DARK);
             }
         #}
@@ -1252,6 +1298,8 @@ var CDU = {
     },
 };
 
+var reinit_listener = setlistener("/sim/signals/reinit", func {CDU.calcZoomLevels();});
+
 var looper = nil;
 var main = func (module) {
     looper = maketimer(2, CDU, CDU.init);
@@ -1272,7 +1320,5 @@ var unload = func {
     foreach(var key ; keys(f16_CDU)) {
         #print("Deleting ",key);
         f16_CDU[key] = nil;
-    }
+    }    
 }
-
-
