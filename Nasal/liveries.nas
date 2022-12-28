@@ -110,7 +110,7 @@ var refresh = func {
 ##############################
 #####  Setup Viper style END
 ##############################
-
+var engineID = props.globals.getNode("sim/variant-engine");
 
 var diag = {
 	init: func (dir) {
@@ -160,7 +160,7 @@ var diag = {
                 var cft = n.getNode(me.cftprop, 1).getValue() or 0;
                 var chute = n.getNode(me.chuteprop, 1).getValue() or 0;
 
-                if (name == nil or index == nil or owner == nil)
+                if (name == nil or index == nil or owner == nil or (engine != nil and engineID != nil and engineID.getValue() != right(""~engine, 1)))
                     continue;
                 append(me.data, [name, index, substr(file, 0, size(file) - 4), me.dir ~ file, owner, pilot, scheme, engine, squad, serial, year, chute, cft]);
                 me.addOwner(owner);
