@@ -4,10 +4,17 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">RNLAF, J-229 "25 yrs service F-16"</name>
+    <name type="string">J-229 "25 yrs F-16 service"</name>
     <texture>Liveries/Block10/78-0229.png</texture>
     <owner type="string">RNLAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Special Color</scheme>
+    <block type="int">10</block>
+    <serial type="string">78-0229</serial>
+    <squad type="string">323 Sqn</squad>
+    <year type="string">2004</year>
    </livery>
+   
    <livery-logo>
     <texture>Liveries/yf/yf16-transp.png</texture>
    </livery-logo>
@@ -18,7 +25,7 @@
 
   <livery-pod>
         <texture>Liveries/Block10/pod.25yrsRNLAF.png</texture>
-    </livery-pod>
+  </livery-pod>
 
   <f16>
      <dragchute type="bool">false</dragchute>

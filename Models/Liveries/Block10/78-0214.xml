@@ -4,10 +4,17 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">RNLAF, TCA Programme</name>
+    <name type="string">TCA Programme</name>
     <texture>Liveries/Block10/78-0214.png</texture>
     <owner type="string">RNLAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string"></scheme>
+    <block type="int">10</block>
+    <serial type="string">78-0214</serial>
+    <squad type="string">TCA</squad>
+    <year type="string">1981</year>
    </livery>
+
    <livery-logo>
     <texture>Liveries/Block20/standard.rnlaf.logos.png</texture>
    </livery-logo>

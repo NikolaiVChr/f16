@@ -7,6 +7,12 @@
     <name type="string">NASA Testbed, #N816NA</name>
     <texture>Liveries/Block10/82-0976.png</texture>
     <owner type="string">NASA</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string"></scheme>
+    <block type="int">10</block>
+    <serial type="string">82-0976</serial>
+    <squad type="string">NASA</squad>
+    <year type="string">1991</year>
    </livery>
 
    <livery-logo>
