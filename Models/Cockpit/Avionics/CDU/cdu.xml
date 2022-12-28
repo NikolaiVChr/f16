@@ -74,6 +74,8 @@
             </hovered>
      </animation>
 
+     
+
      <!-- HDG knob -->
  <animation>
         <type>knob</type>
@@ -312,6 +314,56 @@
                     <command>set-tooltip</command>
                     <tooltip-id>e</tooltip-id>
                     <label>DAY / NIGHT</label>
+                </binding>
+            </hovered>
+     </animation>
+
+     <animation>
+      <type>pick</type>
+       <object-name>Cube.023</object-name>
+       <action>
+        <button>0</button>
+        <repeatable>false</repeatable>
+        <interval-sec>0.2</interval-sec>
+        <binding>
+                    <command>nasal</command>
+              <script>
+                f16_CDU.CDU.buttonPress(23);
+              </script>
+                </binding>
+        <!--<mod-up>
+        </mod-up>-->
+       </action>
+       <hovered>
+                <binding>
+                    <command>set-tooltip</command>
+                    <tooltip-id>h</tooltip-id>
+                    <label>TOGGLE PFD</label>
+                </binding>
+            </hovered>
+     </animation>
+
+     <animation>
+      <type>pick</type>
+       <object-name>Cube.025</object-name>
+       <action>
+        <button>0</button>
+        <repeatable>false</repeatable>
+        <interval-sec>0.2</interval-sec>
+        <binding>
+                    <command>nasal</command>
+              <script>
+                f16_CDU.CDU.buttonPress(25);
+              </script>
+                </binding>
+        <!--<mod-up>
+        </mod-up>-->
+       </action>
+       <hovered>
+                <binding>
+                    <command>set-tooltip</command>
+                    <tooltip-id>i</tooltip-id>
+                    <label>TOGGLE EHSI</label>
                 </binding>
             </hovered>
      </animation>

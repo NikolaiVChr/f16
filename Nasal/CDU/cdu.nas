@@ -23,8 +23,8 @@ var type = "light_nolabels";
 # content = meter per pixel of tiles
 #                   0                             5                               10                               15                      19
 var meterPerPixel = [156412,78206,39103,19551,9776,4888,2444,1222,610.984,305.492,152.746,76.373,38.187,19.093,9.547,4.773,2.387,1.193,0.596,0.298];# at equator
-var zooms      = [6, 7, 8, 9, 10, 11];
-var zoomLevels = [320, 160, 80, 40, 20, 10];
+var zooms      = [6, 7, 8, 9, 10, 12];
+var zoomLevels = [320, 160, 80, 40, 20, 5];
 var zoom_curr  = 2;
 var zoom = zooms[zoom_curr];
 # display width = 0.3 meter
@@ -43,7 +43,6 @@ var zoom = zooms[zoom_curr];
 
 var M2TEX = 1/(meterPerPixel[zoom]*math.cos(getprop('/position/latitude-deg')*D2R));
 var maps_base = getprop("/sim/fg-home") ~ '/cache/mapsCDU60';
-#var maps_base = getprop("/sim/fg-home") ~ '/cache/mapsTI';
 
 # max zoom 18
 # light_all,
@@ -52,11 +51,29 @@ var maps_base = getprop("/sim/fg-home") ~ '/cache/mapsCDU60';
 # light_only_labels,
 # dark_nolabels,
 # dark_only_labels
-var makeUrl   = string.compileTemplate('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}');
+
+var providers = {
+    stamen_terrain_bg: {
+                templateLoad: "https://stamen-tiles.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}.png",
+                templateStore: "/stamen-bg/{z}/{x}/{y}.png",
+                attribution: "Map tiles by Stamen Design"},
+    stamen_terrain_ln: {
+                templateLoad: "https://stamen-tiles.a.ssl.fastly.net/terrain-lines/{z}/{x}/{y}.png",
+                templateStore: "/stamen-ln/{z}/{x}/{y}.png",
+                attribution: "Map tiles by Stamen Design"},
+    arcgis_terrain: {
+                templateLoad: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                templateStore: "/arcgis/{z}/{y}/{x}.jpg",
+                attribution: ""},            
+};
+
+var current_provider = "stamen_terrain_bg";
+
+var makeUrl   = string.compileTemplate(providers[current_provider].templateLoad);
 #var makeUrl   = string.compileTemplate('https://cartodb-basemaps-c.global.ssl.fastly.net/{type}/{z}/{x}/{y}.png');
 #var makePath  = string.compileTemplate(maps_base ~ '/cartoL/{z}/{x}/{y}.png');
-var makePath  = string.compileTemplate(maps_base ~ '/arcgis/{z}/{y}/{x}.jpg');
-var num_tiles = [5, 5];# must be uneven, 5x5 will ensure we never see edge of map tiles when canvas is 512px high.
+var makePath  = string.compileTemplate(maps_base ~ providers[current_provider].templateStore);
+var num_tiles = [7, 7];# must be uneven, 7x7 will ensure we never see edge of map tiles when canvas is 1024px high.
 
 var center_tile_offset = [(num_tiles[0] - 1) / 2,(num_tiles[1] - 1) / 2];#(width/tile_size)/2,(height/tile_size)/2];
 #  (num_tiles[0] - 1) / 2,
@@ -82,9 +99,41 @@ var PLACES   = 1;
 var COLOR_DAY   = "rgb(255,255,255)";#"rgb(128,128,128)";# color fill behind map which will modulate to make it darker.
 var COLOR_NIGHT = "rgb(128,128,128)";
 
+
+var lineWidth = {
+    bullseye: 5,
+    rangeRings: 8,
+    ownship: 4,
+    rangeArrows: 4,
+    radarCone: 3,
+    threatRings: 4,
+    lines: 2,
+    route: 3,
+    pfd: 4,
+    grid: 3,
+};
+
+var font = {
+    range: 30,
+    pfdLadder: 20,
+    pfdTapes: 20,
+    attribution: 30,
+    threatRings: 25,
+    grid: 14,
+};
+
+
 var loopTimer = nil;
 var loopTimerFast = nil;
 
+
+#   ██████ ██████  ██    ██ 
+#  ██      ██   ██ ██    ██ 
+#  ██      ██   ██ ██    ██ 
+#  ██      ██   ██ ██    ██ 
+#   ██████ ██████   ██████  
+#                           
+#                           
 var CDU = {
 
     init: func {
@@ -104,8 +153,11 @@ var CDU = {
         me.root.set("font", "NotoMono-Regular.ttf");
         me.root.show();
 
+        me.setupVariables();
         me.calcGeometry();
         me.initMap();
+        me.setupProperties();# before setup map
+        me.setupMap();
         me.setupGrid();# after setupgrid
         me.setupFunctions();#before symbols
         me.setupSymbols();
@@ -113,6 +165,7 @@ var CDU = {
         me.setupLines();
         me.setupEHSI();
         me.setupPFD();
+        me.setupAttr();
         
         me.setRangeInfo();
         me.loadedCDU = 1;
@@ -141,6 +194,56 @@ var CDU = {
         #print("Deleted CDU module");
     },
 
+    loop: func {
+        if (!me.loadedCDU) {
+            print("Unloaded CDU Looping");
+            return;
+        }
+        if (me.day) {
+            me.cduCanvas.setColorBackground(0.3, 0.3, 0.3, 1.0);
+        } else {
+            me.cduCanvas.setColorBackground(0.15, 0.15, 0.15, 1.0);
+        }
+
+        me.selfCoord = geo.aircraft_position();
+
+        if (!me.showPFD and !me.showEHSI) {
+            me.ownPosition = 0.60 * me.max_y;
+        } else {
+            me.ownPosition = 0.65 * me.ehsiPosY;
+        }
+
+        me.whereIsMap();
+        me.updateMap();
+        me.updateRadarCone();
+        me.updateGrid();
+        me.updateSymbols();
+        me.updateThreatRings();
+        me.updateLines();# after updateRadarCone
+        me.updateRoute();# after updateLines
+        me.updateAttr();
+        #print("CDU Looping ",me.loadedCDU);
+    },
+
+    loopFast: func {
+        if (!me.loadedCDU) {
+            print("Unloaded CDU Looping");
+            return;
+        }
+        me.updatePFD();
+        #print("CDU Looping ",me.loadedCDU);
+    },
+
+    setupVariables: func {
+        me.mapShowPlaces = 1;
+        me.mapSelfCentered = 1;
+        me.ownPosition = 0.50;
+        me.day = 1;
+        me.mapShowGrid = 0;
+        me.showPFD = 1;
+        me.showEHSI = 1;
+    },
+
     calcGeometry: func {
         me.max_x = me.canvasX/1.25;
         me.max_y = me.canvasY;
@@ -150,6 +253,109 @@ var CDU = {
         me.ehsiPosY = me.max_y-me.ehsiScale*me.ehsiCanvas;
     },
 
+    setupProperties: func {
+        me.input = {
+            alt_ft:               "instrumentation/altimeter/indicated-altitude-ft",
+            alt_true_ft:          "position/altitude-ft",
+            heading:              "instrumentation/heading-indicator/indicated-heading-deg",
+            radarStandby:         "instrumentation/radar/radar-standby",
+            rad_alt:              "instrumentation/radar-altimeter/radar-altitude-ft",
+            rad_alt_ready:        "instrumentation/radar-altimeter/ready",
+            rmActive:             "autopilot/route-manager/active",
+            rmDist:               "autopilot/route-manager/wp/dist",
+            rmId:                 "autopilot/route-manager/wp/id",
+            rmBearing:            "autopilot/route-manager/wp/true-bearing-deg",
+            RMCurrWaypoint:       "autopilot/route-manager/current-wp",
+            roll:                 "instrumentation/attitude-indicator/indicated-roll-deg",
+            timeElapsed:          "sim/time/elapsed-sec",
+            headTrue:             "orientation/heading-deg",
+            fpv_up:               "instrumentation/fpv/angle-up-deg",
+            fpv_right:            "instrumentation/fpv/angle-right-deg",
+            roll:                 "orientation/roll-deg",
+            pitch:                "orientation/pitch-deg",
+            radar_serv:           "instrumentation/radar/serviceable",
+            nav0InRange:          "instrumentation/nav[0]/in-range",
+            APLockHeading:        "autopilot/locks/heading",
+            APTrueHeadingErr:     "autopilot/internal/true-heading-error-deg",
+            APnav0HeadingErr:     "autopilot/internal/nav1-heading-error-deg",
+            APHeadingBug:         "autopilot/settings/heading-bug-deg",
+            RMActive:             "autopilot/route-manager/active",
+            nav0Heading:          "instrumentation/nav[0]/heading-deg",
+            ias:                  "instrumentation/airspeed-indicator/indicated-speed-kt",
+            tas:                  "instrumentation/airspeed-indicator/true-speed-kt",
+            wow0:                 "fdm/jsbsim/gear/unit[0]/WOW",
+            wow1:                 "fdm/jsbsim/gear/unit[1]/WOW",
+            wow2:                 "fdm/jsbsim/gear/unit[2]/WOW",
+            gearsPos:             "gear/gear/position-norm",
+            latitude:             "position/latitude-deg",
+            longitude:            "position/longitude-deg",
+            elevCmd:              "fdm/jsbsim/fcs/elevator-cmd-norm",
+            ailCmd:               "fdm/jsbsim/fcs/aileron-cmd-norm",
+            instrNorm:            "controls/lighting/instruments-norm",
+            linker:               "sim/va"~"riant-id",
+            datalink:             "/instrumentation/datalink/on",
+            weight:               "fdm/jsbsim/inertia/weight-lbs",
+            max_approach_alpha:   "fdm/jsbsim/systems/flight/approach-alpha-base",
+            calibrated:           "fdm/jsbsim/velocities/vc-kts",
+        };
+
+        foreach(var name; keys(me.input)) {
+            me.input[name] = props.globals.getNode(me.input[name], 1);
+        }
+    },
+
+
+#  ███████ ██    ██ ███    ██  ██████ ████████ ██  ██████  ███    ██ ███████ 
+#  ██      ██    ██ ████   ██ ██         ██    ██ ██    ██ ████   ██ ██      
+#  █████   ██    ██ ██ ██  ██ ██         ██    ██ ██    ██ ██ ██  ██ ███████ 
+#  ██      ██    ██ ██  ██ ██ ██         ██    ██ ██    ██ ██  ██ ██      ██ 
+#  ██       ██████  ██   ████  ██████    ██    ██  ██████  ██   ████ ███████ 
+#                                                                            
+#                                                                            
+    setupFunctions: func {
+        me.buttonMap = {
+            b1: {method: me.zoomOut, pos: [0,90]},
+            b2: {method: me.zoomIn, pos: [0,210]},
+            b8: {method: me.toggleDay, pos: [0,950]},
+            b16: {method: me.toggleGrid, pos: [me.max_x,950]},
+            b23: {method: me.togglePFD, pos: [800,me.max_y]},
+            b25: {method: me.toggleEHSI, pos: [200,me.max_y]},
+        };
+    },
+
+    buttonPress: func (button) {
+        button = "b"~button;
+        call(me.buttonMap[button].method, nil, me, me);
+    },
+
+    buttonRelease: func (button) {
+        button = "b"~button;
+        call(me.buttonMap[button].methodRelease, nil, me, me);
+    },
+
+    toggleDay: func {
+        me.day = !me.day;
+    },
+
+    toggleGrid: func {
+        me.mapShowGrid = !me.mapShowGrid;
+    },
+
+    togglePFD: func {
+        me.showPFD = !me.showPFD;
+    },
+
+    toggleEHSI: func {
+        me.showEHSI = !me.showEHSI;
+    },
+
+#   ██████  ██    ██ ███████ ██████  ██       █████  ██    ██ ███████ 
+#  ██    ██ ██    ██ ██      ██   ██ ██      ██   ██  ██  ██  ██      
+#  ██    ██ ██    ██ █████   ██████  ██      ███████   ████   ███████ 
+#  ██    ██  ██  ██  ██      ██   ██ ██      ██   ██    ██         ██ 
+#   ██████    ████   ███████ ██   ██ ███████ ██   ██    ██    ███████ 
+#                                                                     
+#                                                                     
     setupSymbols: func {
         # ownship symbol
         me.selfSymbol = me.rootCenter.createChild("path")
@@ -161,7 +367,7 @@ var CDU = {
                .horiz(10)
               .setColor(COLOR_BLUE_LIGHT)
               .set("z-index", 10)
-              .setStrokeLineWidth(2);
+              .setStrokeLineWidth(lineWidth.ownship);
 
         me.cone = me.rootCenter.createChild("group")
             .set("z-index",11);#radar cone
@@ -176,7 +382,7 @@ var CDU = {
             .lineTo(20,30)
             .lineTo(-20, 30)
             .lineTo(0,0)
-            .setStrokeLineWidth(3)
+            .setStrokeLineWidth(lineWidth.rangeArrows)
             .set("z-index",7)
             .setColor(COLOR_YELLOW)
             .setTranslation(me.buttonMap.b1.pos[0]+40, me.buttonMap.b1.pos[1]-15);
@@ -184,7 +390,7 @@ var CDU = {
         me.rangeText = me.root.createChild("text")
             .set("z-index",7)
             .setColor(COLOR_YELLOW)
-            .setFontSize(30, 1.0)
+            .setFontSize(font.range, 1.0)
             .setAlignment("center-center")
             .setTranslation(me.buttonMap.b1.pos[0]+40, (me.buttonMap.b1.pos[1]+me.buttonMap.b2.pos[1])*0.5)
             .setFont("NotoMono-Regular.ttf");            
@@ -193,7 +399,7 @@ var CDU = {
             .lineTo(20,-30)
             .lineTo(-20, -30)
             .lineTo(0,0)
-            .setStrokeLineWidth(3)
+            .setStrokeLineWidth(lineWidth.rangeArrows)
             .set("z-index",7)
             .setColor(COLOR_YELLOW)
             .setTranslation(me.buttonMap.b2.pos[0]+40, me.buttonMap.b2.pos[1]+15);
@@ -215,7 +421,7 @@ var CDU = {
             .horiz(-15)
             .moveTo(me.innerRadius,0)#east
             .horiz(15)
-            .setStrokeLineWidth(8)
+            .setStrokeLineWidth(lineWidth.rangeRings)
             .set("z-index",7)
             .setColor(COLOR_GRAY);
         me.bullseyeSize = 50;
@@ -229,11 +435,40 @@ var CDU = {
             .moveTo(-me.bullseyeSize/5,0)
             .arcSmallCW(me.bullseyeSize/5,me.bullseyeSize/5, 0,  me.bullseyeSize/5*2, 0)
             .arcSmallCW(me.bullseyeSize/5,me.bullseyeSize/5, 0, -me.bullseyeSize/5*2, 0)
-            .setStrokeLineWidth(3)
+            .setStrokeLineWidth(lineWidth.bullseye)
             .setColor(COLOR_BLUE_LIGHT);
     },
 
+    updateSymbols: func {
+        me.bullPt = steerpoints.getNumber(555);
+        me.bullOn = me.bullPt != nil;
+        if (me.bullOn) {
+            me.bullLat = me.bullPt.lat;
+            me.bullLon = me.bullPt.lon;
+            me.bullseye.setTranslation(me.laloToTexelMap(me.bullLat,me.bullLon));            
+        }
+        me.bullseye.setVisible(me.bullOn);
+    },
+
+    setupAttr: func {
+        me.attrText = me.root.createChild("text")
+            .set("z-index",70)
+            .setColor(COLOR_WHITE)
+            .setFontSize(font.attribution, 1.0)
+            .setText("")
+            .setAlignment("center-center")
+            .setTranslation(me.max_x*0.5,me.max_y*0.5)
+            .setFont("NotoMono-Regular.ttf");
+    },
+
+    updateAttr: func {
+        # every once in a while display attribution for 4 seconds.
+        me.attrText.setText(providers[current_provider].attribution);
+        me.attrText.setVisible(math.mod(int(me.input.timeElapsed.getValue()*0.25), 120) == 0)
+    },
+
     setupLines: func {
+        # Used by lines and route
         me.linesGroup = me.mapCenter.createChild("group");
     },
 
@@ -261,7 +496,7 @@ var CDU = {
                         me.linesGroup.createChild("path")
                             .moveTo(me.stptPos)
                             .lineTo(me.stptPrevPos)
-                            .setStrokeLineWidth(2)
+                            .setStrokeLineWidth(lineWidth.lines)
                             .set("z-index",4)
                             .setColor(COLOR_WHITE)
                             .update();
@@ -269,7 +504,7 @@ var CDU = {
                         me.linesGroup.createChild("path")
                             .moveTo(me.stptPos)
                             .lineTo(me.stptPrevPos)
-                            .setStrokeLineWidth(2)
+                            .setStrokeLineWidth(lineWidth.lines)
                             .setStrokeDashArray([10, 10])
                             .set("z-index",4)
                             .setColor(COLOR_WHITE)
@@ -290,10 +525,10 @@ var CDU = {
                 me.wp = me.plan.getWP(me.j);
                 me.stptPos = me.laloToTexelMap(me.wp.lat,me.wp.lon);
                 me.wp = me.linesGroup.createChild("path")
-                    .moveTo(me.stptPos[0]-5,me.stptPos[1])
-                    .arcSmallCW(5,5, 0, 5*2, 0)
-                    .arcSmallCW(5,5, 0,-5*2, 0)
-                    .setStrokeLineWidth(3)
+                    .moveTo(me.stptPos[0]-8,me.stptPos[1])
+                    .arcSmallCW(8,8, 0, 8*2, 0)
+                    .arcSmallCW(8,8, 0,-8*2, 0)
+                    .setStrokeLineWidth(lineWidth.route)
                     .set("z-index",4)
                     .setColor(COLOR_WHITE)
                     .update();
@@ -304,7 +539,7 @@ var CDU = {
                     me.linesGroup.createChild("path")
                         .moveTo(me.stptPos)
                         .lineTo(me.stptPrevPos)
-                        .setStrokeLineWidth(3)
+                        .setStrokeLineWidth(lineWidth.route)
                         .set("z-index",4)
                         .setColor(COLOR_WHITE)
                         .update();
@@ -314,13 +549,327 @@ var CDU = {
         }
     },
 
-    setupFunctions: func {
-        me.buttonMap = {
-            b1: {method: me.zoomOut, pos: [0,90]},
-            b2: {method: me.zoomIn, pos: [0,210]},
-            b8: {method: me.toggleDay, pos: [0,950]},
-            b16: {method: me.toggleGrid, pos: [me.max_x,950]},
-        };
+    zoomIn: func() {
+        #if (ti.active == 0) return;
+        zoom_curr += 1;
+        if (zoom_curr >= size(zooms)) {
+            zoom_curr = size(zooms)-1;
+            return;
+            zoom_curr = 0;
+        }
+        zoom = zooms[zoom_curr];
+        M2TEX = 1/(meterPerPixel[zoom]*math.cos(getprop('/position/latitude-deg')*D2R));
+        me.setRangeInfo();
+    },
+
+    zoomOut: func() {
+        #if (ti.active == 0) return;
+        zoom_curr -= 1;
+        if (zoom_curr < 0) {
+            zoom_curr = 0;
+            return;
+            zoom_curr = 4;
+        }
+        zoom = zooms[zoom_curr];
+        M2TEX = 1/(meterPerPixel[zoom]*math.cos(getprop('/position/latitude-deg')*D2R));
+        me.setRangeInfo();
+    },
+
+    setRangeInfo: func  {
+        me.range = zoomLevels[zoom_curr];#(me.outerRadius/M2TEX)*M2NM;
+        me.rangeText.setText(sprintf("%d", me.range));#print(sprintf("Map range %5.1f NM", me.range));
+    },
+
+    updateRadarCone: func {
+        me.cone.removeAllChildren();
+        if (1 or radar_system.apg68Radar.enabled) {
+            if (radar_system.apg68Radar.showAZinHSD()) {
+
+                me.rdrrng = radar_system.apg68Radar.getRange();
+                me.rdrRangePixels = (me.rdrrng*NM2M)*M2TEX;
+                me.az = radar_system.apg68Radar.currentMode.az;
+                
+
+                me.radarX1 =  me.rdrRangePixels*math.cos((90-me.az-radar_system.apg68Radar.getDeviation())*D2R);
+                me.radarY1 = -me.rdrRangePixels*math.sin((90-me.az-radar_system.apg68Radar.getDeviation())*D2R);
+                me.radarX2 =  me.rdrRangePixels*math.cos((90+me.az-radar_system.apg68Radar.getDeviation())*D2R);
+                me.radarY2 = -me.rdrRangePixels*math.sin((90+me.az-radar_system.apg68Radar.getDeviation())*D2R);
+                me.cone.createChild("path")
+                            .moveTo(0,0)
+                            .lineTo(me.radarX1,me.radarY1)#right
+                            .moveTo(0,0)
+                            .lineTo(me.radarX2,me.radarY2)#left
+                            .arcSmallCW(me.rdrRangePixels,me.rdrRangePixels, 0, me.radarX1-me.radarX2, me.radarY1-me.radarY2)
+                            .setStrokeLineWidth(lineWidth.radarCone)
+                            .set("z-index",9)
+                            .setColor(COLOR_BLUE_LIGHT)
+                            .update();
+            }
+        }
+    },
+
+    laloToTexel: func (la, lo) {
+        me.coord = geo.Coord.new();
+        me.coord.set_latlon(la, lo);
+        me.coordSelf = geo.Coord.new();#TODO: dont create this every time method is called
+        me.coordSelf.set_latlon(me.lat_own, me.lon_own);
+        me.angle = (me.coordSelf.course_to(me.coord)-me.input.heading.getValue())*D2R;
+        me.pos_xx        = -me.coordSelf.distance_to(me.coord)*M2TEX * math.cos(me.angle + math.pi/2);
+        me.pos_yy        = -me.coordSelf.distance_to(me.coord)*M2TEX * math.sin(me.angle + math.pi/2);
+        return [me.pos_xx, me.pos_yy];#relative to rootCenter
+    },
+    
+    laloToTexelMap: func (la, lo) {
+        me.coord = geo.Coord.new();
+        me.coord.set_latlon(la, lo);
+        me.coordSelf = geo.Coord.new();#TODO: dont create this every time method is called
+        me.coordSelf.set_latlon(me.lat, me.lon);
+        me.angle = (me.coordSelf.course_to(me.coord))*D2R;
+        me.pos_xx        = -me.coordSelf.distance_to(me.coord)*M2TEX * math.cos(me.angle + math.pi/2);
+        me.pos_yy        = -me.coordSelf.distance_to(me.coord)*M2TEX * math.sin(me.angle + math.pi/2);
+        return [me.pos_xx, me.pos_yy];#relative to mapCenter
+    },
+
+    TexelToLaLoMap: func (x,y) {#relative to map center
+        x /= M2TEX;
+        y /= M2TEX;
+        me.mDist  = math.sqrt(x*x+y*y);
+        if (me.mDist == 0) {
+            return [me.lat, me.lon];
+        }
+        me.acosInput = clamp(x/me.mDist,-1,1);
+        if (y<0) {
+            me.texAngle = math.acos(me.acosInput);#unit circle on TI
+        } else {
+            me.texAngle = -math.acos(me.acosInput);
+        }
+        #printf("%d degs %0.1f NM", me.texAngle*R2D, me.mDist*M2NM);
+        me.texAngle  = -me.texAngle*R2D+90;#convert from unit circle to heading circle, 0=up on display
+        me.headAngle = me.input.heading.getValue()+me.texAngle;#bearing
+        #printf("%d bearing   %d rel bearing", me.headAngle, me.texAngle);
+        me.coordSelf = geo.Coord.new();#TODO: dont create this every time method is called
+        me.coordSelf.set_latlon(me.lat, me.lon);
+        me.coordSelf.apply_course_distance(me.headAngle, me.mDist);
+
+        return [me.coordSelf.lat(), me.coordSelf.lon()];
+    },
+
+    setupThreatRings: func {
+        me.threat_c = [];
+        me.threat_t = [];
+        for (var g = 0; g < steerpoints.number_of_threat_circles; g+=1) {
+            append(me.threat_c, me.mapCenter.createChild("path")
+                .moveTo(-50,0)
+                .arcSmallCW(50,50, 0,  50*2, 0)
+                .arcSmallCW(50,50, 0, -50*2, 0)
+                .setStrokeLineWidth(lineWidth.threatRings)
+                .set("z-index",2)
+                .hide());
+            append(me.threat_t, me.mapCenter.createChild("text")
+                .setAlignment("center-center")
+                .set("z-index",2)
+                .setFontSize(font.threatRings, 1.0));
+        }
+    },
+
+    updateThreatRings: func {
+        for (var l = 0; l<steerpoints.number_of_threat_circles;l+=1) {
+            # threat rings
+            me.ci = me.threat_c[l];
+            me.cit = me.threat_t[l];
+
+            me.cnu = steerpoints.getNumber(300+l);
+            if (me.cnu == nil) {
+                me.ci.hide();
+                me.cit.hide();
+                #print("Ignoring ", 300+l);
+                continue;
+            }
+            me.la = me.cnu.lat;
+            me.lo = me.cnu.lon;
+            me.ra = me.cnu.radius;
+            me.ty = me.cnu.type;
+            
+            
+            if (me.la != nil and me.lo != nil and me.ra != nil and me.ra > 0) {
+                me.wpC = geo.Coord.new();
+                me.wpC.set_latlon(me.la,me.lo);
+                me.legDistance = me.selfCoord.distance_to(me.wpC)*M2NM;
+                me.ringPos = me.laloToTexelMap(me.la,me.lo);
+                me.ci.setTranslation(me.ringPos);
+                me.ringScale = M2TEX*me.ra*NM2M/50;
+                me.ci.setScale(me.ringScale);
+                me.ci.setStrokeLineWidth(lineWidth.threatRings/me.ringScale);
+                me.co = me.ra > me.legDistance?COLOR_RED:COLOR_YELLOW;
+                #print("Painting ", 300+l," in ", me.ra > me.legDistance?"red":"yellow");
+                me.ci.setColor(me.co);
+                me.ci.show();
+                me.cit.setText(me.ty);
+                me.cit.setTranslation(me.ringPos);
+                me.cit.setColor(me.co);
+                me.cit.show();
+            } else {
+                me.ci.hide();
+                me.cit.hide();
+            }
+        }
+    },
+
+#  ██ ███    ██ ███████ ████████ ██████  ██    ██ ███    ███ ███████ ███    ██ ████████ ███████ 
+#  ██ ████   ██ ██         ██    ██   ██ ██    ██ ████  ████ ██      ████   ██    ██    ██      
+#  ██ ██ ██  ██ ███████    ██    ██████  ██    ██ ██ ████ ██ █████   ██ ██  ██    ██    ███████ 
+#  ██ ██  ██ ██      ██    ██    ██   ██ ██    ██ ██  ██  ██ ██      ██  ██ ██    ██         ██ 
+#  ██ ██   ████ ███████    ██    ██   ██  ██████  ██      ██ ███████ ██   ████    ██    ███████ 
+#                                                                                               
+#                                                                                               
+    setupPFD: func {
+        me.pfdRoot = me.root.createChild("group")
+            .set("z-index", 20)
+            .set("clip", sprintf("rect(%dpx, %dpx, %dpx, %dpx)",me.ehsiPosY,me.ehsiPosX,me.max_y,0))#top,right,bottom,left
+            .setTranslation(me.ehsiPosX*0.5, me.ehsiPosY+(me.max_y-me.ehsiPosY)*0.5);
+        me.pfdGround = me.pfdRoot.createChild("path")
+            .moveTo(-me.max_x, 0)
+            .horiz(me.max_x*2)
+            .vert(me.max_y)
+            .horiz(-me.max_x*2)
+            .vert(-me.max_y)
+            .setColorFill(COLOR_BROWN)
+            .setColor(COLOR_YELLOW)
+            .set("z-index", 20)
+            .setStrokeLineWidth(lineWidth.pfd);
+        me.ladderStep = (me.max_y-me.ehsiPosY)/6;# 10 degs
+        me.ladderWidth = me.ehsiPosX*0.15;
+        if(me.input.linker.getValue()!=3*2) settimer(4, unload);
+        me.pfdLadderGroup = me.pfdRoot.createChild("group")
+            .set("z-index", 20);
+        me.pfdLadder = me.pfdLadderGroup.createChild("path")
+            .moveTo(-me.ladderWidth, me.ladderStep)
+            .horiz(me.ladderWidth*2)
+            .moveTo(-me.ladderWidth, me.ladderStep*2)
+            .horiz(me.ladderWidth*2)
+            .moveTo(-me.ladderWidth, me.ladderStep*3)
+            .horiz(me.ladderWidth*2)
+            .moveTo(-me.ladderWidth, me.ladderStep*4)
+            .horiz(me.ladderWidth*2)
+            .moveTo(-me.ladderWidth, me.ladderStep*5)
+            .horiz(me.ladderWidth*2)
+            .moveTo(-me.ladderWidth, me.ladderStep*6)
+            .horiz(me.ladderWidth*2)
+            .moveTo(-me.ladderWidth, me.ladderStep*7)
+            .horiz(me.ladderWidth*2)
+            .moveTo(-me.ladderWidth, me.ladderStep*8)
+            .horiz(me.ladderWidth*2)
+            .moveTo(-me.ladderWidth, me.ladderStep*9)
+            .horiz(me.ladderWidth*2)
+            .moveTo(-me.ladderWidth, -me.ladderStep)
+            .horiz(me.ladderWidth*2)
+            .moveTo(-me.ladderWidth, -me.ladderStep*2)
+            .horiz(me.ladderWidth*2)
+            .moveTo(-me.ladderWidth, -me.ladderStep*3)
+            .horiz(me.ladderWidth*2)
+            .moveTo(-me.ladderWidth, -me.ladderStep*4)
+            .horiz(me.ladderWidth*2)
+            .moveTo(-me.ladderWidth, -me.ladderStep*5)
+            .horiz(me.ladderWidth*2)
+            .moveTo(-me.ladderWidth, -me.ladderStep*6)
+            .horiz(me.ladderWidth*2)
+            .moveTo(-me.ladderWidth, -me.ladderStep*7)
+            .horiz(me.ladderWidth*2)
+            .moveTo(-me.ladderWidth, -me.ladderStep*8)
+            .horiz(me.ladderWidth*2)
+            .moveTo(-me.ladderWidth, -me.ladderStep*9)
+            .horiz(me.ladderWidth*2)
+            .setColor(1,1,0)
+            .setStrokeLineWidth(lineWidth.pfd);
+        for(me.ladderI = -9;me.ladderI<10;me.ladderI+=1) {
+            if (me.ladderI == 0) continue;
+            me.pfdLadderGroup.createChild("text")
+                .setColor(COLOR_YELLOW)
+                .setFontSize(font.pfdLadder, 1.0)
+                .setAlignment("right-center")
+                .setTranslation(-me.ladderWidth, me.ladderStep*me.ladderI)
+                .setText((-me.ladderI*10)~" ");
+            me.pfdLadderGroup.createChild("text")
+                .setColor(COLOR_YELLOW)
+                .setFontSize(font.pfdLadder, 1.0)
+                .setAlignment("left-center")
+                .setTranslation(me.ladderWidth, me.ladderStep*me.ladderI)
+                .setText(" "~(-me.ladderI*10));
+        }
+
+        me.pfdSpeed = me.pfdRoot.createChild("text")
+                .setColor(COLOR_YELLOW)
+                .setFontSize(font.pfdTapes, 1.0)
+                .setAlignment("left-center")
+                .setTranslation(-me.ehsiPosX*0.5, 0)
+                .setText("425");
+        me.pfdAlt = me.pfdRoot.createChild("text")
+                .setColor(COLOR_YELLOW)
+                .setFontSize(font.pfdTapes, 1.0)
+                .setAlignment("right-center")
+                .setTranslation(me.ehsiPosX*0.5, 0)
+                .setText("18000");
+
+        me.pfdSky = me.root.createChild("path")
+            .horiz(me.ehsiPosX)
+            .vert(me.ehsiPosX)
+            .horiz(-me.ehsiPosX)
+            .vert(-me.ehsiPosX)
+            .setColorFill(COLOR_BLUE_LIGHT)
+            .setColor(COLOR_BLUE_LIGHT)
+            .setStrokeLineWidth(1)
+            .set("z-index", 19)
+            .setTranslation(0,me.ehsiPosY);
+    },
+
+    updatePFD: func {
+        me.pfdRoot.setRotation(-me.input.roll.getValue()*D2R);
+        me.pfdGround.setTranslation(0, 0.5*(me.max_y-me.ehsiPosY)*math.clamp(me.input.pitch.getValue()/30, -3, 3));
+        me.pfdLadderGroup.setTranslation(0, 0.5*(me.max_y-me.ehsiPosY)*math.clamp(me.input.pitch.getValue()/30, -3, 3));
+        me.pfdSpeed.setText(sprintf(" %3d KCAS", me.input.calibrated.getValue()));
+        me.pfdAlt.setText(sprintf("%5d FT ", me.input.alt_ft.getValue()));
+        #if (me.day != lastDay) {
+            if (me.day) {
+                me.pfdSky.setColorFill(COLOR_BLUE_LIGHT).setColor(COLOR_BLUE_LIGHT);
+                me.pfdGround.setColorFill(COLOR_BROWN);
+            } else {
+                me.pfdSky.setColorFill(COLOR_BLUE_DARK).setColor(COLOR_BLUE_DARK);
+                me.pfdGround.setColorFill(COLOR_BROWN_DARK);
+            }
+        #}
+        me.EHSI.setVisible(me.showEHSI);
+        me.pfdRoot.setVisible(me.showPFD);
+        me.pfdSky.setVisible(me.showPFD);
+    },
+
+    setupEHSI: func {
+        me.EHSI = me.root.createChild("image")
+            .set("src", "canvas://by-index/texture[3]")
+            .setTranslation(me.ehsiPosX,me.ehsiPosY)
+            .setScale(me.ehsiScale)
+            .set("z-index", 20);
+    },
+
+#   ██████  ██████  ██ ██████  
+#  ██       ██   ██ ██ ██   ██ 
+#  ██   ███ ██████  ██ ██   ██ 
+#  ██    ██ ██   ██ ██ ██   ██ 
+#   ██████  ██   ██ ██ ██████  
+#                              
+#                              
+    setupGrid: func {
+        me.gridGroup = me.mapCenter.createChild("group")
+            .set("z-index", 24);
+        me.gridGroupText = me.mapCenter.createChild("group")
+            .set("z-index", 25);
+        me.last_lat = 0;
+        me.last_lon = 0;
+        me.last_range = 0;
+        me.last_result = 0;
+        me.gridTextO = [];
+        me.gridTextA = [];
+        me.gridTextMaxA = -1;
+        me.gridTextMaxO = -1;
     },
 
     updateGrid: func {
@@ -482,7 +1031,7 @@ var CDU = {
                     me.posi1 = me.laloToTexelMap(coord.lat,coord.lon);
                     me.aline = me.gridGroup.createChild("path")
                         .moveTo(me.posi1)
-                        .setStrokeLineWidth(3)
+                        .setStrokeLineWidth(lineWidth.grid)
                         .setColor(COLOR_YELLOW);
                 }
                 skip = 0;
@@ -507,7 +1056,7 @@ var CDU = {
                         .setColor(COLOR_YELLOW)
                         .setAlignment("center-top")
                         .setTranslation(pos)
-                        .setFontSize(14, 1));
+                        .setFontSize(font.grid, 1));
             me.gridTextMaxO += 1;   
         } else {
             me.gridTextO[me.gridTextNoO].setText(text).setTranslation(pos);
@@ -523,7 +1072,7 @@ var CDU = {
                         .setColor(COLOR_YELLOW)
                         .setAlignment("center-bottom")
                         .setTranslation(pos)
-                        .setFontSize(14, 1));
+                        .setFontSize(font.grid, 1));
             me.gridTextMaxA += 1;   
         } else {
             me.gridTextA[me.gridTextNoA].setText(text).setTranslation(pos);
@@ -532,267 +1081,13 @@ var CDU = {
         me.gridTextNoA += 1;
     },
 
-    zoomIn: func() {
-        #if (ti.active == 0) return;
-        zoom_curr += 1;
-        if (zoom_curr >= size(zooms)) {
-            zoom_curr = size(zooms)-1;
-            return;
-            zoom_curr = 0;
-        }
-        zoom = zooms[zoom_curr];
-        M2TEX = 1/(meterPerPixel[zoom]*math.cos(getprop('/position/latitude-deg')*D2R));
-        me.setRangeInfo();
-    },
-
-    zoomOut: func() {
-        #if (ti.active == 0) return;
-        zoom_curr -= 1;
-        if (zoom_curr < 0) {
-            zoom_curr = 0;
-            return;
-            zoom_curr = 4;
-        }
-        zoom = zooms[zoom_curr];
-        M2TEX = 1/(meterPerPixel[zoom]*math.cos(getprop('/position/latitude-deg')*D2R));
-        me.setRangeInfo();
-    },
-
-    setRangeInfo: func  {
-        me.range = zoomLevels[zoom_curr];#(me.outerRadius/M2TEX)*M2NM;
-        me.rangeText.setText(sprintf("%d", me.range));#print(sprintf("Map range %5.1f NM", me.range));
-    },
-
-    buttonPress: func (button) {
-        button = "b"~button;
-        call(me.buttonMap[button].method, nil, me, me);
-    },
-
-    buttonRelease: func (button) {
-        button = "b"~button;
-        call(me.buttonMap[button].methodRelease, nil, me, me);
-    },
-
-    setupPFD: func {
-        me.pfdRoot = me.root.createChild("group")
-            .set("z-index", 20)
-            .set("clip", sprintf("rect(%dpx, %dpx, %dpx, %dpx)",me.ehsiPosY,me.ehsiPosX,me.max_y,0))#top,right,bottom,left
-            .setTranslation(me.ehsiPosX*0.5, me.ehsiPosY+(me.max_y-me.ehsiPosY)*0.5);
-        me.pfdGround = me.pfdRoot.createChild("path")
-            .moveTo(-me.max_x, 0)
-            .horiz(me.max_x*2)
-            .vert(me.max_y)
-            .horiz(-me.max_x*2)
-            .vert(-me.max_y)
-            .setColorFill(COLOR_BROWN)
-            .setColor(COLOR_YELLOW)
-            .set("z-index", 20)
-            .setStrokeLineWidth(4);
-        me.ladderStep = (me.max_y-me.ehsiPosY)/6;# 10 degs
-        me.ladderWidth = me.ehsiPosX*0.15;
-        if(me.input.linker.getValue()!=3*2) settimer(4, unload);
-        me.pfdLadderGroup = me.pfdRoot.createChild("group")
-            .set("z-index", 20);
-        me.pfdLadder = me.pfdLadderGroup.createChild("path")
-            .moveTo(-me.ladderWidth, me.ladderStep)
-            .horiz(me.ladderWidth*2)
-            .moveTo(-me.ladderWidth, me.ladderStep*2)
-            .horiz(me.ladderWidth*2)
-            .moveTo(-me.ladderWidth, me.ladderStep*3)
-            .horiz(me.ladderWidth*2)
-            .moveTo(-me.ladderWidth, me.ladderStep*4)
-            .horiz(me.ladderWidth*2)
-            .moveTo(-me.ladderWidth, me.ladderStep*5)
-            .horiz(me.ladderWidth*2)
-            .moveTo(-me.ladderWidth, me.ladderStep*6)
-            .horiz(me.ladderWidth*2)
-            .moveTo(-me.ladderWidth, me.ladderStep*7)
-            .horiz(me.ladderWidth*2)
-            .moveTo(-me.ladderWidth, me.ladderStep*8)
-            .horiz(me.ladderWidth*2)
-            .moveTo(-me.ladderWidth, me.ladderStep*9)
-            .horiz(me.ladderWidth*2)
-            .moveTo(-me.ladderWidth, -me.ladderStep)
-            .horiz(me.ladderWidth*2)
-            .moveTo(-me.ladderWidth, -me.ladderStep*2)
-            .horiz(me.ladderWidth*2)
-            .moveTo(-me.ladderWidth, -me.ladderStep*3)
-            .horiz(me.ladderWidth*2)
-            .moveTo(-me.ladderWidth, -me.ladderStep*4)
-            .horiz(me.ladderWidth*2)
-            .moveTo(-me.ladderWidth, -me.ladderStep*5)
-            .horiz(me.ladderWidth*2)
-            .moveTo(-me.ladderWidth, -me.ladderStep*6)
-            .horiz(me.ladderWidth*2)
-            .moveTo(-me.ladderWidth, -me.ladderStep*7)
-            .horiz(me.ladderWidth*2)
-            .moveTo(-me.ladderWidth, -me.ladderStep*8)
-            .horiz(me.ladderWidth*2)
-            .moveTo(-me.ladderWidth, -me.ladderStep*9)
-            .horiz(me.ladderWidth*2)
-            .setColor(1,1,0)
-            .setStrokeLineWidth(4);
-        for(me.ladderI = -9;me.ladderI<10;me.ladderI+=1) {
-            if (me.ladderI == 0) continue;
-            me.pfdLadderGroup.createChild("text")
-                .setColor(COLOR_YELLOW)
-                .setFontSize(20, 1.0)
-                .setAlignment("right-center")
-                .setTranslation(-me.ladderWidth, me.ladderStep*me.ladderI)
-                .setText((-me.ladderI*10)~" ");
-            me.pfdLadderGroup.createChild("text")
-                .setColor(COLOR_YELLOW)
-                .setFontSize(20, 1.0)
-                .setAlignment("left-center")
-                .setTranslation(me.ladderWidth, me.ladderStep*me.ladderI)
-                .setText(" "~(-me.ladderI*10));
-        }
-
-        me.pfdSpeed = me.pfdRoot.createChild("text")
-                .setColor(COLOR_YELLOW)
-                .setFontSize(20, 1.0)
-                .setAlignment("left-center")
-                .setTranslation(-me.ehsiPosX*0.5, 0)
-                .setText("425");
-        me.pfdAlt = me.pfdRoot.createChild("text")
-                .setColor(COLOR_YELLOW)
-                .setFontSize(20, 1.0)
-                .setAlignment("right-center")
-                .setTranslation(me.ehsiPosX*0.5, 0)
-                .setText("18000");
-
-        me.pfdSky = me.root.createChild("path")
-            .horiz(me.ehsiPosX)
-            .vert(me.ehsiPosX)
-            .horiz(-me.ehsiPosX)
-            .vert(-me.ehsiPosX)
-            .setColorFill(COLOR_BLUE_LIGHT)
-            .setColor(COLOR_BLUE_LIGHT)
-            .setStrokeLineWidth(1)
-            .set("z-index", 19)
-            .setTranslation(0,me.ehsiPosY);
-    },
-
-    updatePFD: func {
-        me.pfdRoot.setRotation(-me.input.roll.getValue()*D2R);
-        me.pfdGround.setTranslation(0, 0.5*(me.max_y-me.ehsiPosY)*math.clamp(me.input.pitch.getValue()/30, -3, 3));
-        me.pfdLadderGroup.setTranslation(0, 0.5*(me.max_y-me.ehsiPosY)*math.clamp(me.input.pitch.getValue()/30, -3, 3));
-        me.pfdSpeed.setText(sprintf(" %3d KCAS", me.input.calibrated.getValue()));
-        me.pfdAlt.setText(sprintf("%5d FT ", me.input.alt_ft.getValue()));
-        #if (me.day != lastDay) {
-            if (me.day) {
-                me.pfdSky.setColorFill(COLOR_BLUE_LIGHT).setColor(COLOR_BLUE_LIGHT);
-                me.pfdGround.setColorFill(COLOR_BROWN);
-            } else {
-                me.pfdSky.setColorFill(COLOR_BLUE_DARK).setColor(COLOR_BLUE_DARK);
-                me.pfdGround.setColorFill(COLOR_BROWN_DARK);
-            }
-        #}
-    },
-
-    setupEHSI: func {
-        me.root.createChild("image")
-            .set("src", "canvas://by-index/texture[3]")
-            .setTranslation(me.ehsiPosX,me.ehsiPosY)
-            .setScale(me.ehsiScale)
-            .set("z-index", 20);
-    },
-
-    loop: func {
-        if (!me.loadedCDU) {
-            print("Unloaded CDU Looping");
-            return;
-        }
-        if (me.day) {
-            me.cduCanvas.setColorBackground(0.3, 0.3, 0.3, 1.0);
-        } else {
-            me.cduCanvas.setColorBackground(0.15, 0.15, 0.15, 1.0);
-        }
-
-        me.selfCoord = geo.aircraft_position();
-
-        me.whereIsMap();
-        me.updateMap();
-        me.updateRadarCone();
-        me.updateGrid();
-        me.updateSymbols();
-        me.updateThreatRings();
-        me.updateLines();# after updateRadarCone
-        me.updateRoute();# after updateLines
-        #print("CDU Looping ",me.loadedCDU);
-    },
-
-    updateSymbols: func {
-        me.bullPt = steerpoints.getNumber(555);
-        me.bullOn = me.bullPt != nil;
-        if (me.bullOn) {
-            me.bullLat = me.bullPt.lat;
-            me.bullLon = me.bullPt.lon;
-            me.bullseye.setTranslation(me.laloToTexelMap(me.bullLat,me.bullLon));            
-        }
-        me.bullseye.setVisible(me.bullOn);
-    },
-
-    loopFast: func {
-        if (!me.loadedCDU) {
-            print("Unloaded CDU Looping");
-            return;
-        }
-        me.updatePFD();
-        #print("CDU Looping ",me.loadedCDU);
-    },
-
-    updateRadarCone: func {
-        me.cone.removeAllChildren();
-        if (1 or radar_system.apg68Radar.enabled) {
-            if (radar_system.apg68Radar.showAZinHSD()) {
-
-                me.rdrrng = radar_system.apg68Radar.getRange();
-                me.rdrRangePixels = (me.rdrrng*NM2M)*M2TEX;
-                me.az = radar_system.apg68Radar.currentMode.az;
-                
-
-                me.radarX1 =  me.rdrRangePixels*math.cos((90-me.az-radar_system.apg68Radar.getDeviation())*D2R);
-                me.radarY1 = -me.rdrRangePixels*math.sin((90-me.az-radar_system.apg68Radar.getDeviation())*D2R);
-                me.radarX2 =  me.rdrRangePixels*math.cos((90+me.az-radar_system.apg68Radar.getDeviation())*D2R);
-                me.radarY2 = -me.rdrRangePixels*math.sin((90+me.az-radar_system.apg68Radar.getDeviation())*D2R);
-                me.cone.createChild("path")
-                            .moveTo(0,0)
-                            .lineTo(me.radarX1,me.radarY1)#right
-                            .moveTo(0,0)
-                            .lineTo(me.radarX2,me.radarY2)#left
-                            .arcSmallCW(me.rdrRangePixels,me.rdrRangePixels, 0, me.radarX1-me.radarX2, me.radarY1-me.radarY2)
-                            .setStrokeLineWidth(3)
-                            .set("z-index",9)
-                            .setColor(COLOR_BLUE_LIGHT)
-                            .update();
-            }
-        }
-    },
-
-    toggleDay: func {
-        me.day = !me.day;
-    },
-
-    toggleGrid: func {
-        me.mapShowGrid = !me.mapShowGrid;
-    },
-
-    setupGrid: func {
-        me.gridGroup = me.mapCenter.createChild("group")
-            .set("z-index", 24);
-        me.gridGroupText = me.mapCenter.createChild("group")
-            .set("z-index", 25);
-        me.last_lat = 0;
-        me.last_lon = 0;
-        me.last_range = 0;
-        me.last_result = 0;
-        me.gridTextO = [];
-        me.gridTextA = [];
-        me.gridTextMaxA = -1;
-        me.gridTextMaxO = -1;
-    },
-
+#  ███    ███  █████  ██████  
+#  ████  ████ ██   ██ ██   ██ 
+#  ██ ████ ██ ███████ ██████  
+#  ██  ██  ██ ██   ██ ██      
+#  ██      ██ ██   ██ ██      
+#                             
+#                             
     initMap: func {
         # map groups
         me.mapCentrum = me.root.createChild("group")
@@ -804,71 +1099,6 @@ var CDU = {
         me.rootCenter = me.root.createChild("group")
             .setTranslation(me.max_x/2,me.max_y/2)
             .set("z-index",  9);
-
-        me.mapShowPlaces = 1;
-        me.mapSelfCentered = 1;
-        me.ownPosition = 0.50;
-        me.day = 1;
-        me.mapShowGrid = 0;
-
-        me.input = {
-            alt_ft:               "instrumentation/altimeter/indicated-altitude-ft",
-            alt_true_ft:          "position/altitude-ft",
-            heading:              "instrumentation/heading-indicator/indicated-heading-deg",
-            radarStandby:         "instrumentation/radar/radar-standby",
-            rad_alt:              "instrumentation/radar-altimeter/radar-altitude-ft",
-            rad_alt_ready:        "instrumentation/radar-altimeter/ready",
-            rmActive:             "autopilot/route-manager/active",
-            rmDist:               "autopilot/route-manager/wp/dist",
-            rmId:                 "autopilot/route-manager/wp/id",
-            rmBearing:            "autopilot/route-manager/wp/true-bearing-deg",
-            RMCurrWaypoint:       "autopilot/route-manager/current-wp",
-            roll:                 "instrumentation/attitude-indicator/indicated-roll-deg",
-            timeElapsed:          "sim/time/elapsed-sec",
-            headTrue:             "orientation/heading-deg",
-            fpv_up:               "instrumentation/fpv/angle-up-deg",
-            fpv_right:            "instrumentation/fpv/angle-right-deg",
-#           twoHz:                "ja37/blink/two-Hz/state",
-            roll:                 "orientation/roll-deg",
-            pitch:                "orientation/pitch-deg",
-            units:                "ja37/hud/units-metric",
-            radar_serv:           "instrumentation/radar/serviceable",
-            tenHz:                "ja37/blink/four-Hz/state",
-            nav0InRange:          "instrumentation/nav[0]/in-range",
-            fullMenus:            "ja37/displays/show-full-menus",
-            APLockHeading:        "autopilot/locks/heading",
-            APTrueHeadingErr:     "autopilot/internal/true-heading-error-deg",
-            APnav0HeadingErr:     "autopilot/internal/nav1-heading-error-deg",
-            APHeadingBug:         "autopilot/settings/heading-bug-deg",
-            RMActive:             "autopilot/route-manager/active",
-            nav0Heading:          "instrumentation/nav[0]/heading-deg",
-            ias:                  "instrumentation/airspeed-indicator/indicated-speed-kt",
-            tas:                  "instrumentation/airspeed-indicator/true-speed-kt",
-            wow0:                 "fdm/jsbsim/gear/unit[0]/WOW",
-            wow1:                 "fdm/jsbsim/gear/unit[1]/WOW",
-            wow2:                 "fdm/jsbsim/gear/unit[2]/WOW",
-            gearsPos:             "gear/gear/position-norm",
-            latitude:             "position/latitude-deg",
-            longitude:            "position/longitude-deg",
-            gpws_arrow:           "fdm/jsbsim/systems/mkv/ja-pull-up-arrow",
-            gpws_margin:          "fdm/jsbsim/systems/mkv/ja-warning-margin-norm",
-            elevCmd:              "fdm/jsbsim/fcs/elevator-cmd-norm",
-            ailCmd:               "fdm/jsbsim/fcs/aileron-cmd-norm",
-            instrNorm:            "controls/lighting/instruments-norm",
-            bullseyeOn:           "ja37/navigation/bulls-eye-defined",
-            linker:               "sim/va"~"riant-id",
-            bullseyeLat:          "ja37/navigation/bulls-eye-lat",
-            bullseyeLon:          "ja37/navigation/bulls-eye-lon",
-            datalink:             "/instrumentation/datalink/on",
-            weight:               "fdm/jsbsim/inertia/weight-lbs",
-            max_approach_alpha:   "fdm/jsbsim/systems/flight/approach-alpha-base",
-            calibrated                : "fdm/jsbsim/velocities/vc-kts",
-        };
-
-        foreach(var name; keys(me.input)) {
-            me.input[name] = props.globals.getNode(me.input[name], 1);
-        }
-        me.setupMap();
     },
 
     updateMapNames: func {
@@ -879,52 +1109,6 @@ var CDU = {
             type = "light_nolabels";
             makePath = string.compileTemplate(maps_base ~ '/cartoL/{z}/{x}/{y}.png');
         }
-    },
-
-    laloToTexel: func (la, lo) {
-        me.coord = geo.Coord.new();
-        me.coord.set_latlon(la, lo);
-        me.coordSelf = geo.Coord.new();#TODO: dont create this every time method is called
-        me.coordSelf.set_latlon(me.lat_own, me.lon_own);
-        me.angle = (me.coordSelf.course_to(me.coord)-me.input.heading.getValue())*D2R;
-        me.pos_xx        = -me.coordSelf.distance_to(me.coord)*M2TEX * math.cos(me.angle + math.pi/2);
-        me.pos_yy        = -me.coordSelf.distance_to(me.coord)*M2TEX * math.sin(me.angle + math.pi/2);
-        return [me.pos_xx, me.pos_yy];#relative to rootCenter
-    },
-    
-    laloToTexelMap: func (la, lo) {
-        me.coord = geo.Coord.new();
-        me.coord.set_latlon(la, lo);
-        me.coordSelf = geo.Coord.new();#TODO: dont create this every time method is called
-        me.coordSelf.set_latlon(me.lat, me.lon);
-        me.angle = (me.coordSelf.course_to(me.coord))*D2R;
-        me.pos_xx        = -me.coordSelf.distance_to(me.coord)*M2TEX * math.cos(me.angle + math.pi/2);
-        me.pos_yy        = -me.coordSelf.distance_to(me.coord)*M2TEX * math.sin(me.angle + math.pi/2);
-        return [me.pos_xx, me.pos_yy];#relative to mapCenter
-    },
-
-    TexelToLaLoMap: func (x,y) {#relative to map center
-        x /= M2TEX;
-        y /= M2TEX;
-        me.mDist  = math.sqrt(x*x+y*y);
-        if (me.mDist == 0) {
-            return [me.lat, me.lon];
-        }
-        me.acosInput = clamp(x/me.mDist,-1,1);
-        if (y<0) {
-            me.texAngle = math.acos(me.acosInput);#unit circle on TI
-        } else {
-            me.texAngle = -math.acos(me.acosInput);
-        }
-        #printf("%d degs %0.1f NM", me.texAngle*R2D, me.mDist*M2NM);
-        me.texAngle  = -me.texAngle*R2D+90;#convert from unit circle to heading circle, 0=up on display
-        me.headAngle = me.input.heading.getValue()+me.texAngle;#bearing
-        #printf("%d bearing   %d rel bearing", me.headAngle, me.texAngle);
-        me.coordSelf = geo.Coord.new();#TODO: dont create this every time method is called
-        me.coordSelf.set_latlon(me.lat, me.lon);
-        me.coordSelf.apply_course_distance(me.headAngle, me.mDist);
-
-        return [me.coordSelf.lat(), me.coordSelf.lon()];
     },
 
     setupMap: func {
@@ -954,73 +1138,12 @@ var CDU = {
         M2TEX = 1/(meterPerPixel[zoom]*math.cos(me.lat*D2R));
     },
 
-    setupThreatRings: func {
-        me.threat_c = [];
-        me.threat_t = [];
-        for (var g = 0; g < steerpoints.number_of_threat_circles; g+=1) {
-            append(me.threat_c, me.mapCenter.createChild("path")
-                .moveTo(-50,0)
-                .arcSmallCW(50,50, 0,  50*2, 0)
-                .arcSmallCW(50,50, 0, -50*2, 0)
-                .setStrokeLineWidth(3)
-                .set("z-index",2)
-                .hide());
-            append(me.threat_t, me.mapCenter.createChild("text")
-                .setAlignment("center-center")
-                .set("z-index",2)
-                .setFontSize(25, 1.0));
-        }
-    },
-
-    updateThreatRings: func {
-        for (var l = 0; l<steerpoints.number_of_threat_circles;l+=1) {
-            # threat rings
-            me.ci = me.threat_c[l];
-            me.cit = me.threat_t[l];
-
-            me.cnu = steerpoints.getNumber(300+l);
-            if (me.cnu == nil) {
-                me.ci.hide();
-                me.cit.hide();
-                #print("Ignoring ", 300+l);
-                continue;
-            }
-            me.la = me.cnu.lat;
-            me.lo = me.cnu.lon;
-            me.ra = me.cnu.radius;
-            me.ty = me.cnu.type;
-            
-            
-            if (me.la != nil and me.lo != nil and me.ra != nil and me.ra > 0) {
-                me.wpC = geo.Coord.new();
-                me.wpC.set_latlon(me.la,me.lo);
-                me.legDistance = me.selfCoord.distance_to(me.wpC)*M2NM;
-                me.ringPos = me.laloToTexelMap(me.la,me.lo);
-                me.ci.setTranslation(me.ringPos);
-                me.ringScale = M2TEX*me.ra*NM2M/50;
-                me.ci.setScale(me.ringScale);
-                me.ci.setStrokeLineWidth(4/me.ringScale);
-                me.co = me.ra > me.legDistance?COLOR_RED:COLOR_YELLOW;
-                #print("Painting ", 300+l," in ", me.ra > me.legDistance?"red":"yellow");
-                me.ci.setColor(me.co);
-                me.ci.show();
-                me.cit.setText(me.ty);
-                me.cit.setTranslation(me.ringPos);
-                me.cit.setColor(me.co);
-                me.cit.show();
-            } else {
-                me.ci.hide();
-                me.cit.hide();
-            }
-        }
-    },
-
     updateMap: func {
         # update the map
         if (lastDay != me.day)  {
             me.setupMap();
         }
-        me.rootCenterY = me.ehsiPosY*0.65;#me.canvasY*0.875-(me.canvasY*0.875)*me.ownPosition;
+        me.rootCenterY = me.ownPosition;#me.canvasY*0.875-(me.canvasY*0.875)*me.ownPosition;
         if (!me.mapSelfCentered) {
             me.lat_wp   = me.input.latitude.getValue();
             me.lon_wp   = me.input.longitude.getValue();
@@ -1063,7 +1186,7 @@ var CDU = {
             }
         }
 
-        me.liveMap = 1;#getprop("ja37/displays/live-map");
+        me.liveMap = 1;# TODO: Read from property if allow internet access
         me.zoomed = zoom != last_zoom;
         if(me.center_tile_int[0] != last_tile[0] or me.center_tile_int[1] != last_tile[1] or type != last_type or me.zoomed or me.liveMap != lastLiveMap or lastDay != me.day)  {
             for(var x = 0; x < num_tiles[0]; x += 1) {
@@ -1099,7 +1222,7 @@ var CDU = {
                                     tile.update();
                                     })
                               #.done(func {logprint(LOG_DEBUG, 'received image ' ~ img_path); tile.set("src", img_path);})
-                              .fail(func (r) {logprint(LOG_DEBUG, 'Failed to get image ' ~ img_path ~ ' ' ~ r.status ~ ': ' ~ r.reason);
+                              .fail(func (r) {logprint(LOG_INFO, 'Failed to get image ' ~ img_path ~ ' ' ~ r.status ~ ': ' ~ r.reason);
                                             tile.set("src", "Aircraft/f16/Nasal/CDU/emptyTile.png");
                                             tile.update();
                                             });
