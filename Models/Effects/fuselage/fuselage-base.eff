@@ -124,10 +124,14 @@
 			</images>
 			<!-- END 6 image cube map -->
 		</texture>
+		<!-- ambient occlusion -->
+		<texture n="6">
+			<type>white</type>
+		</texture>
 		<!-- Reflection fresnel -->
 		<reflection-fresnel type="float">0.1</reflection-fresnel>
-		<texture n="6">
-			<image>Aircraft/Generic/Effects/Gradients.png</image>
+		<texture n="8">
+			<image>Aircraft/Generic/Effects/Gradients.png</image><!-- rainbow and fresnel -->
 			<type>2d</type>
 			<filter>linear-mipmap-linear</filter>
 			<wrap-s>repeat</wrap-s>

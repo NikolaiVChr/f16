@@ -16,12 +16,14 @@ varying vec3	eyeVec;
 varying vec3	eyeDir;
 
 uniform sampler2D	BaseTex;
-uniform sampler2D	LightMapTex;
-uniform sampler2D	NormalTex;
-uniform sampler2D	ReflGradientsTex;
-uniform sampler2D	ReflMapTex;
 uniform sampler3D	ReflNoiseTex;
+uniform sampler2D	NormalTex;
+uniform sampler2D	LightMapTex;
+uniform sampler2D	ReflMapTex;
 uniform samplerCube	Environment;
+uniform sampler2D	AmbientOcclusionTex;
+//uniform sampler2D	GrainTex;
+uniform sampler2D	ReflGradientsTex;
 
 uniform int		dirt_enabled;
 uniform int		dirt_multi;
@@ -128,7 +130,7 @@ void main (void)
 	vec4 reflmap    = texture2D(ReflMapTex, gl_TexCoord[0].st);
 	vec4 noisevec   = texture3D(ReflNoiseTex, rawpos.xyz);
 	vec4 lightmapTexel = texture2D(LightMapTex, gl_TexCoord[0].st);
-	vec4 occlusion  = texture2D(ReflGradientsTex, gl_TexCoord[0].st);
+	vec4 occlusion  = texture2D(AmbientOcclusionTex, gl_TexCoord[0].st);
 
 	vec3 mixedcolor;
 	vec3 N = vec3(0.0,0.0,1.0);
@@ -148,9 +150,7 @@ void main (void)
 	///END bump ////////////////////////////////////////////////////////////////////
 	vec3 viewN	 = normalize((gl_ModelViewMatrixTranspose * vec4(N, 0.0)).xyz);//normal in model space
 	vec3 viewVec = normalize(eyeVec);//vector to fragment in view space
-	float v      = abs(dot(viewVec, viewN));// Map a rainbowish color
-	vec4 fresnel = texture2D(ReflGradientsTex, vec2(v, 0.75));
-	vec4 rainbow = texture2D(ReflGradientsTex, vec2(v, 0.25));
+	
 
 
 	////  reflection vector /////////////////////////////
@@ -171,7 +171,7 @@ void main (void)
 		wRefVec	= reflect(viewVec,N);
 		wRefVec = normalize(gl_ModelViewMatrixInverse * vec4(wRefVec,0.0)).xyz;
 	}
-	vec3 reflection = textureCube(Environment, wRefVec).xyz;
+	
 
 	vec3 E = eyeDir;
 	E = normalize(E);
@@ -226,6 +226,12 @@ void main (void)
 			reflFactor = gl_FrontMaterial.shininess* 0.0078125 + transparency_offset;
 		}
 		reflFactor = clamp(reflFactor, 0.0, 1.0);
+
+
+		float v      = abs(dot(viewVec, viewN));// Map a rainbowish color
+		vec4 fresnel = texture2D(ReflGradientsTex, vec2(v, 0.75));
+		vec4 rainbow = texture2D(ReflGradientsTex, vec2(v, 0.25));
+		vec3 reflection = textureCube(Environment, wRefVec).xyz;
 
 		// add fringing fresnel and rainbow effects and modulate by reflection
 		vec3 reflcolor = mix(reflection, rainbow.rgb, refl_rainbow * v);

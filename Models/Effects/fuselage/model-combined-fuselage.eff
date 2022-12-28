@@ -112,21 +112,7 @@ Modifications author: Nikolai V. Chr.
         </sun_atlas_size>
         <!-- END shadows include -->
 	</parameters>
-	<!--
-		Textures:
-
-		0 - livery (rgba)
-		1 - autogen. 3D noise
-		2 - normal (rgb) & shininess (a) [Note: shininess is ignored if dds bc3n compression is used]
-		3 - light (rgba)
-		4 - reflect map (a) & dirt (rgb)
-		5 - reflect cube map (rgb)
-		6 - fresnel (rgb) & rainbow (rgb) & ambient occlusion (a)
-		7 - grain (rgba)
-
-		TODO:
-			should fog, haze be done in linear or gamma corrected space?
-	-->
+	
 	<technique n="0"><!-- ALS shadows -->
 		<!--<scheme>als-lighting</scheme>-->
 	   <predicate>
@@ -420,6 +406,28 @@ Modifications author: Nikolai V. Chr.
 			  		<use>texture[7]/internal-format</use>
 				   </internal-format>
 		  	   </texture-unit>
+		  	   <!-- Grain texture -->
+		  	   <texture-unit>
+				   <unit>8</unit>
+				   <image>
+			 	   	<use>texture[8]/image</use>
+				   </image>
+                   <type>
+                    <use>texture[8]/type</use>
+                   </type>
+				   <filter>
+			 		<use>texture[8]/filter</use>
+				   </filter>
+				   <wrap-s>
+			   		<use>texture[8]/wrap-s</use>
+				   </wrap-s>
+				   <wrap-t>
+			 		<use>texture[8]/wrap-t</use>
+				   </wrap-t>
+				   <internal-format>
+			  		<use>texture[8]/internal-format</use>
+				   </internal-format>
+		  	   </texture-unit>
 
 			   <vertex-program-two-side>
 				   <use>vertex-program-two-side</use>
@@ -464,7 +472,7 @@ Modifications author: Nikolai V. Chr.
 			   </uniform>
 
 			   <uniform>
-				   <name>ReflGradientsTex</name>
+				   <name>AmbientOcclusionTex</name>
 				   <type>sampler-2d</type>
 				   <value type="int">6</value>
 			   </uniform>
@@ -473,6 +481,12 @@ Modifications author: Nikolai V. Chr.
 				   <name>GrainTex</name>
 				   <type>sampler-2d</type>
 				   <value type="int">7</value>
+		 	   </uniform>
+
+		 	   <uniform>
+				   <name>ReflGradientsTex</name>
+				   <type>sampler-2d</type>
+				   <value type="int">8</value>
 		 	   </uniform>
 
 			   <!-- 			NORMAL MAP -->
@@ -1647,6 +1661,28 @@ Modifications author: Nikolai V. Chr.
 			  		<use>texture[7]/internal-format</use>
 				   </internal-format>
 		  	   </texture-unit>
+		  	   <!-- Grain texture -->
+		  	   <texture-unit>
+				   <unit>8</unit>
+				   <image>
+			 	   	<use>texture[8]/image</use>
+				   </image>
+                   <type>
+                    <use>texture[8]/type</use>
+                   </type>
+				   <filter>
+			 		<use>texture[8]/filter</use>
+				   </filter>
+				   <wrap-s>
+			   		<use>texture[8]/wrap-s</use>
+				   </wrap-s>
+				   <wrap-t>
+			 		<use>texture[8]/wrap-t</use>
+				   </wrap-t>
+				   <internal-format>
+			  		<use>texture[8]/internal-format</use>
+				   </internal-format>
+		  	   </texture-unit>
 
 			   <vertex-program-two-side>
 				   <use>vertex-program-two-side</use>
@@ -1691,7 +1727,7 @@ Modifications author: Nikolai V. Chr.
 			   </uniform>
 
 			   <uniform>
-				   <name>ReflGradientsTex</name>
+				   <name>AmbientOcclusionTex</name>
 				   <type>sampler-2d</type>
 				   <value type="int">6</value>
 			   </uniform>
@@ -1700,6 +1736,12 @@ Modifications author: Nikolai V. Chr.
 				   <name>GrainTex</name>
 				   <type>sampler-2d</type>
 				   <value type="int">7</value>
+		 	   </uniform>
+
+		 	   <uniform>
+				   <name>ReflGradientsTex</name>
+				   <type>sampler-2d</type>
+				   <value type="int">8</value>
 		 	   </uniform>
 
 			   <!-- 			NORMAL MAP -->
@@ -2874,10 +2916,16 @@ Modifications author: Nikolai V. Chr.
 		  </uniform>
 
 		  <uniform>
-			<name>ReflGradientsTex</name>
-			<type>sampler-2d</type>
-			<value type="int">6</value>
-		  </uniform>
+				   <name>AmbientOcclusionTex</name>
+				   <type>sampler-2d</type>
+				   <value type="int">6</value>
+			   </uniform>
+
+		 	   <uniform>
+				   <name>ReflGradientsTex</name>
+				   <type>sampler-2d</type>
+				   <value type="int">8</value>
+		 	   </uniform>
 
 		  <!-- 			NORMAL MAP -->
 		  <!-- normalmap is used-->
@@ -3532,6 +3580,28 @@ Modifications author: Nikolai V. Chr.
 			  		<use>texture[7]/internal-format</use>
 				   </internal-format>
 		  	   </texture-unit>
+		  	   <!-- Grain texture -->
+		  	   <texture-unit>
+				   <unit>8</unit>
+				   <image>
+			 	   	<use>texture[8]/image</use>
+				   </image>
+                   <type>
+                    <use>texture[8]/type</use>
+                   </type>
+				   <filter>
+			 		<use>texture[8]/filter</use>
+				   </filter>
+				   <wrap-s>
+			   		<use>texture[8]/wrap-s</use>
+				   </wrap-s>
+				   <wrap-t>
+			 		<use>texture[8]/wrap-t</use>
+				   </wrap-t>
+				   <internal-format>
+			  		<use>texture[8]/internal-format</use>
+				   </internal-format>
+		  	   </texture-unit>
 
 			   <vertex-program-two-side>
 				   <use>vertex-program-two-side</use>
@@ -3576,7 +3646,7 @@ Modifications author: Nikolai V. Chr.
 			   </uniform>
 
 			   <uniform>
-				   <name>ReflGradientsTex</name>
+				   <name>AmbientOcclusionTex</name>
 				   <type>sampler-2d</type>
 				   <value type="int">6</value>
 			   </uniform>
@@ -3585,6 +3655,12 @@ Modifications author: Nikolai V. Chr.
 				   <name>GrainTex</name>
 				   <type>sampler-2d</type>
 				   <value type="int">7</value>
+		 	   </uniform>
+
+		 	   <uniform>
+				   <name>ReflGradientsTex</name>
+				   <type>sampler-2d</type>
+				   <value type="int">8</value>
 		 	   </uniform>
 
 			   <!-- 			NORMAL MAP -->
@@ -4700,7 +4776,29 @@ Modifications author: Nikolai V. Chr.
 				<internal-format>
 					<use>texture[7]/internal-format</use>
 				</internal-format>
-			</texture-unit>-->
+			</texture-unit-->
+		<!-- Rainbow texture -->
+		  	   <!--texture-unit>
+				   <unit>8</unit>
+				   <image>
+			 	   	<use>texture[8]/image</use>
+				   </image>
+                   <type>
+                    <use>texture[8]/type</use>
+                   </type>
+				   <filter>
+			 		<use>texture[8]/filter</use>
+				   </filter>
+				   <wrap-s>
+			   		<use>texture[8]/wrap-s</use>
+				   </wrap-s>
+				   <wrap-t>
+			 		<use>texture[8]/wrap-t</use>
+				   </wrap-t>
+				   <internal-format>
+			  		<use>texture[8]/internal-format</use>
+				   </internal-format>
+		  	   </texture-unit>-->
 
 
 			<vertex-program-two-side>
@@ -4746,10 +4844,16 @@ Modifications author: Nikolai V. Chr.
 			</uniform>
 
             <uniform>
-                <name>ReflGradientsTex</name>
-                <type>sampler-2d</type>
-                <value type="int">6</value>
-			</uniform>
+			   <name>AmbientOcclusionTex</name>
+			   <type>sampler-2d</type>
+			   <value type="int">6</value>
+		   </uniform>
+
+	 	   <uniform>
+			   <name>ReflGradientsTex</name>
+			   <type>sampler-2d</type>
+			   <value type="int">8</value>
+	 	   </uniform>
 
 			<!-- 			NORMAL MAP -->
 			<!-- normalmap is used-->
@@ -5287,6 +5391,47 @@ Modifications author: Nikolai V. Chr.
 			  <use>texture[6]/internal-format</use>
 			</internal-format>
 		  </texture-unit>
+		  <!-- Reflection rainbow texture unit-->
+<!--			<texture-unit>
+				<unit>7</unit>
+				<image>
+					<use>texture[7]/image</use>
+				</image>
+				<filter>
+					<use>texture[7]/filter</use>
+				</filter>
+				<wrap-s>
+					<use>texture[7]/wrap-s</use>
+				</wrap-s>
+				<wrap-t>
+					<use>texture[7]/wrap-t</use>
+				</wrap-t>
+				<internal-format>
+					<use>texture[7]/internal-format</use>
+				</internal-format>
+			</texture-unit-->
+		<!-- Rainbow texture -->
+		  	   <texture-unit>
+				   <unit>8</unit>
+				   <image>
+			 	   	<use>texture[8]/image</use>
+				   </image>
+                   <type>
+                    <use>texture[8]/type</use>
+                   </type>
+				   <filter>
+			 		<use>texture[8]/filter</use>
+				   </filter>
+				   <wrap-s>
+			   		<use>texture[8]/wrap-s</use>
+				   </wrap-s>
+				   <wrap-t>
+			 		<use>texture[8]/wrap-t</use>
+				   </wrap-t>
+				   <internal-format>
+			  		<use>texture[8]/internal-format</use>
+				   </internal-format>
+		  	   </texture-unit>
 
 		  <vertex-program-two-side>
 			<use>vertex-program-two-side</use>
@@ -5331,10 +5476,16 @@ Modifications author: Nikolai V. Chr.
 		  </uniform>
 
 		  <uniform>
-			<name>ReflGradientsTex</name>
-			<type>sampler-2d</type>
-			<value type="int">6</value>
-		  </uniform>
+				   <name>AmbientOcclusionTex</name>
+				   <type>sampler-2d</type>
+				   <value type="int">6</value>
+			   </uniform>
+
+		 	   <uniform>
+				   <name>ReflGradientsTex</name>
+				   <type>sampler-2d</type>
+				   <value type="int">8</value>
+		 	   </uniform>
 
 		  <!-- 			NORMAL MAP -->
 		  <!-- normalmap is used-->

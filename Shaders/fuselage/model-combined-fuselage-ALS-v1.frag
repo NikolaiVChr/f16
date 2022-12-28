@@ -21,14 +21,15 @@ varying vec3	vertVec;
 
 //varying	float	alpha;
 
-uniform sampler2D BaseTex;
-uniform sampler2D LightMapTex;
-uniform sampler2D NormalTex;
-uniform sampler2D ReflMapTex;
-uniform sampler2D ReflGradientsTex;
-uniform sampler3D ReflNoiseTex;
+uniform sampler2D   BaseTex;
+uniform sampler3D   ReflNoiseTex;
+uniform sampler2D   NormalTex;
+uniform sampler2D   LightMapTex;
+uniform sampler2D   ReflMapTex;
 uniform samplerCube Environment;
-uniform sampler2D GrainTex;
+uniform sampler2D   AmbientOcclusionTex;
+uniform sampler2D   GrainTex;
+uniform sampler2D   ReflGradientsTex;
 
 uniform int dirt_enabled;
 uniform int dirt_multi;
@@ -158,7 +159,7 @@ void main (void)
     vec4 reflmap    = texture2D(ReflMapTex, gl_TexCoord[0].st);
     vec4 noisevec   = texture3D(ReflNoiseTex, rawpos.xyz);
     vec4 lightmapTexel = texture2D(LightMapTex, gl_TexCoord[0].st);
-    vec4 occlusion  = texture2D(ReflGradientsTex, gl_TexCoord[0].st);
+    vec4 occlusion  = texture2D(AmbientOcclusionTex, gl_TexCoord[0].st);
 
     vec4 grainTexel;
 
@@ -323,11 +324,8 @@ void main (void)
 
 
 
-    vec4 reflection = textureCube(Environment, reflVecN  );
     vec3 viewVec = normalize(vViewVec);
-    float v      = abs(dot(viewVec, normalize(VNormal)));// Map a rainbowish color
-    vec4 fresnel = texture2D(ReflGradientsTex, vec2(v, 0.75));
-    vec4 rainbow = texture2D(ReflGradientsTex, vec2(v, 0.25));
+    
 
     float nDotVP = max(0.0, dot(N, normalize(gl_LightSource[0].position.xyz)));
 
@@ -428,6 +426,11 @@ void main (void)
 	    reflFactor+=fresnel_enhance;
 
         reflFactor = clamp(reflFactor, 0.0, 1.0);
+
+        float v      = abs(dot(viewVec, normalize(VNormal)));// Map a rainbowish color
+        vec4 fresnel = texture2D(ReflGradientsTex, vec2(v, 0.75));
+        vec4 rainbow = texture2D(ReflGradientsTex, vec2(v, 0.25));
+        vec4 reflection = textureCube(Environment, reflVecN  );
 
         // add fringing fresnel and rainbow effects and modulate by reflection
         vec3 reflcolor = mix(reflection.rgb, rainbow.rgb, refl_rainbow * v);// combineMe

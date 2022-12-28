@@ -13,8 +13,9 @@ Textures:
 		3 - light (rgba)
 		4 - reflect map (a) & dirt (rgb)
 		5 - reflect cube map (rgb)
-		6 - fresnel (rgb) & rainbow (rgb) & ambient occlusion (a)
+		6 - ambient occlusion (a)
 		7 - grain (rgba)
+		8 - fresnel (rgb) & rainbow (rgb)
 
 
 Parameters that differs from mode-combined-deffered:
@@ -24,3 +25,19 @@ Parameters that differs from mode-combined-deffered:
 <normalmap-dds-compression-bc3n>1</normalmap-dds-compression-bc3n><!-- 0 or 1, if this is enabled alpha on texture 2 is not used for shininess -->
 
 <ambient-correction type="float">0.00</ambient-correction><!-- not used, as the way reflections are applied this is not an issue anymore -->
+
+
+Files and folders:
+==================
+Folders
+	Models/Effects/fuselage   - Used for main effect files plus shaders for 2020.3.xx
+	Shaders4                  - Some old 2020.3.xx Rembrandt shaders so 2020.4.0 do not complain about them missing
+	Shaders/fuselage          - Shaders for 2020.4.0
+	Shaders                   - Copied shaders from 2020.4.0 so 2020.3.xx do not complain about them
+
+Files
+	Shaders/fuselage/model-combined-fuselage-ALS-v1.frag       - 2020.4.0  ALS fragment shader      (technique #0) [Used per default, set f16/scene/version to 0 for the other]
+	Shaders/fuselage/model-combined-fuselage-ALS.frag          - 2020.4.0  ALS fragment shader      (technique #1)
+	Shaders/fuselage/model-combined-fuselage.frag              - 2020.4.0  non-ALS fragment shader  (technique #2)
+	Models/Effects/fuselage/model-combined-fuselage-ALS.frag   - 2020.3.xx ALS fragment shader      (technique #3)
+	Models/Effects/fuselage/model-combined-fuselage.frag       - 2020.3.xx non-ALS fragment shader  (technique #8)
