@@ -2798,8 +2798,11 @@ Modifications author: Nikolai V. Chr.
 		<predicate>
 			<and>
 				<property>/sim/version/compositor-support</property>
-				<!--property>/sim/rendering/shaders/quality-level</property-->
-				<property>/sim/rendering/shaders/model</property>
+				<!--property>/sim/rendering/shaders/quality-level</property-->				
+				<!--less-equal>
+					<value type="float">1.0</value>
+					<property>/sim/rendering/shaders/model</property>
+				</less-equal-->
 				<or>
 					<less-equal>
 						<value type="float">2.0</value>

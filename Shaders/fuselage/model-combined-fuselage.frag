@@ -324,6 +324,7 @@ void main (void)
     fragColor.rgb = max(gl_FrontMaterial.emission.rgb*texel.rgb, fragColor.rgb);
 
 	gl_FragColor = fragColor;//vec4(0.0,1.0,0.0,0.5);
+	//gl_FragColor = vec4(getShadowing());
 }
 // TODO: Add compositor shadows
 //       Make it play nicer with the 2 types of transparency:
