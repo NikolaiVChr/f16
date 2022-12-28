@@ -96,7 +96,7 @@
         <y-m>0</y-m>
         <z-m>0</z-m>
   </offsets>
- </model-->
+ </model>
 
 <animation>
   <type>translate</type>
@@ -189,7 +189,7 @@
   <condition>
           <property>f16/avionics/hud-basic</property>
   </condition>
- </animation>
+ </animation-->
 
  <model>
   <name>HUDa</name>
