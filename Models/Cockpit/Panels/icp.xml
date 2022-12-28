@@ -48,14 +48,8 @@
             <reflection-enabled type="int">1</reflection-enabled>
             <reflection-correction type="float">1.0</reflection-correction>
             <specular-material-ignore type="int">0</specular-material-ignore>
-            <reflection-rainbow type="float">0.1</reflection-rainbow>
-            <texture n="6">
-                <image>Aircraft/Generic/Effects/Rainbow.png</image>
-                <filter>linear-mipmap-linear</filter>
-                <wrap-s>repeat</wrap-s>
-                <wrap-t>repeat</wrap-t>
-                <internal-format>normalized</internal-format>
-            </texture>
+            <reflection-rainbow type="float">0.10</reflection-rainbow>
+            <reflection-fresnel type="float">0.25</reflection-fresnel>
         </parameters>
         <object-name>driftRing</object-name>
         <object-name>gainRing</object-name>
