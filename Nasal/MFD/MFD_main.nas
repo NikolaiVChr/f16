@@ -3990,6 +3990,7 @@ var MFD_Device =
                     me.root.lnkT[me.ii].setText(""~me.blueIndex);
                     me.root.lnk[me.ii].hide();
                     me.root.lnkT[me.ii].show();
+                    me.root.lnkTA[me.ii].hide();
                     me.ii += 1;
                 }
             } elsif (me.blue == 1 and me.ii < me.root.maxB) {
