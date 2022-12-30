@@ -148,6 +148,13 @@ var font = {
     markpoints: 25,
 };
 
+var symbolSize = {
+    contacts: 112,
+    bullseye: 50,
+    gpsSpot: 25,
+    ownship: 30,
+};
+
 var layer_z = {
     # How things are layered on top of each other, higher numbers are on top of lower numbers.
     display: {
@@ -449,13 +456,14 @@ var CDU = {
 #                                                                     
     setupSymbols: func {
         # ownship symbol
+
         me.selfSymbol = me.rootCenter.createChild("path")
                 .moveTo(0, 0)
-                .vert(30)
-               .moveTo(-10, 10)
-               .horiz(20)
-               .moveTo(-5, 20)
-               .horiz(10)
+                .vert(symbolSize.ownship)
+               .moveTo(-symbolSize.ownship/3, symbolSize.ownship/3)
+               .horiz(symbolSize.ownship*2/3)
+               .moveTo(-symbolSize.ownship/6, symbolSize.ownship*2/3)
+               .horiz(symbolSize.ownship/3)
               .setColor(COLOR_BLUE_LIGHT)
               .set("z-index", layer_z.mapOverlay.ownship)
               .setStrokeLineWidth(lineWidth.ownship);
@@ -515,27 +523,27 @@ var CDU = {
             .setStrokeLineWidth(lineWidth.rangeRings)
             .set("z-index",layer_z.mapOverlay.rangeRings)
             .setColor(COLOR_GRAY);
-        me.bullseyeSize = 50;
+
         me.bullseye = me.mapCenter.createChild("path")
-            .moveTo(-me.bullseyeSize,0)
-            .arcSmallCW(me.bullseyeSize,me.bullseyeSize, 0,  me.bullseyeSize*2, 0)
-            .arcSmallCW(me.bullseyeSize,me.bullseyeSize, 0, -me.bullseyeSize*2, 0)
-            .moveTo(-me.bullseyeSize*3/5,0)
-            .arcSmallCW(me.bullseyeSize*3/5,me.bullseyeSize*3/5, 0,  me.bullseyeSize*3/5*2, 0)
-            .arcSmallCW(me.bullseyeSize*3/5,me.bullseyeSize*3/5, 0, -me.bullseyeSize*3/5*2, 0)
-            .moveTo(-me.bullseyeSize/5,0)
-            .arcSmallCW(me.bullseyeSize/5,me.bullseyeSize/5, 0,  me.bullseyeSize/5*2, 0)
-            .arcSmallCW(me.bullseyeSize/5,me.bullseyeSize/5, 0, -me.bullseyeSize/5*2, 0)
+            .moveTo(-symbolSize.bullseye,0)
+            .arcSmallCW(symbolSize.bullseye,symbolSize.bullseye, 0,  symbolSize.bullseye*2, 0)
+            .arcSmallCW(symbolSize.bullseye,symbolSize.bullseye, 0, -symbolSize.bullseye*2, 0)
+            .moveTo(-symbolSize.bullseye*3/5,0)
+            .arcSmallCW(symbolSize.bullseye*3/5,symbolSize.bullseye*3/5, 0,  symbolSize.bullseye*3/5*2, 0)
+            .arcSmallCW(symbolSize.bullseye*3/5,symbolSize.bullseye*3/5, 0, -symbolSize.bullseye*3/5*2, 0)
+            .moveTo(-symbolSize.bullseye/5,0)
+            .arcSmallCW(symbolSize.bullseye/5,symbolSize.bullseye/5, 0,  symbolSize.bullseye/5*2, 0)
+            .arcSmallCW(symbolSize.bullseye/5,symbolSize.bullseye/5, 0, -symbolSize.bullseye/5*2, 0)
             .setStrokeLineWidth(lineWidth.bullseye)
             .setColor(COLOR_BLUE_LIGHT);
-        me.gpsSpotSize = 40;
+
         me.gpsSpot = me.mapCenter.createChild("path")
-            .moveTo(-me.gpsSpotSize,0)
-            .arcSmallCW(me.gpsSpotSize,me.gpsSpotSize, 0,  me.gpsSpotSize*2, 0)
-            .arcSmallCW(me.gpsSpotSize,me.gpsSpotSize, 0, -me.gpsSpotSize*2, 0)
-            .moveTo(-me.gpsSpotSize*3/5,0)
-            .arcSmallCW(me.gpsSpotSize*3/5,me.gpsSpotSize*3/5, 0,  me.gpsSpotSize*3/5*2, 0)
-            .arcSmallCW(me.gpsSpotSize*3/5,me.gpsSpotSize*3/5, 0, -me.gpsSpotSize*3/5*2, 0)
+            .moveTo(-symbolSize.gpsSpot,0)
+            .arcSmallCW(symbolSize.gpsSpot,symbolSize.gpsSpot, 0,  symbolSize.gpsSpot*2, 0)
+            .arcSmallCW(symbolSize.gpsSpot,symbolSize.gpsSpot, 0, -symbolSize.gpsSpot*2, 0)
+            .moveTo(-symbolSize.gpsSpot*3/5,0)
+            .arcSmallCW(symbolSize.gpsSpot*3/5,symbolSize.gpsSpot*3/5, 0,  symbolSize.gpsSpot*3/5*2, 0)
+            .arcSmallCW(symbolSize.gpsSpot*3/5,symbolSize.gpsSpot*3/5, 0, -symbolSize.gpsSpot*3/5*2, 0)
             .setStrokeLineWidth(lineWidth.gpsSpot)
             .setColor(COLOR_BLACK);
     },
@@ -582,26 +590,26 @@ var CDU = {
                 me.blepTriangleText[i] = me.blepTriangle[i].createChild("text")
                                 .setAlignment("center-top")
                                 .setFontSize(font.targets, 1.0)
-                                .setTranslation(0,20);
+                                .setTranslation(0,symbolSize.contacts/5.5);
                 me.blepTriangleVelLine[i] = me.blepTriangleVel[i].createChild("path")
                                 .lineTo(0,-10)
-                                .setTranslation(0,-16)
+                                .setTranslation(0,-symbolSize.contacts/7)
                                 .setStrokeLineWidth(lineWidth.targets);
                 me.blepTrianglePaths[i] = me.blepTriangle[i].createChild("path")
-                                .moveTo(-14,8)
-                                .horiz(28)
-                                .lineTo(0,-16)
-                                .lineTo(-14,8)
+                                .moveTo(-symbolSize.contacts/8,symbolSize.contacts/14)
+                                .horiz(symbolSize.contacts/4)
+                                .lineTo(0,-symbolSize.contacts/7)
+                                .lineTo(-symbolSize.contacts/8,symbolSize.contacts/14)
                                 .set("z-index",10)
                                 .setStrokeLineWidth(lineWidth.targets);
                 me.lnk[i] = me.mapCenter.createChild("path")
-                                .moveTo(-10,-10)
-                                .vert(20)
-                                .horiz(20)
-                                .vert(-20)
-                                .horiz(-20)
-                                .moveTo(0,-10)
-                                .vert(-10)
+                                .moveTo(-symbolSize.contacts/10,-symbolSize.contacts/10)
+                                .vert(symbolSize.contacts/5)
+                                .horiz(symbolSize.contacts/5)
+                                .vert(-symbolSize.contacts/5)
+                                .horiz(-symbolSize.contacts/5)
+                                .moveTo(0,-symbolSize.contacts/10)
+                                .vert(-symbolSize.contacts/10)
                                 .hide()
                                 .set("z-index",layer_z.map.targets)
                                 .setStrokeLineWidth(lineWidth.targetsDL);
@@ -615,9 +623,9 @@ var CDU = {
                                 .setFontSize(font.targets, 1.0);
         }
         me.selection = me.mapCenter.createChild("path")
-                .moveTo(-16, 0)
-                .arcSmallCW(16, 16, 0, 16*2, 0)
-                .arcSmallCW(16, 16, 0, -16*2, 0)
+                .moveTo(-symbolSize.contacts/7, 0)
+                .arcSmallCW(symbolSize.contacts/7, symbolSize.contacts/7, 0, (symbolSize.contacts/7)*2, 0)
+                .arcSmallCW(symbolSize.contacts/7, symbolSize.contacts/7, 0, -(symbolSize.contacts/7)*2, 0)
                 .setColor(COLOR_YELLOW)
                 .set("z-index",layer_z.map.targets)
                 .setStrokeLineWidth(2);
@@ -713,7 +721,7 @@ var CDU = {
             me.i += 1;
             if (me.blue == 2 and me.ii < me.maxB) {
                 me.lnkT[me.ii].setColor(me.color);
-                me.lnkT[me.ii].setTranslation(me.trans[0],me.trans[1]-25);
+                me.lnkT[me.ii].setTranslation(me.trans[0],me.trans[1]-symbolSize.contacts/4.5);
                 me.lnkT[me.ii].setText(""~me.blueIndex);
                 me.lnk[me.ii].hide();
                 me.lnkT[me.ii].show();
@@ -728,8 +736,8 @@ var CDU = {
             #me.lnkTA[me.ii].setRotation(me.selfHeading*D2R);
             me.lnkT[me.ii].setColor(me.color);
             me.lnkTA[me.ii].setColor(me.color);
-            me.lnkT[me.ii].setTranslation(me.trans[0],me.trans[1]-25);
-            me.lnkTA[me.ii].setTranslation(me.trans[0],me.trans[1]+20);
+            me.lnkT[me.ii].setTranslation(me.trans[0],me.trans[1]-symbolSize.contacts/4.5);
+            me.lnkTA[me.ii].setTranslation(me.trans[0],me.trans[1]+symbolSize.contacts/5.5);
             me.lnkT[me.ii].setText(""~me.blueIndex);
             me.lnkTA[me.ii].setText(sprintf("%02d", math.round(me.c_alt*0.001)));
             me.lnk[me.ii].show();
