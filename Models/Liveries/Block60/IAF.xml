@@ -6,7 +6,13 @@
    <livery>
     <name type="string">IAF F-21, "Rico" (Fictional)</name>
     <texture>Liveries/Block60/IAF.png</texture>
-    <owner type="string">IAF</owner>
+    <owner type="string">FICTION</owner>
+    <pilot type="string">Capt Rico</pilot>
+    <scheme type="string">Monotone gray</scheme>
+    <block type="int">60</block>
+    <serial type="string">N/A</serial>
+    <squad type="string">IAF</squad>
+    <year type="string"></year>
    </livery>
 
    <livery-logo>

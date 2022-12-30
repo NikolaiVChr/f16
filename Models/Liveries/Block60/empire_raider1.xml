@@ -6,7 +6,13 @@
             <livery>
                 <name type="string">Empire 181IFW, "Raider1" (Fictional)</name>
                 <texture type="string">Liveries/Block60/empire_raider1.png</texture>
-                <owner type="string">Empire</owner>
+                <owner type="string">FICTION</owner>
+                <pilot type="string">Brig Gen Raider1</pilot>
+                <scheme type="string">Two-tone gray</scheme>
+                <block type="int">60</block>
+                <serial type="string">N/A</serial>
+                <squad type="string">Empire</squad>
+                <year type="string">2019</year>
             </livery>
             <livery-logo>
                 <texture type="string">Liveries/Block60/logos.raider1.png</texture>

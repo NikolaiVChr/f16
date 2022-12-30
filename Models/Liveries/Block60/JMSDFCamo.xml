@@ -4,9 +4,15 @@
     <sim>
         <model> 
             <livery>
-                <name type="string">JMSDF Camo "Salmon" (Fictional)</name>
+                <name type="string">Digital Camo "Salmon" (Fictional)</name>
                 <texture type="string">Liveries/Block60/JMSDFcamo.png</texture>
-                <owner type="string">Salmon</owner>
+                <owner type="string">FICTION</owner>
+                <pilot type="string">Maj Salmon</pilot>
+                <scheme type="string">Digital camo</scheme>
+                <block type="int">60</block>
+                <serial type="string">N/A</serial>
+                <squad type="string">JMSDF</squad>
+                <year type="string">2020</year>
             </livery>
             <livery-logo>
             <texture>Liveries/yf/yf16-transp.png</texture>

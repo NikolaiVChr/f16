@@ -6,7 +6,13 @@
    <livery>
     <name type="string">HRZ #140, "Kokos" (Fictional)</name>
     <texture>Liveries/Block60/HRZ.png</texture>
-    <owner type="string">HRZ</owner>
+    <owner type="string">FICTION</owner>
+    <pilot type="string">Maj Kokos</pilot>
+    <scheme type="string">Digital camo</scheme>
+    <block type="int">60</block>
+    <serial type="string">N/A</serial>
+    <squad type="string">HRZ</squad>
+    <year type="string"></year>
    </livery>
    <livery-logo>
     <texture>Liveries/standard.logos.black.png</texture>

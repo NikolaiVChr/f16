@@ -6,7 +6,13 @@
             <livery>
                 <name type="string">Shaymo (Fictional)</name>
                 <texture>Liveries/Block60/Shaymo.png</texture> 
-                <owner type="string">USAF</owner>
+                <owner type="string">FICTION</owner>
+                <pilot type="string">Maj Shaymo</pilot>
+                <scheme type="string">Dark tone</scheme>
+                <block type="int">60</block>
+                <serial type="string">N/A</serial>
+                <squad type="string">USAF</squad>
+                <year type="string"></year>
             </livery>
 
         <livery-logo>

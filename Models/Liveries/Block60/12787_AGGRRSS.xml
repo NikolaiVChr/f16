@@ -6,7 +6,13 @@
             <livery>
                 <name type="string">12787 AGGRRSS (Fictional)</name>
                 <texture type="string">Liveries/Block60/12787_AGGRRSS.png</texture>
-                <owner type="string">RAAF</owner>
+                <owner type="string">FICTION</owner>
+                <pilot type="string">Lt Col Lachlan</pilot>
+                <scheme type="string">Two-tone digital camo</scheme>
+                <block type="int">60</block>
+                <serial type="string">N/A</serial>
+                <squad type="string">RAAF</squad>
+                <year type="string">2020</year>
             </livery>
             <livery-logo>
                 <texture type="string">Liveries/Block60/logos.12787.png</texture>

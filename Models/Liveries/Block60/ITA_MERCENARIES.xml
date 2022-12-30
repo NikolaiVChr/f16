@@ -4,9 +4,15 @@
     <sim>
         <model> 
             <livery>
-                <name type="string">ITA MERCENARIES (Fictional)</name>
+                <name type="string">ITA MERCENARIES, 22-06 (Fictional)</name>
                 <texture type="string">Liveries/Block60/ITA_MERCENARIES.png</texture>
-                <owner type="string">ITAF</owner>
+                <owner type="string">FICTION</owner>
+                <pilot type="string"></pilot>
+                <scheme type="string">Four-tone camo</scheme>
+                <block type="int">60</block>
+                <serial type="string">N/A</serial>
+                <squad type="string">ITA MERCENARIES</squad>
+                <year type="string">2019</year>
             </livery>
             <livery-logo>
                 <texture type="string">Liveries/standard.logos.color.png</texture>
