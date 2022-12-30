@@ -103,6 +103,23 @@ var PLACES   = 1;
 var COLOR_DAY   = "rgb(255,255,255)";#"rgb(128,128,128)";# color fill behind map which will modulate to make it darker.
 var COLOR_NIGHT = "rgb(128,128,128)";
 
+var vector_aicontacts_links = [];
+var DLRecipient = emesary.Recipient.new("CDU-DLRecipient");
+var startDLListener = func {
+    DLRecipient.radar = radar_system.dlnkRadar;
+    DLRecipient.Receive = func(notification) {
+        if (notification.NotificationType == "DatalinkNotification") {
+            #printf("DL recv: %s", notification.NotificationType);
+            if (me.radar.enabled == 1) {
+                vector_aicontacts_links = notification.vector;
+            }
+            return emesary.Transmitter.ReceiptStatus_OK;
+        }
+        return emesary.Transmitter.ReceiptStatus_NotProcessed;
+    };
+    emesary.GlobalTransmitter.Register(DLRecipient);
+}
+
 
 var lineWidth = {
     bullseye: 5,
@@ -115,6 +132,9 @@ var lineWidth = {
     route: 3,
     pfd: 4,
     grid: 3,
+    targets: 2,
+    targetsDL: 3,
+    gpsSpot: 5,
 };
 
 var font = {
@@ -124,6 +144,35 @@ var font = {
     attribution: 30,
     threatRings: 25,
     grid: 14,
+    targets: 25,
+    markpoints: 25,
+};
+
+var layer_z = {
+    # How things are layered on top of each other, higher numbers are on top of lower numbers.
+    display: {
+        map: 1,
+        mapOverlay: 7,
+        buttonSymbols: 9,
+        pfd: 20,
+        pfdSky: 19,
+        ehsi: 20,
+        attribution: 70,
+    },
+    map: {
+        tiles: 1,
+        targets: 11,
+        markpoints: 10,
+        lines_and_route: 8,
+        threatRings: 4,
+        grid: 2,
+        gridText: 3,
+    },
+    mapOverlay: {
+        ownship: 10,
+        radarCone: 11,
+        rangeRings: 7,
+    },
 };
 
 
@@ -170,6 +219,7 @@ var CDU = {
         me.setupThreatRings();
         me.setupLines();
         me.setupMarkPoints();
+        me.setupTargets();
         me.setupEHSI();
         me.setupPFD();
         me.setupAttr();
@@ -184,6 +234,8 @@ var CDU = {
         loopTimerVerySlow = maketimer(3600, me, me.calcZoomLevels);
         loopTimerVerySlow.start();
         #me.loop();
+
+        startDLListener();
         #print("CDU module started");
     },
 
@@ -231,6 +283,7 @@ var CDU = {
         me.updateLines();# after updateRadarCone
         me.updateRoute();# after updateLines
         me.updateMarkPoints();
+        me.updateTargets();
         me.updateAttr();
         #print("CDU Looping ",me.loadedCDU);
     },
@@ -404,11 +457,11 @@ var CDU = {
                .moveTo(-5, 20)
                .horiz(10)
               .setColor(COLOR_BLUE_LIGHT)
-              .set("z-index", 10)
+              .set("z-index", layer_z.mapOverlay.ownship)
               .setStrokeLineWidth(lineWidth.ownship);
 
         me.cone = me.rootCenter.createChild("group")
-            .set("z-index",11);#radar cone
+            .set("z-index",layer_z.mapOverlay.radarCone);#radar cone
 
         me.outerRadius  = zoomLevels[zoom_curr]*NM2M*M2TEX;
         #me.mediumRadius = me.outerRadius*0.6666;
@@ -421,12 +474,12 @@ var CDU = {
             .lineTo(-20, 30)
             .lineTo(0,0)
             .setStrokeLineWidth(lineWidth.rangeArrows)
-            .set("z-index",7)
+            .set("z-index",layer_z.display.buttonSymbols)
             .setColor(COLOR_YELLOW)
             .setTranslation(me.buttonMap.b1.pos[0]+40, me.buttonMap.b1.pos[1]-15);
 
         me.rangeText = me.root.createChild("text")
-            .set("z-index",7)
+            .set("z-index",layer_z.display.buttonSymbols)
             .setColor(COLOR_YELLOW)
             .setFontSize(font.range, 1.0)
             .setAlignment("center-center")
@@ -438,7 +491,7 @@ var CDU = {
             .lineTo(-20, -30)
             .lineTo(0,0)
             .setStrokeLineWidth(lineWidth.rangeArrows)
-            .set("z-index",7)
+            .set("z-index",layer_z.display.buttonSymbols)
             .setColor(COLOR_YELLOW)
             .setTranslation(me.buttonMap.b2.pos[0]+40, me.buttonMap.b2.pos[1]+15);
 
@@ -460,7 +513,7 @@ var CDU = {
             .moveTo(me.innerRadius,0)#east
             .horiz(15)
             .setStrokeLineWidth(lineWidth.rangeRings)
-            .set("z-index",7)
+            .set("z-index",layer_z.mapOverlay.rangeRings)
             .setColor(COLOR_GRAY);
         me.bullseyeSize = 50;
         me.bullseye = me.mapCenter.createChild("path")
@@ -483,7 +536,7 @@ var CDU = {
             .moveTo(-me.gpsSpotSize*3/5,0)
             .arcSmallCW(me.gpsSpotSize*3/5,me.gpsSpotSize*3/5, 0,  me.gpsSpotSize*3/5*2, 0)
             .arcSmallCW(me.gpsSpotSize*3/5,me.gpsSpotSize*3/5, 0, -me.gpsSpotSize*3/5*2, 0)
-            .setStrokeLineWidth(lineWidth.bullseye)
+            .setStrokeLineWidth(lineWidth.gpsSpot)
             .setColor(COLOR_BLACK);
     },
 
@@ -512,9 +565,189 @@ var CDU = {
         me.conc.setVisible(zoom_curr != 5);
     },
 
+    setupTargets: func {
+        me.maxB = 16;
+        me.blepTriangle = setsize([],me.maxB);
+        me.blepTriangleVel = setsize([],me.maxB);
+        me.blepTriangleText = setsize([],me.maxB);
+        me.blepTriangleVelLine = setsize([],me.maxB);
+        me.blepTrianglePaths = setsize([],me.maxB);
+        me.lnkTA= setsize([],me.maxB);
+        me.lnkT = setsize([],me.maxB);
+        me.lnk  = setsize([],me.maxB);
+        for (var i = 0;i<me.maxB;i+=1) {
+                me.blepTriangle[i] = me.mapCenter.createChild("group")
+                                .set("z-index",layer_z.map.targets);
+                me.blepTriangleVel[i] = me.blepTriangle[i].createChild("group");
+                me.blepTriangleText[i] = me.blepTriangle[i].createChild("text")
+                                .setAlignment("center-top")
+                                .setFontSize(font.targets, 1.0)
+                                .setTranslation(0,20);
+                me.blepTriangleVelLine[i] = me.blepTriangleVel[i].createChild("path")
+                                .lineTo(0,-10)
+                                .setTranslation(0,-16)
+                                .setStrokeLineWidth(lineWidth.targets);
+                me.blepTrianglePaths[i] = me.blepTriangle[i].createChild("path")
+                                .moveTo(-14,8)
+                                .horiz(28)
+                                .lineTo(0,-16)
+                                .lineTo(-14,8)
+                                .set("z-index",10)
+                                .setStrokeLineWidth(lineWidth.targets);
+                me.lnk[i] = me.mapCenter.createChild("path")
+                                .moveTo(-10,-10)
+                                .vert(20)
+                                .horiz(20)
+                                .vert(-20)
+                                .horiz(-20)
+                                .moveTo(0,-10)
+                                .vert(-10)
+                                .hide()
+                                .set("z-index",layer_z.map.targets)
+                                .setStrokeLineWidth(lineWidth.targetsDL);
+                me.lnkT[i] = me.mapCenter.createChild("text")
+                                .setAlignment("center-bottom")
+                                .set("z-index",layer_z.map.targets)
+                                .setFontSize(font.targets, 1.0);
+                me.lnkTA[i] = me.mapCenter.createChild("text")
+                                .setAlignment("center-top")
+                                .set("z-index",layer_z.map.targets)
+                                .setFontSize(font.targets, 1.0);
+        }
+        me.selection = me.mapCenter.createChild("path")
+                .moveTo(-16, 0)
+                .arcSmallCW(16, 16, 0, 16*2, 0)
+                .arcSmallCW(16, 16, 0, -16*2, 0)
+                .setColor(COLOR_YELLOW)
+                .set("z-index",layer_z.map.targets)
+                .setStrokeLineWidth(2);
+    },
+
+    updateTargets: func {
+        me.i = 0;#triangles
+        me.ii = 0;#dlink
+        me.selected = 0;
+
+        me.rando = rand();
+        me.rdrprio = radar_system.apg68Radar.getPriorityTarget();
+        me.selfHeading = radar_system.self.getHeading();
+
+        if (radar_system.datalink_power.getBoolValue()) {
+            #printf("%d DLs",size(vector_aicontacts_links));
+            foreach(contact; vector_aicontacts_links) {
+                me.blue = contact.blue;
+                me.blueIndex = contact.blueIndex;
+                me.paintBlep(contact);
+                contact.rando = me.rando;
+            }
+        }
+        if (radar_system.apg68Radar.enabled) {
+            foreach(contact; radar_system.apg68Radar.getActiveBleps()) {
+                if (contact["rando"] == me.rando) continue;
+
+                me.blue = 0;
+                me.blueIndex = -1;
+
+                me.paintBlep(contact);
+            }
+        }
+
+        for (;me.i<me.maxB;me.i+=1) {
+            me.blepTriangle[me.i].hide();
+        }
+        for (;me.ii<me.maxB;me.ii+=1) {
+            me.lnk[me.ii].hide();
+            me.lnkT[me.ii].hide();
+            me.lnkTA[me.ii].hide();
+        }
+        me.selection.setVisible(me.selected);
+    },
+
+    paintBlep: func (contact) {
+        if (!contact.isVisible() and me.blue != 2) {
+            return;
+        }
+        me.desig = contact.equals(me.rdrprio);
+        me.hasTrack = contact.hasTrackInfo();
+        if (!me.hasTrack and me.blue == 0) {
+            return;
+        }
+        me.color = me.blue == 1?COLOR_BLUE_LIGHT:(me.blue == 2?COLOR_RED:COLOR_YELLOW);
+        if (me.blue != 0) {
+            me.c_rng = contact.getRange()*M2NM;
+            me.c_rbe = contact.getDeviationHeading();
+            me.c_hea = contact.getHeading();
+            me.c_alt = contact.get_altitude();
+            me.c_spd = contact.getSpeed();
+        } else {
+            me.lastBlep = contact.getLastBlep();
+
+            me.c_rng = me.lastBlep.getRangeNow()*M2NM;
+            me.c_rbe = me.lastBlep.getAZDeviation();
+            me.c_hea = me.lastBlep.getHeading();
+            me.c_alt = me.lastBlep.getAltitude();
+            me.c_spd = me.lastBlep.getSpeed();
+        }
+
+
+        #me.distPixels = (me.c_rng/me.rdrrng)*me.rdrRangePixels;
+        #    if (me.blue) print("through ",me.desig," LoS:",!contact.get_behind_terrain());
+
+
+        me.rot = 22.5*math.round( geo.normdeg((me.c_hea))/22.5 )*D2R;#Show rotation in increments of 22.5 deg
+        #me.trans = [me.distPixels*math.sin(me.c_rbe*D2R),-me.distPixels*math.cos(me.c_rbe*D2R)];
+        me.transCoord = contact.getCoord();
+        me.trans = me.laloToTexelMap(me.transCoord.lat(),me.transCoord.lon());
+
+        if (me.blue != 1 and me.i < me.maxB) {
+            me.blepTrianglePaths[me.i].setColor(me.color);
+            me.blepTriangle[me.i].setTranslation(me.trans);
+            me.blepTriangle[me.i].show();
+            me.blepTrianglePaths[me.i].setRotation(me.rot);
+            me.blepTriangleVel[me.i].setRotation(me.rot);
+            me.blepTriangleVelLine[me.i].setScale(1,me.c_spd*0.0045);
+            me.blepTriangleVelLine[me.i].setColor(me.color);
+            me.lockAlt = sprintf("%02d", math.round(me.c_alt*0.001));
+            me.blepTriangleText[me.i].setText(me.lockAlt);
+            me.blepTriangleText[me.i].setColor(me.color);
+            me.i += 1;
+            if (me.blue == 2 and me.ii < me.maxB) {
+                me.lnkT[me.ii].setColor(me.color);
+                me.lnkT[me.ii].setTranslation(me.trans[0],me.trans[1]-25);
+                me.lnkT[me.ii].setText(""~me.blueIndex);
+                me.lnk[me.ii].hide();
+                me.lnkT[me.ii].show();
+                me.lnkTA[me.ii].hide();
+                me.ii += 1;
+            }
+        } elsif (me.blue == 1 and me.ii < me.maxB) {
+            me.lnk[me.ii].setColor(me.color);
+            me.lnk[me.ii].setTranslation(me.trans);
+            me.lnk[me.ii].setRotation(me.rot);
+            #me.lnkT[me.ii].setRotation(me.selfHeading*D2R);
+            #me.lnkTA[me.ii].setRotation(me.selfHeading*D2R);
+            me.lnkT[me.ii].setColor(me.color);
+            me.lnkTA[me.ii].setColor(me.color);
+            me.lnkT[me.ii].setTranslation(me.trans[0],me.trans[1]-25);
+            me.lnkTA[me.ii].setTranslation(me.trans[0],me.trans[1]+20);
+            me.lnkT[me.ii].setText(""~me.blueIndex);
+            me.lnkTA[me.ii].setText(sprintf("%02d", math.round(me.c_alt*0.001)));
+            me.lnk[me.ii].show();
+            me.lnkTA[me.ii].show();
+            me.lnkT[me.ii].show();
+            me.ii += 1;
+        }
+
+        if (me.desig) {
+            me.selection.setTranslation(me.trans);
+            me.selection.setColor(me.color);
+            me.selected = 1;
+        }
+    },
+
     setupAttr: func {
         me.attrText = me.root.createChild("text")
-            .set("z-index",70)
+            .set("z-index",layer_z.display.attribution)
             .setColor(COLOR_WHITE)
             .setFontSize(font.attribution, 1.0)
             .setText("")
@@ -536,8 +769,8 @@ var CDU = {
                     .setAlignment("center-center")
                     .setColor(no<5?COLOR_RED:COLOR_BROWN)
                     .setText("X")
-                    .set("z-index",20)
-                    .setFontSize(25, 1.0);
+                    .set("z-index",layer_z.map.markpoints)
+                    .setFontSize(font.markpoints, 1.0);
         }
     },
 
@@ -562,7 +795,7 @@ var CDU = {
 
     setupLines: func {
         # Used by lines and route
-        me.linesGroup = me.mapCenter.createChild("group");
+        me.linesGroup = me.mapCenter.createChild("group").set("z-index",layer_z.map.lines_and_route);
     },
 
     updateLines: func {
@@ -622,7 +855,7 @@ var CDU = {
                     .arcSmallCW(8,8, 0, 8*2, 0)
                     .arcSmallCW(8,8, 0,-8*2, 0)
                     .setStrokeLineWidth(lineWidth.route)
-                    .set("z-index",4)
+                    .set("z-index",6)
                     .setColor(COLOR_WHITE)
                     .update();
                 if (me.plan.current == me.j) {
@@ -633,7 +866,7 @@ var CDU = {
                         .moveTo(me.stptPos)
                         .lineTo(me.stptPrevPos)
                         .setStrokeLineWidth(lineWidth.route)
-                        .set("z-index",4)
+                        .set("z-index",6)
                         .setColor(COLOR_WHITE)
                         .update();
                 }
@@ -682,7 +915,7 @@ var CDU = {
 
     updateRadarCone: func {
         me.cone.removeAllChildren();
-        if (1 or radar_system.apg68Radar.enabled) {
+        if (radar_system.apg68Radar.enabled) {
             if (radar_system.apg68Radar.showAZinHSD()) {
 
                 me.rdrrng = radar_system.apg68Radar.getRange();
@@ -701,7 +934,6 @@ var CDU = {
                             .lineTo(me.radarX2,me.radarY2)#left
                             .arcSmallCW(me.rdrRangePixels,me.rdrRangePixels, 0, me.radarX1-me.radarX2, me.radarY1-me.radarY2)
                             .setStrokeLineWidth(lineWidth.radarCone)
-                            .set("z-index",9)
                             .setColor(COLOR_BLUE_LIGHT)
                             .update();
             }
@@ -763,11 +995,11 @@ var CDU = {
                 .arcSmallCW(50,50, 0,  50*2, 0)
                 .arcSmallCW(50,50, 0, -50*2, 0)
                 .setStrokeLineWidth(lineWidth.threatRings)
-                .set("z-index",2)
+                .set("z-index",layer_z.map.threatRings)
                 .hide());
             append(me.threat_t, me.mapCenter.createChild("text")
                 .setAlignment("center-center")
-                .set("z-index",2)
+                .set("z-index",layer_z.map.threatRings)
                 .setFontSize(font.threatRings, 1.0));
         }
     },
@@ -824,7 +1056,7 @@ var CDU = {
 #                                                                                               
     setupPFD: func {
         me.pfdRoot = me.root.createChild("group")
-            .set("z-index", 20)
+            .set("z-index", layer_z.display.pfd)
             .set("clip", sprintf("rect(%dpx, %dpx, %dpx, %dpx)",me.ehsiPosY,me.ehsiPosX,me.max_y,0))#top,right,bottom,left
             .setTranslation(me.ehsiPosX*0.5, me.ehsiPosY+(me.max_y-me.ehsiPosY)*0.5);
         me.pfdGround = me.pfdRoot.createChild("path")
@@ -918,7 +1150,7 @@ var CDU = {
             .setColorFill(COLOR_SKY_LIGHT)
             .setColor(COLOR_SKY_LIGHT)
             .setStrokeLineWidth(1)
-            .set("z-index", 19)
+            .set("z-index", layer_z.display.pfdSky)
             .setTranslation(0,me.ehsiPosY);
     },
 
@@ -947,7 +1179,7 @@ var CDU = {
             .set("src", "canvas://by-index/texture[3]")
             .setTranslation(me.ehsiPosX,me.ehsiPosY)
             .setScale(me.ehsiScale)
-            .set("z-index", 20);
+            .set("z-index", layer_z.display.ehsi);
     },
 
 #   ██████  ██████  ██ ██████  
@@ -959,9 +1191,9 @@ var CDU = {
 #                              
     setupGrid: func {
         me.gridGroup = me.mapCenter.createChild("group")
-            .set("z-index", 24);
+            .set("z-index", layer_z.map.grid);
         me.gridGroupText = me.mapCenter.createChild("group")
-            .set("z-index", 25);
+            .set("z-index", layer_z.map.gridText);
         me.last_lat = 0;
         me.last_lon = 0;
         me.last_range = 0;
@@ -1191,14 +1423,15 @@ var CDU = {
     initMap: func {
         # map groups
         me.mapCentrum = me.root.createChild("group")
-            .set("z-index", 1)
+            .set("z-index", layer_z.display.map)
             .setTranslation(me.max_x*0.5,me.max_y*0.5);
         me.mapCenter = me.mapCentrum.createChild("group");
         me.mapRot = me.mapCenter.createTransform();
-        me.mapFinal = me.mapCenter.createChild("group");
+        me.mapFinal = me.mapCenter.createChild("group")
+            .set("z-index",  layer_z.map.tiles);
         me.rootCenter = me.root.createChild("group")
             .setTranslation(me.max_x/2,me.max_y/2)
-            .set("z-index",  9);
+            .set("z-index",  layer_z.display.mapOverlay);
     },
 
     updateMapNames: func {
