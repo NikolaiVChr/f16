@@ -2,7 +2,21 @@
 # F-16 Steerpoint/route/mark/bulls-eye system.
 #
 var lines = [nil,nil];
-var number_of_threat_circles = 15;
+
+var number_of_threat_circles  = 15;
+var number_of_generic         = 10;
+var number_of_markpoints_own  = 5;
+var number_of_markpoints_dlnk = 5;
+
+var index_of_threat_circles   = 300;
+var index_of_generic          = 350;
+var index_of_markpoints_own   = 400;
+var index_of_markpoints_dlnk  = 450;
+var index_of_weapon_gps       = 500;
+var index_of_bullseye         = 555;
+var index_of_lines_1          = 100;
+var index_of_lines_1          = 200;
+
 var stpt300 = setsize([],number_of_threat_circles);#Threat circles
 var stpt350 = setsize([],10);#Generic
 var stpt400 = setsize([],5);#Markpoints Own
