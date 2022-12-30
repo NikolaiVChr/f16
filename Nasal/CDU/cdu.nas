@@ -5,7 +5,8 @@ var COLOR_RED        = [1.00,0.00,0.00];
 var COLOR_WHITE      = [1.00,1.00,1.00];
 var COLOR_BROWN      = [0.71,0.40,0.11];
 var COLOR_BROWN_DARK = [0.56,0.32,0.09];
-var COLOR_GRAY       = [0.50,0.50,0.50];
+var COLOR_GRAY       = [0.25,0.25,0.25,0.50];
+var COLOR_GRAY_LIGHT = [0.75,0.75,0.75,0.50];
 var COLOR_SKY_DARK   = [0.15,0.15,0.60];
 var COLOR_BLACK      = [0.00,0.00,0.00];
 
@@ -456,7 +457,6 @@ var CDU = {
 #                                                                     
     setupSymbols: func {
         # ownship symbol
-
         me.selfSymbol = me.rootCenter.createChild("path")
                 .moveTo(0, 0)
                 .vert(symbolSize.ownship)
@@ -571,6 +571,7 @@ var CDU = {
         me.conc.setScale(me.concScale);
         me.conc.setStrokeLineWidth(lineWidth.rangeRings/me.concScale);
         me.conc.setVisible(zoom_curr != 5);
+        me.conc.setColor(me.day?COLOR_GRAY:COLOR_GRAY_LIGHT);
     },
 
     setupTargets: func {
