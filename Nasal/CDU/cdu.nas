@@ -6,7 +6,8 @@ var COLOR_WHITE      = [1.00,1.00,1.00];
 var COLOR_BROWN      = [0.71,0.40,0.11];
 var COLOR_BROWN_DARK = [0.56,0.32,0.09];
 var COLOR_GRAY       = [0.50,0.50,0.50];
-var COLOR_SKY_DARK  = [0.15,0.15,0.60];
+var COLOR_SKY_DARK   = [0.15,0.15,0.60];
+var COLOR_BLACK      = [0.00,0.00,0.00];
 
 var str = func (d) {return ""~d};
 
@@ -168,6 +169,7 @@ var CDU = {
         me.setupSymbols();
         me.setupThreatRings();
         me.setupLines();
+        me.setupMarkPoints();
         me.setupEHSI();
         me.setupPFD();
         me.setupAttr();
@@ -228,6 +230,7 @@ var CDU = {
         me.updateThreatRings();
         me.updateLines();# after updateRadarCone
         me.updateRoute();# after updateLines
+        me.updateMarkPoints();
         me.updateAttr();
         #print("CDU Looping ",me.loadedCDU);
     },
@@ -472,10 +475,20 @@ var CDU = {
             .arcSmallCW(me.bullseyeSize/5,me.bullseyeSize/5, 0, -me.bullseyeSize/5*2, 0)
             .setStrokeLineWidth(lineWidth.bullseye)
             .setColor(COLOR_BLUE_LIGHT);
+        me.gpsSpotSize = 40;
+        me.gpsSpot = me.mapCenter.createChild("path")
+            .moveTo(-me.gpsSpotSize,0)
+            .arcSmallCW(me.gpsSpotSize,me.gpsSpotSize, 0,  me.gpsSpotSize*2, 0)
+            .arcSmallCW(me.gpsSpotSize,me.gpsSpotSize, 0, -me.gpsSpotSize*2, 0)
+            .moveTo(-me.gpsSpotSize*3/5,0)
+            .arcSmallCW(me.gpsSpotSize*3/5,me.gpsSpotSize*3/5, 0,  me.gpsSpotSize*3/5*2, 0)
+            .arcSmallCW(me.gpsSpotSize*3/5,me.gpsSpotSize*3/5, 0, -me.gpsSpotSize*3/5*2, 0)
+            .setStrokeLineWidth(lineWidth.bullseye)
+            .setColor(COLOR_BLACK);
     },
 
     updateSymbols: func {
-        me.bullPt = steerpoints.getNumber(555);
+        me.bullPt = steerpoints.getNumber(steerpoints.index_of_bullseye);
         me.bullOn = me.bullPt != nil;
         if (me.bullOn) {
             me.bullLat = me.bullPt.lat;
@@ -483,6 +496,16 @@ var CDU = {
             me.bullseye.setTranslation(me.laloToTexelMap(me.bullLat,me.bullLon));            
         }
         me.bullseye.setVisible(me.bullOn);
+
+        me.gpsPt = steerpoints.getNumber(steerpoints.index_of_weapon_gps);
+        me.bullOn = me.gpsPt != nil;
+        if (me.bullOn) {
+            me.gpsLat = me.gpsPt.lat;
+            me.gpsLon = me.gpsPt.lon;
+            me.gpsSpot.setTranslation(me.laloToTexelMap(me.gpsLat,me.gpsLon));            
+        }
+        me.gpsSpot.setVisible(me.bullOn);
+
         me.concScale = zoomLevels[zoom_init]*NM2M*me.M2TEXinit/me.outerRadius;
         me.conc.setScale(me.concScale);
         me.conc.setStrokeLineWidth(lineWidth.rangeRings/me.concScale);
@@ -504,6 +527,37 @@ var CDU = {
         # every once in a while display attribution for 4 seconds.
         me.attrText.setText(providers[zoom_provider[zoom_curr]].attribution);
         me.attrText.setVisible(math.mod(int(me.input.timeElapsed.getValue()*0.25), 120) == 0)
+    },
+
+    setupMarkPoints: func {
+        me.mark = setsize([],steerpoints.number_of_markpoints_own+steerpoints.number_of_markpoints_dlnk);
+        for (var no = 0; no < steerpoints.number_of_markpoints_own+steerpoints.number_of_markpoints_dlnk; no += 1) {
+            me.mark[no] = me.mapCenter.createChild("text")
+                    .setAlignment("center-center")
+                    .setColor(no<5?COLOR_RED:COLOR_BROWN)
+                    .setText("X")
+                    .set("z-index",20)
+                    .setFontSize(25, 1.0);
+        }
+    },
+
+    updateMarkPoints: func {
+        for (var mi = 0; mi < steerpoints.number_of_markpoints_own+steerpoints.number_of_markpoints_dlnk; mi+=1) {
+            var mkpt = nil;
+            if (mi<steerpoints.number_of_markpoints_own) {
+                mkpt = steerpoints.getNumber(steerpoints.index_of_markpoints_own+mi);
+            } else {
+                mkpt = steerpoints.getNumber(steerpoints.index_of_markpoints_dlnk+mi-5);
+            }
+            if (mkpt == nil) {
+                me.mark[mi].hide();
+            } else {                
+                me.markPos = me.laloToTexelMap(mkpt.lat, mkpt.lon);
+                #printf("Showing mark #%d at %d,%d",mi,me.markPos[0],me.markPos[1]);
+                me.mark[mi].setTranslation(me.markPos);
+                me.mark[mi].show();
+            }
+        }
     },
 
     setupLines: func {
