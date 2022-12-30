@@ -919,6 +919,8 @@ var CDU = {
     setRangeInfo: func  {
         me.range = zoomLevels[zoom_curr];#(me.outerRadius/M2TEX)*M2NM;
         me.rangeText.setText(sprintf("%d", me.range));#print(sprintf("Map range %5.1f NM", me.range));
+        me.rangeArrowDown.setVisible(zoom_curr < size(zoomLevels)-1);
+        me.rangeArrowUp.setVisible(zoom_curr > 0);
     },
 
     updateRadarCone: func {
@@ -1236,9 +1238,10 @@ var CDU = {
         } elsif (zoomLevels[zoom_curr] == 20) {
             me.granularity_lon = 0.25;
             me.granularity_lat = 0.25;
-        } elsif (zoomLevels[zoom_curr] == 10) {
-            me.granularity_lon = 0.25;
-            me.granularity_lat = 0.25;
+        } else {
+            me.gridGroup.hide();
+            me.gridGroupText.hide();
+            return;
         }
         
         var delta_lon = me.granularity_lon;
