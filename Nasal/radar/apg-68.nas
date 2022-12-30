@@ -935,6 +935,7 @@ DatalinkRadar = {
 		datalink.can_transmit = func(callsign, mp_prop, mp_index) {
 		    dlnk.contactSender = callsignToContact.get(callsign);
 		    if (dlnk.contactSender == nil) return 0;
+		    if (!dlnk.contactSender.isValid()) return 0;
 		    if (!dlnk.contactSender.isVisible()) return 0;
 
 		    dlnk.isContactStation = isKnownSurface(dlnk.contactSender.getModel()) or isKnownShip(dlnk.contactSender.getModel()) or isKnownAwacs(dlnk.contactSender.getModel());
@@ -954,6 +955,7 @@ DatalinkRadar = {
 		dlnk.DatalinkRadarRecipient.Receive = func(notification) {
 	        if (notification.NotificationType == "AINotification") {
 	        	#printf("DLNKRadar recv: %s", notification.NotificationType);
+	        	#printf("DLNKRadar notified of %d contacts", size(notification.vector));
     		    me.radar.vector_aicontacts = notification.vector;
     		    me.radar.index = 0;
 	            return emesary.Transmitter.ReceiptStatus_OK;
@@ -995,9 +997,11 @@ DatalinkRadar = {
 			}
 		} else {
 
-	        me.lnk = datalink.get_data(me.cs);
+	        
 	        if (!me.contact.isValid()) {
 	        	me.lnk = nil;
+	        } else {
+	        	me.lnk = datalink.get_data(damage.processCallsign(me.cs));
 	        }
 	        
 	        if (me.lnk != nil and me.lnk.on_link() == 1) {
@@ -1038,6 +1042,16 @@ DatalinkRadar = {
 		me.index += 1;
         if (me.index > size(me.vector_aicontacts)-1) {
         	me.index = 0;
+
+        	# Lets not keep contacts no longer in our scene
+        	me.new_vector_aicontacts_for = [];
+			foreach (me.c ; me.vector_aicontacts_for) {
+				if (AirborneRadar.containsVectorContact(me.vector_aicontacts, me.c)) {
+					append(me.new_vector_aicontacts_for, me.c);
+				}
+			}
+			me.vector_aicontacts_for = me.new_vector_aicontacts_for;
+
         	emesary.GlobalTransmitter.NotifyAll(me.DatalinkNotification.updateV(me.vector_aicontacts_for));
         }
 	},
