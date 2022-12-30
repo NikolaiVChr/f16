@@ -238,7 +238,7 @@
                 <binding>
                     <command>set-tooltip</command>
                     <tooltip-id>c</tooltip-id>
-                    <label>ZOOM IN</label>
+                    <label>RANGE INCREASE</label>
                 </binding>
             </hovered>
      </animation>
@@ -263,7 +263,7 @@
                 <binding>
                     <command>set-tooltip</command>
                     <tooltip-id>d</tooltip-id>
-                    <label>ZOOM OUT</label>
+                    <label>RANGE DECREASE</label>
                 </binding>
             </hovered>
      </animation>
