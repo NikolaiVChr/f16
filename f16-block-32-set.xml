@@ -76,7 +76,7 @@
    <path archive="y">Aircraft/f16/Models/F-16.xml</path>
    <livery>
     <file type="string"/>
-    <name type="string">USAF 57WG, 64AS WA "Ghost, 57ATG"</name>
+    <name type="string">57WG, 64AGRS WA "57ATG, Ghost"</name>
     <folder type="string">Aircraft/f16/Models/Liveries/Block30</folder>
    </livery>
    <MFD-color>

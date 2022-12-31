@@ -70,7 +70,7 @@
    <path archive="y">Aircraft/f16/Models/F-16.xml</path>
    <livery>
     <file type="string"/>
-    <name type="string">UAEAF 1 Sqn, #3045</name>
+    <name type="string">1 Sqn, #3045</name>
     <folder type="string">Aircraft/f16/Models/Liveries/Block60</folder>
    </livery>
    <MFD-color>

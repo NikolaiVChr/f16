@@ -74,7 +74,7 @@
    <path archive="y">Aircraft/f16/Models/F-16.xml</path>
    <livery>
     <file type="string"/>
-    <name type="string">USAF 35FW, 14FS WW "Wing Flagship"</name>
+    <name type="string">52FW, 480FS SP "Wing Flagship"</name>
     <folder type="string">Aircraft/f16/Models/Liveries/Block50</folder>
    </livery>
    <MFD-color>
