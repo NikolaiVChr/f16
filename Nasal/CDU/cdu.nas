@@ -205,7 +205,8 @@ var CDU = {
               "name": "CDU",
               "size": [me.canvasX, me.canvasY],
               "view": [me.canvasX, me.canvasY],
-              "mipmapping": 0
+              "mipmapping": 0,
+              "additive-blend": 1,
         });
             
         me.placement = me.cduCanvas.addPlacement({"node": "cdu_canvas"});
