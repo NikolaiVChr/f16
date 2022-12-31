@@ -1463,9 +1463,9 @@ var CDU = {
             for(var y = 0; y < num_tiles[1]; y += 1) {
                 tiles[x][y] = me.mapFinal.createChild("image", "map-tile").set("z-index", 15);
                 if (me.day == 1) {
-                    tiles[x][y].set("fill", COLOR_DAY);
+                    #tiles[x][y].set("fill", COLOR_DAY);
                 } else {
-                    tiles[x][y].set("fill", COLOR_NIGHT);
+                    #tiles[x][y].set("fill", COLOR_NIGHT);
                 }
             }
         }
