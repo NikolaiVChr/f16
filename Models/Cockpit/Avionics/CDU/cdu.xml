@@ -111,7 +111,7 @@
                 <wrap>true</wrap>
            </binding>
         </decrease>
-        <hovered>
+        <!--hovered>
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>ehsi-hdg</tooltip-id>
@@ -119,7 +119,7 @@
                 <label>Heading Bug: %3d</label>
                 <property>instrumentation/heading-indicator/heading-bug-deg</property>
             </binding>
-        </hovered>
+        </hovered-->
     </animation>
 
 
@@ -177,7 +177,7 @@
                 <wrap>true</wrap>
            </binding>
         </decrease>
-        <hovered>
+        <!--hovered>
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>ehsi-hdg</tooltip-id>
@@ -185,7 +185,7 @@
                 <label>Course: %3d</label>
                 <property>instrumentation/nav[0]/radials/selected-deg</property>
             </binding>
-        </hovered>
+        </hovered-->
     </animation>
 
     <animation>
@@ -225,13 +225,13 @@
                 <wrap>false</wrap>
            </binding>
         </decrease>
-        <hovered>
+        <!--hovered>
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>fqs</tooltip-id>
                 <label>FUEL QTY SEL</label>
             </binding>
-        </hovered>
+        </hovered-->
     </animation>
 
     <animation>
