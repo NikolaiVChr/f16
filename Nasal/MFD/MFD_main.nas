@@ -1778,6 +1778,7 @@ var MFD_Device =
                     }
                     if (me.c_alt != nil) {
                         me.root.blepTriangleText[me.ii].setText(""~math.round(me.c_alt*0.001));
+                        me.root.blepTriangleText[me.ii].setColor(me.color);
                     } else {
                         me.root.blepTriangleText[me.ii].setText("");
                     }
