@@ -406,6 +406,7 @@ var CDU = {
             calibrated:           "fdm/jsbsim/velocities/vc-kts",
             mach:                 "instrumentation/airspeed-indicator/indicated-mach",
             inhg:                 "instrumentation/altimeter/setting-inhg",
+            alphaI:               "fdm/jsbsim/fcs/fly-by-wire/pitch/alpha-indicated",
         };
 
         foreach(var name; keys(me.input)) {
@@ -1166,6 +1167,13 @@ var CDU = {
                 .setTranslation(-me.ehsiPosX*0.5, 0)
                 .set("z-index", 21)
                 .setText("425\nM0.94");
+        me.pfdAlpha = me.pfdRoot.createChild("text")
+                .setColor(COLOR_YELLOW)
+                .setFontSize(font.pfdTapes, 1.0)
+                .setAlignment("left-center")
+                .setTranslation(-me.ehsiPosX*0.5, -(me.max_y-me.ehsiPosY)*0.25)
+                .set("z-index", 21)
+                .setText("14 AOA");
         me.pfdAlt = me.pfdRoot.createChild("text")
                 .setColor(COLOR_YELLOW)
                 .setFontSize(font.pfdTapes, 1.0)
@@ -1212,6 +1220,7 @@ var CDU = {
         me.pfdRoot.setVisible(me.showPFD);
         me.pfdSky.setVisible(me.showPFD);
         me.pfdInhg.setText(sprintf("%.2f",me.input.inhg.getValue()));
+        me.pfdAlpha.setText(sprintf("\xCE\xB1%4.1f",me.input.alphaI.getValue()));
     },
 
     setupEHSI: func {
