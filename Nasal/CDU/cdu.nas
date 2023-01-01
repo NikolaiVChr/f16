@@ -72,7 +72,16 @@ var providers = {
                 attribution: ""},            
 };
 
-var zoom_provider = ["stamen_terrain_bg","stamen_terrain_bg","stamen_terrain_bg","stamen_terrain_bg","stamen_terrain_bg","arcgis_terrain"];
+var providerOption = 1;
+var providerOptionLast = providerOption;
+var providerOptions = [
+# This one works on Linux and Windows only
+["stamen_terrain_bg","stamen_terrain_bg","stamen_terrain_bg","stamen_terrain_bg","stamen_terrain_bg","arcgis_terrain"],
+# This one works on MacOS also, so is default
+["arcgis_terrain","arcgis_terrain","arcgis_terrain","arcgis_terrain","arcgis_terrain","arcgis_terrain"]
+];
+
+var zoom_provider = providerOptions[providerOption];
 
 var makeUrl   = string.compileTemplate(providers[zoom_provider[zoom_curr]].templateLoad);
 #var makeUrl   = string.compileTemplate('https://cartodb-basemaps-c.global.ssl.fastly.net/{type}/{z}/{x}/{y}.png');
@@ -419,6 +428,7 @@ var CDU = {
             b8: {method: me.toggleDay, pos: [0,950]},
             b16: {method: me.toggleGrid, pos: [me.max_x,950]},
             b23: {method: me.togglePFD, pos: [800,me.max_y]},
+            b24: {method: me.toggleMAP, pos: [me.max_x*0.5,me.max_y]},
             b25: {method: me.toggleEHSI, pos: [200,me.max_y]},
         };
     },
@@ -447,6 +457,13 @@ var CDU = {
 
     toggleEHSI: func {
         me.showEHSI = !me.showEHSI;
+    },
+
+    toggleMAP: func {
+        providerOption += 1;
+        if (providerOption > 1) providerOption = 0;
+        zoom_provider = providerOptions[providerOption];
+        me.changeProvider();
     },
 
 #   ██████  ██    ██ ███████ ██████  ██       █████  ██    ██ ███████ 
@@ -1496,7 +1513,7 @@ var CDU = {
 
     updateMap: func {
         # update the map
-        if (lastDay != me.day)  {
+        if (lastDay != me.day or providerOptionLast != providerOption)  {
             me.setupMap();
         }
         me.rootCenterY = me.ownPosition;#me.canvasY*0.875-(me.canvasY*0.875)*me.ownPosition;
@@ -1544,7 +1561,7 @@ var CDU = {
 
         me.liveMap = 1;# TODO: Read from property if allow internet access
         me.zoomed = zoom != last_zoom;
-        if(me.center_tile_int[0] != last_tile[0] or me.center_tile_int[1] != last_tile[1] or type != last_type or me.zoomed or me.liveMap != lastLiveMap or lastDay != me.day)  {
+        if(me.center_tile_int[0] != last_tile[0] or me.center_tile_int[1] != last_tile[1] or type != last_type or me.zoomed or me.liveMap != lastLiveMap or lastDay != me.day or providerOptionLast != providerOption)  {
             for(var x = 0; x < num_tiles[0]; x += 1) {
                 for(var y = 0; y < num_tiles[1]; y += 1) {
                     # inside here we use 'var' instead of 'me.' due to generator function, should be able to remember it.
@@ -1600,6 +1617,7 @@ var CDU = {
         last_zoom = zoom;
         lastLiveMap = me.liveMap;
         lastDay = me.day;
+        providerOptionLast = providerOption;
         }
 
         me.mapCenter.setRotation(-me.input.heading.getValue()*D2R);

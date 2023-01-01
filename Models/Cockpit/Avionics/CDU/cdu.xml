@@ -454,6 +454,29 @@
 
      <animation>
       <type>pick</type>
+       <object-name>b24</object-name>
+       <action>
+        <button>0</button>
+        <repeatable>false</repeatable>
+        <interval-sec>0.2</interval-sec>
+        <binding>
+                    <command>nasal</command>
+              <script>
+                f16_CDU.CDU.buttonPress(24);
+              </script>
+                </binding>
+       </action>
+       <hovered>
+                <binding>
+                    <command>set-tooltip</command>
+                    <tooltip-id>i</tooltip-id>
+                    <label>TOGGLE MAP</label>
+                </binding>
+            </hovered>
+     </animation>
+
+     <animation>
+      <type>pick</type>
        <object-name>Cube.025</object-name>
        <action>
         <button>0</button>
@@ -480,20 +503,20 @@
      <effect>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
         <parameters>
-            <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
+            <implicit-lightmap-enabled type="int">1</implicit-lightmap-enabled>
         </parameters>
         <object-name>Mount</object-name>
         <object-name>HSI_course-knob</object-name>
         <object-name>HSI_hdg-knob</object-name>
         <object-name>fuel-knob</object-name>
         <object-name>inhg-knob</object-name>
+        <object-name>button</object-name>
     </effect>
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
         <parameters>
             <implicit-lightmap-enabled type="int">1</implicit-lightmap-enabled>
         </parameters>
-        <object-name>button</object-name>
         <object-name>b01</object-name>
         <object-name>b02</object-name>
         <object-name>b03</object-name>
@@ -540,5 +563,23 @@
         </parameters>
         <object-name>cdu_canvas</object-name>
     </effect>
+
+    <animation>
+        <object-name>beacon</object-name>
+        <type>material</type>
+        <condition>
+            <or>
+                <property>instrumentation/marker-beacon/outer</property>
+                <property>instrumentation/marker-beacon/inner</property>
+                <property>instrumentation/marker-beacon/middle</property>
+                <property>controls/test/test-panel/mal-ind-lts</property>
+            </or>
+        </condition>
+        <emission>
+            <red>  0</red>
+            <green>1</green>
+            <blue> 0</blue>
+        </emission>
+    </animation>
     
 </PropertyList>
