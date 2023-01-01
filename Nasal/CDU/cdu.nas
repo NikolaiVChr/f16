@@ -205,7 +205,7 @@ var CDU = {
               "name": "CDU",
               "size": [me.canvasX, me.canvasY],
               "view": [me.canvasX, me.canvasY],
-              "mipmapping": 1,
+              "mipmapping": 0,
         });
             
         me.placement = me.cduCanvas.addPlacement({"node": "cdu_canvas"});
@@ -1461,11 +1461,11 @@ var CDU = {
         for(var x = 0; x < num_tiles[0]; x += 1) {
             tiles[x] = setsize([], num_tiles[1]);
             for(var y = 0; y < num_tiles[1]; y += 1) {
-                tiles[x][y] = me.mapFinal.createChild("image", "map-tile").set("z-index", 15);
+                tiles[x][y] = me.mapFinal.createChild("image", sprintf("map-tile-%03d-%03d",x,y)).set("z-index", 15);
                 if (me.day == 1) {
-                    #tiles[x][y].set("fill", COLOR_DAY);
+                    tiles[x][y].set("fill", COLOR_DAY);
                 } else {
-                    #tiles[x][y].set("fill", COLOR_NIGHT);
+                    tiles[x][y].set("fill", COLOR_NIGHT);
                 }
             }
         }

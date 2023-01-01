@@ -435,7 +435,7 @@
         <object-name>Cube.024</object-name>
         <object-name>Cube.025</object-name>
     </effect>
-    <!--effect>
+    <effect>
         <inherits-from>Aircraft/f16/Models/Effects/displays/lcd</inherits-from>
         <parameters>
             <inner-angle type="float">45</inner-angle>
@@ -453,6 +453,6 @@
             <dirt-factor>0.05</dirt-factor>
         </parameters>
         <object-name>cdu_canvas</object-name>
-    </effect-->
+    </effect>
     
 </PropertyList>
