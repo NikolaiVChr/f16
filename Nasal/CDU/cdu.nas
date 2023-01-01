@@ -590,6 +590,7 @@ var CDU = {
         me.conc.setStrokeLineWidth(lineWidth.rangeRings/me.concScale);
         me.conc.setVisible(zoom_curr != 5);
         me.conc.setColor(me.day?COLOR_GRAY:COLOR_GRAY_LIGHT);
+        me.conc.setRotation(-me.input.heading.getValue()*D2R);
     },
 
     setupTargets: func {
