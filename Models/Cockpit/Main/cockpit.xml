@@ -635,25 +635,25 @@
        <property>sim/variant-id</property>
        <value>5</value>
       </equals>
-      <equals>
+      <!--equals>
        <property>sim/variant-id</property>
        <value>6</value>
-      </equals>
+      </equals-->
     </or>
    </condition>
  </animation>
 
- <!--model>
+ <model>
   <name>CDU</name>
   <path>Aircraft/f16/Models/Cockpit/Avionics/CDU/cdu.xml</path>
   <offsets>
-   <x-m>-4.643</x-m>
+   <x-m>-4.64</x-m>
    <y-m>0</y-m>
-   <z-m>0.40</z-m>
-   <pitch-deg>45</pitch-deg>
+   <z-m>0.42</z-m>
+   <pitch-deg>55</pitch-deg>
   </offsets>
  </model>
- 
+
  <animation>
   <type>select</type>
   <object-name>CDU</object-name>
@@ -665,7 +665,26 @@
       </equals>
     </or>
    </condition>
- </animation-->
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>ASI</object-name>
+  <object-name>altitude</object-name>
+  <object-name>Instrument Mode</object-name>
+  <object-name>aoa-gauge</object-name>
+  <object-name>adi</object-name>
+  <object-name>vsi</object-name>
+  <object-name>Fuel Quantity Sel</object-name>
+  <condition>
+    <not>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>6</value>
+      </equals>
+    </not>
+   </condition>
+ </animation>
  
  <animation>
   <type>select</type>

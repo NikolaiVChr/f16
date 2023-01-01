@@ -396,6 +396,7 @@ var CDU = {
             max_approach_alpha:   "fdm/jsbsim/systems/flight/approach-alpha-base",
             calibrated:           "fdm/jsbsim/velocities/vc-kts",
             mach:                 "instrumentation/airspeed-indicator/indicated-mach",
+            inhg:                 "instrumentation/altimeter/setting-inhg",
         };
 
         foreach(var name; keys(me.input)) {
@@ -1145,13 +1146,22 @@ var CDU = {
                 .setFontSize(font.pfdTapes, 1.0)
                 .setAlignment("left-center")
                 .setTranslation(-me.ehsiPosX*0.5, 0)
+                .set("z-index", 21)
                 .setText("425\nM0.94");
         me.pfdAlt = me.pfdRoot.createChild("text")
                 .setColor(COLOR_YELLOW)
                 .setFontSize(font.pfdTapes, 1.0)
                 .setAlignment("right-center")
                 .setTranslation(me.ehsiPosX*0.5, 0)
+                .set("z-index", 21)
                 .setText("18000");
+        me.pfdInhg = me.pfdRoot.createChild("text")
+                .setColor(COLOR_YELLOW)
+                .setFontSize(font.pfdTapes, 1.0)
+                .setAlignment("right-center")
+                .setTranslation(me.ehsiPosX*0.5, (me.max_y-me.ehsiPosY)*0.25)
+                .set("z-index", 21)
+                .setText("23.45");
 
         me.pfdSky = me.root.createChild("path")
             .horiz(me.ehsiPosX)
@@ -1183,6 +1193,7 @@ var CDU = {
         me.EHSI.setVisible(me.showEHSI);
         me.pfdRoot.setVisible(me.showPFD);
         me.pfdSky.setVisible(me.showPFD);
+        me.pfdInhg.setText(sprintf("%.2f",me.input.inhg.getValue()));
     },
 
     setupEHSI: func {
