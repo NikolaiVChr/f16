@@ -1252,7 +1252,7 @@ var CDU = {
 
     setupEHSI: func {
         me.EHSI = me.root.createChild("image")
-            .set("src", "canvas://by-index/texture[3]")
+            .set("src", ehsi.cv.getPath())
             .setTranslation(me.ehsiPosX,me.ehsiPosY)
             .setScale(me.ehsiScale)
             .set("z-index", layer_z.display.ehsi);

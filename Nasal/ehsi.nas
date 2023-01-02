@@ -922,7 +922,7 @@ HSI = {
 
 var diam = 512;
 var cv = canvas.new({
-                     "name": "F16 EHSI",
+                     "name": "F16_EHSI",
                      "size": [diam,diam], 
                      "view": [diam,diam],
                      "mipmapping": 1
