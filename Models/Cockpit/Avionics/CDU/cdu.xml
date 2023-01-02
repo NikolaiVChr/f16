@@ -11,11 +11,15 @@
         <condition>
             <greater-than-equals>
                 <property>f16/avionics/power-ufc-warm</property>
-                <value>0.90</value>
+                <value>1</value>
             </greater-than-equals>
+            <equals>
+                <property>f16/avionics/power-mfd</property>
+                <value>1</value>
+            </equals>
         </condition>
         <emission>
-            <factor-prop>fdm/jsbsim/elec/bus/emergency-ac-2</factor-prop>
+            <factor-prop>fdm/jsbsim/elec/bus/ess-ac</factor-prop>
             <red>  0.00714</red>
             <green>0.00714</green>
             <blue> 0.00714</blue>
