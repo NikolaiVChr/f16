@@ -160,8 +160,10 @@ var diag = {
                 var cft = n.getNode(me.cftprop, 1).getValue() or 0;
                 var chute = n.getNode(me.chuteprop, 1).getValue() or 0;
 
-                if (name == nil or index == nil or owner == nil or (engine != nil and engineID != nil and engineID.getValue() != right(""~engine, 1)))
+                if (name == nil or index == nil or owner == nil or (engine != nil and engineID != nil and engine != 0 and engine != 10 and engine != 20 and engineID.getValue() != right(""~engine, 1))) {
+                    #print(name == nil,index == nil,owner == nil,(engine != nil and engineID != nil and engineID.getValue() != right(""~engine, 1)));
                     continue;
+                }
                 append(me.data, [name, index, substr(file, 0, size(file) - 4), me.dir ~ file, owner, pilot, scheme, engine, squad, serial, year, chute, cft]);
                 me.addOwner(owner);
             }
