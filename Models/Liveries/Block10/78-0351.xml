@@ -21,11 +21,11 @@
    
    <livery-patch>
       <texture>Liveries/Block30/patch.idf.png</texture>
-  </livery-patch>
+   </livery-patch>
 
-  <livery-pod>
+   <livery-pod>
         <texture>Armament/External-stores/MXU-648.png</texture>
-    </livery-pod>
+   </livery-pod>
 
   <f16>
      <dragchute type="bool">false</dragchute>

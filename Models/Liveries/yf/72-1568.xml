@@ -7,9 +7,15 @@
                 <name type="string">USAF Testbed #568 "Combat Gray"</name>
                 <texture>Liveries/yf/72-1568.png</texture> 
                 <owner type="string">USAF</owner>
+                <pilot type="string"></pilot>
+                <scheme type="string">Gray camo</scheme>
+                <block type="int">0</block>
+                <serial type="string">72-1568</serial>
+                <squad type="string">USAF</squad>
+                <year type="string">1975</year>
             </livery>
             <livery-logo>
-                <texture>Liveries/standard.logos.black.png</texture>
+                <texture>Liveries/standard.logos.color.png</texture>
             </livery-logo>
 
         <livery-patch>

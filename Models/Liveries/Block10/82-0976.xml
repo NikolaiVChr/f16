@@ -4,7 +4,7 @@
  <sim>
   <model>
    <livery> 
-    <name type="string">NASA Testbed, #N816NA</name>
+    <name type="string">NASA Testbed, N816NA</name>
     <texture>Liveries/Block10/82-0976.png</texture>
     <owner type="string">NASA</owner>
     <pilot type="string"></pilot>

@@ -25,7 +25,7 @@
 
   <livery-pod>
         <texture>Liveries/Block10/pod.white.png</texture>
-    </livery-pod>
+  </livery-pod>
 
   <f16>
      <dragchute type="bool">false</dragchute>

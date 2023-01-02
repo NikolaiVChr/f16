@@ -7,6 +7,12 @@
     <name type="string">YF-16 Prototype</name>
     <texture>Liveries/yf/75-0745.png</texture>
     <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Special Color</scheme>
+    <block type="int">0</block>
+    <serial type="string">75-0745</serial>
+    <squad type="string">USAF</squad>
+    <year type="string">1976</year>
    </livery>
 
    <livery-logo>

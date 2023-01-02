@@ -21,10 +21,10 @@
 
    <livery-patch>
       <texture>Liveries/patch.default.png</texture>
-  </livery-patch>
+   </livery-patch>
 
   <livery-pod>
-        <texture>Liveries/Block10/pod.25yrsRNLAF.png</texture>
+      <texture>Liveries/Block10/pod.25yrsRNLAF.png</texture>
   </livery-pod>
 
   <f16>
