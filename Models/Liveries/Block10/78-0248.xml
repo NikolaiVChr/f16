@@ -14,6 +14,7 @@
     <squad type="string">323 Sqn</squad>
     <year type="string">2000</year>
    </livery>
+   
    <livery-logo>
     <texture>Liveries/yf/yf16-transp.png</texture>
    </livery-logo>

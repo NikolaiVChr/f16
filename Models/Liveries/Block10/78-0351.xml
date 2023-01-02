@@ -14,6 +14,7 @@
     <squad type="string">140 Sqn "Golden Eagles"</squad>
     <year type="string"></year>
    </livery>
+   
    <livery-logo>
     <texture>Liveries/yf/yf16-transp.png</texture>
    </livery-logo>

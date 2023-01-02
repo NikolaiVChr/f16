@@ -14,6 +14,7 @@
     <squad type="string">Top ACES</squad>
     <year type="string">2021</year>
    </livery>
+   
    <livery-logo>
     <texture>Liveries/standard.logos.color.png</texture>
    </livery-logo>

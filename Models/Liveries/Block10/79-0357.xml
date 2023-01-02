@@ -1,38 +1,39 @@
 <?xml version="1.0"?>
 
 <PropertyList>
-    <sim>
-        <model> 
-            <livery>
-                <name type="string">Vermont ANG, "Stars and Stripes exhibit"</name>
-                <texture type="string">Liveries/Block10/79-0357.png</texture>
-                <owner type="string">ANG</owner>
-                <pilot type="string"></pilot>
-                <scheme type="string">Special Color</scheme>
-                <block type="int">10</block>
-                <serial type="string">79-0357</serial>
-                <squad type="string">Vermont ANG</squad>
-                <year type="string">2000</year>
-            </livery>
-            <livery-logo>
-                <texture>Liveries/yf/yf16-transp.png</texture>
-            </livery-logo>
+ <sim>
+  <model> 
+   <livery>
+    <name type="string">Vermont ANG, "Stars and Stripes exhibit"</name>
+    <texture type="string">Liveries/Block10/79-0357.png</texture>
+    <owner type="string">ANG</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Special Color</scheme>
+    <block type="int">10</block>
+    <serial type="string">79-0357</serial>
+    <squad type="string">Vermont ANG</squad>
+    <year type="string">2000</year>
+   </livery>
 
-            <livery-patch>
-                <texture>Liveries/patch.default.png</texture>
-            </livery-patch>
+    <livery-logo>
+        <texture>Liveries/yf/yf16-transp.png</texture>
+    </livery-logo>
 
-            <livery-pod>
-                <texture>Armament/External-stores/MXU-648.png</texture>
-            </livery-pod>
+    <livery-patch>
+        <texture>Liveries/patch.default.png</texture>
+    </livery-patch>
 
-            <f16>
-                <dragchute type="bool">false</dragchute>
-                <link16 type="bool">false</link16>
-            </f16>
-            <livery-specular type="double">0.75</livery-specular>
-        </model>
-    </sim>
+    <livery-pod>
+        <texture>Armament/External-stores/MXU-648.png</texture>
+    </livery-pod>
+
+    <f16>
+        <dragchute type="bool">false</dragchute>
+        <link16 type="bool">false</link16>
+    </f16>
+    <livery-specular type="double">0.75</livery-specular>
+   </model>
+  </sim>
 
   <f16>
      <ejected type="bool">false</ejected>
