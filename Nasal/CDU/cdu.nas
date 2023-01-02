@@ -176,6 +176,8 @@ var layer_z = {
         pfdSky: 19,
         ehsi: 20,
         ehsiExt: 18,
+        hud: 20,
+        hud_bg: 19,
         attribution: 70,
     },
     map: {
@@ -242,6 +244,7 @@ var CDU = {
         me.setupInstr();
         me.setupEHSI();# after setupInstr
         me.setupPFD();# after setupInstr
+        me.setupHUD();# after setupInstr
         me.setupAttr();
         
         me.setRangeInfo();
@@ -306,6 +309,7 @@ var CDU = {
         me.updateTargets();
         me.updateAttr();
         me.updateEHSI();
+        me.updateHUD();
         #print("CDU Looping ",me.loadedCDU);
     },
 
@@ -323,8 +327,6 @@ var CDU = {
         me.mapSelfCentered = 1;
         me.day = 1;
         me.mapShowGrid = 0;
-        me.showPFD = 1;
-        me.showEHSI = 1;
     },
 
     calcGeometry: func {
@@ -459,13 +461,13 @@ var CDU = {
         me.mapShowGrid = !me.mapShowGrid;
     },
 
-    togglePFD: func {
-        me.showPFD = !me.showPFD;
-    },
+    #togglePFD: func {
+    #    me.showPFD = !me.showPFD;
+    #},
 
-    toggleEHSI: func {
-        me.showEHSI = !me.showEHSI;
-    },
+    #toggleEHSI: func {
+    #    me.showEHSI = !me.showEHSI;
+    #},
 
     cycleInstr: func {
         me.instrView += 1;
@@ -1103,9 +1105,10 @@ var CDU = {
     setupInstr: func {
         me.instrView = 0;
         me.instrConf = [
-            {showMap: 1, ehsiScale: 1/1.25, showEhsi: 1, showPfd: 1, ehsiPosX: me.ehsiPosX, ehsiPosY: me.ehsiPosY, showExtEhsi: 0},
-            {showMap: 1, ehsiScale: 1/1.25, showEhsi: 0, showPfd: 0, ehsiPosX: 0, ehsiPosY: 0, showExtEhsi: 0},
-            {showMap: 0, ehsiScale: 2/1.25, showEhsi: 1, showPfd: 0, ehsiPosX: 0, ehsiPosY: me.ehsiPosY-(me.max_y-me.ehsiPosY), showExtEhsi: 1},
+            {showMap: 1, ehsiScale: 1/1.25, showEhsi: 1, showPfd: 1, ehsiPosX: me.ehsiPosX, ehsiPosY: me.ehsiPosY, showExtEhsi: 0, showHud: 0},
+            {showMap: 1, ehsiScale: 1/1.25, showEhsi: 0, showPfd: 0, ehsiPosX: 0, ehsiPosY: 0, showExtEhsi: 0, showHud: 0},
+            {showMap: 0, ehsiScale: 2/1.25, showEhsi: 1, showPfd: 0, ehsiPosX: 0, ehsiPosY: me.ehsiPosY-(me.max_y-me.ehsiPosY), showExtEhsi: 1, showHud: 0},
+            #{showMap: 0, ehsiScale: 2/1.25, showEhsi: 0, showPfd: 0, ehsiPosX: 0, ehsiPosY: me.ehsiPosY-(me.max_y-me.ehsiPosY), showExtEhsi: 0, showHud: 1},
         ];
     },
 
@@ -1285,6 +1288,31 @@ var CDU = {
             me.ehsiExtChannels.setText(sprintf("TACAN %s    ILS %06.2f",me.input.tacanCh.getValue(), me.input.ilsCh.getValue()));
             me.ehsiExtChannels.setTranslation(me.max_x*0.5, me.instrConf[me.instrView].ehsiPosY*0.5);
         }
+    },
+
+    setupHUD: func {
+        return;
+        me.HUD = me.root.createChild("image")
+            .set("src", "canvas://by-index/texture[4]")
+            .setTranslation(0,me.max_y-me.max_x)
+            .setScale(me.max_x/getprop("canvas/by-index/texture[4]/view[1]"))
+            .set("z-index", layer_z.display.hud);
+
+        me.HUDbg = me.root.createChild("path")
+            .horiz(me.max_x)
+            .vert(me.max_y)
+            .horiz(-me.max_x)
+            .vert(-me.max_y)
+            .setColorFill(COLOR_SKY_DARK)
+            .setColor(COLOR_SKY_DARK)
+            .setStrokeLineWidth(10)
+            .set("z-index", layer_z.display.hud_bg);
+    },
+
+    updateHUD: func {
+        return;
+        me.HUD.setVisible(me.instrConf[me.instrView].showHud);
+        me.HUDbg.setVisible(me.instrConf[me.instrView].showHud);
     },
 
 #   ██████  ██████  ██ ██████  
