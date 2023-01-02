@@ -434,7 +434,9 @@ var CDU = {
         me.buttonMap = {
             b1: {method: me.zoomOut, pos: [0,90]},
             b2: {method: me.zoomIn, pos: [0,210]},
-            b8: {method: me.toggleDay, pos: [0,950]},
+            b4: {method: me.toggleDay, pos: [0,450]},
+            b8: {pos: [0,950]},
+            b9: {method: me.toggleHdgUp, pos: [me.max_x,90]},
             b16: {method: me.toggleGrid, pos: [me.max_x,950]},
             b23: {method: me.cycleInstr, pos: [200,me.max_y]},
             b24: {method: me.toggleMAP, pos: [me.max_x*0.5,me.max_y]},
@@ -443,6 +445,7 @@ var CDU = {
     },
 
     buttonPress: func (button) {
+        print("b",button);
         button = "b"~button;
         call(me.buttonMap[button].method, nil, me, me, var err = []);
     },
@@ -459,6 +462,11 @@ var CDU = {
     toggleGrid: func {
         if (!me.instrConf[me.instrView].showMap) return;
         me.mapShowGrid = !me.mapShowGrid;
+    },
+
+    toggleHdgUp: func {
+        if (!me.instrConf[me.instrView].showMap) return;
+        me.hdgUp = !me.hdgUp;
     },
 
     #togglePFD: func {
@@ -582,6 +590,22 @@ var CDU = {
             .arcSmallCW(symbolSize.gpsSpot*3/5,symbolSize.gpsSpot*3/5, 0, -symbolSize.gpsSpot*3/5*2, 0)
             .setStrokeLineWidth(lineWidth.gpsSpot)
             .setColor(COLOR_BLACK);
+
+        me.hdgUpText = me.root.createChild("text")
+            .set("z-index",layer_z.display.buttonSymbols)
+            .setColor(COLOR_YELLOW)
+            .setFontSize(font.range, 1.0)
+            .setAlignment("right-center")
+            .setTranslation(me.buttonMap.b9.pos[0]-20, me.buttonMap.b9.pos[1])
+            .setFont("NotoMono-Regular.ttf");
+
+        me.dayText = me.root.createChild("text")
+            .set("z-index",layer_z.display.buttonSymbols)
+            .setColor(COLOR_YELLOW)
+            .setFontSize(font.range, 1.0)
+            .setAlignment("left-center")
+            .setTranslation(me.buttonMap.b4.pos[0]+20, me.buttonMap.b4.pos[1])
+            .setFont("NotoMono-Regular.ttf");
     },
 
     updateSymbols: func {
@@ -609,6 +633,15 @@ var CDU = {
         me.conc.setVisible(zoom_curr != 5);
         me.conc.setColor(me.day?COLOR_GRAY:COLOR_GRAY_LIGHT);
         me.conc.setRotation(-me.input.heading.getValue()*D2R);
+
+        if(me.hdgUp) {
+            me.hdgUpText.setText("HDG UP");
+            me.rootCenter.setRotation(0);
+        } else {
+            me.hdgUpText.setText("MAP UP");
+            me.rootCenter.setRotation(me.input.heading.getValue()*D2R);
+        }
+        me.dayText.setText(me.day?"DAY":"NIGHT");
     },
 
     setupTargets: func {
@@ -1566,6 +1599,8 @@ var CDU = {
         me.rootCenter = me.root.createChild("group")
             .setTranslation(me.max_x/2,me.max_y/2)
             .set("z-index",  layer_z.display.mapOverlay);
+
+        me.hdgUp = 1;
     },
 
     updateMapNames: func {
@@ -1583,7 +1618,7 @@ var CDU = {
         for(var x = 0; x < num_tiles[0]; x += 1) {
             tiles[x] = setsize([], num_tiles[1]);
             for(var y = 0; y < num_tiles[1]; y += 1) {
-                tiles[x][y] = me.mapFinal.createChild("image", sprintf("map-tile-%03d-%03d",x,y)).set("z-index", 15);
+                tiles[x][y] = me.mapFinal.createChild("image", sprintf("map-tile-%03d-%03d",x,y)).set("z-index", 15);#.set("size", "256,256");
                 if (me.day == 1) {
                     tiles[x][y].set("fill", COLOR_DAY);
                 } else {
@@ -1630,12 +1665,12 @@ var CDU = {
             (1 - math.ln(math.tan(me.lat * D2R) + 1 / math.cos(me.lat * D2R)) / math.pi) / 2 * me.n
         ];
         # center_tile_offset[1]
-        me.center_tile_int = [int(me.center_tile_float[0]), int(me.center_tile_float[1])];
+        me.center_tile_int = [math.floor(me.center_tile_float[0]), math.floor(me.center_tile_float[1])];
 
         me.center_tile_fraction_x = me.center_tile_float[0] - me.center_tile_int[0];
         me.center_tile_fraction_y = me.center_tile_float[1] - me.center_tile_int[1];
-#printf("centertile: %d,%d fraction %.2f,%.2f",me.center_tile_int[0],me.center_tile_int[1],me.center_tile_fraction_x,me.center_tile_fraction_y);
-        me.tile_offset = [int(num_tiles[0]/2), int(num_tiles[1]/2)];
+        #printf("\ncentertile: %d,%d fraction %.2f,%.2f",me.center_tile_int[0],me.center_tile_int[1],me.center_tile_fraction_x,me.center_tile_fraction_y);
+        me.tile_offset = [math.floor(num_tiles[0]/2), math.floor(num_tiles[1]/2)];
 
         # 3x3 example: (same for both canvas-tiles and map-tiles)
         #  *************************
@@ -1646,10 +1681,18 @@ var CDU = {
         #  * -1, 1 *  0, 1 *  1, 1 *
         #  *************************
         #
+        # x goes from -180 lon to +180 lon (zero to me.n)
+        # y goes from +85.0511 lat to -85.0511 lat (zero to me.n)
+        #
+        # me.center_tile_float is always positives, it denotes where we are in x,y (floating points)
+        # me.center_tile_int is the x,y tile that we are in (integers)
+        # me.center_tile_fraction is where in that tile we are located (normalized)
+        # me.tile_offset is the negative buffer so that we show tiles all around us instead of only in x,y positive direction
+
 
         for(var xxx = 0; xxx < num_tiles[0]; xxx += 1) {
             for(var yyy = 0; yyy < num_tiles[1]; yyy += 1) {
-                tiles[xxx][yyy].setTranslation(-int((me.center_tile_fraction_x - xxx+me.tile_offset[0]) * tile_size), -int((me.center_tile_fraction_y - yyy+me.tile_offset[1]) * tile_size));
+                tiles[xxx][yyy].setTranslation(-math.floor((me.center_tile_fraction_x - xxx+me.tile_offset[0]) * tile_size), -math.floor((me.center_tile_fraction_y - yyy+me.tile_offset[1]) * tile_size));
             }
         }
 
@@ -1714,7 +1757,8 @@ var CDU = {
         providerOptionLast = providerOption;
         }
 
-        me.mapCenter.setRotation(-me.input.heading.getValue()*D2R);
+        if (me.hdgUp) me.mapCenter.setRotation(-me.input.heading.getValue()*D2R);
+        else me.mapCenter.setRotation(0);
         #switched to direct rotation to try and solve issue with approach line not updating fast.
         me.mapCenter.update();
     },

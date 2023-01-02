@@ -49,27 +49,7 @@
             </hovered>
      </animation-->
 
-     <!--animation>
-      <type>pick</type>
-       <object-name>b26</object-name>
-       <action>
-        <button>0</button>
-        <repeatable>false</repeatable>
-        <interval-sec>0.2</interval-sec>
-        <binding>
-                    <command>nasal-module-reload</command>
-                    <module>f16_CDU</module>
-                </binding>
-        
-       </action>
-       <hovered>
-                <binding>
-                    <command>set-tooltip</command>
-                    <tooltip-id>b</tooltip-id>
-                    <label>RELOAD</label>
-                </binding>
-            </hovered>
-     </animation-->
+     
 
      
 
@@ -379,7 +359,7 @@
 
      <animation>
       <type>pick</type>
-       <object-name>b08</object-name>
+       <object-name>b04</object-name>
        <action>
         <button>0</button>
         <repeatable>false</repeatable>
@@ -387,19 +367,40 @@
         <binding>
               <command>nasal</command>
               <script>
-                f16_CDU.CDU.buttonPress(8);
+                f16_CDU.CDU.buttonPress(4);
               </script>
          </binding>
-        <!--<mod-up>
-        </mod-up>-->
        </action>
-       <hovered>
+       <!--hovered>
                 <binding>
                     <command>set-tooltip</command>
                     <tooltip-id>e</tooltip-id>
                     <label>DAY / NIGHT</label>
                 </binding>
-            </hovered>
+            </hovered-->
+     </animation>
+
+     <animation>
+      <type>pick</type>
+       <object-name>b09</object-name>
+       <action>
+        <button>0</button>
+        <repeatable>false</repeatable>
+        <interval-sec>0.2</interval-sec>
+        <binding>
+              <command>nasal</command>
+              <script>
+                f16_CDU.CDU.buttonPress(9);
+              </script>
+         </binding>
+       </action>
+       <!--hovered>
+                <binding>
+                    <command>set-tooltip</command>
+                    <tooltip-id>j</tooltip-id>
+                    <label>HDG UP</label>
+                </binding>
+            </hovered-->
      </animation>
 
      <animation>
@@ -486,8 +487,6 @@
                 f16_CDU.initCDU();
               </script>
          </binding>
-        <!--<mod-up>
-        </mod-up>-->
        </action>
        <hovered>
                 <binding>
@@ -579,5 +578,27 @@
             <blue> 0</blue>
         </emission>
     </animation>
+
+    <!--animation>
+      <type>pick</type>
+       <object-name>b26</object-name>
+       <action>
+        <button>0</button>
+        <repeatable>false</repeatable>
+        <interval-sec>0.2</interval-sec>
+        <binding>
+                    <command>nasal-module-reload</command>
+                    <module>f16_CDU</module>
+                </binding>
+        
+       </action>
+       <hovered>
+                <binding>
+                    <command>set-tooltip</command>
+                    <tooltip-id>b</tooltip-id>
+                    <label>RELOAD</label>
+                </binding>
+            </hovered>
+     </animation-->
     
 </PropertyList>
