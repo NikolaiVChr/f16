@@ -422,7 +422,7 @@
                 <binding>
                     <command>set-tooltip</command>
                     <tooltip-id>h</tooltip-id>
-                    <label>TOGGLE PFD</label>
+                    <label>TOGGLE INSTR</label>
                 </binding>
             </hovered>
      </animation>
@@ -440,16 +440,14 @@
                 f16_CDU.CDU.buttonPress(25);
               </script>
                 </binding>
-        <!--<mod-up>
-        </mod-up>-->
        </action>
-       <hovered>
-                <binding>
-                    <command>set-tooltip</command>
-                    <tooltip-id>i</tooltip-id>
-                    <label>TOGGLE EHSI</label>
-                </binding>
-            </hovered>
+       <!--hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>i</tooltip-id>
+                <label>TOGGLE EHSI</label>
+            </binding>
+        </hovered-->
      </animation>
 
      <animation>

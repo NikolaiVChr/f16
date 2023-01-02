@@ -151,6 +151,7 @@ var font = {
     range: 30,
     pfdLadder: 20,
     pfdTapes: 20,
+    ehsiExt: 45,
     attribution: 30,
     threatRings: 25,
     grid: 14,
@@ -174,6 +175,7 @@ var layer_z = {
         pfd: 20,
         pfdSky: 19,
         ehsi: 20,
+        ehsiExt: 18,
         attribution: 70,
     },
     map: {
@@ -237,8 +239,9 @@ var CDU = {
         me.setupLines();
         me.setupMarkPoints();
         me.setupTargets();
-        me.setupEHSI();
-        me.setupPFD();
+        me.setupInstr();
+        me.setupEHSI();# after setupInstr
+        me.setupPFD();# after setupInstr
         me.setupAttr();
         
         me.setRangeInfo();
@@ -285,7 +288,7 @@ var CDU = {
 
         me.selfCoord = geo.aircraft_position();
 
-        if (!me.showPFD and !me.showEHSI) {
+        if (me.instrView == 1) {
             me.ownPosition = 0.60 * me.max_y;
         } else {
             me.ownPosition = me.defaultOwnPosition;
@@ -302,6 +305,7 @@ var CDU = {
         me.updateMarkPoints();
         me.updateTargets();
         me.updateAttr();
+        me.updateEHSI();
         #print("CDU Looping ",me.loadedCDU);
     },
 
@@ -310,7 +314,7 @@ var CDU = {
             print("Unloaded CDU Looping");
             return;
         }
-        me.updatePFD();
+        me.updatePFD();        
         #print("CDU Looping ",me.loadedCDU);
     },
 
@@ -407,6 +411,8 @@ var CDU = {
             mach:                 "instrumentation/airspeed-indicator/indicated-mach",
             inhg:                 "instrumentation/altimeter/setting-inhg",
             alphaI:               "fdm/jsbsim/fcs/fly-by-wire/pitch/alpha-indicated",
+            tacanCh:              "instrumentation/tacan/display/channel",
+            ilsCh:                "instrumentation/nav[0]/frequencies/selected-mhz",
         };
 
         foreach(var name; keys(me.input)) {
@@ -428,20 +434,20 @@ var CDU = {
             b2: {method: me.zoomIn, pos: [0,210]},
             b8: {method: me.toggleDay, pos: [0,950]},
             b16: {method: me.toggleGrid, pos: [me.max_x,950]},
-            b23: {method: me.togglePFD, pos: [800,me.max_y]},
+            b23: {method: me.cycleInstr, pos: [200,me.max_y]},
             b24: {method: me.toggleMAP, pos: [me.max_x*0.5,me.max_y]},
-            b25: {method: me.toggleEHSI, pos: [200,me.max_y]},
+            b25: {pos: [800,me.max_y]},
         };
     },
 
     buttonPress: func (button) {
         button = "b"~button;
-        call(me.buttonMap[button].method, nil, me, me);
+        call(me.buttonMap[button].method, nil, me, me, var err = []);
     },
 
     buttonRelease: func (button) {
         button = "b"~button;
-        call(me.buttonMap[button].methodRelease, nil, me, me);
+        call(me.buttonMap[button].methodRelease, nil, me, me, var err = []);
     },
 
     toggleDay: func {
@@ -449,6 +455,7 @@ var CDU = {
     },
 
     toggleGrid: func {
+        if (!me.instrConf[me.instrView].showMap) return;
         me.mapShowGrid = !me.mapShowGrid;
     },
 
@@ -460,7 +467,15 @@ var CDU = {
         me.showEHSI = !me.showEHSI;
     },
 
+    cycleInstr: func {
+        me.instrView += 1;
+        if (me.instrView >= size(me.instrConf)) {
+            me.instrView = 0;
+        }
+    },
+
     toggleMAP: func {
+        if (!me.instrConf[me.instrView].showMap) return;
         providerOption += 1;
         if (providerOption > 1) providerOption = 0;
         zoom_provider = providerOptions[providerOption];
@@ -905,7 +920,7 @@ var CDU = {
     },
 
     zoomIn: func() {
-        #if (ti.active == 0) return;
+        if (!me.instrConf[me.instrView].showMap) return;
         zoom_curr += 1;
         if (zoom_curr >= size(zooms)) {
             zoom_curr = size(zooms)-1;
@@ -919,7 +934,7 @@ var CDU = {
     },
 
     zoomOut: func() {
-        #if (ti.active == 0) return;
+        if (!me.instrConf[me.instrView].showMap) return;
         zoom_curr -= 1;
         if (zoom_curr < 0) {
             zoom_curr = 0;
@@ -1085,6 +1100,15 @@ var CDU = {
 #  ██ ██   ████ ███████    ██    ██   ██  ██████  ██      ██ ███████ ██   ████    ██    ███████ 
 #                                                                                               
 #                                                                                               
+    setupInstr: func {
+        me.instrView = 0;
+        me.instrConf = [
+            {showMap: 1, ehsiScale: 1/1.25, showEhsi: 1, showPfd: 1, ehsiPosX: me.ehsiPosX, ehsiPosY: me.ehsiPosY, showExtEhsi: 0},
+            {showMap: 1, ehsiScale: 1/1.25, showEhsi: 0, showPfd: 0, ehsiPosX: 0, ehsiPosY: 0, showExtEhsi: 0},
+            {showMap: 0, ehsiScale: 2/1.25, showEhsi: 1, showPfd: 0, ehsiPosX: 0, ehsiPosY: me.ehsiPosY-(me.max_y-me.ehsiPosY), showExtEhsi: 1},
+        ];
+    },
+
     setupPFD: func {
         me.pfdRoot = me.root.createChild("group")
             .set("z-index", layer_z.display.pfd)
@@ -1216,9 +1240,9 @@ var CDU = {
                 me.pfdGround.setColorFill(COLOR_BROWN_DARK);
             }
         #}
-        me.EHSI.setVisible(me.showEHSI);
-        me.pfdRoot.setVisible(me.showPFD);
-        me.pfdSky.setVisible(me.showPFD);
+        
+        me.pfdRoot.setVisible(me.instrConf[me.instrView].showPfd);
+        me.pfdSky.setVisible(me.instrConf[me.instrView].showPfd);
         me.pfdInhg.setText(sprintf("%.2f",me.input.inhg.getValue()));
         me.pfdAlpha.setText(sprintf("\xCE\xB1%4.1f",me.input.alphaI.getValue()));
     },
@@ -1229,6 +1253,38 @@ var CDU = {
             .setTranslation(me.ehsiPosX,me.ehsiPosY)
             .setScale(me.ehsiScale)
             .set("z-index", layer_z.display.ehsi);
+
+        me.EHSIext = me.root.createChild("group")
+            .set("z-index", layer_z.display.ehsiExt);
+
+        me.EHSIext.createChild("path")
+            .horiz(me.max_x)
+            .vert(me.instrConf[2].ehsiPosY)
+            .horiz(-me.max_x)
+            .vert(me.instrConf[2].ehsiPosY)
+            .setColorFill(COLOR_BLACK)
+            .setColor(COLOR_BLACK)
+            .setStrokeLineWidth(10)
+            .set("z-index", 1);
+
+        me.ehsiExtChannels = me.EHSIext.createChild("text")
+                .setColor(COLOR_YELLOW)
+                .setFontSize(font.ehsiExt, 1.0)
+                .setAlignment("center-center")
+                .set("z-index", 2)
+                .setText("123Y");
+    },
+
+    updateEHSI: func {
+        me.EHSI.setTranslation(me.instrConf[me.instrView].ehsiPosX,me.instrConf[me.instrView].ehsiPosY);
+        me.EHSI.setScale(me.instrConf[me.instrView].ehsiScale);
+        me.EHSI.setVisible(me.instrConf[me.instrView].showEhsi);
+        me.EHSIext.setVisible(me.instrConf[me.instrView].showExtEhsi);
+
+        if (me.instrConf[me.instrView].showExtEhsi) {
+            me.ehsiExtChannels.setText(sprintf("TACAN %s    ILS %06.2f",me.input.tacanCh.getValue(), me.input.ilsCh.getValue()));
+            me.ehsiExtChannels.setTranslation(me.max_x*0.5, me.instrConf[me.instrView].ehsiPosY*0.5);
+        }
     },
 
 #   ██████  ██████  ██ ██████  
