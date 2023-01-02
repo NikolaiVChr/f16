@@ -445,14 +445,14 @@ var CDU = {
     },
 
     buttonPress: func (button) {
-        if (me.buttonMap[button] == nil or me.buttonMap[button]["method"] == nil) return;
         button = "b"~button;
+        if (me.buttonMap[button] == nil or me.buttonMap[button]["method"] == nil) return;        
         call(me.buttonMap[button].method, nil, me, me, var err = []);
     },
 
     buttonRelease: func (button) {
-        if (me.buttonMap[button] == nil or me.buttonMap[button]["methodRelease"] == nil) return;
         button = "b"~button;
+        if (me.buttonMap[button] == nil or me.buttonMap[button]["methodRelease"] == nil) return;        
         call(me.buttonMap[button].methodRelease, nil, me, me, var err = []);
     },
 
