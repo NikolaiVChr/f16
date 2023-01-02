@@ -63,7 +63,7 @@ var GPS = 1;
 
 var DualSeaterCallsign = props.globals.getNode("/sim/remote/pilot-callsign", 1);
 
-var emptyCoord = geo.Coord.new().set_xyz(0,0,0);
+var emptyCoord = geo.Coord.new().set_xyz(10,10,10);
 
 
 var VectorNotification = {
@@ -235,6 +235,11 @@ var AIToNasal = {
 	    	me.aircraftPos = geo.Coord.new().set_xyz(me.x.getValue(), me.y.getValue(), me.z.getValue());
 	    	me.aircraftPos.alt();# TODO: once fixed in FG this line is no longer needed.
 	    }
+
+	    if (me.aircraftPos.alt() == nil or me.aircraftPos.lat() == nil or me.aircraftPos.lon() == nil) {
+	    	me.nextReadTreeFrame();
+		    return;
+        }
 	    
 	    
         
@@ -875,7 +880,7 @@ var AIContact = {
 		    }
 		    me.coord = geo.Coord.new().set_latlon(me.lat.getValue(), me.lon.getValue(), me.alt.getValue()*FT2M);
 	    }
-	    if (me.coord.lat() == nil or me.coord.lon() == nil or me.coord.alt() == nil) me.coord = me.oldCoord;# This is due to an error Sammy had
+	    if (me.coord.lat() == nil or me.coord.lon() == nil or me.coord.alt() == nil or me.coord.x() == nil or me.coord.y() == nil or me.coord.z() == nil) me.coord = me.oldCoord;# This is due to an error Sammy had
 	    return me.coord;
 	},
 
