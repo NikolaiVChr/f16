@@ -50,6 +50,14 @@ var dogfight = func {
         f16.f16_mfd.MFDr.p_WPN.selectionBox.show();
         f16.f16_mfd.MFDr.p_WPN.setSelection(nil, f16.f16_mfd.MFDr.PFD.buttons[18], 18);
         setprop("f16/avionics/strf",0);
+        if (pylons.fcs != nil and getprop("controls/armament/master-arm")) {
+            foreach(var snake;pylons.fcs.getAllOfType("AIM-9L")) {
+                snake.setCooling(1);
+            }
+            foreach(var snake;pylons.fcs.getAllOfType("AIM-9M")) {
+                snake.setCooling(1);
+            }
+        }
         #f16.rdrModeGM = 0;
     } else {
         radar_system.apg68Radar.setRootMode(0, radar_system.apg68Radar.getPriorityTarget());
