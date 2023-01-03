@@ -1,10 +1,6 @@
-<?xml version="1.0"?>
-
+<?xml version="1.0" encoding="UTF-8"?>
 <PropertyList>
-
-	<path>cdu.ac</path>
-
-
+    <path>cdu.ac</path>
     <animation>
         <object-name>cdu_canvas</object-name>
         <type>material</type>
@@ -20,12 +16,11 @@
         </condition>
         <emission>
             <factor-prop>fdm/jsbsim/elec/bus/ess-ac</factor-prop>
-            <red>  0.00714</red>
+            <red>0.00714</red>
             <green>0.00714</green>
-            <blue> 0.00714</blue>
+            <blue>0.00714</blue>
         </emission>
     </animation>
-
     <!--animation>
       <type>pick</type>
        <object-name>b22</object-name>
@@ -52,13 +47,8 @@
                 </binding>
             </hovered>
      </animation-->
-
-     
-
-     
-
-     <!-- HDG knob -->
- <animation>
+    <!-- HDG knob -->
+    <animation>
         <type>knob</type>
         <object-name>HSI_hdg-knob</object-name>
         <property>instrumentation/heading-indicator/heading-bug-deg</property>
@@ -74,7 +64,7 @@
             <x>0</x>
             <y>0</y>
             <z>-1</z>
-        </axis>        
+        </axis>
         <increase>
             <binding>
                 <command>property-adjust</command>
@@ -83,7 +73,7 @@
                 <min>0</min>
                 <max>360</max>
                 <wrap>true</wrap>
-           </binding>
+            </binding>
         </increase>
         <decrease>
             <binding>
@@ -91,9 +81,9 @@
                 <property>instrumentation/heading-indicator/heading-bug-deg</property>
                 <step>-1</step>
                 <min>0</min>
-                <max>360</max>                
+                <max>360</max>
                 <wrap>true</wrap>
-           </binding>
+            </binding>
         </decrease>
         <!--hovered>
             <binding>
@@ -105,10 +95,8 @@
             </binding>
         </hovered-->
     </animation>
-
-
-  <!-- COURSE Knob --> 
- <animation>
+    <!-- COURSE Knob -->
+    <animation>
         <type>knob</type>
         <object-name>HSI_course-knob</object-name>
         <property>instrumentation/nav[0]/radials/selected-deg-knob</property>
@@ -124,7 +112,7 @@
             <x>0</x>
             <y>0</y>
             <z>-1</z>
-        </axis>        
+        </axis>
         <increase>
             <binding>
                 <command>property-adjust</command>
@@ -133,7 +121,7 @@
                 <min>0</min>
                 <max>360</max>
                 <wrap>true</wrap>
-           </binding>
+            </binding>
             <binding>
                 <command>property-adjust</command>
                 <property>instrumentation/nav[0]/radials/selected-deg-knob</property>
@@ -141,7 +129,7 @@
                 <min>0</min>
                 <max>360</max>
                 <wrap>true</wrap>
-           </binding>
+            </binding>
         </increase>
         <decrease>
             <binding>
@@ -151,7 +139,7 @@
                 <min>0</min>
                 <max>360</max>
                 <wrap>true</wrap>
-           </binding>
+            </binding>
             <binding>
                 <command>property-adjust</command>
                 <property>instrumentation/nav[0]/radials/selected-deg-knob</property>
@@ -159,7 +147,7 @@
                 <min>0</min>
                 <max>360</max>
                 <wrap>true</wrap>
-           </binding>
+            </binding>
         </decrease>
         <!--hovered>
             <binding>
@@ -171,7 +159,6 @@
             </binding>
         </hovered-->
     </animation>
-
     <animation>
         <type>knob</type>
         <object-name>fuel-knob</object-name>
@@ -180,15 +167,15 @@
         <offset-deg>-30</offset-deg>
         <interval-sec>0.15</interval-sec>
         <center>
-         <x-m>0.127027</x-m>
-         <y-m>0.051596</y-m>
-         <z-m>0</z-m>
+            <x-m>0.127027</x-m>
+            <y-m>0.051596</y-m>
+            <z-m>0</z-m>
         </center>
         <axis>
-         <x>0</x>
-         <y>0</y>
-         <z>-1</z>
-        </axis>  
+            <x>0</x>
+            <y>0</y>
+            <z>-1</z>
+        </axis>
         <increase>
             <binding>
                 <command>property-adjust</command>
@@ -197,7 +184,7 @@
                 <min>0</min>
                 <max>5</max>
                 <wrap>false</wrap>
-           </binding>
+            </binding>
         </increase>
         <decrease>
             <binding>
@@ -207,7 +194,7 @@
                 <min>0</min>
                 <max>5</max>
                 <wrap>false</wrap>
-           </binding>
+            </binding>
         </decrease>
         <!--hovered>
             <binding>
@@ -217,7 +204,6 @@
             </binding>
         </hovered-->
     </animation>
-
     <animation>
         <type>knob</type>
         <object-name>inhg-knob</object-name>
@@ -226,14 +212,14 @@
         <offset-deg>0</offset-deg>
         <interval-sec>0.2</interval-sec>
         <center>
-            <x-m> 0.114414 </x-m>
-            <y-m> -0.035966 </y-m>
-            <z-m> 0 </z-m>
+            <x-m>0.114414</x-m>
+            <y-m>-0.035966</y-m>
+            <z-m>0</z-m>
         </center>
         <axis>
-            <x> 0.0 </x>
-            <y> 0.0 </y>
-            <z> 1.0 </z>
+            <x>0.0</x>
+            <y>0.0</y>
+            <z>1.0</z>
         </axis>
         <increase>
             <binding>
@@ -258,250 +244,232 @@
             </binding>
         </decrease>
     </animation>
-
-<animation>
-  <type>pick</type>
-   <object-name>button</object-name>
-   <action>
-    <button>0</button>
-    <repeatable>false</repeatable>
-    <interval-sec>0.2</interval-sec>
-    <binding>
-          <command>property-adjust</command>
-          <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property>
-          <step>1</step>
-          <min>0</min>
-          <max>5</max>
-          <wrap>true</wrap>
-     </binding>
-    <!--<mod-up>
+    <animation>
+        <type>pick</type>
+        <object-name>button</object-name>
+        <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
+            <interval-sec>0.2</interval-sec>
+            <binding>
+                <command>property-adjust</command>
+                <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property>
+                <step>1</step>
+                <min>0</min>
+                <max>5</max>
+                <wrap>true</wrap>
+            </binding>
+            <!--<mod-up>
     </mod-up>-->
-   </action>
-   <hovered>
+        </action>
+        <hovered>
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>ehsiMode</tooltip-id>
                 <label>Navigation Mode</label>
             </binding>
         </hovered>
- </animation>
-
- <animation>
-      <type>pick</type>
-       <object-name>b01</object-name>
-       <action>
-        <button>0</button>
-        <repeatable>false</repeatable>
-        <interval-sec>0.2</interval-sec>
-        <binding>
-              <command>nasal</command>
-              <script>
-                f16_CDU.CDU.buttonPress(1);
-              </script>
-         </binding>
-        <!--<mod-up>
-        </mod-up>-->
-       </action>
-       <hovered>
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>b01</object-name>
+        <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
+            <interval-sec>0.2</interval-sec>
+            <binding>
+                <command>nasal</command>
+                <script>f16_CDU.CDU.buttonPress(1);</script>
+            </binding>
+        </action>
+        <!--hovered>
                 <binding>
                     <command>set-tooltip</command>
                     <tooltip-id>c</tooltip-id>
                     <label>RANGE INCREASE</label>
                 </binding>
-            </hovered>
-     </animation>
-
-     <animation>
-      <type>pick</type>
-       <object-name>b02</object-name>
-       <action>
-        <button>0</button>
-        <repeatable>false</repeatable>
-        <interval-sec>0.2</interval-sec>
-        <binding>
-              <command>nasal</command>
-              <script>
-                f16_CDU.CDU.buttonPress(2);
-              </script>
-         </binding>
-        <!--<mod-up>
-        </mod-up>-->
-       </action>
-       <hovered>
+            </hovered-->
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>b02</object-name>
+        <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
+            <interval-sec>0.2</interval-sec>
+            <binding>
+                <command>nasal</command>
+                <script>f16_CDU.CDU.buttonPress(2);</script>
+            </binding>
+        </action>
+        <!--hovered>
                 <binding>
                     <command>set-tooltip</command>
                     <tooltip-id>d</tooltip-id>
                     <label>RANGE DECREASE</label>
                 </binding>
-            </hovered>
-     </animation>
-
-     <animation>
-      <type>pick</type>
-       <object-name>b16</object-name>
-       <action>
-        <button>0</button>
-        <repeatable>false</repeatable>
-        <interval-sec>0.2</interval-sec>
-        <binding>
-              <command>nasal</command>
-              <script>
-                f16_CDU.CDU.buttonPress(16);
-              </script>
-         </binding>
-        <!--<mod-up>
-        </mod-up>-->
-       </action>
-       <hovered>
-                <binding>
-                    <command>set-tooltip</command>
-                    <tooltip-id>g</tooltip-id>
-                    <label>GRID</label>
-                </binding>
-            </hovered>
-     </animation>
-
-     <animation>
-      <type>pick</type>
-       <object-name>b04</object-name>
-       <action>
-        <button>0</button>
-        <repeatable>false</repeatable>
-        <interval-sec>0.2</interval-sec>
-        <binding>
-              <command>nasal</command>
-              <script>
-                f16_CDU.CDU.buttonPress(4);
-              </script>
-         </binding>
-       </action>
-       <!--hovered>
-                <binding>
-                    <command>set-tooltip</command>
-                    <tooltip-id>e</tooltip-id>
-                    <label>DAY / NIGHT</label>
-                </binding>
             </hovered-->
-     </animation>
-
-     <animation>
-      <type>pick</type>
-       <object-name>b09</object-name>
-       <action>
-        <button>0</button>
-        <repeatable>false</repeatable>
-        <interval-sec>0.2</interval-sec>
-        <binding>
-              <command>nasal</command>
-              <script>
-                f16_CDU.CDU.buttonPress(9);
-              </script>
-         </binding>
-       </action>
-       <!--hovered>
-                <binding>
-                    <command>set-tooltip</command>
-                    <tooltip-id>j</tooltip-id>
-                    <label>HDG UP</label>
-                </binding>
-            </hovered-->
-     </animation>
-
-     <animation>
-      <type>pick</type>
-       <object-name>b23</object-name>
-       <action>
-        <button>0</button>
-        <repeatable>false</repeatable>
-        <interval-sec>0.2</interval-sec>
-        <binding>
-                    <command>nasal</command>
-              <script>
-                f16_CDU.CDU.buttonPress(23);
-              </script>
-                </binding>
-        <!--<mod-up>
-        </mod-up>-->
-       </action>
-       <hovered>
-                <binding>
-                    <command>set-tooltip</command>
-                    <tooltip-id>h</tooltip-id>
-                    <label>TOGGLE INSTR</label>
-                </binding>
-            </hovered>
-     </animation>
-
-     <animation>
-      <type>pick</type>
-       <object-name>b25</object-name>
-       <action>
-        <button>0</button>
-        <repeatable>false</repeatable>
-        <interval-sec>0.2</interval-sec>
-        <binding>
-                    <command>nasal</command>
-              <script>
-                f16_CDU.CDU.buttonPress(25);
-              </script>
-                </binding>
-       </action>
-       <!--hovered>
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>b03</object-name>
+        <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
+            <interval-sec>0.2</interval-sec>
+            <binding>
+                <command>nasal</command>
+                <script>f16_CDU.CDU.buttonPress(3);</script>
+            </binding>
+        </action>
+        <!--hovered>
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>i</tooltip-id>
                 <label>TOGGLE EHSI</label>
             </binding>
         </hovered-->
-     </animation>
-
-     <animation>
-      <type>pick</type>
-       <object-name>b24</object-name>
-       <action>
-        <button>0</button>
-        <repeatable>false</repeatable>
-        <interval-sec>0.2</interval-sec>
-        <binding>
-                    <command>nasal</command>
-              <script>
-                f16_CDU.CDU.buttonPress(24);
-              </script>
-                </binding>
-       </action>
-       <hovered>
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>b04</object-name>
+        <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
+            <interval-sec>0.2</interval-sec>
+            <binding>
+                <command>nasal</command>
+                <script>f16_CDU.CDU.buttonPress(4);</script>
+            </binding>
+        </action>
+        <!--hovered>
                 <binding>
                     <command>set-tooltip</command>
-                    <tooltip-id>i</tooltip-id>
-                    <label>TOGGLE MAP</label>
+                    <tooltip-id>e</tooltip-id>
+                    <label>DAY / NIGHT</label>
                 </binding>
-            </hovered>
-     </animation>
-
-     <animation>
-      <type>pick</type>
-       <object-name>Cube.025</object-name>
-       <action>
-        <button>0</button>
-        <repeatable>false</repeatable>
-        <interval-sec>0.2</interval-sec>
-        <binding>
-              <command>nasal</command>
-              <script>
-                f16_CDU.initCDU();
-              </script>
-         </binding>
-       </action>
-       <hovered>
+            </hovered-->
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>b05</object-name>
+        <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
+            <interval-sec>0.2</interval-sec>
+            <binding>
+                <command>nasal</command>
+                <script>f16_CDU.CDU.buttonPress(5);</script>
+            </binding>
+        </action>
+        <!--hovered>
                 <binding>
                     <command>set-tooltip</command>
-                    <tooltip-id>f</tooltip-id>
-                    <label>START LOOP</label>
+                    <tooltip-id>h</tooltip-id>
+                    <label>TOGGLE INSTR</label>
                 </binding>
-            </hovered>
-     </animation>
-
-     <effect>
+            </hovered-->
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>b09</object-name>
+        <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
+            <interval-sec>0.2</interval-sec>
+            <binding>
+                <command>nasal</command>
+                <script>f16_CDU.CDU.buttonPress(9);</script>
+            </binding>
+        </action>
+        <!--hovered>
+                <binding>
+                    <command>set-tooltip</command>
+                    <tooltip-id>j</tooltip-id>
+                    <label>HDG UP</label>
+                </binding>
+            </hovered-->
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>b10</object-name>
+        <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
+            <interval-sec>0.2</interval-sec>
+            <binding>
+                <command>nasal</command>
+                <script>f16_CDU.CDU.buttonPress(10);</script>
+            </binding>
+        </action>
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>b11</object-name>
+        <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
+            <interval-sec>0.2</interval-sec>
+            <binding>
+                <command>nasal</command>
+                <script>f16_CDU.CDU.buttonPress(11);</script>
+            </binding>
+        </action>
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>b12</object-name>
+        <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
+            <interval-sec>0.2</interval-sec>
+            <binding>
+                <command>nasal</command>
+                <script>f16_CDU.CDU.buttonPress(12);</script>
+            </binding>
+        </action>
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>b13</object-name>
+        <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
+            <interval-sec>0.2</interval-sec>
+            <binding>
+                <command>nasal</command>
+                <script>f16_CDU.CDU.buttonPress(13);</script>
+            </binding>
+        </action>
+        <!--hovered>
+                <binding>
+                    <command>set-tooltip</command>
+                    <tooltip-id>k</tooltip-id>
+                    <label>GRID</label>
+                </binding>
+            </hovered-->
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>b19</object-name>
+        <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
+            <interval-sec>0.2</interval-sec>
+            <binding>
+                <command>nasal</command>
+                <script>f16_CDU.CDU.buttonPress(19);</script>
+            </binding>
+        </action>
+        <!--hovered>
+                <binding>
+                    <command>set-tooltip</command>
+                    <tooltip-id>h</tooltip-id>
+                    <label>TOGGLE INSTR</label>
+                </binding>
+            </hovered-->
+    </animation>
+    <effect>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
         <parameters>
             <implicit-lightmap-enabled type="int">1</implicit-lightmap-enabled>
@@ -551,7 +519,7 @@
             <inner-angle type="float">45</inner-angle>
             <outer-angle type="float">60</outer-angle>
             <black-angle type="float">80</black-angle>
-            <contrast>1</contrast> 
+            <contrast>1</contrast>
             <texture n="1">
                 <type>2d</type>
                 <filter>linear-mipmap-linear</filter>
@@ -564,7 +532,6 @@
         </parameters>
         <object-name>cdu_canvas</object-name>
     </effect>
-
     <animation>
         <object-name>beacon</object-name>
         <type>material</type>
@@ -577,32 +544,29 @@
             </or>
         </condition>
         <emission>
-            <red>  0</red>
+            <red>0</red>
             <green>1</green>
-            <blue> 0</blue>
+            <blue>0</blue>
         </emission>
     </animation>
-
     <!--animation>
-      <type>pick</type>
-       <object-name>b26</object-name>
-       <action>
-        <button>0</button>
-        <repeatable>false</repeatable>
-        <interval-sec>0.2</interval-sec>
-        <binding>
-                    <command>nasal-module-reload</command>
-                    <module>f16_CDU</module>
-                </binding>
-        
-       </action>
-       <hovered>
-                <binding>
-                    <command>set-tooltip</command>
-                    <tooltip-id>b</tooltip-id>
-                    <label>RELOAD</label>
-                </binding>
-            </hovered>
-     </animation-->
-    
+        <type>pick</type>
+        <object-name>b26</object-name>
+        <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
+            <interval-sec>0.2</interval-sec>
+            <binding>
+                <command>nasal-module-reload</command>
+                <module>f16_CDU</module>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>b</tooltip-id>
+                <label>RELOAD</label>
+            </binding>
+        </hovered>
+    </animation-->
 </PropertyList>
