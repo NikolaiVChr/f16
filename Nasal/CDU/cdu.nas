@@ -145,6 +145,7 @@ var lineWidth = {
     targets: 2,
     targetsDL: 3,
     gpsSpot: 5,
+    crashCross: 12,
 };
 
 var font = {
@@ -172,6 +173,7 @@ var layer_z = {
         map: 1,
         mapOverlay: 7,
         buttonSymbols: 9,
+        buttonSymbolsTop: 25,
         pfd: 20,
         pfdSky: 19,
         ehsi: 20,
@@ -179,6 +181,7 @@ var layer_z = {
         hud: 20,
         hud_bg: 19,
         attribution: 70,
+        crashCross: 100,
     },
     map: {
         tiles: 1,
@@ -246,6 +249,7 @@ var CDU = {
         me.setupPFD();# after setupInstr
         me.setupHUD();# after setupInstr
         me.setupAttr();
+        me.setupCrash();
         
         me.setRangeInfo();
         me.loadedCDU = 1;
@@ -318,7 +322,8 @@ var CDU = {
             print("Unloaded CDU Looping");
             return;
         }
-        me.updatePFD();        
+        me.updatePFD();     
+        me.updateCrash();   
         #print("CDU Looping ",me.loadedCDU);
     },
 
@@ -415,6 +420,7 @@ var CDU = {
             alphaI:               "fdm/jsbsim/fcs/fly-by-wire/pitch/alpha-indicated",
             tacanCh:              "instrumentation/tacan/display/channel",
             ilsCh:                "instrumentation/nav[0]/frequencies/selected-mhz",
+            crashSec:             "instrumentation/radar/time-till-crash",
         };
 
         foreach(var name; keys(me.input)) {
@@ -435,11 +441,15 @@ var CDU = {
             b1: {method: me.zoomOut, pos: [0,90]},
             b2: {method: me.zoomIn, pos: [0,210]},
             b4: {method: me.toggleDay, pos: [0,450]},
+            b5: {pos: [0,575]},
             b8: {pos: [0,950]},
             b9: {method: me.toggleHdgUp, pos: [me.max_x,90]},
-            b16: {method: me.toggleGrid, pos: [me.max_x,950]},
-            b23: {method: me.cycleInstr, pos: [200,me.max_y]},
-            b24: {method: me.toggleMAP, pos: [me.max_x*0.5,me.max_y]},
+            b12: {method: me.toggleMAP, pos: [me.max_x,450]},
+            b13: {method: me.toggleGrid, pos: [me.max_x,575]},
+            b16: {pos: [me.max_x,950]},
+            b19: {method: me.cycleInstr, pos: [me.max_x*0.5,0]},
+            b23: {pos: [200,me.max_y]},
+            b24: {pos: [me.max_x*0.5,me.max_y]},
             b25: {pos: [800,me.max_y]},
         };
     },
@@ -607,6 +617,30 @@ var CDU = {
             .setAlignment("left-center")
             .setTranslation(me.buttonMap.b4.pos[0]+20, me.buttonMap.b4.pos[1])
             .setFont("NotoMono-Regular.ttf");
+
+        me.mapText = me.root.createChild("text")
+            .set("z-index",layer_z.display.buttonSymbols)
+            .setColor(COLOR_YELLOW)
+            .setFontSize(font.range, 1.0)
+            .setAlignment("right-center")
+            .setTranslation(me.buttonMap.b12.pos[0]-20, me.buttonMap.b12.pos[1])
+            .setFont("NotoMono-Regular.ttf");
+
+        me.instrText = me.root.createChild("text")
+            .set("z-index",layer_z.display.buttonSymbolsTop)
+            .setColor(COLOR_YELLOW)
+            .setFontSize(font.range, 1.0)
+            .setAlignment("center-top")
+            .setTranslation(me.buttonMap.b19.pos[0], me.buttonMap.b19.pos[1]+20)
+            .setFont("NotoMono-Regular.ttf");
+
+        me.gridText = me.root.createChild("text")
+            .set("z-index",layer_z.display.buttonSymbols)
+            .setColor(COLOR_YELLOW)
+            .setFontSize(font.range, 1.0)
+            .setAlignment("right-center")
+            .setTranslation(me.buttonMap.b13.pos[0]-20, me.buttonMap.b13.pos[1])
+            .setFont("NotoMono-Regular.ttf");
     },
 
     updateSymbols: func {
@@ -643,6 +677,9 @@ var CDU = {
             me.rootCenter.setRotation(me.input.heading.getValue()*D2R);
         }
         me.dayText.setText(me.day?"DAY":"NIGHT");
+        me.instrText.setText(me.instrConf[me.instrView].descr);
+        me.mapText.setText(providerOption==0?"DRAWN":"PHOTO");
+        me.gridText.setText(me.mapShowGrid?"GRID":"CLEAN");
     },
 
     setupTargets: func {
@@ -1129,6 +1166,26 @@ var CDU = {
         }
     },
 
+    setupCrash: func {
+        me.crashCross = me.root.createChild("path")
+            .lineTo(me.max_x, me.max_y)
+            .moveTo(me.max_x, 0)
+            .lineTo(0, me.max_y)
+            .setStrokeLineWidth(lineWidth.crashCross)
+            .setColor(COLOR_RED)
+            .set("z-index", layer_z.display.crashCross)
+            .hide();
+    },
+
+    updateCrash: func {
+        me.flyUpTime = me.input.crashSec.getValue();
+        if (me.flyUpTime > 0 and me.flyUpTime < 8) {
+            me.crashCross.setVisible(math.mod(me.input.timeElapsed.getValue(), 0.50) < 0.25);
+        } else {
+            me.crashCross.setVisible(0);
+        }
+    },
+
 #  ██ ███    ██ ███████ ████████ ██████  ██    ██ ███    ███ ███████ ███    ██ ████████ ███████ 
 #  ██ ████   ██ ██         ██    ██   ██ ██    ██ ████  ████ ██      ████   ██    ██    ██      
 #  ██ ██ ██  ██ ███████    ██    ██████  ██    ██ ██ ████ ██ █████   ██ ██  ██    ██    ███████ 
@@ -1139,9 +1196,9 @@ var CDU = {
     setupInstr: func {
         me.instrView = 0;
         me.instrConf = [
-            {showMap: 1, ehsiScale: 1/1.25, showEhsi: 1, showPfd: 1, ehsiPosX: me.ehsiPosX, ehsiPosY: me.ehsiPosY, showExtEhsi: 0, showHud: 0},
-            {showMap: 1, ehsiScale: 1/1.25, showEhsi: 0, showPfd: 0, ehsiPosX: 0, ehsiPosY: 0, showExtEhsi: 0, showHud: 0},
-            {showMap: 0, ehsiScale: 2/1.25, showEhsi: 1, showPfd: 0, ehsiPosX: 0, ehsiPosY: me.ehsiPosY-(me.max_y-me.ehsiPosY), showExtEhsi: 1, showHud: 0},
+            {descr: "MIX", showMap: 1, ehsiScale: 1/1.25, showEhsi: 1, showPfd: 1, ehsiPosX: me.ehsiPosX, ehsiPosY: me.ehsiPosY, showExtEhsi: 0, showHud: 0},
+            {descr: "MAP", showMap: 1, ehsiScale: 1/1.25, showEhsi: 0, showPfd: 0, ehsiPosX: 0, ehsiPosY: 0, showExtEhsi: 0, showHud: 0},
+            {descr: "EHSI", showMap: 0, ehsiScale: 2/1.25, showEhsi: 1, showPfd: 0, ehsiPosX: 0, ehsiPosY: me.ehsiPosY-(me.max_y-me.ehsiPosY), showExtEhsi: 1, showHud: 0},
             #{showMap: 0, ehsiScale: 2/1.25, showEhsi: 0, showPfd: 0, ehsiPosX: 0, ehsiPosY: me.ehsiPosY-(me.max_y-me.ehsiPosY), showExtEhsi: 0, showHud: 1},
         ];
     },
