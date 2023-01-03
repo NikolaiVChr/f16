@@ -4,9 +4,15 @@
  <sim>
   <model>
    <livery>
-    <name type="string">BAC 31 Sqn, "Skull n Bones (TM16)"</name>
+    <name type="string">10W 31 Sqn, FA-77 "Skull n Bones, NTM"</name>
     <texture>Liveries/Block20/80-3568.png</texture>
     <owner type="string">BAC</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Special Color</scheme>
+    <block type="int">20</block>
+    <serial type="string">80-3568</serial>
+    <squad type="string">31 Sqn "Tigers"</squad>
+    <year type="string">2016</year>
    </livery>
    <livery-logo>
     <texture>Liveries/standard.logos.color.png</texture>

@@ -4,9 +4,15 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">BAC 2 W, "75 years BAF"</name>
+    <name type="string">2W, FA-87 "75 years BAF"</name>
     <texture>Liveries/Block20/80-3578.png</texture>
     <owner type="string">BAC</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Two-tone gray, Special Color</scheme>
+    <block type="int">20</block>
+    <serial type="string">80-3578</serial>
+    <squad type="string">2W</squad>
+    <year type="string">2021</year>
    </livery>
    <livery-logo>
     <texture>Liveries/standard.logos.black2.png</texture>

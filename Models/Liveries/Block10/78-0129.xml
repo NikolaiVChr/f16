@@ -4,14 +4,14 @@
  <sim>
   <model>
    <livery> 
-    <name type="string">350 Sqn, FA-14</name>
+    <name type="string">1W 350 Sqn, FA-14</name>
     <texture>Liveries/Block10/78-0129.png</texture>
     <owner type="string">BAC</owner>
     <pilot type="string"></pilot>
     <scheme type="string"></scheme>
     <block type="int">10</block>
     <serial type="string">78-0129</serial>
-    <squad type="string">350 Sqn</squad>
+    <squad type="string">350 Sqn "Ambiorix"</squad>
     <year type="string">1980</year>
    </livery>
 

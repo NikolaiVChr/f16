@@ -75,7 +75,7 @@
    <path archive="y">Aircraft/f16/Models/F-16.xml</path>
    <livery>
     <file type="string"/>
-    <name type="string">350 Sqn, FA-14</name>
+    <name type="string">1W 350 Sqn, FA-14</name>
     <folder type="string">Aircraft/f16/Models/Liveries/Block10</folder>
    </livery>
    <MFD-color>

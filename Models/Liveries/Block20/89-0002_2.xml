@@ -4,9 +4,15 @@
  <sim>
   <model>
    <livery> 
-    <name type="string">BAC 350 Sqn, BL FA-124 (1998)</name>
+    <name type="string">2W 350 Sqn, FA-124 "BL"</name>
     <texture>Liveries/Block20/89-0002_2.png</texture>
     <owner type="string">BAC</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string"></scheme>
+    <block type="int">20</block>
+    <serial type="string">89-0002</serial>
+    <squad type="string">350 Sqn "Ambiorix"</squad>
+    <year type="string">1998</year>
    </livery>
 
    <livery-logo>
