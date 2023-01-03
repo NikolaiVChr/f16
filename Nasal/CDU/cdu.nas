@@ -158,6 +158,7 @@ var font = {
     grid: 14,
     targets: 25,
     markpoints: 25,
+    power: 25,
 };
 
 var symbolSize = {
@@ -182,6 +183,7 @@ var layer_z = {
         hud_bg: 19,
         attribution: 70,
         crashCross: 100,
+        power: 20,
     },
     map: {
         tiles: 1,
@@ -248,6 +250,7 @@ var CDU = {
         me.setupEHSI();# after setupInstr
         me.setupPFD();# after setupInstr
         me.setupHUD();# after setupInstr
+        me.setupPower();
         me.setupAttr();
         me.setupCrash();
         
@@ -314,6 +317,7 @@ var CDU = {
         me.updateAttr();
         me.updateEHSI();
         me.updateHUD();
+        me.updatePower();
         #print("CDU Looping ",me.loadedCDU);
     },
 
@@ -421,6 +425,23 @@ var CDU = {
             tacanCh:              "instrumentation/tacan/display/channel",
             ilsCh:                "instrumentation/nav[0]/frequencies/selected-mhz",
             crashSec:             "instrumentation/radar/time-till-crash",
+            powerNonEssAc1:       "fdm/jsbsim/elec/bus/noness-ac-1",
+            powerEmrgAc1:         "fdm/jsbsim/elec/bus/emergency-ac-1",
+            powerNonEssAc2:       "fdm/jsbsim/elec/bus/noness-ac-2",
+            powerEssAc:           "fdm/jsbsim/elec/bus/ess-ac",
+            powerEmrgAc2:         "fdm/jsbsim/elec/bus/emergency-ac-2",
+            powerNcNonEssAc:      "fdm/jsbsim/elec/bus/nacelle-noness-ac",
+            powerNcEssAc:         "fdm/jsbsim/elec/bus/nacelle-ess-ac",
+            powerEmrgDc1:         "fdm/jsbsim/elec/bus/emergency-dc-1",
+            powerNonEssDc:        "fdm/jsbsim/elec/bus/noness-dc",
+            powerEmrgDc2:         "fdm/jsbsim/elec/bus/emergency-dc-2",
+            powerEssDc:           "fdm/jsbsim/elec/bus/ess-dc",
+            powerBatt1:           "fdm/jsbsim/elec/bus/batt-1",
+            powerBatt2:           "fdm/jsbsim/elec/bus/batt-2",
+            powerNcNonEssDc1:     "fdm/jsbsim/elec/bus/nacelle-noness-dc-1",
+            powerNcNonEssDc2:     "fdm/jsbsim/elec/bus/nacelle-noness-dc-2",
+            powerHydrA:           "fdm/jsbsim/systems/hydraulics/sysa-psi",
+            powerHydrB:           "fdm/jsbsim/systems/hydraulics/sysb-psi",
         };
 
         foreach(var name; keys(me.input)) {
@@ -680,6 +701,14 @@ var CDU = {
         me.instrText.setText(me.instrConf[me.instrView].descr);
         me.mapText.setText(providerOption==0?"DRAWN":"PHOTO");
         me.gridText.setText(me.mapShowGrid?"GRID":"CLEAN");
+
+        me.gridText.setVisible(me.instrConf[me.instrView].showMap);
+        me.mapText.setVisible(me.instrConf[me.instrView].showMap);
+        me.dayText.setVisible(me.instrConf[me.instrView].showMap);
+        me.hdgUpText.setVisible(me.instrConf[me.instrView].showMap);
+        me.rangeArrowDown.setVisible(me.instrConf[me.instrView].showMap);
+        me.rangeArrowUp.setVisible(me.instrConf[me.instrView].showMap);
+        me.rangeText.setVisible(me.instrConf[me.instrView].showMap);
     },
 
     setupTargets: func {
@@ -1196,9 +1225,10 @@ var CDU = {
     setupInstr: func {
         me.instrView = 0;
         me.instrConf = [
-            {descr: "MIX", showMap: 1, ehsiScale: 1/1.25, showEhsi: 1, showPfd: 1, ehsiPosX: me.ehsiPosX, ehsiPosY: me.ehsiPosY, showExtEhsi: 0, showHud: 0},
-            {descr: "MAP", showMap: 1, ehsiScale: 1/1.25, showEhsi: 0, showPfd: 0, ehsiPosX: 0, ehsiPosY: 0, showExtEhsi: 0, showHud: 0},
-            {descr: "EHSI", showMap: 0, ehsiScale: 2/1.25, showEhsi: 1, showPfd: 0, ehsiPosX: 0, ehsiPosY: me.ehsiPosY-(me.max_y-me.ehsiPosY), showExtEhsi: 1, showHud: 0},
+            {descr: "MIX", showMap: 1, ehsiScale: 1/1.25, showEhsi: 1, showPfd: 1, ehsiPosX: me.ehsiPosX, ehsiPosY: me.ehsiPosY, showExtEhsi: 0, showHud: 0, showPower: 0},
+            {descr: "MAP", showMap: 1, ehsiScale: 1/1.25, showEhsi: 0, showPfd: 0, ehsiPosX: 0, ehsiPosY: 0, showExtEhsi: 0, showHud: 0, showPower: 0},
+            {descr: "EHSI", showMap: 0, ehsiScale: 2/1.25, showEhsi: 1, showPfd: 0, ehsiPosX: 0, ehsiPosY: me.ehsiPosY-(me.max_y-me.ehsiPosY), showExtEhsi: 1, showHud: 0, showPower: 0},
+            {descr: "POWER", showMap: 0, ehsiScale: 2/1.25, showEhsi: 0, showPfd: 0, ehsiPosX: 0, ehsiPosY: me.ehsiPosY-(me.max_y-me.ehsiPosY), showExtEhsi: 0, showHud: 0, showPower: 1},
             #{showMap: 0, ehsiScale: 2/1.25, showEhsi: 0, showPfd: 0, ehsiPosX: 0, ehsiPosY: me.ehsiPosY-(me.max_y-me.ehsiPosY), showExtEhsi: 0, showHud: 1},
         ];
     },
@@ -1379,6 +1409,67 @@ var CDU = {
             me.ehsiExtChannels.setText(sprintf("TACAN %s    ILS %06.2f",me.input.tacanCh.getValue(), me.input.ilsCh.getValue()));
             me.ehsiExtChannels.setTranslation(me.max_x*0.5, me.instrConf[me.instrView].ehsiPosY*0.5);
         }
+    },
+
+    setupPower: func {
+        me.powerSupplierText = me.root.createChild("text")
+                .setColor(COLOR_YELLOW)
+                .setFontSize(font.power, 1.0)
+                .setAlignment("left-top")
+                .set("z-index", layer_z.display.power)
+                .setTranslation(150, 150)
+                .setText(
+                    "Non Essential AC 1"
+                    ~"\nEmergency AC 1"
+                    ~"\nEmergency AC 2"
+                    ~"\nNon Essential AC 2"
+                    ~"\nEssential AC"
+                    ~"\nNacelle Non Essential AC"
+                    ~"\nNacelle Essential AC"
+                    ~"\n\nEmergency DC 1"
+                    ~"\nEmergency DC 2"
+                    ~"\nNon Essential DC"
+                    ~"\nEssential DC"
+                    ~"\nBattery Bus 1"
+                    ~"\nBattery Bus 2"
+                    ~"\nNacelle Non Essential DC 1"
+                    ~"\nNacelle Non Essential DC 2"
+                    ~"\n\nHydraulics System A"
+                    ~"\nHydraulics System B"
+                );
+
+        me.powerOutputText = me.root.createChild("text")
+                .setColor(COLOR_YELLOW)
+                .setFontSize(font.power, 1.0)
+                .setAlignment("right-top")
+                .set("z-index", layer_z.display.power)
+                .setTranslation(me.max_x-150, 150)
+                .setText("230V\n230V");
+    },
+
+    updatePower: func {
+        me.powerOutputText.setVisible(me.instrConf[me.instrView].showPower);
+        me.powerSupplierText.setVisible(me.instrConf[me.instrView].showPower);
+        if (!me.instrConf[me.instrView].showPower) return;
+        me.powerOutputText.setText(
+            sprintf("%dV\n",me.input.powerNonEssAc1.getValue())~
+            sprintf("%dV\n",me.input.powerEmrgAc1.getValue())~
+            sprintf("%dV\n",me.input.powerEmrgAc2.getValue())~
+            sprintf("%dV\n",me.input.powerNonEssAc2.getValue())~
+            sprintf("%dV\n",me.input.powerEssAc.getValue())~            
+            sprintf("%dV\n",me.input.powerNcNonEssAc.getValue())~
+            sprintf("%dV\n\n",me.input.powerNcEssAc.getValue())~
+            sprintf("%dV\n",me.input.powerEmrgDc1.getValue())~
+            sprintf("%dV\n",me.input.powerEmrgDc2.getValue())~
+            sprintf("%dV\n",me.input.powerNonEssDc.getValue())~
+            sprintf("%dV\n",me.input.powerEssDc.getValue())~
+            sprintf("%dV\n",me.input.powerBatt1.getValue())~
+            sprintf("%dV\n",me.input.powerBatt2.getValue())~
+            sprintf("%dV\n",me.input.powerNcNonEssDc1.getValue())~
+            sprintf("%dV\n\n",me.input.powerNcNonEssDc2.getValue())~
+            sprintf("%d psi\n",me.input.powerHydrA.getValue())~
+            sprintf("%d psi\n",me.input.powerHydrB.getValue())
+        );
     },
 
     setupHUD: func {
@@ -1699,6 +1790,11 @@ var CDU = {
     },
 
     updateMap: func {
+        me.rootCenter.setVisible(me.instrConf[me.instrView].showMap);
+        me.mapCentrum.setVisible(me.instrConf[me.instrView].showMap);
+        if (!me.instrConf[me.instrView].showMap) {
+            return;
+        }
         # update the map
         if (lastDay != me.day or providerOptionLast != providerOption)  {
             me.setupMap();
