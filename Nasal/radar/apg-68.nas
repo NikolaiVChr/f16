@@ -36,7 +36,7 @@ var AirborneRadar = {
 	fieldOfRegardMaxElev: 60,
 	fieldOfRegardMinElev: -60,
 	currentMode: nil, # vector of cascading modes ending with current submode
-	currentModeIndex: 0,
+	currentModeIndex: nil,
 	rootMode: 0,
 	mainModes: nil,
 	instantFoVradius: 2.0,#average of horiz/vert radius
@@ -73,6 +73,11 @@ var AirborneRadar = {
 				# this needs to be set on submodes also...hmmm
 				mode.radar = rdr;
 			}
+		}
+
+		rdr.currentModeIndex = setsize([], size(mainModes));
+		forindex (var i; rdr.currentModeIndex) {
+			rdr.currentModeIndex[i] = 0;
 		}
 
 		rdr.setCurrentMode(rdr.mainModes[0][0], nil);
@@ -142,11 +147,11 @@ var AirborneRadar = {
 		me.currentMode.cycleDesignate();
 	},
 	cycleMode: func {
-		me.currentModeIndex += 1;
-		if (me.currentModeIndex >= size(me.mainModes[me.rootMode])) {
-			me.currentModeIndex = 0;
+		me.currentModeIndex[me.rootMode] += 1;
+		if (me.currentModeIndex[me.rootMode] >= size(me.mainModes[me.rootMode])) {
+			me.currentModeIndex[me.rootMode] = 0;
 		}
-		me.newMode = me.mainModes[me.rootMode][me.currentModeIndex];
+		me.newMode = me.mainModes[me.rootMode][me.currentModeIndex[me.rootMode]];
 		me.newMode.setRange(me.currentMode.getRange());
 		me.oldMode = me.currentMode;
 		me.setCurrentMode(me.newMode, me.oldMode["priorityTarget"]);
@@ -156,8 +161,8 @@ var AirborneRadar = {
 		if (me.rootMode >= size(me.mainModes)) {
 			me.rootMode = 0;
 		}
-		me.currentModeIndex = 0;
-		me.newMode = me.mainModes[me.rootMode][me.currentModeIndex];
+
+		me.newMode = me.mainModes[me.rootMode][me.currentModeIndex[me.rootMode]];
 		#me.newMode.setRange(me.currentMode.getRange());
 		me.oldMode = me.currentMode;
 		me.setCurrentMode(me.newMode, me.oldMode["priorityTarget"]);
@@ -212,8 +217,8 @@ var AirborneRadar = {
 		if (me.rootMode >= size(me.mainModes)) {
 			me.rootMode = 0;
 		}
-		me.currentModeIndex = 0;
-		me.newMode = me.mainModes[me.rootMode][me.currentModeIndex];
+
+		me.newMode = me.mainModes[me.rootMode][me.currentModeIndex[me.rootMode]];
 		#me.newMode.setRange(me.currentMode.getRange());
 		me.oldMode = me.currentMode;
 		me.setCurrentMode(me.newMode, priority);
@@ -1101,8 +1106,8 @@ var APG68 = {
 		if (me.rootMode != 3) {
 			me.rootMode = 3;
 			me.oldMode = me.currentMode;
-			me.currentModeIndex = 0;
-			me.newMode = me.mainModes[me.rootMode][me.currentModeIndex];
+
+			me.newMode = me.mainModes[me.rootMode][me.currentModeIndex[me.rootMode]];
 			me.setCurrentMode(me.newMode, me.oldMode["priorityTarget"]);
 		}
 	},
@@ -1110,8 +1115,8 @@ var APG68 = {
 		if (me.rootMode != 0) {
 			me.rootMode = 0;
 			me.oldMode = me.currentMode;
-			me.currentModeIndex = 0;
-			me.newMode = me.mainModes[me.rootMode][me.currentModeIndex];
+
+			me.newMode = me.mainModes[me.rootMode][me.currentModeIndex[me.rootMode]];
 			me.setCurrentMode(me.newMode, me.oldMode["priorityTarget"]);
 		}
 	},
