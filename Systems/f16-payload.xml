@@ -177,7 +177,7 @@
             <type-id type="int">52</type-id>
             <short-name type="string">A120B</short-name>
             <long-name type="string">AIM-120B AMRAAM</long-name>
-            <guidance type="string">inertial</guidance>
+            <guidance type="string">sample</guidance>
             <vol-search type="double">0.00</vol-search>
             <vol-track type="double">1.00</vol-track>
             <max-fire-range-nm type="int">38.8</max-fire-range-nm>
