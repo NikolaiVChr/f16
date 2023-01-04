@@ -4,9 +4,15 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">RoAF Esc 53, #1616</name>
+    <name type="string">BA86 Esc 53, #1616</name>
     <texture>Liveries/Block20/83-1080.png</texture>
     <owner type="string">RoAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Three-tone camo</scheme>
+    <block type="int">20</block>
+    <serial type="string">83-1080</serial>
+    <squad type="string">Esc 53 "War Hawks"</squad>
+    <year type="string">2020</year>
    </livery>
 
    <livery-logo>
