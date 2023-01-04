@@ -208,6 +208,7 @@ var contactPoint = nil;
 # get_uBody()
 # get_vBody()
 # get_wBody()
+# getLastGroundTrackBlep() - Used for sample guidance
 # getFlareNode()  - Used for flares.
 # getChaffNode()  - Used for chaff.
 # isPainted()     - Tells if this target is still being radar tracked by the launch platform, only used in semi-radar guided missiles.
@@ -316,7 +317,7 @@ var AIM = {
 		m.asc                   = getprop(m.nodeString~"attack-steering-cue-enabled");# Bool. ASC enabled.
 		# navigation, guiding and seekerhead
 		m.max_seeker_dev        = getprop(m.nodeString~"seeker-field-deg") / 2;       # missiles own seekers total FOV diameter.
-		m.guidance              = getprop(m.nodeString~"guidance");                   # heat/radar/semi-radar/laser/gps/vision/unguided/level/gyro-pitch/radiation/inertial/remote/remote-stable/command/gps
+		m.guidance              = getprop(m.nodeString~"guidance");                   # heat/radar/semi-radar/laser/gps/vision/unguided/level/gyro-pitch/radiation/inertial/remote/remote-stable/command/sample
 		m.guidanceLaw           = getprop(m.nodeString~"navigation");                 # guidance-law: direct/direct-alt/OPN/PN/APN/PNxxyy/APNxxyy/LOS (use direct for pure pursuit, use PN for A/A missiles, use APN for modern SAM missiles PN for older, use PNxxyy/APNxxyy for surface to air where xx is degrees to aim above target, yy is seconds it will do that). GPN is APN for winged glidebombs.
 		m.guidanceLawHorizInit  = getprop(m.nodeString~"navigation-init-pure-15");    # Bool. Guide in horizontal plane using pure pursuit until target with 15 deg of nose, before switching to <navigation>
 		m.pro_constant          = getprop(m.nodeString~"proportionality-constant");   # Constant for how sensitive proportional navigation is to target speed/acc. Normally between 3-6. [optional]
@@ -441,6 +442,10 @@ var AIM = {
 
         if (m.radarOrigin == nil) {
         	m.radarOrigin = 1;
+        }
+
+        if (m.all_aspect == nil) {
+        	m.all_aspect = 1;
         }
 
         if (m.guideWhileDrop == nil) {
@@ -3137,14 +3142,44 @@ var AIM = {
 
 		me.guiding = TRUE;
 
+		if (me.guidance == "sample") {
+			me.blep = me.Tgt.getLastGroundTrackBlep();
+			if (me.blep == nil) {
+				me.free = 1;
+				me.guiding = 0;
+			} elsif (me.blep.getID() != me["blepID"]) {
+				thread.lock(me.blep.mutex);
+				me.blepID = me.blep.getID();
+				thread.unlock(me.blep.mutex);
+				me.blepIDtime = me.life_time;
+				me.t_coord_sampled = me.t_coord;
+			} elsif (me["blepIDtime"] != nil) {
+				me.dtTrack = me.life_time - me.blepIDtime;
+				thread.lock(me.blep.mutex);
+				me.ecefVel = me.blep.getECEFVelocity();
+				me.blep_coord = geo.Coord.new(me.blep.getCoord());
+				thread.unlock(me.blep.mutex);
+				me.t_coord_sampled = geo.Coord.new();
+
+				# dead-reckon:
+				me.t_coord_sampled.set_xyz(me.blep_coord.x()+me.ecefVel[0]*me.dtTrack, me.blep_coord.y()+me.ecefVel[1]*me.dtTrack, me.blep_coord.z()+me.ecefVel[2]*me.dtTrack);
+				me.t_coord_sampled.set_alt(me.blep_coord.alt());# we don't dead-reackon alt due to curvature of earth
+			} else {
+				me.free = 1;
+				me.guiding = 0;
+			}
+		} else {
+			me.t_coord_sampled = me.t_coord;
+		}
+
 		# Calculate current target elevation and azimut deviation.
-		me.t_alt            = me.t_coord.alt()*M2FT;
+		me.t_alt            = me.t_coord_sampled.alt()*M2FT;
 		#var t_alt_delta_m   = (me.t_alt - me.alt_ft) * FT2M;
-		me.dist_curr        = me.coord.distance_to(me.t_coord);
-		me.dist_curr_direct = me.coord.direct_distance_to(me.t_coord);
-		me.dist_curr_hypo   = math.sqrt(me.dist_curr_direct*me.dist_curr_direct+math.pow(me.t_coord.alt()-me.coord.alt(),2));
-		me.t_elev_deg       = me.getPitch(me.coord, me.t_coord);
-		me.t_course         = me.coord.course_to(me.t_coord);
+		me.dist_curr        = me.coord.distance_to(me.t_coord_sampled);
+		me.dist_curr_direct = me.coord.direct_distance_to(me.t_coord_sampled);
+		me.dist_curr_hypo   = math.sqrt(me.dist_curr_direct*me.dist_curr_direct+math.pow(me.t_coord_sampled.alt()-me.coord.alt(),2));
+		me.t_elev_deg       = me.getPitch(me.coord, me.t_coord_sampled);
+		me.t_course         = me.coord.course_to(me.t_coord_sampled);
 		me.curr_deviation_e = me.t_elev_deg - me.pitch;
 		me.curr_deviation_h = me.t_course - me.hdg;
 
@@ -3156,7 +3191,7 @@ var AIM = {
 		me.printFlightDetails("Elevation to target %05.2f degs, pitch deviation %05.2f degs, pitch %05.2f degs", me.t_elev_deg, me.curr_deviation_e, me.pitch);
 		me.printFlightDetails("Bearing to target %06.2f degs, heading deviation %06.2f degs, heading %06.2f degs", me.t_course, me.curr_deviation_h, me.hdg);
 		me.printFlightDetails("Altitude above launch platform = %07.1f ft", M2FT * (me.coord.alt()-me.ac.alt()));
-		me.printFlightDetails("Altitude. Target %07.1f. Missile %07.1f. Atan2 %04.1f degs", me.t_coord.alt()*M2FT, me.coord.alt()*M2FT, math.atan2( me.t_coord.alt()-me.coord.alt(), me.dist_curr ) * R2D);
+		me.printFlightDetails("Altitude. Target %07.1f. Missile %07.1f. Atan2 %04.1f degs", me.t_coord_sampled.alt()*M2FT, me.coord.alt()*M2FT, math.atan2( me.t_coord_sampled.alt()-me.coord.alt(), me.dist_curr ) * R2D);
 
 
 
@@ -3290,7 +3325,7 @@ var AIM = {
 	},
 
 	checkForLOS: func () {
-		if (pickingMethod == TRUE and me.guidance != "gps" and me.guidance != "unguided" and me.guidance != "inertial") {
+		if (pickingMethod == TRUE and me.guidance != "gps" and me.guidance != "unguided" and me.guidance != "inertial" and me.guidance != "sample") {
 			me.xyz          = {"x":me.coord.x(),                  "y":me.coord.y(),                 "z":me.coord.z()};
 		    me.directionLOS = {"x":me.t_coord.x()-me.coord.x(),   "y":me.t_coord.y()-me.coord.y(),  "z":me.t_coord.z()-me.coord.z()};
 
@@ -3359,7 +3394,7 @@ var AIM = {
 				me.printStats(me.type~": Not guiding (lost radiation, gave up)");
 				me.free = TRUE;
 			}
-		} elsif ((me.dist_curr_direct*M2NM > me.detect_range_curr_nm or !me.FOV_check(me.hdg, me.pitch, me.curr_deviation_h, me.curr_deviation_e, me.max_seeker_dev, me.myMath)) and me.guidance != "gps" and me.guidance != "inertial") {
+		} elsif (me.guidance != "gps" and me.guidance != "inertial" and me.guidance != "sample" and (me.dist_curr_direct*M2NM > me.detect_range_curr_nm or !me.FOV_check(me.hdg, me.pitch, me.curr_deviation_h, me.curr_deviation_e, me.max_seeker_dev, me.myMath))) {
 			# target is not in missile seeker view anymore
 
 			if (me.fovLost == FALSE and me.detect_range_curr_nm != 0) {
@@ -3416,7 +3451,7 @@ var AIM = {
 	},
 
 	adjustToKeepLock: func {
-		if (me.guidance != "gps" and me.guidance != "inertial") {
+		if (me.guidance != "gps" and me.guidance != "inertial" and me.guidance != "sample") {
 			if (!me.FOV_check(me.hdg, me.pitch, me.curr_deviation_h+me.raw_steer_signal_head, me.curr_deviation_e+me.raw_steer_signal_elev, me.max_seeker_dev, me.myMath) and me.fov_radial != 0) {
 				# the commanded steer order will make the missile lose its lock, to prevent that we reduce the steering just enough so lock wont be lost.
 				me.factorKeep = me.max_seeker_dev/me.fov_radial;
@@ -4539,7 +4574,7 @@ var AIM = {
 		if (!(me.tagt.get_type() == AIR and me.tagt.get_Speed()<15) and ((me.guidance != "semi-radar" or me.is_painted(me.tagt) == TRUE) and (me.guidance !="laser" or me.is_laser_painted(me.tagt) == TRUE))
 						and (me.guidance != "radiation" or me.is_radiating_aircraft(me.tagt) == TRUE)
 					    and me.rng < me.max_fire_range_nm and me.rng > me.getCurrentMinFireRange(me.tagt) and me.FOV_check(OurHdg.getValue(),OurPitch.getValue(),me.total_horiz, me.total_elev, me.slave_to_radar or contactPoint==me.tagt?(me.guidance == "heat" or me.guidance == "vision"?math.min(me.max_seeker_dev, me.fcs_fov):me.fcs_fov):me.max_seeker_dev, vector.Math)
-					    and (me.rng < me.detect_range_curr_nm or (me.guidance != "radar" and me.guidance != "semi-radar" and me.guidance != "heat" and me.guidance != "vision" and me.guidance != "heat" and me.guidance != "radiation"))
+					    and (me.rng < me.detect_range_curr_nm or (me.guidance != "radar" and me.guidance != "semi-radar" and me.guidance != "sample" and me.guidance != "heat" and me.guidance != "vision" and me.guidance != "radiation"))
 					    and (me.guidance != "heat" or (me.all_aspect == TRUE or me.rear_aspect(geo.aircraft_position(), me.tagt) == TRUE))
 					    and me.checkForView()) {
 			return TRUE;
@@ -4558,7 +4593,7 @@ var AIM = {
 	},
 
 	checkForView: func {
-		if (me.guidance != "gps" and me.guidance != "inertial") {
+		if (me.guidance != "gps" and me.guidance != "inertial" and me.guidance != "sample") {
 			me.launchCoord = geo.aircraft_position();
 			if (!me.radarOrigin) {
 				me.geodPos = aircraftToCart({x:-me.radarX, y:me.radarY, z: -me.radarZ});
@@ -4588,7 +4623,7 @@ var AIM = {
 	},
 
 	checkForViewInFlight: func (tagt) {
-		if (me.guidance != "gps" and me.guidance != "inertial") {
+		if (me.guidance != "gps" and me.guidance != "inertial" and me.guidance != "sample") {
 			me.launchCoord = me.coord;
 			me.potentialCoord = tagt.get_Coord();
 			me.xyz          = {"x":me.launchCoord.x(),                  "y":me.launchCoord.y(),                 "z":me.launchCoord.z()};
@@ -4667,7 +4702,7 @@ var AIM = {
 			me.newlockgained = me.all_aspect == TRUE or me.rear_aspect(me.coord, tagt);
 			if (!me.newlockgained) {me.printStatsDetails("Test: no view of heat source. Rejected.");return 0;}
 		}
-		if (me.guidance != "gps" and me.guidance != "inertial") {
+		if (me.guidance != "gps" and me.guidance != "inertial" and me.guidance != "sample") {
 			me.new_elev_deg       = me.getPitch(me.coord, me.newCoord);
 			me.new_course         = me.coord.course_to(me.newCoord);
 			me.new_deviation_e    = me.new_elev_deg - me.pitch;
@@ -5209,7 +5244,7 @@ var AIM = {
 		me.total_horiz = deviation_normdeg(OurHdg.getValue(), me.Tgt.get_bearing());    # deg.
 		# Check if in range and in the seeker FOV.
 		if (me.FOV_check(OurHdg.getValue(),OurPitch.getValue(),me.total_horiz, me.total_elev, me.slave_to_radar?(me.guidance == "heat" or me.guidance == "vision"?math.min(me.max_seeker_dev, me.fcs_fov):me.fcs_fov):me.max_seeker_dev, vector.Math) and me.Tgt.get_range() < me.max_fire_range_nm and me.Tgt.get_range() > me.getCurrentMinFireRange(me.Tgt)
-			and (me.Tgt.get_range() < me.detect_range_curr_nm or (me.guidance != "radar" and me.guidance != "semi-radar" and me.guidance != "heat" and me.guidance != "vision" and me.guidance != "heat" and me.guidance != "radiation"))) {
+			and (me.Tgt.get_range() < me.detect_range_curr_nm or (me.guidance != "radar" and me.guidance != "semi-radar" and me.guidance != "sample" and me.guidance != "heat" and me.guidance != "vision" and me.guidance != "heat" and me.guidance != "radiation"))) {
 			return TRUE;
 		}
 		# Target out of FOV or range while still not launched, return to search loop.
