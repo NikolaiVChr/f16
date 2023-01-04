@@ -442,6 +442,12 @@ var CDU = {
             powerNcNonEssDc2:     "fdm/jsbsim/elec/bus/nacelle-noness-dc-2",
             powerHydrA:           "fdm/jsbsim/systems/hydraulics/sysa-psi",
             powerHydrB:           "fdm/jsbsim/systems/hydraulics/sysb-psi",
+            servSpeed                 : "instrumentation/airspeed-indicator/serviceable",
+            servStatic                : "systems/static/serviceable",
+            servPitot                 : "systems/pitot/serviceable",
+            servAtt                   : "instrumentation/attitude-indicator/serviceable",
+            servHead                  : "instrumentation/heading-indicator/serviceable",
+            servTurn                  : "instrumentation/turn-indicator/serviceable",
         };
 
         foreach(var name; keys(me.input)) {
@@ -688,14 +694,14 @@ var CDU = {
         me.conc.setStrokeLineWidth(lineWidth.rangeRings/me.concScale);
         me.conc.setVisible(zoom_curr != 5);
         me.conc.setColor(me.day?COLOR_GRAY:COLOR_GRAY_LIGHT);
-        me.conc.setRotation(-me.input.heading.getValue()*D2R);
+        if (me.input.servHead.getValue()) me.conc.setRotation(-me.input.heading.getValue()*D2R);
 
         if(me.hdgUp) {
-            me.hdgUpText.setText("HDG UP");
+            me.hdgUpText.setText(me.input.servHead.getValue()?"HDG UP":"FAIL");
             me.rootCenter.setRotation(0);
         } else {
-            me.hdgUpText.setText("MAP UP");
-            me.rootCenter.setRotation(me.input.heading.getValue()*D2R);
+            me.hdgUpText.setText(me.input.servHead.getValue()?"MAP UP":"FAIL");
+            if (me.input.servHead.getValue()) me.rootCenter.setRotation(me.input.heading.getValue()*D2R);
         }
         me.dayText.setText(me.day?"DAY":"NIGHT");
         me.instrText.setText(me.instrConf[me.instrView].descr);
@@ -1349,12 +1355,13 @@ var CDU = {
             .setTranslation(0,me.ehsiPosY);
     },
 
-    updatePFD: func {
-        me.pfdRoot.setRotation(-me.input.roll.getValue()*D2R);
-        me.pfdGround.setTranslation(0, 0.5*(me.max_y-me.ehsiPosY)*math.clamp(me.input.pitch.getValue()/30, -3, 3));
-        me.pfdLadderGroup.setTranslation(0, 0.5*(me.max_y-me.ehsiPosY)*math.clamp(me.input.pitch.getValue()/30, -3, 3));
-        me.pfdSpeed.setText(sprintf(" %3d KCAS\n  M%.2f", me.input.calibrated.getValue(), me.input.mach.getValue()));
-        me.pfdAlt.setText(sprintf("%5d FT ", me.input.alt_ft.getValue()));
+    updatePFD: func {#TODO: fail stuff
+        me.pitot = me.input.servPitot.getValue() and me.input.servStatic.getValue();
+        me.pfdRoot.setRotation(me.input.servTurn.getValue()?-me.input.roll.getValue()*D2R:70);
+        me.pfdGround.setTranslation(0, 0.5*(me.max_y-me.ehsiPosY)*math.clamp(me.input.servAtt.getValue()?me.input.pitch.getValue()/30:-2.5, -3, 3));
+        me.pfdLadderGroup.setTranslation(0, 0.5*(me.max_y-me.ehsiPosY)*math.clamp(me.input.servAtt.getValue()?me.input.pitch.getValue()/30:1.5, -3, 3));
+        me.pfdSpeed.setText(me.pitot?sprintf(" %3d KCAS\n  M%.2f", me.input.servSpeed.getValue()?me.input.calibrated.getValue():0, me.input.servSpeed.getValue()?me.input.mach.getValue():0):"FAIL");
+        me.pfdAlt.setText(sprintf("%5d FT ", me.input.servStatic.getValue()?me.input.alt_ft.getValue():-8888));
         #if (me.day != lastDay) {
             if (me.day) {
                 me.pfdSky.setColorFill(COLOR_SKY_LIGHT).setColor(COLOR_SKY_LIGHT);
@@ -1911,7 +1918,7 @@ var CDU = {
         providerOptionLast = providerOption;
         }
 
-        if (me.hdgUp) me.mapCenter.setRotation(-me.input.heading.getValue()*D2R);
+        if (me.hdgUp and me.input.servHead.getValue()) me.mapCenter.setRotation(-me.input.heading.getValue()*D2R);
         else me.mapCenter.setRotation(0);
         #switched to direct rotation to try and solve issue with approach line not updating fast.
         me.mapCenter.update();
