@@ -4,9 +4,15 @@
  <sim>
   <model>
    <livery>
-    <name type="string">RDAF Esk 727, "60 years"</name>
+    <name type="string">FWSKP Esk 727, E-194 "60 years RDAF"</name>
     <texture>Liveries/Block20/78-0194.png</texture>
     <owner type="string">RDAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Two-tone gray, Special Color</scheme>
+    <block type="int">20</block>
+    <serial type="string">78-0194</serial>
+    <squad type="string">Esk 727 "Craven"</squad>
+    <year type="string">2010</year>
    </livery>
    <livery-logo>
     <texture>Liveries/yf/yf16-transp.png</texture>
