@@ -4,9 +4,15 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">RNoAF 331 skv, "40 years in service"</name>
+    <name type="string">132LV 331 skv, "40 years in service"</name>
     <texture>Liveries/Block20/80-3664.png</texture>
     <owner type="string">RNoAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Single-tone gray, Special Color</scheme>
+    <block type="int">20</block>
+    <serial type="string">80-3664</serial>
+    <squad type="string">331 skv</squad>
+    <year type="string">2020</year>
    </livery>
 
    <livery-logo>
