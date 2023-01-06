@@ -1370,7 +1370,7 @@ kids 1
 OBJECT poly
 name "mount"
 loc 0.00371622 0.00822183 -0.00321351
-texture "../../Textures/f16trans_misc.png"
+texture "../../Textures/mfd_mount.png"
 crease 45.000000
 numvert 72
 -0.00296108 0.0684902 0.0699512

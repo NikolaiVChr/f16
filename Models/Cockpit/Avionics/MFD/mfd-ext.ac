@@ -14,7 +14,7 @@ name "mount"
 data 10
 mount.mesh
 crease 45.0
-texture "../../Textures/f16trans_misc.png"
+texture "../../Textures/mfd_mount.png"
 texrep 1 1
 numvert 72
 -1.00005 0.34252 1.33149
