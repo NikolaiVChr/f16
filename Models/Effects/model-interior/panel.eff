@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PropertyList>
+    <name>panels-with-ao</name>
+    <inherits-from>Aircraft/f16/Models/Effects/model-interior/model-interior-detailed</inherits-from>
+    <parameters>
+      	<texture n="4">
+      	  <type>cubemap</type>
+      	  <images>
+      		    <positive-x>Aircraft/f16/Models/Effects/interior/0006.png</positive-x>      <!-- px (tail) rotate 90 deg from N or S to W -->
+                <negative-x>Aircraft/f16/Models/Effects/interior/0006.png</negative-x>      <!-- nx (nose) rotate 90 deg from N or S to E -->
+                <positive-y>Aircraft/f16/Models/Effects/interior/0006.png</positive-y>      <!-- py (starboard/right) from N do not rotate -->
+                <negative-y>Aircraft/f16/Models/Effects/interior/0006.png</negative-y>      <!-- ny (port/left) from N rotate 180 deg to S -->
+                <positive-z>Aircraft/f16/Models/Effects/interior/0006.png</positive-z>      <!-- pz (top) rotate 90 deg from N or S to W -->
+                <negative-z>Aircraft/f16/Models/Effects/interior/0006.png</negative-z>      <!-- nz (bottom) rotate 90 deg from N or S to W -->
+            </images>
+      	</texture>
+        <texture n="3"><!-- lightmap -->
+            <type>white</type>
+        </texture>
+      	<opacity-cube-center type="vec3d" n="0"> -5.24268 0.0 1.682</opacity-cube-center>
+      	<opacity-cube-scale type="vec3d" n="0"> 1.5 0.5 0.7</opacity-cube-scale>
+      	<opacity-cube-angle type="float">0.0</opacity-cube-angle>
+        <light-filter-one type="vec3d">0.5 0.5 0.5</light-filter-one>
+        <light-filter-two type="vec3d">0.9 0.2 0.2</light-filter-two>
+        <implicit-lightmap-enabled type="int">1</implicit-lightmap-enabled>
+        <implicit-lightmap-tag-color type="vec3d">0.87 0.9 0.91</implicit-lightmap-tag-color>
+        <implicit-lightmap-emit-color type="vec3d">0.476 0.9 0.161</implicit-lightmap-emit-color>
+        <implicit-lightmap-threshold-low type="float">0.1</implicit-lightmap-threshold-low>
+        <implicit-lightmap-threshold-high type="float">0.7</implicit-lightmap-threshold-high>
+        <implicit-lightmap-intensity>
+            <use>controls/lighting/lighting-panel/console-primary</use>
+        </implicit-lightmap-intensity>
+        <!--<residual-ambience-r><use>rendering/scene/diffuse/red</use></residual-ambience-r>
+            <residual-ambience-g><use>rendering/scene/diffuse/red</use></residual-ambience-g>
+            <residual-ambience-b><use>rendering/scene/diffuse/red</use></residual-ambience-b>-->
+        <light-radius type="float">9.6</light-radius>
+        <lightmap-enabled type="int">1</lightmap-enabled>
+        <lightmap-multi type="int">0</lightmap-multi>
+        <lightmap-factor n="0"><use>controls/lighting/lighting-panel/flood-inst-pnl</use></lightmap-factor>
+        <lightmap-color type="vec3d" n="0"> 0.45 0.34 0.18 </lightmap-color>
+    </parameters>
+</PropertyList>
