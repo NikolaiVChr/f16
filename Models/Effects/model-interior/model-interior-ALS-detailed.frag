@@ -109,8 +109,12 @@ void main()
 // this is taken from default.frag
     vec3 n;
     float NdotL, NdotHV, fogFactor;
-    vec4 occlusion  = texture2D(ao, gl_TexCoord[0].st)*ambient_factor+(1.0-ambient_factor);
-    vec4 color = gl_Color*occlusion;
+    
+    vec4 color = gl_Color;
+    if (ambient_factor > 0) {
+        vec4 occlusion  = texture2D(ao, gl_TexCoord[0].st)*ambient_factor+(1.0-ambient_factor);
+        color *= occlusion;
+    }
     vec3 lightDir = gl_LightSource[0].position.xyz;
     vec3 halfVector = gl_LightSource[0].halfVector.xyz;
     vec4 texel;

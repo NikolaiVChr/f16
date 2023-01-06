@@ -101,8 +101,12 @@ void main()
     vec4 fragColor;
     vec4 specular = vec4(0.0);
     float intensity;
-    vec4 occlusion  = texture2D(ao, gl_TexCoord[0].st)*ambient_factor+(1.0-ambient_factor);
-    vec4 color = gl_Color*occlusion;
+    vec4 color = gl_Color;
+    
+    if (ambient_factor > 0) {
+        vec4 occlusion  = texture2D(ao, gl_TexCoord[0].st)*ambient_factor+(1.0-ambient_factor);
+        color *= occlusion;
+    }
 
     float effective_scattering = min(scattering, cloud_self_shading);
 
