@@ -11,6 +11,9 @@ varying vec3 relPos;
 uniform sampler2D texture;
 uniform samplerCube cube_texture;
 
+uniform sampler2D ao;
+uniform float ambient_factor;
+
 varying float yprime_alt;
 varying float mie_angle;
 
@@ -91,13 +94,15 @@ void main()
 // this is taken from default.frag
     vec3 n;
     float NdotL, NdotHV, fogFactor;
-    vec4 color = gl_Color;
+    
     vec3 lightDir = gl_LightSource[0].position.xyz;
     vec3 halfVector = gl_LightSource[0].halfVector.xyz;
     vec4 texel;
     vec4 fragColor;
     vec4 specular = vec4(0.0);
     float intensity;
+    vec4 occlusion  = texture2D(ao, gl_TexCoord[0].st)*ambient_factor+(1.0-ambient_factor);
+    vec4 color = gl_Color*occlusion;
 
     float effective_scattering = min(scattering, cloud_self_shading);
 

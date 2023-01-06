@@ -14,6 +14,8 @@ uniform sampler2D lightmap_texture;
 uniform sampler2D grain_texture;
 uniform samplerCube cube_texture;
 
+uniform sampler2D ao;
+uniform float ambient_factor;
 
 varying float yprime_alt;
 varying float mie_angle;
@@ -107,7 +109,8 @@ void main()
 // this is taken from default.frag
     vec3 n;
     float NdotL, NdotHV, fogFactor;
-    vec4 color = gl_Color;
+    vec4 occlusion  = texture2D(ao, gl_TexCoord[0].st)*ambient_factor+(1.0-ambient_factor);
+    vec4 color = gl_Color*occlusion;
     vec3 lightDir = gl_LightSource[0].position.xyz;
     vec3 halfVector = gl_LightSource[0].halfVector.xyz;
     vec4 texel;

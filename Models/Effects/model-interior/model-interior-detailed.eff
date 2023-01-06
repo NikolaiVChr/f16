@@ -62,6 +62,7 @@
       <use>/sim/rendering/shadows/sun-atlas-size</use>
     </sun_atlas_size>
     <!-- END shadows include -->
+    <ambient-factor type="float">0.0</ambient-factor>
   </parameters>
 
 
@@ -1261,12 +1262,30 @@
           <use>texture[7]/wrap-t</use>
         </wrap-t>
       </texture-unit>
+      <texture-unit>
+        <unit>8</unit>
+        <type>
+          <use>texture[8]/type</use>
+        </type>
+        <image>
+          <use>texture[8]/image</use>
+        </image>
+        <filter>
+          <use>texture[8]/filter</use>
+        </filter>
+        <wrap-s>
+          <use>texture[8]/wrap-s</use>
+        </wrap-s>
+        <wrap-t>
+          <use>texture[8]/wrap-t</use>
+        </wrap-t>
+      </texture-unit>
       <vertex-program-two-side>
         <use>vertex-program-two-side</use>
       </vertex-program-two-side>
       <program>
         <vertex-shader>Shaders/model-interior-ALS-detailed.vert</vertex-shader>
-        <fragment-shader>Shaders/model-interior-ALS-detailed.frag</fragment-shader>
+        <fragment-shader>Aircraft/f16/Models/Effects/model-interior/model-interior-ALS-detailed.frag</fragment-shader>
         <fragment-shader>Shaders/secondary_lights.frag</fragment-shader>
         <fragment-shader>Shaders/noise.frag</fragment-shader>
         <fragment-shader>Shaders/filters-ALS.frag</fragment-shader>
@@ -1643,6 +1662,18 @@
         <value type="int">7</value>
       </uniform>
       <uniform>
+        <name>ao</name>
+        <type>sampler-2d</type>
+        <value type="int">8</value>
+      </uniform>
+      <uniform>
+        <name>ambient_factor</name>
+        <type>float</type>
+        <value>
+          <use>ambient-factor</use>
+        </value>
+      </uniform>
+      <uniform>
         <name>colorMode</name>
         <type>int</type>
         <value>
@@ -1810,12 +1841,30 @@
           <use>texture[4]/images</use>
         </images>
       </texture-unit>
+      <texture-unit>
+        <unit>8</unit>
+        <type>
+          <use>texture[8]/type</use>
+        </type>
+        <image>
+          <use>texture[8]/image</use>
+        </image>
+        <filter>
+          <use>texture[8]/filter</use>
+        </filter>
+        <wrap-s>
+          <use>texture[8]/wrap-s</use>
+        </wrap-s>
+        <wrap-t>
+          <use>texture[8]/wrap-t</use>
+        </wrap-t>
+      </texture-unit>
       <vertex-program-two-side>
         <use>vertex-program-two-side</use>
       </vertex-program-two-side>
       <program>
         <vertex-shader>Shaders/generic-ALS-base.vert</vertex-shader>
-        <fragment-shader>Shaders/model-interior-ALS-base.frag</fragment-shader>
+        <fragment-shader>Aircraft/f16/Models/Effects/model-interior/model-interior-ALS-base.frag</fragment-shader>
         <fragment-shader>Shaders/hazes.frag</fragment-shader>
         <fragment-shader>Shaders/secondary_lights.frag</fragment-shader>
         <fragment-shader>Shaders/noise.frag</fragment-shader>
@@ -2083,6 +2132,18 @@
         <name>cube_texture</name>
         <type>sampler-cube</type>
         <value type="int">4</value>
+      </uniform>
+      <uniform>
+        <name>ao</name>
+        <type>sampler-2d</type>
+        <value type="int">8</value>
+      </uniform>
+      <uniform>
+        <name>ambient_factor</name>
+        <type>float</type>
+        <value>
+          <use>ambient-factor</use>
+        </value>
       </uniform>
       <uniform>
         <name>colorMode</name>
