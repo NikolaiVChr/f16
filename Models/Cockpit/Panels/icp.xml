@@ -1454,4 +1454,15 @@
         </emission>
     </animation>
 
+    <animation>
+        <type>material</type>
+        <object-name>brt</object-name>
+        <object-name>depr_ret</object-name>
+        <object-name>sym</object-name>
+        <object-name>cont</object-name>
+        <property-base>f16/texture</property-base>
+        <texture-prop>icp_wheels</texture-prop>
+        <texture>icp_wheels.png</texture>
+    </animation>
+
 </PropertyList>

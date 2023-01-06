@@ -1877,6 +1877,10 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
         setprop("/f16/cockpit/oxygen-liters", 5.0);
         setprop("f16/cockpit/hydrazine-minutes", 10);
 
+        if (getprop("sim/variant-id") == 0 or getprop("sim/variant-id") == 1 or getprop("sim/variant-id") == 3) {
+            setprop("f16/texture/icp_wheels", "icp_wheels_white.png");
+        }
+
         #-- load HMD as reloadable module
         var hmd = modules.Module.new("f16_HMD"); # Module name
         hmd.setDebug(0); # 0=(mostly) silent; 1=print setlistener and maketimer calls to console; 2=print also each listener hit, be very careful with this!
