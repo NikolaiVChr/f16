@@ -219,7 +219,7 @@
  </animation>
  
  <effect>
-        <inherits-from>Aircraft/f16/Models/Effects/model-interior/f16panel-left</inherits-from>
+        <inherits-from>Aircraft/f16/Models/Effects/model-interior/panel-standard</inherits-from>
         <parameters>
             <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
         </parameters>

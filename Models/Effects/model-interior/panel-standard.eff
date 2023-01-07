@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PropertyList>
-    <name>Effects/f16panel-left</name>
+    <name>Effects/panel-standard</name>
     <inherits-from>Aircraft/f16/Models/Effects/model-interior/model-interior-detailed</inherits-from>
     <parameters>
       	<!--texture n="4">

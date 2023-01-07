@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PropertyList>
-    <name>Effects/f16panel-left</name>
+    <name>Effects/panel-standard</name>
     <inherits-from>Aircraft/f16/Models/Effects/model-interior/panel</inherits-from>
     <parameters>
         <light-filter-one type="vec3d">0.5 0.5 0.5</light-filter-one>
