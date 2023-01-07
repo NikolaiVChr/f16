@@ -4,9 +4,15 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">TNI-AU 3 Sqn, TS-1608</name>
+    <name type="string">3W 3 SkU, TS-1608</name>
     <texture>Liveries/Block20/87-0716.png</texture>
     <owner type="string">TNI-AU</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Three-tone camo</scheme>
+    <block type="int">20</block>
+    <serial type="string">87-0716</serial>
+    <squad type="string">3 SkU</squad>
+    <year type="string"></year>
    </livery>
    <livery-logo>
     <texture>Liveries/yf/yf16-transp.png</texture>

@@ -4,9 +4,15 @@
  <sim>
   <model>
    <livery> 
-    <name type="string">USN NAWDC, #52</name>
+    <name type="string">NAWDC, #52</name>
     <texture>Liveries/Block20/92-0408.png</texture>
     <owner type="string">USN</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Three-tone camo</scheme>
+    <block type="int">20</block>
+    <serial type="string">92-0408</serial>
+    <squad type="string">NAWDC "Strike"</squad>
+    <year type="string">2016</year>
    </livery>
 
    <livery-logo>
