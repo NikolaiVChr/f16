@@ -151,7 +151,8 @@ void main()
     vec3 lookup_pos = scaled_pos - light_vec * dot(light_vec, scaled_pos);
 
     vec3 lookup_vec = normalize(normalize(light_vec) + lookup_pos);
-    vec4 opacity = textureCube(cube_texture, lookup_vec);
+    //vec4 opacity = textureCube(cube_texture, lookup_vec);
+    vec4 opacity = vec4(1.0,1.0,1.0,0.0);
    
 
     vec4 diffuse = diffuse_term;
