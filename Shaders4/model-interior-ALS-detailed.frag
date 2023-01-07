@@ -138,26 +138,26 @@ void main()
     n = normalize(n);
 
     // lookup on the opacity map
-    vec3 light_vec = normalize((gl_ModelViewMatrixInverse * gl_LightSource[0].position).xyz);
+    //vec3 light_vec = normalize((gl_ModelViewMatrixInverse * gl_LightSource[0].position).xyz);
     //vec3 light_vec = vec3 (-1.0,0.0,0.0);
 
     vec4 ep = gl_ModelViewMatrixInverse * vec4(0.0,0.0,0.0,1.0);
-    vec3 scaled_pos = relPos + ep.xyz;
+    //vec3 scaled_pos = relPos + ep.xyz;
 
     //vec3 lookup_vec = normalize(- normalize(light_vec) + relPos);
-    scaled_pos -= offset_vec; 
-    float rangle = radians(angle);
-    mat2 rotMat = mat2 (cos(rangle), -sin(rangle), sin(rangle), cos(rangle));   
-    scaled_pos.xy *=rotMat;
+    //scaled_pos -= offset_vec; 
+    //float rangle = radians(angle);
+    //mat2 rotMat = mat2 (cos(rangle), -sin(rangle), sin(rangle), cos(rangle));   
+    //scaled_pos.xy *=rotMat;
 
-    scaled_pos /= scale_vec;
+    //scaled_pos /= scale_vec;
     
     //vec3 lookup_pos = dot(base1,scaled_pos) * base1 + dot(base2,scaled_pos) * base2;
-    vec3 lookup_pos = scaled_pos - light_vec * dot(light_vec, scaled_pos);
+    //vec3 lookup_pos = scaled_pos - light_vec * dot(light_vec, scaled_pos);
 
-    vec3 lookup_vec = normalize(normalize(light_vec) + lookup_pos);
-    vec4 opacity = textureCube(cube_texture, lookup_vec);
-   
+    //vec3 lookup_vec = normalize(normalize(light_vec) + lookup_pos);
+    //vec4 opacity = textureCube(cube_texture, lookup_vec);
+    vec4 opacity = vec4(1.0,1.0,1.0,1.0);
 
     vec4 diffuse = diffuse_term;
     NdotL = dot(n, lightDir);
