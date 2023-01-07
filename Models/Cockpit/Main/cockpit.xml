@@ -52,9 +52,11 @@
  </animation>
  
  <effect>
+        <!--inherits-from>Aircraft/f16/Models/Effects/model-interior/f16panel-left</inherits-from-->
         <inherits-from>Effects/model-combined-deferred</inherits-from>
         <parameters>
           <ambient-correction type="float">0.00</ambient-correction>
+          <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
         </parameters>        
         <object-name>box_left</object-name>
         <object-name>box_right</object-name>

@@ -5,7 +5,7 @@
  <path>instr.ac</path>
 
  <effect>
-        <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
+        <inherits-from>Aircraft/f16/Models/Effects/model-interior/f16panel-left</inherits-from>
         <parameters>
             <implicit-lightmap-threshold-low type="float">0</implicit-lightmap-threshold-low>
         <implicit-lightmap-threshold-high type="float">0.39</implicit-lightmap-threshold-high>

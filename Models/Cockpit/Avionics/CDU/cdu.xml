@@ -470,7 +470,7 @@
             </hovered-->
     </animation>
     <effect>
-        <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
+        <inherits-from>Aircraft/f16/Models/Effects/model-interior/f16panel-left</inherits-from>
         <parameters>
             <implicit-lightmap-enabled type="int">1</implicit-lightmap-enabled>
         </parameters>
@@ -482,7 +482,7 @@
         <object-name>button</object-name>
     </effect>
     <effect>
-        <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
+        <inherits-from>Aircraft/f16/Models/Effects/model-interior/f16panel-left</inherits-from>
         <parameters>
             <implicit-lightmap-enabled type="int">1</implicit-lightmap-enabled>
         </parameters>

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PropertyList>
     <name>Effects/f16panel-left</name>
-    <inherits-from>Aircraft/f16/Models/Effects/model-interior-detailed</inherits-from>
+    <inherits-from>Aircraft/f16/Models/Effects/model-interior/model-interior-detailed</inherits-from>
     <parameters>
-      	<texture n="4">
+      	<!--texture n="4">
       	  <type>cubemap</type>
       	  <images>
-      		    <positive-x>Aircraft/f16/Models/Effects/interior/0006.png</positive-x>      <!-- px (tail) rotate 90 deg from N or S to W -->
-                <negative-x>Aircraft/f16/Models/Effects/interior/0006.png</negative-x>      <!-- nx (nose) rotate 90 deg from N or S to E -->
-                <positive-y>Aircraft/f16/Models/Effects/interior/0006.png</positive-y>      <!-- py (starboard/right) from N do not rotate -->
-                <negative-y>Aircraft/f16/Models/Effects/interior/0006.png</negative-y>      <!-- ny (port/left) from N rotate 180 deg to S -->
-                <positive-z>Aircraft/f16/Models/Effects/interior/0006.png</positive-z>      <!-- pz (top) rotate 90 deg from N or S to W -->
-                <negative-z>Aircraft/f16/Models/Effects/interior/0006.png</negative-z>      <!-- nz (bottom) rotate 90 deg from N or S to W -->
+      		    <positive-x>Aircraft/f16/Models/Effects/interior/0006.png</positive-x>      
+                <negative-x>Aircraft/f16/Models/Effects/interior/0006.png</negative-x>     
+                <positive-y>Aircraft/f16/Models/Effects/interior/0006.png</positive-y>     
+                <negative-y>Aircraft/f16/Models/Effects/interior/0006.png</negative-y>      
+                <positive-z>Aircraft/f16/Models/Effects/interior/0006.png</positive-z>      
+                <negative-z>Aircraft/f16/Models/Effects/interior/0006.png</negative-z>      
             </images>
-      	</texture>
+      	</texture-->
         <texture n="3"><!-- lightmap -->
             <type>white</type>
         </texture>
