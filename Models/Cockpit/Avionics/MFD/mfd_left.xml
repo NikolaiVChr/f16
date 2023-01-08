@@ -32,6 +32,11 @@
       <object-name>MFDButtonSym</object-name>
       <object-name>MFDButtonGain</object-name>
       <type>material</type>
+      <condition>
+            <not>
+                <property>/sim/rendering/shaders/skydome</property>
+            </not>
+      </condition>
       <emission>
        <factor-prop>controls/lighting/lighting-panel/console-primary</factor-prop>
        <red>0.476</red>
@@ -181,30 +186,7 @@
         </condition>
     </animation>-->
 
-    <animation>
-        <type>translate</type>
-        <object-name>MFDButtonL1</object-name>
-        <condition>
-            <or>
-                <equals>
-                    <property>controls/MFD[0]/button-pressed</property>
-                    <value>1</value>
-                </equals>
-                <equals>
-                    <property>controls/MFD[0]/button-pressed</property>
-                    <value>0</value>
-                </equals>
-            </or>
-        </condition>
-        <property>controls/MFD[0]/button-pressed</property>
-        <factor>-0.002</factor>
-        <axis>
-            <x>1</x>
-            <y>0</y>
-            <z>0</z>
-        </axis>
-
-    </animation>
+    
     <animation>
         <type>knob</type>
         <object-name>MFDButtonL1</object-name>
@@ -458,30 +440,7 @@
         </release>
     </animation>
 
-    <animation>
-        <type>translate</type>
-        <object-name>MFDButtonL2</object-name>
-        <condition>
-            <or>
-                <equals>
-                    <property>controls/MFD[0]/button-pressed</property>
-                    <value>2</value>
-                </equals>
-                <equals>
-                    <property>controls/MFD[0]/button-pressed</property>
-                    <value>0</value>
-                </equals>
-            </or>
-        </condition>
-        <property>controls/MFD[0]/button-pressed</property>
-        <factor>-0.002</factor>
-        <axis>
-            <x>1</x>
-            <y>0</y>
-            <z>0</z>
-        </axis>
-
-    </animation>
+    
 
     <animation>
         <type>knob</type>
@@ -505,30 +464,7 @@
         </release>
     </animation>
 
-    <animation>
-        <type>translate</type>
-        <object-name>MFDButtonL3</object-name>
-        <condition>
-            <or>
-                <equals>
-                    <property>controls/MFD[0]/button-pressed</property>
-                    <value>3</value>
-                </equals>
-                <equals>
-                    <property>controls/MFD[0]/button-pressed</property>
-                    <value>0</value>
-                </equals>
-            </or>
-        </condition>
-        <property>controls/MFD[0]/button-pressed</property>
-        <factor>-0.002</factor>
-        <axis>
-            <x>1</x>
-            <y>0</y>
-            <z>0</z>
-        </axis>
 
-    </animation>
     <animation>
         <type>knob</type>
         <object-name>MFDButtonL3</object-name>
@@ -551,30 +487,7 @@
             </binding>
         </release>
     </animation>
-    <animation>
-        <type>translate</type>
-        <object-name>MFDButtonL4</object-name>
-        <condition>
-            <or>
-                <equals>
-                    <property>controls/MFD[0]/button-pressed</property>
-                    <value>4</value>
-                </equals>
-                <equals>
-                    <property>controls/MFD[0]/button-pressed</property>
-                    <value>0</value>
-                </equals>
-            </or>
-        </condition>
-        <property>controls/MFD[0]/button-pressed</property>
-        <factor>-0.002</factor>
-        <axis>
-            <x>1</x>
-            <y>0</y>
-            <z>0</z>
-        </axis>
 
-    </animation>
     <animation>
         <type>knob</type>
         <object-name>MFDButtonL4</object-name>
@@ -597,30 +510,7 @@
             </binding>
         </release>
     </animation>
-    <animation>
-        <type>translate</type>
-        <object-name>MFDButtonL5</object-name>
-        <condition>
-            <or>
-                <equals>
-                    <property>controls/MFD[0]/button-pressed</property>
-                    <value>5</value>
-                </equals>
-                <equals>
-                    <property>controls/MFD[0]/button-pressed</property>
-                    <value>0</value>
-                </equals>
-            </or>
-        </condition>
-        <property>controls/MFD[0]/button-pressed</property>
-        <factor>-0.002</factor>
-        <axis>
-            <x>1</x>
-            <y>0</y>
-            <z>0</z>
-        </axis>
 
-    </animation>
     <animation>
         <type>knob</type>
         <object-name>MFDButtonL5</object-name>
@@ -644,30 +534,7 @@
         </release>
     </animation>
     <!-- right buttons -->
-    <animation>
-        <type>translate</type>
-        <object-name>MFDButtonR1</object-name>
-        <condition>
-            <or>
-                <equals>
-                    <property>controls/MFD[0]/button-pressed</property>
-                    <value>6</value>
-                </equals>
-                <equals>
-                    <property>controls/MFD[0]/button-pressed</property>
-                    <value>0</value>
-                </equals>
-            </or>
-        </condition>
-        <property>controls/MFD[0]/button-pressed</property>
-        <factor>-0.002</factor>
-        <axis>
-            <x>1</x>
-            <y>0</y>
-            <z>0</z>
-        </axis>
-
-    </animation>
+    
     <animation>
         <type>knob</type>
         <object-name>MFDButtonR1</object-name>
@@ -691,30 +558,7 @@
         </release>
     </animation>
 
-    <animation>
-        <type>translate</type>
-        <object-name>MFDButtonR2</object-name>
-        <condition>
-            <or>
-                <equals>
-                    <property>controls/MFD[0]/button-pressed</property>
-                    <value>7</value>
-                </equals>
-                <equals>
-                    <property>controls/MFD[0]/button-pressed</property>
-                    <value>0</value>
-                </equals>
-            </or>
-        </condition>
-        <property>controls/MFD[0]/button-pressed</property>
-        <factor>-0.002</factor>
-        <axis>
-            <x>1</x>
-            <y>0</y>
-            <z>0</z>
-        </axis>
-
-    </animation>
+    
 
     <animation>
         <type>knob</type>
@@ -739,30 +583,6 @@
     </animation>
 
     <animation>
-        <type>translate</type>
-        <object-name>MFDButtonR3</object-name>
-        <condition>
-            <or>
-                <equals>
-                    <property>controls/MFD[0]/button-pressed</property>
-                    <value>8</value>
-                </equals>
-                <equals>
-                    <property>controls/MFD[0]/button-pressed</property>
-                    <value>0</value>
-                </equals>
-            </or>
-        </condition>
-        <property>controls/MFD[0]/button-pressed</property>
-        <factor>-0.002</factor>
-        <axis>
-            <x>1</x>
-            <y>0</y>
-            <z>0</z>
-        </axis>
-
-    </animation>
-    <animation>
         <type>knob</type>
         <object-name>MFDButtonR3</object-name>
 
@@ -784,30 +604,7 @@
             </binding>
         </release>
     </animation>
-    <animation>
-        <type>translate</type>
-        <object-name>MFDButtonR4</object-name>
-        <condition>
-            <or>
-                <equals>
-                    <property>controls/MFD[0]/button-pressed</property>
-                    <value>9</value>
-                </equals>
-                <equals>
-                    <property>controls/MFD[0]/button-pressed</property>
-                    <value>0</value>
-                </equals>
-            </or>
-        </condition>
-        <property>controls/MFD[0]/button-pressed</property>
-        <factor>-0.002</factor>
-        <axis>
-            <x>1</x>
-            <y>0</y>
-            <z>0</z>
-        </axis>
-
-    </animation>
+    
     <animation>
         <type>knob</type>
         <object-name>MFDButtonR4</object-name>
@@ -830,30 +627,7 @@
             </binding>
         </release>
     </animation>
-    <animation>
-        <type>translate</type>
-        <object-name>MFDButtonR5</object-name>
-        <condition>
-            <or>
-                <equals>
-                    <property>controls/MFD[0]/button-pressed</property>
-                    <value>10</value>
-                </equals>
-                <equals>
-                    <property>controls/MFD[0]/button-pressed</property>
-                    <value>0</value>
-                </equals>
-            </or>
-        </condition>
-        <property>controls/MFD[0]/button-pressed</property>
-        <factor>-0.002</factor>
-        <axis>
-            <x>1</x>
-            <y>0</y>
-            <z>0</z>
-        </axis>
 
-    </animation>
     <animation>
         <type>knob</type>
         <object-name>MFDButtonR5</object-name>
@@ -875,6 +649,240 @@
                 <max>0</max>
             </binding>
         </release>
+    </animation>
+
+
+
+    
+    <animation>
+        <type>translate</type>
+        <object-name>MFDButtonL1</object-name>
+        <condition>
+            <or>
+                <equals>
+                    <property>controls/MFD[0]/button-pressed</property>
+                    <value>1</value>
+                </equals>
+                <equals>
+                    <property>controls/MFD[0]/button-pressed</property>
+                    <value>0</value>
+                </equals>
+            </or>
+        </condition>
+        <property>controls/MFD[0]/button-pressed</property>
+        <factor>-0.002</factor>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>MFDButtonL2</object-name>
+        <condition>
+            <or>
+                <equals>
+                    <property>controls/MFD[0]/button-pressed</property>
+                    <value>2</value>
+                </equals>
+                <equals>
+                    <property>controls/MFD[0]/button-pressed</property>
+                    <value>0</value>
+                </equals>
+            </or>
+        </condition>
+        <property>controls/MFD[0]/button-pressed</property>
+        <factor>-0.001</factor>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>MFDButtonL3</object-name>
+        <condition>
+            <or>
+                <equals>
+                    <property>controls/MFD[0]/button-pressed</property>
+                    <value>3</value>
+                </equals>
+                <equals>
+                    <property>controls/MFD[0]/button-pressed</property>
+                    <value>0</value>
+                </equals>
+            </or>
+        </condition>
+        <property>controls/MFD[0]/button-pressed</property>
+        <factor>-0.000666</factor>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>MFDButtonL4</object-name>
+        <condition>
+            <or>
+                <equals>
+                    <property>controls/MFD[0]/button-pressed</property>
+                    <value>4</value>
+                </equals>
+                <equals>
+                    <property>controls/MFD[0]/button-pressed</property>
+                    <value>0</value>
+                </equals>
+            </or>
+        </condition>
+        <property>controls/MFD[0]/button-pressed</property>
+        <factor>-0.0005</factor>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>MFDButtonL5</object-name>
+        <condition>
+            <or>
+                <equals>
+                    <property>controls/MFD[0]/button-pressed</property>
+                    <value>5</value>
+                </equals>
+                <equals>
+                    <property>controls/MFD[0]/button-pressed</property>
+                    <value>0</value>
+                </equals>
+            </or>
+        </condition>
+        <property>controls/MFD[0]/button-pressed</property>
+        <factor>-0.0004</factor>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>MFDButtonR1</object-name>
+        <condition>
+            <or>
+                <equals>
+                    <property>controls/MFD[0]/button-pressed</property>
+                    <value>6</value>
+                </equals>
+                <equals>
+                    <property>controls/MFD[0]/button-pressed</property>
+                    <value>0</value>
+                </equals>
+            </or>
+        </condition>
+        <property>controls/MFD[0]/button-pressed</property>
+        <factor>-0.000333</factor>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>MFDButtonR2</object-name>
+        <condition>
+            <or>
+                <equals>
+                    <property>controls/MFD[0]/button-pressed</property>
+                    <value>7</value>
+                </equals>
+                <equals>
+                    <property>controls/MFD[0]/button-pressed</property>
+                    <value>0</value>
+                </equals>
+            </or>
+        </condition>
+        <property>controls/MFD[0]/button-pressed</property>
+        <factor>-0.000286</factor>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>MFDButtonR3</object-name>
+        <condition>
+            <or>
+                <equals>
+                    <property>controls/MFD[0]/button-pressed</property>
+                    <value>8</value>
+                </equals>
+                <equals>
+                    <property>controls/MFD[0]/button-pressed</property>
+                    <value>0</value>
+                </equals>
+            </or>
+        </condition>
+        <property>controls/MFD[0]/button-pressed</property>
+        <factor>-0.00025</factor>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>MFDButtonR4</object-name>
+        <condition>
+            <or>
+                <equals>
+                    <property>controls/MFD[0]/button-pressed</property>
+                    <value>9</value>
+                </equals>
+                <equals>
+                    <property>controls/MFD[0]/button-pressed</property>
+                    <value>0</value>
+                </equals>
+            </or>
+        </condition>
+        <property>controls/MFD[0]/button-pressed</property>
+        <factor>-0.00022222</factor>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>MFDButtonR5</object-name>
+        <condition>
+            <or>
+                <equals>
+                    <property>controls/MFD[0]/button-pressed</property>
+                    <value>10</value>
+                </equals>
+                <equals>
+                    <property>controls/MFD[0]/button-pressed</property>
+                    <value>0</value>
+                </equals>
+            </or>
+        </condition>
+        <property>controls/MFD[0]/button-pressed</property>
+        <factor>-0.0002</factor>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
     </animation>
     <!-- Lighting -->
     <!--<animation>
@@ -905,6 +913,38 @@
             <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
         </parameters>
         <object-name>mount</object-name>
+    </effect>
+    <effect>
+        <inherits-from>Aircraft/f16/Models/Effects/model-interior/f16panel-icp</inherits-from>
+        <parameters>
+            <implicit-lightmap-enabled type="int">1</implicit-lightmap-enabled>
+            <implicit-lightmap-threshold-low type="float">0.05</implicit-lightmap-threshold-low>
+            <implicit-lightmap-threshold-high type="float">1</implicit-lightmap-threshold-high>
+        </parameters>
+        <object-name>MFDButtonL1</object-name>
+          <object-name>MFDButtonL2</object-name>
+          <object-name>MFDButtonL3</object-name>
+          <object-name>MFDButtonL4</object-name>
+          <object-name>MFDButtonL5</object-name>
+          <object-name>MFDButtonR1</object-name>
+          <object-name>MFDButtonR2</object-name>
+          <object-name>MFDButtonR3</object-name>
+          <object-name>MFDButtonR4</object-name>
+          <object-name>MFDButtonR5</object-name>
+          <object-name>MFDButtonT1</object-name>
+          <object-name>MFDButtonT2</object-name>
+          <object-name>MFDButtonT3</object-name>
+          <object-name>MFDButtonT4</object-name>
+          <object-name>MFDButtonT5</object-name>
+          <object-name>MFDButtonB1</object-name>
+          <object-name>MFDButtonB2</object-name>
+          <object-name>MFDButtonB3</object-name>
+          <object-name>MFDButtonB4</object-name>
+          <object-name>MFDButtonB5</object-name>
+          <object-name>MFDButtonBrightness</object-name>
+          <object-name>MFDButtonCon</object-name>
+          <object-name>MFDButtonSym</object-name>
+          <object-name>MFDButtonGain</object-name>
     </effect>
     <animation>
         <object-name>MFDimage1</object-name>
