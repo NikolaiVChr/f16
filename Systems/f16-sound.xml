@@ -3593,7 +3593,10 @@
             <condition>
                 <not><property>f16/avionics/voice-msg-inhibit</property></not>
                 <!--not><property>gear/gear[2]/wow</property></not-->
-                <property>payload/armament/MAW-active</property>
+                <or>
+                    <property>payload/armament/MAW-active</property>
+                    <property>payload/armament/MAW-semiactive</property>
+                </or>
                 <greater-than>
                   <property>fdm/jsbsim/elec/bus/batt-1</property>
                   <value>20</value>
