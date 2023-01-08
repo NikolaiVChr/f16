@@ -205,6 +205,10 @@
             <property>/gear/gear[0]/position-norm</property>
             <value>1.0</value>
            </equals>
+           <equals>
+            <property>sim/failure-manager/controls/gear0/failure-level</property>
+            <value>0.0</value>
+           </equals>
 			<and>
 				  <greater-than>
 		  <property>fdm/jsbsim/elec/bus/batt-1</property>
@@ -237,6 +241,10 @@
             <property>/gear/gear[1]/position-norm</property>
             <value>1.0</value>
            </equals>
+           <equals>
+            <property>sim/failure-manager/controls/gear1/failure-level</property>
+            <value>0.0</value>
+           </equals>
 			<and>
 				  <greater-than>
 		  <property>fdm/jsbsim/elec/bus/batt-1</property>
@@ -268,6 +276,10 @@
            <equals>
             <property>/gear/gear[2]/position-norm</property>
             <value>1.0</value>
+           </equals>
+           <equals>
+            <property>sim/failure-manager/controls/gear2/failure-level</property>
+            <value>0.0</value>
            </equals>
 			<and>
 				  <greater-than>
