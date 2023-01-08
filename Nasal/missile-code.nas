@@ -2622,7 +2622,7 @@ var AIM = {
             me.last_noti = me.life_time;
         	thread.lock(mutexTimer);
         	var rdr = me.guidance=="radar";
-        	var semiRdr = me.guidance=="semi-radar" and !me.semiLostLock;# Continous wave illuminator active on the target
+        	var semiRdr = (me.guidance=="semi-radar" and !me.semiLostLock) or (me.guidance=="command" and me.guiding);# Continous wave illuminator active on the target
 			append(AIM.timerQueue, [AIM, AIM.notifyInFlight, [me.latN.getValue(), me.lonN.getValue(), me.altN.getValue()*FT2M,rdr,semiRdr,me.typeID,me.type,me.unique_id,me.thrust_lbf>0,(me.free or me.lostLOS or me.tooLowSpeed or me.flareLock or me.chaffLock)?"":me.callsign, me.hdg, me.pitch, me.new_speed_fps, 0], -1]);
 			thread.unlock(mutexTimer);
         }
