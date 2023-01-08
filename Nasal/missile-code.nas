@@ -947,7 +947,7 @@ var AIM = {
 			if(getprop("payload/armament/msg")) {
 				thread.lock(mutexTimer);
 				#lat,lon,alt,rdar,typeID,typ,unique,thrustOn,callsign, heading, pitch, speed, is_deleted=0
-				append(AIM.timerQueue, [AIM, AIM.notifyInFlight, [nil, -1, -1, 0, me.typeID, "delete()", me.unique_id, 0,"", 0, 0, 0, 1], -1]);
+				append(AIM.timerQueue, [AIM, AIM.notifyInFlight, [nil, -1, -1, 0, 0, me.typeID, "delete()", me.unique_id, 0,"", 0, 0, 0, 1], -1]);
 				thread.unlock(mutexTimer);
 			}
 		} else {
@@ -2622,7 +2622,8 @@ var AIM = {
             me.last_noti = me.life_time;
         	thread.lock(mutexTimer);
         	var rdr = me.guidance=="radar";
-			append(AIM.timerQueue, [AIM, AIM.notifyInFlight, [me.latN.getValue(), me.lonN.getValue(), me.altN.getValue()*FT2M,rdr,me.typeID,me.type,me.unique_id,me.thrust_lbf>0,(me.free or me.lostLOS or me.tooLowSpeed or me.flareLock or me.chaffLock)?"":me.callsign, me.hdg, me.pitch, me.new_speed_fps, 0], -1]);
+        	var semiRdr = me.guidance=="semi-radar" and !me.semiLostLock;# Continous wave illuminator active on the target
+			append(AIM.timerQueue, [AIM, AIM.notifyInFlight, [me.latN.getValue(), me.lonN.getValue(), me.altN.getValue()*FT2M,rdr,semiRdr,me.typeID,me.type,me.unique_id,me.thrust_lbf>0,(me.free or me.lostLOS or me.tooLowSpeed or me.flareLock or me.chaffLock)?"":me.callsign, me.hdg, me.pitch, me.new_speed_fps, 0], -1]);
 			thread.unlock(mutexTimer);
         }
 
@@ -4271,7 +4272,7 @@ var AIM = {
 		damage.damageLog.push(str);
 	},
 
-	notifyInFlight: func (lat,lon,alt,rdar,typeID,typ,unique,thrustOn,callsign, heading, pitch, speed, is_deleted=0) {
+	notifyInFlight: func (lat,lon,alt,rdar,semiRdr,typeID,typ,unique,thrustOn,callsign, heading, pitch, speed, is_deleted=0) {
 		## thrustON cannot be named 'thrust' as FG for some reason will then think its a function (probably fixed by the way call() now is used)
 		var msg = notifications.ArmamentInFlightNotification.new("mfly", unique, is_deleted?damage.DESTROY:damage.MOVE, 21+typeID);
         if (lat != nil) {
@@ -4282,6 +4283,9 @@ var AIM = {
         msg.Flags = rdar;#bit #0
         if (thrustOn) {
         	msg.Flags = bits.set(msg.Flags, 1);#bit #1
+        }
+        if (semiRdr) {
+        	msg.Flags = bits.set(msg.Flags, 2);#bit #2
         }
         msg.IsDistinct = !is_deleted;
         msg.RemoteCallsign = callsign;
@@ -4342,7 +4346,7 @@ var AIM = {
 
 		if(getprop("payload/armament/msg")) {
 			thread.lock(mutexTimer);
-			append(AIM.timerQueue, [AIM, AIM.notifyInFlight, [me.coord.lat(), me.coord.lon(), me.coord.alt(),0,me.typeID,me.type,me.unique_id,0,"", me.hdg, me.pitch, 0, 0], -1]);
+			append(AIM.timerQueue, [AIM, AIM.notifyInFlight, [me.coord.lat(), me.coord.lon(), me.coord.alt(),0,0,me.typeID,me.type,me.unique_id,0,"", me.hdg, me.pitch, 0, 0], -1]);
 			thread.unlock(mutexTimer);
 		}
 
