@@ -26,9 +26,9 @@ var type = "light_nolabels";
 # content = meter per pixel of tiles
 #                   0                             5                               10                               15                      19
 var meterPerPixel = [156412,78206,39103,19551,9776,4888,2444,1222,610.984,305.492,152.746,76.373,38.187,19.093,9.547,4.773,2.387,1.193,0.596,0.298];# at equator
-var zoomsSEU      = [6, 7, 8, 9, 10, 13];# south europe
+var zoomsSEU      = [6, 7, 8, 9, 10, 11, 13];# south europe
 var zooms         = zoomsSEU;
-var zoomLevels = [320, 160, 80, 40, 20, 2.5];
+var zoomLevels = [320, 160, 80, 40, 20, 10, 2.5];
 var zoom_init = 2;
 var zoom_curr  = zoom_init;
 var zoom = zooms[zoom_curr];
@@ -1534,11 +1534,7 @@ var CDU = {
             me.gridGroupText.hide();
             return;
         }
-        if (zoomLevels[zoom_curr] == 320) {
-            me.gridGroup.hide();
-            me.gridGroupText.hide();
-            return;
-        } elsif (zoomLevels[zoom_curr] == 160) {
+        if (zoomLevels[zoom_curr] == 160) {
             me.granularity_lon = 2;
             me.granularity_lat = 2;
         } elsif (zoomLevels[zoom_curr] == 80) {
