@@ -2587,8 +2587,8 @@ var RWR = {
         }
 
         me.launchClose = getprop("payload/armament/MLW-launcher") != "";
-        me.incoming = getprop("payload/armament/MAW-active") or me.heatDefense > me.elapsed;
-        me.spike = getprop("payload/armament/spike")*(getprop("ai/submodels/submodel[0]/count")>15);
+        me.incoming = getprop("payload/armament/MAW-active") or getprop("payload/armament/MAW-semiactive") or me.heatDefense > me.elapsed;
+        me.spike = 0;#getprop("payload/armament/spike")*(getprop("ai/submodels/submodel[0]/count")>15);
         me.autoFlare = me.spike?math.max(me.closestThreat*0.25,0.05):0;
 
         if (0 and getprop("f16/avionics/ew-mode-knob") == 2)
