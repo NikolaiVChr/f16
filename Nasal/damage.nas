@@ -303,6 +303,7 @@ var DamageRecipient =
                 var bearing = ownPos.course_to(notification.Position);
                 var radarOn = bits.test(notification.Flags, 0);
                 var thrustOn = bits.test(notification.Flags, 1);
+                var CWIOn = bits.test(notification.Flags, 2);
                 var index = notification.SecondaryKind-21;
                 var typ = id2warhead[index];
 
@@ -350,7 +351,7 @@ var DamageRecipient =
                       var extra2 = typ[2]==0?",Type=Weapon+Missile":",Type=Weapon+Bomb";
                       extra2 = typ[4]=="Flare"?",Type=Flare":extra2;
                       extra2 = typp=="Parachutist"?"":extra2;
-                      var color = radarOn?",Color=Red":",Color=Yellow";
+                      var color = radarOn or CWIOn?",Color=Red":",Color=Yellow";
                       thread.lock(tacview.mutexWrite);
                       tacview.write("#" ~ (systime() - tacview.starttime)~"\n");
                       tacview.write(tacID~",T="~notification.Position.lon()~"|"~notification.Position.lat()~"|"~notification.Position.alt()~extra~",Name="~typp~color~extra2~"\n");
@@ -378,7 +379,7 @@ var DamageRecipient =
                       setprop("payload/armament/MLW-launcher", notification.Callsign);
                       setprop("payload/armament/MLW-count", getprop("payload/armament/MLW-count")+1);
                       var out = sprintf("Missile Launch Warning from %03d degrees.", bearing);
-                      if (rwr_to_screen) screen.log.write(out, 1,1,0);# temporary till someone models a RWR in RIO seat
+                      if (rwr_to_screen) screen.log.write(out, 1,0.5,0);# temporary till someone models a RWR in RIO seat
                       print(out);
                       damageLog.push(sprintf("Missile Launch Warning from %03d degrees from %s.", bearing, notification.Callsign));
                       if (m28_auto) mig28.missileLaunch();
@@ -389,17 +390,27 @@ var DamageRecipient =
                 # Missile approach warning:
                 var callsign = processCallsign(getprop("sim/multiplay/callsign"));
                 if (notification.RemoteCallsign != callsign) return emesary.Transmitter.ReceiptStatus_OK;
-                if (!radarOn) return emesary.Transmitter.ReceiptStatus_OK;# this should be little more complex later
-                var heading = getprop("orientation/heading-deg");
-                var clock = geo.normdeg(bearing - heading);
-                setprop("payload/armament/MAW-bearing", bearing);
-                setprop("payload/armament/MAW-active", 1);# resets every 1 seconds
+                if (!radarOn and !CWIOn) return emesary.Transmitter.ReceiptStatus_OK;# this should be little more complex later
+                #var heading = getprop("orientation/heading-deg");
+                #var clock = geo.normdeg(bearing - heading);
+                if (radarOn) {
+                    setprop("payload/armament/MAW-bearing", bearing);
+                    setprop("payload/armament/MAW-active", 1);# resets every 1 seconds
+                } elsif (CWIOn) {
+                    setprop("payload/armament/MAW-semiactive", 1);# resets every 1 seconds
+                }
                 MAW_elapsed = elapsed;
                 var appr = approached[notification.Callsign~notification.UniqueIdentity];
                 if (appr == nil or elapsed - appr > 450) {
-                  printf("Missile Approach Warning from %03d degrees.", bearing);
-                  damageLog.push(sprintf("Missile Approach Warning from %03d degrees from %s.", bearing, notification.Callsign));
-                  if (rwr_to_screen) screen.log.write(sprintf("Missile Approach Warning from %03d degrees.", bearing), 1,1,0);# temporary till someone models a RWR in RIO seat
+                  if (radarOn) {
+                      #printf("Missile Approach Warning from %03d degrees.", bearing);
+                      damageLog.push(sprintf("Missile Approach Warning from %03d degrees from %s.", bearing, notification.Callsign));
+                      if (rwr_to_screen) screen.log.write(sprintf("Missile Approach Warning from %03d degrees.", bearing), 1,0.5,0);# temporary till someone models a RWR in RIO seat
+                  } else {
+                      #printf("Missile Approach Warning");
+                      damageLog.push(sprintf("Missile Approach Warning from %s.", notification.Callsign));
+                      if (rwr_to_screen) screen.log.write(sprintf("Missile Approach Warning (semi-active)."), 1,0.5,0);# temporary till someone models a RWR in RIO seat
+                  }
                   approached[notification.Callsign~notification.UniqueIdentity] = elapsed;
                   if (m28_auto) mig28.engagedBy(notification.Callsign, 1);
                 }
@@ -1255,6 +1266,7 @@ var processCallsigns = func () {
   }
   if (getprop("sim/time/elapsed-sec")-MAW_elapsed > 1.1) {
       setprop("payload/armament/MAW-active", 0);# resets every 1.1 seconds without warning
+      setprop("payload/armament/MAW-semiactive", 0);
   }
 
   # spike handling:
@@ -1413,6 +1425,7 @@ setlistener("sim/signals/exit", writeDamageLog, 0, 0);
 
 #screen.property_display.add("payload/armament/MAW-bearing");
 #screen.property_display.add("payload/armament/MAW-active");
+#screen.property_display.add("payload/armament/MAW-semiactive");
 #screen.property_display.add("payload/armament/MLW-bearing");
 #screen.property_display.add("payload/armament/MLW-count");
 #screen.property_display.add("payload/armament/MLW-launcher");
