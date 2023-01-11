@@ -556,6 +556,19 @@ var FireControl = {
 		}
 		return me.pylons[me.selected[0]].getWeapons()[me.selected[1]];
 	},
+
+	weaponHot: func {
+		if (me.getSelectedWeapon() == nil) {
+			return 0;
+		}
+		if (me.getSelectedPylon().operableFunction != nil and !me.getSelectedPylon().operableFunction()) {
+			return 0;
+		}
+		if (me.getSelectedPylon().activeFunction != nil and !me.getSelectedPylon().activeFunction()) {
+			return 0;
+		}
+		return me.getSelectedPylon().getAmmo() > 0;
+	},
 	
 	_getSpecificWeapon: func (p, w) {
 		# return specific weapon or nil

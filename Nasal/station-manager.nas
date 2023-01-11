@@ -293,9 +293,9 @@ var Station = {
 		# Get total ammo for this station. For missiles/bombs this is typically the numbers, for cannon submodel weapons it is the shell count.
 		me.ammo = 0;
 		foreach(me.weapon ; me.getWeapons()) {
-			if (me.weapon != nil and me.weapon.parents[0] == armament.AIM and (me.weapon.type == nil or me.weapon.type == type)) {
+			if (me.weapon != nil and me.weapon.parents[0] == armament.AIM and (type == nil or me.weapon.type == type)) {
 				me.ammo += 1;
-			} elsif (me.weapon != nil and me.weapon.parents[0] == SubModelWeapon and (me.weapon.type == nil or me.weapon.type == type)) {
+			} elsif (me.weapon != nil and me.weapon.parents[0] == SubModelWeapon and (type == nil or me.weapon.type == type)) {
 				me.ammo += me.weapon.getAmmo();
 			}
 		}
