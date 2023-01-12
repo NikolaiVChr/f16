@@ -104,7 +104,7 @@
             <legend>A/A Training</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.b50_train_aa();</script>
+                <script>pylons.b40_train_aa();</script>
             </binding>
         </button>
 
@@ -390,7 +390,7 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>24</row>
             <col>2</col>
-            <legend>A/G Strategic (Unguided, 2 bags)</legend>
+            <legend>A/G Strategic Strike (2 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.a2g_strat();</script>
