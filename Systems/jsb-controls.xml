@@ -225,6 +225,45 @@
                 </table>
             </function>
         </fcs_function>
+		
+		<fcs_function name="fcs/fly-by-wire/pitch/N3">
+            <description>LJQC: 189675 pitch loop gain N3 schedule.</description>
+            <function>
+                <table>
+                    <independentVar lookup="row">fcs/fly-by-wire/q_c</independentVar>
+                    <tableData>
+                        0.0 1
+                        250 1
+                        850 0.555
+                        2970 0.086
+                    </tableData>
+                </table>
+            </function>
+        </fcs_function>
+		
+		<fcs_function name="fcs/fly-by-wire/pitch/N4">
+            <description>LJQC: 189675 low alpha pitch rate gain N4 schedule.</description>
+            <function>
+                <table>
+                    <independentVar lookup="row">fcs/fly-by-wire/q_c</independentVar>
+                    <tableData>
+                        0.0 0.7
+                        100 0.7
+                        220 0.25
+                        400 0.0
+                    </tableData>
+                </table>
+            </function>
+        </fcs_function>
+		
+		<summer name="fcs/fly-by-wire/pitch/N7">
+			<description>LJQC: 189675 high alpha pitch rate gain N7.</description>
+            <input>fcs/fly-by-wire/pitch/N4</input>
+            <clipto>
+                <min>0.14</min>
+                <max>0.7</max>
+            </clipto>
+        </summer>
 
         <fcs_function name="fcs/fly-by-wire/pitch/F3-loop-alt">
             <description>
@@ -777,7 +816,7 @@
                 <sum>
                     <property> fcs/fly-by-wire/pitch/alpha-indicated-mpo </property>
                     <p> fcs/fly-by-wire/pitch/alpha-reduction </p>
-                    <property> fcs/fly-by-wire/pitch/pitch-rate-gain </property>
+                    <property> fcs/fly-by-wire/pitch/pitch-rate-gain-high-alpha</property>
                 </sum>
             </function>
         </fcs_function>
@@ -818,13 +857,19 @@
         </washout_filter>
 
         <pure_gain name="fcs/fly-by-wire/pitch/q-gain-1">
+			<description>LJQC: 055417 gain, not used in 189675.</description>
             <input>fcs/fly-by-wire/pitch/q-washout</input>
             <gain> 0.7 </gain>
         </pure_gain>
 
-        <pure_gain name="fcs/fly-by-wire/pitch/pitch-rate-gain">
-            <input>fcs/fly-by-wire/pitch/q-gain-1</input>
-            <gain> fcs/fly-by-wire/pitch/F3 </gain>
+        <pure_gain name="fcs/fly-by-wire/pitch/pitch-rate-gain-low-alpha">
+            <input>fcs/fly-by-wire/pitch/q-washout</input>
+            <gain> fcs/fly-by-wire/pitch/N4</gain>
+        </pure_gain>
+		
+		<pure_gain name="fcs/fly-by-wire/pitch/pitch-rate-gain-high-alpha">
+            <input>fcs/fly-by-wire/pitch/q-washout</input>
+            <gain> fcs/fly-by-wire/pitch/N7</gain>
         </pure_gain>
 
         <switch name="fcs/fly-by-wire/pitch/bias-top">
@@ -979,7 +1024,7 @@
                          uses alpha-sum instead of a_f.
             </description>
             <input>fcs/fly-by-wire/pitch/pitch-rate-alpha-input</input>
-            <input> fcs/fly-by-wire/pitch/pitch-rate-gain </input>
+            <input> fcs/fly-by-wire/pitch/pitch-rate-gain-low-alpha</input>
             <input> -fcs/fly-by-wire/pitch/bias-final </input>
         </summer>
 
