@@ -2660,6 +2660,7 @@ var AIM = {
                                             speed_fps:              me.old_speed_fps,
                                             weapon_position:         me.coord,
                                             guidance:                 me.guidance,
+                                            guidanceLaw:              me.guidanceLaw,
                                             seeker_detect_range:     me.detect_range_curr_nm,
                                             seeker_fov:             me.max_seeker_dev,
                                             weapon_pitch:             me.pitch,
