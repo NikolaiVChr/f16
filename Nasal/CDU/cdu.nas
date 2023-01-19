@@ -76,9 +76,9 @@ var providerOption = 1;
 var providerOptionLast = providerOption;
 var providerOptions = [
 # This one works on Linux and Windows only
-["stamen_terrain_bg","stamen_terrain_bg","stamen_terrain_bg","stamen_terrain_bg","stamen_terrain_bg","arcgis_terrain"],
+["stamen_terrain_bg","stamen_terrain_bg","stamen_terrain_bg","stamen_terrain_bg","stamen_terrain_bg","stamen_terrain_bg","arcgis_terrain"],
 # This one works on MacOS also, so is default
-["arcgis_terrain","arcgis_terrain","arcgis_terrain","arcgis_terrain","arcgis_terrain","arcgis_terrain"]
+["arcgis_terrain","arcgis_terrain","arcgis_terrain","arcgis_terrain","arcgis_terrain","arcgis_terrain","arcgis_terrain"]
 ];
 
 var zoom_provider = providerOptions[providerOption];
@@ -692,7 +692,7 @@ var CDU = {
         me.concScale = zoomLevels[zoom_init]*NM2M*me.M2TEXinit/me.outerRadius;
         me.conc.setScale(me.concScale);
         me.conc.setStrokeLineWidth(lineWidth.rangeRings/me.concScale);
-        me.conc.setVisible(zoom_curr != 5);
+        me.conc.setVisible(zoom_curr != size(zoomLevels)-1);
         me.conc.setColor(me.day?COLOR_GRAY:COLOR_GRAY_LIGHT);
         if (me.input.servHead.getValue()) me.conc.setRotation(-me.input.heading.getValue()*D2R);
 
