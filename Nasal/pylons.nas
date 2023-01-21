@@ -1053,9 +1053,9 @@ var b10_a2g_strike1 = func {
         pylon1.loadSet(pylonSets.aim9lWT);
         pylon2.loadSet(pylonSets.empty);
         pylon3.loadSet(pylonSets.m82);
-        pylon4.loadSet(pylonSets.m82);
-        pylon5.loadSet(pylonSets.fuel30);
-        pylon6.loadSet(pylonSets.m82);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel37R);
         pylon7.loadSet(pylonSets.m82);
         pylon8.loadSet(pylonSets.empty);
         pylon9.loadSet(pylonSets.aim9lWT);
@@ -1074,9 +1074,9 @@ var b10_a2g_strikeair = func {
         pylon1.loadSet(pylonSets.aim9lWT);
         pylon2.loadSet(pylonSets.empty);
         pylon3.loadSet(pylonSets.m82air);
-        pylon4.loadSet(pylonSets.m82air);
-        pylon5.loadSet(pylonSets.fuel30);
-        pylon6.loadSet(pylonSets.m82air);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel37R);
         pylon7.loadSet(pylonSets.m82air);
         pylon8.loadSet(pylonSets.empty);
         pylon9.loadSet(pylonSets.aim9lWT);
@@ -1095,9 +1095,9 @@ var b10_a2g_strike2 = func {
         pylon1.loadSet(pylonSets.aim9lWT);
         pylon2.loadSet(pylonSets.empty);
         pylon3.loadSet(pylonSets.m84);
-        pylon4.loadSet(pylonSets.m84);
-        pylon5.loadSet(pylonSets.fuel30);
-        pylon6.loadSet(pylonSets.m84);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel37R);
         pylon7.loadSet(pylonSets.m84);
         pylon8.loadSet(pylonSets.empty);
         pylon9.loadSet(pylonSets.aim9lWT);
