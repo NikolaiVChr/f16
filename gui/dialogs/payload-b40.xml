@@ -168,10 +168,10 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>10</row>
             <col>0</col>
-            <legend>Air Defense</legend>
+            <legend>Air Superiority</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.b20_a2a_adf();</script>
+                <script>pylons.a2a_super();</script>
             </binding>
         </button>
 
@@ -184,17 +184,6 @@
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>12</row>
-            <col>0</col>
-            <legend>Air Superiority</legend>
-            <binding>
-                <command>nasal</command>
-                <script>pylons.a2a_super();</script>
-            </binding>
-        </button>
-
-        <button>
-            <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>14</row>
             <col>0</col>
             <legend>Air Superiority (2 bags)</legend>
             <binding>
@@ -211,7 +200,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>16</row>
+            <row>14</row>
             <col>0</col>
             <legend>Defensive Counter Air</legend>
             <binding>
@@ -228,7 +217,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>18</row>
+            <row>16</row>
             <col>0</col>
             <legend>Air Policing (2 bags)</legend>
             <binding>
@@ -245,7 +234,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>20</row>
+            <row>18</row>
             <col>0</col>
             <legend>Ferry Loadout (3 bags)</legend>
             <binding>
@@ -256,7 +245,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>22</row>
+            <row>20</row>
             <col>0</col>
             <legend>Ferry Loadout (2 bags XL)</legend>
             <binding>
