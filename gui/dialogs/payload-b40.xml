@@ -256,6 +256,23 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>22</row>
+            <col>0</col>
+            <legend>IRST Test and Evaluation (2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.b40_testev();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>13</row>
+            <col>0</col>
+            <colspan>6</colspan>
+        </hrule>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>0</row>
             <col>2</col>
             <legend>A/G Training (2 bags)</legend>
@@ -451,12 +468,6 @@
                 <script>pylons.b40_a2g_caslt();</script>
             </binding>
         </button>
-
-        <hrule>
-            <row>13</row>
-            <col>0</col>
-            <colspan>6</colspan>
-        </hrule>
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>

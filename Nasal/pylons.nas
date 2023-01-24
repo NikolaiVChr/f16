@@ -56,7 +56,7 @@ var atp = stations.Smoker.new("AN/AAQ-33 Sniper ATP", "AAQ-33", "f16/stores/tgp-
 var tgp = stations.Smoker.new("AN/AAQ-14 LANTIRN Target Pod", "AAQ-14", "f16/stores/tgp-mounted");
 var nav = stations.Smoker.new("AN/AAQ-13 LANTIRN Nav Pod", "AAQ-13", "f16/stores/nav-mounted");
 var lite = stations.Smoker.new("AN/AAQ-28 LITENING Advanced Targeting", "AAQ-28", "f16/stores/tgp-mounted");
-var irst = stations.Smoker.new("Legion Pod IRST", "IRST", "f16/stores/irst-mounted");
+var irst = stations.Smoker.new("Legion Pod (IRST)", "IRST", "f16/stores/irst-mounted");
 var harm = stations.Smoker.new("AN/ASQ-213 HARM TS Pod", "ASQ-213", "f16/stores/harm-mounted");
 var acmi = stations.Smoker.new("AN/ASQ-T50(V)2 ACMI Pod", "ACMI", "f16/stores/acmi-mounted");
 var ecm131 = stations.Smoker.new("AN/ALQ-131(V) ECM Pod", "AL131", "f16/stores/ecm-mounted");
@@ -150,7 +150,7 @@ var pylonSets = {
     podLTgp:   {name: "AN/AAQ-14 LANTIRN Target Pod", content: [tgp], fireOrder: [0], launcherDragArea: 0.07, launcherMass: 530, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     podLNav:   {name: "AN/AAQ-13 LANTIRN Nav Pod", content: [nav], fireOrder: [0], launcherDragArea: 0.1, launcherMass: 451.1, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     podLite:   {name: "AN/AAQ-28 LITENING Advanced Targeting", content: [lite], fireOrder: [0], launcherDragArea: 0.08, launcherMass: 460, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-    podIrst:   {name: "Legion Pod IRST", content: [irst], fireOrder: [0], launcherDragArea: 0.08, launcherMass: 500, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1}, #mass guess based on available data
+    podIrst:   {name: "Legion Pod (IRST)", content: [irst], fireOrder: [0], launcherDragArea: 0.08, launcherMass: 500, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1}, #mass guess based on available data
     podHarm:   {name: "AN/ASQ-213 HARM TS Pod", content: [harm], fireOrder: [0], launcherDragArea: 0.03, launcherMass: 100, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     podACMI:   {name: "AN/ASQ-T50(V)2 ACMI Pod", pylon: "1 MRL", content: [acmi], fireOrder: [0], launcherDragArea: 0.025, launcherMass: 234, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     podACMIWT: {name: "AN/ASQ-T50(V)2 ACMI Pod", pylon: "1 MRLW", content: [acmi], fireOrder: [0], launcherDragArea: 0, launcherMass: 234, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
@@ -189,9 +189,9 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 		pylon9set = [pylonSets.dumb1WT, pylonSets.dumb2WT, pylonSets.aim9lWT, pylonSets.podACMIWT, pylonSets.smokeRR, pylonSets.smokeGR, pylonSets.smokeBR, pylonSets.smokeWR];# wingtips are normally not empty, so CATM-9L dummy is loaded instead.
 		pylon3set = [pylonSets.empty, pylonSets.m84, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.aim9l];
 		pylon7set = [pylonSets.empty, pylonSets.m84, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.aim9l];
-		pylon4set = [pylonSets.empty, pylonSets.fuel37L, pylonSets.fuel60L, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.m84];
-		pylon6set = [pylonSets.empty, pylonSets.fuel37R, pylonSets.fuel60R, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.m84];
-		pylon5set = [pylonSets.empty, pylonSets.fuel30, pylonSets.podEcm131, pylonSets.podTrvl];
+		pylon4set = [pylonSets.empty, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.m84, pylonSets.fuel60L, pylonSets.fuel37L];
+		pylon6set = [pylonSets.empty, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.m84, pylonSets.fuel60R, pylonSets.fuel37R];
+		pylon5set = [pylonSets.empty, pylonSets.podTrvl, pylonSets.podEcm131, pylonSets.fuel30];
 
 		fuselageRset = [pylonSets.empty];
 		fuselageLset = [pylonSets.empty];
@@ -201,25 +201,25 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 		pylon8set = [pylonSets.empty, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim120, pylonSets.dumb1, pylonSets.podACMI];
 		pylon1set = [pylonSets.dumb1WT, pylonSets.dumb2WT ,pylonSets.dumb3WT, pylonSets.aim9lWT, pylonSets.aim9mWT, pylonSets.aim120WT, pylonSets.podACMIWT, pylonSets.smokeRL, pylonSets.smokeGL, pylonSets.smokeBL, pylonSets.smokeWL];# wingtips are normally not empty, so CATM-9L dummy is loaded instead.
 		pylon9set = [pylonSets.dumb1WT, pylonSets.dumb2WT, pylonSets.dumb3WT, pylonSets.aim9lWT, pylonSets.aim9mWT, pylonSets.aim120WT, pylonSets.podACMIWT, pylonSets.smokeRR, pylonSets.smokeGR, pylonSets.smokeBR, pylonSets.smokeWR];# wingtips are normally not empty, so CATM-9L dummy is loaded instead.
-		pylon3set = [pylonSets.empty, pylonSets.hyd70h3, pylonSets.a154, pylonSets.a119, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.c105, pylonSets.g31, pylonSets.g24, pylonSets.g12, pylonSets.m84, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim7, pylonSets.aim120];
-		pylon7set = [pylonSets.empty, pylonSets.hyd70h7, pylonSets.a154, pylonSets.a119, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.c105, pylonSets.g31, pylonSets.g24, pylonSets.g12, pylonSets.m84, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim7, pylonSets.aim120];
-		pylon4set = [pylonSets.empty, pylonSets.fuel37L, pylonSets.fuel60L, pylonSets.g12x3, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.a154, pylonSets.a119, pylonSets.g31, pylonSets.g24, pylonSets.c87, pylonSets.c105, pylonSets.m84];
-		pylon6set = [pylonSets.empty, pylonSets.fuel37R, pylonSets.fuel60R, pylonSets.g12x3, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.a154, pylonSets.a119, pylonSets.g31, pylonSets.g24, pylonSets.c87, pylonSets.c105, pylonSets.m84];
-		pylon5set = [pylonSets.empty, pylonSets.fuel30, pylonSets.podEcm131, pylonSets.podEcm184, pylonSets.podTrvl, pylonSets.b617];
+		pylon3set = [pylonSets.empty, pylonSets.hyd70h3, pylonSets.a154, pylonSets.a119, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.c105, pylonSets.g31, pylonSets.g24, pylonSets.g12, pylonSets.m84, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.aim7, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim120];
+		pylon7set = [pylonSets.empty, pylonSets.hyd70h7, pylonSets.a154, pylonSets.a119, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.c105, pylonSets.g31, pylonSets.g24, pylonSets.g12, pylonSets.m84, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.aim7, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim120];
+		pylon4set = [pylonSets.empty, pylonSets.g12x3, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.a154, pylonSets.a119, pylonSets.g31, pylonSets.g24, pylonSets.c87, pylonSets.c105, pylonSets.m84, pylonSets.fuel60L, pylonSets.fuel37L];
+		pylon6set = [pylonSets.empty, pylonSets.g12x3, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.a154, pylonSets.a119, pylonSets.g31, pylonSets.g24, pylonSets.c87, pylonSets.c105, pylonSets.m84, pylonSets.fuel60R, pylonSets.fuel37R];
+		pylon5set = [pylonSets.empty, pylonSets.b617, pylonSets.podTrvl, pylonSets.podEcm184, pylonSets.podEcm131, pylonSets.fuel30];
 
-		fuselageRset = [pylonSets.empty, pylonSets.podSAtp, pylonSets.podLite, pylonSets.podLTgp, pylonSets.podHarm];
-		fuselageLset = [pylonSets.empty, pylonSets.podLNav, pylonSets.podHarm];
+		fuselageRset = [pylonSets.empty, pylonSets.podHarm, pylonSets.podSAtp, pylonSets.podLite, pylonSets.podLTgp];
+		fuselageLset = [pylonSets.empty, pylonSets.podHarm, pylonSets.podLNav];
 
 	} elsif (block == 3) {
 		pylon2set = [pylonSets.empty, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim120, pylonSets.dumb1, pylonSets.podACMI];
 		pylon8set = [pylonSets.empty, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim120, pylonSets.dumb1, pylonSets.podACMI];
 		pylon1set = [pylonSets.dumb1WT, pylonSets.dumb2WT, pylonSets.dumb3WT, pylonSets.aim9lWT, pylonSets.aim9mWT, pylonSets.aim120WT, pylonSets.podACMIWT, pylonSets.smokeRL, pylonSets.smokeGL, pylonSets.smokeBL, pylonSets.smokeWL];# wingtips are normally not empty, so CATM-9L dummy is loaded instead.
 		pylon9set = [pylonSets.dumb1WT, pylonSets.dumb2WT, pylonSets.dumb3WT, pylonSets.aim9lWT, pylonSets.aim9mWT, pylonSets.aim120WT, pylonSets.podACMIWT, pylonSets.smokeRR, pylonSets.smokeGR, pylonSets.smokeBR, pylonSets.smokeWR];# wingtips are normally not empty, so CATM-9L dummy is loaded instead.
-		pylon3set = [pylonSets.empty, pylonSets.podEcm188, pylonSets.hyd70h3, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.g12x2, pylonSets.m84, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim7, pylonSets.aim120];
-		pylon7set = [pylonSets.empty, pylonSets.podEcm188, pylonSets.hyd70h7, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.g12x2, pylonSets.m84, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim7, pylonSets.aim120];
-		pylon4set = [pylonSets.empty, pylonSets.fuel37L, pylonSets.fuel60L, pylonSets.g12x3, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.c87, pylonSets.m84];
-		pylon6set = [pylonSets.empty, pylonSets.fuel37R, pylonSets.fuel60R, pylonSets.g12x3, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.c87, pylonSets.m84];
-		pylon5set = [pylonSets.empty, pylonSets.fuel30, pylonSets.podEcm131, pylonSets.podEcm188, pylonSets.podTrvl, pylonSets.b617];
+		pylon3set = [pylonSets.empty, pylonSets.podEcm188, pylonSets.hyd70h3, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.g12x2, pylonSets.m84, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.aim7, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim120];
+		pylon7set = [pylonSets.empty, pylonSets.podEcm188, pylonSets.hyd70h7, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.g12x2, pylonSets.m84, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.aim7, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim120];
+		pylon4set = [pylonSets.empty, pylonSets.g12x3, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.c87, pylonSets.m84, pylonSets.fuel60L, pylonSets.fuel37L];
+		pylon6set = [pylonSets.empty, pylonSets.g12x3, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.c87, pylonSets.m84, pylonSets.fuel60R, pylonSets.fuel37R];
+		pylon5set = [pylonSets.empty, pylonSets.b617, pylonSets.podTrvl, pylonSets.podEcm188, pylonSets.podEcm131, pylonSets.fuel30];
 
 		fuselageRset = [pylonSets.empty, pylonSets.podLTgp];
 		fuselageLset = [pylonSets.empty, pylonSets.podLNav];
@@ -229,28 +229,28 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 		pylon8set = [pylonSets.empty, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim120, pylonSets.dumb1, pylonSets.podACMI];
 		pylon1set = [pylonSets.dumb1WT, pylonSets.dumb2WT, pylonSets.dumb3WT, pylonSets.aim9lWT, pylonSets.aim9mWT, pylonSets.aim120WT, pylonSets.podACMIWT, pylonSets.smokeRL, pylonSets.smokeGL, pylonSets.smokeBL, pylonSets.smokeWL];# wingtips are normally not empty, so CATM-9L dummy is loaded instead.
 		pylon9set = [pylonSets.dumb1WT, pylonSets.dumb2WT, pylonSets.dumb3WT, pylonSets.aim9lWT, pylonSets.aim9mWT, pylonSets.aim120WT, pylonSets.podACMIWT, pylonSets.smokeRR, pylonSets.smokeGR, pylonSets.smokeBR, pylonSets.smokeWR];# wingtips are normally not empty, so CATM-9L dummy is loaded instead.
-		pylon3set = [pylonSets.empty, pylonSets.hyd70h3, pylonSets.a158, pylonSets.a154, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.c105, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x2, pylonSets.m84, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim7, pylonSets.aim120];
-		pylon7set = [pylonSets.empty, pylonSets.hyd70h7, pylonSets.a158, pylonSets.a154, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.c105, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x2, pylonSets.m84, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim7, pylonSets.aim120];
-		pylon4set = [pylonSets.empty, pylonSets.fuel37L, pylonSets.fuel60L, pylonSets.g12x3, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.c87, pylonSets.c105, pylonSets.m84];
-		pylon6set = [pylonSets.empty, pylonSets.fuel37R, pylonSets.fuel60R, pylonSets.g12x3, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.c87, pylonSets.c105, pylonSets.m84];
-		pylon5set = [pylonSets.empty, pylonSets.fuel30, pylonSets.podEcm131, pylonSets.podEcm184, pylonSets.podEcm188, pylonSets.podTrvl, pylonSets.b617, pylonSets.b6112];
+		pylon3set = [pylonSets.empty, pylonSets.hyd70h3, pylonSets.a158, pylonSets.a154, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.c105, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x2, pylonSets.m84, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.aim7, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim120];
+		pylon7set = [pylonSets.empty, pylonSets.hyd70h7, pylonSets.a158, pylonSets.a154, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.c105, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x2, pylonSets.m84, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.aim7, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim120];
+		pylon4set = [pylonSets.empty, pylonSets.g12x3, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.c87, pylonSets.c105, pylonSets.m84, pylonSets.fuel60L, pylonSets.fuel37L];
+		pylon6set = [pylonSets.empty, pylonSets.g12x3, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.c87, pylonSets.c105, pylonSets.m84, pylonSets.fuel60R, pylonSets.fuel37R];
+		pylon5set = [pylonSets.empty, pylonSets.b6112, pylonSets.b617, pylonSets.podTrvl, pylonSets.podEcm188, pylonSets.podEcm184, pylonSets.podEcm131, pylonSets.fuel30];
 
-		fuselageRset = [pylonSets.empty, pylonSets.podSAtp, pylonSets.podLite, pylonSets.podLTgp, pylonSets.podHarm, pylonSets.podIrst];
-	 	fuselageLset = [pylonSets.empty, pylonSets.podLNav, pylonSets.podHarm];
+		fuselageRset = [pylonSets.empty, pylonSets.podIrst, pylonSets.podHarm, pylonSets.podSAtp, pylonSets.podLite, pylonSets.podLTgp];
+        fuselageLset = [pylonSets.empty, pylonSets.podHarm, pylonSets.podLNav];
 
 	} elsif (block == 5) {
 		pylon2set = [pylonSets.empty, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim120, pylonSets.dumb1, pylonSets.podACMI];
 		pylon8set = [pylonSets.empty, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim120, pylonSets.dumb1, pylonSets.podACMI];
 		pylon1set = [pylonSets.dumb1WT, pylonSets.dumb2WT, pylonSets.dumb3WT, pylonSets.aim9lWT, pylonSets.aim9mWT, pylonSets.aim120WT, pylonSets.podACMIWT, pylonSets.smokeRL, pylonSets.smokeGL, pylonSets.smokeBL, pylonSets.smokeWL];# wingtips are normally not empty, so CATM-9L dummy is loaded instead.
 		pylon9set = [pylonSets.dumb1WT, pylonSets.dumb2WT, pylonSets.dumb3WT, pylonSets.aim9lWT, pylonSets.aim9mWT, pylonSets.aim120WT, pylonSets.podACMIWT, pylonSets.smokeRR, pylonSets.smokeGR, pylonSets.smokeBR, pylonSets.smokeWR];# wingtips are normally not empty, so CATM-9L dummy is loaded instead.
-		pylon3set = [pylonSets.empty, pylonSets.hyd70h3, pylonSets.a158, pylonSets.a154, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.c105, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x2, pylonSets.m84, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim7, pylonSets.aim120];
-		pylon7set = [pylonSets.empty, pylonSets.hyd70h7, pylonSets.a158, pylonSets.a154, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.c105, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x2, pylonSets.m84, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim7, pylonSets.aim120];
-		pylon4set = [pylonSets.empty, pylonSets.fuel37L, pylonSets.fuel60L, pylonSets.g12x3, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.c87, pylonSets.c105, pylonSets.m84];
-		pylon6set = [pylonSets.empty, pylonSets.fuel37R, pylonSets.fuel60R, pylonSets.g12x3, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.c87, pylonSets.c105, pylonSets.m84];
-		pylon5set = [pylonSets.empty, pylonSets.fuel30, pylonSets.podEcm131, pylonSets.podEcm184, pylonSets.podEcm188, pylonSets.podTrvl, pylonSets.b617, pylonSets.b6112];
+		pylon3set = [pylonSets.empty, pylonSets.hyd70h3, pylonSets.a158, pylonSets.a154, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.c105, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x2, pylonSets.m84, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.aim7, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim120];
+		pylon7set = [pylonSets.empty, pylonSets.hyd70h7, pylonSets.a158, pylonSets.a154, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.c105, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x2, pylonSets.m84, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.aim7, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim120];
+		pylon4set = [pylonSets.empty, pylonSets.g12x3, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.c87, pylonSets.c105, pylonSets.m84, pylonSets.fuel60L, pylonSets.fuel37L];
+		pylon6set = [pylonSets.empty, pylonSets.g12x3, pylonSets.m82air, pylonSets.m82, pylonSets.m82x1, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.c87, pylonSets.c105, pylonSets.m84, pylonSets.fuel60R, pylonSets.fuel37R];
+		pylon5set = [pylonSets.empty, pylonSets.b6112, pylonSets.b617, pylonSets.podTrvl, pylonSets.podEcm188, pylonSets.podEcm184, pylonSets.podEcm131, pylonSets.fuel30];
 
-		fuselageRset = [pylonSets.empty, pylonSets.podSAtp, pylonSets.podLite, pylonSets.podLTgp, pylonSets.podHarm, pylonSets.podIrst];
-	 	fuselageLset = [pylonSets.empty, pylonSets.podLNav, pylonSets.podHarm];
+		fuselageRset = [pylonSets.empty, pylonSets.podIrst, pylonSets.podHarm, pylonSets.podSAtp, pylonSets.podLite, pylonSets.podLTgp];
+	 	fuselageLset = [pylonSets.empty, pylonSets.podHarm, pylonSets.podLNav];
 
 	 } elsif (block == 6) {
 		pylon2set = [pylonSets.empty, pylonSets.aim9m, pylonSets.aim120, pylonSets.dumb1, pylonSets.podACMI];
@@ -259,9 +259,9 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 		pylon9set = [pylonSets.dumb1WT, pylonSets.dumb2WT, pylonSets.dumb3WT, pylonSets.aim9mWT, pylonSets.aim120WT, pylonSets.podACMIWT, pylonSets.smokeRR, pylonSets.smokeGR, pylonSets.smokeBR, pylonSets.smokeWR];# wingtips are normally not empty, so CATM-9L dummy is loaded instead.
 		pylon3set = [pylonSets.empty, pylonSets.hyd70h3, pylonSets.a154, pylonSets.a88, pylonSets.a84, pylonSets.a65d, pylonSets.c87, pylonSets.c105, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x2, pylonSets.m84, pylonSets.m82air, pylonSets.m82, pylonSets.aim9m, pylonSets.aim120];
 		pylon7set = [pylonSets.empty, pylonSets.hyd70h7, pylonSets.a154, pylonSets.a88, pylonSets.a84, pylonSets.a65d, pylonSets.c87, pylonSets.c105, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x2, pylonSets.m84, pylonSets.m82air, pylonSets.m82, pylonSets.aim9m, pylonSets.aim120];
-		pylon4set = [pylonSets.empty, pylonSets.fuel37L, pylonSets.fuel60L, pylonSets.g12x3, pylonSets.m82air, pylonSets.m82, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.c87, pylonSets.c105, pylonSets.m84];
-		pylon6set = [pylonSets.empty, pylonSets.fuel37R, pylonSets.fuel60R, pylonSets.g12x3, pylonSets.m82air, pylonSets.m82, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.c87, pylonSets.c105, pylonSets.m84];
-		pylon5set = [pylonSets.empty, pylonSets.fuel30, pylonSets.podEcm131, pylonSets.podEcm184, pylonSets.podTrvl];
+		pylon4set = [pylonSets.empty, pylonSets.g12x3, pylonSets.m82air, pylonSets.m82, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.c87, pylonSets.c105, pylonSets.m84, pylonSets.fuel60L, pylonSets.fuel37L];
+		pylon6set = [pylonSets.empty, pylonSets.g12x3, pylonSets.m82air, pylonSets.m82, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.c87, pylonSets.c105, pylonSets.m84, pylonSets.fuel60R, pylonSets.fuel37R];
+		pylon5set = [pylonSets.empty, pylonSets.podTrvl, pylonSets.podEcm184, pylonSets.podEcm131, pylonSets.fuel30];
 
 		fuselageRset = [pylonSets.empty];
 	 	fuselageLset = [pylonSets.podSAtp];
@@ -2054,6 +2054,27 @@ var b50_train_ag = func {
         pylon9.loadSet(pylonSets.dumb3WT);
         pylon10.loadSet(pylonSets.podSAtp);
         pylon11.loadSet(pylonSets.podHarm);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# Legion Pod Test & Evaluation
+var b40_testev = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        damage.damageLog.push("IRST test and evaluation loadout mounted");
+        pylon1.loadSet(pylonSets.dumb3WT);
+        pylon2.loadSet(pylonSets.dumb1);
+        pylon3.loadSet(pylonSets.mau);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel37R);
+        pylon7.loadSet(pylonSets.mau);
+        pylon8.loadSet(pylonSets.podACMI);
+        pylon9.loadSet(pylonSets.dumb3WT);
+        pylon10.loadSet(pylonSets.podIrst);
+        pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);

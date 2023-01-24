@@ -265,6 +265,12 @@
             </binding>
         </button>
 
+        <hrule>
+            <row>13</row>
+            <col>0</col>
+            <colspan>6</colspan>
+        </hrule>
+
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>0</row>
@@ -495,12 +501,6 @@
                 <script>pylons.b40_a2g_caslt();</script>
             </binding>
         </button>
-
-        <hrule>
-            <row>13</row>
-            <col>0</col>
-            <colspan>6</colspan>
-        </hrule>
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>

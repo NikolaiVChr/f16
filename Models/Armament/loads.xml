@@ -224,7 +224,7 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
   <condition>
     <equals>
       <property>payload/armament/station/id-10-type</property>
-      <value>Legion Pod IRST</value>
+      <value>Legion Pod (IRST)</value>
     </equals>
     <greater-than>
       <property>payload/armament/station/id-10-count</property>
@@ -312,7 +312,7 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
     </equals>
     <equals>
       <property>payload/armament/station/id-10-set</property>
-      <value>Legion Pod IRST</value>
+      <value>Legion Pod (IRST)</value>
     </equals>
   </or>
   </condition>
