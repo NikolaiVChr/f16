@@ -19,7 +19,7 @@ Includes the following Aircraft variants:
 - F-16C Block 30
 - F-16C Block 32
 - F-16CM Block 40 (CCIP)
-- F-16CM Block 42 (CCIP)
+- F-16CM Block 42 (CCIP, ANG)
 - F-16CJ Block 50
 - F-16CJ Block 52 (default version)
 - F-16E Block 60

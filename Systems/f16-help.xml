@@ -548,17 +548,17 @@ This test function can be found on the FUEL SELECTOR panel. It causes a fixed am
             ]]></text-12>
             <text-13><![CDATA[
 VARIANTS
-- F-16E Block 60: 19000/32500 lbf. Large horz. tail (mod. aero data).
-- F-16CJ Block 52: 17800/29000 lbf. Large horz. tail (mod. aero data).
-- F-16CJ Block 50: 17000/29000 lbf. Large horz. tail (mod. aero data).
-- F-16CM Block 42 (CCIP): 14670/23830 lbf. Large horz. tail (mod. aero data).
-- F-16CM Block 40 (CCIP): 18330/28620 lbf. Large horz. tail (mod. aero data).
-- F-16C Block 32: 14670/23830 lbf. Large horz. tail (mod. aero data).
-- F-16C Block 30: 18330/28620 lbf. Large horz. tail (mod. aero data).
-- F-16AM Block 20 (MLU 4.3 tape): 14670/23830 lbf. Small horz. tail (auth. aero data).
-- F-16A Block 10: 14670/23830 lbf. Small horz. tail (auth. aero data). Engine has authentic power curves.
-- YF-16: 14670/23830 lbf. Small horz. tail (auth. aero data). Engine has authentic power curves. The FBW in this variant has no spin, nose-slide or deep stall protection.
-- F-16 Simplified : 17800/29000 lbf.  Uses custom FBW, which can be switched off, made for FG and aero data. It is a simplified version of the other versions.
+- F-16E Block 60:  19000/32500 lbf. Large horz. tail (mod. aero data).
+- F-16CJ Block 52:  17800/29000 lbf. Large horz. tail (mod. aero data).
+- F-16CJ Block 50:  17000/29000 lbf. Large horz. tail (mod. aero data).
+- F-16CM Block 42 (CCIP, ANG):  17800/29000 lbf. Large horz. tail (mod. aero data).
+- F-16CM Block 40 (CCIP):  18330/28620 lbf. Large horz. tail (mod. aero data).
+- F-16C Block 32:  14670/23830 lbf. Large horz. tail (mod. aero data).
+- F-16C Block 30:  18330/28620 lbf. Large horz. tail (mod. aero data).
+- F-16AM Block 20 (MLU tape 4.3):  14670/23830 lbf. Small horz. tail (auth. aero data).
+- F-16A Block 10:  14670/23830 lbf. Small horz. tail (auth. aero data). Engine has authentic power curves.
+- YF-16:  14670/23830 lbf. Small horz. tail (auth. aero data). Engine has authentic power curves. The FBW in this variant has no spin, nose-slide or deep stall protection.
+- F-16 Simplified :  17800/29000 lbf.  Uses custom FBW, which can be switched off, made for FG and aero data. It is a simplified version of the other versions.
 
 The engines vary not only in thrust, but also in fuel consumption. Furthermore they differ in empty weight. Different Blocks have different sets of cockpit panels, MFDs and HSI/EHSI, alongside other changes. Variants will also have different sets of liveries that can be selected. There is also small changes in tail for different variants with and without braking chute.
             ]]></text-13>
