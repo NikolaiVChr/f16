@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+    <sim>
+        <model>
+            <livery>
+                <name type="string">57WG, 64AGRS WA "Blizzard"</name>
+                <texture>Liveries/Block30/87-0267.png</texture> 
+                <owner type="string">USAF</owner>
+                <pilot type="string"></pilot>
+                <scheme type="string">Three-tone camo</scheme>
+                <block type="int">32</block>
+                <serial type="string">87-0267</serial>
+                <squad type="string">64th AGRS "Gomers"</squad>
+                <year type="string">2021</year>
+            </livery>
+            <livery-logo>
+                <texture>Liveries/standard.logos.black.png</texture>
+            </livery-logo>
+
+        <livery-patch>
+        <texture>Liveries/Block30/patch.aggressor1.png</texture>
+        </livery-patch>
+
+        <livery-pod>
+            <texture>Armament/External-stores/MXU-648.png</texture>
+        </livery-pod>
+
+        <f16>
+            <dragchute type="bool">false</dragchute>
+            <link16 type="bool">false</link16>
+        </f16>
+        <livery-specular type="double">0.25</livery-specular>
+        </model>
+    </sim>
+</PropertyList>
