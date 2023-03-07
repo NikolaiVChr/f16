@@ -4,15 +4,15 @@
  <sim>
   <model>
    <livery>
-    <name type="string">180FW, 112FS OH "Wing Flagship"</name>
-    <texture>Liveries/Block40/89-2098.png</texture>
+    <name type="string">180FW, 112FS OH "Unit Flagship"</name>
+    <texture>Liveries/Block40/89-2112.png</texture>
     <owner type="string">USAF</owner>
     <pilot type="string"></pilot>
     <scheme type="string">Have Glass V, Flagship</scheme>
     <block type="int">42</block>
-    <serial type="string">89-2098</serial>
+    <serial type="string">89-2112</serial>
     <squad type="string">112th FS "Stingers"</squad>
-    <year type="string">2022</year>
+    <year type="string">2021</year>
    </livery>
 
    <livery-logo>
