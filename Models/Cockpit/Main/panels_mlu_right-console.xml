@@ -472,6 +472,19 @@
                 <wrap>false</wrap>
             </binding>
         </action>
+        <release>
+            <binding>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/hud-test</property>
+                        <value>2</value>
+                    </equals>
+                </condition>
+                <command>property-assign</command>
+                <property>f16/avionics/hud-test</property>
+                <value>1</value>
+           </binding>
+        </release>
     </animation>
     
     <animation>
