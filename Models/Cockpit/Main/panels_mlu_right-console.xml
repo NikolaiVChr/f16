@@ -429,7 +429,6 @@
         <object-name>autobrt-switch</object-name>
         <property>f16/avionics/hud-daytime</property>
         <factor>45</factor>
-        <offset-deg>-45.0</offset-deg>
         <drag-direction>vertical</drag-direction>
         <center>
             <x-m>0.160991</x-m><y-m>0.43924</y-m><z-m>0.027236</z-m>
@@ -442,8 +441,8 @@
                 <command>property-adjust</command>
                 <property>f16/avionics/hud-daytime</property>
                 <factor>1</factor>
-                <min>0</min>
-                <max>2</max>
+                <min>-1</min>
+                <max>1</max>
                 <wrap>false</wrap>
             </binding>
         </action>

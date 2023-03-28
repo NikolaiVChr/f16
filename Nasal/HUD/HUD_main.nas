@@ -1308,9 +1308,9 @@ append(obj.total, obj.speed_curr);
         # set the update list - using the update manager to improve the performance
         # of the HUD update - without this there was a drop of 20fps (when running at 60fps)
         obj.update_items = [
-            props.UpdateManager.FromHashList(["hud_serviceable", "hud_display", "hud_brightness", "hud_power"], 0.1, func(hdp)#changed to 0.1, this function is VERY heavy to run.
+            props.UpdateManager.FromHashList(["hud_serviceable", "hud_display", "hud_sym", "hud_power", "hud_daytime", "red"], 0.1, func(hdp)#changed to 0.1, this function is VERY heavy to run.
                                       {
-# print("HUD hud_serviceable=", hdp.getproper("hud_serviceable," display=", hdp.getproper("hud_display, " brt=", hdp.getproper("hud_brightness, " power=", hdp.getproper("hud_power);
+# print("HUD hud_serviceable=", hdp.getproper("hud_serviceable," display=", hdp.getproper("hud_display, " brt=", hdp.getproper("hud_sym, " power=", hdp.getproper("hud_power);
 
                                           if (!hdp.hud_display or !hdp.hud_serviceable) {
                                             obj.svg.hide();
@@ -1320,9 +1320,17 @@ append(obj.total, obj.speed_curr);
                                             }
                                             obj.ASEC120Aspect.setColorFill(obj.color);
                                             obj.ASEC65Aspect.setColorFill(obj.color);
-                                          } elsif (hdp.hud_brightness != nil and hdp.hud_power != nil) {
+                                          } elsif (hdp.hud_sym != nil and hdp.hud_power != nil) {
                                             obj.svg.show();
-                                            obj.color = [0.3,1,0.3,hdp.hud_brightness * hdp.hud_power];
+                                            var brt = hdp.hud_sym * hdp.hud_power;
+                                            # Ref: GR1F-16CJ-34-1-1 page 1-158
+                                            var night_ratio = 0.6;
+                                            if (hdp.hud_daytime == 0) { # Auto
+                                                brt *= (night_ratio + (hdp.red * (1 - night_ratio)));
+                                            } elsif (hdp.hud_daytime == -1) { # Night
+                                                brt *= night_ratio;
+                                            }
+                                            obj.color = [0.3,1,0.3,brt];
                                             foreach(item;obj.total) {
                                               item.setColor(obj.color);
                                             }
@@ -2734,8 +2742,11 @@ append(obj.total, obj.speed_curr);
         me.old_hdp = {
         "hud_serviceable":hdp.getproper("hud_serviceable"),
         "hud_display":hdp.getproper("hud_display"),
-        "hud_brightness":hdp.getproper("hud_brightness"),
-        "hud_power":hdp.getproper("hud_power")};
+        "hud_sym":hdp.getproper("hud_sym"),
+        "hud_power":hdp.getproper("hud_power"),
+        "hud_daytime":hdp.getproper("hud_daytime"),
+        "red":hdp.getproper("red"),
+        };
         me.firstOne = 1;
         foreach(var update_item; me.update_items)
         {
