@@ -1964,7 +1964,7 @@ append(obj.total, obj.speed_curr);
                         me.terrain.set_latlon(me.intercept.lat, me.intercept.lon ,me.intercept.elevation);
                         me.value = math.min(1,((math.max(me.distMin-me.distMax, me.distMin-me.start.direct_distance_to(me.terrain))+(me.distMax-me.distMin))/me.distMax));
                     }
-                    me.flirPicHD.setPixel(me.x, me.y, [me.color[0],me.color[1],me.color[2],hdp.getproper("hud_power")*me.brt*math.pow(me.value, me.gain)]);
+                    me.flirPicHD.setPixel(me.x, me.y, [me.color[0],me.color[1],me.color[2],me.brt*math.pow(me.value, me.gain)]);
                 }
             }
             me.scanY+=me.scans;if (me.scanY>flirImageReso-me.scans) me.scanY=0;
