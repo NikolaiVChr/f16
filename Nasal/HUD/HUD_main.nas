@@ -1937,14 +1937,14 @@ append(obj.total, obj.speed_curr);
         me.texelPerDegreeX = HudMath.getPixelPerDegreeXAvg(5);
         me.texelPerDegreeY = HudMath.getPixelPerDegreeYAvg(5);
 
-
+        # FLIR
         me.xBore = int(me.sx*0.5/(256/flirImageReso));
         me.yBore = flirImageReso-1-int((HudMath.getCenterOrigin()[1]+HudMath.getBorePos()[1])/(256/flirImageReso));
         me.distMin = hdp.getproper("groundspeed_kt")*getprop("f16/avionics/hud-flir-distance-min");
         me.distMax = hdp.getproper("groundspeed_kt")*getprop("f16/avionics/hud-flir-distance-max");
         me.gain = 1+getprop("f16/avionics/hud-cont")*2.5;
-        me.symb = getprop("f16/avionics/hud-depr-ret");
-        if (me.symb > 0 and getprop("f16/stores/nav-mounted")==1 and getprop("f16/avionics/power-left-hdpt")==1 and me.color[3] != 0) {
+        me.brt = getprop("f16/avionics/hud-brt");
+        if (me.brt > 0 and getprop("f16/stores/nav-mounted")==1 and getprop("f16/avionics/power-left-hdpt")==1 and me.color[3] != 0) {
             for(me.x = 0; me.x < flirImageReso; me.x += 1) {
                 me.xDevi = (me.x-me.xBore)*(256/flirImageReso);
                 me.xDevi /= me.texelPerDegreeX;
@@ -1964,7 +1964,7 @@ append(obj.total, obj.speed_curr);
                         me.terrain.set_latlon(me.intercept.lat, me.intercept.lon ,me.intercept.elevation);
                         me.value = math.min(1,((math.max(me.distMin-me.distMax, me.distMin-me.start.direct_distance_to(me.terrain))+(me.distMax-me.distMin))/me.distMax));
                     }
-                    me.flirPicHD.setPixel(me.x, me.y, [me.color[0],me.color[1],me.color[2],hdp.getproper("hud_power")*me.symb*math.pow(me.value, me.gain)]);
+                    me.flirPicHD.setPixel(me.x, me.y, [me.color[0],me.color[1],me.color[2],hdp.getproper("hud_power")*me.brt*math.pow(me.value, me.gain)]);
                 }
             }
             me.scanY+=me.scans;if (me.scanY>flirImageReso-me.scans) me.scanY=0;
