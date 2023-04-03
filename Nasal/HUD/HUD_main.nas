@@ -1942,7 +1942,7 @@ append(obj.total, obj.speed_curr);
         me.yBore = flirImageReso-1-int((HudMath.getCenterOrigin()[1]+HudMath.getBorePos()[1])/(256/flirImageReso));
         me.distMin = hdp.getproper("groundspeed_kt")*getprop("f16/avionics/hud-flir-distance-min");
         me.distMax = hdp.getproper("groundspeed_kt")*getprop("f16/avionics/hud-flir-distance-max");
-        me.gain = 1+getprop("f16/avionics/hud-cont")*2.5;
+        me.cont = getprop("f16/avionics/hud-cont");
         me.brt = getprop("f16/avionics/hud-brt");
         if (me.brt > 0 and getprop("f16/stores/nav-mounted")==1 and getprop("f16/avionics/power-left-hdpt")==1 and me.color[3] != 0) {
             for(me.x = 0; me.x < flirImageReso; me.x += 1) {
@@ -1964,6 +1964,7 @@ append(obj.total, obj.speed_curr);
                         me.terrain.set_latlon(me.intercept.lat, me.intercept.lon ,me.intercept.elevation);
                         me.value = math.min(1,((math.max(me.distMin-me.distMax, me.distMin-me.start.direct_distance_to(me.terrain))+(me.distMax-me.distMin))/me.distMax));
                     }
+                    me.gain = math.min(1,1+2*me.cont*(1-2*me.value));
                     me.flirPicHD.setPixel(me.x, me.y, [me.color[0],me.color[1],me.color[2],me.brt*math.pow(me.value, me.gain)]);
                 }
             }
