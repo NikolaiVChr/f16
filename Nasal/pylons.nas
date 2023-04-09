@@ -2594,9 +2594,9 @@ var bore_loop = func {
     #} else {
     #	setprop("payload/armament/growl-type", 1);
     #}
-    settimer(bore_loop, 0.1);
 };
 var bore = 0;
+var bore_loop_timer = maketimer(0.1, bore_loop);
 if (fcs!=nil) {
-    bore_loop();
+    bore_loop_timer.start();
 }
