@@ -233,7 +233,7 @@ var lift_cover = func {
 }
 
 # cockpit control sounds: (don't add ICP buttons to this list, they are calling the functions directly)
-setlistener("controls/armament/master-arm", button2, nil, 0);
+setlistener("controls/armament/master-arm-switch", button2, nil, 0);
 setlistener("controls/armament/master-arm-cover-open", lift_cover, nil, 0);
 setlistener("controls/armament/laser-arm-dmd", click2, nil, 0);
 setlistener("controls/gear/brake-parking", button2, nil, 0);
