@@ -28,7 +28,6 @@ var gearPos = props.globals.getNode("gear/gear[0]/position-norm", 1);
 var sceneLight = props.globals.getNode("rendering/scene/diffuse/red", 1);
 
 var light_manager = {
-    run: 0,
 
     lat_to_m: 110952.0,
     lon_to_m: 0.0,
@@ -44,26 +43,23 @@ var light_manager = {
             ALS_light_spot.new(-1.23466, 0 , -0.862066, 0, 2, 0, 0.5, 0.5, 0.5, 0, 4),  #belly
         ];
 
+        me.timer = maketimer(0, me, me.update);
         me.start();
     },
 
     start: func {
         setprop("/sim/rendering/als-secondary-lights/num-lightspots", size(me.data_light));
 
-        me.run = 1;
-        me.update();
+        me.timer.start();
     },
 
     stop: func {
         setprop("/sim/rendering/als-secondary-lights/num-lightspots", 0);
-        me.run = 0;
+
+        me.timer.stop();
     },
 
     update: func {
-        if (me.run == 0) {
-            return;
-        }
-
         cur_alt = alt_agl.getValue();
         if (cur_alt != nil) {
             if (als_on.getValue() == 1) {
@@ -125,7 +121,6 @@ var light_manager = {
             me.data_light[4].light_off();
         }
 
-        settimer ( func me.update(), 0.00);
     },
 };
 
