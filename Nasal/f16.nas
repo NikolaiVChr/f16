@@ -984,7 +984,7 @@ var CARA = func {
     }
 
     # Tri-service combined altitude radar altimeter
-    if (getprop("f16/avionics/power-rdr-alt-warm")<1) {
+    if ((getprop("f16/avionics/power-rdr-alt-warm")<1) or (getprop("f16/avionics/power-rdr-alt")<2)) {
         setprop("f16/avionics/cara-on",0);
         return;
     }
