@@ -600,8 +600,8 @@ var F16_HMD = {
                                             obj.ASEC65Aspect.setColorFill(obj.color);
                                           } elsif (hdp.hmcs_sym != nil and hdp.hud_power != nil) {
                                             var brt = hdp.hmcs_sym * hdp.hud_power;
-                                            # Ref: 16PR16226 page 60
-                                            var night_ratio = 0.5;
+                                            # Ref: 16PR16226 page 60, adjusted up slightly
+                                            var night_ratio = 0.6;
                                             if (hdp.hud_daytime == 0) { # Auto
                                                 brt *= (night_ratio + (hdp.red * (1 - night_ratio)));
                                             } elsif (hdp.hud_daytime == -1) { # Night

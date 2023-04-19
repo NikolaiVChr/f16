@@ -1323,8 +1323,8 @@ append(obj.total, obj.speed_curr);
                                           } elsif (hdp.hud_sym != nil and hdp.hud_power != nil) {
                                             obj.svg.show();
                                             var brt = hdp.hud_sym * hdp.hud_power;
-                                            # Ref: GR1F-16CJ-34-1-1 page 1-158
-                                            var night_ratio = 0.6;
+                                            # Ref: GR1F-16CJ-34-1-1 page 1-158, adjusted up slightly
+                                            var night_ratio = 0.75;
                                             if (hdp.hud_daytime == 0) { # Auto
                                                 brt *= (night_ratio + (hdp.red * (1 - night_ratio)));
                                             } elsif (hdp.hud_daytime == -1) { # Night
