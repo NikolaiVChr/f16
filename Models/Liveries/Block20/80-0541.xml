@@ -4,7 +4,7 @@
  <sim>
   <model>
    <livery> 
-    <name type="string">USAF 53WEG, 82ATRS TD "Victim Vipers QF-16"</name>
+    <name type="string">53WEG, 82ATRS TD "Victim Vipers QF-16"</name>
     <texture>Liveries/Block20/80-0541.png</texture>
     <owner type="string">USAF</owner>
     <pilot type="string"></pilot>
