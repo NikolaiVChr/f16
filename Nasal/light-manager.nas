@@ -129,27 +129,15 @@ var ALS_light_spot = {
     new: func (light_xpos, light_ypos, light_zpos, light_dir, light_size, light_stretch, light_r, light_g, light_b, light_is_on, number) {
         var me = { parents : [ALS_light_spot] };
 
-        if (number == 0) {
-            me.nd_ref_light_x = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-x-m", 1);
-            me.nd_ref_light_y = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-y-m", 1);
-            me.nd_ref_light_z = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-z-m", 1);
-            me.nd_ref_light_dir = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/dir", 1);
-            me.nd_ref_light_size = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/size", 1);
-            me.nd_ref_light_stretch = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/stretch", 1);
-            me.nd_ref_light_r = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/lightspot-r", 1);
-            me.nd_ref_light_g = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/lightspot-g", 1);
-            me.nd_ref_light_b = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/lightspot-b", 1);
-        } else {
-            me.nd_ref_light_x = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-x-m["~number~"]", 1);
-            me.nd_ref_light_y = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-y-m["~number~"]", 1);
-            me.nd_ref_light_z = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-z-m["~number~"]", 1);
-            me.nd_ref_light_dir = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/dir["~number~"]", 1);
-            me.nd_ref_light_size = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/size["~number~"]", 1);
-            me.nd_ref_light_stretch = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/stretch["~number~"]", 1);
-            me.nd_ref_light_r = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/lightspot-r["~number~"]", 1);
-            me.nd_ref_light_g = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/lightspot-g["~number~"]", 1);
-            me.nd_ref_light_b = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/lightspot-b["~number~"]", 1);
-        }
+        me.nd_ref_light_x = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-x-m["~number~"]", 1);
+        me.nd_ref_light_y = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-y-m["~number~"]", 1);
+        me.nd_ref_light_z = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-z-m["~number~"]", 1);
+        me.nd_ref_light_dir = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/dir["~number~"]", 1);
+        me.nd_ref_light_size = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/size["~number~"]", 1);
+        me.nd_ref_light_stretch = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/stretch["~number~"]", 1);
+        me.nd_ref_light_r = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/lightspot-r["~number~"]", 1);
+        me.nd_ref_light_g = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/lightspot-g["~number~"]", 1);
+        me.nd_ref_light_b = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/lightspot-b["~number~"]", 1);
             
         me.light_xpos = light_xpos;
         me.light_ypos = light_ypos;
