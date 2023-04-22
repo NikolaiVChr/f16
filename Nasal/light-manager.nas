@@ -64,19 +64,19 @@ var light_manager = {
         if (cur_alt != nil) {
             if (als_on.getValue() == 1) {
                 # Condition for lights
-                if (gearPos.getValue() > 0.3 and landingLight.getValue() and alt_agl.getValue() < 1000.0) {
+                if (gearPos.getValue() > 0.3 and landingLight.getValue() and cur_alt < 1000.0) {
                     me.data_light[0].light_on();
                 } else {
                     me.data_light[0].light_off();
                 }
 
-                if (gearPos.getValue() > 0.3 and taxiLight.getValue() and alt_agl.getValue() < 50.0) {
+                if (gearPos.getValue() > 0.3 and taxiLight.getValue() and cur_alt < 50.0) {
                     me.data_light[1].light_on();
                 } else {
                     me.data_light[1].light_off();
                 }
 
-                if (alt_agl.getValue() < 20.0) {
+                if (cur_alt < 20.0) {
                     if (navLight.getValue()) {
                         me.data_light[2].light_on();
                         me.data_light[3].light_on();
