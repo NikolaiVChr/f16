@@ -38,9 +38,9 @@ var light_manager = {
             # light_xpos, light_ypos, light_zpos, light_dir, light_size, light_stretch, light_r, light_g, light_b, light_is_on, number
             ALS_light_spot.new(10, 0, -1, 0, 1.5, -2.7, 0.7, 0.7, 0.7, 0, 0),   #landing
             ALS_light_spot.new(100, 0, -1, 0, 12, 7.0, 0.7, 0.7, 0.7, 0, 1),    #taxi
-            ALS_light_spot.new(1.60236, -4.55165, 0.012629, 0, 2, 0, 0.5, 0, 0, 0, 2),  #left
-            ALS_light_spot.new(1.60236,  4.55165, 0.012629, 0, 2, 0, 0, 0.5, 0, 0, 3),  #right
-            ALS_light_spot.new(-1.23466, 0 , -0.862066, 0, 2, 0, 0.5, 0.5, 0.5, 0, 4),  #belly
+            ALS_light_spot.new(1.60236, -4.55165, 0.012629, 0, 2, 0, 0.7, 0, 0, 0, 2),  #left nav (red only)
+            ALS_light_spot.new(1.60236,  4.55165, 0.012629, 0, 2, 0, 0, 0.7, 0, 0, 3),  #right nav (green only)
+            ALS_light_spot.new(-1.23466, 0 , -0.862066, 0, 2, 0, 0.3, 0.3, 0.3, 0, 4),  #belly
         ];
 
         me.timer = maketimer(0, me, me.update);
@@ -65,12 +65,16 @@ var light_manager = {
             if (als_on.getValue() == 1) {
                 # Condition for lights
                 if (gearPos.getValue() > 0.3 and landingLight.getValue() and cur_alt < 1000.0) {
+                    # Light intensity determined in ALS_light_spot.position()
                     me.data_light[0].light_on();
                 } else {
                     me.data_light[0].light_off();
                 }
 
                 if (gearPos.getValue() > 0.3 and taxiLight.getValue() and cur_alt < 50.0) {
+                    me.data_light[1].light_r = me.data_light[1].light_rmax;
+                    me.data_light[1].light_g = me.data_light[1].light_rmax;
+                    me.data_light[1].light_b = me.data_light[1].light_rmax;
                     me.data_light[1].light_on();
                 } else {
                     me.data_light[1].light_off();
@@ -78,33 +82,36 @@ var light_manager = {
 
                 if (cur_alt < 20.0) {
                     if (navLight.getValue()) {
+                        me.data_light[2].light_r = me.data_light[2].light_rmax * (1.0 / (1.5 - (navLightBrt.getValue()/2)));
+                        me.data_light[3].light_g = me.data_light[3].light_gmax * (1.0 / (1.5 - (navLightBrt.getValue()/2)));
                         me.data_light[2].light_on();
                         me.data_light[3].light_on();
-                        me.data_light[2].light_r = (navLightBrt.getValue() == -1 ? 0.3 : 0.7);
-                        me.data_light[3].light_g = (navLightBrt.getValue() == -1 ? 0.3 : 0.7);
                     } elsif (navLightBrt.getValue() == 0 and formLight.getValue()) {
+                        me.data_light[2].light_r = formLightBrt.getValue() * me.data_light[2].light_rmax;
+                        me.data_light[3].light_g = formLightBrt.getValue() * me.data_light[3].light_gmax;
                         me.data_light[2].light_on();
                         me.data_light[3].light_on();
-                        me.data_light[2].light_r = formLightBrt.getValue() * 0.7;
-                        me.data_light[3].light_g = formLightBrt.getValue() * 0.7;
                     } else {
                         me.data_light[2].light_off();
                         me.data_light[3].light_off();
                     }
                     if (formLight.getValue()) {
+                        me.data_light[4].light_r = formLightBrt.getValue() * me.data_light[4].light_rmax;
+                        me.data_light[4].light_g = formLightBrt.getValue() * me.data_light[4].light_gmax;
+                        me.data_light[4].light_b = formLightBrt.getValue() * me.data_light[4].light_bmax;
                         me.data_light[4].light_on();
-                        me.data_light[4].light_r = formLightBrt.getValue() / 3;
-                        me.data_light[4].light_g = me.data_light[4].light_r;
-                        me.data_light[4].light_b = me.data_light[4].light_r;
                     } else {
                         me.data_light[4].light_off();
                     }
                 }
-        
+
                 # Updating each light position
                 for (var i = 0; i < size(me.data_light); i += 1)
                 {
-                    me.data_light[i].position();
+                    if (me.data_light[i].light_is_on == 1)
+                    {
+                        me.data_light[i].position();
+                    }
                 }
             } else {
                 me.data_light[0].light_off();
@@ -145,12 +152,15 @@ var ALS_light_spot = {
         me.light_dir = light_dir;
         me.light_size = light_size;
         me.light_stretch = light_stretch;
-        me.light_r = light_r;
-        me.light_g = light_g;
-        me.light_b = light_b;
+        me.light_rmax = light_r;
+        me.light_gmax = light_g;
+        me.light_bmax = light_b;
+        me.light_r = 0;
+        me.light_g = 0;
+        me.light_b = 0;
         me.light_is_on = light_is_on;
         me.number = number;
-            
+
         me.lon_to_m  = 0;
 
         me.nd_ref_light_x.setValue(me.light_xpos);
@@ -210,9 +220,10 @@ var ALS_light_spot = {
                 apos = test[1];
 
                 # light intensity. fade fully out at 750m dist:
-                me.light_r = 0.8 - 0.8 * math.clamp(test[0], 0, 750) / 750;
-                me.light_g = me.light_r;
-                me.light_b = me.light_r;
+                var attenuation = math.clamp(test[0], 0, 750) / 750;
+                me.light_r = me.light_rmax * (1 - attenuation);
+                me.light_g = me.light_gmax * (1 - attenuation);
+                me.light_b = me.light_bmax * (1 - attenuation);
 
                 # calculate spot position in relation to view position:
                 var delta_x = (apos.lat() - vpos.lat()) * me.lat2m(vpos.lat());
@@ -226,10 +237,7 @@ var ALS_light_spot = {
                 me.nd_ref_light_dir.setValue(heading);  # used to determine spot stretch direction
                 me.nd_ref_light_size.setValue(me.light_size*(((test[0] - 3) / 2) + 3)); # spot radius grows linear with distance
             } else {
-                me.nd_ref_light_r.setValue(0);
-                me.nd_ref_light_g.setValue(0);
-                me.nd_ref_light_b.setValue(0);
-                me.light_is_on = 0;
+                me.light_off();
             }
         } elsif (me.number == 2 or me.number == 3 or me.number == 4) {
             # red/green nav light and belly light
