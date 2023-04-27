@@ -57,7 +57,7 @@
  <system file="jsb-misc"/>
  <flight_control file="Systems/jsb-controls"/>
  <system file="autoflight"/>
- <propulsion file="Systems/jsb-propulsion-block32"/>
+ <propulsion file="Systems/jsb-propulsion-block42"/>
  <aerodynamics file="Systems/jsb-aerodynamics-block15-subtle.xml"/>
 
 

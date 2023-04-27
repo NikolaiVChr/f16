@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim> 
+  <model>
+   <livery>
+    <name type="string">114 FW, 175FS "75th Anniversary"</name>
+    <texture>Liveries/Block40/88-0485.png</texture>
+    <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Special Color</scheme>
+    <block type="int">40</block>
+    <serial type="string">88-0485</serial>
+    <squad type="string">175th FS "Lobos"</squad>
+    <year type="string">2021</year>
+   </livery>
+   
+   <livery-logo>
+     <texture>Liveries/standard.logos.red.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block40/patch.sdak.png</texture>
+  </livery-patch>
+
+  <livery-pod>
+        <texture>Liveries/Block40/pod.sdak_ang.png</texture>
+  </livery-pod>
+
+  <f16>
+    <dragchute type="bool">false</dragchute>
+    <link16 type="bool">true</link16>
+  </f16>
+  <livery-specular type="double">0.25</livery-specular>
+  </model>
+ </sim>
+</PropertyList>

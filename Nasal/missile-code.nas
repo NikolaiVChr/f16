@@ -2660,6 +2660,7 @@ var AIM = {
                                             speed_fps:              me.old_speed_fps,
                                             weapon_position:         me.coord,
                                             guidance:                 me.guidance,
+                                            guidanceLaw:              me.guidanceLaw,
                                             seeker_detect_range:     me.detect_range_curr_nm,
                                             seeker_fov:             me.max_seeker_dev,
                                             weapon_pitch:             me.pitch,
@@ -3170,6 +3171,10 @@ var AIM = {
 				me.guiding = 0;
 			}
 		} else {
+			me.t_coord_sampled = me.t_coord;
+		}
+		if (me["t_coord_sampled"] == nil) {
+			# Without this, t_coord_sampled can possibly be undefined in maddog mode.
 			me.t_coord_sampled = me.t_coord;
 		}
 

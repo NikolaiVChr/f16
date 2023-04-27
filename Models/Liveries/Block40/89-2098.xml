@@ -8,7 +8,7 @@
     <texture>Liveries/Block40/89-2098.png</texture>
     <owner type="string">USAF</owner>
     <pilot type="string"></pilot>
-    <scheme type="string"></scheme>
+    <scheme type="string">Have Glass V, Flagship</scheme>
     <block type="int">42</block>
     <serial type="string">89-2098</serial>
     <squad type="string">112th FS "Stingers"</squad>
@@ -16,7 +16,7 @@
    </livery>
 
    <livery-logo>
-    <texture>Liveries/Block40/OH-098.png</texture>
+    <texture>Liveries/Block40/OH-112FS.png</texture>
    </livery-logo>
    
 
@@ -30,6 +30,7 @@
 
         <f16>
             <dragchute type="bool">false</dragchute>
+            <link16 type="bool">true</link16>
         </f16>
         <livery-specular type="double">0.6</livery-specular>
   </model>

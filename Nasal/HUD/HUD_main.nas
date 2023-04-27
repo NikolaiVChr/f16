@@ -1308,9 +1308,9 @@ append(obj.total, obj.speed_curr);
         # set the update list - using the update manager to improve the performance
         # of the HUD update - without this there was a drop of 20fps (when running at 60fps)
         obj.update_items = [
-            props.UpdateManager.FromHashList(["hud_serviceable", "hud_display", "hud_brightness", "hud_power"], 0.1, func(hdp)#changed to 0.1, this function is VERY heavy to run.
+            props.UpdateManager.FromHashList(["hud_serviceable", "hud_display", "hud_sym", "hud_power", "hud_daytime", "red"], 0.1, func(hdp)#changed to 0.1, this function is VERY heavy to run.
                                       {
-# print("HUD hud_serviceable=", hdp.getproper("hud_serviceable," display=", hdp.getproper("hud_display, " brt=", hdp.getproper("hud_brightness, " power=", hdp.getproper("hud_power);
+# print("HUD hud_serviceable=", hdp.getproper("hud_serviceable," display=", hdp.getproper("hud_display, " brt=", hdp.getproper("hud_sym, " power=", hdp.getproper("hud_power);
 
                                           if (!hdp.hud_display or !hdp.hud_serviceable) {
                                             obj.svg.hide();
@@ -1320,9 +1320,17 @@ append(obj.total, obj.speed_curr);
                                             }
                                             obj.ASEC120Aspect.setColorFill(obj.color);
                                             obj.ASEC65Aspect.setColorFill(obj.color);
-                                          } elsif (hdp.hud_brightness != nil and hdp.hud_power != nil) {
+                                          } elsif (hdp.hud_sym != nil and hdp.hud_power != nil) {
                                             obj.svg.show();
-                                            obj.color = [0.3,1,0.3,hdp.hud_brightness * hdp.hud_power];
+                                            var brt = hdp.hud_sym * hdp.hud_power;
+                                            # Ref: GR1F-16CJ-34-1-1 page 1-158, adjusted up slightly
+                                            var night_ratio = 0.75;
+                                            if (hdp.hud_daytime == 0) { # Auto
+                                                brt *= (night_ratio + (hdp.red * (1 - night_ratio)));
+                                            } elsif (hdp.hud_daytime == -1) { # Night
+                                                brt *= night_ratio;
+                                            }
+                                            obj.color = [0.3,1,0.3,brt];
                                             foreach(item;obj.total) {
                                               item.setColor(obj.color);
                                             }
@@ -1929,14 +1937,14 @@ append(obj.total, obj.speed_curr);
         me.texelPerDegreeX = HudMath.getPixelPerDegreeXAvg(5);
         me.texelPerDegreeY = HudMath.getPixelPerDegreeYAvg(5);
 
-
+        # FLIR
         me.xBore = int(me.sx*0.5/(256/flirImageReso));
         me.yBore = flirImageReso-1-int((HudMath.getCenterOrigin()[1]+HudMath.getBorePos()[1])/(256/flirImageReso));
         me.distMin = hdp.getproper("groundspeed_kt")*getprop("f16/avionics/hud-flir-distance-min");
         me.distMax = hdp.getproper("groundspeed_kt")*getprop("f16/avionics/hud-flir-distance-max");
-        me.gain = 1+getprop("f16/avionics/hud-cont")*2.5;
-        me.symb = getprop("f16/avionics/hud-depr-ret");
-        if (me.symb > 0 and getprop("f16/stores/nav-mounted")==1 and getprop("f16/avionics/power-left-hdpt")==1 and me.color[3] != 0) {
+        me.cont = getprop("f16/avionics/hud-cont");
+        me.brt = getprop("f16/avionics/hud-brt");
+        if (me.brt > 0 and getprop("f16/stores/nav-mounted")==1 and getprop("f16/avionics/power-left-hdpt")==1 and me.color[3] != 0) {
             for(me.x = 0; me.x < flirImageReso; me.x += 1) {
                 me.xDevi = (me.x-me.xBore)*(256/flirImageReso);
                 me.xDevi /= me.texelPerDegreeX;
@@ -1956,7 +1964,8 @@ append(obj.total, obj.speed_curr);
                         me.terrain.set_latlon(me.intercept.lat, me.intercept.lon ,me.intercept.elevation);
                         me.value = math.min(1,((math.max(me.distMin-me.distMax, me.distMin-me.start.direct_distance_to(me.terrain))+(me.distMax-me.distMin))/me.distMax));
                     }
-                    me.flirPicHD.setPixel(me.x, me.y, [me.color[0],me.color[1],me.color[2],hdp.getproper("hud_power")*me.symb*math.pow(me.value, me.gain)]);
+                    me.gain = math.min(1,1+2*me.cont*(1-2*me.value));
+                    me.flirPicHD.setPixel(me.x, me.y, [me.color[0],me.color[1],me.color[2],me.brt*math.pow(me.value, me.gain)]);
                 }
             }
             me.scanY+=me.scans;if (me.scanY>flirImageReso-me.scans) me.scanY=0;
@@ -2734,8 +2743,11 @@ append(obj.total, obj.speed_curr);
         me.old_hdp = {
         "hud_serviceable":hdp.getproper("hud_serviceable"),
         "hud_display":hdp.getproper("hud_display"),
-        "hud_brightness":hdp.getproper("hud_brightness"),
-        "hud_power":hdp.getproper("hud_power")};
+        "hud_sym":hdp.getproper("hud_sym"),
+        "hud_power":hdp.getproper("hud_power"),
+        "hud_daytime":hdp.getproper("hud_daytime"),
+        "red":hdp.getproper("red"),
+        };
         me.firstOne = 1;
         foreach(var update_item; me.update_items)
         {

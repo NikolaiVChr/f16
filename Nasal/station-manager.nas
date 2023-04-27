@@ -1074,14 +1074,12 @@ var FuelTank = {
 	stop: func {},
 };
 
-var Smoker = {
-# Implements a external fuel tank.
+var Submodel = {
+# Implements a generic model, e.g., smoker or pod.
 #  no loop, but lots of listeners.
 #
-# Attributes:
-#  fuel tank number
 	new: func (name, short, model_path) {
-		var s = {parents:[Smoker]};
+		var s = {parents:[Submodel]};
 		s.type = name;
 		s.typeLong = name;
 		s.typeShort = short;
@@ -1095,22 +1093,18 @@ var Smoker = {
 	},
 
 	mount: func(pylon) {
-		# set capacity in fuel tank
 		setprop(me.modelPath, 1);
 	},
 
 	eject: func {
-		# spill out all the fuel?
 		setprop(me.modelPath, 0);
 	},
 
 	del: func {
-		# delete all the fuel
 		setprop(me.modelPath, 0);
 	},
 
 	getAmmo: func {
-		# return 0
 		return 0;
 	},
 
@@ -1134,22 +1128,13 @@ var Dummy = {
 		return s;
 	},
 
-	mount: func(pylon) {
-		
-	},
+	mount: func(pylon) {},
 
-	eject: func {
-		# spill out all the fuel?
-		
-	},
+	eject: func {},
 
-	del: func {
-		# delete all the fuel
-		
-	},
+	del: func {},
 
 	getAmmo: func {
-		# return 0
 		return 0;
 	},
 

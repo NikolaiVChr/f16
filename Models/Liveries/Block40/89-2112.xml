@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery>
+    <name type="string">180FW, 112FS OH "Unit Flagship"</name>
+    <texture>Liveries/Block40/89-2112.png</texture>
+    <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Have Glass V, Flagship</scheme>
+    <block type="int">42</block>
+    <serial type="string">89-2112</serial>
+    <squad type="string">112th FS "Stingers"</squad>
+    <year type="string">2021</year>
+   </livery>
+
+   <livery-logo>
+    <texture>Liveries/Block40/OH-112FS.png</texture>
+   </livery-logo>
+   
+
+   <livery-patch>
+      <texture>Liveries/Block40/patch.Ohio.png</texture>
+   </livery-patch>
+
+  <livery-pod>
+        <texture>Armament/External-stores/MXU-648.png</texture>
+  </livery-pod>
+
+        <f16>
+            <dragchute type="bool">false</dragchute>
+            <link16 type="bool">true</link16>
+        </f16>
+        <livery-specular type="double">0.6</livery-specular>
+  </model>
+ </sim>
+</PropertyList>

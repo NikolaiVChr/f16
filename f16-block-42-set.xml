@@ -5,7 +5,7 @@
  <sim>
   <description>General Dynamics F-16CM Block 42</description>
   <long-description>
-   The General Dynamics F-16CM Fighting Falcon (or Night Falcon) is a single-engine supersonic multirole fighter aircraft originally developed by General Dynamics (now Lockheed Martin) for the United States Air Force (USAF). Powered by F110-GE-100. Designed as an air superiority day fighter, it evolved into a successful all-weather multirole aircraft.
+   The General Dynamics F-16CM Fighting Falcon (or Night Falcon) is a single-engine supersonic multirole fighter aircraft originally developed by General Dynamics (now Lockheed Martin) for the United States Air Force (USAF). Powered by F100-PW-229 (ANG upgrade). Designed as an air superiority day fighter, it evolved into a successful all-weather multirole aircraft.
    Block 40/42 introduced LANTIRN pods, GPS, upgraded APG-68 radar, ATF and more. The Common Configuration Implementation Program (CCIP) is a modernization effort that seeks to standardize all USAF Block 40/42/50/52 F-16s to a common Block 50/52-based avionics software and hardware configuration. This includes features like new MMC, Colored MFDs, advanced IFF and Sniper ATP. Modified F-16CGs have been designated as CM.
   </long-description>
   <author>Erik Hofman, Martin "Pegasus" Schmitt, Pensacola, Nikolai V. Chr., J Maverick 16, Richard Harrison, Josh Davidson, Martien Van Der P., Jonathan Redpath, Gary Brown, Justin Nicholson, Enrico Castaldi, Timi, Barszczisbad, PH-JAKE, Bat Campion</author>
@@ -59,17 +59,12 @@
     <preview>
         <type>exterior</type>
         <splash type="bool">true</splash>
-        <path>gui/splash/f16_b40_1.png</path>
+        <path>gui/splash/f16_b42_1.png</path>
     </preview>
     <preview>
         <type>exterior</type>
         <splash type="bool">true</splash>
-        <path>gui/splash/f16_b40_2.png</path>
-    </preview>
-   <preview>
-        <type>exterior</type>
-        <splash type="bool">true</splash>
-        <path>gui/splash/f16_b40_3.png</path>
+        <path>gui/splash/f16_b42_2.png</path>
     </preview>
   </previews>
 
@@ -227,7 +222,7 @@
 
  <engines>
     <engine>
-      <rated-mil-dry type="double">14670</rated-mil-dry>
+      <rated-mil-dry type="double">17800</rated-mil-dry>
     </engine>
   </engines>
 

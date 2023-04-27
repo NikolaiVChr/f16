@@ -7,7 +7,7 @@
   <ixy unit="SLUG*FT2"> 0 </ixy>
   <ixz unit="SLUG*FT2"> 982 </ixz><!-- why is this negated when flying???? -->
   <iyz unit="SLUG*FT2"> 0 </iyz>
-  <emptywt unit="LBS"> 17200 </emptywt>
+  <emptywt unit="LBS"> 17800 </emptywt> <!-- Original 17200. With F100-PW-229, total is ca. 600lbs heavier. Sources: PW, USAF -->
   <location name="CG" unit="IN">
    <x> 8.5 </x><!-- See comment in metrics.xml -->
    <y> 0 </y>

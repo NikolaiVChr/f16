@@ -230,32 +230,6 @@
         </action>
     </animation>
     
-
-
-    <animation>
-        <type>knob</type>
-        <object-name>tas-switch</object-name>
-        <property>f16/avionics/hud-velocity</property>
-        <factor>45</factor>
-        <offset-deg>0</offset-deg>
-        <drag-direction>vertical</drag-direction>
-        <center>
-            <x-m>0.161223</x-m><y-m>0.378022</y-m><z-m>0.027236</z-m>
-        </center>
-        <axis>
-            <x>0</x><y>-1</y><z>0</z>
-        </axis>
-        <action>
-            <binding>
-                <command>property-adjust</command>
-                <property>f16/avionics/hud-velocity</property>
-                <factor>1</factor>
-                <min>-1</min>
-                <max>1</max>
-                <wrap>false</wrap>
-            </binding>
-        </action>
-    </animation>
     
     <animation>
         <type>knob</type>
@@ -307,12 +281,39 @@
         </action>
     </animation>
 
+    <!-- HUD Remote Control Panel -->
+
+    <animation>
+        <type>knob</type>
+        <object-name>tas-switch</object-name>
+        <property>f16/avionics/hud-velocity</property>
+        <factor>35</factor>
+        <offset-deg>0</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>0.161223</x-m><y-m>0.378022</y-m><z-m>0.027236</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>-1</y><z>0</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/hud-velocity</property>
+                <factor>1</factor>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+
     <animation>
         <type>knob</type>
         <object-name>altrad-switch</object-name>
         <property>f16/avionics/hud-alt</property>
-        <factor>45</factor>
-        <offset-deg>-45.0</offset-deg>
+        <factor>35</factor>
+        <offset-deg>-35.0</offset-deg>
         <drag-direction>vertical</drag-direction>
         <center>
             <x-m>0.161009</x-m><y-m>0.408407</y-m><z-m>0.027236</z-m>
@@ -336,8 +337,8 @@
         <type>knob</type>
         <object-name>deddata-switch</object-name>
         <property>f16/avionics/hud-ded</property>
-        <factor>45</factor>
-        <offset-deg>-45</offset-deg>
+        <factor>35</factor>
+        <offset-deg>-35</offset-deg>
         <drag-direction>vertical</drag-direction>
         <center>
             <x-m>0.125163</x-m><y-m>0.439937</y-m><z-m>0.030422</z-m>
@@ -364,22 +365,11 @@
     </animation>
 
     <animation>
-        <object-name>GROWTH.KY58</object-name>
-        <type>select</type>
-        <condition>
-            <less-than>
-                <property>sim/variant-id</property>
-                <value>2</value>
-            </less-than>
-        </condition>
-    </animation>
-
-    <animation>
         <type>knob</type>
         <object-name>w_vah-switch</object-name>
         <property>f16/avionics/hud-scales</property>
-        <factor>45</factor>
-        <offset-deg>-45.0</offset-deg>
+        <factor>35</factor>
+        <offset-deg>-35.0</offset-deg>
         <drag-direction>vertical</drag-direction>
         <center>
             <x-m>0.126675</x-m><y-m>0.377806</y-m><z-m>0.030568</z-m>
@@ -403,8 +393,8 @@
         <type>knob</type>
         <object-name>att_fpm-switch</object-name>
         <property>f16/avionics/hud-fpm</property>
-        <factor>45</factor>
-        <offset-deg>-45.0</offset-deg>
+        <factor>35</factor>
+        <offset-deg>-35.0</offset-deg>
         <drag-direction>vertical</drag-direction>
         <center>
             <x-m>0.127244</x-m><y-m>0.408555</y-m><z-m>0.030568</z-m>
@@ -428,8 +418,7 @@
         <type>knob</type>
         <object-name>autobrt-switch</object-name>
         <property>f16/avionics/hud-daytime</property>
-        <factor>45</factor>
-        <offset-deg>-45.0</offset-deg>
+        <factor>35</factor>
         <drag-direction>vertical</drag-direction>
         <center>
             <x-m>0.160991</x-m><y-m>0.43924</y-m><z-m>0.027236</z-m>
@@ -442,8 +431,8 @@
                 <command>property-adjust</command>
                 <property>f16/avionics/hud-daytime</property>
                 <factor>1</factor>
-                <min>0</min>
-                <max>2</max>
+                <min>-1</min>
+                <max>1</max>
                 <wrap>false</wrap>
             </binding>
         </action>
@@ -453,8 +442,8 @@
         <type>knob</type>
         <object-name>test-step-switch</object-name>
         <property>f16/avionics/hud-test</property>
-        <factor>45</factor>
-        <offset-deg>-45.0</offset-deg>
+        <factor>35</factor>
+        <offset-deg>-35.0</offset-deg>
         <drag-direction>vertical</drag-direction>
         <center>
             <x-m>0.161119</x-m><y-m>0.468743</y-m><z-m>0.027236</z-m>
@@ -472,6 +461,19 @@
                 <wrap>false</wrap>
             </binding>
         </action>
+        <release>
+            <binding>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/hud-test</property>
+                        <value>2</value>
+                    </equals>
+                </condition>
+                <command>property-assign</command>
+                <property>f16/avionics/hud-test</property>
+                <value>1</value>
+           </binding>
+        </release>
     </animation>
     
     <animation>
