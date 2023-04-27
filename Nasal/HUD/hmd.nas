@@ -587,7 +587,7 @@ var F16_HMD = {
         # set the update list - using the update manager to improve the performance
         # of the HUD update - without this there was a drop of 20fps (when running at 60fps)
         obj.update_items = [
-            props.UpdateManager.FromHashList(["hmcs_sym", "hud_power"], 0.1, func(hdp)#changed to 0.1, this function is VERY heavy to run.
+            props.UpdateManager.FromHashList(["hmcs_sym", "hud_power", "hud_daytime", "red"], 0.1, func(hdp)#changed to 0.1, this function is VERY heavy to run.
                                       {
 # print("HUD hud_serviceable=", hdp.hud_serviceable," display=", hdp.hud_display, " brt=", hdp.hud_brightness, " power=", hdp.hud_power);
 
@@ -599,7 +599,15 @@ var F16_HMD = {
                                             obj.ASEC120Aspect.setColorFill(obj.color);
                                             obj.ASEC65Aspect.setColorFill(obj.color);
                                           } elsif (hdp.hmcs_sym != nil and hdp.hud_power != nil) {
-                                            obj.color = [0.5,1,0.5,hdp.hmcs_sym * hdp.hud_power];
+                                            var brt = hdp.hmcs_sym * hdp.hud_power;
+                                            # Ref: 16PR16226 page 60, adjusted up slightly
+                                            var night_ratio = 0.6;
+                                            if (hdp.hud_daytime == 0) { # Auto
+                                                brt *= (night_ratio + (hdp.red * (1 - night_ratio)));
+                                            } elsif (hdp.hud_daytime == -1) { # Night
+                                                brt *= night_ratio;
+                                            }
+                                            obj.color = [0.5,1,0.5,brt];
                                             foreach(item;obj.total) {
                                               item.setColor(obj.color);
                                             }
@@ -813,7 +821,10 @@ var F16_HMD = {
             me.svg.hide();
             me.old_hdp = {
                 "hmcs_sym":hdp.getproper("hmcs_sym"),
-                "hud_power":hdp.getproper("hud_power")};
+                "hud_power":hdp.getproper("hud_power"),
+                "hud_daytime":hdp.getproper("hud_daytime"),
+                "red":hdp.getproper("red"),
+            };
             me.firstOne = 1;
             foreach(var update_item; me.update_items)
             {
@@ -1263,7 +1274,10 @@ var F16_HMD = {
 
         me.old_hdp = {
         "hmcs_sym":hdp.getproper("hmcs_sym"),
-        "hud_power":hdp.getproper("hud_power")};
+        "hud_power":hdp.getproper("hud_power"),
+        "hud_daytime":hdp.getproper("hud_daytime"),
+        "red":hdp.getproper("red"),
+        };
         me.firstOne = 1;
         foreach(var update_item; me.update_items)
         {

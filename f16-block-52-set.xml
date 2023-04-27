@@ -10,7 +10,6 @@
   </long-description>
   <author>Erik Hofman, Martin "Pegasus" Schmitt, Pensacola, Nikolai V. Chr., J Maverick 16, Richard Harrison, Josh Davidson, Martien Van Der P., Jonathan Redpath, Gary Brown, Justin Nicholson, Enrico Castaldi, Timi, Barszczisbad, PH-JAKE, Bat Campion</author>
   <status>production</status>
-  <status>production</status>
   <rating>
     <FDM type="int">5</FDM>
     <systems type="int">4</systems>
@@ -51,17 +50,12 @@
             <preview>
                 <type>exterior</type>
                 <splash type="bool">true</splash>
-                <path>gui/splash/f16_b50_1.png</path>
+                <path>gui/splash/f16_b52_1.png</path>
             </preview>
             <preview>
                 <type>exterior</type>
                 <splash type="bool">true</splash>
-                <path>gui/splash/f16_b50_2.png</path>
-            </preview>
-            <preview>
-                <type>exterior</type>
-                <splash type="bool">true</splash>
-                <path>gui/splash/f16_b50_3.png</path>
+                <path>gui/splash/f16_b52_2.png</path>
             </preview>
   </previews>
 

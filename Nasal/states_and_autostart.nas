@@ -217,7 +217,7 @@ var autostartengine = func {
   setprop("f16/avionics/power-left-hdpt",1);
 
   setprop("f16/avionics/hud-sym", 1);
-  setprop("f16/avionics/hud-brt", 1);
+  setprop("f16/avionics/hud-brt", 0);
 
   setprop("f16/avionics/ew-mws-switch",1);
   setprop("f16/avionics/ew-jmr-switch",1);

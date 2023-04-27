@@ -3173,6 +3173,10 @@ var AIM = {
 		} else {
 			me.t_coord_sampled = me.t_coord;
 		}
+		if (me["t_coord_sampled"] == nil) {
+			# Without this, t_coord_sampled can possibly be undefined in maddog mode.
+			me.t_coord_sampled = me.t_coord;
+		}
 
 		# Calculate current target elevation and azimut deviation.
 		me.t_alt            = me.t_coord_sampled.alt()*M2FT;

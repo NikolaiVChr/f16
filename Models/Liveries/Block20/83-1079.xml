@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery> 
+    <name type="string">119FW, 178FS ND #079</name>
+    <texture>Liveries/Block20/83-1079.png</texture>
+    <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Two-tone gray</scheme>
+    <block type="int">20</block>
+    <serial type="string">83-1079</serial>
+    <squad type="string">178th FS "Happy Hooligans"</squad>
+    <year type="string">1990</year>
+   </livery>
+
+   <livery-logo>
+    <texture>Liveries/standard.logos.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block20/patch.NDANG.png</texture>
+   </livery-patch>
+
+   <livery-pod>
+        <texture>Armament/External-stores/MXU-648.png</texture>
+   </livery-pod>
+
+  <f16>
+     <dragchute type="bool">false</dragchute>
+     <link16 type="bool">false</link16>
+  </f16>
+  <livery-specular type="double">0.35</livery-specular>
+  </model>
+ </sim>
+</PropertyList>

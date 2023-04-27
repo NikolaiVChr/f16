@@ -4,9 +4,15 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">RNLAF 322 Sqn, J-063 "60 years Polly"</name>
+    <name type="string">322 Sqn, J-063 "60 years Polly"</name>
     <texture>Liveries/Block20/86-0063.png</texture>
     <owner type="string">RNLAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Two-tone gray, Special Color</scheme>
+    <block type="int">20</block>
+    <serial type="string">86-0063</serial>
+    <squad type="string">No. 322 Sqn "Polly Parrot"</squad>
+    <year type="string">2003</year>
    </livery>
    <livery-logo>
     <texture>Liveries/Block20/rnlaf.mig.logos.png</texture>

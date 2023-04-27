@@ -1282,6 +1282,7 @@
             <cara-on type="bool">0</cara-on><!-- if CARA radar altimeter is detecting ground (whether enabled or not) -->
             <cara-alow-inhibit type="bool">1</cara-alow-inhibit>
             <hud-ded type="int">0</hud-ded>
+            <hud-daytime type="int">0</hud-daytime>
             <n-reset type="bool">false</n-reset>
             <gnd-jett type="bool">false</gnd-jett>
             <hud-alt type="int">0</hud-alt><!-- 0=AUTO 1=BARO 2=RADAR -->

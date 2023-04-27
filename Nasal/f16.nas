@@ -984,7 +984,7 @@ var CARA = func {
     }
 
     # Tri-service combined altitude radar altimeter
-    if (getprop("f16/avionics/power-rdr-alt-warm")<1) {
+    if ((getprop("f16/avionics/power-rdr-alt-warm")<1) or (getprop("f16/avionics/power-rdr-alt")<2)) {
         setprop("f16/avionics/cara-on",0);
         return;
     }
@@ -1292,10 +1292,12 @@ var SubSystem_Main = {
             speed_down_fps            : "velocities/speed-down-fps",
             speed_east_fps            : "velocities/speed-east-fps",
             speed_north_fps           : "velocities/speed-north-fps",
-            hud_brightness            : "f16/avionics/hud-sym",
+            hud_sym                   : "f16/avionics/hud-sym",
             hud_power                 : "f16/avionics/hud-power",
             hud_display               : "controls/HUD/display-on",
             hud_serviceable           : "instrumentation/hud/serviceable",
+            hud_daytime               : "f16/avionics/hud-daytime",
+            red                       : "rendering/scene/diffuse/red",
             time_until_crash          : "instrumentation/radar/time-till-crash",
             vne                       : "f16/vne",
             texUp                     : "f16/hud/texels-up",
