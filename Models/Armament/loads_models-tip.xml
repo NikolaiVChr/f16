@@ -34,6 +34,17 @@
   </offsets>
  </model>
 
+ <model>
+  <name>Station1_AIM-9X</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9X/AIM-9X_LW.xml</path>
+  <offsets>
+   <x-m>1.16</x-m>
+   <y-m>-4.865</y-m>
+   <z-m>-0.01</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
   <model>
   <name>Station1_CATM-9L</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AIM-9L/CATM-9L_LW.xml</path>
@@ -150,6 +161,17 @@
  <model>
   <name>Station9_AIM-9M</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AIM-9M/AIM-9M_RW.xml</path>
+  <offsets>
+   <x-m>1.16</x-m>
+   <y-m>4.865</y-m>
+   <z-m>-0.01</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station9_AIM-9X</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9X/AIM-9X_RW.xml</path>
   <offsets>
    <x-m>1.16</x-m>
    <y-m>4.865</y-m>
