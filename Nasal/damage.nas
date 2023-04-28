@@ -166,6 +166,7 @@ var warheads = {
     "Flare":             [95,    0.00,0,0],
     "3M9":               [96,  125.00,0,0],# 3M9M3 Missile used with 2K12/SA-6
     "5V28V":             [97,  478.00,0,0],# Missile used with S-200D/SA-5
+    "AIM-9X":            [98,   20.80,0,0],
 };
 
 var AIR_RADAR = "air";
