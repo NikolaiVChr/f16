@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 
 <PropertyList>
- <sim> 
+ <sim>
   <model>
    <livery>
-    <name type="string">31FW, 510FS AV "Guardian Angel"</name>
-    <texture>Liveries/Block40/89-2001_2.png</texture>
+    <name type="string">31FW, 510FS AV "Unit Anniversary Flagship"</name>
+    <texture>Liveries/Block40/89-2030.png</texture>
     <owner type="string">USAF</owner>
     <pilot type="string"></pilot>
     <scheme type="string">Two-tone gray, Flagship</scheme>
     <block type="int">40</block>
-    <serial type="string">89-2001</serial>
+    <serial type="string">89-2030</serial>
     <squad type="string">510th FS "Buzzards"</squad>
-    <year type="string">2004</year>
+    <year type="string">2023</year>
    </livery>
    
    <livery-logo>
-    <texture>Liveries/yf/yf16-transp.png</texture>
+    <texture>Liveries/standard.logos.black2.png</texture>
    </livery-logo>
 
    <livery-patch>
@@ -31,7 +31,7 @@
     <dragchute type="bool">false</dragchute>
     <link16 type="bool">false</link16>
   </f16>
-  <livery-specular type="double">0.25</livery-specular>
+  <livery-specular type="double">0.30</livery-specular>
   </model>
  </sim>
 </PropertyList>
