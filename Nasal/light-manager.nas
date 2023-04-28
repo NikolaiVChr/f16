@@ -235,7 +235,7 @@ var ALS_light_spot = {
                 me.nd_ref_light_z.setValue(delta_z);
 
                 me.nd_ref_light_dir.setValue(heading);  # used to determine spot stretch direction
-                me.nd_ref_light_size.setValue(me.light_size*(((test[0] - 3) / 2) + 3)); # spot radius grows linear with distance
+                me.nd_ref_light_size.setValue(me.light_size * (10 * math.sqrt(test[0] + 70) - 82.5));
             } else {
                 me.light_off();
             }
