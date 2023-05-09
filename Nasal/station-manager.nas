@@ -165,7 +165,20 @@ var Station = {
 							}
 							return {};
 						};
-					}
+					} elsif (me.weaponName == "AIM-9X") {
+                        mf = func (struct) {
+                            if (struct.deviation_deg != nil) {
+                                if (struct.deviation_deg > 70) {
+                                    return {"navigation":"direct"};
+                                } elsif (struct.deviation_deg < 70) {
+                                    return {"navigation":"OPN", "guidance":"heat"};
+                                } elsif (struct.deviation_deg < 55) {
+                                    return {"navigation":"OPN", "guidance":"heat", "abort_midflight_function":1};
+                                }
+                            }
+                            return {};
+                        };
+                    };
 					
 					me.aim = armament.AIM.new(me.id*100+me.i, me.weaponName, "", mf, me.position);
 					if (me.aim == -1) {

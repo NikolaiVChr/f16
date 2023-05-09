@@ -179,12 +179,12 @@
             <long-name type="string">AIM-9X Sidewinder</long-name>
             <vol-search type="double">0.25</vol-search>
             <vol-track type="double">0.60</vol-track>
-            <guidance type="string">heat</guidance>
+            <guidance type="string">inertial</guidance>  <!-- Switched to heat mid-flight -->
             <navigation type="string">OPN</navigation>
             <all-aspect type="bool">true</all-aspect>
             <max-fire-range-nm type="double">15</max-fire-range-nm> <!-- TODO: Source -->
-            <FCS-field-deg type="int">90</FCS-field-deg>            <!-- Larger than aim-9m --> <!-- TODO: Check this -->
-            <seeker-field-deg type="int">90</seeker-field-deg>                 <!-- source:  --> <!-- TODO: Check this -->
+            <FCS-field-deg type="int">360</FCS-field-deg>
+            <seeker-field-deg type="int">180</seeker-field-deg>                 <!-- source:  -->
             <max-g type="int">50</max-g>                                  <!-- Online ~60G, other sims 35-45 -->
             <thrust-lbf-stage-1 type="double">2880</thrust-lbf-stage-1><!-- same as aim-9m -->
             <thrust-lbf-stage-2 type="double">0.0</thrust-lbf-stage-2>
@@ -198,7 +198,7 @@
             <arming-time-sec type="double">1.4</arming-time-sec>          <!-- same as aim-9l -->
             <min-speed-for-guiding-mach type="double">0.8</min-speed-for-guiding-mach><!-- same as aim-9j -->
             <self-destruct-time-sec type="double">60</self-destruct-time-sec>         <!-- same as aim-9m -->
-            <seeker-angular-speed-dps type="double">24</seeker-angular-speed-dps><!-- same as aim-9m --> <!-- TODO: Check this -->
+            <seeker-angular-speed-dps type="double">60</seeker-angular-speed-dps>
             <rosette-radius-deg type="double">0</rosette-radius-deg>
             <sw-expanded-acquisition-mode type="bool">true</sw-expanded-acquisition-mode>
             <nutate-double-d-instead-of-circle type="bool">false</nutate-double-d-instead-of-circle>
