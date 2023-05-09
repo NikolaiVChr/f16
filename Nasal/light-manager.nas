@@ -71,10 +71,11 @@ var light_manager = {
                     me.data_light[0].light_off();
                 }
 
-                if (gearPos.getValue() > 0.3 and taxiLight.getValue() and cur_alt < 50.0) {
-                    me.data_light[1].light_r = me.data_light[1].light_rmax;
-                    me.data_light[1].light_g = me.data_light[1].light_rmax;
-                    me.data_light[1].light_b = me.data_light[1].light_rmax;
+                if (gearPos.getValue() > 0.3 and taxiLight.getValue() and cur_alt < 300.0) {
+                    var gain = math.pow(((300.0 - cur_alt) / 300.0), 4);
+                    me.data_light[1].light_r = me.data_light[1].light_rmax * gain;
+                    me.data_light[1].light_g = me.data_light[1].light_gmax * gain;
+                    me.data_light[1].light_b = me.data_light[1].light_bmax * gain;
                     me.data_light[1].light_on();
                 } else {
                     me.data_light[1].light_off();
