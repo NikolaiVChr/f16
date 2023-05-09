@@ -900,19 +900,20 @@ var AIContact = {
 		# This is for inaccurate radar locking of surface targets with TGP.
 		if (me.virt != nil) return me.virt;
 		me.virt = {parents: [me, AIContact, Contact]};
-		me.getCoord();
-		me.coord.set_xyz(me.coord.x()+rand()*spheric_dist_m*2-spheric_dist_m,me.coord.y()+rand()*spheric_dist_m*2-spheric_dist_m,me.coord.z()+rand()*spheric_dist_m*2-spheric_dist_m);
-		me.virt.elevpick = geo.elevation(me.coord.lat(),me.coord.lon());
-		if (spheric_dist_m != 0 and me.virt.elevpick != nil) me.coord.set_alt(me.virt.elevpick);# TODO: Not convinced this is the place for the 1m offset since both missiles and radar subtract 1m from targetdistance, but for slanted picking with undulations its still good idea to not place it at the base.
-		me.virt.coord = me.coord;
+		me.virtCoord = me.getCoord();
+		me.virtCoord.set_xyz(me.virtCoord.x()+rand()*spheric_dist_m*2-spheric_dist_m,me.virtCoord.y()+rand()*spheric_dist_m*2-spheric_dist_m,me.virtCoord.z()+rand()*spheric_dist_m*2-spheric_dist_m);
+		me.virt.elevpick = geo.elevation(me.virtCoord.lat(),me.virtCoord.lon());
+		if (spheric_dist_m != 0 and me.virt.elevpick != nil) me.virtCoord.set_alt(me.virt.elevpick);# TODO: Not convinced this is the place for the 1m offset since both missiles and radar subtract 1m from targetdistance, but for slanted picking with undulations its still good idea to not place it at the base.
+		me.virt.coord = me.virtCoord;
+		me.getCoord();# Make sure me.coord is not the altered one
 		me.virt.getNearbyVirtualTGPContact = func {
-			return me.parents[0].getNearbyVirtualTGPContact();
+			return me.virt.parents[0].getNearbyVirtualTGPContact();
 		};
 		me.virt.getNearbyVirtualContact = func (d) {
-			return me.parents[0].getNearbyVirtualContact(d);
+			return me.virt;
 		};
 		me.virt.getCoord = func {
-			return me.coord;
+			return me.virt.coord;
 		};
 		me.virt.isVirtual = func {
 			return 1;
@@ -920,8 +921,16 @@ var AIContact = {
 		me.virt.getType = func {
 			return POINT;
 		};
+		me.virt.getVirtualType = func {
+			return "radar-inprecise";
+		};
 		#me.virt.callsign = me.get_Callsign();
 		return me.virt;
+	},
+
+	getVirtualType: func {
+		# Used to debug issue #532
+		return "orig";
 	},
 
 	getNearbyVirtualTGPContact: func () {
@@ -934,16 +943,19 @@ var AIContact = {
 		#	return me.coord;
 		#};
 		me.virtTGP.getNearbyVirtualTGPContact = func {
-			return me.parents[0].getNearbyVirtualTGPContact();
+			return me.virtTGP;
 		};
 		me.virtTGP.getNearbyVirtualContact = func (d) {
-			return me.parents[0].getNearbyVirtualContact(d);
+			return me.virtTGP.parents[0].getNearbyVirtualContact(d);
 		};
 		me.virtTGP.isVirtual = func {
 			return 1;
 		};
 		me.virtTGP.getType = func {
 			return POINT;
+		};
+		me.virtTGP.getVirtualType = func {
+			return "tgp-precise";
 		};
 		me.virtTGP.callsign = me.get_Callsign();
 		return me.virtTGP;
