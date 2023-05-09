@@ -3146,7 +3146,10 @@ var AIM = {
 
 		if (me.guidance == "sample") {
 			me.blep = me.Tgt.getLastGroundTrackBlep();
-			if (me.blep == nil) {
+			if (me.blep == nil and me.newTargetAssigned) {
+				# TODO: Do not remember what this is for
+				me.t_coord_sampled = me.t_coord;	
+			} elsif (me.blep == nil) {
 				me.free = 1;
 				me.guiding = 0;
 			} elsif (me.blep.getID() != me["blepID"]) {
