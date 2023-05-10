@@ -1892,7 +1892,7 @@ var AIM = {
 			if(me.Tgt == nil) {
 				me.printStats("Note: Ordnance was released with no lock or destination target.");
 			} elsif (me.Tgt["getVirtualType"] != nil) {
-				me.printStats("Note: Ordnance was released locked on this target type: ", me.Tgt.getVirtualType());
+				me.printStats("Note: Ordnance was released locked on this target type: %s", me.Tgt.getVirtualType());
 			}
 			me.printStats("Seekerheads ability to filter out background noise is %.2f, where 0 is perfect and 3 is not so good.", me.seeker_filter);
 			me.printStats("Exhaust plume will reduce drag by %d percent.", (1-me.Cd_plume)*100);
