@@ -4803,7 +4803,7 @@ var AIM = {
 						me.convertGlobalToSeekerViewDirection(me.tagt.get_bearing(), me.tagt.getElevation(), OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue());
 						me.testSeeker();
 						if (me.inBeam) {
-							me.printSearch("uncaged-search found a lock");
+							me.printSearch("uncaged-search found a lock (%s %s)", me.tagt.getVirtualType(), contactPoint!=nil);
 							me.goToLock();
 							return;
 						}
@@ -4839,7 +4839,7 @@ var AIM = {
 					}
 					me.testSeeker();
 					if (me.inBeam) {
-						me.printSearch("rdr-slave-search found a lock");
+						me.printSearch("rdr-slave-search found a lock (%s %s)", me.tagt.getVirtualType(), contactPoint!=nil);
 						me.goToLock();
 						return;
 					}
@@ -4911,7 +4911,7 @@ var AIM = {
 						me.convertGlobalToSeekerViewDirection(me.tagt.get_bearing(), me.tagt.getElevation(), OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue());
 						me.testSeeker();
 						if (me.inBeam) {
-							me.printSearch("dir-search found a lock (%s)",me.tagt.getVirtualType());
+							me.printSearch("dir-search found a lock (%s %s)",me.tagt.getVirtualType(), contactPoint!=nil);
 							me.goToLock();
 							return;
 						}
