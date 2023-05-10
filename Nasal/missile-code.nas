@@ -4803,7 +4803,7 @@ var AIM = {
 						me.convertGlobalToSeekerViewDirection(me.tagt.get_bearing(), me.tagt.getElevation(), OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue());
 						me.testSeeker();
 						if (me.inBeam) {
-							me.printSearch("uncaged-search found a lock (%s %s)", me.tagt.getVirtualType(), contactPoint!=nil);
+							me.printSearch("uncaged-search found a lock (%s %s)", me.tagt["getVirtualType"] != nil?me.tagt.getVirtualType():"orig", contactPoint!=nil);
 							me.goToLock();
 							return;
 						}
@@ -4839,7 +4839,7 @@ var AIM = {
 					}
 					me.testSeeker();
 					if (me.inBeam) {
-						me.printSearch("rdr-slave-search found a lock (%s %s)", me.tagt.getVirtualType(), contactPoint!=nil);
+						me.printSearch("rdr-slave-search found a lock (%s %s)", me.tagt["getVirtualType"] != nil?me.tagt.getVirtualType():"orig", contactPoint!=nil);
 						me.goToLock();
 						return;
 					}
@@ -4911,7 +4911,7 @@ var AIM = {
 						me.convertGlobalToSeekerViewDirection(me.tagt.get_bearing(), me.tagt.getElevation(), OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue());
 						me.testSeeker();
 						if (me.inBeam) {
-							me.printSearch("dir-search found a lock (%s %s)",me.tagt.getVirtualType(), contactPoint!=nil);
+							me.printSearch("dir-search found a lock (%s %s)",me.tagt["getVirtualType"] != nil?me.tagt.getVirtualType():"orig", contactPoint!=nil);
 							me.goToLock();
 							return;
 						}
@@ -5134,7 +5134,7 @@ var AIM = {
 		} elsif (me.deleted == TRUE) {
 			return;
 		} elsif (me.slave_to_radar and me.caged and me.getContact() != me.Tgt and !me.noCommonTarget) {
-			me.printSearch("target switch (%s to %s)", me.Tgt.getVirtualType(), me.getContact()==nil?"nil":me.getContact().getVirtualType());
+			me.printSearch("target switch (%s to %s)", me.Tgt["getVirtualType"] != nil?me.Tgt.getVirtualType():"orig", me.getContact()==nil?"nil":(me.getContact()["getVirtualType"] != nil?me.getContact().getVirtualType():"orig"));
 			me.return_to_search();
 			return;
 		}
