@@ -179,5 +179,5 @@ Pilot2938
 LJQCN101
 - JSB controls improvements based on AD-A189-675
 
-Aron24
-- SDAK ANG, ND ANG liveries
+Aron24 "HAVOC24"
+- SDAK ANG, ND ANG, MN ANG, 75yrs supersonic liveries

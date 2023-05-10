@@ -1891,6 +1891,8 @@ var AIM = {
 			me.printStats("After propulsion ends, it will max steer up to %d degree pitch.",me.maxPitch);
 			if(me.Tgt == nil) {
 				me.printStats("Note: Ordnance was released with no lock or destination target.");
+			} elsif (me.Tgt["getVirtualType"] != nil) {
+				me.printStats("Note: Ordnance was released locked on this target type: %s", me.Tgt.getVirtualType());
 			}
 			me.printStats("Seekerheads ability to filter out background noise is %.2f, where 0 is perfect and 3 is not so good.", me.seeker_filter);
 			me.printStats("Exhaust plume will reduce drag by %d percent.", (1-me.Cd_plume)*100);
@@ -3150,7 +3152,10 @@ var AIM = {
 
 		if (me.guidance == "sample") {
 			me.blep = me.Tgt.getLastGroundTrackBlep();
-			if (me.blep == nil) {
+			if (me.blep == nil and me.newTargetAssigned) {
+				# TODO: Do not remember what this is for
+				me.t_coord_sampled = me.t_coord;	
+			} elsif (me.blep == nil) {
 				me.free = 1;
 				me.guiding = 0;
 			} elsif (me.blep.getID() != me["blepID"]) {
@@ -4439,7 +4444,11 @@ var AIM = {
  					thread.lock(mutexTimer);
 					append(AIM.timerQueue, [AIM, AIM.notifyHit, [explode_coord.alt() - cc.alt(),min_distance,cs,explode_coord.course_to(cc),"mhit1",me.typeID, me.typeLong,0], -1]);
 					thread.unlock(mutexTimer);
-				}
+				} elsif (wh_mass > 0) {
+	                thread.lock(mutexTimer);
+	                append(AIM.timerQueue, [AIM, AIM.log, [phrase], 0]);
+	                thread.unlock(mutexTimer);
+	            }
 
 				me.sendout = 1;
 			}
@@ -4802,7 +4811,7 @@ var AIM = {
 						me.convertGlobalToSeekerViewDirection(me.tagt.get_bearing(), me.tagt.getElevation(), OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue());
 						me.testSeeker();
 						if (me.inBeam) {
-							me.printSearch("uncaged-search found a lock");
+							me.printSearch("uncaged-search found a lock (%s %s)", me.tagt["getVirtualType"] != nil?me.tagt.getVirtualType():"orig", contactPoint!=nil);
 							me.goToLock();
 							return;
 						}
@@ -4838,7 +4847,7 @@ var AIM = {
 					}
 					me.testSeeker();
 					if (me.inBeam) {
-						me.printSearch("rdr-slave-search found a lock");
+						me.printSearch("rdr-slave-search found a lock (%s %s)", me.tagt["getVirtualType"] != nil?me.tagt.getVirtualType():"orig", contactPoint!=nil);
 						me.goToLock();
 						return;
 					}
@@ -4910,7 +4919,7 @@ var AIM = {
 						me.convertGlobalToSeekerViewDirection(me.tagt.get_bearing(), me.tagt.getElevation(), OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue());
 						me.testSeeker();
 						if (me.inBeam) {
-							me.printSearch("dir-search found a lock");
+							me.printSearch("dir-search found a lock (%s %s)",me.tagt["getVirtualType"] != nil?me.tagt.getVirtualType():"orig", contactPoint!=nil);
 							me.goToLock();
 							return;
 						}
@@ -5133,11 +5142,11 @@ var AIM = {
 		} elsif (me.deleted == TRUE) {
 			return;
 		} elsif (me.slave_to_radar and me.caged and me.getContact() != me.Tgt and !me.noCommonTarget) {
-			me.printSearch("target switch");
+			me.printSearch("target switch (%s to %s)", me.Tgt["getVirtualType"] != nil?me.Tgt.getVirtualType():"orig", me.getContact()==nil?"nil":(me.getContact()["getVirtualType"] != nil?me.getContact().getVirtualType():"orig"));
 			me.return_to_search();
 			return;
 		}
-		me.printSearch("lock");
+		me.printSearch("lock (caged:%d slave:%d point:%s same:%d noCommon:%d)",me.caged,me.slave_to_radar,contactPoint!=nil,me.getContact() == me.Tgt,me.noCommonTarget);
 		# Time interval since lock time or last track loop.
 		#if (me.status == MISSILE_LOCK) {
 			# Status = locked. Get target position relative to our aircraft.
@@ -5193,16 +5202,18 @@ var AIM = {
 			me.SwSoundOnOff.setBoolValue(TRUE);
 			me.SwSoundVol.setDoubleValue(me.vol_track);
 
-			me.slaveContact = nil;
-			if (size(me.contacts) == 0) {
-				me.slaveContact = me.getContact();
-			} else {
-				me.slaveContact = me.contacts[0];
-			}
-			if (me.slave_to_radar and (me.slaveContact == nil or (me.slaveContact.getUnique() != nil and me.Tgt.getUnique() != nil and me.slaveContact.getUnique() != me.Tgt.getUnique()))) {
-				me.printSearch("oops ");
-				me.return_to_search();
-				return;
+			if (!me.noCommonTarget and me.slave_to_radar) {
+				me.slaveContact = nil;
+				if (size(me.contacts) == 0) {
+					me.slaveContact = me.getContact();
+				} else {
+					me.slaveContact = me.contacts[0];
+				}
+				if (me.slaveContact == nil or me.slaveContact != me.Tgt or (me.slaveContact.getUnique() != nil and me.Tgt.getUnique() != nil and me.slaveContact.getUnique() != me.Tgt.getUnique())) {
+					me.printSearch("Radar/TGP system lock updated, dropping this lock..");
+					me.return_to_search();
+					return;
+				}
 			}
 
 			settimer(func me.update_lock(), deltaSec.getValue()==0?0.5:0.1);

@@ -3090,6 +3090,11 @@ var ContactTGP = {
 		return 1;
 	},
 
+	getVirtualType: func {
+		# Used to debug issue #532
+		return "tgp-ground";
+	},
+
 	isPainted: func () {
 		return 0;
 	},

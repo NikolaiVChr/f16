@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery> 
+    <name type="string">148FW, 179FS MN #420</name>
+    <texture>Liveries/Block30/85-1420.png</texture>
+    <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Two-tone gray</scheme>
+    <block type="int">32</block>
+    <serial type="string">85-1420</serial>
+    <squad type="string">179th FS "Bulldogs"</squad>
+    <year type="string">2006</year>
+   </livery>
+
+   <livery-logo>
+    <texture>Liveries/standard.logos.black2.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/patch.default.png</texture>
+   </livery-patch>
+
+  <livery-pod>
+        <texture>Armament/External-stores/MXU-648.png</texture>
+  </livery-pod>
+
+   <f16>
+     <dragchute type="bool">false</dragchute>
+     <link16 type="bool">false</link16>
+   </f16>
+   <livery-specular type="double">0.25</livery-specular>
+  </model>
+ </sim>
+</PropertyList>
