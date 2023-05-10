@@ -1684,6 +1684,32 @@ var b50_a2a_ap = func {
     }
 }
 
+# AIM-9x Testing (AIM-9)
+var a9x_testing = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+    	damage.damageLog.push("AIM-9X Testing loadout mounted");
+        pylon1.loadSet(pylonSets.aim9xWT);
+        pylon2.loadSet(pylonSets.aim9x);
+        pylon3.loadSet(pylonSets.aim9x);
+        pylon4.loadSet(pylonSets.empty);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.empty);
+        pylon7.loadSet(pylonSets.aim9x);
+        pylon8.loadSet(pylonSets.aim9x);
+        pylon9.loadSet(pylonSets.aim9xWT);
+        if (block == 5) {
+            pylon10.loadSet(pylonSets.podLite);
+            pylon11.loadSet(pylonSets.podLNav);
+        } else {
+            pylon10.loadSet(pylonSets.podLite);
+            pylon11.loadSet(pylonSets.empty);
+        }
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
 # A/G SFW (CBU-105)
 var b40_a2g_sfw = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {

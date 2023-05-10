@@ -265,6 +265,17 @@
             </binding>
         </button>
 
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>24</row>
+            <col>0</col>
+            <legend>AIM-9X Testing</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a9x_testing();</script>
+            </binding>
+        </button>
+
         <hrule>
             <row>13</row>
             <col>0</col>
