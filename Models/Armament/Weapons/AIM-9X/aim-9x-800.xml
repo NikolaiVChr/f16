@@ -8,8 +8,8 @@
 	<path>AIM-9X_RW.ac</path>
 
 	<effect>  
-    	<inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>  
-    	<object-name>AIM9_IRsphere</object-name> 
+    	<inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>
+    	<object-name>aim9x_ir-sphere</object-name>
   	</effect>
 
 	<effect>
@@ -30,12 +30,12 @@
 
 	<animation>
 		<type>select</type>
-      		<object-name>AIM-9L</object-name>
-      		<object-name>AIM9_Back</object-name>
-      		<object-name>AIM9_Mounts</object-name>
-      		<object-name>AIM9_Rearwing</object-name>
-      		<object-name>AIM9_Frontwing</object-name>
-      		<object-name>AIM9_IRsphere</object-name>
+      		<object-name>aim9x_body</object-name>
+      		<object-name>aim9x_back-fins</object-name>
+      		<object-name>aim9x_front-fins</object-name>
+      		<object-name>aim9x-thrust-vectoring-fins</object-name>
+      		<object-name>aim9x-mount</object-name>
+      		<object-name>aim9x_ir-sphere</object-name>
 		<condition>
 			<property>payload/armament/aim-9x/flags/msl-id-800</property>
 		</condition>
@@ -135,7 +135,7 @@
 	 
 	 <model>
 		<name>flaminghot</name>
-		<path>aim-9x-exhaust.xml</path>
+		<path>AIM-9X_exhaust.xml</path>
 		<offsets>
 			<x-m>1.43018</x-m>
 			<y-m>0</y-m>
@@ -429,12 +429,12 @@
 	 </particlesystem>
 
 	<animation>
-      		<object-name>AIM-9L</object-name>
-      		<object-name>AIM9_Back</object-name>
-      		<object-name>AIM9_Mounts</object-name>
-      		<object-name>AIM9_Rearwing</object-name>
-      		<object-name>AIM9_Frontwing</object-name>
-      		<object-name>AIM9_IRsphere</object-name>
+      		<object-name>aim9x_body</object-name>
+      		<object-name>aim9x_back-fins</object-name>
+      		<object-name>aim9x_front-fins</object-name>
+      		<object-name>aim9x-thrust-vectoring-fins</object-name>
+      		<object-name>aim9x-mount</object-name>
+      		<object-name>aim9x_ir-sphere</object-name>
   		<enable-hot type="bool">false</enable-hot>
  	</animation>
 
