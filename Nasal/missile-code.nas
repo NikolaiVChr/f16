@@ -5138,7 +5138,7 @@ var AIM = {
 			me.return_to_search();
 			return;
 		}
-		me.printSearch("lock");
+		me.printSearch("lock (caged:%d slave:%d point:%s same:%d noCommon:%d)",me.caged,me.slave_to_radar,contactPoint!=nil,me.getContact() == me.Tgt,me.noCommonTarget);
 		# Time interval since lock time or last track loop.
 		#if (me.status == MISSILE_LOCK) {
 			# Status = locked. Get target position relative to our aircraft.
@@ -5194,16 +5194,18 @@ var AIM = {
 			me.SwSoundOnOff.setBoolValue(TRUE);
 			me.SwSoundVol.setDoubleValue(me.vol_track);
 
-			me.slaveContact = nil;
-			if (size(me.contacts) == 0) {
-				me.slaveContact = me.getContact();
-			} else {
-				me.slaveContact = me.contacts[0];
-			}
-			if (me.slave_to_radar and (me.slaveContact == nil or (me.slaveContact.getUnique() != nil and me.Tgt.getUnique() != nil and me.slaveContact.getUnique() != me.Tgt.getUnique()))) {
-				me.printSearch("oops ");
-				me.return_to_search();
-				return;
+			if (!me.noCommonTarget and me.slave_to_radar) {
+				me.slaveContact = nil;
+				if (size(me.contacts) == 0) {
+					me.slaveContact = me.getContact();
+				} else {
+					me.slaveContact = me.contacts[0];
+				}
+				if (me.slaveContact == nil or me.slaveContact != me.Tgt or (me.slaveContact.getUnique() != nil and me.Tgt.getUnique() != nil and me.slaveContact.getUnique() != me.Tgt.getUnique())) {
+					me.printSearch("Radar/TGP system lock updated, dropping this lock..");
+					me.return_to_search();
+					return;
+				}
 			}
 
 			settimer(func me.update_lock(), deltaSec.getValue()==0?0.5:0.1);
