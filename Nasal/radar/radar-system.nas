@@ -942,6 +942,10 @@ var AIContact = {
 		#	me.coord.set_alt(me.coord.alt()+0.0);
 		#	return me.coord;
 		#};
+		if (me.getVirtualType() != "orig") {
+			# Used to debug issue #532
+			print("** ALERT **: Making a TGP point from "~me.getVirtualType());
+		}
 		me.virtTGP.getNearbyVirtualTGPContact = func {
 			return me.virtTGP;
 		};
