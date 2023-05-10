@@ -2720,6 +2720,10 @@ var AIM = {
 			} else {
 				me.remote_control_pitch = 0;
 			}
+			if (me.settings["seeker_fov"] != nil) {
+				me.max_seeker_dev = me.settings.seeker_fov;
+				me.printStats("Seeker FOV switched to %s",me.max_seeker_dev);
+			}
 			if (me.settings["abort_midflight_function"] != nil) {
 				me.mfFunction = nil;
 			}

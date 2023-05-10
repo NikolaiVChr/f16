@@ -167,16 +167,31 @@ var Station = {
 						};
 					} elsif (me.weaponName == "AIM-9X") {
 						mf = func (struct) {
+						    var settings = {};
+						    settings.seeker_fov = 90;
 							if (struct.deviation_deg != nil) {
 								if (struct.deviation_deg > 70) {
-									return {"navigation":"direct"};
-								} elsif (struct.deviation_deg < 70) {
-									return {"navigation":"OPN", "guidance":"heat"};
-								} elsif (struct.deviation_deg < 55) {
-									return {"navigation":"OPN", "guidance":"heat", "abort_midflight_function":1};
+								    settings.guidanceLaw = "direct";
+								    settings.guidance = "inertial";
+								} else {
+								    settings.guidanceLaw = "OPN";
+								    settings.guidance = "heat";
+								    if (struct.deviation_deg < 55) {
+									    settings.abort_midflight_function = 1;
+									}
 								}
 							}
-							return {};
+							# Remove redundant values to keep logs clean
+							if (settings.seeker_fov == struct.seeker_fov) {
+							    settings.seeker_fov = nil;
+							}
+							if (settings["guidanceLaw"] == struct.guidanceLaw) {
+							    settings.guidanceLaw = nil;
+							}
+							if (settings["guidance"] == struct.guidance) {
+							    settings.guidance = nil;
+							}
+							return settings;
 						};
 					};
 

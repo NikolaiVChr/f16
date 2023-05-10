@@ -179,12 +179,12 @@
             <long-name type="string">AIM-9X Sidewinder</long-name>
             <vol-search type="double">0.25</vol-search>
             <vol-track type="double">0.60</vol-track>
-            <guidance type="string">inertial</guidance>  <!-- Switched to heat mid-flight -->
+            <guidance type="string">heat</guidance>  <!-- Switched to inertial mid-flight while >70 OB -->
             <navigation type="string">OPN</navigation>
             <all-aspect type="bool">true</all-aspect>
             <max-fire-range-nm type="double">15</max-fire-range-nm> <!-- TODO: Source -->
             <FCS-field-deg type="int">360</FCS-field-deg>
-            <seeker-field-deg type="int">180</seeker-field-deg>                 <!-- source:  -->
+            <seeker-field-deg type="int">360</seeker-field-deg> <!-- Switched to 180 mid-flight --><!-- source:  -->
             <max-g type="int">50</max-g>                                  <!-- Online ~60G, other sims 35-45 -->
             <thrust-lbf-stage-1 type="double">2880</thrust-lbf-stage-1><!-- same as aim-9m -->
             <thrust-lbf-stage-2 type="double">0.0</thrust-lbf-stage-2>
@@ -202,7 +202,7 @@
             <rosette-radius-deg type="double">0</rosette-radius-deg>
             <sw-expanded-acquisition-mode type="bool">true</sw-expanded-acquisition-mode>
             <nutate-double-d-instead-of-circle type="bool">false</nutate-double-d-instead-of-circle>
-            <seeker-filter type="double">1.25</seeker-filter> <!-- TODO: Check this -->
+            <seeker-filter type="double">1.10</seeker-filter>
             <lock-on-sun-deg type="double">7.5</lock-on-sun-deg> <!-- TODO: Check this -->
             <loft-altitude type="int">0</loft-altitude>
             <min-fire-range-nm type="double">0.16</min-fire-range-nm>   <!-- same as aim-9m --> <!-- TODO: Check this -->
