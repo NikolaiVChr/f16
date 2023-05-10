@@ -43,6 +43,7 @@
             <default value="0"/>
             <test  logic="AND" value="1">
                 systems/hook/tailhook-pos-norm gt 0.99
+                systems/hook/serviceable eq 1
             </test>
         </switch>
 

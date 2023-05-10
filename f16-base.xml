@@ -850,6 +850,7 @@
             </inertia>
             <systems>
                 <hook>
+                    <serviceable type="bool">1</serviceable>
                     <tailhook-cmd-norm type="bool">false</tailhook-cmd-norm>
                     <tailhook-length-ft type="double">4.2979</tailhook-length-ft><!-- 1.31m -->
                     <tailhook-pos-min-deg type="double">-3.806</tailhook-pos-min-deg>

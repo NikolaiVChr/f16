@@ -188,6 +188,15 @@ var init = func {
     FailureMgr.set_trigger("controls/gear2", trigger_gear2);
     trigger_gear2.arm();
 
+    #hook
+
+    prop = "fdm/jsbsim/systems/hook/arrestor-wire-engaged-hook";
+    var trigger_hook = RandSpeedTrigger.new(160, 200, prop);
+    var hook_fc = compat_failure_modes.set_unserviceable("fdm/jsbsim/systems/hook");
+    FailureMgr.add_failure_mode("fdm/jsbsim/systems/hook", "Arrestor hook", hook_fc);
+    FailureMgr.set_trigger("fdm/jsbsim/systems/hook", trigger_hook);
+    trigger_hook.arm();
+
     #var ch = compat_failure_modes.set_unserviceable("canopy");
     #FailureMgr.add_failure_mode("canopy", "Canopy hinges", ch);
     
