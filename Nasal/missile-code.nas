@@ -4911,7 +4911,7 @@ var AIM = {
 						me.convertGlobalToSeekerViewDirection(me.tagt.get_bearing(), me.tagt.getElevation(), OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue());
 						me.testSeeker();
 						if (me.inBeam) {
-							me.printSearch("dir-search found a lock");
+							me.printSearch("dir-search found a lock (%s)",me.tagt.getVirtualType());
 							me.goToLock();
 							return;
 						}
@@ -5134,7 +5134,7 @@ var AIM = {
 		} elsif (me.deleted == TRUE) {
 			return;
 		} elsif (me.slave_to_radar and me.caged and me.getContact() != me.Tgt and !me.noCommonTarget) {
-			me.printSearch("target switch");
+			me.printSearch("target switch (%s to %s)", me.Tgt.getVirtualType(), me.getContact()==nil?"nil":me.getContact().getVirtualType());
 			me.return_to_search();
 			return;
 		}
