@@ -4440,7 +4440,11 @@ var AIM = {
  					thread.lock(mutexTimer);
 					append(AIM.timerQueue, [AIM, AIM.notifyHit, [explode_coord.alt() - cc.alt(),min_distance,cs,explode_coord.course_to(cc),"mhit1",me.typeID, me.typeLong,0], -1]);
 					thread.unlock(mutexTimer);
-				}
+				} elsif (wh_mass > 0) {
+	                thread.lock(mutexTimer);
+	                append(AIM.timerQueue, [AIM, AIM.log, [phrase], 0]);
+	                thread.unlock(mutexTimer);
+	            }
 
 				me.sendout = 1;
 			}
