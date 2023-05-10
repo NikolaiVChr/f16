@@ -219,21 +219,21 @@ var AIToNasal = {
 	    me.x = me.pos.getNode("global-x");
 	    me.y = me.pos.getNode("global-y");
 	    me.z = me.pos.getNode("global-z");
-	    if(me.x == nil or me.y == nil or me.z == nil) {
-	    	me.alt = me.pos.getNode("altitude-ft");
-	    	me.lat = me.pos.getNode("latitude-deg");
-	    	me.lon = me.pos.getNode("longitude-deg");	
-	    	if(me.alt == nil or me.lat == nil or me.lon == nil) {
+	    me.alt = me.pos.getNode("altitude-ft");
+    	me.lat = me.pos.getNode("latitude-deg");
+    	me.lon = me.pos.getNode("longitude-deg");
+	    if(me.alt == nil or me.lat == nil or me.lon == nil) {
+	    	if(me.x == nil or me.y == nil or me.z == nil) {
 	    		# No valid position data found, giving up.
 		      	me.nextReadTreeFrame();
 		      	return;
 			}
-		    me.pos_type = GPS;
-		    me.aircraftPos = geo.Coord.new().set_latlon(me.lat.getValue(), me.lon.getValue(), me.alt.getValue()*FT2M);
-	    } else {
-	    	me.pos_type = ECEF;
+			me.pos_type = ECEF;
 	    	me.aircraftPos = geo.Coord.new().set_xyz(me.x.getValue(), me.y.getValue(), me.z.getValue());
 	    	me.aircraftPos.alt();# TODO: once fixed in FG this line is no longer needed.
+	    } else {
+	    	me.pos_type = GPS;
+		    me.aircraftPos = geo.Coord.new().set_latlon(me.lat.getValue(), me.lon.getValue(), me.alt.getValue()*FT2M);
 	    }
 
 	    if (me.aircraftPos.alt() == nil or me.aircraftPos.lat() == nil or me.aircraftPos.lon() == nil) {

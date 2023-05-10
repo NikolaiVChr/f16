@@ -2425,6 +2425,8 @@ var AIM = {
 					# just to protect the multithreaded code for invalid pos.
 					print("Missile target has undefined coord!");
 					me.Tgt = nil;
+				} else {
+					me.t_coord.alt();# TODO: once fixed in FG this line is no longer needed.
 				}
 			} else {
 				# we are chasing a flare, lets update the flares position.
