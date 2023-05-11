@@ -196,14 +196,14 @@
             <drag-coeff type="double">0.8</drag-coeff>                   <!-- Estimated --> <!-- TODO: Check this -->
             <cross-section-sqft type="double">0.143</cross-section-sqft>  <!-- 5 inch diam -->
             <arming-time-sec type="double">1.4</arming-time-sec>          <!-- same as aim-9l -->
-            <min-speed-for-guiding-mach type="double">0.8</min-speed-for-guiding-mach><!-- same as aim-9j -->
+            <min-speed-for-guiding-mach type="double">0.4</min-speed-for-guiding-mach><!-- just a guess -->
             <self-destruct-time-sec type="double">60</self-destruct-time-sec>         <!-- same as aim-9m -->
             <seeker-angular-speed-dps type="double">60</seeker-angular-speed-dps>
             <rosette-radius-deg type="double">0</rosette-radius-deg>
             <sw-expanded-acquisition-mode type="bool">true</sw-expanded-acquisition-mode>
             <nutate-double-d-instead-of-circle type="bool">false</nutate-double-d-instead-of-circle>
             <seeker-filter type="double">1.10</seeker-filter>
-            <lock-on-sun-deg type="double">7.5</lock-on-sun-deg> <!-- TODO: Check this -->
+            <lock-on-sun-deg type="double">4.5</lock-on-sun-deg> <!-- just a guess -->
             <loft-altitude type="int">0</loft-altitude>
             <min-fire-range-nm type="double">0.16</min-fire-range-nm>   <!-- same as aim-9m --> <!-- TODO: Check this -->
             <expand-min-fire-range type="bool">true</expand-min-fire-range>
