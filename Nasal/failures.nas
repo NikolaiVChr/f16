@@ -191,7 +191,7 @@ var init = func {
     #hook
 
     prop = "fdm/jsbsim/systems/hook/arrestor-wire-engaged-hook";
-    var trigger_hook = RandSpeedTrigger.new(160, 200, prop);
+    var trigger_hook = RandSpeedTrigger.new(175, 215, prop);
     var hook_fc = compat_failure_modes.set_unserviceable("fdm/jsbsim/systems/hook");
     FailureMgr.add_failure_mode("fdm/jsbsim/systems/hook", "Arrestor hook", hook_fc);
     FailureMgr.set_trigger("fdm/jsbsim/systems/hook", trigger_hook);
