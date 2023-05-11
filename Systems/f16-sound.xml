@@ -4743,16 +4743,10 @@
             <name>missile0</name>
             <path>Aircraft/f16/Sounds/aim-launch.wav</path>
             <mode>once</mode>
+            <type>avionics</type>
             <condition>
                 <property>payload/armament/aim-7/sound-fire-on-off</property>
             </condition>
-            <reference-dist>25</reference-dist>
-            <max-dist>10000</max-dist>
-            <position>
-                <x>3.15986</x>
-                <y>-2.70311</y>
-                <z>-0.67645</z>
-            </position>
             <volume>
                 <factor>0.65</factor>
                 <max>1</max>
@@ -4762,16 +4756,10 @@
             <name>missile1</name>
             <path>Aircraft/f16/Sounds/aim-launch.wav</path>
             <mode>once</mode>
+            <type>avionics</type>
             <condition>
                 <property>payload/armament/aim-120/sound-fire-on-off</property>
             </condition>
-            <reference-dist>25</reference-dist>
-            <max-dist>10000</max-dist>
-            <position>
-                <x>3.15986</x>
-                <y>-2.70311</y>
-                <z>-0.67645</z>
-            </position>
             <volume>
                 <factor>0.65</factor>
                 <max>1</max>
@@ -4781,16 +4769,10 @@
             <name>missile2</name>
             <path>Aircraft/f16/Sounds/aim-launch.wav</path>
             <mode>once</mode>
+            <type>avionics</type>
             <condition>
                 <property>payload/armament/aim-9l/sound-fire-on-off</property>
             </condition>
-            <reference-dist>25</reference-dist>
-            <max-dist>10000</max-dist>
-            <position>
-                <x>3.15986</x>
-                <y>-2.70311</y>
-                <z>-0.67645</z>
-            </position>
             <volume>
                 <factor>0.65</factor>
                 <max>1</max>
@@ -4800,16 +4782,10 @@
             <name>missile2m</name>
             <path>Aircraft/f16/Sounds/aim-launch.wav</path>
             <mode>once</mode>
+            <type>avionics</type>
             <condition>
                 <property>payload/armament/aim-9m/sound-fire-on-off</property>
             </condition>
-            <reference-dist>25</reference-dist>
-            <max-dist>10000</max-dist>
-            <position>
-                <x>3.15986</x>
-                <y>-2.70311</y>
-                <z>-0.67645</z>
-            </position>
             <volume>
                 <factor>0.65</factor>
                 <max>1</max>
@@ -4819,16 +4795,10 @@
             <name>missile3</name>
             <path>Aircraft/f16/Sounds/aim-launch.wav</path>
             <mode>once</mode>
+            <type>avionics</type>
             <condition>
                 <property>payload/armament/agm-65b/sound-fire-on-off</property>
             </condition>
-            <reference-dist>25</reference-dist>
-            <max-dist>10000</max-dist>
-            <position>
-                <x>3.15986</x>
-                <y>-2.70311</y>
-                <z>-0.67645</z>
-            </position>
             <volume>
                 <factor>0.65</factor>
                 <max>1</max>
@@ -4838,16 +4808,10 @@
             <name>missile4</name>
             <path>Aircraft/f16/Sounds/aim-launch.wav</path>
             <mode>once</mode>
+            <type>avionics</type>
             <condition>
                 <property>payload/armament/agm-88/sound-fire-on-off</property>
             </condition>
-            <reference-dist>25</reference-dist>
-            <max-dist>10000</max-dist>
-            <position>
-                <x>3.15986</x>
-                <y>-2.70311</y>
-                <z>-0.67645</z>
-            </position>
             <volume>
                 <factor>0.65</factor>
                 <max>1</max>
@@ -4857,16 +4821,10 @@
             <name>missile5</name>
             <path>Aircraft/f16/Sounds/cruise-missile-launch.wav</path>
             <mode>once</mode>
+            <type>avionics</type>
             <condition>
                 <property>payload/armament/agm-84/sound-fire-on-off</property>
             </condition>
-            <reference-dist>25</reference-dist>
-            <max-dist>10000</max-dist>
-            <position>
-                <x>3.15986</x>
-                <y>-2.70311</y>
-                <z>-0.67645</z>
-            </position>
             <volume>
                 <factor>0.65</factor>
                 <max>1</max>
@@ -4876,16 +4834,10 @@
             <name>missile6</name>
             <path>Aircraft/f16/Sounds/cruise-missile-launch.wav</path>
             <mode>once</mode>
+            <type>avionics</type>
             <condition>
                 <property>payload/armament/agm-119/sound-fire-on-off</property>
             </condition>
-            <reference-dist>25</reference-dist>
-            <max-dist>10000</max-dist>
-            <position>
-                <x>3.15986</x>
-                <y>-2.70311</y>
-                <z>-0.67645</z>
-            </position>
             <volume>
                 <factor>0.65</factor>
                 <max>1</max>
@@ -4895,16 +4847,10 @@
             <name>missile7</name>
             <path>Aircraft/f16/Sounds/aim-launch.wav</path>
             <mode>once</mode>
+            <type>avionics</type>
             <condition>
                 <property>payload/armament/agm-65d/sound-fire-on-off</property>
             </condition>
-            <reference-dist>25</reference-dist>
-            <max-dist>10000</max-dist>
-            <position>
-                <x>3.15986</x>
-                <y>-2.70311</y>
-                <z>-0.67645</z>
-            </position>
             <volume>
                 <factor>0.65</factor>
                 <max>1</max>
