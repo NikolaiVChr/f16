@@ -4,6 +4,18 @@
 #
 -->
 <PropertyList>
+    <sta n="3">
+        <serviceable type="bool">true</serviceable>
+    </sta>
+    <sta n="2">
+        <serviceable type="bool">true</serviceable>
+    </sta>
+    <sta n="5">
+        <serviceable type="bool">true</serviceable>
+    </sta>
+    <sta n="6">
+        <serviceable type="bool">true</serviceable>
+    </sta>
     <d-config>
         <full_damage_dist_m type="double">1.25</full_damage_dist_m>
         <use_hitpoints_instead_of_failure_modes_bool type="bool">false</use_hitpoints_instead_of_failure_modes_bool>
