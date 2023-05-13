@@ -3,6 +3,8 @@
 #
 var lines = [nil,nil];
 
+var desired_tos = {};
+
 var number_of_threat_circles  = 15;
 var number_of_generic         = 10;
 var number_of_markpoints_own  = 5;
@@ -37,6 +39,7 @@ var STPT = {
 	type: "   ",
 	radius: 10,
 	color: colorYellow,
+	desiredTOS: nil,
 	
 	new: func {
 		var n = {parents: [STPT]};
@@ -51,6 +54,7 @@ var STPT = {
 		cp.type = me.type;
 		cp.radius = me.radius;
 		cp.color = me.color;
+		me.desiredTOS = me.desiredTOS;
 		return cp;
 	},
 };
@@ -321,6 +325,33 @@ var getLast = func {
 	return getNumber(getLastNumber());
 }
 
+var getRequiredSpeed = func (number) {
+    # Get required groundspeed in kts for TOS on specific steerpoint
+    if (getCurrentNumber() == 0) return nil;
+    var range = getNumberRange(number)*NM2M;
+    var des_tos = _getNumberDesiredTOS(number);
+    #var des_tos = getprop("f16/ded/crus-des-tos");
+    if (des_tos == nil) {
+       des_tos = 0;
+    }
+    # Subtract current time from TOS to get relative time
+    #if (des_tos > addSeconds(0, getprop("sim/time/utc/hour"),getprop("sim/time/utc/minute"),getprop("sim/time/utc/second"))) {
+        # Desired TOS is in the past, this shouldn't really matter, since we have a min of 70kts
+    #}
+    var cur_sec = (((getprop("sim/time/utc/hour")*60)+getprop("sim/time/utc/minute"))*60)+getprop("sim/time/utc/second")+math.fmod(getprop("sim/time/steady-clock-sec"), 1);
+    #var tos_sec = addSeconds(des_tos, -getprop("sim/time/utc/hour"),-getprop("sim/time/utc/minute"),-getprop("sim/time/utc/second"));
+    #tos_sec = (((tos_sec[1]*60)+tos_sec[2])*60)+tos_sec[3];
+
+    # MLU M1: if STPT not reached in time, airspeed caret remains at max
+    if (cur_sec > des_tos) {
+        return 1700;
+    }
+    var tos_sec = des_tos - cur_sec;
+    var req_spd = range / tos_sec / KT2MPS;
+    # As per MLU M1, the speed is limited between 70kts and 1700kts
+    return math.max(math.min(req_spd, 1700), 70);
+}
+
 var getLastETA = func {
 	# Get time in seconds till final steerpoint
 	if (getCurrentNumber() == 0) return nil;
@@ -339,11 +370,56 @@ var getNumberETA = func (number) {
 	return range/gs;
 }
 
+var setNumberDesiredTOS = func (number, tos) {
+    if (getCurrentNumber() < 300) {
+        desired_tos[number] = tos;
+    } else {
+        getNumber(number).desiredTOS = tos;
+    }
+}
+
+var _getNumberDesiredTOS = func (number) {
+    if (getCurrentNumber() == 0) return nil;
+    if (number < 300) {
+        return desired_tos[number];
+    } else {
+        return getNumber(number).desiredTOS;
+    }
+}
+
+var getNumberDesiredTOS = func (number) {
+    # Get string with desired time over steerpoint for specific steerpoint
+    var val = _getNumberDesiredTOS(number);
+	return _getTOS(val);
+}
+
 var getNumberTOS = func (number) {
 	# Get string with time on station for specific steerpoint
 	if (getCurrentNumber() == 0) return nil;
 	var eta = getNumberETA(number);
 	return _getTOS(eta);
+}
+
+var _getCurrentDesiredTOS = func {
+    return _getNumberDesiredTOS(getCurrentNumber());
+}
+
+var getCurrentDesiredTOS = func {
+	# Get string with desired time over steerpoint for current steerpoint
+	return getNumberDesiredTOS(getCurrentNumber());
+}
+
+var setCurrentDesiredTOS = func (tos) {
+	# Get string with desired time over steerpoint for current steerpoint
+	return setNumberDesiredTOS(getCurrentNumber(), tos);
+}
+
+var getCurrentRequiredSpeed = func {
+    return getRequiredSpeed(getCurrentNumber());
+}
+
+var getAbsoluteTOS = func (eta) {
+    return _getTOS(eta, 1);
 }
 
 var getCurrentTOS = func {
@@ -358,19 +434,26 @@ var getLastTOS = func {
 	return _getTOS(eta);
 }
 
-var _getTOS = func (eta) {
+var _getTOS = func (eta, absolute = 0) {
 	# Get string with time on station for a specific time in seconds
 	# eta is allowed to be nil
+	# if absolute the eta is assumed to be an exact time, otherwise eta is assumed to be relative to current time
 	var TOS = "--:--:--";
 	if (getCurrentNumber() == 0) return TOS;
 
 	if (eta == nil or eta>3600*24) {
 		return TOS;
 	} else {
-		var hour   = getprop("sim/time/utc/hour"); 
-		var minute = getprop("sim/time/utc/minute");
-		var second = getprop("sim/time/utc/second");		
-		var final = addSeconds(eta,second,minute,hour);
+	    if (!absolute) {
+            var hour   = getprop("sim/time/utc/hour");
+            var minute = getprop("sim/time/utc/minute");
+            var second = getprop("sim/time/utc/second");
+        } else {
+            var hour   = 0;
+            var minute = 0;
+            var second = 0;
+        }
+        var final = addSeconds(eta,second,minute,hour);
 
 		TOS = sprintf("%02d:%02d:%02d",final[1],final[2],final[3]);
 	}      

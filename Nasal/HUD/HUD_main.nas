@@ -137,8 +137,8 @@ var F16_HUD = {
         obj.alt_line.hide();
         obj.vel_line = obj.get_element("ias_tick_vert_line");
         obj.vel_line.hide();
-        obj.vel_ind = obj.get_element("path3111");
-        obj.vel_ind.hide();
+        obj.ias_desired = obj.get_element("path3111");
+        obj.ias_desired.hide();
         obj.alt_ind = obj.get_element("path3111-1");
         obj.alt_ind.hide();
         obj.radalt_box = obj.get_element("radalt-box");
@@ -222,7 +222,7 @@ var F16_HUD = {
         append(obj.total, obj.alt_range);
         append(obj.total, obj.ias_range);
         append(obj.total, obj.alt_line);
-        append(obj.total, obj.vel_ind);
+        append(obj.total, obj.ias_desired);
         append(obj.total, obj.vel_line);
         append(obj.total, obj.alt_ind);
         append(obj.total, obj.window1);
@@ -1338,6 +1338,18 @@ append(obj.total, obj.speed_curr);
                                             obj.ASEC65Aspect.setColorFill(obj.color);
                                           }
                                       }),
+             func(hdp)
+                                      {
+                                        if (ded.dataEntryDisplay.crusMode == "TOS" ) {
+                                          var desired_kt = getprop("/f16/ded/crus-req-gs");
+                                          if (desired_kt != nil and !hdp.getproper("dgft")) {
+                                            obj.ias_desired.show();
+                                            obj.ias_desired.setTranslation(0, (hdp.getproper("groundspeed_kt")-desired_kt) * ias_range_factor);
+                                          } else {
+                                            obj.ias_desired.hide();
+                                          }
+                                        }
+                                      },
             #props.UpdateManager.FromHashList([], 0.01,
              func(hdp)
                                       {
