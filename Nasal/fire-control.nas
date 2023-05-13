@@ -648,6 +648,10 @@ var FireControl = {
 			printDebug("Nothing to jettison");
 			return nil;
 		}
+		if (!me.pylons[me.selected[0]].isOperable()) {
+			printDebug("Jettison not working");
+			return nil;
+		}
 		me.stopCurrent();
 		me.pylons[me.selected[0]].jettisonAll();
 		me.selected = nil;
@@ -661,6 +665,9 @@ var FireControl = {
 	jettisonAll: func {
 		# jettison all stations
 		foreach (pyl;me.pylons) {
+			if (!pyl.isOperable()) {
+				continue;
+			}
 			pyl.jettisonAll();
 		}
 		if (me.changeListener != nil) me.changeListener();
@@ -679,6 +686,9 @@ var FireControl = {
 				# excluded
 				continue;
 			}
+			if (!pyl.isOperable()) {
+				continue;
+			}
 			pyl.jettisonAll();
 		}
 		if (me.changeListener != nil) me.changeListener();
@@ -695,6 +705,9 @@ var FireControl = {
 							continue;
 						}
 					}
+				}
+				if (!pyl.isOperable()) {
+					continue;
 				}
 				pyl.jettisonAll();
 			}			
