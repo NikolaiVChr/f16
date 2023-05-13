@@ -1857,7 +1857,7 @@
         <drag-scale-px>2.5</drag-scale-px><!-- 10 is default -->
         <repeatable>true</repeatable>
         <interval-sec>0.5</interval-sec>
-        <factor>90</factor>
+        <factor>-90</factor>
         <center>
             <x-m>0.71282</x-m>   <!--  0.56569 + 0.14713  -->
             <y-m>-0.39609</y-m>  <!--  -0.35829 + -.0378  -->

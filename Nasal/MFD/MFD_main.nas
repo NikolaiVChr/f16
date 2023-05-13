@@ -2757,6 +2757,15 @@ var MFD_Device =
                 .setColor(colorText1)
                 .setFontSize(20, 1.0);
 
+        # OBS 7
+        svg.obs7 = svg.p_WPN.createChild("text")
+                .setTranslation(276*0.795, -482*0.5-67.5)
+                .setText("")
+                .setAlignment("right-center")
+                .setColor(colorText1)
+                .setFontSize(20, 1.0);
+
+        # OBS 8
         svg.ready = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795, -482*0.5+0)
                 .setText("")
@@ -2952,6 +2961,19 @@ var MFD_Device =
                             setprop("controls/armament/dual",1);
                         }
                     }
+                } elsif (eventi == 6) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
+                    me.wpn54 = pylons.fcs.getSelectedWeapon();
+                    if (me.wpn54 != nil and me.wpn54.type == "GBU-54") {
+                        me.guide54 = me.wpn54.guidance;
+                        if (me.guide54 == "gps") {
+                            me.wpn54.guidance = "gps-laser";
+                        } else {
+                            me.wpn54.guidance = "gps";
+                        }
+                    }
                 } elsif (eventi == 17) {
                     me.ppp.selectPage(me.my.p_SMS);
                     me.setSelection(me.ppp.buttons[18], me.ppp.buttons[17], 17);
@@ -3037,6 +3059,7 @@ var MFD_Device =
             me.ready = "";
             me.ripple = "";
             me.rippleDist = "";
+            me.obs7 = "";
             me.downAd = 0;
             me.upAd = 0;
             me.coolFrame = 0;
@@ -3068,7 +3091,13 @@ var MFD_Device =
                     pylons.fcs.setRippleDist(FT2M * rpd);
                     me.downAd = rpd>25 and me.showDist;
                     me.upAd = rpd<400 and me.showDist;
-
+                    if (me.wpn.type == "GBU-54") {
+                        if (me.wpn.guidance == "gps-laser") {
+                            me.obs7 = "GPS-LASR";
+                        } else {
+                            me.obs7 = "GPS";
+                        }
+                    }
                     me.rippleDist = sprintf("RP %3d FT",math.round(rpd));
 
                     me.eegs = "A-G";
@@ -3194,6 +3223,7 @@ var MFD_Device =
             me.root.cool.setText(me.cool);
             me.root.eegs.setText(me.eegs);
             me.root.ready.setText(me.ready);
+            me.root.obs7.setText(me.obs7);
             me.root.ripple.setText(me.ripple);
             me.root.coolFrame.setVisible(me.coolFrame);
             me.root.rangDownA.setVisible(me.downA);

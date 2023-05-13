@@ -311,6 +311,8 @@ var list = func (node) {
             if (ut!=nil) {
                 var contact = ut.getNearbyVirtualTGPContact();
                 armament.contactPoint = contact;
+                #var tc = contact.getCoord();
+                #print("contactPoint "~tc.lat()~", "~tc.lon()~" at "~(tc.alt()*M2FT)~" ft");
             } else {
                 armament.contactPoint = radar_system.ContactTGP.new("TGP-Spot",terrain,1);
             }

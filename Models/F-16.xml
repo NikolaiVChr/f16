@@ -1219,13 +1219,14 @@
 
 
 
+
 <model>
   <name>belly</name>
   <path>Aircraft/f16/Models/Effects/lights/belly-light.xml</path>
   <offsets>
-            <x-m> -1.23466 </x-m>
+            <x-m> -1.48466 </x-m><!-- adjusted -0.25 for issue #500 -->
             <y-m> 0 </y-m>
-            <z-m> -0.862066 </z-m>
+            <z-m> -0.848066 </z-m><!-- adjusted 0.014 -->
         </offsets>
  </model>
  <model>

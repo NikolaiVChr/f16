@@ -317,7 +317,7 @@ var AIM = {
 		m.asc                   = getprop(m.nodeString~"attack-steering-cue-enabled");# Bool. ASC enabled.
 		# navigation, guiding and seekerhead
 		m.max_seeker_dev        = getprop(m.nodeString~"seeker-field-deg") / 2;       # missiles own seekers total FOV diameter.
-		m.guidance              = getprop(m.nodeString~"guidance");                   # heat/radar/semi-radar/laser/gps/vision/unguided/level/gyro-pitch/radiation/inertial/remote/remote-stable/command/sample
+		m.guidance              = getprop(m.nodeString~"guidance");                   # heat/radar/semi-radar/laser/gps/gps-laser/vision/unguided/level/gyro-pitch/radiation/inertial/remote/remote-stable/command/sample
 		m.guidanceLaw           = getprop(m.nodeString~"navigation");                 # guidance-law: direct/direct-alt/OPN/PN/APN/PNxxyy/APNxxyy/LOS (use direct for pure pursuit, use PN for A/A missiles, use APN for modern SAM missiles PN for older, use PNxxyy/APNxxyy for surface to air where xx is degrees to aim above target, yy is seconds it will do that). GPN is APN for winged glidebombs.
 		m.guidanceLawHorizInit  = getprop(m.nodeString~"navigation-init-pure-15");    # Bool. Guide in horizontal plane using pure pursuit until target with 15 deg of nose, before switching to <navigation>
 		m.pro_constant          = getprop(m.nodeString~"proportionality-constant");   # Constant for how sensitive proportional navigation is to target speed/acc. Normally between 3-6. [optional]
@@ -2420,7 +2420,9 @@ var AIM = {
 		# Get target position.
 		if (me.Tgt != nil and me.t_coord != nil) {
 			if (me.flareLock == FALSE and me.chaffLock == FALSE) {
-				me.t_coord = geo.Coord.new(me.Tgt.get_Coord());#in case multiple missiles use same Tgt we cannot rely on coords being different, so we extra create new.
+				if (me.guidance != "gps" and (me.guidance != "gps-laser" or me.is_laser_painted(me.Tgt))) {# gps never updated inflight, gps-laser only when laser is online
+					me.t_coord = geo.Coord.new(me.Tgt.get_Coord());#in case multiple missiles use same Tgt we cannot rely on coords being different, so we extra create new.
+				}
 				if (me.t_coord == nil or !me.t_coord.is_defined()) {
 					# just to protect the multithreaded code for invalid pos.
 					print("Missile target has undefined coord!");
@@ -3342,7 +3344,7 @@ var AIM = {
 	},
 
 	checkForLOS: func () {
-		if (pickingMethod == TRUE and me.guidance != "gps" and me.guidance != "unguided" and me.guidance != "inertial" and me.guidance != "sample") {
+		if (pickingMethod == TRUE and me.guidance != "gps" and me.guidance != "gps-laser" and me.guidance != "unguided" and me.guidance != "inertial" and me.guidance != "sample") {
 			me.xyz          = {"x":me.coord.x(),                  "y":me.coord.y(),                 "z":me.coord.z()};
 		    me.directionLOS = {"x":me.t_coord.x()-me.coord.x(),   "y":me.t_coord.y()-me.coord.y(),  "z":me.t_coord.z()-me.coord.z()};
 
@@ -3411,7 +3413,7 @@ var AIM = {
 				me.printStats(me.type~": Not guiding (lost radiation, gave up)");
 				me.free = TRUE;
 			}
-		} elsif (me.guidance != "gps" and me.guidance != "inertial" and me.guidance != "sample" and (me.dist_curr_direct*M2NM > me.detect_range_curr_nm or !me.FOV_check(me.hdg, me.pitch, me.curr_deviation_h, me.curr_deviation_e, me.max_seeker_dev, me.myMath))) {
+		} elsif (me.guidance != "gps" and me.guidance != "gps-laser" and me.guidance != "inertial" and me.guidance != "sample" and (me.dist_curr_direct*M2NM > me.detect_range_curr_nm or !me.FOV_check(me.hdg, me.pitch, me.curr_deviation_h, me.curr_deviation_e, me.max_seeker_dev, me.myMath))) {
 			# target is not in missile seeker view anymore
 
 			if (me.fovLost == FALSE and me.detect_range_curr_nm != 0) {
@@ -3468,7 +3470,7 @@ var AIM = {
 	},
 
 	adjustToKeepLock: func {
-		if (me.guidance != "gps" and me.guidance != "inertial" and me.guidance != "sample") {
+		if (me.guidance != "gps" and me.guidance != "gps-laser" and me.guidance != "inertial" and me.guidance != "sample") {
 			if (!me.FOV_check(me.hdg, me.pitch, me.curr_deviation_h+me.raw_steer_signal_head, me.curr_deviation_e+me.raw_steer_signal_elev, me.max_seeker_dev, me.myMath) and me.fov_radial != 0) {
 				# the commanded steer order will make the missile lose its lock, to prevent that we reduce the steering just enough so lock wont be lost.
 				me.factorKeep = me.max_seeker_dev/me.fov_radial;
@@ -3872,7 +3874,7 @@ var AIM = {
 			}
 			if (me.life_time > 6) {
 				me.noise = 1;
-			} elsif (me.seeker_filter > 0 and me.guidance != "gps" and me.life_time-me.last > me.next) {
+			} elsif (me.seeker_filter > 0 and me.guidance != "gps" and me.guidance != "gps-laser" and me.life_time-me.last > me.next) {
 				# PN noise.
 				me.sign = me.seed>0.85?(rand()>0.75?-1:1):1;
 				me.opnNoiseReduct = me.apn == -1?0.5:1;
@@ -4617,7 +4619,7 @@ var AIM = {
 	},
 
 	checkForView: func {
-		if (me.guidance != "gps" and me.guidance != "inertial" and me.guidance != "sample") {
+		if (me.guidance != "gps-laser" and me.guidance != "gps" and me.guidance != "inertial" and me.guidance != "sample") {
 			me.launchCoord = geo.aircraft_position();
 			if (!me.radarOrigin) {
 				me.geodPos = aircraftToCart({x:-me.radarX, y:me.radarY, z: -me.radarZ});
@@ -4647,7 +4649,7 @@ var AIM = {
 	},
 
 	checkForViewInFlight: func (tagt) {
-		if (me.guidance != "gps" and me.guidance != "inertial" and me.guidance != "sample") {
+		if (me.guidance != "gps-laser" and me.guidance != "gps" and me.guidance != "inertial" and me.guidance != "sample") {
 			me.launchCoord = me.coord;
 			me.potentialCoord = tagt.get_Coord();
 			me.xyz          = {"x":me.launchCoord.x(),                  "y":me.launchCoord.y(),                 "z":me.launchCoord.z()};
@@ -4726,7 +4728,7 @@ var AIM = {
 			me.newlockgained = me.all_aspect == TRUE or me.rear_aspect(me.coord, tagt);
 			if (!me.newlockgained) {me.printStatsDetails("Test: no view of heat source. Rejected.");return 0;}
 		}
-		if (me.guidance != "gps" and me.guidance != "inertial" and me.guidance != "sample") {
+		if (me.guidance != "gps-laser" and me.guidance != "gps" and me.guidance != "inertial" and me.guidance != "sample") {
 			me.new_elev_deg       = me.getPitch(me.coord, me.newCoord);
 			me.new_course         = me.coord.course_to(me.newCoord);
 			me.new_deviation_e    = me.new_elev_deg - me.pitch;

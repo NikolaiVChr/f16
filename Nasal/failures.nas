@@ -96,7 +96,8 @@ var init = func {
         },
 
         update: func {
-            if(getprop(me.params["property"]) != 0) {
+            me.prp = getprop(me.params["property"]);
+            if(me.prp != nil and me.prp) {
                 var speed = getprop(me._speed_prop);
                 var min = me.params["min-speed-kt"];
                 var max = me.params["max-speed-kt"];
@@ -112,6 +113,75 @@ var init = func {
             }
             return me.fired = 0;
         }
+    };
+
+    var StationTrigger = {
+
+        parents: [FailureMgr.Trigger],
+        requires_polling: 1,
+        type: "Station",
+
+        # Props: weight on station
+        # Params: arm_meters
+        #
+        # v1: at fails, the stores will not be releasable, not be jettisonable. Reason: stress, flutter.
+        #
+        # TODO: Tears, rollrate acc., rollrate
+        new: func(name, arm, propGW) {
+            if(arm == nil)
+                die("StationTrigger.new: arm must be specified");
+
+            if(propGW == nil or propGW == "")
+                die("StationTrigger.new: propGW must be specified");
+
+            var m = FailureMgr.Trigger.new();
+            m.parents = [StationTrigger];
+            m.params["propertyGW"] = propGW;
+            m.params["arm"] = 6.5 - arm;
+            m.params["name"] = name;
+            m._normal_prop = "/accelerations/pilot-gdamped";
+            m._alpha_prop = "/orientation/alpha-deg";
+            m._roll_prop = "/orientation/roll-rate-degps";
+            return m;
+        },
+
+        to_str: func {
+            sprintf("Increasing probability of fails at higher AoA and G and when greater weight is hung.");
+        },
+
+        update: func {
+            me.weight = getprop(me.params["propertyGW"]);
+            me.normal = getprop(me._normal_prop);
+            if(me.weight > 300 and me.normal > me.params.arm) {# TODO: a bit crude destinction
+                me.alpha = math.max(0, getprop(me._alpha_prop));               
+
+                me.maxVio = me.extrapolate(me.weight, 300, 2500, 20, 0);
+                me.maxAlpha = me.extrapolate(me.weight, 300, 1500, 26, 16);
+
+                me.violation = math.max(0, me.normal-me.params.arm)*math.max(0, me.alpha-me.maxAlpha);# TODO: Too crude, and wrong.
+
+                if(me.violation > me.maxVio) {
+                    # In violation regime
+                    me.violation -= me.maxVio;
+
+                    me.factor = me.violation/15;
+
+                    if(rand() < me.factor) {
+                        printf("%s failed    at %d AoA, %.1f G, %d lbm. (%d > %d) %d%%", me.params.name, me.alpha, me.normal, me.weight, me.violation, me.maxVio, me.factor*100);
+                        return me.fired = 1;
+                    }
+                    printf("%s stress     at %d AoA, %.1f G, %d lbm. (%d > %d) %d%%", me.params.name, me.alpha, me.normal, me.weight, me.violation, me.maxVio, me.factor*100);
+                }
+                printf("%s stressless at %d AoA, %.1f G, %d lbm. (%d > %d)", me.params.name, me.alpha, me.normal, me.weight, me.violation, me.maxVio);
+            } else {
+                printf("%s weight %d  %.1f > %.1f", me.params.name, me.weight, me.normal, me.params.arm);
+            }
+            return me.fired = 0;
+        },
+
+        extrapolate: func (x, x1, x2, y1, y2) {
+            return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
+        },
     };
 
     var set_value = func(path, value) {
@@ -165,6 +235,37 @@ var init = func {
     var hud = compat_failure_modes.set_unserviceable("instrumentation/hud");
     FailureMgr.add_failure_mode("instrumentation/hud", "HUD", hud);
     
+    # stations
+
+    prop = "fdm/jsbsim/inertia/pointmass-weight-lbs[4]";
+    var trigger_sta4 = StationTrigger.new("Station 4", 1.62889, prop);
+    var sta4_fc = compat_failure_modes.set_unserviceable("payload/sta[3]");
+    #FailureMgr.add_failure_mode("payload/sta4", "Station 4", sta4_fc);
+    #FailureMgr.set_trigger("payload/sta4", trigger_sta4);
+    #trigger_sta4.arm();
+
+    prop = "fdm/jsbsim/inertia/pointmass-weight-lbs[6]";
+    var trigger_sta6 = StationTrigger.new("Station 6", 1.62889, prop);
+    var sta6_fc = compat_failure_modes.set_unserviceable("payload/sta[5]");
+    #FailureMgr.add_failure_mode("payload/sta6", "Station 6", sta6_fc);
+    #FailureMgr.set_trigger("payload/sta6", trigger_sta6);
+    #trigger_sta6.arm();
+
+    prop = "fdm/jsbsim/inertia/pointmass-weight-lbs[3]";
+    var trigger_sta3 = StationTrigger.new("Station 3", 2.88034, prop);
+    var sta3_fc = compat_failure_modes.set_unserviceable("payload/sta[2]");
+    #FailureMgr.add_failure_mode("payload/sta3", "Station 3", sta3_fc);
+    #FailureMgr.set_trigger("payload/sta3", trigger_sta3);
+    #trigger_sta3.arm();
+
+    prop = "fdm/jsbsim/inertia/pointmass-weight-lbs[7]";
+    var trigger_sta7 = StationTrigger.new("Station 7", 2.88034, prop);
+    var sta7_fc = compat_failure_modes.set_unserviceable("payload/sta[6]");
+    #FailureMgr.add_failure_mode("payload/sta7", "Station 7", sta7_fc);
+    #FailureMgr.set_trigger("payload/sta7", trigger_sta7);
+    #trigger_sta7.arm();
+
+
     #gears
 
     prop = "gear/gear[0]/position-norm";
