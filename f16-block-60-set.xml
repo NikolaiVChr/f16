@@ -220,4 +220,11 @@
     </engine>
   </engines>
 
+  <f16>
+    <stores>
+      <tgp-mounted type="bool">true</tgp-mounted><!-- built into b60 -->
+      <nav-mounted type="bool">true</nav-mounted>
+    </stores>
+  </f16>
+
 </PropertyList>
