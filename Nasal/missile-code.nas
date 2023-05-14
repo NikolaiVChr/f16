@@ -1517,7 +1517,7 @@ var AIM = {
 		me.msl_pitch = ac_pitch;
 
 		if (me.rail == 1) {
-			if (me.rail_forward == 0) {
+			if (!me.rail_forward) {
 				me.position_on_rail = 0;
 				#if (me.rail_pitch_deg == 90 and me.Tgt != nil) {
 					# This only really works for surface launchers which is not rolled
@@ -1544,12 +1544,12 @@ var AIM = {
 		}
 		var init_coord = nil;
 		if (me.rail == 1) {
-			if (me.rail_forward == 0) {
+			if (!me.rail_forward) {
 				me.railBegin = [-me.x, -me.y, me.z];
 				me.railEnd   = vector.Math.plus(me.railBegin, vector.Math.product(me.rail_dist_m, me.railvec));
 			}
 		}
-		if (offsetMethod == 1 and (me.rail == 0 or me.rail_forward == 1)) {
+		if (offsetMethod == 1 and (me.rail == 0 or me.rail_forward)) {
 			var pos = aircraftToCart({x:-me.x, y:me.y, z: -me.z});
 			init_coord = geo.Coord.new();
 			init_coord.set_xyz(pos.x, pos.y, pos.z);
@@ -1590,8 +1590,8 @@ var AIM = {
 		me.speed_east_fps = getprop("velocities/speed-east-fps");
 		me.speed_north_fps = getprop("velocities/speed-north-fps");
 		me.speed_horizontal_fps = math.sqrt(me.speed_east_fps*me.speed_east_fps + me.speed_north_fps*me.speed_north_fps);
-		if (me.rail == 1) {
-			if (me.rail_forward == 0) {
+		if (me.rail) {
+			if (!me.rail_forward) {
 					# TODO: add side wind here too since rail can now have heading offset too.
 					me.u = noseAir.getValue();
 					me.w = -belowAir.getValue();
@@ -1601,7 +1601,7 @@ var AIM = {
 				me.rail_speed_into_wind = noseAir.getValue();
 				#printf("Rail: ac_fps=%d uBody_fps=%d", math.sqrt(me.speed_down_fps*me.speed_down_fps+math.pow(math.sqrt(me.speed_east_fps*me.speed_east_fps+me.speed_north_fps*me.speed_north_fps),2)), me.rail_speed_into_wind);
 			}
-		} elsif (me.intoBore == 0 and me.eject_speed == 0) {
+		} elsif (!me.intoBore and me.eject_speed == 0) {
 			# to prevent the missile to appear falling up, we need to sometimes pitch it into wind:
 			#var t_spd = math.sqrt(me.speed_down_fps*me.speed_down_fps + h_spd*h_spd);
 			var wind_pitch = math.atan2(-me.speed_down_fps, me.speed_horizontal_fps) * R2D;
@@ -2101,10 +2101,10 @@ var AIM = {
 			me.printStats("Maddog stage over, guided at "~me.callsign);
 		}
 
-		if (me.guidanceEnabled and me.free == 0 and !me.newTargetAssigned and (me.canSwitch or (me.loal and me.maddog)) and size(me.contacts) > 0 and (me.dist_curr_direct==-1 or me.dist_curr_direct>me.reportDist)) {
+		if (me.guidanceEnabled and !me.free and !me.newTargetAssigned and (me.canSwitch or (me.loal and me.maddog)) and size(me.contacts) > 0 and (me.dist_curr_direct==-1 or me.dist_curr_direct>me.reportDist)) {
 			# me.reaquire must also be enabled for me.canSwitch to work
 
-			if (me.Tgt==nil or me.hasGuided == 0 or (me.canSwitch and (me.fovLost or me.lostLOS or me.radLostLock or me.semiLostLock or me.heatLostLock)) and me.life_time > me.nextFovCheck) {
+			if (me.Tgt==nil or !me.hasGuided or (me.canSwitch and (me.fovLost or me.lostLOS or me.radLostLock or me.semiLostLock or me.heatLostLock)) and me.life_time > me.nextFovCheck) {
 				# test next contact
 				me.numberContacts = size(me.contacts);
 				me.switchIndex += 1;
@@ -2126,7 +2126,7 @@ var AIM = {
 		if (me.prevGuidance != me.guidance) {
 			me.keepPitch = me.pitch;
 		}
-		if (me.Tgt != nil and me.Tgt.isValid() == 0) {#TODO: verify that the following threaded code can handle invalid contact. As its read from property-tree, not mutex protected.
+		if (me.Tgt != nil and !me.Tgt.isValid()) {#TODO: verify that the following threaded code can handle invalid contact. As its read from property-tree, not mutex protected.
 			if (!(me.canSwitch and me.reaquire)) {
 				me.printStats(me.type~": Target went away, deleting missile.");
 				#me.sendMessage(me.type~" missed "~me.callsign~": Target logged off.");
@@ -2162,7 +2162,7 @@ var AIM = {
 			}
 		}
 
-		if (me.rail == 0) {
+		if (!me.rail) {
 			me.deploy = me.clamp(me.extrapolate(me.life_time, me.drop_time, me.drop_time+me.deploy_time,0,1),0,1);
 		} elsif (me.rail_passed_time == nil and me.rail_passed == 1) {
 			me.rail_passed_time = me.life_time;
@@ -2234,7 +2234,7 @@ var AIM = {
 			# No guidance at low speed.
 			# Still go through the guidance loop for sensor logic (need to check flares, LOS, etc.
 			# to detect loss of lock), but the steering commands will be ignored.
-			if (me.tooLowSpeed == 0) {
+			if (!me.tooLowSpeed) {
 				me.printStats(me.type~": Not guiding (too low speed)");
 			}
 			me.tooLowSpeed = 1;
@@ -2251,8 +2251,8 @@ var AIM = {
 			}
 			AIM.setETA(nil);
 		    me.prevETA = nil;
-		} elsif (me.Tgt != nil and me.t_coord !=nil and me.free == 0 and me.guidance != "unguided"
-			and (me.rail == 0 or me.rail_passed == 1) and me.guidanceEnabled) {
+		} elsif (me.Tgt != nil and me.t_coord !=nil and !me.free and me.guidance != "unguided"
+			and (!me.rail or me.rail_passed == 1) and me.guidanceEnabled) {
 				#
 				# Here we figure out how to guide, navigate and steer.
 				#
@@ -2272,7 +2272,7 @@ var AIM = {
 			        }
 				}
 	            me.observing = me.guidance;
-	    } elsif (me.guidance != "unguided" and (me.rail == 0 or me.rail_passed == 1) and me.guidanceEnabled and me.free == 0 and me.t_coord == nil
+	    } elsif (me.guidance != "unguided" and (!me.rail or me.rail_passed == 1) and me.guidanceEnabled and !me.free and me.t_coord == nil
 	    		and (me.newTargetAssigned or (me.canSwitch and (me.fovLost or me.lostLOS or me.radLostLock or me.semiLostLock or me.heatLostLock) or (me.loal and me.maddog)))) {
 	    	# check for too low speed not performed on purpuse, difference between flying straight on A/P and making manouvres.
 	    	if (me.observing != me.standbyFlight) {
@@ -2340,7 +2340,7 @@ var AIM = {
 		me.speed_east_fps       = math.sin(me.hdg * D2R) * me.speed_horizontal_fps;
 		me.speed_down_fps      += g_fps * me.dt;
 
-		if (me.rail == 1 and me.rail_passed == 0) {
+		if (me.rail == 1 and !me.rail_passed) {
 			# missile still on rail, lets calculate its speed relative to the wind coming in from the aircraft nose.
 			me.rail_speed_into_wind = me.rail_speed_into_wind + me.speed_change_fps;
 		} else {
@@ -2349,7 +2349,7 @@ var AIM = {
 		}
 
 
-		if (me.rail == 1 and me.rail_passed == 0) {
+		if (me.rail == 1 and !me.rail_passed) {
 			me.u = noseAir.getValue();# airstream from nose
 			#var v = getprop("velocities/vBody-fps");# airstream from side
 			me.w = -belowAir.getValue();# airstream from below
@@ -2380,7 +2380,7 @@ var AIM = {
 			}
 		}
 
-		if (me.rail == 0 or me.rail_passed == 1) {
+		if (!me.rail or me.rail_passed) {
 			# missile not on rail, lets move it to next waypoint
 			if (me.observing != "level" or me.speed_m < me.min_speed_for_guiding) {
 				me.alt_ft = me.alt_ft - (me.speed_down_fps * me.dt);
@@ -2416,7 +2416,7 @@ var AIM = {
 		}
 		# Get target position.
 		if (me.Tgt != nil and me.t_coord != nil) {
-			if (me.flareLock == 0 and me.chaffLock == 0) {
+			if (!me.flareLock and !me.chaffLock) {
 				if (me.guidance != "gps" and (me.guidance != "gps-laser" or me.is_laser_painted(me.Tgt))) {# gps never updated inflight, gps-laser only when laser is online
 					me.t_coord = geo.Coord.new(me.Tgt.get_Coord());#in case multiple missiles use same Tgt we cannot rely on coords being different, so we extra create new.
 				}
@@ -2464,7 +2464,7 @@ var AIM = {
 		me.latN.setDoubleValue(me.coord.lat());
 		me.lonN.setDoubleValue(me.coord.lon());
 		me.altN.setDoubleValue(me.alt_ft);
-		if (!me.no_pitch or (me.rail == 1 and me.rail_passed == 0)) {
+		if (!me.no_pitch or (me.rail and !me.rail_passed)) {
 			me.pitchN.setDoubleValue(me.pitch);
 		} else {
 			# for ejection seat
@@ -2508,8 +2508,8 @@ var AIM = {
 		##############################
 		#### Proximity detection.#####
 		##############################
-		if (me.rail == 0 or me.rail_passed == 1) {
- 			if ( me.free == 0 ) {
+		if (!me.rail or me.rail_passed) {
+ 			if ( !me.free ) {
 				me.g = me.steering_speed_G(me.hdg, me.pitch, me.track_signal_e, me.track_signal_h, me.old_speed_fps, me.dt);
 			} else {
 				me.g = 0;
@@ -2550,7 +2550,7 @@ var AIM = {
 			}
 		}
 
-		if (me.Tgt == nil and me.rail == 1 and me.rail_pitch_deg==90 and me.rail_passed == 0) {
+		if (me.Tgt == nil and me.rail == 1 and me.rail_pitch_deg==90 and !me.rail_passed) {
 			#for ejection seat to be oriented correct, wont be ran for missiles with target such as the frigate.
 
 			# model of seat is loaded such that face is pointing in -Z FG coords.
@@ -2598,7 +2598,7 @@ var AIM = {
 			#print("looking2 "~me.myMath.cartesianToEuler(me.myMath.product(-1,me.myMath.eulerToCartesian3Z(-me.hdg, me.pitch, turnFace)))[0]);
 			#printf("seat now at P:%d H:%d R:%d",me.pitch, me.hdg, turnFace);
 		}
-		if (me.rail_passed == 0 and (me.rail == 0 or me.rail_pos > me.rail_dist_m * M2FT)) {
+		if (!me.rail_passed and (!me.rail or me.rail_pos > me.rail_dist_m * M2FT)) {
 			me.rail_passed = 1;
 			me.printFlight("rail passed");
 		}
@@ -3030,7 +3030,7 @@ var AIM = {
 
 	setFirst: func() {
 		if (me.smoke_prop.getValue() == 1 and me.life_time < first_in_air_max_sec) {
-			if (me.first == 1 or first_in_air == 0) {
+			if (me.first == 1 or !first_in_air) {
 				# report position over MP for MP animation of smoke trail.
 				me.first = 1;
 				first_in_air = 1;
@@ -3075,12 +3075,12 @@ var AIM = {
 
             me.myGnew = me.steering_speed_G(me.hdg, me.pitch, me.track_signal_e, me.track_signal_h, me.old_speed_fps, me.dt);
             #me.printFlight(sprintf("G2 %.2f", myG)~sprintf(" - Coeff %.2f", MyCoef));
-            if (me.limitGs == 0) {
+            if (!me.limitGs) {
             	me.printFlight("%s: Missile pulling approx max G: %06.3f/%06.3f (%06.3f)", me.type, me.myGnew, me.max_g_current, me.myG);
             }
             me.myG = me.myGnew;
         }
-        if (me.limitGs == 1 and me.myG > me.max_g_current/2) {
+        if (me.limitGs and me.myG > me.max_g_current/2) {
         	# Save the horiz high performance maneuvering for later
         	me.track_signal_e = me.track_signal_e /2;
         }
@@ -3254,7 +3254,7 @@ var AIM = {
 		#
 		# Check for being fooled by flare.
 		#
-		if (me.Tgt != nil and me.fovLost != 1 and me.guidance == "heat" and me.flareLock == 0 and (me.life_time-me.flareTime) > 1) {
+		if (me.Tgt != nil and me.fovLost != 1 and me.guidance == "heat" and !me.flareLock and (me.life_time-me.flareTime) > 1) {
 			# the fov check is for loal missiles that should not lock onto flares from aircraft not in view.
 			#
 			# TODO: Use Richards Emissary for this.
@@ -3288,7 +3288,7 @@ var AIM = {
 		#
 		# Check for being fooled by chaff.
 		#
-		if (me.Tgt != nil and me.fovLost != 1 and (me.guidance == "radar" or me.guidance == "semi-radar" or me.guidance == "command") and me.chaffLock == 0 and (me.life_time-me.chaffTime) > 1) {
+		if (me.Tgt != nil and me.fovLost != 1 and (me.guidance == "radar" or me.guidance == "semi-radar" or me.guidance == "command") and !me.chaffLock and (me.life_time-me.chaffTime) > 1) {
 			#
 			# TODO: Use Richards Emissary for this.
 			#
@@ -3357,14 +3357,14 @@ var AIM = {
 				}
 			}
 			if (me.reaquire == 1) {
-				if (me.lostLOS == 0) {
+				if (!me.lostLOS) {
 					me.printStats(me.type~": Not guiding (lost line of sight, trying to reaquire)");
 				}
 				me.lostLOS = 1;
 				me.guiding = 0;
 				return;
 			} else {
-				if (me.lostLOS == 0) {
+				if (!me.lostLOS) {
 					me.printStats(me.type~": Gave up (lost line of sight)");
 				}
 				me.lostLOS = 1;
@@ -3378,11 +3378,11 @@ var AIM = {
 	checkForGuidance: func () {
 		if(me.tooLowSpeed) {
 			me.guiding = 0;
-		} elsif ((me.guidance == "semi-radar" and me.is_painted(me.Tgt) == 0) or (me.guidance =="laser" and me.is_laser_painted(me.Tgt) == 0) ) {
+		} elsif ((me.guidance == "semi-radar" and !me.is_painted(me.Tgt)) or (me.guidance =="laser" and !me.is_laser_painted(me.Tgt)) ) {
 			# if its semi-radar guided and the target is no longer painted
 			me.guiding = 0;
 			if (me.reaquire == 1) {
-				if (me.semiLostLock == 0) {
+				if (!me.semiLostLock) {
 					me.printStats(me.type~": Not guiding (lost radar reflection, trying to reaquire)");
 				}
 				me.semiLostLock = 1;
@@ -3394,11 +3394,11 @@ var AIM = {
 			# if its command guided and the control no longer sends commands
 			me.guiding = 0;
 			me.printStats(me.type~": Not guiding (no commands from controller)");
-		} elsif (me.guidance == "radiation" and me.is_radiating_me(me.Tgt) == 0) {
+		} elsif (me.guidance == "radiation" and !me.is_radiating_me(me.Tgt)) {
 			# if its radiation guided and the target is not illuminating us with radiation
 			me.guiding = 0;
 			if (me.reaquire == 1) {
-				if (me.radLostLock == 0) {
+				if (!me.radLostLock) {
 					me.printStats(me.type~": Not guiding (lost radiation, trying to reaquire)");
 				}
 				me.radLostLock = 1;
@@ -3409,22 +3409,22 @@ var AIM = {
 		} elsif (me.guidance != "gps" and me.guidance != "gps-laser" and me.guidance != "inertial" and me.guidance != "sample" and (me.dist_curr_direct*M2NM > me.detect_range_curr_nm or !me.FOV_check(me.hdg, me.pitch, me.curr_deviation_h, me.curr_deviation_e, me.max_seeker_dev, me.myMath))) {
 			# target is not in missile seeker view anymore
 
-			if (me.fovLost == 0 and me.detect_range_curr_nm != 0) {
+			if (!me.fovLost and me.detect_range_curr_nm != 0) {
 				me.normFOV = me.FOV_check_norm(me.hdg, me.pitch, me.curr_deviation_h, me.curr_deviation_e, me.max_seeker_dev, me.myMath);
 				me.printStats(me.type~": "~me.callsign~" is not in seeker view. (%d%% in view, %d%% in range)", me.normFOV*100, 100*me.dist_curr_direct*M2NM / me.detect_range_curr_nm);#~me.viewLost);
-			} elsif (me.fovLost == 0) {
+			} elsif (!me.fovLost) {
 				me.normFOV = me.FOV_check_norm(me.hdg, me.pitch, me.curr_deviation_h, me.curr_deviation_e, me.max_seeker_dev, me.myMath);
 				me.printStats(me.type~": "~me.callsign~" is not in seeker view. (%d%% in view)", me.normFOV*100);#~me.viewLost);
 			}
-			if (me.reaquire == 0) {
+			if (!me.reaquire) {
 				me.free = 1;
 			} else {
 				me.fovLost = 1;
 				me.guiding = 0;
 			}
-		} elsif (me.all_aspect == 0 and me.rear_aspect(me.coord, me.Tgt) == 0) {
+		} elsif (!me.all_aspect and !me.rear_aspect(me.coord, me.Tgt)) {
 			me.guiding = 0;
-           	if (me.heatLostLock == 0) {
+           	if (!me.heatLostLock) {
         		me.printStats(me.type~": Missile lost heat lock, attempting to reaquire..");
         	}
         	me.heatLostLock = 1;
@@ -3513,7 +3513,7 @@ var AIM = {
 		#
 		# cruise, loft, cruise-missile
 		#
-		if (me.guiding == 0) {
+		if (!me.guiding) {
 			return;
 		}
 		me.loft_angle = 15;# notice Shinobi used 26.5651 degs, but Raider1 found a source saying 10-20 degs.
@@ -3542,7 +3542,7 @@ var AIM = {
             }
 			me.cruise_or_loft = 1;
 			me.limitHalfGs = 1;
-        } elsif(me.loft_alt != 0 and me.snapUp == 0) {
+        } elsif(me.loft_alt != 0 and !me.snapUp) {
         	# this is for Air to ground/sea cruise-missile (SCALP, Sea-Eagle, Taurus, Tomahawk, RB-15...)
 
         	var code = 1;# 0 = old, 1 = new, 2 = angle
@@ -3740,7 +3740,7 @@ var AIM = {
 		#	}
 		} elsif (me.snapUp == 1 and me.t_elev_deg > me.clamp(-50/me.speed_m,-30,-5) and me.dist_curr * M2NM > me.speed_m * 6
 			 and me.t_elev_deg < me.loft_angle #and me.t_elev_deg > -7.5
-			 and me.dive_token == 0) {
+			 and !me.dive_token) {
 			# lofting: due to target is more than 10 miles out and we havent reached
 			# our desired cruising alt, and the elevation to target is less than lofting angle.
 			# The -7.5 limit, is so the seeker don't lose track of target when lofting.
@@ -3830,14 +3830,14 @@ var AIM = {
 		#
 		# guidance laws
 		#
-		if (me.guiding == 1 and me.free == 0 and me.dist_last != nil and me.last_dt != 0 and me.newTargetAssigned==0) {
+		if (me.guiding == 1 and !me.free and me.dist_last != nil and me.last_dt != 0 and me.newTargetAssigned==0) {
 			# augmented proportional navigation for heading #
 			#################################################
 
 			if (me.guidanceLaw == "direct" or (me.guidanceLaw == "LOS" and me.life_time < 4)) {
 				# pure pursuit
 				me.raw_steer_signal_head = me.curr_deviation_h;
-				if (me.cruise_or_loft == 0) {
+				if (!me.cruise_or_loft) {
 					me.raw_steer_signal_elev = me.curr_deviation_e;
 					me.attitudePN = (math.atan2(-(me.speed_down_fps+g_fps * me.dt), me.speed_horizontal_fps ) - math.atan2(-me.speed_down_fps, me.speed_horizontal_fps )) * R2D;
 		            me.gravComp = - me.attitudePN;
@@ -3894,7 +3894,7 @@ var AIM = {
 
 			me.t_velocity = me.myMath.getCartesianVelocity(-me.Tgt.get_heading(), me.Tgt.get_Pitch(), me.Tgt.get_Roll(), me.Tgt.get_uBody(), me.Tgt.get_vBody(), me.Tgt.get_wBody());
 
-			if ((me.flareLock == 0 and me.chaffLock == 0) or me.t_heading == nil) {
+			if ((!me.flareLock and !me.chaffLock) or me.t_heading == nil) {
 				me.euler = me.myMath.cartesianToEuler(me.t_velocity);
 				if (me.euler[0] != nil) {
 					me.t_heading        = me.euler[0];
@@ -4004,7 +4004,7 @@ var AIM = {
 			#me.print(sprintf("commanded-perpendicular-acceleration=%.1f ft/s^2", acc_lateral_fps2));
 			#printf("horz leading by %.1f deg, commanding %.1f deg", me.curr_deviation_h, me.raw_steer_signal_head);
 
-			if (me.cruise_or_loft == 0) {
+			if (!me.cruise_or_loft) {
 				me.fixed_aim = nil;
 				me.fixed_aim_time = nil;
 				if (find("PN",me.guidanceLaw) != -1 and size(me.guidanceLaw) > 3) {
@@ -4575,7 +4575,7 @@ var AIM = {
 						me.warm = me.clamp(me.extrapolate(me.cool_curr_time, 0, me.cool_time, 1, 0),0,1);
 					}
 				}
-				if (me.cooling == 0) {
+				if (!me.cooling) {
 					me.cool_curr_time = me.cool_delta_time+me.extrapolate(me.warm, 0, 1, 0, me.cool_time*3);#takes longer to warm than to cool down
 					me.warm = me.clamp(me.extrapolate(me.cool_curr_time, 0, me.cool_time*3, 0, 1),0,1);
 				}
@@ -5160,7 +5160,7 @@ var AIM = {
 		if (me.status != MISSILE_STANDBY ) {#TODO: should this also check for starting up?
 			me.in_view = me.check_t_in_fov();
 
-			if (me.in_view == 0) {
+			if (!me.in_view) {
 				me.printSearch("out of view");
 				me.return_to_search();
 				return;
@@ -5381,7 +5381,7 @@ var AIM = {
 				me.explode_water_prop.setBoolValue(0);
 			} elsif (info[1] == nil) {
 				#print ("Building hit!");
-			} elsif (info[1].solid == 0) {
+			} elsif (!info[1].solid) {
 			 	me.explode_water_prop.setBoolValue(1);
 			} else {
 				me.explode_water_prop.setBoolValue(0);
