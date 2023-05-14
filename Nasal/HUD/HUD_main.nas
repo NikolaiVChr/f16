@@ -1065,9 +1065,10 @@ append(obj.total, obj.speed_curr);
              .setColor(0,0,0));
 
         var v = getprop("sim/variant-id");
+        var rads = [];
         for(var i = -17; i <= -1; i += 1) { # stipled lines
-          var rad = (v==0 or v==1 or v==3)?0:me.extrapolate(-i*5,5,90,8,45)*D2R;#as per US manual pitch lines bend down from 8 to 45 degrees
-
+          var rad = (v==0 or v==1 or v==3)?0:me.extrapolate(-i*5,5,85,8,45)*D2R;#as per US manual pitch lines bend down from 8 to 45 degrees
+          append(rads, minuss*math.sin(rad));
           append(obj.total, obj.ladder_group.createChild("path")
                          .moveTo(minuso, -i * distance - minuso*0.5)
                          .vert(minuso*0.5)
@@ -1137,14 +1138,14 @@ append(obj.total, obj.speed_curr);
              .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL)
              .setFont(HUD_FONT)
              .setAlignment("right-center")
-             .setTranslation(-minuso-minuss-minuss*0.2, -i * distance)
+             .setTranslation(-minuso-minuss-minuss*0.2, -i * distance + rads[i])
              .setColor(0,0,0));
           append(obj.total, obj.ladder_group.createChild("text")
              .setText(i*-5)
              .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL)
              .setFont(HUD_FONT)
              .setAlignment("left-center")
-             .setTranslation(minuso+minuss+minuss*0.2, -i * distance)
+             .setTranslation(minuso+minuss+minuss*0.2, -i * distance + rads[i])
              .setColor(0,0,0));
         }
         for(var i = 1; i <= 17; i += 1) {
