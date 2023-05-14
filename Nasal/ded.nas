@@ -530,14 +530,20 @@ var dataEntryDisplay = {
     crusModeSelected: nil,
 	updateCrus: func() {
 		# Source: F-16 A/B Mid-Life Update Production Tape M1: Pilot's guide to new to new capabilities & cockpit enhancements.
-		# The page is at the moment fixed at RNG.
-		# The steerpoint is currently fixed at last steerpoint, unless using a non route steerpoint.
+		# This page does not yet support HOME or EDR
+
+        # The top right STPT number should be hidden except on the TOS page
+        var tempNo = "";
+        if (me.crusMode == "TOS") {
+            tempNo = me.no;
+        }
+
         if (CRUSmodeTF.selected and me.crusModeSelected == me.crusMode) {
-			me.text[0] = sprintf("      CRUS %s     %s ", utf8.chstr(0xFB75)~backgroundText(me.crusMode)~utf8.chstr(0xFB75),me.no);
+			me.text[0] = sprintf("      CRUS %s     %s ", utf8.chstr(0xFB75)~backgroundText(me.crusMode)~utf8.chstr(0xFB75), tempNo);
 		} elsif (CRUSmodeTF.selected) {
-			me.text[0] = sprintf("      CRUS *%s*     %s ", me.crusMode, me.no);
+			me.text[0] = sprintf("      CRUS *%s*     %s ", me.crusMode, tempNo);
 		} else {
-			me.text[0] = sprintf("      CRUS  %s      %s ", me.crusMode, me.no);
+			me.text[0] = sprintf("      CRUS  %s      %s ", me.crusMode, tempNo);
 		}
 		# me.text[0] = sprintf("     CRUS  RNG  ",me.no);
 		if (me.crusMode == "TOS") {
@@ -580,6 +586,7 @@ var dataEntryDisplay = {
             }
 
 		} elsif (me.crusMode == "RNG") {
+		    # The steerpoint is currently fixed at last steerpoint, unless using a non route steerpoint
             var fuel   = "";
             var fp = flightplan();
             var maxS = "";
@@ -629,10 +636,10 @@ var dataEntryDisplay = {
             }
             windkts = sprintf("% 3dKTS",getprop("environment/wind-speed-kt"));
             winddir = sprintf("%03d\xc2\xb0",getprop("environment/wind-from-heading-deg"));
-            me.text[1] = sprintf("     STPT  %s  ",maxS);
-            me.text[2] = sprintf("     FUEL %s",fuel);#fuel remaining after getting to last steerpoint at current fuel consumption.
+            me.text[1] = sprintf("      STPT   %s  ",maxS);
+            me.text[2] = sprintf("      FUEL %s",fuel);#fuel remaining after getting to last steerpoint at current fuel consumption.
             me.text[3] = sprintf("                        ");
-            me.text[4] = sprintf("     WIND  %s %s",winddir,windkts);
+            me.text[4] = sprintf("      WIND %s %s",winddir,windkts);
         }
 	},
 
