@@ -24,6 +24,9 @@ var center_to_edge_distance_m = 0.025;#meters
 var screen_w=getprop("sim/startup/xsize");
 var screen_h=getprop("sim/startup/ysize");
 
+var VISUAL = 47;
+var SLAVE  = 76;
+
 var F16_HMD = {
     map: func (value, leftMin, leftMax, rightMin, rightMax) {
         # Figure out how 'wide' each range is
@@ -953,16 +956,23 @@ var F16_HMD = {
         me.irT = 0;#IR triangle aspect indicator
         me.rdT = 0;
         me.irB = 0;#IR search bore
+        me.aimMode = SLAVE;
         #printf("%d %d %d %s",hdp.master_arm,pylons.fcs != nil,pylons.fcs.getAmmo(),hdp.weapon_selected);
         if(hdp.getproper("master_arm") != 0 and pylons.fcs != nil and pylons.fcs.getAmmo() > 0) {
             hdp.weapon_selected = pylons.fcs.selectedType;
             var aim = pylons.fcs.getSelectedWeapon();
+
             if (0 and hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
                 if (!pylons.fcs.isLock()) {
                     me.radarLock.setTranslation(0, -me.sy*0.25+262*0.3*0.5);
                     me.rdL = 1;
                 }
             } elsif (hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "AIM-9M" or hdp.weapon_selected == "IRIS-T") {
+                if (aim != nil) {
+                    if (!aim.isRadarSlaved()) {
+                        me.aimMode = VISUAL;
+                    }
+                }
                 if (aim != nil and aim.isCaged()) {
                     var coords = aim.getSeekerInfo();
                     if (coords != nil) {
@@ -1267,7 +1277,7 @@ var F16_HMD = {
 
         hdp.window5_txt = f16.transfer_stpt;
         hdp.window3_txt = f16.transfer_dist;
-        hdp.window9_txt = f16.transfer_arms~(f16.transfer_arms==""?"":"-V");
+        hdp.window9_txt = f16.transfer_arms~(f16.transfer_arms==""?"":me.aimMode==VISUAL?"-V":"-S");
         hdp.window2_txt = f16.transfer_mode;
         hdp.window11_txt = f16.transfer_fuel_bullseye;
         hdp.window12_txt = f16.transfer_g;
