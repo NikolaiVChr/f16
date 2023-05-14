@@ -1338,14 +1338,20 @@ append(obj.total, obj.speed_curr);
                                       }),
              func(hdp)
                                       {
-                                        if (ded.dataEntryDisplay.crusMode == "TOS" ) {
-                                          var desired_kt = getprop("/f16/ded/crus-req-gs");
-                                          if (desired_kt != nil and !hdp.getproper("dgft")) {
-                                            obj.ias_desired.show();
-                                            obj.ias_desired.setTranslation(0, (hdp.getproper("groundspeed_kt")-desired_kt) * ias_range_factor);
+                                        if (!hdp.getproper("dgft")) {
+                                          if (ded.dataEntryDisplay.crusModeSelected == "TOS") {
+                                            var desired_kt = getprop("/f16/ded/crus-req-gs");
+                                            if (desired_kt != nil) {
+                                              obj.ias_desired.show();
+                                              obj.ias_desired.setTranslation(0, (hdp.getproper("groundspeed_kt")-desired_kt) * ias_range_factor);
+                                            } else {
+                                              obj.ias_desired.hide();
+                                            }
                                           } else {
                                             obj.ias_desired.hide();
                                           }
+                                        } else {
+                                          obj.ias_desired.hide();
                                         }
                                       },
             #props.UpdateManager.FromHashList([], 0.01,

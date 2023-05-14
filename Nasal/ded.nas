@@ -18,7 +18,7 @@ var STPTlonFE = EditableLON.new("f16/ded/lon", convertDegreeToStringLon);
 var STPTnumFE = EditableField.new("f16/ded/stpt-edit", "%3d", 3);
 var STPTradFE = EditableField.new("f16/ded/stpt-rad", "%2d", 2);
 var STPTaltFE = EditableField.new("f16/ded/alt", "%5d", 5);
-var CRUSmodeTF = toggleableField.new(["TOS", "RNG"], "f16/ded/crus-mode");
+var CRUSmodeTF = toggleableFieldTwo.new(["TOS", "RNG"], "f16/ded/crus-mode");
 var CRUSdesTosEF = EditableTime.new("f16/ded/crus-des-tos", steerpoints.getAbsoluteTOS);
 #var CRUSstptEF = EditableField.new("f16/ded/crus-stpt", "%3d", 3);
 var STPTtypeTF = toggleableField.new(["   ", " 2 ", " 5 ", " 6 ", " 11", " 20", " SH", " P ", " AAA"], "f16/ded/stpt-type");
@@ -161,7 +161,7 @@ var dataEntryDisplay = {
 		if (me.no == 0) {
 		  me.no = "";
 		} else {
-		  me.no = sprintf("%3d",me.no);
+		  me.no = sprintf("%3d "~utf8.chstr(0x2195),me.no);
 		}
 
 		if (me.page == pTACAN) {
@@ -533,11 +533,11 @@ var dataEntryDisplay = {
 		# The page is at the moment fixed at RNG.
 		# The steerpoint is currently fixed at last steerpoint, unless using a non route steerpoint.
         if (CRUSmodeTF.selected and me.crusModeSelected == me.crusMode) {
-			me.text[0] = sprintf("      CRUS %s   %s", me.crusMode, utf8.chstr(0xFB75)~me.no~utf8.chstr(0xFB75));
+			me.text[0] = sprintf("      CRUS %s     %s ", utf8.chstr(0xFB75)~backgroundText(me.crusMode)~utf8.chstr(0xFB75),me.no);
 		} elsif (CRUSmodeTF.selected) {
-			me.text[0] = sprintf("      CRUS *%s*   %s", me.crusMode, me.no);
+			me.text[0] = sprintf("      CRUS *%s*     %s ", me.crusMode, me.no);
 		} else {
-			me.text[0] = sprintf("      CRUS  %s    %s", me.crusMode, me.no);
+			me.text[0] = sprintf("      CRUS  %s      %s ", me.crusMode, me.no);
 		}
 		# me.text[0] = sprintf("     CRUS  RNG  ",me.no);
 		if (me.crusMode == "TOS") {
@@ -643,7 +643,7 @@ var dataEntryDisplay = {
 		var hackSec = int(getprop("f16/avionics/hack/elapsed-time-sec") - (hackHour * 3600) - (hackMin * 60));
 		var hackTime = sprintf("%02.0f", hackHour) ~ ":" ~ sprintf("%02.0f", hackMin) ~ ":" ~ sprintf("%02.0f", hackSec);
 		var date = sprintf("%02.0f", getprop("/sim/time/utc/month")) ~ "/" ~ sprintf("%02.0f", getprop("/sim/time/utc/day")) ~ "/" ~ right(sprintf("%s", getprop("/sim/time/utc/year")), 2);
-		me.text[0] = sprintf("          TIME      %s  ",me.no);
+		me.text[0] = sprintf("          TIME       %s  ",me.no);
 		if (getprop("f16/avionics/power-gps") and getprop("sim/variant-id") != 1 and getprop("sim/variant-id") != 3) {
 			me.text[1] = sprintf("GPS SYSTEM      %s",time);
 		} else {

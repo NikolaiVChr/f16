@@ -44,15 +44,6 @@ var Button = {
 					}
 					return;
 				}
-
-                if (dataEntryDisplay.page == pCRUS and CRUSmodeTF.selected) {
-					if (dataEntryDisplay.crusModeSelected == nil) {
-					    dataEntryDisplay.crusModeSelected = dataEntryDisplay.crusMode;
-					} else {
-					    dataEntryDisplay.crusModeSelected = nil;
-					}
-					return;
-				}
 			}
 		}
 		if (me.To9 or me.btnText == "0") {
@@ -249,6 +240,74 @@ var toggleableField = {
 	},
 	enter: func() {
 		return;
+	},
+	getText: func() {
+		if (me.selected) {
+			return "*" ~ me.value ~ "*";
+		} else {
+			return " " ~ me.value ~ " ";
+		}
+	},
+	updateText: func() {
+		for (var i = 0; i < size(me.valuesVector); i = i + 1) {
+			if (getprop(me.prop) == me.valuesVector[i]) {
+				me.value = me.valuesVector[i];
+				me.index = i;
+			}
+		}
+	},
+};
+
+var toggleableFieldTwo = {
+	new: func(valuesVector, prop) {
+		var tF = {parents: [toggleableFieldTwo,StandardField]};
+		tF.valuesVector = valuesVector;
+		tF.value = "";
+		tF.index = 0;
+		tF.prop = prop;
+		tF.selected = 0;
+		tF.text = "";
+		tF.lastText1 = "";
+		tF.lastText2 = "";
+		tF.recallStatus = 0;
+		tF.listener = nil;
+		tF.skipMe = 0;
+		tF.init();
+		return tF;
+	},
+	init: func() {
+		if (me.listener == nil) {
+			me.listener = setlistener(me.prop, func() {
+				me.updateText();
+			}, 0, 0);
+		}
+
+		for (var i = 0; i < size(me.valuesVector); i = i + 1) {
+			if (getprop(me.prop) == me.valuesVector[i]) {
+				me.value = me.valuesVector[i];
+				me.index = i;
+			}
+		}
+	},
+	append: func(letter) {
+		if (letter != "0") { return; }
+		me.index += 1;
+		if (me.index >= size(me.valuesVector)) {
+			me.index = 0;
+		}
+		setprop(me.prop, me.valuesVector[me.index]);
+	},
+	recall: func() {
+		return;
+	},
+	enter: func() {
+	    # TODO: This should be done via the M-SEL mode select button, but I don't know how to implement that
+	    if (dataEntryDisplay.crusModeSelected != dataEntryDisplay.crusMode) {
+            dataEntryDisplay.crusModeSelected = dataEntryDisplay.crusMode;
+        } else {
+            dataEntryDisplay.crusModeSelected = nil;
+        }
+        return;
 	},
 	getText: func() {
 		if (me.selected) {
