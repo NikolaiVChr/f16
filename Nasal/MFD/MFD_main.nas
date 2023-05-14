@@ -1097,7 +1097,7 @@ var MFD_Device =
             if (radar_system.apg68Radar.currentMode.longName == radar_system.vsMode.longName) {
                 me.root.distl.setScale(-1,1);
             } else {
-                me.root.distl.setScale(1,1);
+                me.root.distl.setScale( 1,1);
             }
             me.root.distl.show();
 
