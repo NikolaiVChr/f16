@@ -980,6 +980,17 @@ var F16_HMD = {
                         me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
                         me.echoPos[0] = (512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512 (should be 0.1385 from eye instead to be like real f16)
                         me.echoPos[1] = -(512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
+
+                        me.clamped = math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]) > 500;
+
+                        if (me.clamped) {
+                            me.clampAmount = 500/math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]);
+                            me.echoPos[0] *= me.clampAmount;
+                            me.echoPos[1] *= me.clampAmount;
+                            me.irBore.setStrokeDashArray([7,7]);
+                        } else {
+                            me.irBore.setStrokeDashArray([100]);
+                        }
                         me.irBore.setTranslation(me.echoPos);
                         me.irB = 1;
                     }#atan((0.025*500)/(0.2*512)) = radius_fg = atan(12.5/102.4) = 6.96 degs => 13.92 deg diam
@@ -991,6 +1002,18 @@ var F16_HMD = {
                         me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
                         me.echoPos[0] = (512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
                         me.echoPos[1] = -(512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
+
+                        me.clamped = math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]) > 500;
+
+                        if (me.clamped) {
+                            me.clampAmount = 500/math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]);
+                            me.echoPos[0] *= me.clampAmount;
+                            me.echoPos[1] *= me.clampAmount;
+                            me.irLock.setStrokeDashArray([7,7]);
+                        } else {
+                            me.irLock.setStrokeDashArray([100]);
+                        }
+
                         me.irLock.setTranslation(me.echoPos);
                         me.irL = 1;
                     }
@@ -1033,7 +1056,7 @@ var F16_HMD = {
                         me.echoPos[1] *= me.clampAmount;
                         me.tgt.setStrokeDashArray([7,7]);
                     } else {
-                        me.tgt.setStrokeDashArray([1]);
+                        me.tgt.setStrokeDashArray([100]);
                     }
 
                     if (radar_system.apg68Radar.getPriorityTarget() != nil and radar_system.apg68Radar.getPriorityTarget().getLastBlep() != nil and radar_system.apg68Radar.getPriorityTarget().getLastRangeDirect() != nil and radar_system.apg68Radar.getPriorityTarget().get_Callsign() != nil and me.u.get_Callsign() == radar_system.apg68Radar.getPriorityTarget().get_Callsign()) {
@@ -1047,7 +1070,7 @@ var F16_HMD = {
                         if (me.clamped) {
                             me.target_locked.setStrokeDashArray([7,7]);
                         } else {
-                            me.target_locked.setStrokeDashArray([1]);
+                            me.target_locked.setStrokeDashArray([100]);
                         }
                         me.target_locked.update();
                         if (0 and currASEC != nil) {
@@ -1071,6 +1094,18 @@ var F16_HMD = {
                                     var coords = aim.getSeekerInfo();
                                     if (coords != nil) {
                                         me.seekPos = hmd.HudMath.getCenterPosFromDegs(coords[0],coords[1]);
+
+                                        me.clamped = math.sqrt(me.seekPos[0]*me.seekPos[0]+me.seekPos[1]*me.seekPos[1]) > 500;
+
+                                        if (me.clamped) {
+                                            me.clampAmount = 500/math.sqrt(me.seekPos[0]*me.seekPos[0]+me.seekPos[1]*me.seekPos[1]);
+                                            me.seekPos[0] *= me.clampAmount;
+                                            me.seekPos[1] *= me.clampAmount;
+                                            me.irLock.setStrokeDashArray([7,7]);
+                                        } else {
+                                            me.irLock.setStrokeDashArray([100]);
+                                        }
+
                                         me.irLock.setTranslation(me.seekPos);
                                         me.radarLock.setTranslation(me.seekPos);
                                     }
