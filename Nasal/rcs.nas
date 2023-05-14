@@ -116,11 +116,11 @@ var timeNode = props.globals.getNode("sim/time/elapsed-sec");
 # In between these two values, a test is done with probability 'refresh_prob'.
 var refreshRequired = func (contact, min_refresh_sec, max_refresh_sec, refresh_prob) {
     var callsign = contact.get_Callsign();
-    if (callsign == nil or !contains(lastUpdateTime, callsign)) return TRUE;
+    if (callsign == nil or !contains(lastUpdateTime, callsign)) return 1;
 
     var update_age = timeNode.getValue() - lastUpdateTime[callsign];
-    if (update_age < min_refresh_sec) return FALSE;
-    elsif (update_age > max_refresh_sec) return TRUE;
+    if (update_age < min_refresh_sec) return 0;
+    elsif (update_age > max_refresh_sec) return 1;
     else return (rand() < refresh_prob);
 }
 

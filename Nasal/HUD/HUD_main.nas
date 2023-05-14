@@ -3061,7 +3061,7 @@ append(obj.total, obj.speed_curr);
                         me.pipperLine.setVisible(me.showPipper);
                         return 0;
                     }
-                    me.showme = TRUE;
+                    me.showme = 1;
 
                     #me.myOwnPos = geo.aircraft_position();
                     #me.xyz = {"x":me.myOwnPos.x(),                  "y":me.myOwnPos.y(),                 "z":me.myOwnPos.z()};
@@ -3073,10 +3073,10 @@ append(obj.total, obj.speed_curr);
                     #    me.maxDist = me.myOwnPos.direct_distance_to(me.ccipPos[0])-1;
                     #    me.terrainDist = me.myOwnPos.direct_distance_to(me.terrain);
                     #    if (me.terrainDist < me.maxDist) {
-                    #        me.showme = FALSE;
+                    #        me.showme = 0;
                     #    }
                     #} else {
-                    #    me.showme = FALSE;
+                    #    me.showme = 0;
                     #}
                     me.hud_pos = HudMath.getPosFromCoord(me.ccipPos[0]);
                     if(me.hud_pos != nil) {
@@ -3087,16 +3087,16 @@ append(obj.total, obj.speed_curr);
                         #printf("dist=%0.1f (%3d , %3d)", dist, pos_x, pos_y);
 
                         #if(me.pos_x > (512/1024)*canvasWidth) {
-                        #  me.showme = FALSE;
+                        #  me.showme = 0;
                         #} elsif(me.pos_x < -(512/1024)*canvasWidth) {
-                        #  me.showme = FALSE;
+                        #  me.showme = 0;
                         #} elsif(me.pos_y > (512/1024)*canvasWidth) {
-                        #  me.showme = FALSE;
+                        #  me.showme = 0;
                         #} elsif(me.pos_y < -(512/1024)*canvasWidth) {
-                        #  me.showme = FALSE;
+                        #  me.showme = 0;
                         #}
 
-                        if(me.showme == TRUE) {
+                        if(me.showme == 1) {
                             me.pipperLine.removeAllChildren();
                             me.bPos = [hdp.VV_x,hdp.VV_y];
                             me.llx  = me.pos_x-me.bPos[0];
