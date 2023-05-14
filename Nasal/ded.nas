@@ -538,13 +538,19 @@ var dataEntryDisplay = {
             tempNo = me.no;
         }
 
-        if (CRUSmodeTF.selected and me.crusModeSelected == me.crusMode) {
-			me.text[0] = sprintf("      CRUS %s     %s ", utf8.chstr(0xFB75)~backgroundText(me.crusMode)~utf8.chstr(0xFB75), tempNo);
-		} elsif (CRUSmodeTF.selected) {
-			me.text[0] = sprintf("      CRUS *%s*     %s ", me.crusMode, tempNo);
-		} else {
-			me.text[0] = sprintf("      CRUS  %s      %s ", me.crusMode, tempNo);
-		}
+        var tempCrusMode = me.crusMode;
+        if (CRUSmodeTF.selected) {
+            tempCrusMode = "*"~tempCrusMode~"*";
+        }
+        if (me.crusModeSelected == me.crusMode) {
+            tempCrusMode = backgroundText(tempCrusMode);
+        }
+        if (!CRUSmodeTF.selected) {
+            tempCrusMode = " "~tempCrusMode~" ";
+        }
+
+
+        me.text[0] = sprintf("      CRUS  %s      %s ", tempCrusMode, tempNo);
 		# me.text[0] = sprintf("     CRUS  RNG  ",me.no);
 		if (me.crusMode == "TOS") {
 		    var time = getprop("/sim/time/gmt-string");
