@@ -1064,26 +1064,21 @@ append(obj.total, obj.speed_curr);
              .setStrokeLineWidth(1)
              .setColor(0,0,0));
 
+        var v = getprop("sim/variant-id");
         for(var i = -17; i <= -1; i += 1) { # stipled lines
-          #var rad = me.extrapolate(-i*5,10,90,8,45)*D2R;#as per US manual pitch lines bend down from 8 to 45 degrees
+          var rad = (v==0 or v==1 or v==3)?0:me.extrapolate(-i*5,5,90,8,45)*D2R;#as per US manual pitch lines bend down from 8 to 45 degrees
+
           append(obj.total, obj.ladder_group.createChild("path")
-                         .moveTo(minuso, -i * distance)
-                         .horiz(minuss*0.2)
-                         .moveTo(minuso+minuss*0.4, -i * distance)
-                         .horiz(minuss*0.2)
-                         .moveTo(minuso+minuss*0.8, -i * distance)
-                         .horiz(minuss*0.2)
-                         .vert(-minuso*0.5)
-
-                         .moveTo(-minuso, -i * distance)
-                         .horiz(-minuss*0.2)
-                         .moveTo(-minuso-minuss*0.4, -i * distance)
-                         .horiz(-minuss*0.2)
-                         .moveTo(-minuso-minuss*0.8, -i * distance)
-                         .horiz(-minuss*0.2)
-                         .vert(-minuso*0.5)
-
+                         .moveTo(minuso, -i * distance - minuso*0.5)
+                         .vert(minuso*0.5)
+                         .lineTo(minuso+minuss*math.cos(rad), -i * distance + minuss*math.sin(rad))
+                         
+                         .moveTo(-minuso, -i * distance - minuso*0.5)
+                         .vert(minuso*0.5)
+                         .lineTo(-minuso-minuss*math.cos(rad), -i * distance + minuss*math.sin(rad))
+                         
                          .setStrokeLineWidth(1)
+                         .setStrokeDashArray([minuss*0.2+minuso*0.5, minuss*0.2, minuss*0.2, minuss*0.2, minuss*0.2, 0])
                          .setColor(0,0,0));
         }
 
