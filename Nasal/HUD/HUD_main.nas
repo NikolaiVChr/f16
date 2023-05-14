@@ -1338,7 +1338,7 @@ append(obj.total, obj.speed_curr);
                                       }),
              func(hdp)
                                       {
-                                        if (!hdp.getproper("dgft")) {
+                                        if (!hdp.getproper("dgft") and !hdp.getproper("gear_down")) {
                                           if (ded.dataEntryDisplay.crusModeSelected == "TOS") {
                                             var desired_kt = getprop("/f16/ded/crus-req-gs");
                                             if (desired_kt != nil) {
