@@ -565,13 +565,13 @@ var dataEntryDisplay = {
 		    if (cur_wp == nil) {
 		        TOS = "";
 		    }
-		    if (gs_num == nil) {
+		    if (gs_num == nil or cur_des == nil) {
 		        req_gs = "";
 		    }
             me.text[1] = sprintf("      TIME  %s", time);
             me.text[2] = sprintf("   DES TOS %s", TOS);
             me.text[3] = sprintf("       ETA  %s", ETA);
-            me.text[4] = sprintf("   REQ G/S  %s", req_gs);
+            me.text[4] = sprintf("   REQ G/S   %s", req_gs);
 
             if (cur_des != nil) {
                 des_tos_last = cur_des;
