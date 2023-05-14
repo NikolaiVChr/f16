@@ -1049,16 +1049,17 @@ append(obj.total, obj.speed_curr);
         var pixelPerDegreeY = HudMath.getPixelPerDegreeAvg(5.0);
         var pixelPerDegreeX = 16.70527172464148;
         var distance = pixelPerDegreeY * 5;
-        var minuss = 0.125*sx*uv_used;
+        var minuss = 0.140*sx*uv_used;#Made a little longer since they bend
+        var pluss = 0.125*sx*uv_used;
         var minuso = 20*mr;
         for(var i = 1; i <= 17; i += 1) # full drawn lines
           append(obj.total, obj.ladder_group.createChild("path")
              .moveTo(minuso, -i * distance)
-             .horiz(minuss)
+             .horiz(pluss)
              .vert(minuso*0.5)
 
              .moveTo(-minuso, -i * distance)
-             .horiz(-minuss)
+             .horiz(-pluss)
              .vert(minuso*0.5)
 
              .setStrokeLineWidth(1)
@@ -1079,7 +1080,7 @@ append(obj.total, obj.speed_curr);
                          .lineTo(-minuso-minuss*math.cos(rad), -i * distance + minuss*math.sin(rad))
                          
                          .setStrokeLineWidth(1)
-                         .setStrokeDashArray([minuss*0.2+minuso*0.5, minuss*0.2, minuss*0.2, minuss*0.2, minuss*0.2, 0])
+                         .setStrokeDashArray([minuso*0.5+minuss*0.1, minuss*0.1, minuss*0.2, minuss*0.1, minuss*0.2, minuss*0.1, minuss*0.2, 0])
                          .setColor(0,0,0));
         }
 
@@ -1138,14 +1139,14 @@ append(obj.total, obj.speed_curr);
              .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL)
              .setFont(HUD_FONT)
              .setAlignment("right-center")
-             .setTranslation(-minuso-minuss-minuss*0.2, -i * distance + rads[i])
+             .setTranslation(-minuso-pluss-pluss*0.2, -i * distance + rads[i])
              .setColor(0,0,0));
           append(obj.total, obj.ladder_group.createChild("text")
              .setText(i*-5)
              .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL)
              .setFont(HUD_FONT)
              .setAlignment("left-center")
-             .setTranslation(minuso+minuss+minuss*0.2, -i * distance + rads[i])
+             .setTranslation(minuso+pluss+pluss*0.2, -i * distance + rads[i])
              .setColor(0,0,0));
         }
         for(var i = 1; i <= 17; i += 1) {
@@ -1155,33 +1156,34 @@ append(obj.total, obj.speed_curr);
              .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL)
              .setFont(HUD_FONT)
              .setAlignment("right-center")
-             .setTranslation(-minuso-minuss-minuss*0.2, -i * distance)
+             .setTranslation(-minuso-pluss-pluss*0.2, -i * distance)
              .setColor(0,0,0));
           append(obj.total, obj.ladder_group.createChild("text")
              .setText(i*5)
              .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL)
              .setFont(HUD_FONT)
              .setAlignment("left-center")
-             .setTranslation(minuso+minuss+minuss*0.2, -i * distance)
+             .setTranslation(minuso+pluss+pluss*0.2, -i * distance)
              .setColor(0,0,0));
         }
 
         # approach line
         var i = -0.5;
+        pluss *= 0.8;# Approach line is shorter
         obj.appLine = obj.ladder_group.createChild("path")
                          .moveTo(minuso, -i * distance)
-                         .horiz(minuss*0.2)
-                         .moveTo(minuso+minuss*0.4, -i * distance)
-                         .horiz(minuss*0.2)
-                         .moveTo(minuso+minuss*0.8, -i * distance)
-                         .horiz(minuss*0.2)
+                         .horiz(pluss*0.2)
+                         .moveTo(minuso+pluss*0.4, -i * distance)
+                         .horiz(pluss*0.2)
+                         .moveTo(minuso+pluss*0.8, -i * distance)
+                         .horiz(pluss*0.2)
 
                          .moveTo(-minuso, -i * distance)
-                         .horiz(-minuss*0.2)
-                         .moveTo(-minuso-minuss*0.4, -i * distance)
-                         .horiz(-minuss*0.2)
-                         .moveTo(-minuso-minuss*0.8, -i * distance)
-                         .horiz(-minuss*0.2)
+                         .horiz(-pluss*0.2)
+                         .moveTo(-minuso-pluss*0.4, -i * distance)
+                         .horiz(-pluss*0.2)
+                         .moveTo(-minuso-pluss*0.8, -i * distance)
+                         .horiz(-pluss*0.2)
 
                          .setStrokeLineWidth(1)
                          .setColor(0,0,0);
