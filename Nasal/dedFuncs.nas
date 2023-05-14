@@ -983,7 +983,11 @@ var EditableTime = {
 	    #max should be 23:59:59
 		me.editing = 1;
 		#print("append "~letter);
-		if (me.index == 0 and letter != "0" and letter != "1" and letter != "2") return;
+		if (me.index == 0 and letter != "0" and letter != "1" and letter != "2") {
+		    # For ease of use, let's assume that the user forgot to enter a leading 0.
+		    me.value[me.index] = 0;
+		    me.index += 1;
+		};
 		if (me.index == 1) {
 		    if (me.value[0] == 2 and letter != "0" and letter != "1" and letter != "2" and letter != "3") return;
 		}
