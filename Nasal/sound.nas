@@ -1,5 +1,4 @@
-var TRUE = 1;
-var FALSE = 0;
+
 
 
 
@@ -154,12 +153,12 @@ var play_thunder = func (name, timeout=0.1) {
 
     #settimer(func {
         # Play the sound
-        setprop(sound_prop, TRUE);
+        setprop(sound_prop, 1);
 
         # Reset the property after timeout so that the sound can be
         # played again.
         settimer(func {
-            setprop(sound_prop, FALSE);
+            setprop(sound_prop, 0);
         }, timeout);
     #}, delay);
 };

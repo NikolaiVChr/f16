@@ -12,8 +12,6 @@
 #   GPL 2.0
 
 
-var TRUE = 1;
-var FALSE = 0;
 
 var CrashAndStress = {
 	# pattern singleton
@@ -28,12 +26,12 @@ var CrashAndStress = {
 
 			m = me._instance;
 
-			m.inService = FALSE;
-			m.repairing = FALSE;
+			m.inService = 0;
+			m.repairing = 0;
 
-			m.exploded = FALSE;
+			m.exploded = 0;
 
-			m.wingsAttached = TRUE;
+			m.wingsAttached = 1;
 			m.wingLoadLimitUpper = nil;
 			m.wingLoadLimitLower = nil;
 			m._looptimer = maketimer(0, m, m._loop);
@@ -107,13 +105,13 @@ var CrashAndStress = {
 	},
 	# start the system
 	start: func () {
-		me.inService = TRUE;
+		me.inService = 1;
 	},
 	# stop the system
 	stop: func () {
-		me.inService = FALSE;
+		me.inService = 0;
 	},
-	# return TRUE if in progress
+	# return 1 if in progress
 	isStarted: func () {
 		return me.inService;
 	},
@@ -133,9 +131,9 @@ var CrashAndStress = {
 	        var prop = path ~ "/serviceable";
 
 	        if (props.globals.getNode(prop) == nil) {
-	            props.globals.initNode(prop, TRUE, "BOOL");
+	            props.globals.initNode(prop, 1, "BOOL");
 	        } else {
-	        	props.globals.getNode(prop).setBoolValue(TRUE);#in case this gets initialized empty from a recorder signal or MP alias.
+	        	props.globals.getNode(prop).setBoolValue(1);#in case this gets initialized empty from a recorder signal or MP alias.
 	        }
 
 	        return {
@@ -189,11 +187,11 @@ var CrashAndStress = {
 		foreach(var failure_mode_id; me.mode_list) {
 			FailureMgr.set_failure_level(failure_mode_id, 0);
 		}
-		me.wingsAttached = TRUE;
-		me.exploded = FALSE;
+		me.wingsAttached = 1;
+		me.exploded = 0;
 		me.lastMessageTime = 0;
-		me.repairing = TRUE;
-		me.input.simCrashed.setBoolValue(FALSE);
+		me.repairing = 1;
+		me.input.simCrashed.setBoolValue(0);
 		me.repairTimer.restart(10.0);
 	},
 	abandon: func {
@@ -203,7 +201,7 @@ var CrashAndStress = {
 	    foreach(var failure_mode_id; me.mode_list) {
       		FailureMgr.set_failure_level(failure_mode_id, 1);
 	    }
-	    me.wingsAttached = FALSE;
+	    me.wingsAttached = 0;
 	},
 	eject: func {
 		me.failure_modes = FailureMgr._failmgr.failure_modes;
@@ -216,17 +214,17 @@ var CrashAndStress = {
 	    }
 	},
 	_finishRepair: func () {
-		me.repairing = FALSE;
+		me.repairing = 0;
 	},
 	_initProperties: func () {
-		me.input.crackOn.setBoolValue(FALSE);
-		me.input.creakOn.setBoolValue(FALSE);
+		me.input.crackOn.setBoolValue(0);
+		me.input.creakOn.setBoolValue(0);
 		me.input.crackVol.setDoubleValue(0.0);
 		me.input.creakVol.setDoubleValue(0.0);
-		me.input.wCrashOn.setBoolValue(FALSE);
-		me.input.crashOn.setBoolValue(FALSE);
-		me.input.detachOn.setBoolValue(FALSE);
-		me.input.explodeOn.setBoolValue(FALSE);
+		me.input.wCrashOn.setBoolValue(0);
+		me.input.crashOn.setBoolValue(0);
+		me.input.detachOn.setBoolValue(0);
+		me.input.explodeOn.setBoolValue(0);
 	},
 	_identifyGears: func (gears) {
 		me.contacts = props.globals.getNode("/gear").getChildren("gear");
@@ -235,7 +233,7 @@ var CrashAndStress = {
 			me.index = contact.getIndex();
 			me.isGear = me._contains(gears, me.index);
 			me.wow = contact.getChild("wow");
-			if (me.isGear == TRUE) {
+			if (me.isGear == 1) {
 				append(me.wowGear, me.wow);
 			} else {
 				append(me.wowStructure, me.wow);
@@ -244,27 +242,27 @@ var CrashAndStress = {
 	},	
 	_isStructureInContact: func () {
 		foreach(var structure; me.wowStructure) {
-			if (structure.getBoolValue() == TRUE) {
-				return TRUE;
+			if (structure.getBoolValue() == 1) {
+				return 1;
 			}
 		}
-		return FALSE;
+		return 0;
 	},
 	_isGearInContact: func () {
 		foreach(var gear; me.wowGear) {
-			if (gear.getBoolValue() == TRUE) {
-				return TRUE;
+			if (gear.getBoolValue() == 1) {
+				return 1;
 			}
 		}
-		return FALSE;
+		return 0;
 	},
 	_contains: func (vector, content) {
 		foreach(var vari; vector) {
 			if (vari == content) {
-				return TRUE;
+				return 1;
 			}
 		}
-		return FALSE;
+		return 0;
 	},
 	_startImpactListeners: func () {
 		ImpactStructureListener.crash = me;
@@ -273,14 +271,14 @@ var CrashAndStress = {
 		}
 	},
 	_isRunning: func () {
-		if (me.inService == FALSE or me.input.replay.getBoolValue() == TRUE or me.repairing == TRUE) {
-			return FALSE;
+		if (me.inService == 0 or me.input.replay.getBoolValue() == 1 or me.repairing == 1) {
+			return 0;
 		}
 		me.time = me.fdm.input.simTime.getValue();
 		if (me.time != nil and me.time > 1) {
-			return TRUE;
+			return 1;
 		}
-		return FALSE;
+		return 0;
 	},
 	_calcGroundSpeed: func () {
   		me.realSpeed = me.fdm.getSpeedRelGround();
@@ -291,10 +289,10 @@ var CrashAndStress = {
 	    me.lat = me.input.lat.getValue();
 		me.lon = me.input.lon.getValue();
 		me.info = geodinfo(me.lat, me.lon);
-		me.solid = me.info == nil?TRUE:(me.info[1] == nil?TRUE:me.info[1].solid);
+		me.solid = me.info == nil?1:(me.info[1] == nil?1:me.info[1].solid);
 		me.speed = me._calcGroundSpeed();
 
-		if (me.exploded == FALSE) {
+		if (me.exploded == 0) {
 			me.failure_modes = FailureMgr._failmgr.failure_modes;
 		    me.mode_list = keys(me.failure_modes);
 		    me.probability = (me.speed * me.speed) / 40000.0;# 200kt will fail everything, 0kt will fail nothing.
@@ -312,7 +310,7 @@ var CrashAndStress = {
 		    # test for explosion
 		    if(me.probability > 0.766 and me.fdm.input.fuel.getValue() > 2500) {
 		    	# 175kt+ and fuel in tanks will explode the aircraft on impact.
-		    	me.input.simCrashed.setBoolValue(TRUE);
+		    	me.input.simCrashed.setBoolValue(1);
 		    	me._explodeBegin("Aircraft hit "~me.hitStr~".");
 		    	return;
 		    }
@@ -325,14 +323,14 @@ var CrashAndStress = {
 
 			me.str = "Aircraft hit "~me.hitStr~".";
 			me._output(me.str);
-		} elsif (me.solid == TRUE) {
+		} elsif (me.solid == 1) {
 			# The aircraft is burning and will ignite the ground
-			if(me.input.wildfire.getValue() == TRUE) {
+			if(me.input.wildfire.getValue() == 1) {
 				me.pos= geo.Coord.new().set_latlon(me.lat, me.lon);
 				wildfire.ignite(me.pos, 1);
 			}
 		}
-		if(me.solid == TRUE) {
+		if(me.solid == 1) {
 			me._impactSoundBegin(me.speed);
 		} else {
 			me._impactSoundWaterBegin(me.speed);
@@ -340,55 +338,55 @@ var CrashAndStress = {
 	},
 	_impactSoundWaterBegin: func (speed) {
 		if (speed > 5) {#check if sound already running?
-			me.input.wCrashOn.setBoolValue(TRUE);
+			me.input.wCrashOn.setBoolValue(1);
 			me.soundWaterTimer.restart(3);
 		}
 	},
 	_impactSoundWaterEnd: func	() {
-		me.input.wCrashOn.setBoolValue(FALSE);
+		me.input.wCrashOn.setBoolValue(0);
 	},
 	_impactSoundBegin: func (speed) {
 		if (speed > 5) {
-			me.input.crashOn.setBoolValue(TRUE);
+			me.input.crashOn.setBoolValue(1);
 			me.soundTimer.restart(3);
 		}
 	},
 	_impactSoundEnd: func () {
-		me.input.crashOn.setBoolValue(FALSE);
+		me.input.crashOn.setBoolValue(0);
 	},
 	_explodeBegin: func(str) {
-		me.input.explodeOn.setBoolValue(TRUE);
-		me.exploded = TRUE;
+		me.input.explodeOn.setBoolValue(1);
+		me.exploded = 1;
 		me.failure_modes = FailureMgr._failmgr.failure_modes;
 	    me.mode_list = keys(me.failure_modes);
 
 	    foreach(var failure_mode_id; me.mode_list) {
       		FailureMgr.set_failure_level(failure_mode_id, 1);
 	    }
-	    me.wingsAttached = FALSE;
-	    me._output(str~" and exploded.", TRUE);
+	    me.wingsAttached = 0;
+	    me._output(str~" and exploded.", 1);
 		
 		me.explodeTimer.restart(3);
 	},
 	_explodeEnd: func () {
-		me.input.explodeOn.setBoolValue(FALSE);
+		me.input.explodeOn.setBoolValue(0);
 	},
 	_stressDamage: func (str) {
 		me._output("Aircraft damaged: Wings broke off, due to "~str~" G forces.");
-		me.input.detachOn.setBoolValue(TRUE);
+		me.input.detachOn.setBoolValue(1);
 		
   		FailureMgr.set_failure_level(me.fdm.wingsFailureID, 1);
 
-		me.wingsAttached = FALSE;
+		me.wingsAttached = 0;
 
 		me.stressTimer.restart(3);
 	},
 	_stressDamageEnd: func () {
-		me.input.detachOn.setBoolValue(FALSE);
+		me.input.detachOn.setBoolValue(0);
 	},
-	_output: func (str, override = FALSE) {
+	_output: func (str, override = 0) {
 		me.time = me.fdm.input.simTime.getValue();
-		if (override == TRUE or (me.time - me.lastMessageTime) > 3) {
+		if (override == 1 or (me.time - me.lastMessageTime) > 3) {
 			me.lastMessageTime = me.time;
 			print(str);
 			screen.log.write(str, 0.7098, 0.5372, 0.0);# solarized yellow
@@ -403,34 +401,34 @@ var CrashAndStress = {
 			me.lat = me.input.lat.getValue();
 			me.lon = me.input.lon.getValue();
 			me.info = geodinfo(me.lat, me.lon);
-			me.solid = me.info==nil?TRUE:(me.info[1] == nil?TRUE:me.info[1].solid);
-			if(me.solid == FALSE) {
+			me.solid = me.info==nil?1:(me.info[1] == nil?1:me.info[1].solid);
+			if(me.solid == 0) {
 				me._impactDamage();
 			}
 		}
 	},
 	_testStress: func () {
-		if (me._isRunning() == TRUE and me.wingsAttached == TRUE) {
+		if (me._isRunning() == 1 and me.wingsAttached == 1) {
 			me.gForce = me.fdm.input.Nz.getValue() == nil?1:me.fdm.input.Nz.getValue();
 			me.weight = me.fdm.input.weight.getValue();
 			me.wingload = me.gForce * me.weight;
 
-			me.broken = FALSE;
+			me.broken = 0;
 
 			if(me.wingload < 0) {
 				me.broken = me._testWingload(-me.wingload, -me.wingLoadLimitLower);
-				if(me.broken == TRUE) {
+				if(me.broken == 1) {
 					me._stressDamage("negative");
 				}
 			} else {
 				me.broken = me._testWingload(me.wingload, me.wingLoadLimitUpper);
-				if(me.broken == TRUE) {
+				if(me.broken == 1) {
 					me._stressDamage("positive");
 				}
 			}
 		} else {
-			me.input.crackOn.setBoolValue(FALSE);
-			me.input.creakOn.setBoolValue(FALSE);
+			me.input.crackOn.setBoolValue(0);
+			me.input.creakOn.setBoolValue(0);
 			#me.input.trembleOn.setValue(0);
 		}
 	},
@@ -444,29 +442,29 @@ var CrashAndStress = {
 
 				#me.tremble_max = math.sqrt((wingloadCurr - (wingLoadLimit * 0.5)) / (wingLoadLimit * 0.5));
 				me.input.creakVol.setDoubleValue(me.tremble_max);
-				me.input.creakOn.setBoolValue(TRUE);
+				me.input.creakOn.setBoolValue(1);
 
 				if (wingloadCurr > (wingLoadLimit * 0.90)) {
-					me.input.crackOn.setBoolValue(TRUE);
+					me.input.crackOn.setBoolValue(1);
 					me.input.crackVol.setDoubleValue(me.tremble_max);
 					if (wingloadCurr > wingLoadLimit) {
 						me.input.crackVol.setDoubleValue(1);
 						me.input.creakVol.setDoubleValue(1);
 						#me.input.trembleMax.setDoubleValue(1);
-						return TRUE;
+						return 1;
 					}
 				} else {
-					me.input.crackOn.setBoolValue(FALSE);
+					me.input.crackOn.setBoolValue(0);
 				}
 			} else {
-				me.input.creakOn.setBoolValue(FALSE);
+				me.input.creakOn.setBoolValue(0);
 			}
 		} else {
-			me.input.crackOn.setBoolValue(FALSE);
-			me.input.creakOn.setBoolValue(FALSE);
+			me.input.crackOn.setBoolValue(0);
+			me.input.creakOn.setBoolValue(0);
 			#me.input.trembleOn.setValue(0);
 		}
-		return FALSE;
+		return 0;
 	},
 };
 
@@ -474,9 +472,9 @@ var CrashAndStress = {
 var ImpactStructureListener = {
 	crash: nil,
 	run: func () {
-		if (crash._isRunning() == TRUE) {
+		if (crash._isRunning() == 1) {
 			var wow = crash._isStructureInContact();
-			if (wow == TRUE) {
+			if (wow == 1) {
 				crash._impactDamage();
 			}
 		}

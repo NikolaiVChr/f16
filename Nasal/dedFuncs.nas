@@ -1246,3 +1246,74 @@ var stringToLat = func (str) {
     return nil;
   }
 }
+
+var backgroundChar = func (letter) {
+    var ch = nil;
+    if (letter == "A") {
+        ch = 0xFB5A;
+    } elsif (letter == "B") {
+        ch = 0xFB5B;
+    } elsif (letter == "C") {
+        ch = 0xFB5C;
+    } elsif (letter == "D") {
+        ch = 0xFB5D;
+    } elsif (letter == "E") {
+        ch = 0xFB5E;
+    } elsif (letter == "F") {
+        ch = 0xFB5F;
+    } elsif (letter == "G") {
+        ch = 0xFB60;
+    } elsif (letter == "H") {
+        ch = 0xFB61;
+    } elsif (letter == "I") {
+        ch = 0xFB62;
+    } elsif (letter == "J") {
+        ch = 0xFB63;
+    } elsif (letter == "K") {
+        ch = 0xFB64;
+    } elsif (letter == "L") {
+        ch = 0xFB65;
+    } elsif (letter == "M") {
+        ch = 0xFB66;
+    } elsif (letter == "N") {
+        ch = 0xFB67;
+    } elsif (letter == "O") {
+        ch = 0xFB68;
+    } elsif (letter == "P") {
+        ch = 0xFB69;
+    } elsif (letter == "Q") {
+        ch = 0xFB6A;
+    } elsif (letter == "R") {
+        ch = 0xFB6B;
+    } elsif (letter == "S") {
+        ch = 0xFB6C;
+    } elsif (letter == "T") {
+        ch = 0xFB6D;
+    } elsif (letter == "U") {
+        ch = 0xFB6E;
+    } elsif (letter == "V") {
+        ch = 0xFB6F;
+    } elsif (letter == "W") {
+        ch = 0xFB70;
+    } elsif (letter == "X") {
+        ch = 0xFB71;
+    } elsif (letter == "Y") {
+        ch = 0xFB72;
+    } elsif (letter == "Z") {
+        ch = 0xFB73;
+    } elsif (letter == "*") {
+        ch = 0xFB75;
+    } else {
+        ch = 0xFB74; # Blank
+    }
+    return utf8.chstr(ch);
+}
+
+var backgroundText = func (str) {
+    var vec = split("", str);
+    var final = "";
+    foreach (var letter; vec) {
+        final ~= backgroundChar(letter);
+    }
+    return final;
+}

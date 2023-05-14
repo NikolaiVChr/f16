@@ -6,10 +6,15 @@
             <target-tf-altitude-ft type="double">20000.0</target-tf-altitude-ft>
             <tf-minimums type="int">500</tf-minimums>
         </settings>
+        <route-manager>
+            <disable-route-manager type="bool">true</disable-route-manager><!-- we use our own delagate -->
+            <disable-fms type="bool">true</disable-fms><!-- we use our own delagate -->
+        </route-manager>
     </autopilot>
     <sim>
         <aircraft-version>3.72</aircraft-version>
         <minimum-fg-version>2020.3</minimum-fg-version>
+	<expected-aircraft-dir-name>f16</expected-aircraft-dir-name>
         <!-- enable "parkpos=AVAILABLE" option for the F-16 -->
         <dimensions>
             <radius-m type="double">10.0</radius-m>
@@ -1670,6 +1675,9 @@
         <terr_foll>
             <file>Aircraft/f16/Nasal/terrain_follow.nas</file>
         </terr_foll>
+        <delegate>
+            <file>Aircraft/f16/Nasal/flightPlanDelegate.nas</file>
+        </delegate>
     </nasal>
 
 

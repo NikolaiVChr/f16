@@ -27,8 +27,6 @@ var mlw_max=getprop("payload/d-config/mlw_max"); #
 var auto_flare_caller = getprop("payload/d-config/auto_flare_caller"); # If damage.nas should detect flare releases, or if function is called from somewhere in aircraft
 ############################################################################################################################
 
-var TRUE  = 1;
-var FALSE = 0;
 
 var hp = hp_max;
 setprop("sam/damage", math.max(0,100*hp/hp_max));#used in HUD
@@ -1252,7 +1250,7 @@ var processCallsigns = func () {
   var painted = 0;
   var paint_list = [];
   foreach (var player; players) {
-    if(player.getChild("valid") != nil and player.getChild("valid").getValue() == TRUE and player.getChild("callsign") != nil and player.getChild("callsign").getValue() != "" and player.getChild("callsign").getValue() != nil) {
+    if(player.getChild("valid") != nil and player.getChild("valid").getValue() == 1 and player.getChild("callsign") != nil and player.getChild("callsign").getValue() != "" and player.getChild("callsign").getValue() != nil) {
       var callsign = player.getChild("callsign").getValue();
       callsign_struct[callsign] = player;
       var str6 = player.getNode("sim/multiplay/generic/string[6]");
@@ -1313,7 +1311,7 @@ processCallsignsTimer.start();
 var code_ct = func () {
   #ANTIC
   if (getprop("payload/armament/msg")) {
-      setprop("sim/rendering/redout/enabled", TRUE);
+      setprop("sim/rendering/redout/enabled", 1);
       #call(func{fgcommand('dialog-close', multiplayer.dialog.dialog.prop())},nil,var err= []);# props.Node.new({"dialog-name": "location-in-air"}));
       if (!m28_auto) call(func{multiplayer.dialog.del();},nil,var err= []);
       if (!getprop("gear/gear[0]/wow")) {
@@ -1337,7 +1335,7 @@ code_ctTimer.simulatedTime = 1;
 
 
 
-setprop("/sim/failure-manager/display-on-screen", FALSE);
+setprop("/sim/failure-manager/display-on-screen", 0);
 
 code_ctTimer.start();
 

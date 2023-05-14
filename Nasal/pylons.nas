@@ -53,6 +53,7 @@ var smokewinderBlue9 = stations.Submodel.new("Smokewinder Blue", "SMOKE-B", "sim
 var smokewinderWhite1 = stations.Submodel.new("Smokewinder White", "SMOKE-W", "sim/model/f16/smokewinderW1");
 var smokewinderWhite9 = stations.Submodel.new("Smokewinder White", "SMOKE-W", "sim/model/f16/smokewinderW9");
 var atp = stations.Submodel.new("AN/AAQ-33 Sniper ATP", "AAQ-33", "f16/stores/tgp-mounted");
+var ifts = stations.Submodel.new("AN/AAQ-32 Internal FLIR Targeting System", "AAQ-32", "f16/stores/tgp-mounted");
 var tgp = stations.Submodel.new("AN/AAQ-14 LANTIRN Target Pod", "AAQ-14", "f16/stores/tgp-mounted");
 var nav = stations.Submodel.new("AN/AAQ-13 LANTIRN Nav Pod", "AAQ-13", "f16/stores/nav-mounted");
 var lite = stations.Submodel.new("AN/AAQ-28 LITENING Advanced Targeting", "AAQ-28", "f16/stores/tgp-mounted");
@@ -147,6 +148,7 @@ var pylonSets = {
     podEcm188: {name: "AN/ALQ-188(V) EAT Pod", pylon: "1 MAU", rack: nil, content: [ecm188], fireOrder: [0], launcherDragArea: 0.08, launcherMass: 355, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 2},
     podTrvl:   {name: "MXU-648 Cargopod", pylon: "1 MAU", rack: nil, content: [crgpd], fireOrder: [], launcherDragArea: 0.20, launcherMass: 324, launcherJettisonable: 1, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 2},
     podSAtp:   {name: "AN/AAQ-33 Sniper ATP", content: [atp], fireOrder: [0], launcherDragArea: 0.06, launcherMass: 446, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    podSifts:  {name: "AN/AAQ-32 Internal FLIR Targeting System", content: [ifts], fireOrder: [0], launcherDragArea: 0.06, launcherMass: 0, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     podLTgp:   {name: "AN/AAQ-14 LANTIRN Target Pod", content: [tgp], fireOrder: [0], launcherDragArea: 0.07, launcherMass: 530, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     podLNav:   {name: "AN/AAQ-13 LANTIRN Nav Pod", content: [nav], fireOrder: [0], launcherDragArea: 0.1, launcherMass: 451.1, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     podLite:   {name: "AN/AAQ-28 LITENING Advanced Targeting", content: [lite], fireOrder: [0], launcherDragArea: 0.08, launcherMass: 460, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
@@ -264,7 +266,7 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 		pylon5set = [pylonSets.empty, pylonSets.podTrvl, pylonSets.podEcm184, pylonSets.podEcm131, pylonSets.fuel30];
 
 		fuselageRset = [pylonSets.empty];
-	 	fuselageLset = [pylonSets.podSAtp];
+	 	fuselageLset = [pylonSets.podSifts];
 	 }
 
 	# pylons
