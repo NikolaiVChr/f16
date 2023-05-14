@@ -1094,7 +1094,7 @@ var MFD_Device =
             me.root.acm.setVisible(1);
             me.root.horiz.setRotation(-radar_system.self.getRoll()*D2R);
 
-            if (radar_system.apg68Radar.currentMode.longName == radar_system.vsrMode.longName) {
+            if (radar_system.apg68Radar.currentMode.longName == radar_system.vsMode.longName) {
                 me.root.distl.setScale(-1,1);
             } else {
                 me.root.distl.setScale(1,1);
@@ -1275,7 +1275,7 @@ var MFD_Device =
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
             me.root.rang.setText(sprintf("%d",radar_system.apg68Radar.getRange()));
-
+            me.root.rang.setVisible(radar_system.apg68Radar.currentMode.longName != radar_system.vsMode.longName);
             me.i=0;
 
             var a = 0;
@@ -1387,7 +1387,7 @@ var MFD_Device =
 
             me.randoo = rand();
 
-            if (radar_system.datalink_power.getBoolValue() and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName and radar_system.apg68Radar.currentMode["painter"] != 1) {
+            if (radar_system.datalink_power.getBoolValue() and radar_system.apg68Radar.currentMode.longName != radar_system.vsMode.longName and radar_system.apg68Radar.currentMode["painter"] != 1) {
                 foreach(contact; vector_aicontacts_links) {
                     if (contact["blue"] != 1) continue;
                     me.paintDL(contact, noti);
@@ -1409,7 +1409,7 @@ var MFD_Device =
                     contact.randoo = me.randoo;
                 }
             }
-            if (radar_system.datalink_power.getBoolValue() and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName and !radar_system.apg68Radar.currentMode.painter) {
+            if (radar_system.datalink_power.getBoolValue() and radar_system.apg68Radar.currentMode.longName != radar_system.vsMode.longName and !radar_system.apg68Radar.currentMode.painter) {
                 foreach(contact; vector_aicontacts_links) {
                     me.paintRdr(contact);
                     contact.randoo = me.randoo;
@@ -1699,8 +1699,8 @@ var MFD_Device =
             }
             me.bleps = contact.getBleps();
             foreach(me.bleppy ; me.bleps) {
-                if (me.i < me.root.maxB and me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.currentMode.timeToFadeBleps and me.bleppy.getDirection() != nil and (radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName or (me.bleppy.getClosureRate() != nil and me.bleppy.getClosureRate()>0))) {
-                    if (me.bleppy.getClosureRate() != nil and radar_system.apg68Radar.currentMode.longName == radar_system.vsrMode.longName) {
+                if (me.i < me.root.maxB and me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.currentMode.timeToFadeBleps and me.bleppy.getDirection() != nil and (radar_system.apg68Radar.currentMode.longName != radar_system.vsMode.longName or (me.bleppy.getClosureRate() != nil and me.bleppy.getClosureRate()>0))) {
+                    if (me.bleppy.getClosureRate() != nil and radar_system.apg68Radar.currentMode.longName == radar_system.vsMode.longName) {
                         me.distPixels = math.min(950, me.bleppy.getClosureRate())*(482/(1000));
                     } else {
                         me.distPixels = me.bleppy.getRangeNow()*(482/(radar_system.apg68Radar.getRange()*NM2M));
@@ -1733,7 +1733,7 @@ var MFD_Device =
                 }
             }
             me.sizeBleps = size(me.bleps);
-            if (contact["blue"] != 1 and me.ii < me.root.maxT and ((me.sizeBleps and contact.hadTrackInfo()) or contact["blue"] == 2) and me.iff == 0 and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName) {
+            if (contact["blue"] != 1 and me.ii < me.root.maxT and ((me.sizeBleps and contact.hadTrackInfo()) or contact["blue"] == 2) and me.iff == 0 and radar_system.apg68Radar.currentMode.longName != radar_system.vsMode.longName) {
                 # Paint bleps with tracks
                 if (contact["blue"] != 2) me.bleppy = me.bleps[me.sizeBleps-1];
                 if (contact["blue"] == 2 or (me.bleppy.hasTrackInfo() and me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.timeToKeepBleps)) {
@@ -1800,7 +1800,7 @@ var MFD_Device =
 
                     me.ii += 1;
                 }
-            } elsif (me.iff != 0 and contact["blue"] != 1 and contact.isVisible() and me.iiii < me.root.maxT and me.sizeBleps and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName) {
+            } elsif (me.iff != 0 and contact["blue"] != 1 and contact.isVisible() and me.iiii < me.root.maxT and me.sizeBleps and radar_system.apg68Radar.currentMode.longName != radar_system.vsMode.longName) {
                 # Paint IFF symbols
                 me.bleppy = me.bleps[me.sizeBleps-1];
                 if (me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.timeToKeepBleps) {
@@ -1820,7 +1820,7 @@ var MFD_Device =
         };
         me.p_RDR.paintChaff = func (chaff) {
             #if (me.chaffLifetime == 0) return;
-            if (me.i < me.root.maxB and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName) {
+            if (me.i < me.root.maxB and radar_system.apg68Radar.currentMode.longName != radar_system.vsMode.longName) {
                 me.distPixels = chaff.meters*(482/(radar_system.apg68Radar.getRange()*NM2M));
 
                 me.echoPos = me.calcPos(me.wdt, geo.normdeg180(chaff.bearing - radar_system.self.getHeading()), me.distPixels);

@@ -1531,15 +1531,15 @@ var F16GMTMode = {
 };
 
 
-#  ██    ██ ███████ ██████ 
-#  ██    ██ ██      ██   ██ 
-#  ██    ██ ███████ ██████  
-#   ██  ██       ██ ██   ██ 
-#    ████   ███████ ██   ██ 
+#  ██    ██ ███████
+#  ██    ██ ██     
+#  ██    ██ ███████
+#   ██  ██       ██ 
+#    ████   ███████ 
 #                           
 #
 var F16VSMode = {
-	shortName: "VSR",
+	shortName: "VS",#todo: make vsr also for newer blocks
 	longName: "Velocity Search",
 	range: 160,
 	discSpeed_dps: 45,
@@ -1595,10 +1595,16 @@ var F16VSMode = {
 		}
 	},
 	increaseRange: func {
-		me._increaseRange();
+		#me._increaseRange();
 	},
 	decreaseRange: func {
-		me._decreaseRange();
+		#me._decreaseRange();
+	},
+	showRangeOptions: func {
+		return 0;
+	},
+	setRange: func {# Range is always 160 in VS
+		return 0;
 	},
 	getSearchInfo: func (contact) {
 		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
@@ -3273,14 +3279,14 @@ var ecm = ECMChecker.new(0.05, 6);
 var rwsMode = F16RWSMode.new(F16RWSSAMMode.new(F16MultiSTTMode.new()));
 var twsMode = F16TWSMode.new(F16MultiSTTMode.new());
 var lrsMode = F16LRSMode.new(F16LRSSAMMode.new(F16MultiSTTMode.new()));
-var vsrMode = F16VSMode.new(F16STTMode.new());
+var vsMode = F16VSMode.new(F16STTMode.new());
 var acm20Mode = F16ACM20Mode.new(F16ACMSTTMode.new());
 var acm60Mode = F16ACM60Mode.new(F16ACMSTTMode.new());
 var acmBoreMode = F16ACMBoreMode.new(F16ACMSTTMode.new());
 var seaMode = F16SeaMode.new(F16SEAFTTMode.new());
 var gmMode = F16GMMode.new(F16GMFTTMode.new());
 var gmtMode = F16GMTMode.new(F16GMTFTTMode.new());
-var apg68Radar = AirborneRadar.newAirborne([[rwsMode,twsMode,lrsMode,vsrMode],[acm20Mode,acm60Mode,acmBoreMode],[seaMode],[gmMode],[gmtMode]], APG68);
+var apg68Radar = AirborneRadar.newAirborne([[rwsMode,twsMode,lrsMode,vsMode],[acm20Mode,acm60Mode,acmBoreMode],[seaMode],[gmMode],[gmtMode]], APG68);
 var f16_rwr = RWR.new();
 var acmLockSound = props.globals.getNode("f16/sound/acm-lock");
 var mapper = TerrainMapper.new(apg68Radar, 0.50);
@@ -3300,5 +3306,5 @@ var getCompleteList = func {
 #   HSD radar arc CW vs. CCW
 #
 # TODO:
-#   VSR switch speed at each bar instead of each frame
+#   VS switch speed at each bar instead of each frame
 #
