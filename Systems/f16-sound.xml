@@ -4828,6 +4828,19 @@
             </volume>
         </missile1>
         <missile1>
+            <name>missile2x</name>
+            <path>Aircraft/f16/Sounds/aim-launch.wav</path>
+            <mode>once</mode>
+            <type>avionics</type>
+            <condition>
+                <property>payload/armament/aim-9x/sound-fire-on-off</property>
+            </condition>
+            <volume>
+                <factor>0.65</factor>
+                <max>1</max>
+            </volume>
+        </missile1>
+        <missile1>
             <name>missile3</name>
             <path>Aircraft/f16/Sounds/aim-launch.wav</path>
             <mode>once</mode>
