@@ -32,7 +32,7 @@ var apLoop = maketimer(1, func {
 
 			setprop("/autopilot/route-manager/advance", turn_dist_nm);
 
-			if (getprop("/autopilot/route-manager/wp/dist") <= turn_dist_nm) {
+			if (getprop("/autopilot/route-manager/wp/dist") <= turn_dist_nm and steerpoints.autoMode) {
 				setprop("/autopilot/route-manager/current-wp", getprop("/autopilot/route-manager/current-wp") + 1);
 			}
 		}

@@ -22,6 +22,7 @@ var CRUSmodeTF = toggleableMode.new(["TOS", "RNG"], "f16/ded/crus-mode", "f16/de
 var CRUSdesTosEF = EditableTime.new("f16/ded/crus-des-tos", steerpoints.getAbsoluteTOS);
 #var CRUSstptEF = EditableField.new("f16/ded/crus-stpt", "%3d", 3);
 var STPTtypeTF = toggleableField.new(["   ", " 2 ", " 5 ", " 6 ", " 11", " 20", " SH", " P ", " AAA"], "f16/ded/stpt-type");
+var STPTauto = toggleableField.new(["AUTO", "MAN "], "f16/ded/stpt-auto");
 #var STPTcolorTF = toggleableField.new(["RED", "YEL", "GRN"], "f16/ded/stpt-color");
 var dlinkEF   = EditableField.new("instrumentation/datalink/channel", "%4d", 4);
 var com1FrqEF = EditableField.new("instrumentation/comm[0]/frequencies/selected-mhz", "%6.2f", 6);
@@ -32,7 +33,7 @@ var com2SFrqEF = EditableField.new("instrumentation/comm[1]/frequencies/standby-
 var pTACAN = EditableFieldPage.new(0, [tacanChanEF,tacanBandTF,ilsFrqEF,ilsCrsEF]);
 var pALOW  = EditableFieldPage.new(1, [alowEF,mslFloorEF,tfEF]);
 var pFACK  = EditableFieldPage.new(2);
-var pSTPT  = EditableFieldPage.new(3, [STPTnumFE,STPTlatFE,STPTlonFE,STPTradFE,STPTaltFE,STPTtypeTF]);#,STPTcolorTF
+var pSTPT  = EditableFieldPage.new(3, [STPTnumFE,STPTlatFE,STPTlonFE,STPTradFE,STPTaltFE,STPTtypeTF,STPTauto]);#,STPTcolorTF
 var pCRUS  = EditableFieldPage.new(4, [CRUSmodeTF, CRUSdesTosEF]);
 var pTIME  = EditableFieldPage.new(5);
 var pMARK  = EditableFieldPage.new(6);
@@ -523,7 +524,8 @@ var dataEntryDisplay = {
 			pSTPT.vector[5].skipMe = 1;#type
 			#pSTPT.vector[6].skipMe = 1;#color
 		}
-		me.text[0] = sprintf("      STPT %s  AUTO %s", pSTPT.vector[0].getText(), me.no);
+		me.text[0] = sprintf("     STPT %s%s %s", pSTPT.vector[0].getText(), pSTPT.vector[6].getText(), me.no);
+		steerpoints.autoMode = getprop("f16/ded/stpt-auto")=="AUTO"?1:0;
 	},
 
 	updateCrus: func() {
@@ -1116,7 +1118,7 @@ var dataEntryDisplay = {
 		if (getprop("sim/multiplay/online")) {
     		ms = "S";
 		}
-		me.text[0] = sprintf("UHF   %6.2f    STPT %s",getprop("/instrumentation/comm[0]/frequencies/selected-mhz"), me.no);# removed the 'A' here, as MLU manuals don't show it.
+		me.text[0] = sprintf("UHF   %6.2f    STPT %s",getprop("/instrumentation/comm[0]/frequencies/selected-mhz"), me.no);# removed the 'A' here, as MLU manuals don't show it. Otherwise it should depend on steerpoints.autoMode
 
 		if (me.CNIshowWind) {
 			me.text[1] = sprintf("                %s %s", winddir, windkts);
