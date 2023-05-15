@@ -18,7 +18,7 @@ var STPTlonFE = EditableLON.new("f16/ded/lon", convertDegreeToStringLon);
 var STPTnumFE = EditableField.new("f16/ded/stpt-edit", "%3d", 3);
 var STPTradFE = EditableField.new("f16/ded/stpt-rad", "%2d", 2);
 var STPTaltFE = EditableField.new("f16/ded/alt", "%5d", 5);
-var CRUSmodeTF = toggleableFieldTwo.new(["TOS", "RNG"], "f16/ded/crus-mode");
+var CRUSmodeTF = toggleableMode.new(["TOS", "RNG"], "f16/ded/crus-mode", "f16/ded/cur-crus-mode");
 var CRUSdesTosEF = EditableTime.new("f16/ded/crus-des-tos", steerpoints.getAbsoluteTOS);
 #var CRUSstptEF = EditableField.new("f16/ded/crus-stpt", "%3d", 3);
 var STPTtypeTF = toggleableField.new(["   ", " 2 ", " 5 ", " 6 ", " 11", " 20", " SH", " P ", " AAA"], "f16/ded/stpt-type");
@@ -526,23 +526,22 @@ var dataEntryDisplay = {
 		me.text[0] = sprintf("      STPT %s  AUTO %s", pSTPT.vector[0].getText(), me.no);
 	},
 
-    crusMode: "TOS",
-    crusModeSelected: nil,
 	updateCrus: func() {
 		# Source: F-16 A/B Mid-Life Update Production Tape M1: Pilot's guide to new to new capabilities & cockpit enhancements.
 		# This page does not yet support HOME or EDR
 
         # The top right STPT number should be hidden except on the TOS page
         var tempNo = "";
-        if (me.crusMode == "TOS") {
+        var crusMode = getprop("f16/ded/crus-mode");
+        var tempCrusMode = crusMode;
+        if (crusMode == "TOS") {
             tempNo = me.no;
         }
 
-        var tempCrusMode = me.crusMode;
         if (CRUSmodeTF.selected) {
             tempCrusMode = "*"~tempCrusMode~"*";
         }
-        if (me.crusModeSelected == me.crusMode) {
+        if (getprop("f16/ded/cur-crus-mode") == crusMode) {
             tempCrusMode = backgroundText(tempCrusMode);
         }
         if (!CRUSmodeTF.selected) {
@@ -550,9 +549,9 @@ var dataEntryDisplay = {
         }
 
 
-        me.text[0] = sprintf("      CRUS  %s      %s ", tempCrusMode, tempNo);
+        me.text[0] = sprintf("      CRUS %s     %s ", tempCrusMode, tempNo);
 		# me.text[0] = sprintf("     CRUS  RNG  ",me.no);
-		if (me.crusMode == "TOS") {
+		if (crusMode == "TOS") {
 		    var time = getprop("/sim/time/gmt-string");
 		    var cur_wp = steerpoints.getCurrent();
 		    var cur_des = steerpoints._getCurrentDesiredTOS();
@@ -591,7 +590,7 @@ var dataEntryDisplay = {
                 des_tos_last = 0;
             }
 
-		} elsif (me.crusMode == "RNG") {
+		} elsif (crusMode == "RNG") {
 		    # The steerpoint is currently fixed at last steerpoint, unless using a non route steerpoint
             var fuel   = "";
             var fp = flightplan();
@@ -1443,16 +1442,17 @@ setlistener("f16/avionics/rtn-seq", func() {
 		}
 
 		if (dataEntryDisplay.page == pCRUS and CRUSmodeTF.selected) {
-		    if (dataEntryDisplay.crusMode == "TOS") {
-				dataEntryDisplay.crusMode = "RNG";
+		    CRUSmodeTF.sequence();
+		    #if (dataEntryDisplay.crusMode == "TOS") {
+			#	dataEntryDisplay.crusMode = "RNG";
 			#} elsif (dataEntryDisplay.crusMode == "RNG") {
 			#	dataEntryDisplay.crusMode = "HOME";
 			#} elsif (dataEntryDisplay.crusMode == "HOME") {
 			#	dataEntryDisplay.crusMode = "EDR";
 			#} elsif (dataEntryDisplay.crusMode == "EDR") {
-			} else {
-				dataEntryDisplay.crusMode = "TOS";
-			}
+			#} else {
+			#	dataEntryDisplay.crusMode = "TOS";
+			#}
 		}
 
 		if (dataEntryDisplay.page == pMARK and dataEntryDisplay.markModeSelected) {
