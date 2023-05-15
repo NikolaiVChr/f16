@@ -1686,7 +1686,7 @@ var b50_a2a_ap = func {
 
 # AIM-9x Testing (AIM-9)
 var a9x_testing = func {
-    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+    if (fcs != nil and (getprop("payload/armament/msg") == 0 or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
     	damage.damageLog.push("AIM-9X Testing loadout mounted");
         pylon1.loadSet(pylonSets.aim9xWT);
         pylon2.loadSet(pylonSets.aim9x);
