@@ -537,7 +537,8 @@ var loop_caution = func {# TODO: unlit the caution lights except elec-sys when m
     setprop("f16/avionics/caution/overheat",       (batt2 and (!getprop("damage/fire/serviceable") or getprop("controls/test/test-panel/fire-ovht-test"))));
     setprop("f16/avionics/caution/sec",            (batt2 and (getprop("f16/engine/sec-self-test") or getprop("f16/engine/ctl-sec"))));
     setprop("f16/avionics/caution/avionics",       (batt2 and fail_master[3]));
-    setprop("f16/avionics/caution/engine-fault",       (batt2 and !FailureMgr.get_failure_level("engines/engine")));
+    setprop("f16/avionics/caution/engine-fault",   (batt2 and !FailureMgr.get_failure_level("engines/engine")));
+    setprop("f16/avionics/caution/flcs",           (batt2 and fail_master[0] or fail_master[1]));
 };
 
 # Call caution method when a caution condition changes.
@@ -557,6 +558,7 @@ setlistener("f16/avionics/caution/sec",caution,0,0);
 setlistener("f16/avionics/caution/avionics",caution,0,0);
 setlistener("f16/avionics/caution/probe-heat",caution,0,0);
 setlistener("f16/avionics/caution/engine-fault",caution,0,0);
+setlistener("f16/avionics/caution/flcs",caution,0,0);
 
 loop();
  
