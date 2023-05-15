@@ -1115,7 +1115,7 @@ var dataEntryDisplay = {
 		if (getprop("sim/multiplay/online")) {
     		ms = "S";
 		}
-		me.text[0] = sprintf("UHF   %6.2f    STPT %s",getprop("/instrumentation/comm[0]/frequencies/selected-mhz"), me.no);# removed the 'A' here, as MLU manuals don't show it.
+		me.text[0] = sprintf("UHF   %6.2f    STPT %s",getprop("/instrumentation/comm[0]/frequencies/selected-mhz"), me.no);# removed the 'A' here, as MLU manuals don't show it. Otherwise it should depend on steerpoints.autoMode
 
 		if (me.CNIshowWind) {
 			me.text[1] = sprintf("                %s %s", winddir, windkts);
