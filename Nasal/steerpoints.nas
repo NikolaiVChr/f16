@@ -41,7 +41,6 @@ var STPT = {
 	type: "   ",
 	radius: 10,
 	color: colorYellow,
-	desiredTOS: nil,
 	
 	new: func {
 		var n = {parents: [STPT]};
@@ -56,7 +55,6 @@ var STPT = {
 		cp.type = me.type;
 		cp.radius = me.radius;
 		cp.color = me.color;
-		me.desiredTOS = me.desiredTOS;
 		return cp;
 	},
 };
