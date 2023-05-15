@@ -526,7 +526,6 @@ var dataEntryDisplay = {
 		}
 		me.text[0] = sprintf("     STPT %s%s %s", pSTPT.vector[0].getText(), pSTPT.vector[6].getText(), me.no);
 		steerpoints.autoMode = getprop("f16/ded/stpt-auto")=="AUTO"?1:0;
-		print("auto ",steerpoints.autoMode);
 	},
 
 	updateCrus: func() {
