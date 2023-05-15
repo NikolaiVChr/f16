@@ -68,7 +68,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                 <product>
                     <difference>
                         <p>inertia/cg-x-in</p>
-                        <v>-176.5</v><!-- X_CG-ref (inches) -->
+                        <v>8.5</v><!-- X_CG-ref (inches) -->
                     </difference>
                     <v>0.083333</v><!-- in to ft -->
                 </product>
@@ -703,7 +703,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
         </sum>
     </function>
 
-    <axis name="X">
+    <axis name="X" apply_at_cg="true">
 
         <function name="aero/coefficient/force/X_t-lbf">
             <description>Total X</description>
@@ -1171,7 +1171,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
     </function>
 
 
-    <axis name="Z">
+    <axis name="Z" apply_at_cg="true">
 
         <function name="aero/coefficient/force/Z_t-lbf">
             <description>Total Z force</description>
@@ -1420,7 +1420,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                     </table>
         </function>
 
-        <!--<function name="aero/coefficient/Cm_cg">
+        <function name="aero/coefficient/Cm_cg">
             <description>
                Cm due to CoG shift, page 44 of TP 1538
             </description>
@@ -1429,9 +1429,9 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                     <v>0.35</v>
                     <p>aero/CG-pos-c</p>
                 </difference>
-                <p>aero/coefficient/Cz_t</p>
+                <p>aero/coefficient/CZ_t</p>
             </product>
-        </function>-->
+        </function>
 
         <function name="aero/coefficient/dCm_sb">
             <description>
@@ -1631,6 +1631,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                 <p>aero/function/n_dh</p>
                 <p>aero/coefficient/Cm</p>
             </product>
+            <p>aero/coefficient/Cm_cg</p>
             <product>
                 <p>aero/coefficient/dCm_lef</p>
                 <p>fcs/fly-by-wire/lef/lef-pos-r-norm</p>
@@ -1659,7 +1660,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
         </sum>
     </function>
 
-    <axis name="PITCH">
+    <axis name="PITCH" apply_at_cg="true">
 
         <function name="aero/coefficient/moment/Cm_t-lbf_ft">
             <description>Total pitch moment</description>
@@ -2067,7 +2068,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
         </sum>
     </function>
 
-    <axis name="Y">
+    <axis name="Y" apply_at_cg="true">
 
         <function name="aero/coefficient/force/Y_t-lbf">
             <description>
@@ -2331,7 +2332,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                 </table>
         </function>
 
-        <!--<function name="aero/coefficient/Cn_cg">
+        <function name="aero/coefficient/Cn_cg">
             <description>
                Cn due to CoG shift, page 45 of TP 1538
             </description>
@@ -2347,7 +2348,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                 </quotient>
                 <p>aero/coefficient/Cy_t</p>
             </product>
-        </function>-->
+        </function>
 
         <function name="aero/coefficient/Cn_r">
             <description>
@@ -2592,6 +2593,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                     <p>aero/coefficient/dCn_lef</p>
                     <p>fcs/fly-by-wire/lef/lef-pos-r-norm</p>
                 </product>
+                <p>aero/coefficient/Cn_cg</p>
                 <product>
                     <sum>
                         <p>aero/coefficient/dCn_da</p>
@@ -2638,7 +2640,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </sum>
     </function>
 
-    <axis name="YAW">
+    <axis name="YAW" apply_at_cg="true">
 
         <function name="aero/coefficient/moment/Cn_t-lbf_ft">
             <description>Total yaw moment</description>
@@ -3206,7 +3208,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </sum>
     </function>
 
-    <axis name="ROLL">
+    <axis name="ROLL" apply_at_cg="true">
 
         <function name="aero/coefficient/moment/Cl_t-lbf_ft">
             <description>Total roll moment</description>

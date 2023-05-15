@@ -118,11 +118,11 @@ var init = func {
     var StationTrigger = {
 
         parents: [FailureMgr.Trigger],
-        requires_polling: 1,
+        requires_polling: 1,# its 0.1 Hz
         type: "Station",
 
         # Props: weight on station
-        # Params: arm_meters
+        # Params: name, arm_meters
         #
         # v1: at fails, the stores will not be releasable, not be jettisonable. Reason: stress, flutter.
         #
@@ -146,7 +146,7 @@ var init = func {
         },
 
         to_str: func {
-            sprintf("Increasing probability of fails at higher AoA and G and when greater weight is hung.");
+            sprintf("%s: Increasing probability of fails at higher AoA and G and when greater weight is hung.",me.params.name);
         },
 
         update: func {
@@ -156,25 +156,24 @@ var init = func {
                 me.alpha = math.max(0, getprop(me._alpha_prop));               
 
                 me.maxVio = me.extrapolate(me.weight, 300, 2500, 20, 0);
-                me.maxAlpha = me.extrapolate(me.weight, 300, 1500, 26, 16);
+                me.maxAlpha = math.max(16, me.extrapolate(me.weight, 0, 1500, 26, 16));
 
                 me.violation = math.max(0, me.normal-me.params.arm)*math.max(0, me.alpha-me.maxAlpha);# TODO: Too crude, and wrong.
 
                 if(me.violation > me.maxVio) {
                     # In violation regime
-                    me.violation -= me.maxVio;
 
-                    me.factor = me.violation/15;
+                    me.factor = math.min(0.95, (me.violation-me.maxVio)/15);#max 95% chance
 
                     if(rand() < me.factor) {
-                        printf("%s failed    at %d AoA, %.1f G, %d lbm. (%d > %d) %d%%", me.params.name, me.alpha, me.normal, me.weight, me.violation, me.maxVio, me.factor*100);
+                        #printf("%s failed    at %d AoA, %.1f G, %d lbm. (vio %d > %d) %d%%", me.params.name, me.alpha, me.normal, me.weight, me.violation, me.maxVio, me.factor*100);
                         return me.fired = 1;
                     }
-                    printf("%s stress     at %d AoA, %.1f G, %d lbm. (%d > %d) %d%%", me.params.name, me.alpha, me.normal, me.weight, me.violation, me.maxVio, me.factor*100);
+                    #printf("%s stress     at %d AoA, %.1f G, %d lbm. (vio %d > %d) %d%%", me.params.name, me.alpha, me.normal, me.weight, me.violation, me.maxVio, me.factor*100);
                 }
-                printf("%s stressless at %d AoA, %.1f G, %d lbm. (%d > %d)", me.params.name, me.alpha, me.normal, me.weight, me.violation, me.maxVio);
+                #printf("%s stressless at %d AoA, %.1f G, %d lbm. (vio %d > %d)", me.params.name, me.alpha, me.normal, me.weight, me.violation, me.maxVio);
             } else {
-                printf("%s weight %d  %.1f > %.1f", me.params.name, me.weight, me.normal, me.params.arm);
+                #printf("%s weight %d  %.1f G > %.1f G", me.params.name, me.weight, me.normal, me.params.arm);
             }
             return me.fired = 0;
         },
@@ -240,30 +239,30 @@ var init = func {
     prop = "fdm/jsbsim/inertia/pointmass-weight-lbs[4]";
     var trigger_sta4 = StationTrigger.new("Station 4", 1.62889, prop);
     var sta4_fc = compat_failure_modes.set_unserviceable("payload/sta[3]");
-    #FailureMgr.add_failure_mode("payload/sta4", "Station 4", sta4_fc);
-    #FailureMgr.set_trigger("payload/sta4", trigger_sta4);
-    #trigger_sta4.arm();
+    FailureMgr.add_failure_mode("payload/sta4", "Station 4", sta4_fc);
+    FailureMgr.set_trigger("payload/sta4", trigger_sta4);
+    trigger_sta4.arm();
 
     prop = "fdm/jsbsim/inertia/pointmass-weight-lbs[6]";
     var trigger_sta6 = StationTrigger.new("Station 6", 1.62889, prop);
     var sta6_fc = compat_failure_modes.set_unserviceable("payload/sta[5]");
-    #FailureMgr.add_failure_mode("payload/sta6", "Station 6", sta6_fc);
-    #FailureMgr.set_trigger("payload/sta6", trigger_sta6);
-    #trigger_sta6.arm();
+    FailureMgr.add_failure_mode("payload/sta6", "Station 6", sta6_fc);
+    FailureMgr.set_trigger("payload/sta6", trigger_sta6);
+    trigger_sta6.arm();
 
     prop = "fdm/jsbsim/inertia/pointmass-weight-lbs[3]";
     var trigger_sta3 = StationTrigger.new("Station 3", 2.88034, prop);
     var sta3_fc = compat_failure_modes.set_unserviceable("payload/sta[2]");
-    #FailureMgr.add_failure_mode("payload/sta3", "Station 3", sta3_fc);
-    #FailureMgr.set_trigger("payload/sta3", trigger_sta3);
-    #trigger_sta3.arm();
+    FailureMgr.add_failure_mode("payload/sta3", "Station 3", sta3_fc);
+    FailureMgr.set_trigger("payload/sta3", trigger_sta3);
+    trigger_sta3.arm();
 
     prop = "fdm/jsbsim/inertia/pointmass-weight-lbs[7]";
     var trigger_sta7 = StationTrigger.new("Station 7", 2.88034, prop);
     var sta7_fc = compat_failure_modes.set_unserviceable("payload/sta[6]");
-    #FailureMgr.add_failure_mode("payload/sta7", "Station 7", sta7_fc);
-    #FailureMgr.set_trigger("payload/sta7", trigger_sta7);
-    #trigger_sta7.arm();
+    FailureMgr.add_failure_mode("payload/sta7", "Station 7", sta7_fc);
+    FailureMgr.set_trigger("payload/sta7", trigger_sta7);
+    trigger_sta7.arm();
 
 
     #gears
@@ -390,8 +389,12 @@ var fail_list = [
        [1," FLCS AOA  FAIL ", "systems/static/serviceable", 1, 0],
        [3," CADC BUS  FAIL ", "systems/vacuum/serviceable", 1, 0],
        [0,">FLCS LEF  LOCK<", "f16/fcs/le-flaps-switch", 1, 0],
-       [0,">FLCS BIT  FAIL<", "!f16/fcs/bit-fail", 1, 0]
+       [0,">FLCS BIT  FAIL<", "!f16/fcs/bit-fail", 1, 0],
 #      [1," FLCS A/P  FAIL ", "???", 1, 0]  if created, contributes to A/P inhibit
+       [3," SMS  STA3 FAIL ", "payload/sta[2]/serviceable", 1, 0],
+       [3," SMS  STA4 FAIL ", "payload/sta[3]/serviceable", 1, 0],
+       [3," SMS  STA6 FAIL ", "payload/sta[5]/serviceable", 1, 0],
+       [3," SMS  STA7 FAIL ", "payload/sta[6]/serviceable", 1, 0]
 ]; 
 # Systems:
 # 0: FLCS (Warning)

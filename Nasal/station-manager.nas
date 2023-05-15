@@ -67,6 +67,14 @@ var Station = {
 		# Get name of this station.
 		return me.currentName;
 	},
+
+	isOperable: func {
+		# Returns if is operable.
+		if (me.operableFunction != nil) {
+			return me.operableFunction();
+		}
+		return 1;
+	},
 	
 	isActive: func {
 		# Returns if is active. This is for example used in F-14, where stations be individually enabled or disabled.

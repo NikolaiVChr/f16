@@ -18,6 +18,9 @@ var STPTlonFE = EditableLON.new("f16/ded/lon", convertDegreeToStringLon);
 var STPTnumFE = EditableField.new("f16/ded/stpt-edit", "%3d", 3);
 var STPTradFE = EditableField.new("f16/ded/stpt-rad", "%2d", 2);
 var STPTaltFE = EditableField.new("f16/ded/alt", "%5d", 5);
+var CRUSmodeTF = toggleableFieldTwo.new(["TOS", "RNG"], "f16/ded/crus-mode");
+var CRUSdesTosEF = EditableTime.new("f16/ded/crus-des-tos", steerpoints.getAbsoluteTOS);
+#var CRUSstptEF = EditableField.new("f16/ded/crus-stpt", "%3d", 3);
 var STPTtypeTF = toggleableField.new(["   ", " 2 ", " 5 ", " 6 ", " 11", " 20", " SH", " P ", " AAA"], "f16/ded/stpt-type");
 #var STPTcolorTF = toggleableField.new(["RED", "YEL", "GRN"], "f16/ded/stpt-color");
 var dlinkEF   = EditableField.new("instrumentation/datalink/channel", "%4d", 4);
@@ -30,7 +33,7 @@ var pTACAN = EditableFieldPage.new(0, [tacanChanEF,tacanBandTF,ilsFrqEF,ilsCrsEF
 var pALOW  = EditableFieldPage.new(1, [alowEF,mslFloorEF,tfEF]);
 var pFACK  = EditableFieldPage.new(2);
 var pSTPT  = EditableFieldPage.new(3, [STPTnumFE,STPTlatFE,STPTlonFE,STPTradFE,STPTaltFE,STPTtypeTF]);#,STPTcolorTF
-var pCRUS  = EditableFieldPage.new(4);
+var pCRUS  = EditableFieldPage.new(4, [CRUSmodeTF, CRUSdesTosEF]);
 var pTIME  = EditableFieldPage.new(5);
 var pMARK  = EditableFieldPage.new(6);
 var pFIX   = EditableFieldPage.new(7);
@@ -75,11 +78,24 @@ var wp_num_lastR = nil;
 #var wp_num_lastC = nil;
 var wp_num_lastT = nil;
 var wp_num_curr = 0;
+var des_tos_last = nil;
 
 
 var modeSDeci = 65535*rand();
 var modeS_PERM  = "AE"~sprintf("%4X", modeSDeci);
 var modeS_OPER  = sprintf("%8o", modeSDeci+11403264);
+
+#setlistener("f16/ded/crus-des-tos", func() {
+    # Gonna assume it's cheaper to just write instead of check if we need to
+#    var cur_wp = steerpoints.getCurrent();
+#    if (cur_wp != nil) {
+#        cur_wp.desiredTOS = getprop("f16/ded/crus-des-tos");
+#    }
+    #var newVal = getprop("f16/ded/crus-des-tos");
+    #if (cur_wp.desiredTOS != newVal) {
+    #    cur_wp.desiredTOS = newVal;
+    #}
+#});
 
 var dataEntryDisplay = {
 	line1: nil,
@@ -145,7 +161,7 @@ var dataEntryDisplay = {
 		if (me.no == 0) {
 		  me.no = "";
 		} else {
-		  me.no = sprintf("%3d",me.no);
+		  me.no = sprintf("%3d "~utf8.chstr(0x2195),me.no);
 		}
 
 		if (me.page == pTACAN) {
@@ -510,64 +526,127 @@ var dataEntryDisplay = {
 		me.text[0] = sprintf("      STPT %s  AUTO %s", pSTPT.vector[0].getText(), me.no);
 	},
 
+    crusMode: "TOS",
+    crusModeSelected: nil,
 	updateCrus: func() {
 		# Source: F-16 A/B Mid-Life Update Production Tape M1: Pilot's guide to new to new capabilities & cockpit enhancements.
-		# The page is at the moment fixed at RNG.
-		# The steerpoint is currently fixed at last steerpoint, unless using a non route steerpoint.
-		var fuel   = "";
-		var fp = flightplan();
-		var maxS = "";
-		var stnum = steerpoints.getCurrentNumber();
-		if (fp != nil and stnum < 100) {
-			var max = fp.getPlanSize();
-			if (max > 0) {
-				maxS =""~max;
-				var ete = getprop("autopilot/route-manager/ete");
-				if (ete != nil and ete > 0) {
-					var pph = getprop("engines/engine[0]/fuel-flow_pph");
-					if (pph == nil) pph = 0;
-					var remain = getprop("consumables/fuel/total-fuel-lbs")-pph*(ete/3600);
-					fuel = sprintf("% 6dLBS",remain);
-					if (size(fuel)>9) {
-						if (remain > 0) {
-							fuel = "999999LBS";
-						} else {
-							fuel = "-99999LBS";
-						}
-					}
-				}
-			}
-		} elsif (stnum >= 100) {
-			var stpt = steerpoints.getCurrent();
-			maxS = ""~stnum;
-			var ete = steerpoints.getCurrentETA();
-			if (ete != nil and ete > 0) {
-				var pph = getprop("engines/engine[0]/fuel-flow_pph");
-				if (pph == nil) pph = 0;
-				var remain = getprop("consumables/fuel/total-fuel-lbs")-pph*(ete/3600);
-				fuel = sprintf("% 6dLBS",remain);
-				if (size(fuel)>9) {
-					if (remain > 0) {
-						fuel = "999999LBS";
-					} else {
-						fuel = "-99999LBS";
-					}
-				}
-			}
-		}
-		var windkts = getprop("environment/wind-speed-kt");
-		var winddir = getprop("environment/wind-from-heading-deg");
-		if (windkts == nil or winddir == nil) {
-			windkts = -1;
-			winddir = -1;
-		}
-		windkts = sprintf("% 3dKTS",getprop("environment/wind-speed-kt"));
-		winddir = sprintf("%03d\xc2\xb0",getprop("environment/wind-from-heading-deg"));
-		me.text[0] = sprintf("     CRUS  RNG  ",me.no);
-		me.text[1] = sprintf("     STPT  %s  ",maxS);
-		me.text[2] = sprintf("     FUEL %s",fuel);#fuel remaining after getting to last steerpoint at current fuel consumption.
-		me.text[3] = sprintf("                        ");
-		me.text[4] = sprintf("     WIND  %s %s",winddir,windkts);
+		# This page does not yet support HOME or EDR
+
+        # The top right STPT number should be hidden except on the TOS page
+        var tempNo = "";
+        if (me.crusMode == "TOS") {
+            tempNo = me.no;
+        }
+
+        var tempCrusMode = me.crusMode;
+        if (CRUSmodeTF.selected) {
+            tempCrusMode = "*"~tempCrusMode~"*";
+        }
+        if (me.crusModeSelected == me.crusMode) {
+            tempCrusMode = backgroundText(tempCrusMode);
+        }
+        if (!CRUSmodeTF.selected) {
+            tempCrusMode = " "~tempCrusMode~" ";
+        }
+
+
+        me.text[0] = sprintf("      CRUS  %s      %s ", tempCrusMode, tempNo);
+		# me.text[0] = sprintf("     CRUS  RNG  ",me.no);
+		if (me.crusMode == "TOS") {
+		    var time = getprop("/sim/time/gmt-string");
+		    var cur_wp = steerpoints.getCurrent();
+		    var cur_des = steerpoints._getCurrentDesiredTOS();
+		    if (cur_des != nil and des_tos_last != cur_des) {
+                setprop("f16/ded/crus-des-tos", cur_des);
+            } else {
+                steerpoints.setCurrentDesiredTOS(getprop("f16/ded/crus-des-tos"));
+            }
+            if (cur_wp == nil) {
+                pCRUS.vector[1].skipMe = 1; # desiredTOS
+            } else {
+                pCRUS.vector[1].skipMe = 0; # desiredTOS
+            }
+
+            var TOS = CRUSdesTosEF.getText();
+		    var ETA = steerpoints.getCurrentTOS();
+		    var gs_num = steerpoints.getCurrentRequiredSpeed();
+		    if (gs_num != nil) {
+		        setprop("/f16/ded/crus-req-gs", gs_num);
+            }
+		    var req_gs = sprintf("%dKTS", gs_num);
+		    if (cur_wp == nil) {
+		        TOS = "";
+		    }
+		    if (gs_num == nil or cur_des == nil) {
+		        req_gs = "";
+		    }
+            me.text[1] = sprintf("      TIME  %s", time);
+            me.text[2] = sprintf("   DES TOS %s", TOS);
+            me.text[3] = sprintf("       ETA  %s", ETA);
+            me.text[4] = sprintf("   REQ G/S   %s", req_gs);
+
+            if (cur_des != nil) {
+                des_tos_last = cur_des;
+            } else {
+                des_tos_last = 0;
+            }
+
+		} elsif (me.crusMode == "RNG") {
+		    # The steerpoint is currently fixed at last steerpoint, unless using a non route steerpoint
+            var fuel   = "";
+            var fp = flightplan();
+            var maxS = "";
+            var stnum = steerpoints.getCurrentNumber();
+            if (fp != nil and stnum < 100) {
+                var max = fp.getPlanSize();
+                if (max > 0) {
+                    maxS =""~max;
+                    var ete = getprop("autopilot/route-manager/ete");
+                    if (ete != nil and ete > 0) {
+                        var pph = getprop("engines/engine[0]/fuel-flow_pph");
+                        if (pph == nil) pph = 0;
+                        var remain = getprop("consumables/fuel/total-fuel-lbs")-pph*(ete/3600);
+                        fuel = sprintf("% 6dLBS",remain);
+                        if (size(fuel)>9) {
+                            if (remain > 0) {
+                                fuel = "999999LBS";
+                            } else {
+                                fuel = "-99999LBS";
+                            }
+                        }
+                    }
+                }
+            } elsif (stnum >= 100) {
+                var stpt = steerpoints.getCurrent();
+                maxS = ""~stnum;
+                var ete = steerpoints.getCurrentETA();
+                if (ete != nil and ete > 0) {
+                    var pph = getprop("engines/engine[0]/fuel-flow_pph");
+                    if (pph == nil) pph = 0;
+                    var remain = getprop("consumables/fuel/total-fuel-lbs")-pph*(ete/3600);
+                    fuel = sprintf("% 6dLBS",remain);
+                    if (size(fuel)>9) {
+                        if (remain > 0) {
+                            fuel = "999999LBS";
+                        } else {
+                            fuel = "-99999LBS";
+                        }
+                    }
+                }
+            }
+            var windkts = getprop("environment/wind-speed-kt");
+            var winddir = getprop("environment/wind-from-heading-deg");
+            if (windkts == nil or winddir == nil) {
+                windkts = -1;
+                winddir = -1;
+            }
+            windkts = sprintf("% 3dKTS",getprop("environment/wind-speed-kt"));
+            winddir = sprintf("%03d\xc2\xb0",getprop("environment/wind-from-heading-deg"));
+            me.text[1] = sprintf("      STPT   %s  ",maxS);
+            me.text[2] = sprintf("      FUEL %s",fuel);#fuel remaining after getting to last steerpoint at current fuel consumption.
+            me.text[3] = sprintf("                        ");
+            me.text[4] = sprintf("      WIND %s %s",winddir,windkts);
+        }
 	},
 
 	updateTime: func() {
@@ -577,7 +656,7 @@ var dataEntryDisplay = {
 		var hackSec = int(getprop("f16/avionics/hack/elapsed-time-sec") - (hackHour * 3600) - (hackMin * 60));
 		var hackTime = sprintf("%02.0f", hackHour) ~ ":" ~ sprintf("%02.0f", hackMin) ~ ":" ~ sprintf("%02.0f", hackSec);
 		var date = sprintf("%02.0f", getprop("/sim/time/utc/month")) ~ "/" ~ sprintf("%02.0f", getprop("/sim/time/utc/day")) ~ "/" ~ right(sprintf("%s", getprop("/sim/time/utc/year")), 2);
-		me.text[0] = sprintf("          TIME      %s  ",me.no);
+		me.text[0] = sprintf("          TIME       %s  ",me.no);
 		if (getprop("f16/avionics/power-gps") and getprop("sim/variant-id") != 1 and getprop("sim/variant-id") != 3) {
 			me.text[1] = sprintf("GPS SYSTEM      %s",time);
 		} else {
@@ -1361,6 +1440,19 @@ setlistener("f16/avionics/rtn-seq", func() {
 		if (dataEntryDisplay.page == pGPS and getprop("f16/avionics/power-gps")) {
 			dataEntryDisplay.GPSpage = !dataEntryDisplay.GPSpage;
 			return;
+		}
+
+		if (dataEntryDisplay.page == pCRUS and CRUSmodeTF.selected) {
+		    if (dataEntryDisplay.crusMode == "TOS") {
+				dataEntryDisplay.crusMode = "RNG";
+			#} elsif (dataEntryDisplay.crusMode == "RNG") {
+			#	dataEntryDisplay.crusMode = "HOME";
+			#} elsif (dataEntryDisplay.crusMode == "HOME") {
+			#	dataEntryDisplay.crusMode = "EDR";
+			#} elsif (dataEntryDisplay.crusMode == "EDR") {
+			} else {
+				dataEntryDisplay.crusMode = "TOS";
+			}
 		}
 
 		if (dataEntryDisplay.page == pMARK and dataEntryDisplay.markModeSelected) {

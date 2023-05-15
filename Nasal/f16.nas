@@ -1,6 +1,4 @@
 srand();# to avoid picking the same suspect numbers
-var TRUE = 1;
-var FALSE = 0;
 
 # Use: f16.tree("/",0);
 var tree = func(n = "", graph = 1) {
@@ -242,42 +240,42 @@ var medium_fast = {
     loop: func {
         # Flare/chaff release
         if (getprop("ai/submodels/submodel[0]/flare-release-snd") == nil) {
-            setprop("ai/submodels/submodel[0]/flare-release-snd", FALSE);
-            setprop("ai/submodels/submodel[0]/flare-release-out-snd", FALSE);
+            setprop("ai/submodels/submodel[0]/flare-release-snd", 0);
+            setprop("ai/submodels/submodel[0]/flare-release-out-snd", 0);
         }
         var flareOn = getprop("ai/submodels/submodel[0]/flare-release-cmd") and getprop("f16/avionics/ew-mode-knob") == 1;
         var flareOnA = getprop("ai/submodels/submodel[0]/flare-auto-release-cmd") > rand() and getprop("f16/avionics/ew-mode-knob") == 2 and getprop("ai/submodels/submodel[0]/flare-release-cmd") == 0;
         flareOn = flareOn or flareOnA;
 
-        if (flareOn == TRUE and getprop("ai/submodels/submodel[0]/flare-release") == FALSE
-                and getprop("ai/submodels/submodel[0]/flare-release-out-snd") == FALSE
-                and getprop("ai/submodels/submodel[0]/flare-release-snd") == FALSE) {
+        if (flareOn == 1 and getprop("ai/submodels/submodel[0]/flare-release") == 0
+                and getprop("ai/submodels/submodel[0]/flare-release-out-snd") == 0
+                and getprop("ai/submodels/submodel[0]/flare-release-snd") == 0) {
             me.flareCount = getprop("ai/submodels/submodel[0]/count");
             me.flareStart = getprop("sim/time/elapsed-sec");
-            setprop("ai/submodels/submodel[0]/flare-release-cmd", FALSE);
+            setprop("ai/submodels/submodel[0]/flare-release-cmd", 0);
             if (me.flareCount > 0 and getprop("fdm/jsbsim/elec/bus/emergency-dc-2")>20) {
                 # release a flare
-                setprop("ai/submodels/submodel[0]/flare-release-snd", TRUE);
-                setprop("ai/submodels/submodel[0]/flare-release", TRUE);
+                setprop("ai/submodels/submodel[0]/flare-release-snd", 1);
+                setprop("ai/submodels/submodel[0]/flare-release", 1);
                 setprop("rotors/main/blade[3]/flap-deg", me.flareStart);
                 setprop("rotors/main/blade[3]/position-deg", me.flareStart);
                 damage.flare_released();
             } else {
                 # play the sound for out of flares
-                setprop("ai/submodels/submodel[0]/flare-release-out-snd", TRUE);
+                setprop("ai/submodels/submodel[0]/flare-release-out-snd", 1);
             }
         }
-        if (getprop("ai/submodels/submodel[0]/flare-release-snd") == TRUE and (me.flareStart + 1) < getprop("sim/time/elapsed-sec")) {
-            setprop("ai/submodels/submodel[0]/flare-release-snd", FALSE);
+        if (getprop("ai/submodels/submodel[0]/flare-release-snd") == 1 and (me.flareStart + 1) < getprop("sim/time/elapsed-sec")) {
+            setprop("ai/submodels/submodel[0]/flare-release-snd", 0);
             setprop("rotors/main/blade[3]/flap-deg", 0);
             setprop("rotors/main/blade[3]/position-deg", 0);#MP interpolates between numbers, so nil is better than 0.
         }
-        if (getprop("ai/submodels/submodel[0]/flare-release-out-snd") == TRUE and (me.flareStart + 1.5) < getprop("sim/time/elapsed-sec")) {
-            setprop("ai/submodels/submodel[0]/flare-release-out-snd", FALSE);
+        if (getprop("ai/submodels/submodel[0]/flare-release-out-snd") == 1 and (me.flareStart + 1.5) < getprop("sim/time/elapsed-sec")) {
+            setprop("ai/submodels/submodel[0]/flare-release-out-snd", 0);
         }
         if (me.flareCount > getprop("ai/submodels/submodel[0]/count")) {
             # A flare was released in last loop, we stop releasing flares, so user have to press button again to release new.
-            setprop("ai/submodels/submodel[0]/flare-release", FALSE);
+            setprop("ai/submodels/submodel[0]/flare-release", 0);
             me.flareCount = -1;
         }
 
@@ -289,8 +287,8 @@ var medium_fast = {
         #setprop("instrumentation/mfd-sit/inputs/lh-vor-adf", 0);
         #setprop("instrumentation/mfd-sit/inputs/rh-vor-adf", 0);
         setprop("instrumentation/mfd-sit-2/inputs/wpt", 0);
-        if (getprop("payload/armament/msg") == TRUE) {
-            setprop("sim/rendering/redout/enabled", TRUE);
+        if (getprop("payload/armament/msg") == 1) {
+            setprop("sim/rendering/redout/enabled", 1);
             if (getprop("sim/rendering/redout/new")) {
                 newsuit();
             } else {
@@ -842,7 +840,7 @@ var cockpit_temperature_control = {
         me.tempOutsideDew = getprop("environment/dewpoint-degc");
         me.tempInsideDew = getprop("/environment/aircraft-effects/dewpoint-inside-degC");
         me.tempACDew = 5;# aircondition dew point target. 5 = dry
-        me.ACRunning = getprop("fdm/jsbsim/elec/bus/emergency-dc-1") > 20 and getprop("controls/ventilation/airconditioning-enabled") == TRUE;
+        me.ACRunning = getprop("fdm/jsbsim/elec/bus/emergency-dc-1") > 20 and getprop("controls/ventilation/airconditioning-enabled") == 1;
 
         # calc inside temp
         me.hotAir_deg_min = 2.0;# how fast does the sources heat up cockpit.
@@ -877,7 +875,7 @@ var cockpit_temperature_control = {
             me.tempInsideDew = me.tempOutsideDew;
         } else {
             me.tempInsideDewTarget = 0;
-            if (me.ACRunning == TRUE) {
+            if (me.ACRunning == 1) {
                 # calculate dew point for inside air. When full airconditioning is achieved at tempAC dewpoint will be tempACdew.
                 # slope = (outsideDew - desiredInsideDew)/(outside-desiredInside)
                 # insideDew = slope*(inside-desiredInside)+desiredInsideDew
@@ -924,9 +922,9 @@ var cockpit_temperature_control = {
         me.fogNorm = me.fogNormOutside>me.fogNormInside?me.fogNormOutside:me.fogNormInside;
 
         # If the hot air on windshield is enabled and its setting is high enough, then apply the mask which will defog the windshield.
-        #me.mask = FALSE;
+        #me.mask = 0;
         #if (me.frostNorm <= me.hotAirOnWindshield and me.hotAirOnWindshield != 0) {
-            me.mask = TRUE;
+            me.mask = 1;
         #}
 
         # internal environment
@@ -1205,7 +1203,7 @@ var impact_listener = func {
 var hitmessage = func(typeOrd) {
     #print("inside hitmessage");
     var phrase = typeOrd ~ " hit: " ~ hit_callsign ~ ": " ~ hits_count ~ " hits";
-    if (getprop("payload/armament/msg") == TRUE) {
+    if (getprop("payload/armament/msg") == 1) {
         #armament.defeatSpamFilter(phrase);
         var msg = notifications.ArmamentNotification.new("mhit", 4, -1*(damage.shells[typeOrd][0]+1));
         msg.RelativeAltitude = 0;

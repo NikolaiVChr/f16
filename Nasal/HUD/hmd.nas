@@ -24,6 +24,9 @@ var center_to_edge_distance_m = 0.025;#meters
 var screen_w=getprop("sim/startup/xsize");
 var screen_h=getprop("sim/startup/ysize");
 
+var VISUAL = 47;
+var SLAVE  = 76;
+
 var F16_HMD = {
     map: func (value, leftMin, leftMax, rightMin, rightMax) {
         # Figure out how 'wide' each range is
@@ -953,16 +956,23 @@ var F16_HMD = {
         me.irT = 0;#IR triangle aspect indicator
         me.rdT = 0;
         me.irB = 0;#IR search bore
+        me.aimMode = SLAVE;
         #printf("%d %d %d %s",hdp.master_arm,pylons.fcs != nil,pylons.fcs.getAmmo(),hdp.weapon_selected);
         if(hdp.getproper("master_arm") != 0 and pylons.fcs != nil and pylons.fcs.getAmmo() > 0) {
             hdp.weapon_selected = pylons.fcs.selectedType;
             var aim = pylons.fcs.getSelectedWeapon();
+
             if (0 and hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
                 if (!pylons.fcs.isLock()) {
                     me.radarLock.setTranslation(0, -me.sy*0.25+262*0.3*0.5);
                     me.rdL = 1;
                 }
             } elsif (hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "AIM-9M" or hdp.weapon_selected == "AIM-9X" or hdp.weapon_selected == "IRIS-T") {
+                if (aim != nil) {
+                    if (!aim.isRadarSlaved()) {
+                        me.aimMode = VISUAL;
+                    }
+                }
                 if (aim != nil and aim.isCaged()) {
                     var coords = aim.getSeekerInfo();
                     if (coords != nil) {
@@ -970,6 +980,17 @@ var F16_HMD = {
                         me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
                         me.echoPos[0] = (512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512 (should be 0.1385 from eye instead to be like real f16)
                         me.echoPos[1] = -(512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
+
+                        me.clamped = math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]) > 500;
+
+                        if (me.clamped) {
+                            me.clampAmount = 500/math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]);
+                            me.echoPos[0] *= me.clampAmount;
+                            me.echoPos[1] *= me.clampAmount;
+                            me.irBore.setStrokeDashArray([7,7]);
+                        } else {
+                            me.irBore.setStrokeDashArray([100]);
+                        }
                         me.irBore.setTranslation(me.echoPos);
                         me.irB = 1;
                     }#atan((0.025*500)/(0.2*512)) = radius_fg = atan(12.5/102.4) = 6.96 degs => 13.92 deg diam
@@ -981,6 +1002,18 @@ var F16_HMD = {
                         me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
                         me.echoPos[0] = (512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
                         me.echoPos[1] = -(512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
+
+                        me.clamped = math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]) > 500;
+
+                        if (me.clamped) {
+                            me.clampAmount = 500/math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]);
+                            me.echoPos[0] *= me.clampAmount;
+                            me.echoPos[1] *= me.clampAmount;
+                            me.irLock.setStrokeDashArray([7,7]);
+                        } else {
+                            me.irLock.setStrokeDashArray([100]);
+                        }
+
                         me.irLock.setTranslation(me.echoPos);
                         me.irL = 1;
                     }
@@ -1023,7 +1056,7 @@ var F16_HMD = {
                         me.echoPos[1] *= me.clampAmount;
                         me.tgt.setStrokeDashArray([7,7]);
                     } else {
-                        me.tgt.setStrokeDashArray([1]);
+                        me.tgt.setStrokeDashArray([100]);
                     }
 
                     if (radar_system.apg68Radar.getPriorityTarget() != nil and radar_system.apg68Radar.getPriorityTarget().getLastBlep() != nil and radar_system.apg68Radar.getPriorityTarget().getLastRangeDirect() != nil and radar_system.apg68Radar.getPriorityTarget().get_Callsign() != nil and me.u.get_Callsign() == radar_system.apg68Radar.getPriorityTarget().get_Callsign()) {
@@ -1037,7 +1070,7 @@ var F16_HMD = {
                         if (me.clamped) {
                             me.target_locked.setStrokeDashArray([7,7]);
                         } else {
-                            me.target_locked.setStrokeDashArray([1]);
+                            me.target_locked.setStrokeDashArray([100]);
                         }
                         me.target_locked.update();
                         if (0 and currASEC != nil) {
@@ -1061,6 +1094,18 @@ var F16_HMD = {
                                     var coords = aim.getSeekerInfo();
                                     if (coords != nil) {
                                         me.seekPos = hmd.HudMath.getCenterPosFromDegs(coords[0],coords[1]);
+
+                                        me.clamped = math.sqrt(me.seekPos[0]*me.seekPos[0]+me.seekPos[1]*me.seekPos[1]) > 500;
+
+                                        if (me.clamped) {
+                                            me.clampAmount = 500/math.sqrt(me.seekPos[0]*me.seekPos[0]+me.seekPos[1]*me.seekPos[1]);
+                                            me.seekPos[0] *= me.clampAmount;
+                                            me.seekPos[1] *= me.clampAmount;
+                                            me.irLock.setStrokeDashArray([7,7]);
+                                        } else {
+                                            me.irLock.setStrokeDashArray([100]);
+                                        }
+
                                         me.irLock.setTranslation(me.seekPos);
                                         me.radarLock.setTranslation(me.seekPos);
                                     }
@@ -1267,7 +1312,7 @@ var F16_HMD = {
 
         hdp.window5_txt = f16.transfer_stpt;
         hdp.window3_txt = f16.transfer_dist;
-        hdp.window9_txt = f16.transfer_arms~(f16.transfer_arms==""?"":"-V");
+        hdp.window9_txt = f16.transfer_arms~(f16.transfer_arms==""?"":me.aimMode==VISUAL?"-V":"-S");
         hdp.window2_txt = f16.transfer_mode;
         hdp.window11_txt = f16.transfer_fuel_bullseye;
         hdp.window12_txt = f16.transfer_g;

@@ -148,6 +148,10 @@ var diag = {
                 if (substr(file, -4) != ".xml")
                     continue;
                 var n = io.read_properties(me.dir ~ file);
+                if (n == nil) {
+                    print("Malformed XML livery file:\n",me.dir ~ file);
+                    continue;
+                }
                 var name = n.getNode(me.nameprop, 1).getValue();
                 var index = n.getNode(me.sortprop, 1).getValue();
                 var owner = n.getNode(me.ownerprop, 1).getValue();

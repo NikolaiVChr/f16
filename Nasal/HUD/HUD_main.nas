@@ -137,8 +137,8 @@ var F16_HUD = {
         obj.alt_line.hide();
         obj.vel_line = obj.get_element("ias_tick_vert_line");
         obj.vel_line.hide();
-        obj.vel_ind = obj.get_element("path3111");
-        obj.vel_ind.hide();
+        obj.ias_desired = obj.get_element("path3111");
+        obj.ias_desired.hide();
         obj.alt_ind = obj.get_element("path3111-1");
         obj.alt_ind.hide();
         obj.radalt_box = obj.get_element("radalt-box");
@@ -222,7 +222,7 @@ var F16_HUD = {
         append(obj.total, obj.alt_range);
         append(obj.total, obj.ias_range);
         append(obj.total, obj.alt_line);
-        append(obj.total, obj.vel_ind);
+        append(obj.total, obj.ias_desired);
         append(obj.total, obj.vel_line);
         append(obj.total, obj.alt_ind);
         append(obj.total, obj.window1);
@@ -1049,41 +1049,38 @@ append(obj.total, obj.speed_curr);
         var pixelPerDegreeY = HudMath.getPixelPerDegreeAvg(5.0);
         var pixelPerDegreeX = 16.70527172464148;
         var distance = pixelPerDegreeY * 5;
-        var minuss = 0.125*sx*uv_used;
+        var minuss = 0.140*sx*uv_used;#Made a little longer since they bend
+        var pluss = 0.125*sx*uv_used;
         var minuso = 20*mr;
         for(var i = 1; i <= 17; i += 1) # full drawn lines
           append(obj.total, obj.ladder_group.createChild("path")
              .moveTo(minuso, -i * distance)
-             .horiz(minuss)
+             .horiz(pluss)
              .vert(minuso*0.5)
 
              .moveTo(-minuso, -i * distance)
-             .horiz(-minuss)
+             .horiz(-pluss)
              .vert(minuso*0.5)
 
              .setStrokeLineWidth(1)
              .setColor(0,0,0));
 
+        var v = getprop("sim/variant-id");
+        var rads = [];
         for(var i = -17; i <= -1; i += 1) { # stipled lines
-          #var rad = me.extrapolate(-i*5,10,90,8,45)*D2R;#as per US manual pitch lines bend down from 8 to 45 degrees
+          var rad = (v==0 or v==1 or v==3)?0:me.extrapolate(-i*5,5,85,8,45)*D2R;#as per US manual pitch lines bend down from 8 to 45 degrees
+          append(rads, minuss*math.sin(rad));
           append(obj.total, obj.ladder_group.createChild("path")
-                         .moveTo(minuso, -i * distance)
-                         .horiz(minuss*0.2)
-                         .moveTo(minuso+minuss*0.4, -i * distance)
-                         .horiz(minuss*0.2)
-                         .moveTo(minuso+minuss*0.8, -i * distance)
-                         .horiz(minuss*0.2)
-                         .vert(-minuso*0.5)
-
-                         .moveTo(-minuso, -i * distance)
-                         .horiz(-minuss*0.2)
-                         .moveTo(-minuso-minuss*0.4, -i * distance)
-                         .horiz(-minuss*0.2)
-                         .moveTo(-minuso-minuss*0.8, -i * distance)
-                         .horiz(-minuss*0.2)
-                         .vert(-minuso*0.5)
-
+                         .moveTo(minuso, -i * distance - minuso*0.5)
+                         .vert(minuso*0.5)
+                         .lineTo(minuso+minuss*math.cos(rad), -i * distance + minuss*math.sin(rad))
+                         
+                         .moveTo(-minuso, -i * distance - minuso*0.5)
+                         .vert(minuso*0.5)
+                         .lineTo(-minuso-minuss*math.cos(rad), -i * distance + minuss*math.sin(rad))
+                         
                          .setStrokeLineWidth(1)
+                         .setStrokeDashArray([minuso*0.5+minuss*0.1, minuss*0.1, minuss*0.2, minuss*0.1, minuss*0.2, minuss*0.1, minuss*0.2, 0])
                          .setColor(0,0,0));
         }
 
@@ -1142,14 +1139,14 @@ append(obj.total, obj.speed_curr);
              .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL)
              .setFont(HUD_FONT)
              .setAlignment("right-center")
-             .setTranslation(-minuso-minuss-minuss*0.2, -i * distance)
+             .setTranslation(-minuso-pluss-pluss*0.2, -i * distance + rads[i])
              .setColor(0,0,0));
           append(obj.total, obj.ladder_group.createChild("text")
              .setText(i*-5)
              .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL)
              .setFont(HUD_FONT)
              .setAlignment("left-center")
-             .setTranslation(minuso+minuss+minuss*0.2, -i * distance)
+             .setTranslation(minuso+pluss+pluss*0.2, -i * distance + rads[i])
              .setColor(0,0,0));
         }
         for(var i = 1; i <= 17; i += 1) {
@@ -1159,33 +1156,34 @@ append(obj.total, obj.speed_curr);
              .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL)
              .setFont(HUD_FONT)
              .setAlignment("right-center")
-             .setTranslation(-minuso-minuss-minuss*0.2, -i * distance)
+             .setTranslation(-minuso-pluss-pluss*0.2, -i * distance)
              .setColor(0,0,0));
           append(obj.total, obj.ladder_group.createChild("text")
              .setText(i*5)
              .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL)
              .setFont(HUD_FONT)
              .setAlignment("left-center")
-             .setTranslation(minuso+minuss+minuss*0.2, -i * distance)
+             .setTranslation(minuso+pluss+pluss*0.2, -i * distance)
              .setColor(0,0,0));
         }
 
         # approach line
         var i = -0.5;
+        pluss *= 0.8;# Approach line is shorter
         obj.appLine = obj.ladder_group.createChild("path")
                          .moveTo(minuso, -i * distance)
-                         .horiz(minuss*0.2)
-                         .moveTo(minuso+minuss*0.4, -i * distance)
-                         .horiz(minuss*0.2)
-                         .moveTo(minuso+minuss*0.8, -i * distance)
-                         .horiz(minuss*0.2)
+                         .horiz(pluss*0.2)
+                         .moveTo(minuso+pluss*0.4, -i * distance)
+                         .horiz(pluss*0.2)
+                         .moveTo(minuso+pluss*0.8, -i * distance)
+                         .horiz(pluss*0.2)
 
                          .moveTo(-minuso, -i * distance)
-                         .horiz(-minuss*0.2)
-                         .moveTo(-minuso-minuss*0.4, -i * distance)
-                         .horiz(-minuss*0.2)
-                         .moveTo(-minuso-minuss*0.8, -i * distance)
-                         .horiz(-minuss*0.2)
+                         .horiz(-pluss*0.2)
+                         .moveTo(-minuso-pluss*0.4, -i * distance)
+                         .horiz(-pluss*0.2)
+                         .moveTo(-minuso-pluss*0.8, -i * distance)
+                         .horiz(-pluss*0.2)
 
                          .setStrokeLineWidth(1)
                          .setColor(0,0,0);
@@ -1338,6 +1336,24 @@ append(obj.total, obj.speed_curr);
                                             obj.ASEC65Aspect.setColorFill(obj.color);
                                           }
                                       }),
+             func(hdp)
+                                      {
+                                        if (!hdp.getproper("dgft") and !hdp.getproper("gear_down")) {
+                                          if (ded.dataEntryDisplay.crusModeSelected == "TOS") {
+                                            var desired_kt = getprop("/f16/ded/crus-req-gs");
+                                            if (desired_kt != nil) {
+                                              obj.ias_desired.show();
+                                              obj.ias_desired.setTranslation(0, (hdp.getproper("groundspeed_kt")-desired_kt) * ias_range_factor);
+                                            } else {
+                                              obj.ias_desired.hide();
+                                            }
+                                          } else {
+                                            obj.ias_desired.hide();
+                                          }
+                                        } else {
+                                          obj.ias_desired.hide();
+                                        }
+                                      },
             #props.UpdateManager.FromHashList([], 0.01,
              func(hdp)
                                       {
@@ -3063,7 +3079,7 @@ append(obj.total, obj.speed_curr);
                         me.pipperLine.setVisible(me.showPipper);
                         return 0;
                     }
-                    me.showme = TRUE;
+                    me.showme = 1;
 
                     #me.myOwnPos = geo.aircraft_position();
                     #me.xyz = {"x":me.myOwnPos.x(),                  "y":me.myOwnPos.y(),                 "z":me.myOwnPos.z()};
@@ -3075,10 +3091,10 @@ append(obj.total, obj.speed_curr);
                     #    me.maxDist = me.myOwnPos.direct_distance_to(me.ccipPos[0])-1;
                     #    me.terrainDist = me.myOwnPos.direct_distance_to(me.terrain);
                     #    if (me.terrainDist < me.maxDist) {
-                    #        me.showme = FALSE;
+                    #        me.showme = 0;
                     #    }
                     #} else {
-                    #    me.showme = FALSE;
+                    #    me.showme = 0;
                     #}
                     me.hud_pos = HudMath.getPosFromCoord(me.ccipPos[0]);
                     if(me.hud_pos != nil) {
@@ -3089,16 +3105,16 @@ append(obj.total, obj.speed_curr);
                         #printf("dist=%0.1f (%3d , %3d)", dist, pos_x, pos_y);
 
                         #if(me.pos_x > (512/1024)*canvasWidth) {
-                        #  me.showme = FALSE;
+                        #  me.showme = 0;
                         #} elsif(me.pos_x < -(512/1024)*canvasWidth) {
-                        #  me.showme = FALSE;
+                        #  me.showme = 0;
                         #} elsif(me.pos_y > (512/1024)*canvasWidth) {
-                        #  me.showme = FALSE;
+                        #  me.showme = 0;
                         #} elsif(me.pos_y < -(512/1024)*canvasWidth) {
-                        #  me.showme = FALSE;
+                        #  me.showme = 0;
                         #}
 
-                        if(me.showme == TRUE) {
+                        if(me.showme == 1) {
                             me.pipperLine.removeAllChildren();
                             me.bPos = [hdp.VV_x,hdp.VV_y];
                             me.llx  = me.pos_x-me.bPos[0];

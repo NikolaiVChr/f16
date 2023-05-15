@@ -258,6 +258,74 @@ var toggleableField = {
 	},
 };
 
+var toggleableFieldTwo = {
+	new: func(valuesVector, prop) {
+		var tF = {parents: [toggleableFieldTwo,StandardField]};
+		tF.valuesVector = valuesVector;
+		tF.value = "";
+		tF.index = 0;
+		tF.prop = prop;
+		tF.selected = 0;
+		tF.text = "";
+		tF.lastText1 = "";
+		tF.lastText2 = "";
+		tF.recallStatus = 0;
+		tF.listener = nil;
+		tF.skipMe = 0;
+		tF.init();
+		return tF;
+	},
+	init: func() {
+		if (me.listener == nil) {
+			me.listener = setlistener(me.prop, func() {
+				me.updateText();
+			}, 0, 0);
+		}
+
+		for (var i = 0; i < size(me.valuesVector); i = i + 1) {
+			if (getprop(me.prop) == me.valuesVector[i]) {
+				me.value = me.valuesVector[i];
+				me.index = i;
+			}
+		}
+	},
+	append: func(letter) {
+		if (letter != "0") { return; }
+		me.index += 1;
+		if (me.index >= size(me.valuesVector)) {
+			me.index = 0;
+		}
+		setprop(me.prop, me.valuesVector[me.index]);
+	},
+	recall: func() {
+		return;
+	},
+	enter: func() {
+	    # TODO: This should be done via the M-SEL mode select button, but I don't know how to implement that
+	    if (dataEntryDisplay.crusModeSelected != dataEntryDisplay.crusMode) {
+            dataEntryDisplay.crusModeSelected = dataEntryDisplay.crusMode;
+        } else {
+            dataEntryDisplay.crusModeSelected = nil;
+        }
+        return;
+	},
+	getText: func() {
+		if (me.selected) {
+			return "*" ~ me.value ~ "*";
+		} else {
+			return " " ~ me.value ~ " ";
+		}
+	},
+	updateText: func() {
+		for (var i = 0; i < size(me.valuesVector); i = i + 1) {
+			if (getprop(me.prop) == me.valuesVector[i]) {
+				me.value = me.valuesVector[i];
+				me.index = i;
+			}
+		}
+	},
+};
+
 var EditableFieldPage = {
 	new: func(number, vector = nil) {
 		var efp = {parents: [EditableFieldPage]};
@@ -885,6 +953,181 @@ var EditableLON = {
 	},
 };
 
+var EditableTime = {
+	new: func(prop, convert) {
+		var editableField = {parents: [EditableTime]};
+		editableField.convert = convert;# convert from value to prop
+		editableField.value   = [nil,nil,nil,nil,nil,nil];# list of letter/digits
+		editableField.entervalue   = getprop(prop);# convert from value to prop
+		editableField.prop = prop;      # prop set when press enter
+		editableField.index = 0;        # which decimal/letter is being edited
+		editableField.selected = 0;     # If the DED cursor is on this field
+		editableField.listener = nil;   # listen to the prop
+		editableField.maxDigits = 6;
+		editableField.editing = 0;
+		editableField.skipMe = 0;
+		editableField.init();
+		return editableField;
+	},
+	init: func() {
+		if (me.listener == nil) {
+			me.listener = setlistener(me.prop, func() {
+				me.entervalue   = getprop(me.prop);
+				me.value   = [nil,nil,nil,nil,nil,nil];
+				me.editing = 0;
+				me.index = 0;
+			}, 0, 0);
+		}
+	},
+	append: func(letter) {
+	    #max should be 23:59:59
+		me.editing = 1;
+		#print("append "~letter);
+		if (me.index == 0 and letter != "0" and letter != "1" and letter != "2") {
+		    # For ease of use, let's assume that the user forgot to enter a leading 0.
+		    me.value[me.index] = 0;
+		    me.index += 1;
+		};
+		if (me.index == 1) {
+		    if (me.value[0] == 2 and letter != "0" and letter != "1" and letter != "2" and letter != "3") return;
+		}
+		if ((me.index == 2 or me.index == 4) and (letter == "6" or letter == "7" or letter == "8" or letter == "9")) return;
+		#if (me.index == 4 and (letter == "6" or letter == "7" or letter == "8" or letter == "9")) return;
+		#if (me.index == 2 and letter == "9" and me.value[1] == "1") return;
+
+		me.value[me.index] = num(letter);
+		me.index += 1;
+		if (me.index >= me.maxDigits) {
+			me.index = 0;
+		}
+	},
+	reset: func {
+		#stop editing and reset to before editing started
+		me.entervalue = getprop(me.prop);
+		me.value   = [nil,nil,nil,nil,nil,nil];
+		me.editing = 0;
+		me.index = 0;
+	},
+	recall: func() {
+		#delete last entry
+		if (!me.editing) return;
+		if (me.index <= 0) {
+		    if (me.index == 0 and me.value[me.index] == nil) {
+		        # Reset if we're at the start and deleting
+		        me.reset();
+		        return
+            } else {
+                # We're at the start but not deleting, so let's skip to the end
+                me.index = me.maxDigits;
+            }
+		}
+		me.index -= 1;
+		me.value[me.index] = nil;
+	},
+	enter: func() {
+		if (me.editing == 0) return;
+		me.entervalue = me.valueToSecs();
+		me.editing = 0;
+		if (me.entervalue != nil) {
+			setprop(me.prop, me.entervalue);
+		} else {
+			me.entervalue = getprop(me.prop);
+		}
+	},
+	valueToSecs: func {
+		var hours = 0;
+		var minutes = 0;
+		var seconds = 0;
+		if (me.value[0] != nil) {
+		    hours += me.value[0] * 10;
+		}
+		if (me.value[1] != nil) {
+		    hours += me.value[1];
+		}
+		if (me.value[2] != nil) {
+		    minutes += me.value[2] * 10;
+		}
+		if (me.value[3] != nil) {
+		    minutes += me.value[3];
+		}
+		if (me.value[4] != nil) {
+		    seconds += me.value[4] * 10;
+		}
+		if (me.value[5] != nil) {
+		    seconds += me.value[5];
+		}
+		if (hours < 24 and minutes < 60 and seconds < 60) {
+		    return (((hours * 60) + minutes) * 60) + seconds;
+		} else {
+		    return nil;
+		}
+	},
+	getEditText: func {
+		var txt = "";
+		if (me.value[0] != nil) {
+			txt ~= me.value[0]
+		} else {
+			txt ~= " ";
+		}
+		if (me.value[1] != nil) {
+			txt ~= me.value[1];
+		} else {
+			txt ~= " ";
+		}
+		txt ~= ":";
+		if (me.value[2] != nil) {
+			txt ~= me.value[2];
+		} else {
+			txt ~= " ";
+		}
+		if (me.value[3] != nil) {
+			txt ~= me.value[3];
+		} else {
+			txt ~= " ";
+		}
+		txt ~= ":";
+		if (me.value[4] != nil) {
+			txt ~= me.value[4];
+		} else {
+			txt ~= " ";
+		}
+		if (me.value[5] != nil) {
+			txt ~= me.value[5];
+		} else {
+			txt ~= " ";
+		}
+		return txt;
+	},
+	getText: func() {
+		if (me.selected) {
+			if (!me.editing) {
+				return "*"~me.convert(getprop(me.prop))~"*";
+			} else {
+				return utf8.chstr(0xFB75)~me.getEditText()~utf8.chstr(0xFB75);
+			}
+		} else {
+			return " "~me.convert(getprop(me.prop))~" ";
+		}
+	},
+};
+
+var convertSecondsToStringTime = func (value) {
+    if (value == nil) return "--:--:--";
+    var v = split("",sprintf("%.6d", value));
+    var hour = 0;
+
+    var txt = "";
+    txt ~= v[0];
+    txt ~= v[1];
+    txt ~= ":";
+    txt ~= v[2];
+    txt ~= v[3];
+    txt ~= ":";
+    txt ~= v[4];
+    txt ~= v[5];
+    return txt;
+}
+
 var checkValueTransponderCode = func(text) {
 	text = sprintf("%04d",text);
 	var codeDigits = split("", text);
@@ -1065,4 +1308,75 @@ var stringToLat = func (str) {
   } else {
     return nil;
   }
+}
+
+var backgroundChar = func (letter) {
+    var ch = nil;
+    if (letter == "A") {
+        ch = 0xFB5A;
+    } elsif (letter == "B") {
+        ch = 0xFB5B;
+    } elsif (letter == "C") {
+        ch = 0xFB5C;
+    } elsif (letter == "D") {
+        ch = 0xFB5D;
+    } elsif (letter == "E") {
+        ch = 0xFB5E;
+    } elsif (letter == "F") {
+        ch = 0xFB5F;
+    } elsif (letter == "G") {
+        ch = 0xFB60;
+    } elsif (letter == "H") {
+        ch = 0xFB61;
+    } elsif (letter == "I") {
+        ch = 0xFB62;
+    } elsif (letter == "J") {
+        ch = 0xFB63;
+    } elsif (letter == "K") {
+        ch = 0xFB64;
+    } elsif (letter == "L") {
+        ch = 0xFB65;
+    } elsif (letter == "M") {
+        ch = 0xFB66;
+    } elsif (letter == "N") {
+        ch = 0xFB67;
+    } elsif (letter == "O") {
+        ch = 0xFB68;
+    } elsif (letter == "P") {
+        ch = 0xFB69;
+    } elsif (letter == "Q") {
+        ch = 0xFB6A;
+    } elsif (letter == "R") {
+        ch = 0xFB6B;
+    } elsif (letter == "S") {
+        ch = 0xFB6C;
+    } elsif (letter == "T") {
+        ch = 0xFB6D;
+    } elsif (letter == "U") {
+        ch = 0xFB6E;
+    } elsif (letter == "V") {
+        ch = 0xFB6F;
+    } elsif (letter == "W") {
+        ch = 0xFB70;
+    } elsif (letter == "X") {
+        ch = 0xFB71;
+    } elsif (letter == "Y") {
+        ch = 0xFB72;
+    } elsif (letter == "Z") {
+        ch = 0xFB73;
+    } elsif (letter == "*") {
+        ch = 0xFB75;
+    } else {
+        ch = 0xFB74; # Blank
+    }
+    return utf8.chstr(ch);
+}
+
+var backgroundText = func (str) {
+    var vec = split("", str);
+    var final = "";
+    foreach (var letter; vec) {
+        final ~= backgroundChar(letter);
+    }
+    return final;
 }
