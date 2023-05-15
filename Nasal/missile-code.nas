@@ -252,7 +252,7 @@ var AIM = {
         if (m.SwSoundVol.getValue() == nil) {
         	m.SwSoundVol.setDoubleValue(0);
         }
-        m.tacview_support       = getprop("payload/armament/tacview");# set to false, unless using an aircraft that has tacview
+        m.tacview_support       = getprop("payload/d-config/tacview_supported");# set to false, unless using an aircraft that has tacview
         m.gnd_launch            = getprop("payload/armament/gnd-launch");#true to be a SAM or ship
         if (m.gnd_launch == nil) {
         	m.gnd_launch = 0;
