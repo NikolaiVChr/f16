@@ -549,7 +549,7 @@ var dataEntryDisplay = {
         }
 
 
-        me.text[0] = sprintf("      CRUS  %s      %s ", tempCrusMode, tempNo);
+        me.text[0] = sprintf("      CRUS %s     %s ", tempCrusMode, tempNo);
 		# me.text[0] = sprintf("     CRUS  RNG  ",me.no);
 		if (crusMode == "TOS") {
 		    var time = getprop("/sim/time/gmt-string");
