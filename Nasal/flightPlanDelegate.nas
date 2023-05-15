@@ -246,7 +246,7 @@ var F16GPSDeleagte = {
 
     sequence: func
     {
-        if (!me.flightplan.active)
+        if (!me.flightplan.active or !steerpoints.autoMode)
             return;
 
         var mode = me._modeProp.getValue();

@@ -31,6 +31,8 @@ var colorRed = 0;
 var colorYellow = 1;
 var colorGreen = 2;
 
+var autoMode = 1;# if change this then also change f16/ded/stpt-auto
+
 var STPT = {
 	# stored in the above vectors for non-route steerpoints
 	lon: 0,
