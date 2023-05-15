@@ -41,7 +41,6 @@ var STPT = {
 	type: "   ",
 	radius: 10,
 	color: colorYellow,
-	desiredTOS: nil,
 	
 	new: func {
 		var n = {parents: [STPT]};
@@ -56,7 +55,6 @@ var STPT = {
 		cp.type = me.type;
 		cp.radius = me.radius;
 		cp.color = me.color;
-		me.desiredTOS = me.desiredTOS;
 		return cp;
 	},
 };
@@ -373,20 +371,24 @@ var getNumberETA = func (number) {
 }
 
 var setNumberDesiredTOS = func (number, tos) {
-    if (getCurrentNumber() < 300) {
-        desired_tos[number] = tos;
-    } else {
-        getNumber(number).desiredTOS = tos;
+    if (tos == -1) {
+        tos = nil;
     }
+    desired_tos[number] = tos;
+    return;
 }
 
 var _getNumberDesiredTOS = func (number) {
     if (getCurrentNumber() == 0) return nil;
-    if (number < 300) {
-        return desired_tos[number];
-    } else {
-        return getNumber(number).desiredTOS;
+    return desired_tos[number];
+}
+
+var serializeTOS = func (number) {
+    var result = _getNumberDesiredTOS(number);
+    if (result == nil) {
+        result = -1;
     }
+    return result;
 }
 
 var getNumberDesiredTOS = func (number) {
@@ -443,7 +445,7 @@ var _getTOS = func (eta, absolute = 0) {
 	var TOS = "--:--:--";
 	if (getCurrentNumber() == 0) return TOS;
 
-	if (eta == nil or eta>3600*24) {
+	if (eta == nil or eta>3600*24 or eta == -1) {
 		return TOS;
 	} else {
 	    if (!absolute) {
@@ -782,14 +784,14 @@ var serialize = func() {
 		var plan = flightplan();
 		for (var s = 0; s < plan.getPlanSize(); s+=1) {
 			var key = plan.getWP(s);
-		  	ret = ret~sprintf("PLAN,%d,%.6f,%.6f,%d|",s+0,key.lat,key.lon,(key.alt_cstr_type!=nil and key.alt_cstr != nil)?key.alt_cstr:EMPTY_ALT);
+		  	ret = ret~sprintf("PLAN,%d,%.6f,%.6f,%d,%d|",s+0,key.lat,key.lon,(key.alt_cstr_type!=nil and key.alt_cstr != nil)?key.alt_cstr:EMPTY_ALT,serializeTOS(s+1));
 	  	}
 	}
   foreach(key;stpt300) {
   	if (key == nil) {
 		ret = ret~sprintf("STPT,%d,nil|",iter+300);
   	} else {
-    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s|",iter+300,key.lat,key.lon,key.alt,key.radius,key.color,key.type);
+    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s,%d|",iter+300,key.lat,key.lon,key.alt,key.radius,key.color,key.type,serializeTOS(iter+300));
     }
     iter += 1;
   }
@@ -798,7 +800,7 @@ var serialize = func() {
   	if (key == nil) {
   		ret = ret~sprintf("STPT,%d,nil|",iter+350);
   	} else {
-    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s|",iter+350,key.lat,key.lon,key.alt,key.radius,key.color,key.type);
+    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s,%d|",iter+350,key.lat,key.lon,key.alt,key.radius,key.color,key.type,serializeTOS(iter+350));
     }
     iter += 1;
   }
@@ -807,7 +809,7 @@ var serialize = func() {
   	if (key == nil) {
   		ret = ret~sprintf("STPT,%d,nil|",iter+400);
   	} else {
-    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s|",iter+400,key.lat,key.lon,key.alt,key.radius,key.color,key.type);
+    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s,%d|",iter+400,key.lat,key.lon,key.alt,key.radius,key.color,key.type,serializeTOS(iter+400));
     }
     iter += 1;
   }
@@ -816,7 +818,7 @@ var serialize = func() {
   	if (key == nil) {
   		ret = ret~sprintf("STPT,%d,nil|",iter+450);
   	} else {
-    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s|",iter+450,key.lat,key.lon,key.alt,key.radius,key.color,key.type);
+    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s,%d|",iter+450,key.lat,key.lon,key.alt,key.radius,key.color,key.type,serializeTOS(iter+450));
     }
     iter += 1;
   }
@@ -825,7 +827,7 @@ var serialize = func() {
   	if (key == nil) {
   		ret = ret~sprintf("STPT,%d,nil|",iter+500);
   	} else {
-    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s|",iter+500,key.lat,key.lon,key.alt,key.radius,key.color,key.type);
+    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s,%d|",iter+500,key.lat,key.lon,key.alt,key.radius,key.color,key.type,serializeTOS(iter+500));
     }
     iter += 1;
   }
@@ -834,7 +836,7 @@ var serialize = func() {
   	if (key == nil) {
   		ret = ret~sprintf("STPT,%d,nil|",iter+555);
   	} else {
-    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s|",iter+555,key.lat,key.lon,key.alt,key.radius,key.color,key.type);
+    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s,%d|",iter+555,key.lat,key.lon,key.alt,key.radius,key.color,key.type,serializeTOS(iter+555));
     }
     iter += 1;
   }
@@ -880,6 +882,9 @@ var unserialize = func(m) {
 			var leg = plan.getWP(plan.getPlanSize()-1);
 			leg.setAltitude(num(items[4]), "at");
 		}
+		if (size(items) > 5) { # TOS is supported
+            setNumberDesiredTOS(number+1, num(items[5]));
+        }
       } elsif (key == "LINE") {
       	var number = num(items[1]);
       	var no = number >= 200;
@@ -919,6 +924,9 @@ var unserialize = func(m) {
       	} elsif (number >= 300) {
       		stpt300[number-300] = newST;
       	}
+      	if (size(items) > 8) { # TOS is supported
+            setNumberDesiredTOS(number, num(items[8]));
+        }
 
       } elsif (key == "IFF") {
       	setprop("instrumentation/iff/channel-selection", num(items[1]));

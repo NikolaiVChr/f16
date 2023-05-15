@@ -557,8 +557,12 @@ var dataEntryDisplay = {
 		    var time = getprop("/sim/time/gmt-string");
 		    var cur_wp = steerpoints.getCurrent();
 		    var cur_des = steerpoints._getCurrentDesiredTOS();
-		    if (cur_des != nil and des_tos_last != cur_des) {
-                setprop("f16/ded/crus-des-tos", cur_des);
+		    if (des_tos_last != cur_des) {
+		        if (cur_des != nil) {
+		            setprop("f16/ded/crus-des-tos", cur_des);
+		        } else {
+		            setprop("f16/ded/crus-des-tos", -1);
+		        }
             } else {
                 steerpoints.setCurrentDesiredTOS(getprop("f16/ded/crus-des-tos"));
             }
@@ -586,10 +590,10 @@ var dataEntryDisplay = {
             me.text[3] = sprintf("       ETA  %s", ETA);
             me.text[4] = sprintf("   REQ G/S   %s", req_gs);
 
-            if (cur_des != nil) {
+            if (cur_wp != nil) {
                 des_tos_last = cur_des;
             } else {
-                des_tos_last = 0;
+                des_tos_last = nil;
             }
 
 		} elsif (crusMode == "RNG") {
