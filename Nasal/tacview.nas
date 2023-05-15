@@ -37,7 +37,7 @@ var get_primary_contact = func {
 
 # Radar range. May return nil if n/a
 var get_radar_range_nm = func {
-    return getprop("instrumentation/radar/radar2-range");
+    return radar_system.apg68Radar.getRange();
 }
 
 ### End of parameters
