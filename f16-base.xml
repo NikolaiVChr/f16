@@ -1380,6 +1380,7 @@
                 <avionics type="bool">false</avionics>
                 <elec-reset-btn type="bool">false</elec-reset-btn>
                 <probe-heat type="bool">false</probe-heat>
+                <engine-fault type="bool">false</engine-fault>
             </caution>
             <bingo type="int">0</bingo><!-- 0: No warn 1: warn 2: warn reset -->
             <fault-warning type="int">0</fault-warning><!-- 0: No warn 1: warn 2: warn reset -->
