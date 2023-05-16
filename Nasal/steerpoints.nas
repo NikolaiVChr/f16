@@ -594,6 +594,7 @@ var markOFLY = func {
 	mark.lat = getprop("/position/latitude-deg");
 	mark.lon = getprop("/position/longitude-deg");
 	mark.alt = getprop("/position/altitude-ft");
+	mark.type = "OFLY";
 	addOwnMark(mark);
 }
 
@@ -603,6 +604,17 @@ var markTGP = func (coord) {
 	mark.lat = coord.lat();
 	mark.lon = coord.lon();
 	mark.alt = coord.alt()*M2FT;
+	mark.type = "TGP";
+	return addOwnMark(mark);
+}
+
+var markHUD = func (coord) {
+	# Create a HUD markpoint
+	var mark = STPT.new();
+	mark.lat = coord.lat();
+	mark.lon = coord.lon();
+	mark.alt = coord.alt()*M2FT;
+	mark.type = "HUD";
 	return addOwnMark(mark);
 }
 

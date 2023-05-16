@@ -679,9 +679,8 @@ var dataEntryDisplay = {
 	# the Mark page is supposed to be for creating steerpoints 26 --> 30. Until we have a list of 30 steerpoints,
 	# we will make this show current position since that is what it does anyway
 	markMode: "OFLY",
-	markModeSelected: 1,
+	markModeSelected: 0,
 	updateMark: func() {
-		me.markMode = "OFLY";
 		me.markNo = 0;
 		if (me.page != me.pageLast) {
 			# we just entered this page, lets store this mark
@@ -693,10 +692,18 @@ var dataEntryDisplay = {
 		}
 
 		wp_num_curr = me.markNo;
-
-		lat = convertDegreeToStringLat(me.mark.lat);
-		lon = convertDegreeToStringLon(me.mark.lon);
-		alt = me.mark.alt;
+		if (me.mark != nil) {
+			me.markMode = (!size(me.mark.type) or me.mark.type == "   ")?"OFLY":me.mark.type;
+			lat = convertDegreeToStringLat(me.mark.lat);
+			lon = convertDegreeToStringLon(me.mark.lon);
+			alt = me.mark.alt;
+		} else {
+			me.markMode = "NULL";
+			lat = "-";
+			lon = "-";
+			alt = 0;
+		}
+		
 		if (me.markModeSelected) {
 			me.text[0] = sprintf("         MARK *%s*   %s",me.markMode,me.no);
 		} else {
@@ -1461,16 +1468,16 @@ setlistener("f16/avionics/rtn-seq", func() {
 			#}
 		}
 
-		if (dataEntryDisplay.page == pMARK and dataEntryDisplay.markModeSelected) {
-			if (dataEntryDisplay.markMode == "OFLY") {
-				dataEntryDisplay.markMode = "FCR";
-			} elsif (dataEntryDisplay.markMode == "FCR") {
-				dataEntryDisplay.markMode = "HUD";
-			} else {
-				dataEntryDisplay.markMode = "OFLY";
-			}
-			return;
-		}
+		#if (dataEntryDisplay.page == pMARK and dataEntryDisplay.markModeSelected) {
+		#	if (dataEntryDisplay.markMode == "OFLY") {
+		#		dataEntryDisplay.markMode = "FCR";
+		#	} elsif (dataEntryDisplay.markMode == "FCR") {
+		#		dataEntryDisplay.markMode = "HUD";
+		#	} else {
+		#		dataEntryDisplay.markMode = "OFLY";
+		#	}
+		#	return;
+		#}
 
 		if (dataEntryDisplay.page == pFIX and dataEntryDisplay.fixTakingModeSelected) {
 			if (dataEntryDisplay.fixTakingMode == "OFLY") {
