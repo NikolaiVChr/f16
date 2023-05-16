@@ -233,6 +233,9 @@ var init = func {
     
     var hud = compat_failure_modes.set_unserviceable("instrumentation/hud");
     FailureMgr.add_failure_mode("instrumentation/hud", "HUD", hud);
+
+    var ap = compat_failure_modes.set_unserviceable("autopilot");
+    FailureMgr.add_failure_mode("autopilot", "Autopilot", ap);
     
     # stations
 
@@ -390,7 +393,7 @@ var fail_list = [
        [3," CADC BUS  FAIL ", "systems/vacuum/serviceable", 1, 0],
        [0,">FLCS LEF  LOCK<", "f16/fcs/le-flaps-switch", 1, 0],
        [0,">FLCS BIT  FAIL<", "!f16/fcs/bit-fail", 1, 0],
-#      [1," FLCS A/P  FAIL ", "???", 1, 0]  if created, contributes to A/P inhibit
+       [1," FLCS A/P  FAIL ", "autopilot/serviceable", 1, 0], # contributes to A/P inhibit
        [3," SMS  STA3 FAIL ", "payload/sta[2]/serviceable", 1, 0],
        [3," SMS  STA4 FAIL ", "payload/sta[3]/serviceable", 1, 0],
        [3," SMS  STA6 FAIL ", "payload/sta[5]/serviceable", 1, 0],
