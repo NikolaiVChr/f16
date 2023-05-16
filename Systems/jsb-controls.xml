@@ -1213,11 +1213,12 @@
             <description>
                 On old diagram looks to be 25, not 2.5
                 The reason is, if is was 2.5 its usually written as "2. 5" with a space
-                before 5. BUT at high speed there is oscillations with 25, so keeping it 2.5
+                before 5. BUT at high speed there is oscillations with 25.
+                Set to 5
                 DNU
             </description>
             <input> fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lead-lagged </input>
-            <c1> 2.5 </c1>
+            <c1>  5 </c1>
             <c2> 20 </c2>
             <c3> 3500 </c3>
             <c4> 1 </c4>
@@ -3007,7 +3008,12 @@
         </aerosurface_scale>
 
         <fcs_function name="fcs/fly-by-wire/lef/lef-pos-r-norm">
-            <description>Inversed normalized LEF. Used in aero.</description>
+            <description>
+                Inversed normalized LEF. Should be used in aero,
+                but for at least CZ its an error in TP-1537 to use it.
+                For CX its correct though, did not check other axes,
+                they might be wrong or might be right.
+            </description>
             <function>
                 <difference>
                     <v>1</v>
