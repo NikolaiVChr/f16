@@ -10,6 +10,7 @@
             <disable-route-manager type="bool">true</disable-route-manager><!-- we use our own delagate -->
             <disable-fms type="bool">true</disable-fms><!-- we use our own delagate -->
         </route-manager>
+        <serviceable type="bool">true</serviceable>
     </autopilot>
     <sim>
         <aircraft-version>3.72</aircraft-version>

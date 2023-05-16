@@ -184,6 +184,7 @@ var autopilot_inhibit = {
         setlistener("/controls/gear/gear-down", me.evaluate, 0, 0);
         setlistener("/fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains", me.evaluate, 0, 0);
         setlistener("/f16/fcs/trim-ap-disc-switch", me.evaluate, 0, 0);
+        setlistener("/autopilot/serviceable", me.evaluate, 0, 0);
         if (getprop("/sim/variant-id") >= 4) {
             # TODO: A/P FAIL PFL occurs
             setlistener("/f16/fcs/autopilot-aoa-limit-exceed", me.evaluate, 0, 0);
@@ -202,7 +203,7 @@ var autopilot_inhibit = {
             getprop("/controls/gear/gear-down") or
             getprop("/fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains") or
             getprop("/f16/fcs/trim-ap-disc-switch") or
-            getprop("autopilot/serviceable") or # this makes also A/P FAIL PFL occur
+            !getprop("autopilot/serviceable") or # this makes also A/P FAIL PFL occur
             (
             getprop("/sim/variant-id") >= 4 and
             (            
