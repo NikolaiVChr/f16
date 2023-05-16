@@ -210,13 +210,13 @@
             <binding>
                 <command>property-assign</command>
                 <property>instrumentation/comm[0]/ptt</property>
-                <value type="bool">true</value>
+                <value type="int">1</value>
             </binding>
             <mod-up>
                 <binding>
                     <command>property-assign</command>
                     <property>instrumentation/comm[0]/ptt</property>
-                    <value type="bool">false</value>
+                    <value type="int">0</value>
                 </binding>
             </mod-up>
         </key>
@@ -226,13 +226,13 @@
             <binding>
                 <command>property-assign</command>
                 <property>instrumentation/comm[1]/ptt</property>
-                <value type="bool">true</value>
+                <value type="int">1</value>
             </binding>
             <mod-up>
                 <binding>
                     <command>property-assign</command>
                     <property>instrumentation/comm[1]/ptt</property>
-                    <value type="bool">false</value>
+                    <value type="int">0</value>
                 </binding>
             </mod-up>
         </key>
