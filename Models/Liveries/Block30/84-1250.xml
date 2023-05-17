@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery>
+    <name type="string">50TFW, 10TFS HR "Wing Flagship"</name>
+    <texture>Liveries/Block30/84-1250.png</texture>
+    <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Two-tone gray, Flagship</scheme>
+    <block type="int">32</block>
+    <serial type="string">84-1250</serial>
+    <squad type="string">10th TFS "Fighting Tenth"</squad>
+    <year type="string">1991</year>
+   </livery>
+   
+   <livery-logo>
+    <texture>Liveries/standard.logos.color2.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/patch.default.png</texture>
+   </livery-patch>
+
+  <livery-pod>
+        <texture>Armament/External-stores/MXU-648.png</texture>
+  </livery-pod>
+
+        <f16>
+            <dragchute type="bool">false</dragchute>
+            <link16 type="bool">false</link16>
+            <cft type="bool">false</cft>
+        </f16>
+        <livery-specular type="double">0.15</livery-specular>
+  </model>
+ </sim>
+</PropertyList>
