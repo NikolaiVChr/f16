@@ -1306,7 +1306,7 @@ append(obj.total, obj.speed_curr);
         # set the update list - using the update manager to improve the performance
         # of the HUD update - without this there was a drop of 20fps (when running at 60fps)
         obj.update_items = [
-            props.UpdateManager.FromHashList(["hud_serviceable", "hud_display", "hud_sym", "hud_power", "hud_daytime", "red"], 0.1, func(hdp)#changed to 0.1, this function is VERY heavy to run.
+            props.UpdateManager.FromHashList(["hud_serviceable", "hud_display", "hud_sym", "hud_power", "hud_daytime", "red"], 0.05, func(hdp)#changed to 0.1, this function is VERY heavy to run.
                                       {
 # print("HUD hud_serviceable=", hdp.getproper("hud_serviceable," display=", hdp.getproper("hud_display, " brt=", hdp.getproper("hud_sym, " power=", hdp.getproper("hud_power);
 
@@ -1324,7 +1324,8 @@ append(obj.total, obj.speed_curr);
                                             # Ref: GR1F-16CJ-34-1-1 page 1-158, adjusted up slightly
                                             var night_ratio = 0.75;
                                             if (hdp.hud_daytime == 0) { # Auto
-                                                brt *= (night_ratio + (hdp.red * (1 - night_ratio)));
+                                                obj.daylight_red = math.min(1, obj.extrapolate(hdp.red, 0, 0.85, 0, 1));# treat 0.85 as full day light, so it dont have to june and noon at equator to get full brightness
+                                                brt *= (night_ratio + (obj.daylight_red * (1 - night_ratio)));
                                             } elsif (hdp.hud_daytime == -1) { # Night
                                                 brt *= night_ratio;
                                             }

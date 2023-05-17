@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 
 <PropertyList>
- <sim> 
+ <sim>
   <model>
    <livery>
-    <name type="string">8FW, 80FS WP HGV #468</name>
-    <texture>Liveries/Block40/88-0468.png</texture>
+    <name type="string">20FW, 79FS SW "Unit Flagship"</name>
+    <texture>Liveries/Block50/91-0379.png</texture>
     <owner type="string">USAF</owner>
     <pilot type="string"></pilot>
-    <scheme type="string">Have Glass V</scheme>
-    <block type="int">40</block>
-    <serial type="string">88-0468</serial>
-    <squad type="string">80th FS "Juvats"</squad>
-    <year type="string">2021</year>
+    <scheme type="string">Have Glass V, Flagship</scheme>
+    <block type="int">50</block>
+    <serial type="string">91-0379</serial>
+    <squad type="string">79th FS "Flying Tigers"</squad>
+    <year type="string">2022</year>
    </livery>
    
    <livery-logo>
@@ -20,16 +20,15 @@
    </livery-logo>
 
    <livery-patch>
-      <texture>Liveries/Block40/patch.8thFW.png</texture>
+      <texture>Liveries/Block50/patch.tigers.png</texture>
   </livery-patch>
 
   <livery-pod>
-        <texture>Liveries/External-stores/MXU-648.png</texture>
+        <texture>Armament/External-stores/MXU-648.png</texture>
   </livery-pod>
 
   <f16>
     <dragchute type="bool">false</dragchute>
-    <link16 type="bool">false</link16>
     <cft type="bool">false</cft>
   </f16>
   <livery-specular type="double">0.35</livery-specular>
