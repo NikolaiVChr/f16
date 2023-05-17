@@ -110,8 +110,7 @@ var F16_HMD = {
                 .lineTo(0,1024)
                 .setStrokeLineWidth(stroke1)
                 .setColor(0,0,1)
-                .hide()
-                ;
+                .hide();
         obj.mainCircle = obj.svg.createChild("path")
             .moveTo(12,512)
             .arcSmallCW(500,500, 0, 500*2, 0)
@@ -460,6 +459,19 @@ var F16_HMD = {
             append(obj.tgt_symbols, obj.tgt);
             append(obj.total, obj.tgt);
         }
+        obj.mark_symbols = [];
+        for(var u = 0; u<steerpoints.number_of_markpoints_own + steerpoints.number_of_markpoints_dlnk;u+=1) {
+            obj.tgt = obj.centerOrigin.createChild("path")
+                .moveTo(-boxRadius*0.4,-boxRadius*0.4)
+                .lineTo( boxRadius*0.4, boxRadius*0.4)
+                .moveTo( boxRadius*0.4,-boxRadius*0.4)
+                .lineTo(-boxRadius*0.4, boxRadius*0.4)
+                .setStrokeLineWidth(stroke1)
+                .hide()
+                .setColor(0,1,0);
+            append(obj.mark_symbols, obj.tgt);
+            append(obj.total, obj.tgt);
+        }
         obj.steerPT = obj.centerOrigin.createChild("path")
                 .moveTo(-boxRadius*0.3, 0)
                 .lineTo(0, boxRadiusHalf*0.85)
@@ -721,6 +733,12 @@ var F16_HMD = {
                                                  } else {
                                                      obj.steerPT.hide();
                                                  }
+                                                 for (var t = 400; t < steerpoints.number_of_markpoints_own+400; t+=1) {
+                                                    obj.paintMark(steerpoints.getNumber(t),t-400, hdp);
+                                                 }
+                                                 for (var t = 450; t < steerpoints.number_of_markpoints_own+450; t+=1) {
+                                                    obj.paintMark(steerpoints.getNumber(t),t-450+5, hdp);
+                                                 }
                                              }
                                             ,
             #props.UpdateManager.FromHashList(["hmdH","hmdP"], 0.1,
@@ -804,6 +822,26 @@ var F16_HMD = {
         obj.NzMax = 1.0;
 
         return obj;
+    },
+
+    paintMark: func (stpt, number, hdp) {
+        if (stpt != nil) {
+            me.stptPos = f16.HudMath.getDevFromCoord(steerpoints.stpt2coord(stpt), hdp.getproper("hmdH"), hdp.getproper("hmdP"), hdp, geo.viewer_position());
+            me.stptPos[0] = geo.normdeg180(me.stptPos[0]);
+            me.stptPos[0] = (512/center_to_edge_distance_m)*(math.tan(math.clamp(me.stptPos[0],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
+            me.stptPos[1] = -(512/center_to_edge_distance_m)*(math.tan(math.clamp(me.stptPos[1],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
+
+            me.clamped = math.sqrt(me.stptPos[0]*me.stptPos[0]+me.stptPos[1]*me.stptPos[1]) > 500;
+
+            if (!me.clamped) {
+                me.mark_symbols[number].setTranslation(me.stptPos);
+                me.mark_symbols[number].show();
+            } else {
+                me.mark_symbols[number].hide();
+            }
+         } else {
+             me.mark_symbols[number].hide();
+         }
     },
 
     #######################################################################################################
@@ -1656,6 +1694,8 @@ var mark = func {
                 steerpoints.markHUD(terrain);
                 ded.dataEntryDisplay.pageLast = ded.pMARK;# So it does not do a OFLY mark.
                 ded.dataEntryDisplay.page     = ded.pMARK;
+                #var crater_model = getprop("payload/armament/models") ~ "the-flare.xml";#
+                #var static = geo.put_model(crater_model, terrain.lat(),terrain.lon(),terrain.alt(), 0);#
                 #print("mark voila");
                 #armament.contactPoint = radar_system.ContactTGP.new("TGP-Spot",terrain,1);
             }
