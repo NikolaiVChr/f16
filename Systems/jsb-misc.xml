@@ -421,6 +421,11 @@
             </test>
         </switch>
 
+        <pure_gain name="velocities/psidot-deg_sec">
+            <input>velocities/psidot-rad_sec</input>
+            <gain> 57.29578 </gain>
+        </pure_gain>
+
     </channel>
 
 

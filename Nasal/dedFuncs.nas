@@ -258,9 +258,9 @@ var toggleableField = {
 	},
 };
 
-var toggleableFieldTwo = {
-	new: func(valuesVector, prop) {
-		var tF = {parents: [toggleableFieldTwo,StandardField]};
+var toggleableMode = {
+	new: func(valuesVector, prop, prop2) {
+		var tF = {parents: [toggleableMode,StandardField]};
 		tF.valuesVector = valuesVector;
 		tF.value = "";
 		tF.index = 0;
@@ -272,7 +272,9 @@ var toggleableFieldTwo = {
 		tF.recallStatus = 0;
 		tF.listener = nil;
 		tF.skipMe = 0;
+		tF.prop2 = prop2;
 		tF.init();
+		setprop(tF.prop, tF.valuesVector[tF.index]);
 		return tF;
 	},
 	init: func() {
@@ -291,7 +293,14 @@ var toggleableFieldTwo = {
 	},
 	append: func(letter) {
 		if (letter != "0") { return; }
-		me.index += 1;
+		if (getprop(me.prop2) != getprop(me.prop)) {
+            setprop(me.prop2, getprop(me.prop));
+        } else {
+            setprop(me.prop2, 0); # I'd rather nil but 0 works
+        }
+	},
+	sequence: func() {
+	    me.index += 1;
 		if (me.index >= size(me.valuesVector)) {
 			me.index = 0;
 		}
@@ -301,13 +310,7 @@ var toggleableFieldTwo = {
 		return;
 	},
 	enter: func() {
-	    # TODO: This should be done via the M-SEL mode select button, but I don't know how to implement that
-	    if (dataEntryDisplay.crusModeSelected != dataEntryDisplay.crusMode) {
-            dataEntryDisplay.crusModeSelected = dataEntryDisplay.crusMode;
-        } else {
-            dataEntryDisplay.crusModeSelected = nil;
-        }
-        return;
+	    return;
 	},
 	getText: func() {
 		if (me.selected) {

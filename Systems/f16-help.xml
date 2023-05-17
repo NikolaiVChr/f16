@@ -157,6 +157,14 @@
                 <name>Ctrl-4</name>
                 <desc>IFF interrogation</desc>
             </key>
+            <key>
+                <name>Home</name>
+                <desc>Push to talk COMM #1 (UHF)</desc>
+            </key>
+            <key>
+                <name>End</name>
+                <desc>Push to talk COMM #2 (VHF)</desc>
+            </key>
             <text>
 This help is old, new manual here:
 https://github.com/NikolaiVChr/f16/wiki

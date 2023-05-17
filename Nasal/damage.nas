@@ -242,6 +242,10 @@ for(var myid = 0;myid<size(k);myid+=1) {
   }
 }
 
+var crater_model0 = getprop("payload/armament/models") ~ "crater_small.xml";
+var crater_model1 = getprop("payload/armament/models") ~ "crater_big.xml";
+var crater_model2 = getprop("payload/armament/models") ~ "bomb_hit_smoke.xml";
+
 #==================================================================
 #                       Notification processing
 #==================================================================
@@ -564,21 +568,18 @@ var DamageRecipient =
                 }
                 if (notification.Kind == CREATE and getprop("payload/armament/enable-craters") == 1 and statics["obj_"~notification.UniqueIdentity] == nil) {
                     if (notification.SecondaryKind == 0) {# TODO: make a hash with all the models
-                        var crater_model = getprop("payload/armament/models") ~ "crater_small.xml";
-                        var static = geo.put_model(crater_model, notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.Heading);
+                        var static = geo.put_model(crater_model0, notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.Heading);
                         if (static != nil) {
                             statics["obj_"~notification.UniqueIdentity] = [static, notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.Heading, notification.SecondaryKind];
                             #static is a PropertyNode inside /models
                         }
                     } elsif (notification.SecondaryKind == 1) {
-                        var crater_model = getprop("payload/armament/models") ~ "crater_big.xml";
-                        var static = geo.put_model(crater_model, notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.Heading);
+                        var static = geo.put_model(crater_model1, notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.Heading);
                         if (static != nil) {
                             statics["obj_"~notification.UniqueIdentity] = [static, notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.Heading, notification.SecondaryKind];
                         }
                     } elsif (notification.SecondaryKind == 2) {
-                        var crater_model = getprop("payload/armament/models") ~ "bomb_hit_smoke.xml";
-                        var static = geo.put_model(crater_model, notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.Heading);
+                        var static = geo.put_model(crater_model2, notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.Heading);
                         if (static != nil) {
                             statics["obj_"~notification.UniqueIdentity] = [static, notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.Heading, notification.SecondaryKind];
                         }
@@ -1356,6 +1357,22 @@ var re_init = func (node) {
   }
   stopLaunch();
   damageLog.push("Aircraft was repaired due to re-init.");
+
+  # Remove all 3D craters and re-place them. Due to re-init can remove some of them.
+
+  foreach (var thekey ; keys(statics)) {
+    var sta = statics[thekey];
+    if (sta[0] != nil) {
+        sta[0].remove();
+        if (sta[5] == 0) {# TODO: make a hash with all the models
+            sta[0] = geo.put_model(crater_model0, sta[1], sta[2], sta[3], sta[4]);
+        } elsif (sta[5] == 1) {
+            sta[0] = geo.put_model(crater_model1, sta[1], sta[2], sta[3], sta[4]);
+        } elsif (sta[5] == 2) {
+            sta[0] = geo.put_model(crater_model2, sta[1], sta[2], sta[3], sta[4]);
+        }
+    }
+  }
 }
 
 #==================================================================

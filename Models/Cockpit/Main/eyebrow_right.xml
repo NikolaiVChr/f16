@@ -36,7 +36,7 @@
   <condition>
    <or>
     <and>
-      <greater-than>
+      <greater-than> 
         <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
         <value>20</value>
       </greater-than>
@@ -44,6 +44,7 @@
       <or>
         <not><property>fdm/jsbsim/elec/sources/batt-bus</property></not>
         <property>f16/fcs/bit-fail</property>
+        <property>f16/avionics/caution/flcs</property>
         <not><property>systems/pitot/serviceable</property></not>
         <not><property>systems/static/serviceable</property></not>
         <not><property>f16/fcs/le-flaps-switch</property></not>

@@ -1339,11 +1339,13 @@ append(obj.total, obj.speed_curr);
              func(hdp)
                                       {
                                         if (!hdp.getproper("dgft") and !hdp.getproper("gear_down")) {
-                                          if (ded.dataEntryDisplay.crusModeSelected == "TOS") {
+                                          # IAS range clip is set to 79.739967, so let's stay within that
+                                          var minmax_range = 79.739967/2;
+                                          if (getprop("f16/ded/cur-crus-mode") == "TOS") {
                                             var desired_kt = getprop("/f16/ded/crus-req-gs");
                                             if (desired_kt != nil) {
                                               obj.ias_desired.show();
-                                              obj.ias_desired.setTranslation(0, (hdp.getproper("groundspeed_kt")-desired_kt) * ias_range_factor);
+                                              obj.ias_desired.setTranslation(0, math.max(math.min((hdp.getproper("groundspeed_kt")-desired_kt) * ias_range_factor,minmax_range),-minmax_range));
                                             } else {
                                               obj.ias_desired.hide();
                                             }

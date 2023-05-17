@@ -233,6 +233,9 @@ var init = func {
     
     var hud = compat_failure_modes.set_unserviceable("instrumentation/hud");
     FailureMgr.add_failure_mode("instrumentation/hud", "HUD", hud);
+
+    var ap = compat_failure_modes.set_unserviceable("autopilot");
+    FailureMgr.add_failure_mode("autopilot", "Autopilot", ap);
     
     # stations
 
@@ -390,7 +393,7 @@ var fail_list = [
        [3," CADC BUS  FAIL ", "systems/vacuum/serviceable", 1, 0],
        [0,">FLCS LEF  LOCK<", "f16/fcs/le-flaps-switch", 1, 0],
        [0,">FLCS BIT  FAIL<", "!f16/fcs/bit-fail", 1, 0],
-#      [1," FLCS A/P  FAIL ", "???", 1, 0]  if created, contributes to A/P inhibit
+       [1," FLCS A/P  FAIL ", "autopilot/serviceable", 1, 0], # contributes to A/P inhibit
        [3," SMS  STA3 FAIL ", "payload/sta[2]/serviceable", 1, 0],
        [3," SMS  STA4 FAIL ", "payload/sta[3]/serviceable", 1, 0],
        [3," SMS  STA6 FAIL ", "payload/sta[5]/serviceable", 1, 0],
@@ -536,7 +539,9 @@ var loop_caution = func {# TODO: unlit the caution lights except elec-sys when m
     setprop("f16/avionics/caution/equip-hot",      (batt2 and (!getprop("controls/ventilation/airconditioning-source") and getprop("f16/avionics/power-ufc-warm"))));
     setprop("f16/avionics/caution/overheat",       (batt2 and (!getprop("damage/fire/serviceable") or getprop("controls/test/test-panel/fire-ovht-test"))));
     setprop("f16/avionics/caution/sec",            (batt2 and (getprop("f16/engine/sec-self-test") or getprop("f16/engine/ctl-sec"))));
-    setprop("f16/avionics/caution/avionics",       (batt2 and (!getprop("instrumentation/hud/serviceable") or !getprop("instrumentation/radar/serviceable") or !getprop("instrumentation/rwr/serviceable") or !getprop("instrumentation/tacan/serviceable"))));
+    setprop("f16/avionics/caution/avionics",       (batt2 and fail_master[3]));
+    setprop("f16/avionics/caution/engine-fault",   (batt2 and FailureMgr.get_failure_level("engines/engine")));
+    setprop("f16/avionics/caution/flcs",           (batt2 and fail_master[0] or fail_master[1]));
 };
 
 # Call caution method when a caution condition changes.
@@ -555,6 +560,8 @@ setlistener("f16/avionics/caution/overheat",caution,0,0);
 setlistener("f16/avionics/caution/sec",caution,0,0);
 setlistener("f16/avionics/caution/avionics",caution,0,0);
 setlistener("f16/avionics/caution/probe-heat",caution,0,0);
+setlistener("f16/avionics/caution/engine-fault",caution,0,0);
+setlistener("f16/avionics/caution/flcs",caution,0,0);
 
 loop();
  

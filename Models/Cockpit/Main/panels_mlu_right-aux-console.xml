@@ -835,6 +835,7 @@
    <not>
     <or>
      <property>controls/test/test-panel/mal-ind-lts</property>
+     <property>f16/avionics/caution/engine-fault</property>
     </or>
    </not>
   </condition>
@@ -1204,6 +1205,7 @@
   <condition>
    <or>
     <property>controls/test/test-panel/mal-ind-lts</property>
+    <property>f16/avionics/caution/engine-fault</property>
    </or>
   </condition>
  </animation>

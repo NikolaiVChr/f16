@@ -1,5 +1,47 @@
-# author: pinto
-# adapted by Nikolai V. Chr.
+# Copyright by Justin Nicholson (aka Pinto)
+# Released under the GNU General Public License version 2.0
+#
+# Authors: Pinto, Nikolai V. Chr., Colin Geniet
+
+# Short installation instructions:
+# - Add and load this file in the 'tacview' namespace.
+# - Adjust the four parameters just below.
+# - Set property /payload/d-config/tacview_supported=1
+# - Ensure the radar code sets 'tacobj' fields properly.
+#   In Nikolai/Richard generic 'radar-system.nas',
+#   this simply requires setting 'enable_tacobject=1'.
+# - Add some way to start/stop recording.
+
+### Parameters to adjust (example values from the F-16)
+
+# Aircraft type string for tacview
+var tacview_ac_type = getprop("sim/variant-id") < 3 ? "F-16A" : "F-16C";
+# Aircraft type as inserted in the output file name
+var filename_ac_type = "f16";
+
+# Function returning an array of "contact" objects, containing all aicrafts tacview is to show.
+# A contact object must
+# - implement the API specified by missile-code.nas
+# - have a getModel() method, which will be used as aircraft type designator in tacview.
+# - contain a field 'tacobj', which must be an instance of the 'tacobj' class below,
+#   and have the 'tacviewID' and 'valid' fields set appropriately.
+#
+var get_contacts_list = func {
+    return radar_system.getCompleteList();
+}
+
+# Function returning the focused/locked aircraft, as a "contact" object (or nil).
+var get_primary_contact = func {
+    return radar_system.apg68Radar.getPriorityTarget();
+}
+
+# Radar range. May return nil if n/a
+var get_radar_range_nm = func {
+    return radar_system.apg68Radar.getRange();
+}
+
+### End of parameters
+
 
 var main_update_rate = 0.3;
 var write_rate = 10;
@@ -13,7 +55,7 @@ var myplaneID = int(rand()*10000);
 var starttime = 0;
 var writetime = 0;
 
-seen_ids = [];
+var seen_ids = [];
 
 var tacobj = {
     tacviewID: 0,
@@ -36,18 +78,40 @@ var heading = 0;
 var speed = 0;
 var mutexWrite = thread.newlock();
 
+var input = {
+    mp_host:    "sim/multiplay/txhost",
+    radar:      "sim/multiplay/generic/int[2]",
+    fuel:       "consumables/fuel/total-fuel-lbs",
+    gear:       "gear/gear[0]/position-norm",
+    lat:        "position/latitude-deg",
+    lon:        "position/longitude-deg",
+    alt:        "position/altitude-ft",
+    roll:       "orientation/roll-deg",
+    pitch:      "orientation/pitch-deg",
+    heading:    "orientation/heading-deg",
+    tas:        "fdm/jsbsim/velocities/vtrue-kts",
+    cas:        "velocities/airspeed-kt",
+    mach:       "velocities/mach",
+    aoa:        "orientation/alpha-deg",
+    gforce:     "accelerations/pilot-g",
+};
+
+foreach (var name; keys(input)) {
+    input[name] = props.globals.getNode(input[name], 1);
+}
+
+
 var startwrite = func() {
+    if (starttime)
+        return;
+
     timestamp = getprop("/sim/time/utc/year") ~ "-" ~ getprop("/sim/time/utc/month") ~ "-" ~ getprop("/sim/time/utc/day") ~ "T";
     timestamp = timestamp ~ getprop("/sim/time/utc/hour") ~ ":" ~ getprop("/sim/time/utc/minute") ~ ":" ~ getprop("/sim/time/utc/second") ~ "Z";
-    filetimestamp = string.replace(timestamp,":","-");
-    output_file = getprop("/sim/fg-home") ~ "/Export/tacview-f16-" ~ filetimestamp ~ ".acmi";
+    var filetimestamp = string.replace(timestamp,":","-");
+    output_file = getprop("/sim/fg-home") ~ "/Export/tacview-" ~ filename_ac_type ~ "-" ~ filetimestamp ~ ".acmi";
     # create the file
     f = io.open(output_file, "w");
     io.close(f);
-    var ownship = "F-16C";
-    if (getprop("sim/variant-id")<3) {
-        ownship = "F-16A";
-    }
     var color = ",Color=Blue";
     if (left(getprop("sim/multiplay/callsign"),5)=="OPFOR") {
         color=",Color=Red";
@@ -56,14 +120,15 @@ var startwrite = func() {
     thread.lock(mutexWrite);
     write("FileType=text/acmi/tacview\nFileVersion=2.1\n");
     write("0,ReferenceTime=" ~ timestamp ~ meta ~ "\n#0\n");
-    write(myplaneID ~ ",T=" ~ getLon() ~ "|" ~ getLat() ~ "|" ~ getAlt() ~ "|" ~ getRoll() ~ "|" ~ getPitch() ~ "|" ~ getHeading() ~ ",Name="~ownship~",CallSign="~getprop("/sim/multiplay/callsign")~color~"\n"); #
+    write(myplaneID ~ ",T=" ~ getLon() ~ "|" ~ getLat() ~ "|" ~ getAlt() ~ "|" ~ getRoll() ~ "|" ~ getPitch() ~ "|" ~ getHeading() ~ ",Name="~tacview_ac_type~",CallSign="~getprop("/sim/multiplay/callsign")~color~"\n"); #
     thread.unlock(mutexWrite);
     starttime = systime();
     setprop("/sim/screen/black","Starting Tacview recording");
-    settimer(func(){mainloop();}, main_update_rate);
+    main_timer.start();
 }
 
 var stopwrite = func() {
+    main_timer.stop();
     setprop("/sim/screen/black","Stopping Tacview recording");
     writetofile();
     starttime = 0;
@@ -74,9 +139,9 @@ var stopwrite = func() {
 
 var mainloop = func() {
     if (!starttime) {
+        main_timer.stop();
         return;
     }
-    settimer(func(){mainloop();}, main_update_rate);
     if (systime() - writetime > write_rate) {
         writetofile();
     }
@@ -85,11 +150,11 @@ var mainloop = func() {
     thread.unlock(mutexWrite);
     writeMyPlanePos();
     writeMyPlaneAttributes();
-    foreach (var cx; radar_system.getCompleteList()) {
-        if(cx.getType() == armament.ORDNANCE) {
+    foreach (var cx; get_contacts_list()) {
+        if(cx.get_type() == armament.ORDNANCE) {
             continue;
         }
-        if (cx["prop"] != nil and cx.prop.getName() == "multiplayer" and getprop("sim/multiplay/txhost") == "mpserver.opredflag.com") {
+        if (cx["prop"] != nil and cx.prop.getName() == "multiplayer" and input.mp_host.getValue() == "mpserver.opredflag.com") {
             continue;
         }
         var color = ",Color=Blue";
@@ -101,7 +166,7 @@ var mainloop = func() {
             append(seen_ids, cx.tacobj.tacviewID);
             var model_is = cx.getModel();
             if (model_is=="Mig-28") {
-                model_is = "F-16C";
+                model_is = tacview_ac_type;
                 color=",Color=Red";
             }
             write(cx.tacobj.tacviewID ~ ",Name="~ model_is~ ",CallSign=" ~ cx.get_Callsign() ~color~"\n")
@@ -157,6 +222,9 @@ var mainloop = func() {
     explosion_timeout_loop();
 }
 
+var main_timer = maketimer(main_update_rate, mainloop);
+
+
 var writeMyPlanePos = func() {
     thread.lock(mutexWrite);
     write(myplaneID ~ ",T=" ~ getLon() ~ "|" ~ getLat() ~ "|" ~ getAlt() ~ "|" ~ getRoll() ~ "|" ~ getPitch() ~ "|" ~ getHeading() ~ "\n");
@@ -165,23 +233,35 @@ var writeMyPlanePos = func() {
 
 var writeMyPlaneAttributes = func() {
     var tgt = "";
-    if(radar_system.apg68Radar.getPriorityTarget() != nil) {
-        tgt= ",FocusedTarget="~radar_system.apg68Radar.getPriorityTarget().tacobj.tacviewID;
+    var contact = get_primary_contact();
+    if (contact != nil) {
+        tgt= ",FocusedTarget="~contact.tacobj.tacviewID;
     }
     var rmode = ",RadarMode=1";
-    if (getprop("sim/multiplay/generic/int[2]")) {
+    if (input.radar.getBoolValue()) {
         rmode = ",RadarMode=0";
     }
-    var rrange = ",RadarRange="~rounder(getprop("instrumentation/radar/radar2-range")*NM2M,1);
-    var fuel = ",FuelWeight="~rounder(0.4535*getprop("/consumables/fuel/total-fuel-lbs"),1);
-    var gear = ",LandingGear="~rounder(getprop("gear/gear[0]/position-norm"),0.01);
-    var str = myplaneID ~ fuel~rmode~rrange~gear~",TAS="~getTas()~",CAS="~getCas()~",Mach="~getMach()~",AOA="~getAoA()~",HDG="~getHeading()~tgt~"\n";#",Throttle="~getThrottle()~",Afterburner="~getAfterburner()~
+    var rrange = get_radar_range_nm();
+    if (rrange != nil) {
+        rrange = sprintf(",RadarRange=%.0f", get_radar_range_nm()*NM2M);
+    } else {
+        rrange = "";
+    }
+    var fuel = sprintf(",FuelWeight=%.0f", input.fuel.getValue());
+    var gear = sprintf(",LandingGear=%.2f", input.gear.getValue());
+    var tas = getTas();
+    if (tas != nil) {
+        tas = ",TAS="~tas;
+    } else {
+        tas = "";
+    }
+    var str = myplaneID ~ fuel~rmode~rrange~gear~tas~",CAS="~getCas()~",Mach="~getMach()~",AOA="~getAoA()~",HDG="~getHeading()~tgt~",VerticalGForce="~getG()~"\n";#",Throttle="~getThrottle()~",Afterburner="~getAfterburner()~
     thread.lock(mutexWrite);
     write(str);
     thread.unlock(mutexWrite);
 }
 
-explo = {
+var explo = {
     tacviewID: 0,
     time: 0,
 };
@@ -228,61 +308,60 @@ var writetofile = func() {
 }
 
 var getLat = func() {
-    return getprop("/position/latitude-deg");
+    return input.lat.getValue();
 }
 
 var getLon = func() {
-    return getprop("/position/longitude-deg");
+    return input.lon.getValue();
 }
 
 var getAlt = func() {
-    return rounder(getprop("/position/altitude-ft") * FT2M,0.01);
+    return sprintf("%.2f", input.alt.getValue() * FT2M);
 }
 
 var getRoll = func() {
-    return rounder(getprop("/orientation/roll-deg"),0.01);
+    return sprintf("%.2f", input.roll.getValue());
 }
 
 var getPitch = func() {
-    return rounder(getprop("/orientation/pitch-deg"),0.01);
+    return sprintf("%.2f", input.pitch.getValue());
 }
 
 var getHeading = func() {
-    return rounder(getprop("/orientation/heading-deg"),0.01);
+    return sprintf("%.2f", input.heading.getValue());
 }
 
 var getTas = func() {
-    return rounder(getprop("fdm/jsbsim/velocities/vtrue-kts") * KT2MPS,1.0);
+    var tas = input.tas.getValue();
+    if (tas != nil)
+        return sprintf("%.1f", tas * KT2MPS);
+    else
+        return nil;
 }
 
 var getCas = func() {
-    return rounder(getprop("fdm/jsbsim/velocities/vc-kts") * KT2MPS,1.0);
+    return sprintf("%.1f", input.cas.getValue() * KT2MPS);
 }
 
 var getMach = func() {
-    return rounder(getprop("/velocities/mach"),0.001);
+    return sprintf("%.3f", input.mach.getValue());
 }
 
 var getAoA = func() {
-    return rounder(getprop("/orientation/alpha-deg"),0.01);
+    return sprintf("%.2f", input.aoa.getValue());
+}
+
+var getG = func() {
+    return sprintf("%.2f", input.gforce.getValue());
 }
 
 #var getThrottle = func() {
-#    return rounder(getprop("velocities/thrust"),0.01);
+#    return sprintf("%.2f", getprop("velocities/thrust");
 #}
 
 #var getAfterburner = func() {
 #    return getprop("velocities/thrust")>0.61*0.61;
 #}
-
-var rounder = func(x, p) {
-    v = math.mod(x, p);
-    if ( v <= (p * 0.5) ) {
-        x = x - v;
-    } else {
-        x = (x + p) - v;
-    }
-}
 
 var find_in_array = func(arr,val) {
     forindex(var i; arr) {

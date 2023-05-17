@@ -204,6 +204,38 @@
                 </binding>
             </mod-up>
         </key>
+        <key n="362">
+            <name>Home</name>
+            <desc>Push to talk COMM #1</desc>
+            <binding>
+                <command>property-assign</command>
+                <property>instrumentation/comm[0]/ptt</property>
+                <value type="int">1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>instrumentation/comm[0]/ptt</property>
+                    <value type="int">0</value>
+                </binding>
+            </mod-up>
+        </key>
+        <key n="363">
+            <name>End</name>
+            <desc>Push to talk COMM #2</desc>
+            <binding>
+                <command>property-assign</command>
+                <property>instrumentation/comm[1]/ptt</property>
+                <value type="int">1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>instrumentation/comm[1]/ptt</property>
+                    <value type="int">0</value>
+                </binding>
+            </mod-up>
+        </key>
 		<key n="24">
 			<name>Ctrl-x</name>
 			<desc>Reset zoom to default</desc>

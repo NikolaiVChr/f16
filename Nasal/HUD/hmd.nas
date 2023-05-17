@@ -1589,4 +1589,78 @@ var dropping = func {
     }
 }
 
+var isMarking = 0;
+var markStart = func {
+    if (getprop("controls/displays/cursor-click") and f16.SOI == 1 and HUDobj["off"] == 0 and isMarking == 0) {
+        isMarking = 1;
+        var t = maketimer(0.55, func markStart());
+        t.singleShot = 1;
+        #print("markStart 1");
+        t.start();        
+    } elsif (getprop("controls/displays/cursor-click") and f16.SOI == 1 and HUDobj["off"] == 0 and isMarking == 1) {
+        isMarking = 2;
+        #print("markStart 2");
+        mark();
+    } elsif (!getprop("controls/displays/cursor-click") and isMarking > 0) {
+        isMarking = 0;
+        #print("markStart 0");
+    } else {
+        #print("markStart click ",getprop("controls/displays/cursor-click")," soi ",f16.SOI == 1," HMD ",HUDobj["off"] == 0," marking ",isMarking);
+    }
+};
+
+var mark = func {
+    if (getprop("controls/displays/cursor-click") and f16.SOI == 1 and HUDobj["off"] == 0) {
+        # Mark
+        var coordA = geo.viewer_position();
+        coordA.alt();# TODO: once fixed in FG this line is no longer needed.
+        
+        # get quaternion for view rotation:
+        var q = [getprop("sim/current-view/debug/orientation-w"),getprop("sim/current-view/debug/orientation-x"),getprop("sim/current-view/debug/orientation-y"),getprop("sim/current-view/debug/orientation-z")];
+
+        var V = [2 * (q[1] * q[3] - q[0] * q[2]), 2 * (q[2] * q[3] + q[0] * q[1]),1 - 2 * (q[1] * q[1] + q[2] * q[2])];
+        var w= q[0];
+        var x= q[1];
+        var y= q[2];
+        var z= q[3];
+
+        #rotate from x axis using the quaternion:
+        V = [1 - 2 * (y*y + z*z),2 * (x*y + w*z),2 * (x*z - w*y)];
+
+        var xyz          = {"x":coordA.x(),                "y":coordA.y(),               "z":coordA.z()};
+        #var directionLOS = {"x":dirCoord.x()-coordA.x(),   "y":dirCoord.y()-coordA.y(),  "z":dirCoord.z()-coordA.z()};
+        var directionLOS = {"x":V[0],   "y":V[1],  "z":V[2]};
+
+        # Check for terrain between own weapon and target:
+        var terrainGeod = get_cart_ground_intersection(xyz, directionLOS);
+        if (terrainGeod == nil) {
+            #print("0 terrain");
+            return;
+        } else {
+            var terrain = geo.Coord.new();
+            terrain.set_latlon(terrainGeod.lat, terrainGeod.lon, terrainGeod.elevation);
+            var ut = nil;
+            #foreach (u ; radar_system.getCompleteList()) {
+            #    if (terrain.direct_distance_to(u.get_Coord())<45) {
+            #        ut = u;
+            #        break;
+            #    }
+            #}
+            if (ut!=nil) {
+                var contact = ut.getNearbyVirtualTGPContact();
+                armament.contactPoint = contact;
+                #var tc = contact.getCoord();
+                #print("contactPoint "~tc.lat()~", "~tc.lon()~" at "~(tc.alt()*M2FT)~" ft");
+            } else {
+                steerpoints.markHUD(terrain);
+                ded.dataEntryDisplay.pageLast = ded.pMARK;# So it does not do a OFLY mark.
+                ded.dataEntryDisplay.page     = ded.pMARK;
+                #print("mark voila");
+                #armament.contactPoint = radar_system.ContactTGP.new("TGP-Spot",terrain,1);
+            }
+        }
+    }
+};
+
 setlistener("payload/armament/gravity-dropping",func{dropping()},nil,0);
+setlistener("controls/displays/cursor-click", markStart);

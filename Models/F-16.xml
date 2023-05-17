@@ -580,6 +580,18 @@
     </effect>
 
   <effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">1.00</metallic>
+          <ambient-factor type="float">0.0</ambient-factor>
+          <rain-enabled type="int">0</rain-enabled>
+          <snow-enabled type="int">0</snow-enabled>
+          <reflection-enabled type="int">1</reflection-enabled>
+      </parameters>
+      <object-name>PitotTube</object-name>
+    </effect>
+
+  <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
       <parameters>
           <lightmap-enabled type="int">1</lightmap-enabled>
