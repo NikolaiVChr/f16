@@ -7,9 +7,9 @@
 	<name>AIM-9X</name>
 	<path>AIM-9X_RW.ac</path>
 
-	<effect>  
-    	<inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>  
-    	<object-name>aim9x_ir-sphere</object-name> 
+	<effect>
+    	<inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>
+    	<object-name>aim9x-ir-sphere</object-name>
   	</effect>
 
 	<effect>
@@ -21,11 +21,34 @@
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
-      <object-name>aim9x_body</object-name>
-      <object-name>aim9x_back-fins</object-name>
-      <object-name>aim9x_front-fins</object-name>
+      <object-name>aim9x-body</object-name>
+      <object-name>aim9x-back-fins</object-name>
+      <object-name>aim9x-front-fins</object-name>
       <object-name>aim9x-thrust-vectoring-fins</object-name>
-      <object-name>aim9x-mount</object-name>
+      <object-name>aim9x-mounts</object-name>
   </effect>
+
+
+  <animation>
+      <type>rotate</type>
+      <object-name>aim9x-body</object-name>
+      <object-name>aim9x-back-fins</object-name>
+      <object-name>aim9x-front-fins</object-name>
+      <object-name>aim9x-thrust-vectoring-fins</object-name>
+      <object-name>aim9x-mounts</object-name>
+      <object-name>aim9x-ir-sphere</object-name>
+      <factor>0.0</factor>
+      <offset-deg>90</offset-deg>
+      <center>
+        <x-m>0</x-m>
+        <y-m>0</y-m>
+        <z-m>0</z-m>
+      </center>
+      <axis>
+       <x>1.0</x>
+       <y>0.0</y>
+       <z>0.0</z>
+      </axis>
+ </animation>
 
 </PropertyList>

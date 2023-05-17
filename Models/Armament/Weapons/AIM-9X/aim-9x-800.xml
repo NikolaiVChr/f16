@@ -9,7 +9,7 @@
 
 	<effect>  
     	<inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>
-    	<object-name>aim9x_ir-sphere</object-name>
+    	<object-name>aim9x-ir-sphere</object-name>
   	</effect>
 
 	<effect>
@@ -21,21 +21,21 @@
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
-      <object-name>aim9x_body</object-name>
-      <object-name>aim9x_back-fins</object-name>
-      <object-name>aim9x_front-fins</object-name>
+      <object-name>aim9x-body</object-name>
+      <object-name>aim9x-back-fins</object-name>
+      <object-name>aim9x-front-fins</object-name>
       <object-name>aim9x-thrust-vectoring-fins</object-name>
-      <object-name>aim9x-mount</object-name>
+      <object-name>aim9x-mounts</object-name>
   	</effect>
 
 	<animation>
 		<type>select</type>
-      		<object-name>aim9x_body</object-name>
-      		<object-name>aim9x_back-fins</object-name>
-      		<object-name>aim9x_front-fins</object-name>
+      		<object-name>aim9x-body</object-name>
+      		<object-name>aim9x-back-fins</object-name>
+      		<object-name>aim9x-front-fins</object-name>
       		<object-name>aim9x-thrust-vectoring-fins</object-name>
-      		<object-name>aim9x-mount</object-name>
-      		<object-name>aim9x_ir-sphere</object-name>
+      		<object-name>aim9x-mounts</object-name>
+      		<object-name>aim9x-ir-sphere</object-name>
 		<condition>
 			<property>payload/armament/aim-9x/flags/msl-id-800</property>
 		</condition>
@@ -429,12 +429,12 @@
 	 </particlesystem>
 
 	<animation>
-      		<object-name>aim9x_body</object-name>
-      		<object-name>aim9x_back-fins</object-name>
-      		<object-name>aim9x_front-fins</object-name>
+      		<object-name>aim9x-body</object-name>
+      		<object-name>aim9x-back-fins</object-name>
+      		<object-name>aim9x-front-fins</object-name>
       		<object-name>aim9x-thrust-vectoring-fins</object-name>
-      		<object-name>aim9x-mount</object-name>
-      		<object-name>aim9x_ir-sphere</object-name>
+      		<object-name>aim9x-mounts</object-name>
+      		<object-name>aim9x-ir-sphere</object-name>
   		<enable-hot type="bool">false</enable-hot>
  	</animation>
 
