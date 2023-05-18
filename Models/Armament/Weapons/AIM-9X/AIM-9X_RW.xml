@@ -9,7 +9,7 @@
 
 	<effect>
     	<inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>
-    	<object-name>aim9x-ir-sphere</object-name>
+    	<object-name>aim9x_ir-sphere</object-name>
   	</effect>
 
 	<effect>
@@ -36,7 +36,7 @@
       <object-name>aim9x-front-fins</object-name>
       <object-name>aim9x-thrust-vectoring-fins</object-name>
       <object-name>aim9x-mounts</object-name>
-      <object-name>aim9x-ir-sphere</object-name>
+      <object-name>aim9x_ir-sphere</object-name>
       <factor>0.0</factor>
       <offset-deg>90</offset-deg>
       <center>

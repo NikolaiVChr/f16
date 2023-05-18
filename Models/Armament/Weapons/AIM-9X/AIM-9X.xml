@@ -9,7 +9,7 @@
 
 	<effect>  
     	<inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>  
-    	<object-name>aim9x-ir-sphere</object-name>
+    	<object-name>aim9x_ir-sphere</object-name>
   	</effect>
 
 	<effect>
