@@ -2727,8 +2727,9 @@ var AIM = {
 				me.max_seeker_dev = me.settings.seeker_fov;
 				me.printStats("Seeker FOV switched to %s",me.max_seeker_dev);
 			}
-			if (me.settings["abort_midflight_function"] != nil) {
+			if (me.settings["abort_midflight_function"] == 1) {
 				me.mfFunction = nil;
+				me.printStats("Midflight function finished");
 			}
 		}
 	},
@@ -2876,7 +2877,7 @@ var AIM = {
 		}
 
 		if (!me.simple_drag) {
-			if (me.vector_thrust and me.thrust_lbf>0) N=N*0.35;
+			if (me.vector_thrust and me.thrust_lbf>0) N=N*0.15;
 			if (mach < 1.1) {
 				me.Cdi = (me.Cd_base+me.Cd_delta*me.deploy)*N;# N = normal force in G
 			} else {
@@ -3460,6 +3461,10 @@ var AIM = {
 				me.printStats(me.type~": Passed minimum speed for guiding after %.1f seconds. Target %d%% inside view.", me.life_time, me.normFOV*100);
 			}
 		}
+		if (me.guidance == "gps" or me.guidance == "inertial" or me.guidance == "sample") {
+			# To make sure deviation_deg is updated in midflight function.
+            me.FOV_check(me.hdg, me.pitch, me.curr_deviation_h, me.curr_deviation_e, me.max_seeker_dev, me.myMath);
+        }
 		if (me.chaffLock and (me.guidance == "command" or me.guidance == "semi-radar" or me.guidance == "tvm") and (me.life_time - me.chaffLockTime) > (me.gnd_launch?4:6)) {
 			me.chaffLock = 0;
 			me.printStats(me.type~": Chaff dissipated, regained track.");
