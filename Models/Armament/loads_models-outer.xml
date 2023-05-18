@@ -35,6 +35,17 @@
    <pitch-deg>-3.5</pitch-deg>
   </offsets>
  </model>
+
+ <model>
+  <name>Station2_AIM-9X</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9X/AIM-9X.xml</path>
+  <offsets>
+   <x-m>1.275</x-m>
+   <y-m>-3.7</y-m>
+   <z-m>-0.32</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
  
 <model>
   <name>Station2_AIM-120B</name>
@@ -87,6 +98,17 @@
  <model>
   <name>Station8_AIM-9M</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AIM-9M/AIM-9M.xml</path>
+  <offsets>
+   <x-m>1.275</x-m>
+   <y-m>3.7</y-m>
+   <z-m>-0.32</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station8_AIM-9X</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9X/AIM-9X.xml</path>
   <offsets>
    <x-m>1.275</x-m>
    <y-m>3.7</y-m>

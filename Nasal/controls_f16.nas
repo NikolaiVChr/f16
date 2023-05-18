@@ -57,6 +57,9 @@ var dogfight = func {
             foreach(var snake;pylons.fcs.getAllOfType("AIM-9M")) {
                 snake.setCooling(1);
             }
+            foreach(var snake;pylons.fcs.getAllOfType("AIM-9X")) {
+                snake.setCooling(1);
+            }
         }
         #f16.rdrModeGM = 0;
     } else {

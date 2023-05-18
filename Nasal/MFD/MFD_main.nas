@@ -2951,6 +2951,9 @@ var MFD_Device =
                         foreach(var snake;pylons.fcs.getAllOfType("AIM-9M")) {
                             snake.setCooling(me.cooling);
                         }
+                        foreach(var snake;pylons.fcs.getAllOfType("AIM-9X")) {
+                            snake.setCooling(me.cooling);
+                        }
                     } elsif (me.wpnType == "fall") {
                         if (getprop("controls/armament/dual")==1) {
                             setprop("controls/armament/dual",2);
@@ -3148,7 +3151,7 @@ var MFD_Device =
                     } else {
                         me.ready = "RDY";
                     }
-                } elsif (me.wpn.type == "AIM-9L" or me.wpn.type == "AIM-9M") {
+                } elsif (me.wpn.type == "AIM-9L" or me.wpn.type == "AIM-9M" or me.wpn.type == "AIM-9X") {
                     me.wpnType ="heat";
                     me.cool = me.wpn.getWarm()==0?"COOL":"WARM";
                     me.eegs = "A-A";
