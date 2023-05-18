@@ -314,7 +314,7 @@ var AIM = {
 		m.asc                   = getprop(m.nodeString~"attack-steering-cue-enabled");# Bool. ASC enabled.
 		# navigation, guiding and seekerhead
 		m.max_seeker_dev        = getprop(m.nodeString~"seeker-field-deg") / 2;       # missiles own seekers total FOV diameter.
-		m.guidance              = getprop(m.nodeString~"guidance");                   # heat/radar/semi-radar/laser/gps/gps-laser/vision/unguided/level/gyro-pitch/radiation/inertial/remote/remote-stable/command/sample
+		m.guidance              = getprop(m.nodeString~"guidance");                   # heat/radar/semi-radar/tvm/laser/gps/gps-laser/vision/unguided/level/gyro-pitch/radiation/inertial/remote/remote-stable/command/sample
 		m.guidanceLaw           = getprop(m.nodeString~"navigation");                 # guidance-law: direct/direct-alt/OPN/PN/APN/PNxxyy/APNxxyy/LOS (use direct for pure pursuit, use PN for A/A missiles, use APN for modern SAM missiles PN for older, use PNxxyy/APNxxyy for surface to air where xx is degrees to aim above target, yy is seconds it will do that). GPN is APN for winged glidebombs.
 		m.guidanceLawHorizInit  = getprop(m.nodeString~"navigation-init-pure-15");    # Bool. Guide in horizontal plane using pure pursuit until target with 15 deg of nose, before switching to <navigation>
 		m.pro_constant          = getprop(m.nodeString~"proportionality-constant");   # Constant for how sensitive proportional navigation is to target speed/acc. Normally between 3-6. [optional]
@@ -572,7 +572,7 @@ var AIM = {
 			m.destruct_when_free = 0;
 		}
 		if (m.reaquire == nil) {
-			if (m.guidance == "semi-radar" or m.guidance == "laser" or m.guidance == "heat" or m.guidance == "vision") {
+			if (m.guidance == "semi-radar" or m.guidance == "laser" or m.guidance == "heat" or m.guidance == "vision" or m.guidance == "tvm") {
 				m.reaquire = 1;
 			} else {
 				m.reaquire = 0;
@@ -2004,9 +2004,9 @@ var AIM = {
 		if (!me.rail and me.eject_speed != 0) {
 			me.printStats("Weapon will be ejected at %.1f feet/sec.",me.eject_speed);
 		}
-		if (me.guidance == "heat" or me.guidance == "radar" or me.guidance == "semi-radar") {
+		if (me.guidance == "heat" or me.guidance == "radar" or me.guidance == "semi-radar" or me.guidance == "tvm") {
 			me.printStats("COUNTER-MEASURES:");
-			if (me.guidance == "radar" or me.guidance == "semi-radar") {
+			if (me.guidance == "radar" or me.guidance == "semi-radar" or me.guidance == "tvm") {
 				me.printStats("Resistance to chaff is %d%%.",me.chaffResistance*100);
 			} elsif (me.guidance == "heat") {
 				me.printStats("Resistance to flares is %d%%.",me.flareResistance*100);
@@ -3292,7 +3292,7 @@ var AIM = {
 		#
 		# Check for being fooled by chaff.
 		#
-		if (me.Tgt != nil and me.fovLost != 1 and (me.guidance == "radar" or me.guidance == "semi-radar" or me.guidance == "command") and !me.chaffLock and (me.life_time-me.chaffTime) > 1) {
+		if (me.Tgt != nil and me.fovLost != 1 and (me.guidance == "radar" or me.guidance == "semi-radar" or me.guidance == "command" or me.guidance == "tvm") and !me.chaffLock and (me.life_time-me.chaffTime) > 1) {
 			#
 			# TODO: Use Richards Emissary for this.
 			#
@@ -3305,7 +3305,7 @@ var AIM = {
 						me.chaffLast = me.chaffNumber;
 						me.chaffTime = me.life_time;
 						me.aspectDeg = me.aspectToExhaust(me.coord, me.Tgt) / 180;# 0 = viewing engine, 1 = front
-						me.redux = me.guidance == "semi-radar" or me.guidance == "command"?(me.gnd_launch?0.5:0.75):1;
+						me.redux = me.guidance == "semi-radar" or me.guidance == "command" or me.guidance == "tvm"?(me.gnd_launch?0.5:0.75):1;
 						me.chaffChance = (1-me.chaffResistance)*me.redux;
 						me.chaffLock = rand() < (me.chaffChance - (me.chaffChance * 0.5 * me.aspectDeg));# 50% less chance to be fooled if front aspect
 
@@ -3394,8 +3394,8 @@ var AIM = {
 				me.printStats(me.type~": Not guiding (lost radar reflection, gave up)");
 				me.free = 1;
 			}
-		} elsif (me.guidance == "command" and (me.Tgt == nil or !me.Tgt.isCommandActive())) {
-			# if its command guided and the control no longer sends commands
+		} elsif ((me.guidance == "command" or me.guidance == "tvm") and (me.Tgt == nil or !me.Tgt.isCommandActive())) {
+			# if its command or TVM guided and the control no longer sends commands
 			me.guiding = 0;
 			me.printStats(me.type~": Not guiding (no commands from controller)");
 		} elsif (me.guidance == "radiation" and !me.is_radiating_me(me.Tgt)) {
@@ -3460,7 +3460,7 @@ var AIM = {
 				me.printStats(me.type~": Passed minimum speed for guiding after %.1f seconds. Target %d%% inside view.", me.life_time, me.normFOV*100);
 			}
 		}
-		if (me.chaffLock and (me.guidance == "command" or me.guidance == "semi-radar") and (me.life_time - me.chaffLockTime) > (me.gnd_launch?4:6)) {
+		if (me.chaffLock and (me.guidance == "command" or me.guidance == "semi-radar" or me.guidance == "tvm") and (me.life_time - me.chaffLockTime) > (me.gnd_launch?4:6)) {
 			me.chaffLock = 0;
 			me.printStats(me.type~": Chaff dissipated, regained track.");
 		}
@@ -4597,7 +4597,7 @@ var AIM = {
 		if (!(me.tagt.get_type() == AIR and me.tagt.get_Speed()<15) and ((me.guidance != "semi-radar" or me.is_painted(me.tagt)) and (me.guidance !="laser" or me.is_laser_painted(me.tagt)))
 						and (me.guidance != "radiation" or me.is_radiating_aircraft(me.tagt))
 					    and me.rng < me.max_fire_range_nm and me.rng > me.getCurrentMinFireRange(me.tagt) and me.FOV_check(OurHdg.getValue(),OurPitch.getValue(),me.total_horiz, me.total_elev, me.slave_to_radar or contactPoint==me.tagt?(me.guidance == "heat" or me.guidance == "vision"?math.min(me.max_seeker_dev, me.fcs_fov):me.fcs_fov):me.max_seeker_dev, vector.Math)
-					    and (me.rng < me.detect_range_curr_nm or (me.guidance != "radar" and me.guidance != "semi-radar" and me.guidance != "sample" and me.guidance != "heat" and me.guidance != "vision" and me.guidance != "radiation"))
+					    and (me.rng < me.detect_range_curr_nm or (me.guidance != "radar" and me.guidance != "semi-radar" and me.guidance != "tvm" and me.guidance != "sample" and me.guidance != "heat" and me.guidance != "vision" and me.guidance != "radiation"))
 					    and (me.guidance != "heat" or (me.all_aspect or me.rear_aspect(geo.aircraft_position(), me.tagt)))
 					    and me.checkForView()) {
 			return 1;
@@ -5269,7 +5269,7 @@ var AIM = {
 		me.total_horiz = deviation_normdeg(OurHdg.getValue(), me.Tgt.get_bearing());    # deg.
 		# Check if in range and in the seeker FOV.
 		if (me.FOV_check(OurHdg.getValue(),OurPitch.getValue(),me.total_horiz, me.total_elev, me.slave_to_radar?(me.guidance == "heat" or me.guidance == "vision"?math.min(me.max_seeker_dev, me.fcs_fov):me.fcs_fov):me.max_seeker_dev, vector.Math) and me.Tgt.get_range() < me.max_fire_range_nm and me.Tgt.get_range() > me.getCurrentMinFireRange(me.Tgt)
-			and (me.Tgt.get_range() < me.detect_range_curr_nm or (me.guidance != "radar" and me.guidance != "semi-radar" and me.guidance != "sample" and me.guidance != "heat" and me.guidance != "vision" and me.guidance != "heat" and me.guidance != "radiation"))) {
+			and (me.Tgt.get_range() < me.detect_range_curr_nm or (me.guidance != "radar" and me.guidance != "semi-radar" and me.guidance != "tvm" and me.guidance != "sample" and me.guidance != "heat" and me.guidance != "vision" and me.guidance != "heat" and me.guidance != "radiation"))) {
 			return 1;
 		}
 		# Target out of FOV or range while still not launched, return to search loop.
