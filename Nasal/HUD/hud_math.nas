@@ -154,6 +154,8 @@ var HudMath = {
         }
         me.ptch = vector.Math.getPitch(me.crft, gpsCoord);
         me.brng = me.crft.course_to(gpsCoord);
+        #me.cd = courseAndDistance(me.crft, gpsCoord);#same precision at close range (couple of meters)
+        #me.brng = me.cd[0];
 
         var ym = vector.Math.yawMatrix(-viewh);
         var pm = vector.Math.pitchMatrix(-viewp);

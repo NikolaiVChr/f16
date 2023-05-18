@@ -66,6 +66,7 @@
       <wingmounts type="bool">false</wingmounts>
       <dragchute type="bool">false</dragchute>
       <link16 type="bool">false</link16>
+      <cft type="bool">false</cft>
     </f16>
    <path archive="y">Aircraft/f16/Models/YF-16.xml</path>
    <livery>
