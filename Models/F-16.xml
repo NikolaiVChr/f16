@@ -3013,6 +3013,7 @@
   <object-name>Turbine</object-name>-->
   <object-name>Fuselage</object-name>
   <object-name>irst</object-name>
+  <object-name>PitotTube</object-name>
   <!--<object-name>FrontTire</object-name>
   <object-name>LeftMainTire</object-name>
   <object-name>RightMainTire</object-name>-->
