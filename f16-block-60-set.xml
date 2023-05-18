@@ -66,6 +66,7 @@
     <f16>
     <dragchute type="bool">false</dragchute>
     <link16 type="bool">true</link16>
+    <cft type="bool">true</cft>
   </f16>
    <path archive="y">Aircraft/f16/Models/F-16.xml</path>
    <livery>
