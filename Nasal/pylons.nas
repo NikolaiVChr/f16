@@ -148,7 +148,7 @@ var pylonSets = {
     podEcm188: {name: "AN/ALQ-188(V) EAT Pod", pylon: "1 MAU", rack: nil, content: [ecm188], fireOrder: [0], launcherDragArea: 0.08, launcherMass: 355, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 2},
     podTrvl:   {name: "MXU-648 Cargopod", pylon: "1 MAU", rack: nil, content: [crgpd], fireOrder: [], launcherDragArea: 0.20, launcherMass: 324, launcherJettisonable: 1, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 2},
     podSAtp:   {name: "AN/AAQ-33 Sniper ATP", content: [atp], fireOrder: [0], launcherDragArea: 0.06, launcherMass: 446, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-    podSifts:  {name: "AN/AAQ-32 Internal FLIR Targeting System", content: [ifts], fireOrder: [0], launcherDragArea: 0.06, launcherMass: 0, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    podIfts:   {name: "AN/AAQ-32 Internal FLIR Targeting System", content: [ifts], fireOrder: [0], launcherDragArea: 0.05, launcherMass: 390, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1}, #mass guess
     podLTgp:   {name: "AN/AAQ-14 LANTIRN Target Pod", content: [tgp], fireOrder: [0], launcherDragArea: 0.07, launcherMass: 530, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     podLNav:   {name: "AN/AAQ-13 LANTIRN Nav Pod", content: [nav], fireOrder: [0], launcherDragArea: 0.1, launcherMass: 451.1, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     podLite:   {name: "AN/AAQ-28 LITENING Advanced Targeting", content: [lite], fireOrder: [0], launcherDragArea: 0.08, launcherMass: 460, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
@@ -266,7 +266,7 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 		pylon5set = [pylonSets.empty, pylonSets.podTrvl, pylonSets.podEcm184, pylonSets.podEcm131, pylonSets.fuel30];
 
 		fuselageRset = [pylonSets.empty];
-	 	fuselageLset = [pylonSets.podSifts];
+	 	fuselageLset = [pylonSets.podIfts];
 	 }
 
 	# pylons
@@ -422,7 +422,7 @@ var default = func {
         pylon9.loadSet(pylonSets.dumb1WT);
         if (block == 6) {
         	pylon10.loadSet(pylonSets.empty);
-        	pylon11.loadSet(pylonSets.podSAtp);
+        	pylon11.loadSet(pylonSets.podIfts);
         } else {
         	pylon10.loadSet(pylonSets.empty);
         	pylon11.loadSet(pylonSets.empty);
@@ -448,7 +448,7 @@ var clean = func {
         pylon9.loadSet(pylonSets.empty);
         if (block == 6) {
         	pylon10.loadSet(pylonSets.empty);
-        	pylon11.loadSet(pylonSets.podSAtp);
+        	pylon11.loadSet(pylonSets.podIfts);
         } else {
         	pylon10.loadSet(pylonSets.empty);
         	pylon11.loadSet(pylonSets.empty);
@@ -474,7 +474,7 @@ var airshow = func {
         pylon9.loadSet(pylonSets.smokeWR);
         if (block == 6) {
         	pylon10.loadSet(pylonSets.empty);
-        	pylon11.loadSet(pylonSets.podSAtp);
+        	pylon11.loadSet(pylonSets.podIfts);
         } else {
         	pylon10.loadSet(pylonSets.empty);
         	pylon11.loadSet(pylonSets.empty);
@@ -609,7 +609,7 @@ var ferry1 = func {
         pylon9.loadSet(pylonSets.dumb2WT);
         if (block == 6) {
         	pylon10.loadSet(pylonSets.empty);
-        	pylon11.loadSet(pylonSets.podSAtp);
+        	pylon11.loadSet(pylonSets.podIfts);
         } else {
         	pylon10.loadSet(pylonSets.empty);
         	pylon11.loadSet(pylonSets.empty);
@@ -635,7 +635,7 @@ var ferry2 = func {
         pylon9.loadSet(pylonSets.dumb2WT);
         if (block == 6) {
         	pylon10.loadSet(pylonSets.empty);
-        	pylon11.loadSet(pylonSets.podSAtp);
+        	pylon11.loadSet(pylonSets.podIfts);
         } else {
         	pylon10.loadSet(pylonSets.empty);
         	pylon11.loadSet(pylonSets.empty);
@@ -855,7 +855,7 @@ var a2g_sead = func {
         pylon9.loadSet(pylonSets.aim120WT);
         if (block == 6) {
         	pylon10.loadSet(pylonSets.empty);
-        	pylon11.loadSet(pylonSets.podSAtp);
+        	pylon11.loadSet(pylonSets.podIfts);
         } else {
         	pylon10.loadSet(pylonSets.podSAtp);
             pylon11.loadSet(pylonSets.podHarm);
@@ -881,7 +881,7 @@ var a2g_dead = func {
         pylon9.loadSet(pylonSets.aim120WT);
         if (block == 6) {
         	pylon10.loadSet(pylonSets.empty);
-        	pylon11.loadSet(pylonSets.podSAtp);
+        	pylon11.loadSet(pylonSets.podIfts);
         } else {
         	pylon10.loadSet(pylonSets.podSAtp);
             pylon11.loadSet(pylonSets.podHarm);
@@ -970,7 +970,7 @@ var a2s_antiship = func {
         pylon9.loadSet(pylonSets.aim120WT);
         if (block == 6) {
         	pylon10.loadSet(pylonSets.empty);
-        	pylon11.loadSet(pylonSets.podSAtp);
+        	pylon11.loadSet(pylonSets.podIfts);
         } else {
         	pylon10.loadSet(pylonSets.podLite);
             pylon11.loadSet(pylonSets.empty);
@@ -2174,7 +2174,7 @@ var b60_train_aa = func {
         pylon8.loadSet(pylonSets.dumb1);
         pylon9.loadSet(pylonSets.dumb3WT);
         pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.podIfts);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -2195,7 +2195,7 @@ var b60_train_ag = func {
         pylon8.loadSet(pylonSets.dumb1);
         pylon9.loadSet(pylonSets.dumb3WT);
         pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.podIfts);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -2216,7 +2216,7 @@ var b60_a2a_cap = func {
         pylon8.loadSet(pylonSets.aim120);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.podIfts);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -2237,7 +2237,7 @@ var b60_a2a_capext = func {
         pylon8.loadSet(pylonSets.aim120);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.podIfts);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -2258,7 +2258,7 @@ var b60_a2a_super = func {
         pylon8.loadSet(pylonSets.aim120);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.podIfts);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -2279,7 +2279,7 @@ var b60_a2a_superer = func {
         pylon8.loadSet(pylonSets.aim120);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.podIfts);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -2300,7 +2300,7 @@ var b60_a2a_superer2 = func {
         pylon8.loadSet(pylonSets.aim120);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.podIfts);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -2321,7 +2321,7 @@ var b60_a2a_dca = func {
         pylon8.loadSet(pylonSets.aim9m);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.podIfts);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -2342,7 +2342,7 @@ var b60_a2g_mk1 = func {
         pylon8.loadSet(pylonSets.aim9m);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.podIfts);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -2363,7 +2363,7 @@ var b60_a2g_mk2 = func {
         pylon8.loadSet(pylonSets.aim9m);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.podIfts);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -2384,7 +2384,7 @@ var b60_a2g_mkair = func {
         pylon8.loadSet(pylonSets.aim9m);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.podIfts);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -2405,7 +2405,7 @@ var b60_a2g_cem = func {
         pylon8.loadSet(pylonSets.aim9m);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.podIfts);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -2426,7 +2426,7 @@ var b60_a2g_lgb1 = func {
         pylon8.loadSet(pylonSets.aim9m);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.podIfts);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -2447,7 +2447,7 @@ var b60_a2g_lgb2 = func {
         pylon8.loadSet(pylonSets.aim9m);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.podIfts);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -2468,7 +2468,7 @@ var b60_a2g_gps = func {
         pylon8.loadSet(pylonSets.aim9m);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.podIfts);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -2489,7 +2489,7 @@ var b60_a2g_gpslsr = func {
         pylon8.loadSet(pylonSets.aim9m);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.podIfts);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -2509,7 +2509,7 @@ var b60_a2g_sfw = func {
         pylon8.loadSet(pylonSets.aim9m);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.podIfts);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -2530,7 +2530,7 @@ var b60_a2g_cas = func {
         pylon8.loadSet(pylonSets.aim9m);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.podIfts);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -2551,7 +2551,7 @@ var b60_a2g_hyd70 = func {
         pylon8.loadSet(pylonSets.aim9m);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.podIfts);
         f16.reloadCannon();
         f16.reloadHydras();
     } else {
@@ -2573,7 +2573,7 @@ var b60_a2s_antiship = func {
         pylon8.loadSet(pylonSets.aim9m);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.podIfts);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -2594,7 +2594,7 @@ var b60_a2g_jsow = func {
         pylon8.loadSet(pylonSets.aim9m);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.podIfts);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);

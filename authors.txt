@@ -180,4 +180,9 @@ LJQCN101
 - JSB controls improvements based on AD-A189-675
 
 Aron24 "HAVOC24"
-- SDAK ANG, ND ANG, MN ANG, 75yrs supersonic liveries
+- SDAK ANG, ND ANG, MN ANG, 75yrs supersonic, 50TFW liveries
+
+BobDotCom
+- DED CRUS TOS page
+- DED, HUD font updates
+- Bug fixes and improvements
