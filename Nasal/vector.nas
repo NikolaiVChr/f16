@@ -2,7 +2,7 @@ var Math = {
     #
     # Authors: Nikolai V. Chr, Axel Paccalin.
     #
-    # Version 2.01
+    # Version 2.02
     #
     # When doing euler coords. to cartesian: +x = forw, +y = left,  +z = up.
     # FG struct. coords:                     +x = back, +y = right, +z = up.
@@ -292,7 +292,7 @@ var Math = {
             return 0;
         }
         me.coord3 = geo.Coord.new(coord1);
-        me.coord3.set_alt(coord1.alt()-me.d12*1.5);# this will increase the area of the triangle so that rounding errors dont get in the way. Changed to 1.5 May 2023, which gives more presision than 0.5 when c1 and c2 are very close.
+        me.coord3.set_alt(coord1.alt()-me.d12*5);# this will increase the area of the triangle so that rounding errors dont get in the way. Changed to 5 May 2023, which gives more presision than 0.5 when c1 and c2 are very close.
         me.d13 = coord1.alt()-me.coord3.alt();        
         me.d32 = me.coord3.direct_distance_to(coord2);
         if (math.abs(me.d13)+me.d32 < me.d12) {
