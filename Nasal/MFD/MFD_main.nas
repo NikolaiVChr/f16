@@ -4297,18 +4297,16 @@ var MFD_Device =
         me.p_HARM.model_index = me.model_index;
         me.p_HARM.root = svg;
         me.p_HARM.elapsed = 0;
-        me.p_HARM.handoffTime = 0;
         me.p_HARM.slew_c_last = slew_c;
         me.p_HARM.table = 0;
         me.p_HARM.fov = 0;
         me.p_HARM.wdt = 552*0.795;
         me.p_HARM.ppp = me.PFD;
         me.p_HARM.my = me;
-        me.p_HARM.tables = [["2","11","20","P","SH"],["6","AAA","5","",""],["S","","","",""]];
+        me.p_HARM.tables = [["2","11","20","P","SH"],["6","AAA","5"],["S"]];
         me.p_HARM.items = [];
         me.p_HARM.iter = -1;
         me.p_HARM.sensor = radar_system.f16_radSensor;
-        me.p_HARM.handoffTarget = nil;
         me.p_HARM.selectionBox = me.selectionBox;
         me.p_HARM.setSelectionColor = me.setSelectionColor;
         me.p_HARM.resetColor = me.resetColor;
@@ -4407,7 +4405,7 @@ var MFD_Device =
                             me.sensor.fov = me.fov;
                             me.sensor.reset();
                         }
-                        me.sensor.setEnabled(me["handoffTarget"] == nil);
+                        me.sensor.setEnabled(me.sensor.handoffTarget == nil);
                     } else {
                         me.sensor.setEnabled(0);
                     }
@@ -4562,18 +4560,18 @@ var MFD_Device =
             me.items = me.sensor.vector_aicontacts_seen;
             me.iter = size(me.items)-1;
 
-            if (me.radWeap != nil and me["handoffTarget"] != nil and me.radWeap["guidance"] == "radiation" and me.radWeap.status < armament.MISSILE_LOCK) {
+            if (me.radWeap != nil and me.sensor.handoffTarget != nil and me.radWeap["guidance"] == "radiation" and me.radWeap.status < armament.MISSILE_LOCK) {
                 # This makes sure we go from handover back to search when missile loses lock
-                if (systime()-me.handoffTime > 1) {
+                if (systime()-me.sensor.handoffTime > 1) {
                     # It had time to get lock, but failed
                     me.radWeap.setContacts([]);
-                    me["handoffTarget"] = nil;
+                    me.sensor.handoffTarget = nil;
                 }
             }
 
-            if (me["handoffTarget"] != nil) {
+            if (me.sensor.handoffTarget != nil) {
                 #me.handoffTarget
-                me.root.rdrTxt[0].setText(me.handoffTarget.radiSpike~me.handoffTarget.mdl);
+                me.root.rdrTxt[0].setText(me.sensor.handoffTarget.radiSpike~me.sensor.handoffTarget.mdl);
                 me.root.rdrTxt[0].setTranslation(0, me.root.fieldY + me.root.fieldH*0.5);
                 me.root.cross.setTranslation(0, me.root.fieldY + me.root.fieldH*0.5);
                 me.root.rdrTxt[1].hide();
@@ -4594,7 +4592,7 @@ var MFD_Device =
                 #me.root.dashBox.hide();
                 me.root.cross.show();
                 if (cursor_click == me.root.index) {
-                    me.handoffTarget = nil;
+                    me.sensor.handoffTarget = nil;
                     cursor_click = -1;
                     if (me.radWeap != nil and me.radWeap["guidance"] == "radiation") {
                         me.radWeap.setContacts([]);
@@ -4603,7 +4601,7 @@ var MFD_Device =
                 } else {
                     #if (me.sensor.enabled) {
                     if (me.radWeap != nil and me.radWeap["guidance"] == "radiation") {
-                        me.radWeap.setContacts([me.handoffTarget]);
+                        me.radWeap.setContacts([me.sensor.handoffTarget]);
                     }
                         me.sensor.setEnabled(0);
                     #}
@@ -4653,7 +4651,8 @@ var MFD_Device =
                 if (cursor_click == me.root.index) {
                     me.handoffTarget = me.click(me.items);
                     if (me.handoffTarget != nil) {
-                        me.handoffTime = systime();
+                        me.sensor.handoffTime = systime();
+                        me.sensor.handoffTarget = me.handoffTarget;
                     }
                     cursor_click = -1;
                 }

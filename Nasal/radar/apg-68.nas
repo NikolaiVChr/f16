@@ -2655,6 +2655,8 @@ var RadSensor = {
 	index: -1,
 	timing: 0.05,
 	table: [],
+	handoffTarget: nil,
+	handoffTime: 0,
 	searchCounter: 0,
 	x: [-40, 40],
 	y: [-40, 10],
