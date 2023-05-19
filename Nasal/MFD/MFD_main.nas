@@ -4562,7 +4562,7 @@ var MFD_Device =
             me.items = me.sensor.vector_aicontacts_seen;
             me.iter = size(me.items)-1;
 
-            if (me.radWeap != nil and me["handoffTarget"] != nil and me.radWeap["guidance"] == "radiation" and me.radWeap.Tgt == me.radWeap and me.radWeap.status != MISSILE_LOCK) {
+            if (me.radWeap != nil and me["handoffTarget"] != nil and me.radWeap["guidance"] == "radiation" and me.radWeap.status < armament.MISSILE_LOCK) {
                 # This makes sure we go from handover back to search when missile loses lock
                 if (systime()-me.handoffTime > 1) {
                     # It had time to get lock, but failed
