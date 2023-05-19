@@ -4238,6 +4238,12 @@ var MFD_Device =
                 .setColor(colorText1)
                 .set("z-index",2)
                 .setFontSize(20, 1.0);
+        svg.obs7 = svg.buttonView.createChild("text")
+                .setTranslation(276*0.775, -482*0.5-65)
+                .setText("RS")
+                .setAlignment("right-center")
+                .setColor(colorText1)
+                .setFontSize(20, 1.0);
         svg.obs10 = svg.buttonView.createChild("text")
                 .setTranslation(276*0.775, -482*0.5+125+10)
                 .setText("")
@@ -4319,7 +4325,7 @@ var MFD_Device =
                 } elsif (eventi == 4) {
                     #me.setSelection(me.ppp.buttons[10], me.ppp.buttons[10], 4);
                 } elsif (eventi == 6) {                    
-                    # RS
+                    me.sensor.reset();
                 } elsif (eventi == 10) {
                     me.ppp.selectPage(me.my.p_LIST);
                     me.resetColor(me.ppp.buttons[10]);
@@ -4369,6 +4375,7 @@ var MFD_Device =
 
             # make sure it can maddog
             # filters for table
+            # when having 2 HAS displays, sensor might get table confused, and check for other issues.
             # test
 
             if (pylons.fcs != nil) {
