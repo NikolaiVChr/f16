@@ -153,19 +153,11 @@ var slugs_to_lbm = SLUGS2LBM;# since various aircraft use this from outside miss
 var first_in_air = 0;# first missile is in the air, other missiles should not write to MP.
 var first_in_air_max_sec = 30;
 
-var versionString = getprop("sim/version/flightgear");
-var version = split(".", versionString);
-var major = num(version[0]);
-var minor = num(version[1]);
-var pica  = num(version[2]);
-var pickingMethod = 0;
-if ((major == 2017 and minor == 2 and pica >= 1) or (major == 2017 and minor > 2) or major > 2017) {
-	pickingMethod = 1;
-}
-var offsetMethod = 0;
-if ((major == 2017 and minor == 2 and pica >= 1) or (major == 2017 and minor > 2) or major > 2017) {
-	offsetMethod = 1;
-}
+#var versionString = getprop("sim/version/flightgear");
+#var version = split(".", versionString);
+#var major = num(version[0]);
+#var minor = num(version[1]);
+#var pica  = num(version[2]);
 
 var wingedGuideFactor = 0.1;
 
@@ -193,27 +185,27 @@ var contactPoint = nil;
 # get_type()      - (AIR, MARINE, SURFACE or ORDNANCE)
 # getUnique()     - Used when comparing 2 targets to each other and determining if they are the same target.
 # isValid()       - If this target is valid
-# getElevation()
-# get_bearing()
-# get_Callsign()
-# get_range()
+# getElevation()  - Pitch to target from launch vehicle
+# get_bearing()   - Bearing to target from launch vehicle
+# get_Callsign() 
+# get_range()     - NM
 # get_Coord()
-# get_altitude()
+# get_altitude()  - FT
 # get_Pitch()
 # get_Speed()
 # get_heading()
-# get_uBody()
-# get_vBody()
-# get_wBody()
+# get_uBody()     - Body velocities in ft/s. Forward component.
+# get_vBody()     - Right component
+# get_wBody()     - Down component
 # getLastGroundTrackBlep() - Used for sample guidance
 # getFlareNode()  - Used for flares.
 # getChaffNode()  - Used for chaff.
 # isPainted()     - Tells if this target is still being radar tracked by the launch platform, only used in semi-radar guided missiles.
 # isLaserPainted()     - Tells if this target is still being tracked by the launch platform, only used by laser guided ordnance.
 # isRadiating(coord) - Tell if anti-radiation missile is hit by radiation from target. coord is the weapon position.
-# isCommandActive()
+# isCommandActive()  - If surface based launcher is still tracking (command guidance) or have a search blep (TVM) on target.
 # isVirtual()     - Tells if the target is just a position, and should not be considered for damage.
-# get_closure_rate()  -  closure rate in kt
+# get_closure_rate()  -  closure rate in kt to launch platform
 
 var AIM = {
 	lowestETA: nil,
@@ -1549,7 +1541,7 @@ var AIM = {
 				me.railEnd   = vector.Math.plus(me.railBegin, vector.Math.product(me.rail_dist_m, me.railvec));
 			}
 		}
-		if (offsetMethod and (!me.rail or me.rail_forward)) {
+		if (!me.rail or me.rail_forward) {
 			var pos = aircraftToCart({x:-me.x, y:me.y, z: -me.z});
 			init_coord = geo.Coord.new();
 			init_coord.set_xyz(pos.x, pos.y, pos.z);
@@ -2394,12 +2386,8 @@ var AIM = {
 			# missile on rail, lets move it on the rail
 			if (me.rail_forward) {
 				var init_coord = nil;
-				if (offsetMethod) {
-					me.geodPos = aircraftToCart({x:-me.x, y:me.y, z: -me.z});
-					me.coord.set_xyz(me.geodPos.x, me.geodPos.y, me.geodPos.z);
-				} else {
-					me.coord = me.getGPS(me.x, me.y, me.z, OurPitch.getValue());
-				}
+				me.geodPos = aircraftToCart({x:-me.x, y:me.y, z: -me.z});
+				me.coord.set_xyz(me.geodPos.x, me.geodPos.y, me.geodPos.z);
 			} else {
 				me.coord = me.getGPS(-me.railPos[0], -me.railPos[1], me.railPos[2], OurPitch.getValue(), OurHdg.getValue());
 			}
@@ -3342,7 +3330,7 @@ var AIM = {
 	},
 
 	checkForLOS: func () {
-		if (pickingMethod and me.guidance != "gps" and me.guidance != "gps-laser" and me.guidance != "unguided" and me.guidance != "inertial" and me.guidance != "sample") {
+		if (me.guidance != "gps" and me.guidance != "gps-laser" and me.guidance != "unguided" and me.guidance != "inertial" and me.guidance != "sample") {
 			me.xyz          = {"x":me.coord.x(),                  "y":me.coord.y(),                 "z":me.coord.z()};
 		    me.directionLOS = {"x":me.t_coord.x()-me.coord.x(),   "y":me.t_coord.y()-me.coord.y(),  "z":me.t_coord.z()-me.coord.z()};
 
@@ -5326,15 +5314,6 @@ var AIM = {
 		me.seeker_elev_target = 0;
 		me.seeker_head_target = 0;
 		me.moveSeeker();
-	},
-
-	clamp_min_max: func (v, mm) {
-		if ( v < -mm ) {
-			v = -mm;
-		} elsif ( v > mm ) {
-			v = mm;
-		}
-		return(v);
 	},
 
 	clamp: func(v, min, max) { v < min ? min : v > max ? max : v },
