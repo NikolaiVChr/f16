@@ -867,8 +867,9 @@
             <reaquire type="bool">true</reaquire>
             <lock-on-after-launch type="bool">true</lock-on-after-launch>
             <auto-switch-target-allowed type="bool">false</auto-switch-target-allowed>
+            <no-common-target type="bool">true</no-common-target>
             <prowl-flight type="string">gyro-pitch</prowl-flight>
-            <switch-time-sec type="double">5</switch-time-sec>
+            <switch-time-sec type="double">15</switch-time-sec>
             <class type="string">GM</class>
             <fire-msg type="string">Sniper</fire-msg><!--Magnum-->
             <ready-time type="double">0.25</ready-time>

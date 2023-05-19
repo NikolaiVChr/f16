@@ -1930,6 +1930,10 @@ var MFD_Device =
                     me.ppp.selectPage(me.my.p_DTE);
                     me.selectionBox.show();
                     me.setSelection(nil, me.ppp.buttons[7], 7);
+                } elsif (eventi == 11) {
+                    me.ppp.selectPage(me.my.p_HARM);
+                    me.selectionBox.show();
+                    me.setSelection(nil, me.ppp.buttons[10], 10);
                 } elsif (eventi == 15) {
                     swap();
                 }
@@ -3141,7 +3145,7 @@ var MFD_Device =
                 } elsif (me.wpn.type == "AGM-88") {
                     me.wpnType ="anti-rad";
                     me.eegs = "A-G";
-                    me.drop = getprop("f16/stores/harm-mounted")?"HAD":"HAS";
+                    me.drop = "HAS";#getprop("f16/stores/harm-mounted")?"HAD":"HAS";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "MAL";
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
@@ -4051,6 +4055,709 @@ var MFD_Device =
         };
     },
 
+    setupHARM: func (svg, index) {
+        svg.p_HARM = me.canvas.createGroup()
+                    .set("z-index",2)
+                    .set("font","LiberationFonts/LiberationMono-Regular.ttf");
+        svg.buttonView = svg.p_HARM.createChild("group")
+                .setTranslation(276*0.795,482);
+        svg.groupRdr = svg.p_HARM.createChild("group")
+                .setTranslation(276*0.795, 0);#552,482 , 0.795 is for UV map
+        svg.groupCursor = svg.p_HARM.createChild("group")
+                .setTranslation(276*0.795, 482);#552,482 , 0.795 is for UV map
+
+        svg.width  = 276*0.795*2;
+        svg.height = 482;
+        svg.index = index;
+        svg.maxB = 5;
+        svg.rdrTxt = setsize([],svg.maxB);
+        for (var i = 0;i<svg.maxB;i+=1) {
+                svg.rdrTxt[i] = svg.groupRdr.createChild("text")
+                        .setAlignment("center-center")
+                        .setFontSize(20, 1.0)
+                        .setColor(colorDot1);
+        }
+        svg.cursor = svg.groupCursor.createChild("path")
+                    .moveTo(-8,-9)
+                    .vert(18)
+                    .moveTo(8,-9)
+                    .vert(18)
+                    .setStrokeLineWidth(2.0)
+                    .setColor(colorLine3);
+
+        var fieldH = svg.height * 0.60;
+        var fieldW = svg.width * 0.666;
+        svg.fieldH = fieldH;
+        svg.fieldW = fieldW;
+        svg.fieldX = -fieldW * 0.5;
+        svg.fieldY = svg.height * 0.25;
+        svg.topBox = svg.groupRdr.createChild("path")
+                .moveTo(-fieldW*0.5, 40)
+                .horiz(fieldW)
+                .vert(svg.height * 0.10)
+                .horiz(-fieldW)
+                .vert(-svg.height * 0.10)
+                .setColor(colorLine1)
+                .set("z-index",12)
+                .setStrokeLineWidth(2);
+        svg.topBoxText = svg.groupRdr.createChild("text")
+                        .setAlignment("left-center")
+                        .setTranslation(-fieldW*0.5, 40+svg.height * 0.10*0.5)
+                        .setFontSize(20, 1.0)
+                        .setColor(colorDot1);
+        svg.dashBox = svg.groupRdr.createChild("path")
+                .moveTo(-fieldW * 0.5, svg.height * 0.25)
+                .horiz(fieldW)
+                .vert(fieldH)
+                .horiz(-fieldW)
+                .vert(-fieldH)
+                .setColor(colorLine2)
+                .setStrokeDashArray([20,20])
+                .set("z-index",12)
+                .setStrokeLineWidth(2);
+
+        svg.searchText = svg.groupRdr.createChild("text")
+                        .setAlignment("center-top")
+                        .setTranslation(0, 40+svg.height * 0.10+5)
+                        .setFontSize(20, 1.0)
+                        .setColor(colorDot1);
+
+        svg.crossY = svg.groupRdr.createChild("path")
+                .moveTo(0, svg.fieldY)
+                .vert(fieldH)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
+        svg.crossX = svg.groupRdr.createChild("path")
+                .moveTo(-fieldW * 0.5, svg.fieldY + fieldH * 0.25)
+                .horiz(fieldW)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
+        svg.crossX1 = svg.groupRdr.createChild("path")
+                .moveTo(0, 5)
+                .vert(-10)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
+        svg.crossX2 = svg.groupRdr.createChild("path")
+                .moveTo(0, 5)
+                .vert(-10)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
+        svg.crossX3 = svg.groupRdr.createChild("path")
+                .moveTo(0, 5)
+                .vert(-10)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
+        svg.crossX4 = svg.groupRdr.createChild("path")
+                .moveTo(0, 5)
+                .vert(-10)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
+        svg.crossX5 = svg.groupRdr.createChild("path")
+                .moveTo(0, 5)
+                .vert(-10)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
+        svg.crossX6 = svg.groupRdr.createChild("path")
+                .moveTo(0, 5)
+                .vert(-10)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
+        svg.crossY1 = svg.groupRdr.createChild("path")
+                .moveTo(-5, 0)
+                .horiz(10)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
+        svg.crossY2 = svg.groupRdr.createChild("path")
+                .moveTo(-5, 0)
+                .horiz(10)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
+        svg.crossY3 = svg.groupRdr.createChild("path")
+                .moveTo(-5, 0)
+                .horiz(10)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
+        svg.cross = svg.groupRdr.createChild("path")
+                .moveTo(20, 0)
+                .horiz(fieldW * 0.5-20)
+                .moveTo(-20, 0)
+                .horiz(-fieldW * 0.5+20)
+                .moveTo(0, 20)
+                .vert(fieldH * 0.5-20)
+                .moveTo(0, -20)
+                .vert(-fieldH * 0.5+20)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
+
+
+        # BUTTONS
+        svg.obs1 = svg.buttonView.createChild("text")
+                .setTranslation(-276*0.795, -482*0.5-125)
+                .setText(" P")
+                .setAlignment("left-center")
+                .setColor(colorText1)
+                .setFontSize(20, 1.0);
+        svg.obs2 = svg.buttonView.createChild("text")
+                .setTranslation(-276*0.795, -482*0.5-65)
+                .setText(" 2")
+                .setAlignment("left-center")
+                .setColor(colorText1)
+                .setFontSize(20, 1.0);
+        svg.obs3 = svg.buttonView.createChild("text")
+                .setTranslation(-276*0.795, -482*0.5-5)
+                .setText("11")
+                .setAlignment("left-center")
+                .setColor(colorText1)
+                .setFontSize(20, 1.0);
+        svg.obs4 = svg.buttonView.createChild("text")
+                .setTranslation(-276*0.795, -482*0.5+55)
+                .setText("20")
+                .setAlignment("left-center")
+                .setColor(colorText1)
+                .setFontSize(20, 1.0);
+        svg.obs5  = svg.buttonView.createChild("text")
+                .setTranslation(-276*0.795, -482*0.5+125+10)
+                .setText(" 6")
+                .setAlignment("left-center")
+                .setColor(colorText1)
+                .set("z-index",2)
+                .setFontSize(20, 1.0);
+        svg.obs10 = svg.buttonView.createChild("text")
+                .setTranslation(276*0.775, -482*0.5+125+10)
+                .setText("")
+                .setAlignment("right-center")
+                .setColor(colorText1)
+                .set("z-index",1)
+                .setFontSize(20, 1.0);
+        #svg.obs11 = svg.buttonView.createChild("text")
+        #        .setTranslation(276*0.795*-0.71, -482*0.5-215)
+        #        .setText("HAS")
+        #        .setAlignment("center-top")
+        #        .setColor(colorText1)
+        #        .set("z-index",20000)
+        #        .setFontSize(20, 1.0);
+        svg.obs12 = svg.buttonView.createChild("text")
+                .setTranslation(276*0.795*-0.30, -482*0.5-225)
+                .setText("TBL1")
+                .setAlignment("center-top")
+                .setColor(colorText1)
+                .setFontSize(18, 1.0);
+        svg.obs13 = svg.buttonView.createChild("text")
+                .setTranslation(276*0.795*0.0, -482*0.5-225)
+                .setText("WIDE")
+                .setAlignment("center-top")
+                .setColor(colorText1)
+                .set("z-index",1)
+                .setFontSize(18, 1.0);
+        
+        
+        
+        svg.notSOI = svg.buttonView.createChild("text")
+           .setTranslation(0, -482*0.55)
+           .setAlignment("center-center")
+           .setText("NOT SOI")
+           .set("z-index",12)
+           .setFontSize(18, 1.0)
+           .setColor(colorText2);
+    },
+
+    addHARM: func {
+        var svg = {getElementById: func (id) {return me[id]},};
+        me.setupHARM(svg, me.model_index);
+        me.PFD.addHARMPage = func(svg, title, layer_id) {
+            var np = PFD_Page.new(svg, title, layer_id, me);
+            append(me.pages, np);
+            me.page_index[layer_id] = np;
+            np.setVisible(0);
+            return np;
+        };
+        me.p_HARM = me.PFD.addHARMPage(svg, "HAD", "p_HARM");
+        me.p_HARM.model_index = me.model_index;
+        me.p_HARM.root = svg;
+        me.p_HARM.elapsed = 0;
+        me.p_HARM.slew_c_last = slew_c;
+        me.p_HARM.table = 0;
+        me.p_HARM.fov = 0;
+        me.p_HARM.wdt = 552*0.795;
+        me.p_HARM.ppp = me.PFD;
+        me.p_HARM.my = me;
+        me.p_HARM.tables = [["2","11","20","P","SH"],["6","AAA","5","",""],["S","","","",""]];
+        me.p_HARM.items = [];
+        me.p_HARM.iter = -1;
+        me.p_HARM.sensor = radar_system.f16_radSensor;
+        me.p_HARM.handoffTarget = nil;
+        me.p_HARM.selectionBox = me.selectionBox;
+        me.p_HARM.setSelectionColor = me.setSelectionColor;
+        me.p_HARM.resetColor = me.resetColor;
+        me.p_HARM.setSelection = me.setSelection;
+        me.p_HARM.notifyButton = func (eventi) {
+            if (eventi != nil) {
+                if (eventi == 0) {
+                    #me.setSelection(me.ppp.buttons[10], me.ppp.buttons[10], 0);
+                } elsif (eventi == 1) {
+                    #me.setSelection(me.ppp.buttons[10], me.ppp.buttons[10], 1);
+                } elsif (eventi == 2) {
+                    #me.setSelection(me.ppp.buttons[10], me.ppp.buttons[10], 2);
+                } elsif (eventi == 3) {
+                    #me.setSelection(me.ppp.buttons[10], me.ppp.buttons[10], 3);
+                } elsif (eventi == 4) {
+                    #me.setSelection(me.ppp.buttons[10], me.ppp.buttons[10], 4);
+                } elsif (eventi == 6) {                    
+                    # RS
+                } elsif (eventi == 10) {
+                    me.ppp.selectPage(me.my.p_LIST);
+                    me.resetColor(me.ppp.buttons[10]);
+                    me.selectionBox.hide();
+                } elsif (eventi == 11) {
+                    me.table += 1;
+                    if (me.table > 2) me.table = 0;
+                } elsif (eventi == 12) {
+                    me.fov += 1;
+                    if (me.fov > 3) me.fov = 0;
+                } elsif (eventi == 15) {
+                    swap();
+                } elsif (eventi == 16) {
+                    me.ppp.selectPage(me.my.p_HSD);
+                    me.setSelection(me.ppp.buttons[10], me.ppp.buttons[16], 16);
+                } elsif (eventi == 17) {
+                    me.ppp.selectPage(me.my.p_SMS);
+                    me.setSelection(me.ppp.buttons[10], me.ppp.buttons[17], 17);
+                } elsif (eventi == 18) {                    
+                    me.ppp.selectPage(me.my.p_WPN);
+                    me.setSelection(me.ppp.buttons[10], me.ppp.buttons[18], 18);
+                } elsif (eventi == 19) {
+                    if(getprop("f16/stores/tgp-mounted") and !getprop("/fdm/jsbsim/gear/unit[0]/WOW")) {
+                        screen.log.write("Click BACK to get back to cockpit view",1,1,1);
+                        switchTGP();
+                    }
+                }
+            }
+
+# Menu Id's
+#  CRM
+#   10  11  12  13  14
+# 0                    5
+# 1                    6
+# 2                    7
+# 3                    8
+# 4                    9
+#   15  16  17  18  19
+#  VSD HSD SMS SIT
+        };
+
+        me.p_HARM.update = func (noti) {
+            
+            #if (noti.FrameCount != 1 and noti.FrameCount != 3)
+            #    return;
+            #print("\nHAD update:\n=======");
+
+            # make sure it can maddog
+            # filters for table
+            # it find 20 too fast
+            # it searches dura x 3
+            # test
+
+            if (pylons.fcs != nil) {
+                me.radWeap = pylons.fcs.getSelectedWeapon();
+                if (me.radWeap != nil) {
+                    if (me.radWeap["guidance"] == "radiation") {
+                        me.sensor.maxArea = me.root.fieldW * me.root.fieldH;
+                        if (me.fov == 1) {
+                            me.sensor.area = me.sensor.maxArea*0.25;
+                            me.sensor.x    = [-15, 15];
+                            me.sensor.y    = [-10, 10];#todo: something of here, decide proper
+                        } elsif (me.fov == 2) {
+                            me.sensor.area = me.sensor.maxArea*0.5;
+                            me.sensor.x    = [-30, 0];
+                            me.sensor.y    = [-30, 10];
+                        } elsif (me.fov == 3) {
+                            me.sensor.area = me.sensor.maxArea*0.5;
+                            me.sensor.x    = [0, 30];
+                            me.sensor.y    = [-30, 10];
+                        } else {
+                            me.sensor.area = me.sensor.maxArea;
+                            me.sensor.x    = [-30, 30];
+                            me.sensor.y    = [-30, 10];
+                        }
+                        me.sensor.table = me.tables[me.table];
+                        me.sensor.range = me.radWeap.max_fire_range_nm;
+                        if (me.sensor["fov"] != me.fov) {
+                            me.sensor.fov = me.fov;
+                            me.sensor.reset();
+                        }
+                        me.sensor.setEnabled(me["handoffTarget"] == nil);
+                    } else {
+                        me.sensor.setEnabled(0);
+                    }
+                } else {
+                    me.sensor.setEnabled(0);
+                }
+            } else {
+                me.sensor.setEnabled(0);
+                return;
+            }
+
+            #CURSOR
+            if (uv != nil and me.root.index == uv[2]) {
+                if (systime()-uv[3] < 0.5) {
+                    # the time check is to prevent click on other pages to carry over to CRM when that is selected.
+                    cursor_destination = uv;
+                }
+                uv = nil;
+            }
+
+            me.slew_x = getprop("controls/displays/target-management-switch-x[" ~ me.model_index ~ "]");
+            me.slew_y = -getprop("controls/displays/target-management-switch-y[" ~ me.model_index ~ "]");
+
+            if (noti.getproper("viewName") != "TGP") {
+                f16.resetSlew();
+            }
+
+            me.dt = noti.getproper("elapsed") - me.elapsed;
+
+            if ((me.slew_x != 0 or me.slew_y != 0 or slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.root.index) and noti.getproper("viewName") != "TGP") {
+                cursor_destination = nil;
+                cursor_pos[0] += me.slew_x*175;
+                cursor_pos[1] -= me.slew_y*175;
+                cursor_pos[0] = math.clamp(cursor_pos[0], -552*0.5*0.795, 552*0.5*0.795);
+                cursor_pos[1] = math.clamp(cursor_pos[1], -482, 0);
+                cursor_click = (slew_c and !me.slew_c_last)?me.root.index:-1;
+                cursor_lock = me.root.index;
+            } elsif (cursor_lock == me.root.index or (me.slew_x == 0 or me.slew_y == 0 or slew_c == 0)) {
+                cursor_lock = -1;
+            }
+            me.slew_c_last = slew_c;
+            slew_c = 0;
+            if (cursor_destination != nil and cursor_destination[2] == me.root.index) {
+                me.slew = 100*me.dt;
+                if (cursor_destination[0] > cursor_pos[0]) {
+                    cursor_pos[0] += me.slew;
+                    if (cursor_destination[0] < cursor_pos[0]) {
+                        cursor_pos[0] = cursor_destination[0]
+                    }
+                } elsif (cursor_destination[0] < cursor_pos[0]) {
+                    cursor_pos[0] -= me.slew;
+                    if (cursor_destination[0] > cursor_pos[0]) {
+                        cursor_pos[0] = cursor_destination[0]
+                    }
+                }
+                if (cursor_destination[1] > cursor_pos[1]) {
+                    cursor_pos[1] += me.slew;
+                    if (cursor_destination[1] < cursor_pos[1]) {
+                        cursor_pos[1] = cursor_destination[1]
+                    }
+                } elsif (cursor_destination[1] < cursor_pos[1]) {
+                    cursor_pos[1] -= me.slew;
+                    if (cursor_destination[1] > cursor_pos[1]) {
+                        cursor_pos[1] = cursor_destination[1]
+                    }
+                }
+                cursor_lock = me.root.index;
+                if (cursor_destination[0] == cursor_pos[0] and cursor_destination[1] == cursor_pos[1]) {
+                    cursor_click = me.root.index;
+                }
+            }
+            me.elapsed = noti.getproper("elapsed");
+            me.root.cursor.setTranslation(cursor_pos);
+            if (0 and cursor_click==0) print(cursor_pos[0],", ",cursor_pos[1]+482, "  click: ", cursor_click);
+
+            if (f16.SOI == 3 and me.model_index == 1) {
+                me.root.notSOI.hide();
+            } elsif (f16.SOI == 2 and me.model_index == 0) {
+                me.root.notSOI.hide();
+            } else {
+                me.root.notSOI.show();
+            }
+            
+            me.root.obs12.setText("TBL"~(me.table + 1));
+            
+            if (me.fov == 1) {
+                me.fovTxt = "CTR";
+                me.root.crossX.setTranslation(0,me.root.fieldH*0.25); 
+                me.root.crossY.setTranslation(0,0);
+                me.root.crossX1.setTranslation(me.root.fieldX+20*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.5); 
+                me.root.crossX2.setTranslation(me.root.fieldX+20*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.5); 
+                me.root.crossX3.setTranslation(me.root.fieldX+1*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.5); 
+                me.root.crossX4.setTranslation(me.root.fieldX+5*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.5); 
+                me.root.crossX5.setTranslation(me.root.fieldX+20*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.5); 
+                me.root.crossX6.setTranslation(me.root.fieldX+20*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.5); 
+                me.root.crossY1.setTranslation(0, me.root.fieldY+me.root.fieldH*0.5+2*me.root.fieldH*0.75/3);
+                me.root.crossY2.setTranslation(0, me.root.fieldY+me.root.fieldH*0.5+4*me.root.fieldH*0.75/3);
+                me.root.crossY3.setTranslation(0, me.root.fieldY+me.root.fieldH*0.5+6*me.root.fieldH*0.75/3);
+            } elsif (me.fov == 2) {
+                me.fovTxt = "LEFT";
+                me.root.crossX.setTranslation(0,0); 
+                me.root.crossY.setTranslation(-me.root.fieldX,0);
+                me.root.crossX1.setTranslation(me.root.fieldX,                    me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX2.setTranslation(me.root.fieldX+2*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX3.setTranslation(me.root.fieldX+4*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX4.setTranslation(me.root.fieldX+6*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX5.setTranslation(me.root.fieldX+8*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX6.setTranslation(me.root.fieldX+10*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossY1.setTranslation(-me.root.fieldX, me.root.fieldY+me.root.fieldH*0.25+1*me.root.fieldH*0.75/3);
+                me.root.crossY2.setTranslation(-me.root.fieldX, me.root.fieldY+me.root.fieldH*0.25+2*me.root.fieldH*0.75/3);
+                me.root.crossY3.setTranslation(-me.root.fieldX, me.root.fieldY+me.root.fieldH*0.25+3*me.root.fieldH*0.75/3);
+            } elsif (me.fov == 3) {
+                me.fovTxt = "RGHT";
+                me.root.crossX.setTranslation(0,0); 
+                me.root.crossY.setTranslation(me.root.fieldX,0);
+                me.root.crossX1.setTranslation(me.root.fieldX,                    me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX2.setTranslation(me.root.fieldX+2*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX3.setTranslation(me.root.fieldX+4*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX4.setTranslation(me.root.fieldX+6*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX5.setTranslation(me.root.fieldX+8*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX6.setTranslation(me.root.fieldX+10*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossY1.setTranslation(me.root.fieldX, me.root.fieldY+me.root.fieldH*0.25+1*me.root.fieldH*0.75/3);
+                me.root.crossY2.setTranslation(me.root.fieldX, me.root.fieldY+me.root.fieldH*0.25+2*me.root.fieldH*0.75/3);
+                me.root.crossY3.setTranslation(me.root.fieldX, me.root.fieldY+me.root.fieldH*0.25+3*me.root.fieldH*0.75/3);
+            } else {
+                me.fovTxt = "WIDE";
+                me.root.crossX.setTranslation(0,0); 
+                me.root.crossY.setTranslation(0,0);
+                me.root.crossX1.setTranslation(me.root.fieldX, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX2.setTranslation(me.root.fieldX+1*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX3.setTranslation(me.root.fieldX+2*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX4.setTranslation(me.root.fieldX+3*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX5.setTranslation(me.root.fieldX+4*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX6.setTranslation(me.root.fieldX+5*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossY1.setTranslation(0, me.root.fieldY+me.root.fieldH*0.25+1*me.root.fieldH*0.75/3);
+                me.root.crossY2.setTranslation(0, me.root.fieldY+me.root.fieldH*0.25+2*me.root.fieldH*0.75/3);
+                me.root.crossY3.setTranslation(0, me.root.fieldY+me.root.fieldH*0.25+3*me.root.fieldH*0.75/3);
+            }
+            me.root.obs13.setText(me.fovTxt);
+            me.root.obs1.setText(me.tables[me.table][0]);
+            me.root.obs2.setText(me.tables[me.table][1]);
+            me.root.obs3.setText(me.tables[me.table][2]);
+            me.root.obs4.setText(me.tables[me.table][3]);
+            me.root.obs5.setText(me.tables[me.table][4]);
+            if (me.sensor.enabled) {
+                me.root.searchText.setText(sprintf("%d:%02d   SCT-%d",(systime()-me.sensor.searchStart)/60,math.mod(systime()-me.sensor.searchStart,60),me.sensor.searchCounter));
+                me.root.searchText.show();
+            } else {
+                me.root.searchText.hide();
+            }
+
+
+            
+            me.items = me.sensor.vector_aicontacts_seen;
+            me.iter = size(me.items)-1;
+                
+            if (me["handoffTarget"] != nil) {
+                #me.handoffTarget
+                me.root.rdrTxt[0].setText(me.handoffTarget.radiSpike~me.handoffTarget.mdl);
+                me.root.rdrTxt[0].setTranslation(0, me.root.fieldY + me.root.fieldH*0.5);
+                me.root.cross.setTranslation(0, me.root.fieldY + me.root.fieldH*0.5);
+                me.root.rdrTxt[1].hide();
+                me.root.rdrTxt[2].hide();
+                me.root.rdrTxt[3].hide();
+                me.root.rdrTxt[4].hide();
+                me.root.crossX.hide();
+                me.root.crossY.hide();
+                me.root.crossX1.hide();
+                me.root.crossX2.hide(); 
+                me.root.crossX3.hide();
+                me.root.crossX4.hide();
+                me.root.crossX5.hide();
+                me.root.crossX6.hide();
+                me.root.crossY1.hide();
+                me.root.crossY2.hide();
+                me.root.crossY2.hide();
+                #me.root.dashBox.hide();
+                me.root.cross.show();
+                if (cursor_click == me.root.index) {
+                    me.handoffTarget = nil;
+                    cursor_click = -1;
+                    me.radWeap.setContacts([]);
+                    me.radWeap.clearTgt();
+                } else {
+                    #if (me.sensor.enabled) {
+                        me.radWeap.setContacts([me.handoffTarget]);
+                        me.sensor.setEnabled(0);
+                    #}
+                }
+            } elsif (me.sensor.enabled) {
+                me.root.crossX.show();
+                me.root.crossY.show();
+                me.root.crossX1.show();
+                me.root.crossX2.show(); 
+                me.root.crossX3.show();
+                me.root.crossX4.show();
+                me.root.crossX5.show();
+                me.root.crossX6.show();
+                me.root.crossY1.show();
+                me.root.crossY2.show();
+                me.root.crossY2.show();
+                #me.root.dashBox.show();
+                me.root.cross.hide();
+                me.topLine = "   ";
+                me.topCheck = [0,0,0,0,0];
+                for (me.txt_count = 0; me.txt_count < 5; me.txt_count += 1) {
+                    me.check = !(me.txt_count > me.iter);
+                    me.checkFresh = me.check and me.items[me.txt_count].discover < systime()-me.sensor.searchStart and me.items[me.txt_count].discoverSCT==me.sensor.searchCounter;
+                    me.checkFading = me.check and me.items[me.txt_count]["discoverSCTShown"] == me.sensor.searchCounter-1;
+                    #if (me.check) print(" fresh ",me.checkFresh,", fading ",me.checkFading, ", timetoshow ", me.items[me.txt_count].discover);
+                    #if (me.check) print("  time ",me.items[me.txt_count].discover > systime()-me.sensor.searchStart,",  shown ",me.items[me.txt_count].discoverSCT," now",me.sensor.searchCounter);
+                    if (!me.check or (!me.checkFresh and !me.checkFading) ) {
+                        me.root.rdrTxt[me.txt_count].hide();
+                        continue;
+                    }
+                    me.root.rdrTxt[me.txt_count].show();
+                    me.data = me.items[me.txt_count];
+                    if (me.checkFresh) {
+                        me.data.discoverShown = me.data.discover;
+                        me.data.discoverSCTShown = me.data.discoverSCT;
+                    }
+                    me.dataPos = [me.extrapolate(me.data.pos[0], me.sensor.x[0], me.sensor.x[1], me.root.fieldX, me.root.fieldX + me.root.fieldW), me.extrapolate(me.data.pos[1], me.sensor.y[0], me.sensor.y[1], me.root.fieldY + me.root.fieldH, me.root.fieldY)];
+                    me.data.xyPos = me.dataPos;
+                    me.root.rdrTxt[me.txt_count].setText(me.data.radiSpike~me.data.mdl);
+                    me.root.rdrTxt[me.txt_count].setTranslation(me.dataPos);
+                    if (!me.topCheck[me.data.tblIdx]) {
+                        me.topLine ~= me.data.mdl~"   ";
+                        me.topCheck[me.data.tblIdx] = 1;
+                    }
+                }
+                me.root.topBoxText.setText(me.topLine);
+                if (cursor_click == me.root.index) {
+                    me.handoffTarget = me.click(me.items);
+                    cursor_click = -1;
+                }
+            } else {
+                me.root.crossX.show();
+                me.root.crossY.show();
+                me.root.crossX1.show();
+                me.root.crossX2.show(); 
+                me.root.crossX3.show();
+                me.root.crossX4.show();
+                me.root.crossX5.show();
+                me.root.crossX6.show();
+                me.root.crossY1.show();
+                me.root.crossY2.show();
+                me.root.crossY2.show();
+                #me.root.dashBox.show();
+                me.root.cross.hide();
+                me.topLine = "   ";
+                me.topCheck = [0,0,0,0,0];
+                me.root.topBoxText.setText(me.topLine);
+
+                if (cursor_click == me.root.index) {
+                    cursor_click = -1;
+                }
+            }
+
+            return;
+        };
+        me.p_HARM.click = func (items) {
+            me.clostestItem = nil;
+            me.clostestDist = 10000;
+
+            foreach(me.citem; items) {
+                me.xx = math.abs(me.citem.xyPos[0]-cursor_pos[0]);
+                me.yy = math.abs(me.citem.xyPos[1]-(cursor_pos[1] + 482));
+                me.cdist = math.sqrt(me.xx*me.xx+me.yy*me.yy);
+                if (me.cdist < me.clostestDist) {
+                    me.clostestDist = me.cdist;
+                    me.clostestItem = me.citem;
+                }
+            }
+            if (me.clostestDist < 20) {
+                return me.clostestItem;
+            }
+        };
+        me.p_HARM.interpolate = func (x, x1, x2, y1, y2) {
+            return math.clamp(y1 + ((x - x1) / (x2 - x1)) * (y2 - y1),y1,y2);
+        };
+        me.p_HARM.extrapolate = func (x, x1, x2, y1, y2) {
+            return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
+        };
+        me.p_HARM.paintBlep = func (contact) {
+            if (!contact.isVisible() and me.blue != 2) {
+                return;
+            }
+            me.desig = contact.equals(me.rdrprio);
+            me.hasTrack = contact.hasTrackInfo();
+            if (!me.hasTrack and me.blue == 0) {
+                return;
+            }
+            me.color = me.blue == 1?colorDot4:(me.blue == 2?colorCircle1:colorCircle2);
+            if (me.blue != 0) {
+                me.c_rng = contact.getRange()*M2NM;
+                me.c_rbe = contact.getDeviationHeading();
+                me.c_hea = contact.getHeading();
+                me.c_alt = contact.get_altitude();
+                me.c_spd = contact.getSpeed();
+            } else {
+                me.lastBlep = contact.getLastBlep();
+
+                me.c_rng = me.lastBlep.getRangeNow()*M2NM;
+                me.c_rbe = me.lastBlep.getAZDeviation();
+                me.c_hea = me.lastBlep.getHeading();
+                me.c_alt = me.lastBlep.getAltitude();
+                me.c_spd = me.lastBlep.getSpeed();
+            }
+
+
+            me.distPixels = (me.c_rng/me.rdrrng)*me.rdrRangePixels;
+            #    if (me.blue) print("through ",me.desig," LoS:",!contact.get_behind_terrain());
+
+
+            me.rot = 22.5*math.round( geo.normdeg((me.c_hea-me.selfHeading))/22.5 )*D2R;#Show rotation in increments of 22.5 deg
+            me.trans = [me.distPixels*math.sin(me.c_rbe*D2R),-me.distPixels*math.cos(me.c_rbe*D2R)];
+
+            if (me.blue != 1 and me.i < me.root.maxB) {
+                me.root.blepTrianglePaths[me.i].setColor(me.color);
+                me.root.blepTriangle[me.i].setTranslation(me.trans);
+                me.root.blepTriangle[me.i].show();
+                me.root.blepTrianglePaths[me.i].setRotation(me.rot);
+                me.root.blepTriangleVel[me.i].setRotation(me.rot);
+                me.root.blepTriangleVelLine[me.i].setScale(1,me.c_spd*0.0045);
+                me.root.blepTriangleVelLine[me.i].setColor(me.color);
+                me.lockAlt = sprintf("%02d", math.round(me.c_alt*0.001));
+                me.root.blepTriangleText[me.i].setText(me.lockAlt);
+                me.i += 1;
+                if (me.blue == 2 and me.ii < me.root.maxB) {
+                    me.root.lnkT[me.ii].setColor(me.color);
+                    me.root.lnkT[me.ii].setTranslation(me.trans[0],me.trans[1]-25);
+                    me.root.lnkT[me.ii].setText(""~me.blueIndex);
+                    me.root.lnk[me.ii].hide();
+                    me.root.lnkT[me.ii].show();
+                    me.root.lnkTA[me.ii].hide();
+                    me.ii += 1;
+                }
+            } elsif (me.blue == 1 and me.ii < me.root.maxB) {
+                me.root.lnk[me.ii].setColor(me.color);
+                me.root.lnk[me.ii].setTranslation(me.trans);
+                me.root.lnk[me.ii].setRotation(me.rot);
+                me.root.lnkT[me.ii].setColor(me.color);
+                me.root.lnkTA[me.ii].setColor(me.color);
+                me.root.lnkT[me.ii].setTranslation(me.trans[0],me.trans[1]-25);
+                me.root.lnkTA[me.ii].setTranslation(me.trans[0],me.trans[1]+20);
+                me.root.lnkT[me.ii].setText(""~me.blueIndex);
+                me.root.lnkTA[me.ii].setText(sprintf("%02d", math.round(me.c_alt*0.001)));
+                me.root.lnk[me.ii].show();
+                me.root.lnkTA[me.ii].show();
+                me.root.lnkT[me.ii].show();
+                me.ii += 1;
+            }
+
+            if (me.desig) {
+                me.root.selection.setTranslation(me.trans);
+                me.root.selection.setColor(me.color);
+                me.selected = 1;
+            }
+        };
+    },
 
 
 #   █████  ██████  ██████      ██████   █████   ██████  ███████ ███████ 
@@ -4073,6 +4780,7 @@ var MFD_Device =
         me.addRList();
         me.addRMList();
         me.addDTE();
+        me.addHARM();
 
         me.mfd_button_pushed = 0;
         # Connect the buttons - using the provided model index to get the right ones from the model binding
@@ -4220,6 +4928,13 @@ var MFD_Device =
         me.p_HSD.addMenuItem(18, "WPN", me.p_WPN);
         me.p_HSD.addMenuItem(19, "TGP", nil);
 
+        me.p_HARM.addMenuItem(10, "HAS", me.p_LIST); #selectionColored
+        me.p_HARM.addMenuItem(15, "SWAP", nil);
+        me.p_HARM.addMenuItem(16, "HSD", me.p_HSD);
+        me.p_HARM.addMenuItem(17, "SMS", me.p_SMS);
+        me.p_HARM.addMenuItem(18, "WPN", me.p_WPN);
+        me.p_HARM.addMenuItem(19, "TGP", nil);
+
         me.p_WPN.addMenuItem(10, "FCR", me.p_RDR);
         me.p_WPN.addMenuItem(15, "SWAP", nil);
         me.p_WPN.addMenuItem(16, "HSD", me.p_HSD);
@@ -4246,7 +4961,7 @@ var MFD_Device =
 #  VSD HSD SMS SIT
 
         me.p_LIST.addMenuItem(10, "BLANK", nil);
-        me.p_LIST.addMenuItem(11, "HAD", nil);
+        me.p_LIST.addMenuItem(11, "HAD", me.p_HARM);
         me.p_LIST.addMenuItem(13, "RCCE", nil);
         me.p_LIST.addMenuItem(14, "RESET\n MENU", nil);
         me.p_LIST.addMenuItem(15, "SWAP", nil);
@@ -4436,6 +5151,8 @@ var getMenuButton = func (pageName) {
         return nil;
     } elsif (pageName == "DTE") {
         return 7;
+    } elsif (pageName == "HAD") {
+        return nil;#HARM
     } else {
         print("Make sure button assignment is set correctly in getMenuButton() in MFD_main.nas");
         return nil;

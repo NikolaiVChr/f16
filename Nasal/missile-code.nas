@@ -134,7 +134,7 @@ var PATTERN_ROSETTE = 1;
 var PATTERN_DOUBLE_D = 2;
 
 # set these to print stuff to console:
-var DEBUG_STATS            = 0;#most basic stuff
+var DEBUG_STATS            = 1;#most basic stuff
 var DEBUG_FLIGHT           = 0;#for creating missiles sometimes good to have this on to see how it flies.
 
 # set these to debug the code:
@@ -1343,7 +1343,11 @@ var AIM = {
 		# do NOT call this after launch
 		# see also release(vect)
 		if (me.status == MISSILE_FLYING) return;
-		me.contacts = vect;
+		me.contacts = vect;		
+	},
+
+	clearTgt: func {
+		me.Tgt = nil;
 	},
 
 	commandDir: func (heading_deg, pitch_deg) {

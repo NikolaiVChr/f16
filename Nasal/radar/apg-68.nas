@@ -2494,8 +2494,8 @@ var RWR = {
 	        return emesary.Transmitter.ReceiptStatus_NotProcessed;
 	    };
 		emesary.GlobalTransmitter.Register(rr.RWRRecipient);
-		#nr.FORNotification = VectorNotification.new("FORNotification");
-		#nr.FORNotification.updateV(nr.vector_aicontacts_for);
+		rr.RWRNotification = VectorNotification.new("RWRNotification");
+		rr.RWRNotification.updateV(rr.vector_aicontacts_threats);
 		#rr.timer.start();
 		return rr;
 	},
@@ -2608,6 +2608,7 @@ var RWR = {
         if (me.autoFlare > 0.80 and rand()>0.99 and getprop("ai/submodels/submodel[0]/count") < 1) {
             setprop("ai/submodels/submodel[0]/flare-release-out-snd", 1);
         }
+        emesary.GlobalTransmitter.NotifyAll(me.RWRNotification.updateV(me.vector_aicontacts_threats));
 	},
 	del: func {
         emesary.GlobalTransmitter.DeRegister(me.RWRRecipient);
@@ -2618,7 +2619,185 @@ var RWR = {
 
 
 
+var RadSensor = {
+	# inherits from Radar
+	new: func () {
+		var rs = {parents: [RadSensor, Radar]};
 
+		rs.vector_aicontacts = [];
+		rs.vector_aicontacts_seen = [];
+
+		rs.RadSensorRecipient = emesary.Recipient.new("RadSensorRecipient");
+		rs.RadSensorRecipient.radar = rs;
+		rs.RadSensorRecipient.Receive = func(notification) {
+	        if (notification.NotificationType == "RWRNotification") {
+	        	#printf("RadSensor recv: %s", notification.NotificationType);
+	            if (me.radar.enabled == 1) {
+	    		    me.radar.vector_aicontacts = notification.vector;
+	    	    }
+	            return emesary.Transmitter.ReceiptStatus_OK;
+	        }
+	        return emesary.Transmitter.ReceiptStatus_NotProcessed;
+	    };
+		emesary.GlobalTransmitter.Register(rs.RadSensorRecipient);
+		rs.timer          = maketimer(0.05, rs, func rs.scan());
+		rs.timer.singleShot = 1;
+		rs.enabled = 0;
+		return rs;
+	},
+	range: 40,
+	area: 10,
+	maxArea: 20,
+	maxDura: 90,
+	dura: 60,
+	searchTime: 0,
+	searchStart: 0,
+	index: -1,
+	timing: 0.05,
+	table: [],
+	searchCounter: 0,
+	x: [-40, 40],
+	y: [-40, 10],
+	setEnabled: func (e) {
+		me.enabled = e;
+		if (e and !me.timer.isRunning) {
+			me.dura = me.maxDura * me.area/me.maxArea * size(me.table)/5;
+        	me.timing = 0.95*me.dura/size(me.vector_aicontacts);# Give time to scan the last
+        	me.timing = math.min(5, me.timing);
+        	me.timer.restart(me.timing);
+			me.timer.start();
+			me.searchStart = systime();
+
+			#print("setEnabled again");
+		} elsif (!e) {
+			me.timer.stop();
+			me.reset();
+		}
+	},
+	reset: func {
+		me.searchCounter = 0;
+		me.searchTime = 0;
+		me.searchStart = systime();
+		foreach(me.seen;me.vector_aicontacts_seen) {
+    		me.seen.discover = 0;
+    		me.seen.discoverSCT = -2;
+    	}
+		me.vector_aicontacts_seen = [];
+		me.dura = me.maxDura * me.area/me.maxArea * size(me.table)/5;
+    	me.timing = 0.95*me.dura/size(me.vector_aicontacts);# Give time to scan the last
+    	me.timing = math.min(5, me.timing);
+	},
+	scan: func {
+		if (!me.enabled) {
+			foreach(me.seen;me.vector_aicontacts_seen) {
+        		me.seen.discover = 0;
+        		me.seen.discoverSCT = -2;
+        	}
+            me.vector_aicontacts_seen = [];
+            return;
+        }
+        
+        me.searchTime = systime()-me.searchStart;
+        if (me.searchTime > me.dura) {
+        	me.index = -1;
+        	me.searchStart = systime();
+        	me.searchCounter += 1;
+        	me.searchTime = 0;
+        	#print("finished search");
+        }
+
+        if (me.index >= size(me.vector_aicontacts)-1) {
+        	me.index = -1;
+        }
+        if (!size(me.vector_aicontacts)) {
+        	foreach(me.seen;me.vector_aicontacts_seen) {
+        		me.seen.discover = 0;
+        		me.seen.discoverSCT = -2;
+        	}
+        	me.vector_aicontacts_seen = [];
+        	me.timer.restart(me.timing);
+	        if (!me.timer.isRunning) {
+	        	me.timer.start();
+	        }
+        	return;
+        }
+        me.index += 1;
+
+        me.candidate = me.vector_aicontacts[me.index][0];
+        #print(size(me.vector_aicontacts)," me.candidate.rd is nil: ",me.candidate["isRadiating"]==nil);
+        me.ownCoord = self.getCoord();
+        me.myHeading = radar_system.self.getHeading();
+        me.ok = 0;
+        if (me.candidate.isRadiating(me.ownCoord)) {
+        	me.testBearing = me.candidate.getBearing();
+            me.testElevation = me.candidate.getElevation();
+            me.testDev = geo.normdeg180(me.testBearing-me.myHeading);
+            if (me.testDev > me.x[0] and me.testDev < me.x[1] and me.candidate.get_range() < me.range) {
+	            if (me.testElevation < me.y[1] and me.testElevation > me.y[0]) {
+    	            me.candidate.radiSpike = me.candidate.isSpikingMe()?"T":"A";
+    	            me.candidate.pos = [me.testDev, me.testElevation];
+    	            me.candidate.mdl = "";
+    	            me.candidateModel = me.candidate.getModel();
+                    if (me.candidateModel=="buk-m2") me.candidate.mdl="11";
+                    elsif (me.candidateModel=="s-300") me.candidate.mdl="20";
+                    elsif (me.candidateModel=="s-200") me.candidate.mdl="5";
+                    elsif (me.candidateModel=="S-75") me.candidate.mdl="2";
+                    elsif (me.candidateModel=="missile_frigate") me.candidate.mdl="SH";
+                    elsif (me.candidateModel=="SA-6") me.candidate.mdl="6";
+                    elsif (me.candidateModel=="MIM104D") me.candidate.mdl="P";
+                    elsif (me.candidateModel=="ZSU-23-4M") me.candidate.mdl="AAA";
+                    if (me.candidate.mdl != "") {
+                    	
+	                    for (me.i = 0; me.i < size(me.table);me.i+=1) {
+	                        me.tableitem = me.table[me.i];
+	                        if (me.candidate.mdl == me.tableitem) {
+	                            me.ok = 1;
+	                            me.candidate.tblIdx = me.i;
+	                            if (me.candidate["discoverSCT"] != me.searchCounter) {
+	                            	me.candidate.discover = me.dura*rand();
+	                            	me.candidate.discoverSCT = me.searchCounter;
+	                            }
+	                            break;
+	                        }
+	                    }
+	                    if (me.ok) {
+	                    	if (!me.containsVector(me.vector_aicontacts_seen, me.candidate)) {
+	                    		append(me.vector_aicontacts_seen, me.candidate);
+	                    	}
+	                    }
+                    }
+    	        }
+            }
+        }
+        if (!me.ok and me.containsVector(me.vector_aicontacts_seen, me.candidate)) {
+        	me.temp = [];
+        	foreach(me.seen;me.vector_aicontacts_seen) {
+        		if (me.seen == me.candidate) continue;
+        		append(me.temp,me.seen);
+        	}
+        	me.vector_aicontacts_seen = me.temp;
+        }
+        me.dura = me.maxDura * me.area/me.maxArea * size(me.table)/5;
+        me.timing = 0.95*me.dura/size(me.vector_aicontacts);# Give time to scan the last
+        me.timing = math.min(5, me.timing);
+        #printf("dura %.3f  size %d  sleep %.3f",me.dura,size(me.vector_aicontacts),0.95*me.dura/size(me.vector_aicontacts));
+        me.timer.restart(me.timing);
+        if (!me.timer.isRunning) {
+        	me.timer.start();
+        }
+	},
+	containsVector: func (vec, item) {
+		foreach(test; vec) {
+			if (test == item) {
+				return 1;
+			}
+		}
+		return 0;
+	},
+	del: func {
+        emesary.GlobalTransmitter.DeRegister(me.RadSensorRecipient);
+    },
+};
 
 
 
@@ -3288,6 +3467,7 @@ var gmMode = F16GMMode.new(F16GMFTTMode.new());
 var gmtMode = F16GMTMode.new(F16GMTFTTMode.new());
 var apg68Radar = AirborneRadar.newAirborne([[rwsMode,twsMode,lrsMode,vsMode],[acm20Mode,acm60Mode,acmBoreMode],[seaMode],[gmMode],[gmtMode]], APG68);
 var f16_rwr = RWR.new();
+var f16_radSensor = RadSensor.new();
 var acmLockSound = props.globals.getNode("f16/sound/acm-lock");
 var mapper = TerrainMapper.new(apg68Radar, 0.50);
 

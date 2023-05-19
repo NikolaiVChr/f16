@@ -674,6 +674,21 @@ append(obj.total, obj.speed_curr);
         append(obj.total, obj.roll_pointer);
         append(obj.total, obj.roll_lines);
         append(obj.total, obj.bank_angle_indicator);
+
+        var fov_y =  0;
+        var fov_x = 55;
+        var fov_h = 20;
+        obj.fov_box = obj.centerOrigin.createChild("path")
+                            .moveTo(-fov_x, fov_y)
+                            .horiz(fov_x * 2)
+                            .vert(fov_h)
+                            .horiz(-fov_x * 2)
+                            .vert(-fov_h)
+                            .setStrokeLineWidth(1)
+                            .hide()
+                            .setColor(0,1,0);
+        append(obj.total, obj.fov_box);
+
         var vTick = 4;
         var tickSpace = 6;
         obj.vertical_pointer = obj.centerOrigin.createChild("path")
@@ -2029,6 +2044,7 @@ append(obj.total, obj.speed_curr);
             me.asec65  = 0;
             var eegsShow = 0;
             var currASEC = nil;
+            me.showFov = 0;
 
             if(hdp.getproper("master_arm") != 0 and pylons.fcs != nil)
             {
@@ -2109,6 +2125,10 @@ append(obj.total, obj.speed_curr);
                     } elsif (hdp.weapon_selected == "MK-84") {
                         me.window9_txt = sprintf("%d B84", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "AGM-88") {
+                        me.showFov = 1;
+                        if (pylons.fcs.isLock()) {
+                            me.showFov = math.mod(hdp.getproper("elapsed"), 0.5) < 0.25;
+                        }
                         me.window9_txt = sprintf("%d AG88", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "GBU-31") {
                         me.window9_txt = sprintf("%d GB31", pylons.fcs.getAmmo());
@@ -2275,6 +2295,7 @@ append(obj.total, obj.speed_curr);
             me.ASEC100.setVisible(me.asec100);
             me.ASEC120.setVisible(me.asec120);
             me.ASEC65.setVisible(me.asec65);
+            me.fov_box.setVisible(me.showFov);
             me.eegsGroup.setVisible(eegsShow);
             if (eegsShow and !me.eegsLoop.isRunning) {
                 me.eegsLoop.start();
@@ -2322,6 +2343,7 @@ append(obj.total, obj.speed_curr);
 
             me.window7_txt = sprintf("  %.2f",hdp.getproper("mach"));
         }
+
 
 
 
