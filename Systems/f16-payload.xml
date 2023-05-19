@@ -203,7 +203,7 @@
             <stage-1-duration-sec type="double">5.00</stage-1-duration-sec><!-- same as aim-9m -->
             <stage-2-duration-sec type="double">0.0</stage-2-duration-sec>
             <weight-launch-lbs type="double">186.0</weight-launch-lbs>      <!-- source: navair.navy.mil -->
-            <weight-warhead-lbs type="double">20.8</weight-warhead-lbs> <!-- TODO: Check this -->
+            <weight-warhead-lbs type="double">20.8</weight-warhead-lbs> <!-- TODO: Check this --> <!-- source: 2009 Weapons File -->
             <weight-fuel-lbm type="double">60.0</weight-fuel-lbm>         <!-- same as aim-9m --> <!-- TODO: Check this -->
             <drag-coeff type="double">0.8</drag-coeff>                   <!-- Estimated --> <!-- TODO: Check this -->
             <cross-section-sqft type="double">0.143</cross-section-sqft>  <!-- 5 inch diam -->
