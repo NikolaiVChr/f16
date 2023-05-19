@@ -4359,14 +4359,12 @@ var MFD_Device =
 
         me.p_HARM.update = func (noti) {
             
-            #if (noti.FrameCount != 1 and noti.FrameCount != 3)
-            #    return;
+            if (noti.FrameCount != 1 and noti.FrameCount != 3)
+                return;
             #print("\nHAD update:\n=======");
 
             # make sure it can maddog
             # filters for table
-            # it find 20 too fast
-            # it searches dura x 3
             # test
 
             if (pylons.fcs != nil) {

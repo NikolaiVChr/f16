@@ -180,10 +180,10 @@ var Station = {
 							if (struct.deviation_deg != nil) {
 								if (struct.deviation_deg > 70) {
 								    settings.guidanceLaw = "direct";
-								    settings.guidance = "inertial";
+								    #settings.guidance = "inertial";
 								} else {
 								    settings.guidanceLaw = "OPN";
-								    settings.guidance = "heat";
+								    #settings.guidance = "heat";
 								    if (struct.deviation_deg < 55) {
 									    settings.abort_midflight_function = 1;
 									}
@@ -196,9 +196,9 @@ var Station = {
 							if (settings["guidanceLaw"] == struct.guidanceLaw) {
 							    settings.guidanceLaw = nil;
 							}
-							if (settings["guidance"] == struct.guidance) {
-							    settings.guidance = nil;
-							}
+							#if (settings["guidance"] == struct.guidance) {
+							#    settings.guidance = nil;
+							#}
 							return settings;
 						};
 					};
