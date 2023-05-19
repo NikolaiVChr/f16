@@ -845,8 +845,8 @@
             <navigation type="string">APN</navigation>
             <all-aspect type="bool">true</all-aspect>
             <max-fire-range-nm type="double">30</max-fire-range-nm>              <!--  -->
-            <FCS-field-deg type="int">25</FCS-field-deg>
-            <seeker-field-deg type="int">100</seeker-field-deg>
+            <FCS-field-deg type="int">80</FCS-field-deg>
+            <seeker-field-deg type="int">80</seeker-field-deg>
             <max-g type="int">15</max-g>
             <thrust-lbf-stage-1 type="double">3000</thrust-lbf-stage-1><!-- Boost Sustain 64,000 lbs./sec     630 mps/mach 2+ -->
             <thrust-lbf-stage-2 type="double">575</thrust-lbf-stage-2>

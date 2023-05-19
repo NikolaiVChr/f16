@@ -4297,6 +4297,7 @@ var MFD_Device =
         me.p_HARM.model_index = me.model_index;
         me.p_HARM.root = svg;
         me.p_HARM.elapsed = 0;
+        me.p_HARM.handoffTime = 0;
         me.p_HARM.slew_c_last = slew_c;
         me.p_HARM.table = 0;
         me.p_HARM.fov = 0;
@@ -4558,11 +4559,18 @@ var MFD_Device =
                 me.root.searchText.hide();
             }
 
-
-            
             me.items = me.sensor.vector_aicontacts_seen;
             me.iter = size(me.items)-1;
-                
+
+            if (me.radWeap != nil and me["handoffTarget"] != nil and me.radWeap["guidance"] == "radiation" and me.radWeap.Tgt == me.radWeap and me.radWeap.status != MISSILE_LOCK) {
+                # This makes sure we go from handover back to search when missile loses lock
+                if (systime()-me.handoffTime > 1) {
+                    # It had time to get lock, but failed
+                    me.radWeap.setContacts([]);
+                    me["handoffTarget"] == nil;
+                }
+            }
+
             if (me["handoffTarget"] != nil) {
                 #me.handoffTarget
                 me.root.rdrTxt[0].setText(me.handoffTarget.radiSpike~me.handoffTarget.mdl);
@@ -4588,13 +4596,13 @@ var MFD_Device =
                 if (cursor_click == me.root.index) {
                     me.handoffTarget = nil;
                     cursor_click = -1;
-                    if (me.radWeap != nil) {
+                    if (me.radWeap != nil and me.radWeap["guidance"] == "radiation") {
                         me.radWeap.setContacts([]);
                         me.radWeap.clearTgt();
                     }
                 } else {
                     #if (me.sensor.enabled) {
-                    if (me.radWeap != nil) {
+                    if (me.radWeap != nil and me.radWeap["guidance"] == "radiation") {
                         me.radWeap.setContacts([me.handoffTarget]);
                     }
                         me.sensor.setEnabled(0);
@@ -4644,6 +4652,9 @@ var MFD_Device =
                 me.root.topBoxText.setText(me.topLine);
                 if (cursor_click == me.root.index) {
                     me.handoffTarget = me.click(me.items);
+                    if (me.handoffTarget != nil) {
+                        me.handoffTime = systime();
+                    }
                     cursor_click = -1;
                 }
             } else {

@@ -5162,6 +5162,7 @@ var AIM = {
 			me.in_view = me.check_t_in_fov();
 
 			if (!me.in_view) {
+				if (me.noCommonTarget and me.guidance == "radiation") me.Tgt = nil;#Hack, todo fix this
 				me.printSearch("out of view");
 				me.return_to_search();
 				return;
