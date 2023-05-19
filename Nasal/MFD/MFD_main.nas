@@ -2994,6 +2994,10 @@ var MFD_Device =
                     }
                     if (me.wpnType == "fall") {
                         pylons.fcs.setDropMode(!pylons.fcs.getDropMode());
+                    } elsif (me.wpnType=="anti-rad") {
+                        me.ppp.selectPage(me.my.p_HARM);
+                        me.selectionBox.show();
+                        me.setSelection(me.ppp.buttons[18], me.ppp.buttons[10], 10);
                     }
                 } elsif (eventi == 12) {
                     if (getprop("sim/variant-id") == 0) {
