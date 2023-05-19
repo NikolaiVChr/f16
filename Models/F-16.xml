@@ -21,21 +21,27 @@
   <load><![CDATA[
     var self = cmdarg();
     var id = self.getNode("sim/multiplay/generic/int[9]");
+    var idVal = id.getValue();
     var folder = "Aircraft/f16/Models/Liveries";
-    if (id != nil and id.getValue() == 3) {
-      folder = "Aircraft/f16/Models/Liveries/Block30"
-    } elsif (id != nil and id.getValue() == 1) {
-      folder = "Aircraft/f16/Models/Liveries/Block10"
-    } elsif (id != nil and id.getValue() == 2) {
-      folder = "Aircraft/f16/Models/Liveries/Block20"
-    } elsif (id != nil and id.getValue() == 5) {
-      folder = "Aircraft/f16/Models/Liveries/Block50"
-    } elsif (id != nil and id.getValue() == 4) {
-      folder = "Aircraft/f16/Models/Liveries/Block40"
-    } elsif (id != nil and id.getValue() == 6) {
-      folder = "Aircraft/f16/Models/Liveries/Block60"
+    if (idVal != nil) {
+      if (idVal == 3) {
+        folder = "Aircraft/f16/Models/Liveries/Block30"
+      } elsif (idVal == 1) {
+        folder = "Aircraft/f16/Models/Liveries/Block10"
+      } elsif (idVal == 2) {
+        folder = "Aircraft/f16/Models/Liveries/Block20"
+      } elsif (idVal == 5) {
+        folder = "Aircraft/f16/Models/Liveries/Block50"
+      } elsif (idVal == 4) {
+        folder = "Aircraft/f16/Models/Liveries/Block40"
+      } elsif (idVal == 6) {
+        folder = "Aircraft/f16/Models/Liveries/Block60"
+      }
+      self.getNode("sim/variant-id", 1).setIntValue(idVal);
     }
     var livery_update = aircraft.livery_update.new(folder, 10);
+
+    
 
     if (!(left(getprop("sim/version/flightgear"),6) == "2020.3")) {
         props.globals.getNode("/sim/version/compositor-support", 1).setBoolValue(1);
