@@ -4567,7 +4567,7 @@ var MFD_Device =
                 if (systime()-me.handoffTime > 1) {
                     # It had time to get lock, but failed
                     me.radWeap.setContacts([]);
-                    me["handoffTarget"] == nil;
+                    me["handoffTarget"] = nil;
                 }
             }
 
