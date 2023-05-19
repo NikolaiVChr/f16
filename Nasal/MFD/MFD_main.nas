@@ -4588,11 +4588,15 @@ var MFD_Device =
                 if (cursor_click == me.root.index) {
                     me.handoffTarget = nil;
                     cursor_click = -1;
-                    me.radWeap.setContacts([]);
-                    me.radWeap.clearTgt();
+                    if (me.radWeap != nil) {
+                        me.radWeap.setContacts([]);
+                        me.radWeap.clearTgt();
+                    }
                 } else {
                     #if (me.sensor.enabled) {
+                    if (me.radWeap != nil) {
                         me.radWeap.setContacts([me.handoffTarget]);
+                    }
                         me.sensor.setEnabled(0);
                     #}
                 }
