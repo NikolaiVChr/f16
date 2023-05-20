@@ -4638,9 +4638,9 @@ var MFD_Device =
                         me.root.rdrTxt[me.txt_count].hide();
                         continue;
                     }
-                    append(me.clickableItems, me.data);
                     me.root.rdrTxt[me.txt_count].show();
                     me.data = me.items[me.txt_count];
+                    append(me.clickableItems, me.data);
                     if (me.checkFresh) {
                         me.data.discoverShown = me.data.discover;
                         me.data.discoverSCTShown = me.data.discoverSCT;
