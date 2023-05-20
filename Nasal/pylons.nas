@@ -148,7 +148,7 @@ var pylonSets = {
     podEcm188: {name: "AN/ALQ-188(V) EAT Pod", pylon: "1 MAU", rack: nil, content: [ecm188], fireOrder: [0], launcherDragArea: 0.08, launcherMass: 355, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 2},
     podTrvl:   {name: "MXU-648 Cargopod", pylon: "1 MAU", rack: nil, content: [crgpd], fireOrder: [], launcherDragArea: 0.20, launcherMass: 324, launcherJettisonable: 1, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 2},
     podSAtp:   {name: "AN/AAQ-33 Sniper ATP", content: [atp], fireOrder: [0], launcherDragArea: 0.06, launcherMass: 446, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-    podIfts:   {name: "AN/AAQ-32 Internal FLIR Targeting System", content: [ifts], fireOrder: [0], launcherDragArea: 0.05, launcherMass: 390, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1}, #mass guess
+    podIfts:   {name: "AN/AAQ-32 Internal FLIR Targeting System", content: [ifts], fireOrder: [0], launcherDragArea: 0.05, launcherMass: 400, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1}, #mass guess
     podLTgp:   {name: "AN/AAQ-14 LANTIRN Target Pod", content: [tgp], fireOrder: [0], launcherDragArea: 0.07, launcherMass: 530, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     podLNav:   {name: "AN/AAQ-13 LANTIRN Nav Pod", content: [nav], fireOrder: [0], launcherDragArea: 0.1, launcherMass: 451.1, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     podLite:   {name: "AN/AAQ-28 LITENING Advanced Targeting", content: [lite], fireOrder: [0], launcherDragArea: 0.08, launcherMass: 460, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
@@ -1894,7 +1894,7 @@ var b40_a2g_casmix = func {
         pylon5.loadSet(pylonSets.empty);
         pylon6.loadSet(pylonSets.fuel37R);
         pylon7.loadSet(pylonSets.hyd70h7);
-        pylon8.loadSet(pylonSets.aim9l);
+        pylon8.loadSet(pylonSets.aim9m);
         pylon9.loadSet(pylonSets.aim120WT);
         if (block == 5) {
             pylon10.loadSet(pylonSets.podSAtp);
@@ -1936,13 +1936,13 @@ var a2g_jsow = func {
     if (fcs != nil and (getprop("payload/armament/msg") == 0 or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
     	damage.damageLog.push("A/G Stand-off (JSOW) loadout mounted");
         pylon1.loadSet(pylonSets.aim120WT);
-        pylon2.loadSet(pylonSets.aim9l);
+        pylon2.loadSet(pylonSets.aim9m);
         pylon3.loadSet(pylonSets.a154);
         pylon4.loadSet(pylonSets.fuel37L);
         pylon5.loadSet(pylonSets.podEcm184);
         pylon6.loadSet(pylonSets.fuel37R);
         pylon7.loadSet(pylonSets.a154);
-        pylon8.loadSet(pylonSets.aim9l);
+        pylon8.loadSet(pylonSets.aim9m);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.podSAtp);
         pylon11.loadSet(pylonSets.podHarm);
@@ -1957,13 +1957,13 @@ var a2g_jassm = func {
     if (fcs != nil and (getprop("payload/armament/msg") == 0 or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
     	damage.damageLog.push("A/G Stand-off (JASSM) loadout mounted");
         pylon1.loadSet(pylonSets.aim120WT);
-        pylon2.loadSet(pylonSets.aim9l);
+        pylon2.loadSet(pylonSets.aim9m);
         pylon3.loadSet(pylonSets.a158);
         pylon4.loadSet(pylonSets.fuel37L);
         pylon5.loadSet(pylonSets.podEcm131);
         pylon6.loadSet(pylonSets.fuel37R);
         pylon7.loadSet(pylonSets.a158);
-        pylon8.loadSet(pylonSets.aim9l);
+        pylon8.loadSet(pylonSets.aim9m);
         pylon9.loadSet(pylonSets.aim120WT);
         if (block == 5) {
             pylon10.loadSet(pylonSets.podSAtp);
