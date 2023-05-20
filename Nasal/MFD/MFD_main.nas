@@ -4556,7 +4556,8 @@ var MFD_Device =
             if (size(me.tables[me.table])>4) me.root.obs5.setText(me.tables[me.table][4]);
             else me.root.obs5.setText("");
             if (me.sensor.enabled) {
-                me.root.searchText.setText(sprintf("%d:%02d   SCT-%d",(systime()-me.sensor.searchStart)/60,math.mod(systime()-me.sensor.searchStart,60),me.sensor.searchCounter));
+                me.cycleTimeLeft = math.max(0,me.sensor.dura-(systime()-me.sensor.searchStart));
+                me.root.searchText.setText(sprintf("%d:%02d   SCT-%d",(me.cycleTimeLeft)/60, math.mod(me.cycleTimeLeft,60),me.sensor.searchCounter));
                 me.root.searchText.show();
             } else {
                 me.root.searchText.hide();
