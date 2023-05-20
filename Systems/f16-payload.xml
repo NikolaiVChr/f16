@@ -773,7 +773,7 @@
             <max-fire-range-nm type="double">12</max-fire-range-nm>              <!-- source -->
             <FCS-field-deg type="int">25</FCS-field-deg>
             <seeker-field-deg type="int">180</seeker-field-deg>
-            <seeker-angular-speed-dps type="double">40</seeker-angular-speed-dps> <!-- deg/sec guess-->
+            <seeker-angular-speed-dps type="double">45</seeker-angular-speed-dps> <!-- deg/sec guess-->
             <lock-on-sun-deg type="double">4</lock-on-sun-deg>
             <max-g type="int">25</max-g>
             <max-launch-g type="int">7</max-launch-g>
@@ -806,23 +806,23 @@
             <long-name type="string">AGM-84D Harpoon</long-name>
             <vol-search type="double">0.00</vol-search>
             <vol-track type="double">1.00</vol-track>
-            <guidance type="string">inertial</guidance><!--  -->
+            <guidance type="string">inertial</guidance> <!--  -->
             <navigation type="string">direct</navigation>
             <all-aspect type="bool">true</all-aspect>
-            <max-fire-range-nm type="double">120</max-fire-range-nm>              <!-- D variant -->
+            <max-fire-range-nm type="double">120</max-fire-range-nm> <!-- D variant -->
             <FCS-field-deg type="int">30</FCS-field-deg>
             <seeker-field-deg type="int">180</seeker-field-deg>
             <max-g type="int">5</max-g>
             <max-launch-g type="int">7</max-launch-g>
-            <thrust-lbf-stage-1 type="double">13000</thrust-lbf-stage-1><!-- 13000 lbf is approx 36000 lb sec impulse -->
-            <thrust-lbf-stage-2 type="double">660</thrust-lbf-stage-2><!-- SAC -->
-            <stage-1-duration-sec type="double">2.84</stage-1-duration-sec><!-- SAC -->
-            <stage-2-duration-sec type="double">960</stage-2-duration-sec><!-- SAC -->
-            <weight-launch-lbs type="double">1190</weight-launch-lbs>              <!--  -->
-            <weight-warhead-lbs type="double">500</weight-warhead-lbs>            <!--  -->
-            <weight-fuel-lbm type="double"> 259 </weight-fuel-lbm><!-- SAC 113sustain+146boost-->
+            <thrust-lbf-stage-1 type="double">13000</thrust-lbf-stage-1> <!-- 13000 lbf is approx 36000 lb sec impulse -->
+            <thrust-lbf-stage-2 type="double">660</thrust-lbf-stage-2> <!-- SAC -->
+            <stage-1-duration-sec type="double">2.84</stage-1-duration-sec> <!-- SAC -->
+            <stage-2-duration-sec type="double">960</stage-2-duration-sec> <!-- SAC -->
+            <weight-launch-lbs type="double">1190</weight-launch-lbs> <!--  -->
+            <weight-warhead-lbs type="double">500</weight-warhead-lbs> <!--  -->
+            <weight-fuel-lbm type="double"> 259 </weight-fuel-lbm> <!-- SAC 113sustain+146boost-->
             <drag-coeff type="double">0.16</drag-coeff>
-            <cross-section-sqft type="double">0.994</cross-section-sqft>      <!-- SAC -->
+            <cross-section-sqft type="double">0.994</cross-section-sqft> <!-- SAC -->
             <arming-time-sec type="double">5.0</arming-time-sec>
             <min-speed-for-guiding-mach type="double">0.5</min-speed-for-guiding-mach>
             <self-destruct-time-sec type="double">1000</self-destruct-time-sec>
@@ -831,7 +831,7 @@
             <rail type="bool">false</rail>
             <max-report-distance type="double">125</max-report-distance>
             <class type="string">M</class>
-            <terrain-follow type="bool">false</terrain-follow><!-- seaskimming, not terrain following -->
+            <terrain-follow type="bool">false</terrain-follow> <!-- seaskimming, not terrain following -->
             <fire-msg type="string">Bruiser</fire-msg>
             <ready-time type="double">25</ready-time> <!-- INS alignment -->
         </agm-84>
@@ -848,15 +848,15 @@
             <FCS-field-deg type="int">80</FCS-field-deg>
             <seeker-field-deg type="int">80</seeker-field-deg>
             <max-g type="int">15</max-g>
-            <thrust-lbf-stage-1 type="double">3000</thrust-lbf-stage-1><!-- Boost Sustain 64,000 lbs./sec     630 mps/mach 2+ -->
+            <thrust-lbf-stage-1 type="double">3000</thrust-lbf-stage-1><!-- Boost Sustain 64,000 lbs./sec    630 mps/mach 2+ -->
             <thrust-lbf-stage-2 type="double">575</thrust-lbf-stage-2>
             <stage-1-duration-sec type="double">10</stage-1-duration-sec>
             <stage-2-duration-sec type="double">50</stage-2-duration-sec>
-            <weight-launch-lbs type="double">800</weight-launch-lbs>              <!--  -->
-            <weight-warhead-lbs type="double">143.51</weight-warhead-lbs>            <!--  -->
+            <weight-launch-lbs type="double">800</weight-launch-lbs>  <!--  -->
+            <weight-warhead-lbs type="double">143.51</weight-warhead-lbs>   <!--  -->
             <weight-fuel-lbm type="double">250</weight-fuel-lbm>
             <drag-coeff type="double">0.25</drag-coeff>
-            <cross-section-sqft type="double">0.53</cross-section-sqft>                             <!-- 9.84 inch diam -->
+            <cross-section-sqft type="double">0.53</cross-section-sqft> <!-- 9.84 inch diam -->
             <arming-time-sec type="double">4.0</arming-time-sec>
             <min-speed-for-guiding-mach type="double">0.5</min-speed-for-guiding-mach>
             <self-destruct-time-sec type="double">150</self-destruct-time-sec>
@@ -871,7 +871,7 @@
             <prowl-flight type="string">gyro-pitch</prowl-flight>
             <switch-time-sec type="double">15</switch-time-sec>
             <class type="string">GM</class>
-            <fire-msg type="string">Sniper</fire-msg><!--Magnum-->
+            <fire-msg type="string">Magnum</fire-msg>
             <ready-time type="double">0.25</ready-time>
         </agm-88>
         <agm-119>
@@ -992,8 +992,8 @@
             <weight-launch-lbs type="double">2150</weight-launch-lbs> <!-- source -->
             <weight-warhead-lbs type="double">1000</weight-warhead-lbs>
             <weight-fuel-lbm type="double">269</weight-fuel-lbm> <!-- source: approx 40 gal JP-10 -->
-            <drag-coeff type="double">0.0275</drag-coeff><!-- subsonic, except when diving to cruise altitude -->
-            <cross-section-sqft type="double">2.55732153</cross-section-sqft><!-- 0.55 meter diam -->
+            <drag-coeff type="double">0.030</drag-coeff> <!-- subsonic, except when diving to cruise altitude -->
+            <cross-section-sqft type="double">2.55732153</cross-section-sqft> <!-- 0.55 meter diam -->
             <arming-time-sec type="double">2.0</arming-time-sec>
             <min-speed-for-guiding-mach type="double">0.24</min-speed-for-guiding-mach>
             <self-destruct-time-sec type="double">2000</self-destruct-time-sec>
