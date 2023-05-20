@@ -4298,7 +4298,6 @@ var MFD_Device =
         me.p_HARM.root = svg;
         me.p_HARM.elapsed = 0;
         me.p_HARM.slew_c_last = slew_c;
-        me.p_HARM.table = 0;
         me.p_HARM.fov = 0;
         me.p_HARM.wdt = 552*0.795;
         me.p_HARM.ppp = me.PFD;
@@ -4330,8 +4329,8 @@ var MFD_Device =
                     me.resetColor(me.ppp.buttons[10]);
                     me.selectionBox.hide();
                 } elsif (eventi == 11) {
-                    me.table += 1;
-                    if (me.table > 2) me.table = 0;
+                    me.sensor.currtable += 1;
+                    if (me.sensor.currtable > 2) me.sensor.currtable = 0;
                 } elsif (eventi == 12) {
                     me.fov += 1;
                     if (me.fov > 3) me.fov = 0;
@@ -4399,7 +4398,7 @@ var MFD_Device =
                             me.sensor.x    = [-30, 30];
                             me.sensor.y    = [-30, 10];
                         }
-                        me.sensor.table = me.tables[me.table];
+                        me.sensor.table = me.tables[me.sensor.currtable];
                         me.sensor.range = me.radWeap.max_fire_range_nm;
                         if (me.sensor["fov"] != me.fov) {
                             me.sensor.fov = me.fov;
@@ -4489,7 +4488,7 @@ var MFD_Device =
                 me.root.notSOI.show();
             }
             
-            me.root.obs12.setText("TBL"~(me.table + 1));
+            me.root.obs12.setText("TBL"~(me.sensor.currtable + 1));
             
             if (me.fov == 1) {
                 me.fovTxt = "CTR";
@@ -4545,15 +4544,15 @@ var MFD_Device =
                 me.root.crossY3.setTranslation(0, me.root.fieldY+me.root.fieldH*0.25+3*me.root.fieldH*0.75/3);
             }
             me.root.obs13.setText(me.fovTxt);
-            if (size(me.tables[me.table])>0) me.root.obs1.setText(me.tables[me.table][0]);
+            if (size(me.tables[me.sensor.currtable])>0) me.root.obs1.setText(me.tables[me.sensor.currtable][0]);
             else me.root.obs1.setText("");
-            if (size(me.tables[me.table])>1) me.root.obs2.setText(me.tables[me.table][1]);
+            if (size(me.tables[me.sensor.currtable])>1) me.root.obs2.setText(me.tables[me.sensor.currtable][1]);
             else me.root.obs2.setText("");
-            if (size(me.tables[me.table])>2) me.root.obs3.setText(me.tables[me.table][2]);
+            if (size(me.tables[me.sensor.currtable])>2) me.root.obs3.setText(me.tables[me.sensor.currtable][2]);
             else me.root.obs3.setText("");
-            if (size(me.tables[me.table])>3) me.root.obs4.setText(me.tables[me.table][3]);
+            if (size(me.tables[me.sensor.currtable])>3) me.root.obs4.setText(me.tables[me.sensor.currtable][3]);
             else me.root.obs4.setText("");
-            if (size(me.tables[me.table])>4) me.root.obs5.setText(me.tables[me.table][4]);
+            if (size(me.tables[me.sensor.currtable])>4) me.root.obs5.setText(me.tables[me.sensor.currtable][4]);
             else me.root.obs5.setText("");
             if (me.sensor.enabled) {
                 me.cycleTimeLeft = math.max(0,me.sensor.dura-(systime()-me.sensor.searchStart));
