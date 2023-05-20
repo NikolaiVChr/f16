@@ -4545,11 +4545,16 @@ var MFD_Device =
                 me.root.crossY3.setTranslation(0, me.root.fieldY+me.root.fieldH*0.25+3*me.root.fieldH*0.75/3);
             }
             me.root.obs13.setText(me.fovTxt);
-            me.root.obs1.setText(me.tables[me.table][0]);
-            me.root.obs2.setText(me.tables[me.table][1]);
-            me.root.obs3.setText(me.tables[me.table][2]);
-            me.root.obs4.setText(me.tables[me.table][3]);
-            me.root.obs5.setText(me.tables[me.table][4]);
+            if (size(me.tables[me.table])>0) me.root.obs1.setText(me.tables[me.table][0]);
+            else me.root.obs1.setText("");
+            if (size(me.tables[me.table])>1) me.root.obs2.setText(me.tables[me.table][1]);
+            else me.root.obs2.setText("");
+            if (size(me.tables[me.table])>2) me.root.obs3.setText(me.tables[me.table][2]);
+            else me.root.obs3.setText("");
+            if (size(me.tables[me.table])>3) me.root.obs4.setText(me.tables[me.table][3]);
+            else me.root.obs4.setText("");
+            if (size(me.tables[me.table])>4) me.root.obs5.setText(me.tables[me.table][4]);
+            else me.root.obs5.setText("");
             if (me.sensor.enabled) {
                 me.root.searchText.setText(sprintf("%d:%02d   SCT-%d",(systime()-me.sensor.searchStart)/60,math.mod(systime()-me.sensor.searchStart,60),me.sensor.searchCounter));
                 me.root.searchText.show();
