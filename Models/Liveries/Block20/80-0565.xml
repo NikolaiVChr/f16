@@ -4,10 +4,17 @@
  <sim>
   <model>
    <livery>
-    <name type="string">AMI 23 Gruppo, "Diana farewell"</name>
+    <name type="string">5° Stormo, 23° Gruppo "Diana farewell"</name>
     <texture>Liveries/Block20/80-0565.png</texture>
     <owner type="string">AMI</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Special Color</scheme>
+    <block type="int">20</block>
+    <serial type="string">80-0565</serial>
+    <squad type="string">23° Gruppo "Veltri"</squad>
+    <year type="string">2010</year>
    </livery>
+
    <livery-logo>
     <texture>Liveries/standard.logos.png</texture>
    </livery-logo>
@@ -24,7 +31,7 @@
      <dragchute type="bool">false</dragchute>
      <link16 type="bool">true</link16>
   </f16>
-  <livery-specular type="double">0.4</livery-specular>
+  <livery-specular type="double">0.35</livery-specular>
   </model>
  </sim>
 </PropertyList>

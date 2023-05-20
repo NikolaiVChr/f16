@@ -4,9 +4,15 @@
  <sim>
   <model>
    <livery>
-    <name type="string">AMI 37 Stormo, "Livrea speciale Gruppi 10 e 18"</name>
+    <name type="string">37° Stormo, 10°-18° Gruppo "Livrea speciale"</name>
     <texture>Liveries/Block20/81-0680.png</texture>
     <owner type="string">AMI</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Two-tone gray, Flagship</scheme>
+    <block type="int">20</block>
+    <serial type="string">81-0680</serial>
+    <squad type="string">18° Gruppo "Ocio che te copo"</squad>
+    <year type="string">2009</year>
    </livery>
    <livery-logo>
     <texture>Liveries/standard.logos.png</texture>
