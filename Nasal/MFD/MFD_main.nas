@@ -4627,6 +4627,7 @@ var MFD_Device =
                 me.root.cross.hide();
                 me.topLine = "   ";
                 me.topCheck = [0,0,0,0,0];
+                me.clickableItems = [];
                 for (me.txt_count = 0; me.txt_count < 5; me.txt_count += 1) {
                     me.check = !(me.txt_count > me.iter);
                     me.checkFresh = me.check and me.items[me.txt_count].discover < systime()-me.sensor.searchStart and me.items[me.txt_count].discoverSCT==me.sensor.searchCounter;
@@ -4637,6 +4638,7 @@ var MFD_Device =
                         me.root.rdrTxt[me.txt_count].hide();
                         continue;
                     }
+                    append(me.clickableItems, me.data);
                     me.root.rdrTxt[me.txt_count].show();
                     me.data = me.items[me.txt_count];
                     if (me.checkFresh) {
@@ -4654,7 +4656,7 @@ var MFD_Device =
                 }
                 me.root.topBoxText.setText(me.topLine);
                 if (cursor_click == me.root.index) {
-                    me.handoffTarget = me.click(me.items);
+                    me.handoffTarget = me.click(me.clickableItems);
                     if (me.handoffTarget != nil) {
                         me.sensor.handoffTime = systime();
                         me.sensor.handoffTarget = me.handoffTarget;
@@ -4691,6 +4693,7 @@ var MFD_Device =
             me.clostestDist = 10000;
 
             foreach(me.citem; items) {
+                if (me.citem["xyPos"] == nil) continue;
                 me.xx = math.abs(me.citem.xyPos[0]-cursor_pos[0]);
                 me.yy = math.abs(me.citem.xyPos[1]-(cursor_pos[1] + 482));
                 me.cdist = math.sqrt(me.xx*me.xx+me.yy*me.yy);
