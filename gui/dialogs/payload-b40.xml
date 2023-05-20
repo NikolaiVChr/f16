@@ -537,7 +537,7 @@
             <legend>A/G Stand-off (JASSM, 2 bags)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2g_jassm();</script>
+                <script>pylons.b40_a2g_jassm();</script>
             </binding>
         </button>
 
