@@ -4210,37 +4210,27 @@ var MFD_Device =
 
 
         # BUTTONS
-        svg.obs1 = svg.buttonView.createChild("text")
-                .setTranslation(-276*0.795, -482*0.5-125)
+        var leftButtonsMax = 5;
+        svg.obsL = [];
+        svg.obsLb = [];
+        var initY = -125;
+        for (var i = 0;i<leftButtonsMax;i+=1) {
+            append(svg.obsL, svg.buttonView.createChild("text")
+                .setTranslation(-276*0.795, -482*0.5+initY)
                 .setText(" P")
                 .setAlignment("left-center")
                 .setColor(colorText1)
-                .setFontSize(20, 1.0);
-        svg.obs2 = svg.buttonView.createChild("text")
-                .setTranslation(-276*0.795, -482*0.5-65)
-                .setText(" 2")
+                .setFontSize(20, 1.0));
+            append(svg.obsLb, svg.buttonView.createChild("text")
+                .setTranslation(-276*0.795, -482*0.5+initY)
+                .setText(" P")
                 .setAlignment("left-center")
-                .setColor(colorText1)
-                .setFontSize(20, 1.0);
-        svg.obs3 = svg.buttonView.createChild("text")
-                .setTranslation(-276*0.795, -482*0.5-5)
-                .setText("11")
-                .setAlignment("left-center")
-                .setColor(colorText1)
-                .setFontSize(20, 1.0);
-        svg.obs4 = svg.buttonView.createChild("text")
-                .setTranslation(-276*0.795, -482*0.5+55)
-                .setText("20")
-                .setAlignment("left-center")
-                .setColor(colorText1)
-                .setFontSize(20, 1.0);
-        svg.obs5  = svg.buttonView.createChild("text")
-                .setTranslation(-276*0.795, -482*0.5+125+10)
-                .setText(" 6")
-                .setAlignment("left-center")
-                .setColor(colorText1)
-                .set("z-index",2)
-                .setFontSize(20, 1.0);
+                .setColor(colorBackground)
+                .setColorFill(colorText1)
+                .setDrawMode(canvas.Text.TEXT + canvas.Text.FILLEDBOUNDINGBOX)#This does only work before first text element update so cannot be properly changed in loops
+                .setFontSize(20, 1.0));
+            initY += 60;
+        }
         svg.obs7 = svg.buttonView.createChild("text")
                 .setTranslation(276*0.775, -482*0.5-65)
                 .setText("RS")
@@ -4315,18 +4305,13 @@ var MFD_Device =
         me.p_HARM.setSelection = me.setSelection;
         me.p_HARM.notifyButton = func (eventi) {
             if (eventi != nil) {
-                if (eventi == 0) {
-                    #me.setSelection(me.ppp.buttons[10], me.ppp.buttons[10], 0);
-                } elsif (eventi == 1) {
-                    #me.setSelection(me.ppp.buttons[10], me.ppp.buttons[10], 1);
-                } elsif (eventi == 2) {
-                    #me.setSelection(me.ppp.buttons[10], me.ppp.buttons[10], 2);
-                } elsif (eventi == 3) {
-                    #me.setSelection(me.ppp.buttons[10], me.ppp.buttons[10], 3);
-                } elsif (eventi == 4) {
-                    #me.setSelection(me.ppp.buttons[10], me.ppp.buttons[10], 4);
+                if (eventi >= 0 and eventi < 5) {
+                    if (me.sensor.handoffTarget["tblIdx"] == eventi) {
+                        me.sensor.handoffTarget = nil;
+                    }
                 } elsif (eventi == 6) {                    
                     me.sensor.reset();
+                    me.sensor.searchCounter += 1;
                 } elsif (eventi == 10) {
                     me.ppp.selectPage(me.my.p_LIST);
                     me.resetColor(me.ppp.buttons[10]);
@@ -4334,6 +4319,7 @@ var MFD_Device =
                 } elsif (eventi == 11) {
                     me.sensor.currtable += 1;
                     if (me.sensor.currtable > 2) me.sensor.currtable = 0;
+                    me.sensor.handoffTarget = nil;
                 } elsif (eventi == 12) {
                     me.fov += 1;
                     if (me.fov > 3) me.fov = 0;
@@ -4378,7 +4364,7 @@ var MFD_Device =
             # filters for table
             # when having 2 HAS displays, sensor might get table confused, and check for other issues.
             # test
-
+            me.harmSelected = 0;
             if (pylons.fcs != nil) {
                 me.radWeap = pylons.fcs.getSelectedWeapon();
                 if (me.radWeap != nil) {
@@ -4408,6 +4394,7 @@ var MFD_Device =
                             me.sensor.reset();
                         }
                         me.sensor.setEnabled(me.sensor.handoffTarget == nil);
+                        me.harmSelected = 1;
                     } else {
                         me.sensor.setEnabled(0);
                     }
@@ -4554,16 +4541,15 @@ var MFD_Device =
                 me.root.crossY3.setTranslation(0, me.root.fieldY+me.root.fieldH*0.25+3*me.root.fieldH*0.75/3);
             }
             me.root.obs13.setText(me.fovTxt);
-            if (size(me.tables[me.sensor.currtable])>0) me.root.obs1.setText(me.tables[me.sensor.currtable][0]);
-            else me.root.obs1.setText("");
-            if (size(me.tables[me.sensor.currtable])>1) me.root.obs2.setText(me.tables[me.sensor.currtable][1]);
-            else me.root.obs2.setText("");
-            if (size(me.tables[me.sensor.currtable])>2) me.root.obs3.setText(me.tables[me.sensor.currtable][2]);
-            else me.root.obs3.setText("");
-            if (size(me.tables[me.sensor.currtable])>3) me.root.obs4.setText(me.tables[me.sensor.currtable][3]);
-            else me.root.obs4.setText("");
-            if (size(me.tables[me.sensor.currtable])>4) me.root.obs5.setText(me.tables[me.sensor.currtable][4]);
-            else me.root.obs5.setText("");
+
+            for (me.jj = 0; me.jj < 5;me.jj += 1) {
+                if (size(me.tables[me.sensor.currtable])>me.jj) {
+                    me.root.obsL[me.jj].setText(me.tables[me.sensor.currtable][me.jj]);
+                    me.root.obsLb[me.jj].setText(me.tables[me.sensor.currtable][me.jj]);
+                } else {
+                    me.root.obsL[me.jj].setText("");
+                }
+            }
             if (me.sensor.enabled) {
                 me.cycleTimeLeft = math.max(0,me.sensor.dura-(systime()-me.sensor.searchStart));
                 me.root.searchText.setText(sprintf("%d:%02d   SCT-%d",(me.cycleTimeLeft)/60, math.mod(me.cycleTimeLeft,60),me.sensor.searchCounter));
@@ -4581,6 +4567,15 @@ var MFD_Device =
                     # It had time to get lock, but failed
                     me.radWeap.setContacts([]);
                     me.sensor.handoffTarget = nil;
+                }
+            } elsif (!me.harmSelected) {
+                me.sensor.handoffTarget = nil;
+            }
+
+            if (noti.FrameCount == 1 and me.sensor.handoffTarget == nil) {
+                for (me.jj = 0; me.jj < 5;me.jj += 1) {
+                    me.root.obsL[me.jj].show();
+                    me.root.obsLb[me.jj].hide();
                 }
             }
 
@@ -4606,6 +4601,14 @@ var MFD_Device =
                 me.root.crossY2.hide();
                 #me.root.dashBox.hide();
                 me.root.cross.show();
+
+                for (me.jj = 0; me.jj < 5;me.jj += 1) {
+                    if (me.sensor.handoffTarget["tblIdx"] == me.jj) {
+                        me.root.obsL[me.jj].hide();
+                        me.root.obsLb[me.jj].show();
+                    }
+                }
+
                 if (cursor_click == me.root.index) {
                     me.sensor.handoffTarget = nil;
                     cursor_click = -1;
