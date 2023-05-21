@@ -4082,7 +4082,7 @@ var MFD_Device =
                 svg.rdrTxt[i] = svg.groupRdr.createChild("text")
                         .setAlignment("center-center")
                         .setFontSize(20, 1.0)
-                        .setColor(colorDot1);
+                        .setColor(colorText1);
         }
         svg.cursor = svg.groupCursor.createChild("path")
                     .moveTo(-8,-9)
@@ -4118,7 +4118,7 @@ var MFD_Device =
                 .vert(fieldH)
                 .horiz(-fieldW)
                 .vert(-fieldH)
-                .setColor(colorLine2)
+                .setColor(colorCircle1)
                 .setStrokeDashArray([20,20])
                 .set("z-index",12)
                 .setStrokeLineWidth(2);
@@ -4437,7 +4437,7 @@ var MFD_Device =
 
             me.dt = noti.getproper("elapsed") - me.elapsed;
 
-            if ((me.slew_x != 0 or me.slew_y != 0 or slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.root.index) and noti.getproper("viewName") != "TGP") {
+            if ((me.slew_x != 0 or me.slew_y != 0 or slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.root.index) and noti.getproper("viewName") != "TGP" and me.sensor.handoffTarget == nil) {
                 cursor_destination = nil;
                 cursor_posHAS[0] += me.slew_x*175;
                 cursor_posHAS[1] -= me.slew_y*175;
@@ -4450,7 +4450,7 @@ var MFD_Device =
             }
             me.slew_c_last = slew_c;
             slew_c = 0;
-            if (cursor_destination != nil and cursor_destination[2] == me.root.index) {
+            if (cursor_destination != nil and cursor_destination[2] == me.root.index and me.sensor.handoffTarget == nil) {
                 me.slew = 100*me.dt;
                 if (cursor_destination[0] > cursor_posHAS[0]) {
                     cursor_posHAS[0] += me.slew;
@@ -4481,6 +4481,7 @@ var MFD_Device =
             }
             me.elapsed = noti.getproper("elapsed");
             me.root.cursor.setTranslation(cursor_posHAS);
+            me.root.cursor.setVisible(me.sensor.handoffTarget == nil);
             if (0 and cursor_click==0) print(cursor_posHAS[0],", ",cursor_posHAS[1]+482, "  click: ", cursor_click);
 
             
@@ -4693,6 +4694,10 @@ var MFD_Device =
                 me.topLine = "   ";
                 me.topCheck = [0,0,0,0,0];
                 me.root.topBoxText.setText(me.topLine);
+
+                for (me.txt_count = 0; me.txt_count < 5; me.txt_count += 1) {
+                    me.root.rdrTxt[me.txt_count].hide();
+                }
 
                 if (cursor_click == me.root.index) {
                     cursor_click = -1;

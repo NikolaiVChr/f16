@@ -203,6 +203,7 @@ var contactPoint = nil;
 # isPainted()     - Tells if this target is still being radar tracked by the launch platform, only used in semi-radar guided missiles.
 # isLaserPainted()     - Tells if this target is still being tracked by the launch platform, only used by laser guided ordnance.
 # isRadiating(coord) - Tell if anti-radiation missile is hit by radiation from target. coord is the weapon position.
+# isSpikingMe() - Tells if the target is STT locked on launch platform.
 # isCommandActive()  - If surface based launcher is still tracking (command guidance) or have a search blep (TVM) on target.
 # isVirtual()     - Tells if the target is just a position, and should not be considered for damage.
 # get_closure_rate()  -  closure rate in kt to launch platform
@@ -1417,6 +1418,10 @@ var AIM = {
 		if (me.status != MISSILE_FLYING) {
 			me.status = MISSILE_STANDBY;
 			#printf("stop  #%3d %s", me.ID, me.type);
+			if (me.guidance == "radiation") {
+				me.Tgt = nil;
+				me.contacts = [];
+			}
 		}
 	},
 
