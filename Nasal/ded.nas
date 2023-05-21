@@ -1040,12 +1040,16 @@ var dataEntryDisplay = {
 		}
 	},
 
+	harmTablePage: 0,
 	updateHARM: func() {
-		me.text[0] = sprintf(" HARM TBL1     T1       ");
-		me.text[1] = sprintf("               T2       ");
-		me.text[2] = sprintf("               T3       ");
-		me.text[3] = sprintf("               T4       ");
-		me.text[4] = sprintf(" SEQ=MN1       T5       ");
+		#me.harmTablePage = radar_system.f16_radSensor.currtable;# for now the tables cannot be flipped on DED.
+		var table = radar_system.f16_radSensor.tables[me.harmTablePage];
+		var siz = size(table);
+		me.text[0] = sprintf(" HARM TBL%d "~utf8.chstr(0x2195)~"   T1 %s",me.harmTablePage+1,siz>0?table[0]:"");
+		me.text[1] = sprintf("               T2 %s",siz>1?table[1]:"");
+		me.text[2] = sprintf("               T3 %s",siz>2?table[2]:"");
+		me.text[3] = sprintf("               T4 %s",siz>3?table[3]:"");
+		me.text[4] = sprintf(" SEQ=MN1       T5 %s",siz>4?table[4]:"");
 	},
 
 	updateLaser: func() {
@@ -1451,6 +1455,12 @@ setlistener("f16/avionics/rtn-seq", func() {
 
 		if (dataEntryDisplay.page == pGPS and getprop("f16/avionics/power-gps")) {
 			dataEntryDisplay.GPSpage = !dataEntryDisplay.GPSpage;
+			return;
+		}
+
+		if (dataEntryDisplay.page == pHARM) {
+			dataEntryDisplay.harmTablePage += 1;
+			if (dataEntryDisplay.harmTablePage >= 3) dataEntryDisplay.harmTablePage = 0;
 			return;
 		}
 

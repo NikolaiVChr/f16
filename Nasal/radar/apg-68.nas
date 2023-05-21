@@ -2655,6 +2655,7 @@ var RadSensor = {
 	index: -1,
 	timing: 0.05,
 	table: [],
+    tables: [["2","11","20","P","S"],["6","5"],["AAA","SH"]],
 	currtable: 0,
 	handoffTarget: nil,
 	handoffTime: 0,

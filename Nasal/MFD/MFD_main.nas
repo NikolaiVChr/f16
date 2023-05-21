@@ -4275,6 +4275,13 @@ var MFD_Device =
                 .setColor(colorText1)
                 .set("z-index",1)
                 .setFontSize(18, 1.0);
+        svg.obs15 = svg.buttonView.createChild("text")
+                .setTranslation(276*0.795*0.60, -482*0.5-225)
+                .setText("UFC")
+                .setAlignment("center-top")
+                .setColor(colorText1)
+                .set("z-index",1)
+                .setFontSize(18, 1.0);
         
         
         
@@ -4305,7 +4312,6 @@ var MFD_Device =
         me.p_HARM.wdt = 552*0.795;
         me.p_HARM.ppp = me.PFD;
         me.p_HARM.my = me;
-        me.p_HARM.tables = [["2","11","20","P","S"],["6","5"],["AAA","SH"]];
         me.p_HARM.items = [];
         me.p_HARM.iter = -1;
         me.p_HARM.sensor = radar_system.f16_radSensor;
@@ -4333,6 +4339,9 @@ var MFD_Device =
                 } elsif (eventi == 12) {
                     me.sensor.fov_desired += 1;
                     if (me.sensor.fov_desired > 3) me.sensor.fov_desired = 0;
+                } elsif (eventi == 14) {
+                    ded.dataEntryDisplay.harmTablePage = me.sensor.currtable;
+                    ded.dataEntryDisplay.page = ded.pHARM;
                 } elsif (eventi == 15) {
                     swap();
                 } elsif (eventi == 16) {
@@ -4405,7 +4414,7 @@ var MFD_Device =
                             me.sensor.x    = [-30, 30];
                             me.sensor.y    = [-30, 10];
                         }
-                        me.sensor.table = me.tables[me.sensor.currtable];
+                        me.sensor.table = me.sensor.tables[me.sensor.currtable];
                         me.sensor.range = me.radWeap.max_fire_range_nm;
                         if (me.sensor.fov != me.sensor.fov_desired) {
                             me.sensor.fov = me.sensor.fov_desired;
@@ -4525,9 +4534,9 @@ var MFD_Device =
             me.root.obs13.setText(me.fovTxt);
 
             for (me.jj = 0; me.jj < 5;me.jj += 1) {
-                if (size(me.tables[me.sensor.currtable])>me.jj) {
-                    me.root.obsL[me.jj].setText(me.tables[me.sensor.currtable][me.jj]);
-                    me.root.obsLb[me.jj].setText(me.tables[me.sensor.currtable][me.jj]);
+                if (size(me.sensor.tables[me.sensor.currtable])>me.jj) {
+                    me.root.obsL[me.jj].setText(me.sensor.tables[me.sensor.currtable][me.jj]);
+                    me.root.obsLb[me.jj].setText(me.sensor.tables[me.sensor.currtable][me.jj]);
                 } else {
                     me.root.obsL[me.jj].setText("");
                 }
