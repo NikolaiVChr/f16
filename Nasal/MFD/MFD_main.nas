@@ -1139,13 +1139,15 @@ var MFD_Device =
                 me.root.bitText.hide();
             }
 
-            if (uv != nil and me.root.index == uv[2]) {
-                if (systime()-uv[3] < 0.5) {
-                    # the time check is to prevent click on other pages to carry over to CRM when that is selected.
-                    cursor_destination = uv;
-                }
-                uv = nil;
-            }
+            # This is old cursor system for clicking in 3D
+            #if (uv != nil and me.root.index == uv[2]) {
+            #    if (systime()-uv[3] < 0.5) {
+            #        # the time check is to prevent click on other pages to carry over to CRM when that is selected.
+            #        cursor_destination = uv;
+            #    }
+            #    uv = nil;
+            #}
+
             me.exp_modi = exp?(radar_system.apg68Radar.currentMode.EXPfixedAim?0.20:0.25):1.00;# slow down cursor movement when in zoom mode
 
             me.slew_x = getprop("controls/displays/target-management-switch-x[" ~ me.model_index ~ "]")*me.exp_modi;
@@ -1171,35 +1173,37 @@ var MFD_Device =
             }
             me.slew_c_last = slew_c;
             slew_c = 0;
-            if (cursor_destination != nil and cursor_destination[2] == me.root.index) {
-                me.slew = 100*me.dt;
-                if (cursor_destination[0] > cursor_pos[0]) {
-                    cursor_pos[0] += me.slew;
-                    if (cursor_destination[0] < cursor_pos[0]) {
-                        cursor_pos[0] = cursor_destination[0]
-                    }
-                } elsif (cursor_destination[0] < cursor_pos[0]) {
-                    cursor_pos[0] -= me.slew;
-                    if (cursor_destination[0] > cursor_pos[0]) {
-                        cursor_pos[0] = cursor_destination[0]
-                    }
-                }
-                if (cursor_destination[1] > cursor_pos[1]) {
-                    cursor_pos[1] += me.slew;
-                    if (cursor_destination[1] < cursor_pos[1]) {
-                        cursor_pos[1] = cursor_destination[1]
-                    }
-                } elsif (cursor_destination[1] < cursor_pos[1]) {
-                    cursor_pos[1] -= me.slew;
-                    if (cursor_destination[1] > cursor_pos[1]) {
-                        cursor_pos[1] = cursor_destination[1]
-                    }
-                }
-                cursor_lock = me.root.index;
-                if (cursor_destination[0] == cursor_pos[0] and cursor_destination[1] == cursor_pos[1]) {
-                    cursor_click = me.root.index;
-                }
-            }
+
+            # This is old cursor system for clicking in 3D, part 2
+            #if (cursor_destination != nil and cursor_destination[2] == me.root.index) {
+            #    me.slew = 100*me.dt;
+            #    if (cursor_destination[0] > cursor_pos[0]) {
+            #        cursor_pos[0] += me.slew;
+            #        if (cursor_destination[0] < cursor_pos[0]) {
+            #            cursor_pos[0] = cursor_destination[0]
+            #        }
+            #    } elsif (cursor_destination[0] < cursor_pos[0]) {
+            #        cursor_pos[0] -= me.slew;
+            #        if (cursor_destination[0] > cursor_pos[0]) {
+            #            cursor_pos[0] = cursor_destination[0]
+            #        }
+            #    }
+            #    if (cursor_destination[1] > cursor_pos[1]) {
+            #        cursor_pos[1] += me.slew;
+            #        if (cursor_destination[1] < cursor_pos[1]) {
+            #            cursor_pos[1] = cursor_destination[1]
+            #        }
+            #    } elsif (cursor_destination[1] < cursor_pos[1]) {
+            #        cursor_pos[1] -= me.slew;
+            #        if (cursor_destination[1] > cursor_pos[1]) {
+            #            cursor_pos[1] = cursor_destination[1]
+            #        }
+            #    }
+            #    cursor_lock = me.root.index;
+            #    if (cursor_destination[0] == cursor_pos[0] and cursor_destination[1] == cursor_pos[1]) {
+            #        cursor_click = me.root.index;
+            #    }
+            #}
             me.elapsed = noti.getproper("elapsed");
 
             if (radar_system.apg68Radar.currentMode.detectAIR) {
@@ -4419,15 +4423,6 @@ var MFD_Device =
                 me.root.notSOI.show();
             }
 
-
-            if (uv != nil and me.root.index == uv[2]) {
-                if (systime()-uv[3] < 0.5) {
-                    # the time check is to prevent click on other pages to carry over to CRM when that is selected.
-                    cursor_destination = uv;
-                }
-                uv = nil;
-            }
-
             me.slew_x = getprop("controls/displays/target-management-switch-x[" ~ me.model_index ~ "]");
             me.slew_y = -getprop("controls/displays/target-management-switch-y[" ~ me.model_index ~ "]");
 
@@ -4450,35 +4445,7 @@ var MFD_Device =
             }
             me.slew_c_last = slew_c;
             slew_c = 0;
-            if (cursor_destination != nil and cursor_destination[2] == me.root.index and me.sensor.handoffTarget == nil) {
-                me.slew = 100*me.dt;
-                if (cursor_destination[0] > cursor_posHAS[0]) {
-                    cursor_posHAS[0] += me.slew;
-                    if (cursor_destination[0] < cursor_posHAS[0]) {
-                        cursor_posHAS[0] = cursor_destination[0]
-                    }
-                } elsif (cursor_destination[0] < cursor_posHAS[0]) {
-                    cursor_posHAS[0] -= me.slew;
-                    if (cursor_destination[0] > cursor_posHAS[0]) {
-                        cursor_posHAS[0] = cursor_destination[0]
-                    }
-                }
-                if (cursor_destination[1] > cursor_posHAS[1]) {
-                    cursor_posHAS[1] += me.slew;
-                    if (cursor_destination[1] < cursor_posHAS[1]) {
-                        cursor_posHAS[1] = cursor_destination[1]
-                    }
-                } elsif (cursor_destination[1] < cursor_posHAS[1]) {
-                    cursor_posHAS[1] -= me.slew;
-                    if (cursor_destination[1] > cursor_posHAS[1]) {
-                        cursor_posHAS[1] = cursor_destination[1]
-                    }
-                }
-                cursor_lock = me.root.index;
-                if (cursor_destination[0] == cursor_posHAS[0] and cursor_destination[1] == cursor_posHAS[1]) {
-                    cursor_click = me.root.index;
-                }
-            }
+            
             me.elapsed = noti.getproper("elapsed");
             me.root.cursor.setTranslation(cursor_posHAS);
             me.root.cursor.setVisible(me.sensor.handoffTarget == nil);
@@ -5157,12 +5124,14 @@ var startupMFD = func {
 #emesary.GlobalTransmitter.Register(f16_mfd);
 
 
-
+# This is old cursor system for clicking in 3D, part 3
 var uv = nil;
+var cursor_destination = nil;
+
+# Cursor stuff
 var cursor_pos = [100,-100];
 var cursor_posHAS = [0,-241];
 var cursor_click = -1;
-var cursor_destination = nil;
 var cursor_lock = -1;
 var exp = 0;
 
