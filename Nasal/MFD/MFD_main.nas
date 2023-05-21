@@ -3159,7 +3159,7 @@ var MFD_Device =
                 } elsif (me.wpn.type == "AGM-65B" or me.wpn.type == "AGM-65D") {
                     me.wpnType ="ground";
                     me.eegs = "A-G";
-                    me.obs7 = me.wpn.isPowerOn()?"POWER ON":"POWER OFF";
+                    me.obs7 = me.wpn.isPowerOn()?"PWR ON":"PWR OFF";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "MAL";
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
@@ -3175,7 +3175,7 @@ var MFD_Device =
                     me.wpnType ="anti-rad";
                     me.eegs = "A-G";
                     me.drop = "HAS";#getprop("f16/stores/harm-mounted")?"HAS":"HAS";
-                    me.obs7 = me.wpn.isPowerOn()?"POWER ON":"POWER OFF";
+                    me.obs7 = me.wpn.isPowerOn()?"PWR ON":"PWR OFF";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "MAL";
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
