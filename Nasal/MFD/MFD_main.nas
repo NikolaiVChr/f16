@@ -4322,7 +4322,7 @@ var MFD_Device =
         me.p_HARM.notifyButton = func (eventi) {
             if (eventi != nil) {
                 if (eventi >= 0 and eventi < 5) {
-                    if (me.sensor.handoffTarget["tblIdx"] == eventi) {
+                    if (me.sensor.handoffTarget != nil and me.sensor.handoffTarget["tblIdx"] == eventi) {
                         me.sensor.handoffTarget = nil;
                     }
                 } elsif (eventi == 6) {                    
