@@ -990,10 +990,13 @@ var MFD_Device =
 
             me.root.p_RDR_image.setVisible(radar_system.apg68Radar.enabled);
             me.DGFT = noti.getproper("dgft");
+            me.IMSOI = 0;
 			if (f16.SOI == 3 and me.model_index == 1) {
 				me.root.notSOI.hide();
+                me.IMSOI = 1;
 			} elsif (f16.SOI == 2 and me.model_index == 0) {
 				me.root.notSOI.hide();
+                me.IMSOI = 1;
 			} else {
 				me.root.notSOI.show();
 			}
@@ -1148,7 +1151,7 @@ var MFD_Device =
             me.slew_x = getprop("controls/displays/target-management-switch-x[" ~ me.model_index ~ "]")*me.exp_modi;
             me.slew_y = -getprop("controls/displays/target-management-switch-y[" ~ me.model_index ~ "]")*me.exp_modi;
 
-            if (noti.getproper("viewName") != "TGP") {
+            if (noti.getproper("viewName") != "TGP" and me.IMSOI) {
                 f16.resetSlew();
             }
 
@@ -3149,7 +3152,7 @@ var MFD_Device =
                 } elsif (me.wpn.type == "AGM-88") {
                     me.wpnType ="anti-rad";
                     me.eegs = "A-G";
-                    me.drop = "HAS";#getprop("f16/stores/harm-mounted")?"HAD":"HAS";
+                    me.drop = "HAS";#getprop("f16/stores/harm-mounted")?"HAS":"HAS";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "MAL";
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
@@ -4293,7 +4296,7 @@ var MFD_Device =
             np.setVisible(0);
             return np;
         };
-        me.p_HARM = me.PFD.addHARMPage(svg, "HAD", "p_HARM");
+        me.p_HARM = me.PFD.addHARMPage(svg, "HAS", "p_HARM");
         me.p_HARM.model_index = me.model_index;
         me.p_HARM.root = svg;
         me.p_HARM.elapsed = 0;
@@ -4366,7 +4369,7 @@ var MFD_Device =
         };
 
         me.p_HARM.update = func (noti) {
-            
+            if (bottomImages[me.model_index] != nil) bottomImages[me.model_index].hide();
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
             #print("\nHAD update:\n=======");
@@ -4417,6 +4420,19 @@ var MFD_Device =
             }
 
             #CURSOR
+
+            me.IMSOI = 0;
+            if (f16.SOI == 3 and me.model_index == 1) {
+                me.root.notSOI.hide();
+                me.IMSOI = 1;
+            } elsif (f16.SOI == 2 and me.model_index == 0) {
+                me.root.notSOI.hide();
+                me.IMSOI = 1;
+            } else {
+                me.root.notSOI.show();
+            }
+
+
             if (uv != nil and me.root.index == uv[2]) {
                 if (systime()-uv[3] < 0.5) {
                     # the time check is to prevent click on other pages to carry over to CRM when that is selected.
@@ -4428,7 +4444,7 @@ var MFD_Device =
             me.slew_x = getprop("controls/displays/target-management-switch-x[" ~ me.model_index ~ "]");
             me.slew_y = -getprop("controls/displays/target-management-switch-y[" ~ me.model_index ~ "]");
 
-            if (noti.getproper("viewName") != "TGP") {
+            if (noti.getproper("viewName") != "TGP" and me.IMSOI) {
                 f16.resetSlew();
             }
 
@@ -4436,10 +4452,10 @@ var MFD_Device =
 
             if ((me.slew_x != 0 or me.slew_y != 0 or slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.root.index) and noti.getproper("viewName") != "TGP") {
                 cursor_destination = nil;
-                cursor_pos[0] += me.slew_x*175;
-                cursor_pos[1] -= me.slew_y*175;
-                cursor_pos[0] = math.clamp(cursor_pos[0], -552*0.5*0.795, 552*0.5*0.795);
-                cursor_pos[1] = math.clamp(cursor_pos[1], -482, 0);
+                cursor_posHAS[0] += me.slew_x*175;
+                cursor_posHAS[1] -= me.slew_y*175;
+                cursor_posHAS[0] = math.clamp(cursor_posHAS[0], -552*0.5*0.795, 552*0.5*0.795);
+                cursor_posHAS[1] = math.clamp(cursor_posHAS[1], -482, 0);
                 cursor_click = (slew_c and !me.slew_c_last)?me.root.index:-1;
                 cursor_lock = me.root.index;
             } elsif (cursor_lock == me.root.index or (me.slew_x == 0 or me.slew_y == 0 or slew_c == 0)) {
@@ -4449,44 +4465,38 @@ var MFD_Device =
             slew_c = 0;
             if (cursor_destination != nil and cursor_destination[2] == me.root.index) {
                 me.slew = 100*me.dt;
-                if (cursor_destination[0] > cursor_pos[0]) {
-                    cursor_pos[0] += me.slew;
-                    if (cursor_destination[0] < cursor_pos[0]) {
-                        cursor_pos[0] = cursor_destination[0]
+                if (cursor_destination[0] > cursor_posHAS[0]) {
+                    cursor_posHAS[0] += me.slew;
+                    if (cursor_destination[0] < cursor_posHAS[0]) {
+                        cursor_posHAS[0] = cursor_destination[0]
                     }
-                } elsif (cursor_destination[0] < cursor_pos[0]) {
-                    cursor_pos[0] -= me.slew;
-                    if (cursor_destination[0] > cursor_pos[0]) {
-                        cursor_pos[0] = cursor_destination[0]
+                } elsif (cursor_destination[0] < cursor_posHAS[0]) {
+                    cursor_posHAS[0] -= me.slew;
+                    if (cursor_destination[0] > cursor_posHAS[0]) {
+                        cursor_posHAS[0] = cursor_destination[0]
                     }
                 }
-                if (cursor_destination[1] > cursor_pos[1]) {
-                    cursor_pos[1] += me.slew;
-                    if (cursor_destination[1] < cursor_pos[1]) {
-                        cursor_pos[1] = cursor_destination[1]
+                if (cursor_destination[1] > cursor_posHAS[1]) {
+                    cursor_posHAS[1] += me.slew;
+                    if (cursor_destination[1] < cursor_posHAS[1]) {
+                        cursor_posHAS[1] = cursor_destination[1]
                     }
-                } elsif (cursor_destination[1] < cursor_pos[1]) {
-                    cursor_pos[1] -= me.slew;
-                    if (cursor_destination[1] > cursor_pos[1]) {
-                        cursor_pos[1] = cursor_destination[1]
+                } elsif (cursor_destination[1] < cursor_posHAS[1]) {
+                    cursor_posHAS[1] -= me.slew;
+                    if (cursor_destination[1] > cursor_posHAS[1]) {
+                        cursor_posHAS[1] = cursor_destination[1]
                     }
                 }
                 cursor_lock = me.root.index;
-                if (cursor_destination[0] == cursor_pos[0] and cursor_destination[1] == cursor_pos[1]) {
+                if (cursor_destination[0] == cursor_posHAS[0] and cursor_destination[1] == cursor_posHAS[1]) {
                     cursor_click = me.root.index;
                 }
             }
             me.elapsed = noti.getproper("elapsed");
-            me.root.cursor.setTranslation(cursor_pos);
-            if (0 and cursor_click==0) print(cursor_pos[0],", ",cursor_pos[1]+482, "  click: ", cursor_click);
+            me.root.cursor.setTranslation(cursor_posHAS);
+            if (0 and cursor_click==0) print(cursor_posHAS[0],", ",cursor_posHAS[1]+482, "  click: ", cursor_click);
 
-            if (f16.SOI == 3 and me.model_index == 1) {
-                me.root.notSOI.hide();
-            } elsif (f16.SOI == 2 and me.model_index == 0) {
-                me.root.notSOI.hide();
-            } else {
-                me.root.notSOI.show();
-            }
+            
             
             me.root.obs12.setText("TBL"~(me.sensor.currtable + 1));
             
@@ -4694,8 +4704,8 @@ var MFD_Device =
 
             foreach(me.citem; items) {
                 if (me.citem["xyPos"] == nil) continue;
-                me.xx = math.abs(me.citem.xyPos[0]-cursor_pos[0]);
-                me.yy = math.abs(me.citem.xyPos[1]-(cursor_pos[1] + 482));
+                me.xx = math.abs(me.citem.xyPos[0]-cursor_posHAS[0]);
+                me.yy = math.abs(me.citem.xyPos[1]-(cursor_posHAS[1] + 482));
                 me.cdist = math.sqrt(me.xx*me.xx+me.yy*me.yy);
                 if (me.cdist < me.clostestDist) {
                     me.clostestDist = me.cdist;
@@ -4992,7 +5002,7 @@ var MFD_Device =
 #  VSD HSD SMS SIT
 
         me.p_LIST.addMenuItem(10, "BLANK", nil);
-        me.p_LIST.addMenuItem(11, "HAD", me.p_HARM);
+        me.p_LIST.addMenuItem(11, "HAS", me.p_HARM);
         me.p_LIST.addMenuItem(13, "RCCE", nil);
         me.p_LIST.addMenuItem(14, "RESET\n MENU", nil);
         me.p_LIST.addMenuItem(15, "SWAP", nil);
@@ -5142,6 +5152,7 @@ var startupMFD = func {
 
 var uv = nil;
 var cursor_pos = [100,-100];
+var cursor_posHAS = [0,-241];
 var cursor_click = -1;
 var cursor_destination = nil;
 var cursor_lock = -1;
@@ -5182,7 +5193,7 @@ var getMenuButton = func (pageName) {
         return nil;
     } elsif (pageName == "DTE") {
         return 7;
-    } elsif (pageName == "HAD") {
+    } elsif (pageName == "HAS") {
         return nil;#HARM
     } else {
         print("Make sure button assignment is set correctly in getMenuButton() in MFD_main.nas");
