@@ -2985,6 +2985,9 @@ var MFD_Device =
                             me.wpn54.guidance = "gps";
                         }
                     }
+                    if (me.wpn54 != nil and me.wpn54["powerOnRequired"] == 1) {
+                        pylons.fcs.togglePowerOn();
+                    }
                 } elsif (eventi == 17) {
                     me.ppp.selectPage(me.my.p_SMS);
                     me.setSelection(me.ppp.buttons[18], me.ppp.buttons[17], 17);
@@ -3141,7 +3144,7 @@ var MFD_Device =
                     } else {
                         me.ready = "RDY";
                     }
-                } elsif (me.wpn.type == "AGM-65B" or me.wpn.type == "AGM-65D" or me.wpn.type == "AGM-84" or me.wpn.type == "AGM-119" or me.wpn.type == "AGM-158") {
+                } elsif (me.wpn.type == "AGM-84" or me.wpn.type == "AGM-119" or me.wpn.type == "AGM-158") {
                     me.wpnType ="ground";
                     me.eegs = "A-G";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
@@ -3153,16 +3156,34 @@ var MFD_Device =
                     } else {
                         me.ready = "RDY";
                     }
-                } elsif (me.wpn.type == "AGM-88") {
-                    me.wpnType ="anti-rad";
+                } elsif (me.wpn.type == "AGM-65B" or me.wpn.type == "AGM-65D") {
+                    me.wpnType ="ground";
                     me.eegs = "A-G";
-                    me.drop = "HAS";#getprop("f16/stores/harm-mounted")?"HAS":"HAS";
+                    me.obs7 = me.wpn.isPowerOn()?"POWER ON":"POWER OFF";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "MAL";
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
                         me.ready = "OFF";
-                    } elsif (me.wpn.status == armament.MISSILE_STARTING) {
+                    } elsif (me.wpn.status == armament.MISSILE_STARTING and me.wpn["powerOn"]) {
                         me.ready = "INIT";
+                    } elsif (me.wpn.status == armament.MISSILE_STARTING) {
+                        me.ready = "OFF";
+                    } else {
+                        me.ready = "RDY";
+                    }
+                } elsif (me.wpn.type == "AGM-88") {
+                    me.wpnType ="anti-rad";
+                    me.eegs = "A-G";
+                    me.drop = "HAS";#getprop("f16/stores/harm-mounted")?"HAS":"HAS";
+                    me.obs7 = me.wpn.isPowerOn()?"POWER ON":"POWER OFF";
+                    if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
+                        me.ready = "MAL";
+                    } elsif (me.wpn.status < armament.MISSILE_STARTING) {
+                        me.ready = "OFF";
+                    } elsif (me.wpn.status == armament.MISSILE_STARTING and me.wpn["powerOn"]) {
+                        me.ready = "INIT";
+                    } elsif (me.wpn.status == armament.MISSILE_STARTING) {
+                        me.ready = "OFF";
                     } else {
                         me.ready = "RDY";
                     }

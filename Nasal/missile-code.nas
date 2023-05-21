@@ -134,7 +134,7 @@ var PATTERN_ROSETTE = 1;
 var PATTERN_DOUBLE_D = 2;
 
 # set these to print stuff to console:
-var DEBUG_STATS            = 1;#most basic stuff
+var DEBUG_STATS            = 0;#most basic stuff
 var DEBUG_FLIGHT           = 0;#for creating missiles sometimes good to have this on to see how it flies.
 
 # set these to debug the code:
@@ -305,6 +305,7 @@ var AIM = {
 		m.radarZ                = getprop(m.nodeString~"FCS-z");                      #    In future I will add direction to it also, for now its center gimbal is along -x axis.
 		m.expand_min            = getprop(m.nodeString~"expand-min-fire-range");      # Bool. Default false. If min fire range should expand with closing rate. Mainly use this for A/A missiles.
 		m.asc                   = getprop(m.nodeString~"attack-steering-cue-enabled");# Bool. ASC enabled.
+		m.powerOnRequired       = getprop(m.nodeString~"requires-power-on");          # Bool. ASC enabled.
 		# navigation, guiding and seekerhead
 		m.max_seeker_dev        = getprop(m.nodeString~"seeker-field-deg") / 2;       # missiles own seekers total FOV diameter.
 		m.guidance              = getprop(m.nodeString~"guidance");                   # heat/radar/semi-radar/tvm/laser/gps/gps-laser/vision/unguided/level/gyro-pitch/radiation/inertial/remote/remote-stable/command/sample
@@ -403,6 +404,10 @@ var AIM = {
 
 		if (m.eject_speed == nil) {
           m.eject_speed = 0;
+        }
+
+        if (m.powerOnRequired == nil) {
+          m.powerOnRequired = 0;
         }
 
         if (m.rail_forward == 1) {
@@ -713,6 +718,7 @@ var AIM = {
         m.contacts              = [];# contacts that should be considered to lock onto. In slave it will only lock to the first.
         m.warm                  = 1;# normalized warm/cold
         m.ready_standby_time    = 0;# time when started from standby
+        m.power_on_time         = 0;# time when started from standby
         m.cooling               = 0;
         m.slave_to_radar        = m.seam_support?1:0;
         m.seeker_last_time      = 0;
@@ -721,6 +727,7 @@ var AIM = {
         m.seam_scan             = 0;
         m.cooling_last_time     = 0;
         m.cool_total_time       = 0;
+        m.powerOn               = 0;
 
 		#
 		# Emesary damage system
@@ -1403,6 +1410,24 @@ var AIM = {
 
 	isCooling: func () {
 		return me.cooling;
+	},
+
+	togglePowerOn: func {
+		me.powerOn = !me.powerOn;
+		if (me.powerOn) {
+			me.power_on_time = getprop("sim/time/elapsed-sec");
+		}
+	},
+
+	setPowerOn: func (enable) {
+		me.powerOn = enable;
+		if (me.powerOn) {
+			me.power_on_time = getprop("sim/time/elapsed-sec");
+		}
+	},
+
+	isPowerOn: func {
+		return me.powerOn;
 	},
 
 	start: func {
@@ -4529,8 +4554,11 @@ var AIM = {
 	standby: func {
 		# looping in standby mode
 		if (deltaSec.getValue()==0) {
+			# paused
 			settimer(func me.standby(), 0.5);
+			return;
 		}
+		me.printCode("In standby(%d)",me.status);
 		if(me.seam_support and me.uncage_auto) {
 			me.caged = 1;
 		}
@@ -4551,8 +4579,11 @@ var AIM = {
 		# looping in starting mode
 		#print("startup");
 		if (deltaSec.getValue()==0) {
+			# Paused
 			settimer(func me.startup(), 0.5);
+			return;
 		}
+		me.printCode("In startup()");
 		if(me.seam_support and me.uncage_auto) {
 			me.caged = 1;
 		}
@@ -4560,7 +4591,7 @@ var AIM = {
 			me.standby();
 			return;
 		}
-		if (me.ready_standby_time != 0 and getprop("sim/time/elapsed-sec") > (me.ready_standby_time+me.ready_time)) {
+		if (me.ready_standby_time != 0 and ((!me.powerOnRequired and getprop("sim/time/elapsed-sec") > (me.ready_standby_time+me.ready_time)) or (me.powerOnRequired and (me.powerOn and getprop("sim/time/elapsed-sec") > me.power_on_time + me.ready_time)))) {
 			me.status = MISSILE_SEARCH;
 			me.search();
 			return;
@@ -4762,6 +4793,7 @@ var AIM = {
 		if (deltaSec.getValue()==0) {
 			settimer(func me.search(), 0.5);
 		}
+		me.printCode("In search()");
 		if (me.deleted) {
 			return;
 		} elsif ( me.status == MISSILE_FLYING ) {
@@ -4769,6 +4801,14 @@ var AIM = {
 			me.SwSoundOnOff.setBoolValue(0);
 			return;
 		} elsif ( me.status == MISSILE_STANDBY or me.status == MISSILE_STARTING) {
+			# Stand by.
+			me.SwSoundVol.setDoubleValue(0);
+			me.SwSoundOnOff.setBoolValue(0);
+			#me.trackWeak = 1;
+			me.standby();
+			return;
+		} elsif (me.powerOnRequired and !me.powerOn) {
+			me.status = MISSILE_STARTING;
 			# Stand by.
 			me.SwSoundVol.setDoubleValue(0);
 			me.SwSoundOnOff.setBoolValue(0);
@@ -5137,6 +5177,15 @@ var AIM = {
 			me.reset_seeker();
 			me.SwSoundOnOff.setBoolValue(0);
 			me.SwSoundVol.setDoubleValue(0);
+			#me.trackWeak = 1;
+			me.standby();
+			return;
+		} elsif (me.powerOnRequired and !me.powerOn) {
+			me.status = MISSILE_STARTING;
+			me.reset_seeker();
+			# Stand by.
+			me.SwSoundVol.setDoubleValue(0);
+			me.SwSoundOnOff.setBoolValue(0);
 			#me.trackWeak = 1;
 			me.standby();
 			return;

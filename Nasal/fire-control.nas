@@ -192,6 +192,19 @@ var FireControl = {
 		return me.selectedType;
 	},
 
+	togglePowerOn: func () {
+		me.myType = me.getSelectedType();
+		if (me.myType == nil) return;
+		me.myWeaps = me.getAllOfType(me.myType);
+		me.currPow = 0;
+		if (me.myWeaps != nil and size(me.myWeaps) and me.myWeaps[0].parents[0] == armament.AIM) {
+			me.currPow = me.myWeaps[0].isPowerOn();
+			foreach (me.myWeap ; me.myWeaps) {
+				me.myWeap.setPowerOn(!me.currPow);
+			}
+		}
+	},
+
 	getCategory: func {
 		# get loadout CAT (not to be confused with FBW CAT setting)
 		me.cat = 1;
