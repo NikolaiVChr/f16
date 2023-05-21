@@ -4305,7 +4305,7 @@ var MFD_Device =
         me.p_HARM.wdt = 552*0.795;
         me.p_HARM.ppp = me.PFD;
         me.p_HARM.my = me;
-        me.p_HARM.tables = [["2","11","20","P","SH"],["6","AAA","5"],["S"]];
+        me.p_HARM.tables = [["2","11","20","P","S"],["6","5"],["AAA","SH"]];
         me.p_HARM.items = [];
         me.p_HARM.iter = -1;
         me.p_HARM.sensor = radar_system.f16_radSensor;
@@ -4586,7 +4586,7 @@ var MFD_Device =
 
             if (me.sensor.handoffTarget != nil) {
                 #me.handoffTarget
-                me.root.rdrTxt[0].setText(me.sensor.handoffTarget.radiSpike~me.sensor.handoffTarget.mdl);
+                me.root.rdrTxt[0].setText(me.sensor.handoffTarget.mdl~me.sensor.handoffTarget.radiSpike);
                 me.root.rdrTxt[0].setTranslation(0, me.root.fieldY + me.root.fieldH*0.5);
                 me.root.cross.setTranslation(0, me.root.fieldY + me.root.fieldH*0.5);
                 me.root.rdrTxt[1].hide();
@@ -4657,7 +4657,7 @@ var MFD_Device =
                     }
                     me.dataPos = [me.extrapolate(me.data.pos[0], me.sensor.x[0], me.sensor.x[1], me.root.fieldX, me.root.fieldX + me.root.fieldW), me.extrapolate(me.data.pos[1], me.sensor.y[0], me.sensor.y[1], me.root.fieldY + me.root.fieldH, me.root.fieldY)];
                     me.data.xyPos = me.dataPos;
-                    me.root.rdrTxt[me.txt_count].setText(me.data.radiSpike~me.data.mdl);
+                    me.root.rdrTxt[me.txt_count].setText(me.data.mdl~me.data.radiSpike);
                     me.root.rdrTxt[me.txt_count].setTranslation(me.dataPos);
                     if (!me.topCheck[me.data.tblIdx]) {
                         me.topLine ~= me.data.mdl~"   ";
