@@ -839,6 +839,7 @@ var dataEntryDisplay = {
 		me.text[4] = sprintf("TOF      5.4SEC ");
 	},
 
+	INSpage: 0,
 	updateINS: func() {
 		lat = convertDegreeToStringLat(getprop("position/latitude-deg"));
 		lon = convertDegreeToStringLon(getprop("position/longitude-deg"));
@@ -846,11 +847,20 @@ var dataEntryDisplay = {
 		if (getprop("f16/avionics/ins-knob") == 3) {
     		rdy = "RDY";
 		}
-		me.text[0] = sprintf("  INS   10.2/10 %s  %s",rdy,me.no);
-		me.text[1] = sprintf("  LAT  %s",lat);
-		me.text[2] = sprintf("  LNG  %s",lon);
-		me.text[3] = sprintf("  SALT  %5dFT",getprop("position/altitude-ft"));
-		me.text[3] = sprintf("THDG %5.1f\xc2\xb0     G/S %3d",getprop("orientation/true-heading-deg"),getprop("velocities/groundspeed-kt"));
+		var hdgmag = getprop("/orientation/heading-magnetic-deg");
+		if (me.INSpage == 0) {
+			me.text[0] = sprintf("  INS   10.2/10 %s  %s",rdy,me.no);
+			me.text[1] = sprintf("  LAT  %s",lat);
+			me.text[2] = sprintf("  LNG  %s",lon);
+			me.text[3] = sprintf("  SALT  %5dFT",getprop("position/altitude-ft"));
+			me.text[4] = sprintf("THDG %5.1f\xc2\xb0     G/S %3d",getprop("orientation/true-heading-deg"),getprop("velocities/groundspeed-kt"));
+		} elsif (me.INSpage == 1) {
+			me.text[0] = sprintf("    INS INFLT ALIGN  %s ",me.no);
+			me.text[1] = sprintf("                        ");
+			me.text[2] = sprintf(" COMPASS HDG   * %3d°*  ",hdgmag);
+			me.text[3] = sprintf("                        ");#FIX NECESSARY
+			me.text[4] = sprintf("                        ");
+		}
 	},
 
 	updateEWS: func() {
@@ -978,6 +988,9 @@ var dataEntryDisplay = {
 
 	OFPpage: 0,
 	updateOFP: func() {
+		var serial = getprop("/sim/model/livery/serial");
+		var splitSerial = split("-",serial);
+		var serialSimple = splitSerial[0]~splitSerial[1];
 		if (me.OFPpage == 0) {
 			me.text[0] = sprintf("         OFP1        %s",me.no);
 			me.text[1] = sprintf("  UFC  P07A   FCR  7010");
@@ -990,12 +1003,18 @@ var dataEntryDisplay = {
 			me.text[2] = sprintf("  HK3  P07A   TGP  P07A");
 			me.text[3] = sprintf("  HK7  P07A  BLKR  P07B");
 			me.text[4] = sprintf(" FLCS  7072   NVP  P07A");
-		} else {
+		} elsif (me.OFPpage == 2) {
 			me.text[0] = sprintf("         OFP3        %s",me.no);
 			me.text[1] = sprintf("  RWR  P07A  IECM  P07A");
 			me.text[2] = sprintf("  EID  P07B   MDF  M074");
 			me.text[3] = sprintf(" CMDS  P040  DLNK  P07B");
 			me.text[4] = sprintf("  MDF  M074   ");
+		} else {
+			me.text[0] = sprintf("        DTC MISC       ");
+			me.text[1] = sprintf("                       ");
+			me.text[2] = sprintf("  A/C TAIL  *%s*       ",serialSimple);
+			me.text[3] = sprintf("  WPN DATA             ");
+			me.text[4] = sprintf("  RDR DATA             ");
 		}
 	},
 
@@ -1430,9 +1449,14 @@ setlistener("f16/avionics/rtn-seq", func() {
 			return;
 		}
 
+		if (dataEntryDisplay.page == pINS) {
+			dataEntryDisplay.INSpage = !dataEntryDisplay.INSpage;
+			return;
+		}
+
 		if (dataEntryDisplay.page == pOFP) {
 			dataEntryDisplay.OFPpage = dataEntryDisplay.OFPpage + 1;
-			if (dataEntryDisplay.OFPpage == 3) {
+			if (dataEntryDisplay.OFPpage == 4) {
 				dataEntryDisplay.OFPpage = 0;
 			}
 			return;
