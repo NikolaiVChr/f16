@@ -1425,6 +1425,10 @@ var AIM = {
 		}
 	},
 
+	getStatus: func {
+		return me.status;
+	},
+
 	isCaged: func () {
 		if (!me.seam_support) return me.status != MISSILE_FLYING;
 		return me.caged;

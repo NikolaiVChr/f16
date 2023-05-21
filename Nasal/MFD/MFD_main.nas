@@ -4302,7 +4302,6 @@ var MFD_Device =
         me.p_HARM.root = svg;
         me.p_HARM.elapsed = 0;
         me.p_HARM.slew_c_last = slew_c;
-        me.p_HARM.fov = 0;
         me.p_HARM.wdt = 552*0.795;
         me.p_HARM.ppp = me.PFD;
         me.p_HARM.my = me;
@@ -4332,8 +4331,8 @@ var MFD_Device =
                     if (me.sensor.currtable > 2) me.sensor.currtable = 0;
                     me.sensor.handoffTarget = nil;
                 } elsif (eventi == 12) {
-                    me.fov += 1;
-                    if (me.fov > 3) me.fov = 0;
+                    me.sensor.fov_desired += 1;
+                    if (me.sensor.fov_desired > 3) me.sensor.fov_desired = 0;
                 } elsif (eventi == 15) {
                     swap();
                 } elsif (eventi == 16) {
@@ -4387,17 +4386,17 @@ var MFD_Device =
             if (pylons.fcs != nil) {
                 me.radWeap = pylons.fcs.getSelectedWeapon();
                 if (me.radWeap != nil) {
-                    if (me.radWeap["guidance"] == "radiation") {
+                    if (me.radWeap["guidance"] == "radiation" and me.radWeap.getStatus() >= armament.MISSILE_SEARCH) {
                         me.sensor.maxArea = me.root.fieldW * me.root.fieldH;
-                        if (me.fov == 1) {
+                        if (me.sensor.fov_desired == 1) {
                             me.sensor.area = me.sensor.maxArea*0.25;
                             me.sensor.x    = [-15, 15];
                             me.sensor.y    = [-10, 10];#todo: something of here, decide proper
-                        } elsif (me.fov == 2) {
+                        } elsif (me.sensor.fov_desired == 2) {
                             me.sensor.area = me.sensor.maxArea*0.5;
                             me.sensor.x    = [-30, 0];
                             me.sensor.y    = [-30, 10];
-                        } elsif (me.fov == 3) {
+                        } elsif (me.sensor.fov_desired == 3) {
                             me.sensor.area = me.sensor.maxArea*0.5;
                             me.sensor.x    = [0, 30];
                             me.sensor.y    = [-30, 10];
@@ -4408,8 +4407,8 @@ var MFD_Device =
                         }
                         me.sensor.table = me.tables[me.sensor.currtable];
                         me.sensor.range = me.radWeap.max_fire_range_nm;
-                        if (me.sensor["fov"] != me.fov) {
-                            me.sensor.fov = me.fov;
+                        if (me.sensor.fov != me.sensor.fov_desired) {
+                            me.sensor.fov = me.sensor.fov_desired;
                             me.sensor.reset();
                         }
                         me.sensor.setEnabled(me.sensor.handoffTarget == nil);
@@ -4470,7 +4469,7 @@ var MFD_Device =
             
             me.root.obs12.setText("TBL"~(me.sensor.currtable + 1));
             
-            if (me.fov == 1) {
+            if (me.sensor.fov_desired == 1) {
                 me.fovTxt = "CTR";
                 me.root.crossX.setTranslation(0,me.root.fieldH*0.25); 
                 me.root.crossY.setTranslation(0,0);
@@ -4483,7 +4482,7 @@ var MFD_Device =
                 me.root.crossY1.setTranslation(0, me.root.fieldY+me.root.fieldH*0.5+2*me.root.fieldH*0.75/3);
                 me.root.crossY2.setTranslation(0, me.root.fieldY+me.root.fieldH*0.5+4*me.root.fieldH*0.75/3);
                 me.root.crossY3.setTranslation(0, me.root.fieldY+me.root.fieldH*0.5+6*me.root.fieldH*0.75/3);
-            } elsif (me.fov == 2) {
+            } elsif (me.sensor.fov_desired == 2) {
                 me.fovTxt = "LEFT";
                 me.root.crossX.setTranslation(0,0); 
                 me.root.crossY.setTranslation(-me.root.fieldX,0);
@@ -4496,7 +4495,7 @@ var MFD_Device =
                 me.root.crossY1.setTranslation(-me.root.fieldX, me.root.fieldY+me.root.fieldH*0.25+1*me.root.fieldH*0.75/3);
                 me.root.crossY2.setTranslation(-me.root.fieldX, me.root.fieldY+me.root.fieldH*0.25+2*me.root.fieldH*0.75/3);
                 me.root.crossY3.setTranslation(-me.root.fieldX, me.root.fieldY+me.root.fieldH*0.25+3*me.root.fieldH*0.75/3);
-            } elsif (me.fov == 3) {
+            } elsif (me.sensor.fov_desired == 3) {
                 me.fovTxt = "RGHT";
                 me.root.crossX.setTranslation(0,0); 
                 me.root.crossY.setTranslation(me.root.fieldX,0);
@@ -4544,10 +4543,10 @@ var MFD_Device =
             me.items = me.sensor.vector_aicontacts_seen;
             me.iter = size(me.items)-1;
 
-            if (me.radWeap != nil and me.sensor.handoffTarget != nil and me.radWeap["guidance"] == "radiation" and me.radWeap.status < armament.MISSILE_LOCK) {
+            if (me.harmSelected and me.sensor.handoffTarget != nil and me.radWeap.status < armament.MISSILE_LOCK) {
                 # This makes sure we go from handover back to search when missile loses lock
                 if (systime()-me.sensor.handoffTime > 1) {
-                    # It had time to get lock, but failed
+                    # It had time to get lock, but failed or masterarm was off
                     me.radWeap.setContacts([]);
                     me.sensor.handoffTarget = nil;
                 }
@@ -4595,17 +4594,13 @@ var MFD_Device =
                 if (cursor_click == me.root.index) {
                     me.sensor.handoffTarget = nil;
                     cursor_click = -1;
-                    if (me.radWeap != nil and me.radWeap["guidance"] == "radiation") {
-                        me.radWeap.setContacts([]);
-                        me.radWeap.clearTgt();
-                    }
-                } else {
-                    #if (me.sensor.enabled) {
-                    if (me.radWeap != nil and me.radWeap["guidance"] == "radiation") {
-                        me.radWeap.setContacts([me.sensor.handoffTarget]);
-                    }
-                        me.sensor.setEnabled(0);
+                    # not needed anymore due to last lines in method:
+                    #if (me.radWeap != nil and me.radWeap["guidance"] == "radiation") {
+                    #    me.radWeap.setContacts([]);
+                    #    me.radWeap.clearTgt();
                     #}
+                } elsif (me.harmSelected) {
+                    me.radWeap.setContacts([me.sensor.handoffTarget]);
                 }
             } elsif (me.sensor.enabled) {
                 me.root.crossX.show();
@@ -4686,7 +4681,10 @@ var MFD_Device =
                 }
             }
 
-            return;
+            if (me.sensor.handoffTarget == nil and me.harmSelected) {
+                me.radWeap.clearTgt();
+                me.radWeap.setContacts([]);
+            }
         };
         me.p_HARM.click = func (items) {
             me.clostestItem = nil;

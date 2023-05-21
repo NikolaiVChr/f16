@@ -2661,6 +2661,8 @@ var RadSensor = {
 	searchCounter: 0,
 	x: [-40, 40],
 	y: [-40, 10],
+	fov: 0,
+	fov_desired: 0,
 	setEnabled: func (e) {
 		me.enabled = e;
 		if (e and !me.timer.isRunning) {
