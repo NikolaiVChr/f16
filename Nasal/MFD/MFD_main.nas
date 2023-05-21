@@ -4066,6 +4066,13 @@ var MFD_Device =
         };
     },
 
+#  ██   ██  █████  ███████     ███████ ███████ ████████ ██    ██ ██████  
+#  ██   ██ ██   ██ ██          ██      ██         ██    ██    ██ ██   ██ 
+#  ███████ ███████ ███████     ███████ █████      ██    ██    ██ ██████  
+#  ██   ██ ██   ██      ██          ██ ██         ██    ██    ██ ██      
+#  ██   ██ ██   ██ ███████     ███████ ███████    ██     ██████  ██      
+#                                                                        
+#                                                          
     setupHARM: func (svg, index) {
         svg.p_HARM = me.canvas.createGroup()
                     .set("z-index",2)
@@ -4115,7 +4122,7 @@ var MFD_Device =
                         .setAlignment("left-center")
                         .setTranslation(-fieldW*0.5, 40+svg.height * 0.10*0.5)
                         .setFontSize(20, 1.0)
-                        .setColor(colorDot1);
+                        .setColor(colorText1);
         svg.dashBox = svg.groupRdr.createChild("path")
                 .moveTo(-fieldW * 0.5, svg.height * 0.25)
                 .horiz(fieldW)
@@ -4131,7 +4138,7 @@ var MFD_Device =
                         .setAlignment("center-top")
                         .setTranslation(0, 40+svg.height * 0.10+5)
                         .setFontSize(20, 1.0)
-                        .setColor(colorDot1);
+                        .setColor(colorText2);
 
         svg.crossY = svg.groupRdr.createChild("path")
                 .moveTo(0, svg.fieldY)
@@ -4358,6 +4365,14 @@ var MFD_Device =
 #  VSD HSD SMS SIT
         };
 
+
+#  ██   ██  █████  ███████     ██    ██ ██████  ██████   █████  ████████ ███████ 
+#  ██   ██ ██   ██ ██          ██    ██ ██   ██ ██   ██ ██   ██    ██    ██      
+#  ███████ ███████ ███████     ██    ██ ██████  ██   ██ ███████    ██    █████   
+#  ██   ██ ██   ██      ██     ██    ██ ██      ██   ██ ██   ██    ██    ██      
+#  ██   ██ ██   ██ ███████      ██████  ██      ██████  ██   ██    ██    ███████ 
+#                                                                                
+#                                                                                
         me.p_HARM.update = func (noti) {
             if (bottomImages[me.model_index] != nil) bottomImages[me.model_index].hide();
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
@@ -4696,83 +4711,7 @@ var MFD_Device =
         };
         me.p_HARM.extrapolate = func (x, x1, x2, y1, y2) {
             return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
-        };
-        me.p_HARM.paintBlep = func (contact) {
-            if (!contact.isVisible() and me.blue != 2) {
-                return;
-            }
-            me.desig = contact.equals(me.rdrprio);
-            me.hasTrack = contact.hasTrackInfo();
-            if (!me.hasTrack and me.blue == 0) {
-                return;
-            }
-            me.color = me.blue == 1?colorDot4:(me.blue == 2?colorCircle1:colorCircle2);
-            if (me.blue != 0) {
-                me.c_rng = contact.getRange()*M2NM;
-                me.c_rbe = contact.getDeviationHeading();
-                me.c_hea = contact.getHeading();
-                me.c_alt = contact.get_altitude();
-                me.c_spd = contact.getSpeed();
-            } else {
-                me.lastBlep = contact.getLastBlep();
-
-                me.c_rng = me.lastBlep.getRangeNow()*M2NM;
-                me.c_rbe = me.lastBlep.getAZDeviation();
-                me.c_hea = me.lastBlep.getHeading();
-                me.c_alt = me.lastBlep.getAltitude();
-                me.c_spd = me.lastBlep.getSpeed();
-            }
-
-
-            me.distPixels = (me.c_rng/me.rdrrng)*me.rdrRangePixels;
-            #    if (me.blue) print("through ",me.desig," LoS:",!contact.get_behind_terrain());
-
-
-            me.rot = 22.5*math.round( geo.normdeg((me.c_hea-me.selfHeading))/22.5 )*D2R;#Show rotation in increments of 22.5 deg
-            me.trans = [me.distPixels*math.sin(me.c_rbe*D2R),-me.distPixels*math.cos(me.c_rbe*D2R)];
-
-            if (me.blue != 1 and me.i < me.root.maxB) {
-                me.root.blepTrianglePaths[me.i].setColor(me.color);
-                me.root.blepTriangle[me.i].setTranslation(me.trans);
-                me.root.blepTriangle[me.i].show();
-                me.root.blepTrianglePaths[me.i].setRotation(me.rot);
-                me.root.blepTriangleVel[me.i].setRotation(me.rot);
-                me.root.blepTriangleVelLine[me.i].setScale(1,me.c_spd*0.0045);
-                me.root.blepTriangleVelLine[me.i].setColor(me.color);
-                me.lockAlt = sprintf("%02d", math.round(me.c_alt*0.001));
-                me.root.blepTriangleText[me.i].setText(me.lockAlt);
-                me.i += 1;
-                if (me.blue == 2 and me.ii < me.root.maxB) {
-                    me.root.lnkT[me.ii].setColor(me.color);
-                    me.root.lnkT[me.ii].setTranslation(me.trans[0],me.trans[1]-25);
-                    me.root.lnkT[me.ii].setText(""~me.blueIndex);
-                    me.root.lnk[me.ii].hide();
-                    me.root.lnkT[me.ii].show();
-                    me.root.lnkTA[me.ii].hide();
-                    me.ii += 1;
-                }
-            } elsif (me.blue == 1 and me.ii < me.root.maxB) {
-                me.root.lnk[me.ii].setColor(me.color);
-                me.root.lnk[me.ii].setTranslation(me.trans);
-                me.root.lnk[me.ii].setRotation(me.rot);
-                me.root.lnkT[me.ii].setColor(me.color);
-                me.root.lnkTA[me.ii].setColor(me.color);
-                me.root.lnkT[me.ii].setTranslation(me.trans[0],me.trans[1]-25);
-                me.root.lnkTA[me.ii].setTranslation(me.trans[0],me.trans[1]+20);
-                me.root.lnkT[me.ii].setText(""~me.blueIndex);
-                me.root.lnkTA[me.ii].setText(sprintf("%02d", math.round(me.c_alt*0.001)));
-                me.root.lnk[me.ii].show();
-                me.root.lnkTA[me.ii].show();
-                me.root.lnkT[me.ii].show();
-                me.ii += 1;
-            }
-
-            if (me.desig) {
-                me.root.selection.setTranslation(me.trans);
-                me.root.selection.setColor(me.color);
-                me.selected = 1;
-            }
-        };
+        };        
     },
 
 
