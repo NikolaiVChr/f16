@@ -294,7 +294,7 @@ var dataEntryDisplay = {
 		me.scrollF += 0.25;
 		if (me.scrollF >= last-2) me.scrollF = 0;
 		var used = subvec(fails,int(me.scrollF),3);
-		me.text[0] = sprintf("       F-ACK       %s   ",me.no);
+		me.text[0] = sprintf("       F-ACK         %s ",me.no);
 		me.text[1] = sprintf("                        ");
 		if (size(used)>0) me.text[2] = sprintf(" %s ",used[0]);
 		else me.text[2] = "";
@@ -488,17 +488,17 @@ var dataEntryDisplay = {
 				#pSTPT.vector[6].skipMe = 1;#color
 			}
 
-			me.text[1] = sprintf("      LAT  %s", pSTPT.vector[1].getText());
-			me.text[2] = sprintf("      LNG  %s", pSTPT.vector[2].getText());
+			me.text[1] = sprintf("     LAT  %s", pSTPT.vector[1].getText());
+			me.text[2] = sprintf("     LNG  %s", pSTPT.vector[2].getText());
 			if (wp_num == 555) {
-				me.text[3] = sprintf("     ELEV  -1FT");
+				me.text[3] = sprintf("    ELEV  -1FT");
 			} else {
-				me.text[3] = sprintf("     ELEV  %sFT", pSTPT.vector[4].getText());
+				me.text[3] = sprintf("    ELEV  %sFT", pSTPT.vector[4].getText());
 			}
 			if (wp_num == steerpoints.getCurrentNumber()) {
 				TOS = steerpoints.getCurrentTOS();
 			}
-			me.text[4] = sprintf("      TOS  %s", TOS);
+			me.text[4] = sprintf("     TOS  %s", TOS);
 
 
 
@@ -524,7 +524,7 @@ var dataEntryDisplay = {
 			pSTPT.vector[5].skipMe = 1;#type
 			#pSTPT.vector[6].skipMe = 1;#color
 		}
-		me.text[0] = sprintf("     STPT %s%s %s", pSTPT.vector[0].getText(), pSTPT.vector[6].getText(), me.no);
+		me.text[0] = sprintf("    STPT %s%s %s", pSTPT.vector[0].getText(), pSTPT.vector[6].getText(), me.no);
 		steerpoints.autoMode = getprop("f16/ded/stpt-auto")=="AUTO"?1:0;
 	},
 
@@ -705,14 +705,14 @@ var dataEntryDisplay = {
 		}
 		
 		if (me.markModeSelected) {
-			me.text[0] = sprintf("         MARK *%s*   %s",me.markMode,me.no);
+			me.text[0] = sprintf("        MARK *%s*  %s",me.markMode,me.no);
 		} else {
-			me.text[0] = sprintf("         MARK  %s    %s",me.markMode,me.no);
+			me.text[0] = sprintf("        MARK  %s   %s",me.markMode,me.no);
 		}
-		me.text[1] = sprintf("      LAT  %s",lat);
-		me.text[2] = sprintf("      LNG  %s",lon);
-		me.text[3] = sprintf("     ELEV  % 5dFT",alt);
-		me.text[4] = sprintf("        #  %03d", me.markNo);
+		me.text[1] = sprintf("     LAT  %s",lat);
+		me.text[2] = sprintf("     LNG  %s",lon);
+		me.text[3] = sprintf("    ELEV  % 5dFT",alt);
+		me.text[4] = sprintf("       #  %03d", me.markNo);
 	},
 
 	fixTakingMode: "OFLY",
@@ -733,9 +733,9 @@ var dataEntryDisplay = {
 	acalModeSelected: 1,
 	updateAcal: func() {
 		if (me.acalModeSelected) {
-			me.text[0] = sprintf(" ACAL    *%s*  %s", me.acalMode, me.no);
+			me.text[0] = sprintf(" ACAL    *%s*       %s", me.acalMode, me.no);
 		} else {
-			me.text[0] = sprintf(" ACAL     %s   %s", me.acalMode, me.no);
+			me.text[0] = sprintf(" ACAL     %s        %s", me.acalMode, me.no);
 		}
 		me.text[1] = sprintf("          AUTO");
 		me.text[2] = sprintf("                 ");
@@ -771,7 +771,7 @@ var dataEntryDisplay = {
 		}
 		TOS = steerpoints.getLastTOS();
 
-		me.text[0] = sprintf("         DEST  DIR  %s",me.no);
+		me.text[0] = sprintf("         DEST  DIR   %s",me.no);
 		me.text[1] = sprintf("      LAT  %s",lat);
 		me.text[2] = sprintf("      LNG  %s",lon);
 		me.text[3] = sprintf("     ELEV  % 5dFT",alt);
@@ -779,7 +779,7 @@ var dataEntryDisplay = {
 	},
 
 	updateBingo: func() {
-		me.text[0] = sprintf("        BINGO       %s  ",me.no);
+		me.text[0] = sprintf("        BINGO        %s ",me.no);
 		me.text[1] = sprintf("                        ");
 		me.text[2] = sprintf("    SET    %s  ",pBINGO.vector[0].getText());
 		me.text[3] = sprintf("  TOTAL    %5dLBS      ",getprop("consumables/fuel/total-fuel-lbs"));
@@ -832,7 +832,7 @@ var dataEntryDisplay = {
 	},
 
 	updateMan: func() {
-		me.text[0] = sprintf("      MAN       %s ",me.no);
+		me.text[0] = sprintf("      MAN            %s",me.no);
 		me.text[1] = sprintf("WSPAN   %sFT",pMAN.vector[0].getText());
 		me.text[2] = sprintf("      MBAL    ");
 		me.text[3] = sprintf("RNG      2000FT  ");
@@ -846,7 +846,7 @@ var dataEntryDisplay = {
 		if (getprop("f16/avionics/ins-knob") == 3) {
     		rdy = "RDY";
 		}
-		me.text[0] = sprintf("  INS   10.2/10 %s   %s",rdy,me.no);
+		me.text[0] = sprintf("  INS   10.2/10 %s  %s",rdy,me.no);
 		me.text[1] = sprintf("  LAT  %s",lat);
 		me.text[2] = sprintf("  LNG  %s",lon);
 		me.text[3] = sprintf("  SALT  %5dFT",getprop("position/altitude-ft"));
@@ -856,7 +856,7 @@ var dataEntryDisplay = {
 	updateEWS: func() {
 		var flares = getprop("ai/submodels/submodel[0]/count");
 		var jammer = getprop("f16/avionics/ew-jmr-switch") ? " ON" : "OFF";
-		me.text[0] = sprintf("        EWS CONTROLS  %s",me.no);
+		me.text[0] = sprintf("       EWS CONTROLS  %s",me.no);
 		me.text[1] = sprintf(" CH %3d     REQJAM   %s", flares, jammer);
 		me.text[2] = sprintf(" FL %3d     FDBK      ON", flares);
 		me.text[3] = sprintf(" MODE %s  REQCTR    ON", getprop("f16/avionics/ew-mode-knob") == 1 ? "MAN " :( getprop("f16/avionics/ew-mode-knob") == 2?"AUT ":"OFF "));
@@ -864,7 +864,7 @@ var dataEntryDisplay = {
 	},
 
 	updateMode: func() {
-		me.text[0] = sprintf("        MODE *NAV*     %s",me.no);
+		me.text[0] = sprintf("        MODE *NAV*    %s ",me.no);
 		me.text[1] = sprintf("                        ");
 		me.text[2] = sprintf("                        ");
 		me.text[3] = sprintf("                        ");
@@ -928,13 +928,13 @@ var dataEntryDisplay = {
 				j += 1;
 			}
 
-			me.text[0] = sprintf("    DLNK  CH %s   %s",pDLNK.vector[0].getText(),me.no);
+			me.text[0] = sprintf("    DLNK  CH %s  %s",pDLNK.vector[0].getText(),me.no);
 			me.text[1] = sprintf("%s %7s       COMM VHF",usedI[0],usedC[0]);
 			me.text[2] = sprintf("%s %7s       DATA 16K",usedI[1],usedC[1]);
 			me.text[3] = sprintf("%s %7s       OWN  #0 ",usedI[2],usedC[2]);
 			me.text[4] = sprintf("%s %7s       LAST #%d ",usedI[3],usedC[3],highest);
 		} else {
-			me.text[0] = sprintf("        DLNK           %s",me.no);
+			me.text[0] = sprintf("        DLNK          %s ",me.no);
 			me.text[1] = sprintf("  NO DLINK DATA ");
 			me.text[2] = sprintf("                        ");
 			me.text[3] = sprintf("                        ");
@@ -979,19 +979,19 @@ var dataEntryDisplay = {
 	OFPpage: 0,
 	updateOFP: func() {
 		if (me.OFPpage == 0) {
-			me.text[0] = sprintf("         OFP1    %s ",me.no);
+			me.text[0] = sprintf("         OFP1        %s",me.no);
 			me.text[1] = sprintf("  UFC  P07A   FCR  7010");
 			me.text[2] = sprintf("  MFD  P07A   FCC  P07B");
 			me.text[3] = sprintf("  SMS  P07A   DTE  P010");
 			me.text[4] = sprintf("  FDR  P30A   HUD  002e");
 		} elsif (me.OFPpage == 1) {
-			me.text[0] = sprintf("         OFP2    %s ",me.no);
+			me.text[0] = sprintf("         OFP2        %s",me.no);
 			me.text[1] = sprintf("  GPS  P07B   IFF  P03A");
 			me.text[2] = sprintf("  HK3  P07A   TGP  P07A");
 			me.text[3] = sprintf("  HK7  P07A  BLKR  P07B");
 			me.text[4] = sprintf(" FLCS  7072   NVP  P07A");
 		} else {
-			me.text[0] = sprintf("         OFP3    %s ",me.no);
+			me.text[0] = sprintf("         OFP3        %s",me.no);
 			me.text[1] = sprintf("  RWR  P07A  IECM  P07A");
 			me.text[2] = sprintf("  EID  P07B   MDF  M074");
 			me.text[3] = sprintf(" CMDS  P040  DLNK  P07B");
@@ -1054,7 +1054,7 @@ var dataEntryDisplay = {
 
 	updateLaser: func() {
 		var code = getprop("f16/avionics/laser-code");
-		me.text[0] = sprintf("         LASER        %s ",me.no);
+		me.text[0] = sprintf("         LASER       %s ",me.no);
 		me.text[1] = sprintf("   TGP CODE   %s     ",pLASR.vector[0].getText());
 		me.text[2] = sprintf("   LST CODE    %04d     ",code);
 		me.text[3] = sprintf("   A-G: CMBT  A-A: TRNG ");
