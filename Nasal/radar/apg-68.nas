@@ -2746,6 +2746,7 @@ var RadSensor = {
                     elsif (me.candidateModel=="s-200") me.candidate.mdl="5";
                     elsif (me.candidateModel=="S-75") me.candidate.mdl="2";
                     elsif (me.candidateModel=="missile_frigate") me.candidate.mdl="SH";
+                    elsif (me.candidateModel=="fleet") me.candidate.mdl="SH";
                     elsif (me.candidateModel=="SA-6") me.candidate.mdl="6";
                     elsif (me.candidateModel=="MIM104D") me.candidate.mdl="P";
                     elsif (me.candidateModel=="ZSU-23-4M") me.candidate.mdl="AAA";
