@@ -5300,6 +5300,7 @@ var AIM = {
 			if (me.seeMe != nil and me.seeMe) {
 				return 1;
 			}
+			return target.isSpikingMe();
 		}
 		return 0;
 	},
