@@ -4497,22 +4497,6 @@ var MFD_Device =
         var staY = 9;
         var staW = 15;
         var staH = 19;
-        svg.sta[0] = svg.buttonView.createChild("text")
-           .setTranslation(276*0.795 * -0.6, staPosY)
-           .setAlignment("center-center")
-           .setText("1")
-           .set("z-index",12)
-           .setFontSize(staFont, 1.0)
-           .hide()
-           .setColor(colorText1);
-        svg.sta[1] = svg.buttonView.createChild("text")
-           .setTranslation(276*0.795 * -0.5, staPosY)
-           .setAlignment("center-center")
-           .setText("2")
-           .set("z-index",12)
-           .setFontSize(staFont, 1.0)
-           .hide()
-           .setColor(colorText1);
         svg.sta[2] = svg.buttonView.createChild("text")
            .setTranslation(276*0.795 * -0.4, staPosY)
            .setAlignment("center-center")
@@ -4525,14 +4509,6 @@ var MFD_Device =
            .setTranslation(276*0.795 * -0.3, staPosY)
            .setAlignment("center-center")
            .setText("4")
-           .set("z-index",12)
-           .setFontSize(staFont, 1.0)
-           .hide()
-           .setColor(colorText1);
-        svg.sta[4] = svg.buttonView.createChild("text")
-           .setTranslation(276*0.795 * 0.0, staPosY)
-           .setAlignment("center-center")
-           .setText("5")
            .set("z-index",12)
            .setFontSize(staFont, 1.0)
            .hide()
@@ -4553,40 +4529,6 @@ var MFD_Device =
            .setFontSize(staFont, 1.0)
            .hide()
            .setColor(colorText1);
-        svg.sta[7] = svg.buttonView.createChild("text")
-           .setTranslation(276*0.795 * 0.5, staPosY)
-           .setAlignment("center-center")
-           .setText("8")
-           .set("z-index",12)
-           .setFontSize(staFont, 1.0)
-           .hide()
-           .setColor(colorText1);
-        svg.sta[8] = svg.buttonView.createChild("text")
-           .setTranslation(276*0.795 * 0.6, staPosY)
-           .setAlignment("center-center")
-           .setText("9")
-           .set("z-index",12)
-           .setFontSize(staFont, 1.0)
-           .hide()
-           .setColor(colorText1);
-        svg.staFrame[0] = svg.buttonView.createChild("path")
-           .moveTo(276*0.795 * -0.6 + staX, staPosY+staY)
-           .vert(-staH)
-           .horiz(-staW)
-           .vert(staH)
-           .horiz(staW)
-           .setColor(colorText1)
-           .hide()
-           .setStrokeLineWidth(staStroke);
-        svg.staFrame[1] = svg.buttonView.createChild("path")
-           .moveTo(276*0.795 * -0.5 + staX, staPosY+staY)
-           .vert(-staH)
-           .horiz(-staW)
-           .vert(staH)
-           .horiz(staW)
-           .setColor(colorText1)
-           .hide()
-           .setStrokeLineWidth(staStroke);
         svg.staFrame[2] = svg.buttonView.createChild("path")
            .moveTo(276*0.795 * -0.4 + staX, staPosY+staY)
            .vert(-staH)
@@ -4605,15 +4547,6 @@ var MFD_Device =
            .setColor(colorText1)
            .hide()
            .setStrokeLineWidth(staStroke);
-        svg.staFrame[4] = svg.buttonView.createChild("path")
-           .moveTo(276*0.795 * 0.0 + staX, staPosY+staY)
-           .vert(-staH)
-           .horiz(-staW)
-           .vert(staH)
-           .horiz(staW)
-           .setColor(colorText1)
-           .hide()
-           .setStrokeLineWidth(staStroke);
         svg.staFrame[5] = svg.buttonView.createChild("path")
            .moveTo(276*0.795 * 0.3 + staX, staPosY+staY)
            .vert(-staH)
@@ -4625,24 +4558,6 @@ var MFD_Device =
            .setStrokeLineWidth(staStroke);
         svg.staFrame[6] = svg.buttonView.createChild("path")
            .moveTo(276*0.795 * 0.4 + staX, staPosY+staY)
-           .vert(-staH)
-           .horiz(-staW)
-           .vert(staH)
-           .horiz(staW)
-           .setColor(colorText1)
-           .hide()
-           .setStrokeLineWidth(staStroke);
-        svg.staFrame[7] = svg.buttonView.createChild("path")
-           .moveTo(276*0.795 * 0.5 + staX, staPosY+staY)
-           .vert(-staH)
-           .horiz(-staW)
-           .vert(staH)
-           .horiz(staW)
-           .setColor(colorText1)
-           .hide()
-           .setStrokeLineWidth(staStroke);
-        svg.staFrame[8] = svg.buttonView.createChild("path")
-           .moveTo(276*0.795 * 0.6 + staX, staPosY+staY)
            .vert(-staH)
            .horiz(-staW)
            .vert(staH)
@@ -5062,6 +4977,7 @@ var MFD_Device =
             }
             me.indices = pylons.fcs.getStationIndecesForSelectedType("AGM-88");
             for (me.indi = 0; me.indi < 9; me.indi += 1) {
+                if (me.indi != 2 and me.indi != 3 and me.indi != 5 and me.indi != 6) continue;
                 me.root.sta[me.indi].setVisible(me.indices[me.indi] > -1);
                 me.root.staFrame[me.indi].setVisible(me.indices[me.indi] == 1);
             }
