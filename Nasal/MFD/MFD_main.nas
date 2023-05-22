@@ -3315,7 +3315,7 @@ var MFD_Device =
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
                         me.status = "OFF";
                     } elsif (me.wpn.status == armament.MISSILE_STARTING) {
-                        me.status = "INIT";
+                        me.status = "NOT TIMED OUT";
                     } else {
                         me.status = "RDY";
                     }
@@ -3327,7 +3327,7 @@ var MFD_Device =
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
                         me.status = "OFF";
                     } elsif (me.wpn.status == armament.MISSILE_STARTING) {
-                        me.status = "INIT";
+                        me.status = "NOT TIMED OUT";
                     } else {
                         me.status = "RDY";
                     }
@@ -3340,7 +3340,7 @@ var MFD_Device =
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
                         me.status = "OFF";
                     } elsif (me.wpn.status == armament.MISSILE_STARTING and me.wpn["powerOn"]) {
-                        me.status = "INIT";
+                        me.status = "NOT TIMED OUT";
                     } elsif (me.wpn.status == armament.MISSILE_STARTING) {
                         me.status = "OFF";
                     } else {
@@ -3356,7 +3356,7 @@ var MFD_Device =
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
                         me.status = "OFF";
                     } elsif (me.wpn.status == armament.MISSILE_STARTING and me.wpn["powerOn"]) {
-                        me.status = "INIT";
+                        me.status = "NOT TIMED OUT";
                     } elsif (me.wpn.status == armament.MISSILE_STARTING) {
                         me.status = "OFF";
                     } else {
@@ -3375,7 +3375,7 @@ var MFD_Device =
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
                         me.status = "OFF";
                     } elsif (me.wpn.status == armament.MISSILE_STARTING) {
-                        me.status = "INIT";
+                        me.status = "NOT TIMED OUT";
                     } else {
                         me.status = "RDY";
                     }
@@ -3388,7 +3388,7 @@ var MFD_Device =
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
                         me.status = "OFF";
                     } elsif (me.wpn.status == armament.MISSILE_STARTING) {
-                        me.status = "INIT";
+                        me.status = "NOT TIMED OUT";
                     } else {
                         me.status = "RDY";
                     }
@@ -3422,6 +3422,7 @@ var MFD_Device =
                 } else {
                     me.myammo = ""~me.myammo;
                 }
+                if (me.status == "RDY" and getprop("controls/armament/master-arm-switch") == pylons.ARM_SIM) me.status = "SIM";
                 me.obs6 = sprintf("%4s   %7s",me.status,me.myammo~me.wpn.typeShort);
                 if (0 and getprop("controls/armament/master-arm") != 1) {
                     me.obs8 = "";#TODO: ?
