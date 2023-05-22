@@ -759,7 +759,7 @@
             <class type="string">MGP</class>
             <fire-msg type="string">Rifle</fire-msg>
             <hit-everything-nearby type="bool">true</hit-everything-nearby>
-            <ready-time type="double">70</ready-time>
+            <ready-time type="double">180</ready-time>
             <requires-power-on type="bool">true</requires-power-on>
         </agm-65b>
         <agm-65d>
@@ -799,7 +799,7 @@
             <class type="string">MGP</class>
             <fire-msg type="string">Rifle</fire-msg>
             <hit-everything-nearby type="bool">true</hit-everything-nearby>
-            <ready-time type="double">70</ready-time>
+            <ready-time type="double">180</ready-time>
             <requires-power-on type="bool">true</requires-power-on>
         </agm-65d>
         <agm-84>                    <!-- A variant: 0.85 mach cruise, E is calibrated to just under 1.00 -->
