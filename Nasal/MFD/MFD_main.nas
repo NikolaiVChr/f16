@@ -3977,6 +3977,7 @@ var MFD_Device =
                     me.prevY = nil;
                     for (me.j = 0; me.j < me.planSize;me.j+=1) {
                         me.wp = me.plan.getWP(me.j);
+                        if (me.wp.lat == 0 and me.wp.lon == 0) continue;# Ignore SIDs that have no GPS position
                         me.wpC = geo.Coord.new();
                         me.wpC.set_latlon(me.wp.lat,me.wp.lon);
                         me.legBearing = me.selfCoord.course_to(me.wpC)-me.selfHeading;#relative
@@ -3988,6 +3989,12 @@ var MFD_Device =
                         }
                         me.legX = me.legRangePixels*math.sin(me.legBearing*D2R);
                         me.legY = -me.legRangePixels*math.cos(me.legBearing*D2R);
+                        #if (me.j == 1) {
+                            #print();
+                            #printf("Dist=%d bear=%d rangePix=%d   %d,%d",me.legDistance*M2NM,me.legBearing,me.legRangePixels,me.legX,me.legY);
+                            #printf("%.3f, %.3f",me.wp.lat,me.wp.lon);
+                            #printf("%.3f, %.3f",me.wp.wp_lat,me.wp.wp_lon);
+                        #}
                         me.wp = me.root.cone.createChild("path")
                             .moveTo(me.legX-5,me.legY)
                             .arcSmallCW(5,5, 0, 5*2, 0)
