@@ -3422,7 +3422,7 @@ var MFD_Device =
                 } else {
                     me.myammo = ""~me.myammo;
                 }
-                me.obs6 = me.status~"   "~me.myammo~me.wpn.typeShort;
+                me.obs6 = sprintf("%4s   %7s",me.status,me.myammo~me.wpn.typeShort);
                 if (0 and getprop("controls/armament/master-arm") != 1) {
                     me.obs8 = "";#TODO: ?
                 }
