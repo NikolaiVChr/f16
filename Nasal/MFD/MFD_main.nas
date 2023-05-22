@@ -2760,8 +2760,16 @@ var MFD_Device =
                 .setAlignment("center-top")
                 .setColor(colorText1)
                 .setFontSize(18, 1.0);
+
+        # OBS 3
+        svg.obs3 = svg.p_WPN.createChild("text")
+                .setTranslation(-276*0.795, -482*0.5+0)
+                .setText("")
+                .setAlignment("left-center")
+                .setColor(colorText1)
+                .setFontSize(20, 1.0);
         # OBS 6
-        svg.weap = svg.p_WPN.createChild("text")
+        svg.obs6 = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795, -482*0.5-135)
                 .setText("")
                 .setAlignment("right-center")
@@ -2777,7 +2785,7 @@ var MFD_Device =
                 .setFontSize(20, 1.0);
 
         # OBS 8
-        svg.ready = svg.p_WPN.createChild("text")
+        svg.obs8 = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795, -482*0.5+0)
                 .setText("")
                 .setAlignment("right-center")
@@ -2791,14 +2799,14 @@ var MFD_Device =
         #        .setColor(colorText1)
         #        .setFontSize(20, 1.0);
 
-        svg.ripple = svg.p_WPN.createChild("text")
+        svg.obs9 = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795, -482*0.5+70)
                 .setText("")
                 .setAlignment("right-center")
                 .setColor(colorText1)
                 .setFontSize(20, 1.0);
 
-        svg.cool = svg.p_WPN.createChild("text")
+        svg.obs10 = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795, -482*0.5+140)
                 .setText("")
                 .setAlignment("right-center")
@@ -2861,9 +2869,171 @@ var MFD_Device =
            .setFontSize(18, 1.0)
            .setColor(colorText2);
 
+        svg.sta      = setsize([], 9);# 9 stations
+        svg.staFrame = setsize([], 9);
+        var staPosY = -482*0.20;
+        var staFont = 17;
+        var staStroke = 1.5;
+        var staX = 7;
+        var staY = 9;
+        var staW = 15;
+        var staH = 19;
+        svg.sta[0] = svg.p_WPN.createChild("text")
+           .setTranslation(276*0.795 * -0.9, staPosY)
+           .setAlignment("center-center")
+           .setText("1")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[1] = svg.p_WPN.createChild("text")
+           .setTranslation(276*0.795 * -0.8, staPosY)
+           .setAlignment("center-center")
+           .setText("2")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[2] = svg.p_WPN.createChild("text")
+           .setTranslation(276*0.795 * -0.7, staPosY)
+           .setAlignment("center-center")
+           .setText("3")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[3] = svg.p_WPN.createChild("text")
+           .setTranslation(276*0.795 * -0.6, staPosY)
+           .setAlignment("center-center")
+           .setText("4")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[4] = svg.p_WPN.createChild("text")
+           .setTranslation(276*0.795 * 0.0, staPosY)
+           .setAlignment("center-center")
+           .setText("5")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[5] = svg.p_WPN.createChild("text")
+           .setTranslation(276*0.795 * 0.6, staPosY)
+           .setAlignment("center-center")
+           .setText("6")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[6] = svg.p_WPN.createChild("text")
+           .setTranslation(276*0.795 * 0.7, staPosY)
+           .setAlignment("center-center")
+           .setText("7")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[7] = svg.p_WPN.createChild("text")
+           .setTranslation(276*0.795 * 0.8, staPosY)
+           .setAlignment("center-center")
+           .setText("8")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[8] = svg.p_WPN.createChild("text")
+           .setTranslation(276*0.795 * 0.9, staPosY)
+           .setAlignment("center-center")
+           .setText("9")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.staFrame[0] = svg.p_WPN.createChild("path")
+           .moveTo(276*0.795 * -0.9 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[1] = svg.p_WPN.createChild("path")
+           .moveTo(276*0.795 * -0.8 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[2] = svg.p_WPN.createChild("path")
+           .moveTo(276*0.795 * -0.7 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[3] = svg.p_WPN.createChild("path")
+           .moveTo(276*0.795 * -0.6 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[4] = svg.p_WPN.createChild("path")
+           .moveTo(276*0.795 * 0.0 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[5] = svg.p_WPN.createChild("path")
+           .moveTo(276*0.795 * 0.6 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[6] = svg.p_WPN.createChild("path")
+           .moveTo(276*0.795 * 0.7 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[7] = svg.p_WPN.createChild("path")
+           .moveTo(276*0.795 * 0.8 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[8] = svg.p_WPN.createChild("path")
+           .moveTo(276*0.795 * 0.9 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
 
-        svg.coolFrame = svg.p_WPN.createChild("path")
-           .moveTo(276*0.795, -482*0.5+140+12)
+        svg.obs9Frame = svg.p_WPN.createChild("path")
+           .moveTo(276*0.795, -482*0.5+70+12)
            .vert(-24)
            .horiz(-60)
            .vert(24)
@@ -2897,15 +3067,7 @@ var MFD_Device =
         me.p_WPN.setSelection = me.setSelection;
         me.p_WPN.notifyButton = func (eventi) {
             if (eventi != nil) {
-                if (eventi == 10) {
-                    me.ppp.selectPage(me.my.p_RDR);
-                    me.setSelection(me.ppp.buttons[18], me.ppp.buttons[10], 10);
-                } elsif (eventi == 5) {
-                    if (getprop("sim/variant-id") == 0) {
-                        return;
-                    }
-                    pylons.fcs.cycleLoadedWeapon();
-                } elsif (eventi == 0) {
+                if (eventi == 0) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
@@ -2925,6 +3087,10 @@ var MFD_Device =
                     }
                     if (me.wpnType == "fall") {
                         me.ar = 25;
+                    } elsif (me.wpnType == "heat") {
+                        var auto = pylons.fcs.isAutocage();
+                        auto = !auto;
+                        pylons.fcs.setAutocage(auto);
                     }
                 } elsif (eventi == 3) {
                     if (getprop("sim/variant-id") == 0) {
@@ -2933,45 +3099,11 @@ var MFD_Device =
                     if (me.wpnType == "fall") {
                         me.ar = -25;
                     }
-                } elsif (eventi == 8) {
+                } elsif (eventi == 5) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
-                    if (me.wpnType == "fall") {
-                        var rp = pylons.fcs.getRippleMode();
-                        if (rp < 9) {
-                            rp += 1;
-                        } elsif (rp == 9) {
-                            rp = 1;
-                        }
-                        pylons.fcs.setRippleMode(rp);
-                    } elsif (me.wpnType == "heat") {
-                        var auto = pylons.fcs.isAutocage();
-                        auto = !auto;
-                        pylons.fcs.setAutocage(auto);
-                    }
-                } elsif (eventi == 9) {
-                    if (getprop("sim/variant-id") == 0) {
-                        return;
-                    }
-                    if (me.wpnType=="heat") {
-                        me.cooling = !pylons.fcs.getSelectedWeapon().isCooling();
-                        foreach(var snake;pylons.fcs.getAllOfType("AIM-9L")) {
-                            snake.setCooling(me.cooling);
-                        }
-                        foreach(var snake;pylons.fcs.getAllOfType("AIM-9M")) {
-                            snake.setCooling(me.cooling);
-                        }
-                        foreach(var snake;pylons.fcs.getAllOfType("AIM-9X")) {
-                            snake.setCooling(me.cooling);
-                        }
-                    } elsif (me.wpnType == "fall") {
-                        if (getprop("controls/armament/dual")==1) {
-                            setprop("controls/armament/dual",2);
-                        } else {
-                            setprop("controls/armament/dual",1);
-                        }
-                    }
+                    pylons.fcs.cycleLoadedWeapon();
                 } elsif (eventi == 6) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
@@ -2988,16 +3120,48 @@ var MFD_Device =
                     if (me.wpn54 != nil and me.wpn54["powerOnRequired"] == 1) {
                         pylons.fcs.togglePowerOn();
                     }
-                } elsif (eventi == 17) {
-                    me.ppp.selectPage(me.my.p_SMS);
-                    me.setSelection(me.ppp.buttons[18], me.ppp.buttons[17], 17);
-                #} elsif (eventi == 18) {
-                #    me.ppp.selectPage(me.my.pjitds_1);
-
-                } elsif (eventi == 18) {
-                    me.ppp.selectPage(me.my.p_LIST);
-                    me.resetColor(me.ppp.buttons[18]);
-                    me.selectionBox.hide();
+                } elsif (eventi == 7) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
+                    if (me.wpnType == "fall") {
+                        var rp = pylons.fcs.getRippleMode();
+                        if (rp < 9) {
+                            rp += 1;
+                        } elsif (rp == 9) {
+                            rp = 1;
+                        }
+                        pylons.fcs.setRippleMode(rp);
+                    } 
+                } elsif (eventi == 8) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
+                    if (me.wpnType == "fall") {
+                        if (getprop("controls/armament/dual")==1) {
+                            setprop("controls/armament/dual",2);
+                        } else {
+                            setprop("controls/armament/dual",1);
+                        }
+                    } elsif (me.wpnType=="heat") {
+                        me.cooling = !pylons.fcs.getSelectedWeapon().isCooling();
+                        foreach(var snake;pylons.fcs.getAllOfType("AIM-9L")) {
+                            snake.setCooling(me.cooling);
+                        }
+                        foreach(var snake;pylons.fcs.getAllOfType("AIM-9M")) {
+                            snake.setCooling(me.cooling);
+                        }
+                        foreach(var snake;pylons.fcs.getAllOfType("AIM-9X")) {
+                            snake.setCooling(me.cooling);
+                        }
+                    }
+                } elsif (eventi == 9) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
+                } elsif (eventi == 10) {
+                    me.ppp.selectPage(me.my.p_RDR);
+                    me.setSelection(me.ppp.buttons[18], me.ppp.buttons[10], 10);
                 } elsif (eventi == 11) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
@@ -3028,6 +3192,13 @@ var MFD_Device =
                     me.setSelection(me.ppp.buttons[18], me.ppp.buttons[16], 16);
                 } elsif (eventi == 15) {
                     swap();
+                } elsif (eventi == 17) {
+                    me.ppp.selectPage(me.my.p_SMS);
+                    me.setSelection(me.ppp.buttons[18], me.ppp.buttons[17], 17);
+                } elsif (eventi == 18) {
+                    me.ppp.selectPage(me.my.p_LIST);
+                    me.resetColor(me.ppp.buttons[18]);
+                    me.selectionBox.hide();
                 } elsif (eventi == 19) {
                     if(getprop("f16/stores/tgp-mounted") and !getprop("/fdm/jsbsim/gear/unit[0]/WOW")) {
                         screen.log.write("Click BACK to get back to cockpit view",1,1,1);
@@ -3072,15 +3243,19 @@ var MFD_Device =
             me.pylon = pylons.fcs.getSelectedPylon();
 
             me.wpnType = "";
-            me.cool = "";
+            
             me.eegs = "";
-            me.ready = "";
-            me.ripple = "";
-            me.rippleDist = "";
+            me.status = "";
+            me.obs3 = "";
+            me.obs6 = "";
+            me.obs8 = "";
             me.obs7 = "";
+            me.obs9 = "";
+            me.obs10 = "";
+            me.rippleDist = "";
             me.downAd = 0;
             me.upAd = 0;
-            me.coolFrame = 0;
+            me.obs9Frame = 0;
             me.downA = 0;
             me.upA = 0;
             me.armtimer = "";
@@ -3096,7 +3271,7 @@ var MFD_Device =
                     if (nm == 0) {me.drop = "CCRP";me.pre="PRE"}
                     var rp = pylons.fcs.getRippleMode();
                     var rpd = pylons.fcs.getRippleDist()*M2FT;
-                    me.ripple = "RP "~rp;
+                    me.obs8 = "RP "~rp;
                     if (rp > 1) {
                         me.showDist = 1;
                     }
@@ -3134,42 +3309,42 @@ var MFD_Device =
                     me.downA = me.armtime>0;
                     me.upA = me.armtime<20;
                     me.armtimer = sprintf("AD %.2fSEC",me.armtime);#arming delay
-                    me.cool = getprop("controls/armament/dual")==1?"SGL":"PAIR";
+                    me.obs9 = getprop("controls/armament/dual")==1?"SGL":"PAIR";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "MAL";
+                        me.status = "MAL";
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
-                        me.ready = "OFF";
+                        me.status = "OFF";
                     } elsif (me.wpn.status == armament.MISSILE_STARTING) {
-                        me.ready = "INIT";
+                        me.status = "INIT";
                     } else {
-                        me.ready = "RDY";
+                        me.status = "RDY";
                     }
                 } elsif (me.wpn.type == "AGM-84" or me.wpn.type == "AGM-119" or me.wpn.type == "AGM-158") {
                     me.wpnType ="ground";
                     me.eegs = "A-G";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "MAL";
+                        me.status = "MAL";
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
-                        me.ready = "OFF";
+                        me.status = "OFF";
                     } elsif (me.wpn.status == armament.MISSILE_STARTING) {
-                        me.ready = "INIT";
+                        me.status = "INIT";
                     } else {
-                        me.ready = "RDY";
+                        me.status = "RDY";
                     }
                 } elsif (me.wpn.type == "AGM-65B" or me.wpn.type == "AGM-65D") {
                     me.wpnType ="ground";
                     me.eegs = "A-G";
                     me.obs7 = me.wpn.isPowerOn()?"PWR\nON":"PWR\nOFF";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "MAL";
+                        me.status = "MAL";
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
-                        me.ready = "OFF";
+                        me.status = "OFF";
                     } elsif (me.wpn.status == armament.MISSILE_STARTING and me.wpn["powerOn"]) {
-                        me.ready = "INIT";
+                        me.status = "INIT";
                     } elsif (me.wpn.status == armament.MISSILE_STARTING) {
-                        me.ready = "OFF";
+                        me.status = "OFF";
                     } else {
-                        me.ready = "RDY";
+                        me.status = "RDY";
                     }
                 } elsif (me.wpn.type == "AGM-88") {
                     me.wpnType ="anti-rad";
@@ -3177,64 +3352,64 @@ var MFD_Device =
                     me.drop = "HAS";#getprop("f16/stores/harm-mounted")?"HAS":"HAS";
                     me.obs7 = me.wpn.isPowerOn()?"PWR\nON":"PWR\nOFF";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "MAL";
+                        me.status = "MAL";
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
-                        me.ready = "OFF";
+                        me.status = "OFF";
                     } elsif (me.wpn.status == armament.MISSILE_STARTING and me.wpn["powerOn"]) {
-                        me.ready = "INIT";
+                        me.status = "INIT";
                     } elsif (me.wpn.status == armament.MISSILE_STARTING) {
-                        me.ready = "OFF";
+                        me.status = "OFF";
                     } else {
-                        me.ready = "RDY";
+                        me.status = "RDY";
                     }
                 } elsif (me.wpn.type == "AIM-9L" or me.wpn.type == "AIM-9M" or me.wpn.type == "AIM-9X") {
                     me.wpnType ="heat";
-                    me.cool = me.wpn.getWarm()==0?"COOL":"WARM";
+                    me.obs9 = me.wpn.getWarm()==0?"COOL":"WARM";
                     me.eegs = "A-A";
                     me.pre = pylons.fcs.isXfov()?"SCAN":"SPOT";
-                    me.coolFrame = me.wpn.isCooling()==1?1:0;
+                    me.obs9Frame = me.wpn.isCooling()==1?1:0;
                     me.drop = pylons.bore>0?"BORE":"SLAV";
-                    me.ripple = pylons.fcs.isAutocage()?"TD":"BP";
+                    me.obs3 = pylons.fcs.isAutocage()?"TD":"BP";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "MAL";
+                        me.status = "MAL";
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
-                        me.ready = "OFF";
+                        me.status = "OFF";
                     } elsif (me.wpn.status == armament.MISSILE_STARTING) {
-                        me.ready = "INIT";
+                        me.status = "INIT";
                     } else {
-                        me.ready = "RDY";
+                        me.status = "RDY";
                     }
                 } elsif (me.wpn.type == "AIM-120" or me.wpn.type == "AIM-7") {
                     me.wpnType ="air";
                     me.drop = "SLAV";
                     me.eegs = "A-A";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "MAL";
+                        me.status = "MAL";
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
-                        me.ready = "OFF";
+                        me.status = "OFF";
                     } elsif (me.wpn.status == armament.MISSILE_STARTING) {
-                        me.ready = "INIT";
+                        me.status = "INIT";
                     } else {
-                        me.ready = "RDY";
+                        me.status = "RDY";
                     }
                 } elsif (me.wpn.type == "20mm Cannon") {
                     me.wpnType ="gun";
                     me.eegs = getprop("f16/avionics/strf")?"STRF":"EEGS";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "MAL";
+                        me.status = "MAL";
                     } else {
-                        me.ready = "RDY";
+                        me.status = "RDY";
                     }
                 } elsif (me.wpn.type == "LAU-68") {
                     me.wpnType ="rocket";
                     me.eegs = "A-G";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "MAL";
+                        me.status = "MAL";
                     } else {
-                        me.ready = "RDY";
+                        me.status = "RDY";
                     }
                 } else {
-                    print(me.wpn.type~" not supported in WPN page.");
+                    #print(me.wpn.type~" not supported in WPN page.");
                     me.wpnType ="void";
                 }
                 me.myammo = pylons.fcs.getAmmo();
@@ -3247,21 +3422,23 @@ var MFD_Device =
                 } else {
                     me.myammo = ""~me.myammo;
                 }
-                me.root.weap.setText(me.myammo~me.wpn.typeShort);
-                if (getprop("controls/armament/master-arm") != 1) {
-                    me.ready = "";#TODO: ?
+                me.obs6 = me.status~"   "~me.myammo~me.wpn.typeShort;
+                if (0 and getprop("controls/armament/master-arm") != 1) {
+                    me.obs8 = "";#TODO: ?
                 }
             } else {
-                me.root.weap.setText("");
+                me.obs6 = "";
             }
             me.root.pre.setText(me.pre);
             me.root.drop.setText(me.drop);
-            me.root.cool.setText(me.cool);
             me.root.eegs.setText(me.eegs);
-            me.root.ready.setText(me.ready);
+            me.root.obs3.setText(me.obs3);
+            me.root.obs6.setText(me.obs6);
             me.root.obs7.setText(me.obs7);
-            me.root.ripple.setText(me.ripple);
-            me.root.coolFrame.setVisible(me.coolFrame);
+            me.root.obs8.setText(me.obs8);
+            me.root.obs9.setText(me.obs9);
+            me.root.obs10.setText(me.obs10);
+            me.root.obs9Frame.setVisible(me.obs9Frame);
             me.root.rangDownA.setVisible(me.downA);
             me.root.rangUpA.setVisible(me.upA);
             me.root.rangA.setText(me.armtimer);
@@ -3275,6 +3452,12 @@ var MFD_Device =
             me.root.distA.setVisible(me.showDist);
             me.at = 0;
             me.ar = 0;
+
+            me.indices = pylons.fcs.getStationIndecesForSelectedType();
+            for (me.indi = 0; me.indi < 9; me.indi += 1) {
+                me.root.sta[me.indi].setVisible(me.indices[me.indi] > -1);
+                me.root.staFrame[me.indi].setVisible(me.indices[me.indi] == 1);
+            }
         };
     },
 

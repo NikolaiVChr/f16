@@ -1244,6 +1244,28 @@ var FireControl = {
 		}
 		return me.typVec;
 	},
+
+	getStationIndecesForSelectedType: func {
+		# return vector with all weapons of certain type
+		me.indices = [];
+		for (var i = 0; i < size(me.pylons);i +=1) {
+			me.pylo = me.pylons[i];
+			me.value = -1;
+			if (me.selected != nil and i == me.selected[0]) {
+				me.value = 1;
+			} elsif (me.selectedType != nil) {
+				foreach(me.pylweap ; me.pylo.getWeapons()) {
+					if (me.pylweap != nil and me.pylweap.type == me.selectedType) {
+						me.value = 0;
+						break;
+					}
+				}
+			}
+			append(me.indices, me.value);
+		}
+		
+		return me.indices;
+	},
 };
 
 var debug = 0;
