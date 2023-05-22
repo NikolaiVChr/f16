@@ -761,6 +761,7 @@
             <hit-everything-nearby type="bool">true</hit-everything-nearby>
             <ready-time type="double">180</ready-time>
             <requires-power-on type="bool">true</requires-power-on>
+            <power-on-battery-time type="double">2700</power-on-battery-time>
         </agm-65b>
         <agm-65d>
             <type-id type="int">58</type-id>
@@ -801,6 +802,7 @@
             <hit-everything-nearby type="bool">true</hit-everything-nearby>
             <ready-time type="double">180</ready-time>
             <requires-power-on type="bool">true</requires-power-on>
+            <power-on-battery-time type="double">2700</power-on-battery-time>
         </agm-65d>
         <agm-84>                    <!-- A variant: 0.85 mach cruise, E is calibrated to just under 1.00 -->
             <type-id type="int">1</type-id>
@@ -876,6 +878,7 @@
             <fire-msg type="string">Magnum</fire-msg>
             <requires-power-on type="bool">true</requires-power-on>
             <ready-time type="double">3</ready-time>
+            <power-on-battery-time type="double">1200</power-on-battery-time>
         </agm-88>
         <agm-119>
             <type-id type="int">4</type-id>
