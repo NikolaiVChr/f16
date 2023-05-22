@@ -4428,23 +4428,23 @@ var MFD_Device =
         var leftButtonsMax = 5;
         svg.obsL = [];
         svg.obsLb = [];
-        var initY = -125;
+        var initY = -136;
         for (var i = 0;i<leftButtonsMax;i+=1) {
             append(svg.obsL, svg.buttonView.createChild("text")
-                .setTranslation(-276*0.795, -482*0.5+initY)
+                .setTranslation(-276*0.795+3, -482*0.5+initY)
                 .setText(" P")
                 .setAlignment("left-center")
                 .setColor(colorText1)
                 .setFontSize(20, 1.0));
             append(svg.obsLb, svg.buttonView.createChild("text")
-                .setTranslation(-276*0.795, -482*0.5+initY)
+                .setTranslation(-276*0.795+3, -482*0.5+initY)
                 .setText(" P")
                 .setAlignment("left-center")
                 .setColor(colorBackground)
                 .setColorFill(colorText1)
                 .setDrawMode(canvas.Text.TEXT + canvas.Text.FILLEDBOUNDINGBOX)#This does only work before first text element update so cannot be properly changed in loops
                 .setFontSize(20, 1.0));
-            initY += 60;
+            initY += 68;
         }
         svg.obs7 = svg.buttonView.createChild("text")
                 .setTranslation(276*0.775, -482*0.5-65)
@@ -4487,7 +4487,169 @@ var MFD_Device =
                 .set("z-index",1)
                 .setFontSize(18, 1.0);
         
-        
+        # copied from p_WPN page:
+        svg.sta      = setsize([], 9);# 9 stations
+        svg.staFrame = setsize([], 9);
+        var staPosY = -482*0.10;
+        var staFont = 17;
+        var staStroke = 1.5;
+        var staX = 7;
+        var staY = 9;
+        var staW = 15;
+        var staH = 19;
+        svg.sta[0] = svg.buttonView.createChild("text")
+           .setTranslation(276*0.795 * -0.6, staPosY)
+           .setAlignment("center-center")
+           .setText("1")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[1] = svg.buttonView.createChild("text")
+           .setTranslation(276*0.795 * -0.5, staPosY)
+           .setAlignment("center-center")
+           .setText("2")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[2] = svg.buttonView.createChild("text")
+           .setTranslation(276*0.795 * -0.4, staPosY)
+           .setAlignment("center-center")
+           .setText("3")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[3] = svg.buttonView.createChild("text")
+           .setTranslation(276*0.795 * -0.3, staPosY)
+           .setAlignment("center-center")
+           .setText("4")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[4] = svg.buttonView.createChild("text")
+           .setTranslation(276*0.795 * 0.0, staPosY)
+           .setAlignment("center-center")
+           .setText("5")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[5] = svg.buttonView.createChild("text")
+           .setTranslation(276*0.795 * 0.3, staPosY)
+           .setAlignment("center-center")
+           .setText("6")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[6] = svg.buttonView.createChild("text")
+           .setTranslation(276*0.795 * 0.4, staPosY)
+           .setAlignment("center-center")
+           .setText("7")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[7] = svg.buttonView.createChild("text")
+           .setTranslation(276*0.795 * 0.5, staPosY)
+           .setAlignment("center-center")
+           .setText("8")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[8] = svg.buttonView.createChild("text")
+           .setTranslation(276*0.795 * 0.6, staPosY)
+           .setAlignment("center-center")
+           .setText("9")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.staFrame[0] = svg.buttonView.createChild("path")
+           .moveTo(276*0.795 * -0.6 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[1] = svg.buttonView.createChild("path")
+           .moveTo(276*0.795 * -0.5 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[2] = svg.buttonView.createChild("path")
+           .moveTo(276*0.795 * -0.4 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[3] = svg.buttonView.createChild("path")
+           .moveTo(276*0.795 * -0.3 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[4] = svg.buttonView.createChild("path")
+           .moveTo(276*0.795 * 0.0 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[5] = svg.buttonView.createChild("path")
+           .moveTo(276*0.795 * 0.3 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[6] = svg.buttonView.createChild("path")
+           .moveTo(276*0.795 * 0.4 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[7] = svg.buttonView.createChild("path")
+           .moveTo(276*0.795 * 0.5 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[8] = svg.buttonView.createChild("path")
+           .moveTo(276*0.795 * 0.6 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
         
         svg.notSOI = svg.buttonView.createChild("text")
            .setTranslation(0, -482*0.55)
@@ -4897,6 +5059,11 @@ var MFD_Device =
             if (me.sensor.handoffTarget == nil and me.harmSelected) {
                 me.radWeap.clearTgt();
                 me.radWeap.setContacts([]);
+            }
+            me.indices = pylons.fcs.getStationIndecesForSelectedType("AGM-88");
+            for (me.indi = 0; me.indi < 9; me.indi += 1) {
+                me.root.sta[me.indi].setVisible(me.indices[me.indi] > -1);
+                me.root.staFrame[me.indi].setVisible(me.indices[me.indi] == 1);
             }
         };
         me.p_HARM.click = func (items) {
