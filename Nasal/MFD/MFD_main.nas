@@ -3328,49 +3328,19 @@ var MFD_Device =
                     me.upA = me.armtime<20;
                     me.armtimer = sprintf("AD %.2fSEC",me.armtime);#arming delay
                     me.obs9 = getprop("controls/armament/dual")==1?"SGL":"PAIR";
-                    if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.status = "MAL";
-                    } elsif (me.wpn.status < armament.MISSILE_STARTING) {
-                        me.status = "OFF";
-                    } elsif (me.wpn.powerOnRequired and me.wpn.status == armament.MISSILE_STARTING and me.wpn["powerOn"]) {
-                        me.status = "NOT TIMED OUT";
-                    } elsif (me.wpn.status == armament.MISSILE_STARTING) {
-                        me.status = "NOT TIMED OUT";
-                    } else {
-                        me.status = "RDY";
-                    }
+                    me.setWeaponStatus();
                 } elsif (me.wpn.type == "AGM-65B" or me.wpn.type == "AGM-65D" or me.wpn.type == "AGM-84" or me.wpn.type == "AGM-119" or me.wpn.type == "AGM-158" or me.wpn.type == "AGM-154A") {
                     # Smart weapons that needs power on.
                     me.wpnType ="ground";
                     me.eegs = "A-G";
                     me.obs7 = me.wpn.isPowerOn()?"PWR\nON":"PWR\nOFF";
-                    if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.status = "MAL";
-                    } elsif (me.wpn.status < armament.MISSILE_STARTING) {
-                        me.status = "OFF";
-                    } elsif (me.wpn.status == armament.MISSILE_STARTING and me.wpn["powerOn"]) {
-                        me.status = "NOT TIMED OUT";
-                    } elsif (me.wpn.status == armament.MISSILE_STARTING) {
-                        me.status = "OFF";
-                    } else {
-                        me.status = "RDY";
-                    }
+                    me.setWeaponStatus();
                 } elsif (me.wpn.type == "AGM-88") {
                     me.wpnType ="anti-rad";
                     me.eegs = "A-G";
                     me.drop = "HAS";#getprop("f16/stores/harm-mounted")?"HAS":"HAS";
                     me.obs7 = me.wpn.isPowerOn()?"PWR\nON":"PWR\nOFF";
-                    if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.status = "MAL";
-                    } elsif (me.wpn.status < armament.MISSILE_STARTING) {
-                        me.status = "OFF";
-                    } elsif (me.wpn.status == armament.MISSILE_STARTING and me.wpn["powerOn"]) {
-                        me.status = "NOT TIMED OUT";
-                    } elsif (me.wpn.status == armament.MISSILE_STARTING) {
-                        me.status = "OFF";
-                    } else {
-                        me.status = "RDY";
-                    }
+                    me.setWeaponStatus();
                 } elsif (me.wpn.type == "AIM-9L" or me.wpn.type == "AIM-9M" or me.wpn.type == "AIM-9X") {
                     me.wpnType ="heat";
                     me.obs9 = me.wpn.getWarm()==0?"COOL":"WARM";
@@ -3379,35 +3349,20 @@ var MFD_Device =
                     me.obs9Frame = me.wpn.isCooling()==1?1:0;
                     me.drop = pylons.bore>0?"BORE":"SLAV";
                     me.obs3 = pylons.fcs.isAutocage()?"TD":"BP";
-                    if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.status = "MAL";
-                    } elsif (me.wpn.status < armament.MISSILE_STARTING) {
-                        me.status = "OFF";
-                    } elsif (me.wpn.status == armament.MISSILE_STARTING) {
-                        me.status = "NOT TIMED OUT";
-                    } else {
-                        me.status = "RDY";
-                    }
+                    me.setWeaponStatus();
                 } elsif (me.wpn.type == "AIM-120" or me.wpn.type == "AIM-7") {
                     me.wpnType ="air";
                     me.drop = "SLAV";
                     me.eegs = "A-A";
-                    if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.status = "MAL";
-                    } elsif (me.wpn.status < armament.MISSILE_STARTING) {
-                        me.status = "OFF";
-                    } elsif (me.wpn.status == armament.MISSILE_STARTING) {
-                        me.status = "NOT TIMED OUT";
-                    } else {
-                        me.status = "RDY";
-                    }
+                    me.setWeaponStatus();
                 } elsif (me.wpn.type == "20mm Cannon") {
                     me.wpnType ="gun";
                     me.eegs = getprop("f16/avionics/strf")?"STRF":"EEGS";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.status = "MAL";
                     } else {
-                        me.status = "RDY";
+                        if (getprop("controls/armament/master-arm-switch") == pylons.ARM_SIM) me.status = "SIM";
+                        else me.status = "RDY";
                     }
                 } elsif (me.wpn.type == "LAU-68") {
                     me.wpnType ="rocket";
@@ -3415,7 +3370,8 @@ var MFD_Device =
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.status = "MAL";
                     } else {
-                        me.status = "RDY";
+                        if (getprop("controls/armament/master-arm-switch") == pylons.ARM_SIM) me.status = "SIM";
+                        else me.status = "RDY";
                     }
                 } else {
                     #print(me.wpn.type~" not supported in WPN page.");
@@ -3431,7 +3387,7 @@ var MFD_Device =
                 } else {
                     me.myammo = ""~me.myammo;
                 }
-                if (me.status == "RDY" and getprop("controls/armament/master-arm-switch") == pylons.ARM_SIM) me.status = "SIM";
+                
                 me.obs6 = sprintf("%4s   %7s",me.status,me.myammo~me.wpn.typeShort);
                 if (0 and getprop("controls/armament/master-arm") != 1) {
                     me.obs8 = "";# What was this for??
@@ -3468,6 +3424,20 @@ var MFD_Device =
             for (me.indi = 0; me.indi < 9; me.indi += 1) {
                 me.root.sta[me.indi].setVisible(me.indices[me.indi] > -1);
                 me.root.staFrame[me.indi].setVisible(me.indices[me.indi] == 1);
+            }
+        };
+        me.p_WPN.setWeaponStatus = func {
+            if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
+                me.status = "MAL";
+            } elsif (me.wpn.status < armament.MISSILE_STARTING) {
+                me.status = "OFF";
+            } elsif (me.wpn.powerOnRequired and me.wpn.status == armament.MISSILE_STARTING and me.wpn["powerOn"]) {
+                me.status = "NOT TIMED OUT";
+            } elsif (me.wpn.status == armament.MISSILE_STARTING) {
+                me.status = "NOT TIMED OUT";
+            } else {
+                if (getprop("controls/armament/master-arm-switch") == pylons.ARM_SIM) me.status = "SIM";
+                else me.status = "RDY";
             }
         };
     },
