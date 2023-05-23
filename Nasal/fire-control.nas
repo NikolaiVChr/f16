@@ -38,7 +38,16 @@ var FireControl = {
 		#setlistener("controls/armament/master-arm",func{fc.updateCurrent()},nil,0);
 		setlistener(masterArmSwitch,func{fc.masterArmSwitch()},nil,0);
 		setlistener("controls/armament/dual",func{fc.updateDual()},nil,0);
+		setlistener("sim/signals/reinit",func{fc.updateMass()},nil,0);
 		return fc;
+	},
+
+	updateMass: func {
+		# JSBSim seems to reset all properties under fdm/jsbsim/inertia at reinit, so we need to repopulate them.
+		foreach (var p;me.pylons) {
+			p.calculateMass();
+			p.calculateFDM();
+		}
 	},
 
 	cage: func (cageIt) {
