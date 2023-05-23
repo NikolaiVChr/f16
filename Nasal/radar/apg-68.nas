@@ -2630,7 +2630,7 @@ var RadSensor = {
 		rs.RadSensorRecipient = emesary.Recipient.new("RadSensorRecipient");
 		rs.RadSensorRecipient.radar = rs;
 		rs.RadSensorRecipient.Receive = func(notification) {
-	        if (notification.NotificationType == "RWRNotification") {
+	        if (notification.NotificationType == "OmniNotification") {
 	        	#printf("RadSensor recv: %s", notification.NotificationType);
 	            if (me.radar.enabled == 1) {
 	    		    me.radar.vector_aicontacts = notification.vector;
