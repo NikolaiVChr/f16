@@ -2771,6 +2771,14 @@ var MFD_Device =
                 .setAlignment("left-center")
                 .setColor(colorText1)
                 .setFontSize(20, 1.0);
+
+        svg.obs5 = svg.p_WPN.createChild("text")
+                .setTranslation(-276*0.795, -482*0.5+140)
+                .setText("")
+                .setAlignment("left-center")
+                .setColor(colorText1)
+                .setFontSize(20, 1.0);
+
         # OBS 6
         svg.obs6 = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795, -482*0.5-135)
@@ -3102,6 +3110,16 @@ var MFD_Device =
                     if (me.wpnType == "fall") {
                         me.ar = -25;
                     }
+                } elsif (eventi == 4) {
+                    me.wpn_ = pylons.fcs.getSelectedWeapon();
+                    if (me.wpn_ != nil and me.wpn_.type == "GBU-54") {
+                        me.guide54 = me.wpn_.guidance;
+                        if (me.guide54 == "gps") {
+                            me.wpn_.guidance = "gps-laser";
+                        } else {
+                            me.wpn_.guidance = "gps";
+                        }
+                    }
                 } elsif (eventi == 5) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
@@ -3111,16 +3129,8 @@ var MFD_Device =
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
-                    me.wpn54 = pylons.fcs.getSelectedWeapon();
-                    if (me.wpn54 != nil and me.wpn54.type == "GBU-54") {
-                        me.guide54 = me.wpn54.guidance;
-                        if (me.guide54 == "gps") {
-                            me.wpn54.guidance = "gps-laser";
-                        } else {
-                            me.wpn54.guidance = "gps";
-                        }
-                    }
-                    if (me.wpn54 != nil and me.wpn54["powerOnRequired"] == 1) {
+                    me.wpn_ = pylons.fcs.getSelectedWeapon();
+                    if (me.wpn_ != nil and me.wpn_["powerOnRequired"] == 1) {
                         pylons.fcs.togglePowerOn();
                     }
                 } elsif (eventi == 7) {
@@ -3250,6 +3260,7 @@ var MFD_Device =
             me.eegs = "";
             me.status = "";
             me.obs3 = "";
+            me.obs5 = "";
             me.obs6 = "";
             me.obs8 = "";
             me.obs7 = "";
@@ -3267,7 +3278,7 @@ var MFD_Device =
             me.pre = "";
             #me.td_bp = "TD";
             if (me.wpn != nil and me.pylon != nil and me.wpn["typeShort"] != nil) {
-                if (me.wpn.type == "MK-82" or me.wpn.type == "MK-82AIR" or me.wpn.type == "MK-83" or me.wpn.type == "MK-84" or me.wpn.type == "GBU-12" or me.wpn.type == "GBU-24" or me.wpn.type == "GBU-54" or me.wpn.type == "CBU-87" or me.wpn.type == "CBU-105" or me.wpn.type == "GBU-31" or me.wpn.type == "AGM-154A" or me.wpn.type == "B61-7" or me.wpn.type == "B61-12") {
+                if (me.wpn.type == "MK-82" or me.wpn.type == "MK-82AIR" or me.wpn.type == "MK-83" or me.wpn.type == "MK-84" or me.wpn.type == "GBU-12" or me.wpn.type == "GBU-24" or me.wpn.type == "GBU-54" or me.wpn.type == "CBU-87" or me.wpn.type == "CBU-105" or me.wpn.type == "GBU-31" or me.wpn.type == "B61-7" or me.wpn.type == "B61-12") {
                     me.wpnType ="fall";
                     var nm = pylons.fcs.getDropMode();
                     if (nm == 1) {me.drop = "CCIP";me.pre=armament.contact != nil and armament.contact.get_type() != armament.AIR?"PRE":"VIS";}
@@ -3289,12 +3300,16 @@ var MFD_Device =
                     me.upAd = rpd<400 and me.showDist;
                     if (me.wpn.type == "GBU-54") {
                         if (me.wpn.guidance == "gps-laser") {
-                            me.obs7 = "GPS-LASR";
+                            me.obs5 = "GPS-LASR";
                         } else {
-                            me.obs7 = "GPS";
+                            me.obs5 = "GPS";
                         }
                     }
                     me.rippleDist = sprintf("RP %3d FT",math.round(rpd));
+
+                    if (me.wpn.powerOnRequired) {
+                        me.obs7 = me.wpn.isPowerOn()?"PWR\nON":"PWR\nOFF";
+                    }
 
                     me.eegs = "A-G";
                     me.wpn.arming_time += me.at;
@@ -3317,24 +3332,15 @@ var MFD_Device =
                         me.status = "MAL";
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
                         me.status = "OFF";
+                    } elsif (me.wpn.powerOnRequired and me.wpn.status == armament.MISSILE_STARTING and me.wpn["powerOn"]) {
+                        me.status = "NOT TIMED OUT";
                     } elsif (me.wpn.status == armament.MISSILE_STARTING) {
                         me.status = "NOT TIMED OUT";
                     } else {
                         me.status = "RDY";
                     }
-                } elsif (me.wpn.type == "AGM-84" or me.wpn.type == "AGM-119" or me.wpn.type == "AGM-158") {
-                    me.wpnType ="ground";
-                    me.eegs = "A-G";
-                    if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.status = "MAL";
-                    } elsif (me.wpn.status < armament.MISSILE_STARTING) {
-                        me.status = "OFF";
-                    } elsif (me.wpn.status == armament.MISSILE_STARTING) {
-                        me.status = "NOT TIMED OUT";
-                    } else {
-                        me.status = "RDY";
-                    }
-                } elsif (me.wpn.type == "AGM-65B" or me.wpn.type == "AGM-65D") {
+                } elsif (me.wpn.type == "AGM-65B" or me.wpn.type == "AGM-65D" or me.wpn.type == "AGM-84" or me.wpn.type == "AGM-119" or me.wpn.type == "AGM-158" or me.wpn.type == "AGM-154A") {
+                    # Smart weapons that needs power on.
                     me.wpnType ="ground";
                     me.eegs = "A-G";
                     me.obs7 = me.wpn.isPowerOn()?"PWR\nON":"PWR\nOFF";
@@ -3428,7 +3434,7 @@ var MFD_Device =
                 if (me.status == "RDY" and getprop("controls/armament/master-arm-switch") == pylons.ARM_SIM) me.status = "SIM";
                 me.obs6 = sprintf("%4s   %7s",me.status,me.myammo~me.wpn.typeShort);
                 if (0 and getprop("controls/armament/master-arm") != 1) {
-                    me.obs8 = "";#TODO: ?
+                    me.obs8 = "";# What was this for??
                 }
             } else {
                 me.obs6 = "";
@@ -3437,6 +3443,7 @@ var MFD_Device =
             me.root.drop.setText(me.drop);
             me.root.eegs.setText(me.eegs);
             me.root.obs3.setText(me.obs3);
+            me.root.obs5.setText(me.obs5);
             me.root.obs6.setText(me.obs6);
             me.root.obs7.setText(me.obs7);
             me.root.obs8.setText(me.obs8);
