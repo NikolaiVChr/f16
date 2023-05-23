@@ -130,6 +130,14 @@ var Station = {
 							}
 							return {};
 						};
+					} elsif (me.weaponName == "AGM-88") {
+						mf = func (struct) {
+							if (!struct.hasTarget) {
+								# Is in maddog mode
+								return {"class": "GM","abort_midflight_function":1};
+							}
+							return {"abort_midflight_function":1};
+						};
 					} elsif (me.weaponName == "AIM-54") {
 						mf = func (struct) {
 							if (struct.dist_m != -1 and struct.dist_m*M2NM < 11 and struct.guidance == "sample") {

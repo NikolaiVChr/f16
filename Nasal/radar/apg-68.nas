@@ -2754,9 +2754,9 @@ var RadSensor = {
                     elsif (me.candidateModel=="MIM104D") me.candidate.mdl="P";
                     elsif (me.candidateModel=="ZSU-23-4M") me.candidate.mdl="AAA";
                     elsif (me.candidateModel=="gci") me.candidate.mdl="S";
-                    #elsif (me.candidateModel=="A-50") me.candidate.mdl="S";
-                    #elsif (me.candidateModel=="EC-137R") me.candidate.mdl="S";
-                    #elsif (me.candidateModel=="E-3") me.candidate.mdl="S";
+                    elsif (me.candidateModel=="A-50") me.candidate.mdl="S";
+                    elsif (me.candidateModel=="EC-137R") me.candidate.mdl="S";
+                    elsif (me.candidateModel=="E-3") me.candidate.mdl="S";
                     if (me.candidate.mdl != "") {
                     	
 	                    for (me.i = 0; me.i < size(me.table);me.i+=1) {
