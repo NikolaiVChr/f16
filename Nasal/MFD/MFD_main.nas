@@ -4321,10 +4321,12 @@ var MFD_Device =
 
         var fieldH = svg.height * 0.60;
         var fieldW = svg.width * 0.666;
+
         svg.fieldH = fieldH;
         svg.fieldW = fieldW;
         svg.fieldX = -fieldW * 0.5;
         svg.fieldY = svg.height * 0.25;
+        svg.fieldDiag = math.sqrt(svg.fieldX*svg.fieldX+svg.fieldX*svg.fieldX);
         svg.detectedThreatStatusBox = svg.groupRdr.createChild("path")
                 .moveTo(-fieldW*0.5, 40)
                 .horiz(fieldW)
@@ -4869,14 +4871,17 @@ var MFD_Device =
 
             if (me.sensor.handoffTarget != nil) {
                 # Handoff
-                # whow only if in fov: todo
-                me.rot = radar_system.self.getRoll()*D2R;
-                me.root.handoffRot.setRotation(-me.rot);
                 me.dataPos = [me.extrapolate(me.data.get_bearing()-radar_system.self.getHeading(), -30, 30, -me.root.fieldW*0.5, me.root.fieldW*0.5), me.extrapolate(me.data.getElevation()-radar_system.self.getPitch(), -30, 30, me.root.fieldW*0.5, -me.root.fieldW*0.5)];
-                me.root.handoffTxt.setTranslation(me.dataPos);
-                me.root.handoffTxt.setRotation(me.rot);
-                me.root.handoffTxt.setText(me.sensor.handoffTarget.mdl~me.sensor.handoffTarget.radiSpike);
-                me.root.handoffTxt.show();
+                if (math.sqrt(me.dataPos[0]*me.dataPos[0]+me.dataPos[1]*me.dataPos[1]) < me.root.fieldDiag) {
+                    me.rot = radar_system.self.getRoll()*D2R;
+                    me.root.handoffRot.setRotation(-me.rot);
+                    me.root.handoffTxt.setTranslation(me.dataPos);
+                    me.root.handoffTxt.setRotation(me.rot);
+                    me.root.handoffTxt.setText(me.sensor.handoffTarget.mdl~me.sensor.handoffTarget.radiSpike);
+                    me.root.handoffTxt.show();
+                } else {
+                    me.root.handoffTxt.hide();
+                }
                 me.root.cross.setTranslation(0, me.root.fieldY + me.root.fieldH*0.5);
                 me.root.rdrTxt[0].hide();
                 me.root.rdrTxt[1].hide();
