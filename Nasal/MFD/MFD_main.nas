@@ -3429,6 +3429,8 @@ var MFD_Device =
         me.p_WPN.setWeaponStatus = func {
             if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                 me.status = "MAL";
+            } elsif (me.wpn.powerOnRequired and me.wpn["powerOn"] and !me.wpn.hasPowerEnough()) {
+                me.status = "MAL";
             } elsif (me.wpn.status < armament.MISSILE_STARTING) {
                 me.status = "OFF";
             } elsif (me.wpn.powerOnRequired and me.wpn.status == armament.MISSILE_STARTING and me.wpn["powerOn"]) {

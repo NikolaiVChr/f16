@@ -619,7 +619,7 @@
             <ejector-speed-fps type="double">20</ejector-speed-fps>
             <ready-time type="double">300</ready-time>
             <requires-power-on type="bool">true</requires-power-on>
-            <power-on-battery-time type="double">100000</power-on-battery-time><!-- infinite -->
+            <power-on-battery-time type="double">0</power-on-battery-time><!-- infinite -->
             <telemetry type="bool">true</telemetry>
         </gbu-54>
         <gbu-31>
@@ -673,7 +673,7 @@
             <ejector-speed-fps type="double">5</ejector-speed-fps>
             <ready-time type="double">300</ready-time>
             <requires-power-on type="bool">true</requires-power-on>
-            <power-on-battery-time type="double">100000</power-on-battery-time><!-- infinite -->
+            <power-on-battery-time type="double">0</power-on-battery-time><!-- infinite -->
             <telemetry type="bool">true</telemetry>
         </gbu-31>
         <gbu-24>

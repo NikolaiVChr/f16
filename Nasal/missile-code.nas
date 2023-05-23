@@ -306,6 +306,7 @@ var AIM = {
 		m.expand_min            = getprop(m.nodeString~"expand-min-fire-range");      # Bool. Default false. If min fire range should expand with closing rate. Mainly use this for A/A missiles.
 		m.asc                   = getprop(m.nodeString~"attack-steering-cue-enabled");# Bool. ASC enabled.
 		m.powerOnRequired       = getprop(m.nodeString~"requires-power-on");          # Bool. ASC enabled.
+		m.powerOnBatteryTime    = getprop(m.nodeString~"power-on-battery-time");      # Seconds.
 		# navigation, guiding and seekerhead
 		m.max_seeker_dev        = getprop(m.nodeString~"seeker-field-deg") / 2;       # missiles own seekers total FOV diameter.
 		m.guidance              = getprop(m.nodeString~"guidance");                   # heat/radar/semi-radar/tvm/laser/gps/gps-laser/vision/unguided/level/gyro-pitch/radiation/inertial/remote/remote-stable/command/sample
@@ -408,6 +409,10 @@ var AIM = {
 
         if (m.powerOnRequired == nil) {
           m.powerOnRequired = 0;
+        }
+
+        if (m.powerOnBatteryTime == nil) {
+          m.powerOnBatteryTime = 0;# infinite
         }
 
         if (m.rail_forward == 1) {
@@ -727,7 +732,11 @@ var AIM = {
         m.seam_scan             = 0;
         m.cooling_last_time     = 0;
         m.cool_total_time       = 0;
+
         m.powerOn               = 0;
+        m.powerAvailable        = m.powerOnBatteryTime;
+        m.powerOnPassedTime     = 0;
+        m.powerOnLastCheck      = 0;
 
 		#
 		# Emesary damage system
@@ -1430,6 +1439,10 @@ var AIM = {
 		return me.powerOn;
 	},
 
+	hasPowerEnough: func {
+		return !me.powerOnRequired or me.powerOnBatteryTime == 0 or me.powerAvailable > me.powerOnBatteryTime * 0.05;
+	},
+
 	start: func {
 		if (me.status == MISSILE_STANDBY) {
 			me.status = MISSILE_STARTING;
@@ -1513,6 +1526,11 @@ var AIM = {
 		me.release = nil;# no calling this method twice
 		me.elapsed_last = systime();
 		me.status = MISSILE_FLYING;
+
+		if (!me.hasPowerEnough()) {
+			# Smart weapon reduced to dumb weapon
+			me.free = 1;
+		}
 
 		if (vect!= nil) {
 
@@ -4551,6 +4569,15 @@ var AIM = {
 		}
 	},
 
+	consumeBattery: func (curr_time) {
+		if (me.powerOnRequired) {
+			me.powerOnPassedTime = curr_time-me.powerOnLastCheck;
+			me.powerAvailable += (me.powerOn?-1:1)*me.powerOnPassedTime;
+			me.powerAvailable = math.clamp(me.powerAvailable, 0, me.powerOnBatteryTime);
+			me.powerOnLastCheck = curr_time;
+		}
+	},
+
 	standby: func {
 		# looping in standby mode
 		if (deltaSec.getValue()==0) {
@@ -4559,6 +4586,10 @@ var AIM = {
 			return;
 		}
 		me.printCode("In standby(%d)",me.status);
+
+		me.curr_time = getprop("sim/time/elapsed-sec");
+		me.consumeBattery(me.curr_time);
+
 		if(me.seam_support and me.uncage_auto) {
 			me.caged = 1;
 		}
@@ -4591,7 +4622,11 @@ var AIM = {
 			me.standby();
 			return;
 		}
-		if (me.ready_standby_time != 0 and ((!me.powerOnRequired and getprop("sim/time/elapsed-sec") > (me.ready_standby_time+me.ready_time)) or (me.powerOnRequired and (me.powerOn and getprop("sim/time/elapsed-sec") > me.power_on_time + me.ready_time)))) {
+
+		me.curr_time = getprop("sim/time/elapsed-sec");
+		me.consumeBattery(me.curr_time);
+
+		if (me.ready_standby_time != 0 and me.hasPowerEnough() and ((!me.powerOnRequired and me.curr_time > (me.ready_standby_time+me.ready_time)) or (me.powerOnRequired and (me.powerOn and me.curr_time > me.power_on_time + me.ready_time)))) {
 			me.status = MISSILE_SEARCH;
 			me.search();
 			return;
@@ -4807,7 +4842,7 @@ var AIM = {
 			#me.trackWeak = 1;
 			me.standby();
 			return;
-		} elsif (me.powerOnRequired and !me.powerOn) {
+		} elsif (me.powerOnRequired and (!me.powerOn or (me.powerOnBatteryTime > 0 and me.powerAvailable < me.powerOnBatteryTime * 0.05))) {
 			me.status = MISSILE_STARTING;
 			# Stand by.
 			me.SwSoundVol.setDoubleValue(0);
@@ -4821,7 +4856,7 @@ var AIM = {
 			me.return_to_search();
 			return;
 		}
-
+		me.consumeBattery(getprop("sim/time/elapsed-sec"));
 
 
 		me.printSearch("searching");
@@ -5180,7 +5215,7 @@ var AIM = {
 			#me.trackWeak = 1;
 			me.standby();
 			return;
-		} elsif (me.powerOnRequired and !me.powerOn) {
+		} elsif (me.powerOnRequired and (!me.powerOn or (me.powerOnBatteryTime > 0 and me.powerAvailable < me.powerOnBatteryTime * 0.05))) {
 			me.status = MISSILE_STARTING;
 			me.reset_seeker();
 			# Stand by.
@@ -5202,6 +5237,7 @@ var AIM = {
 			me.return_to_search();
 			return;
 		}
+		me.consumeBattery(getprop("sim/time/elapsed-sec"));
 		me.printSearch("lock (caged:%d slave:%d point:%s same:%d noCommon:%d)",me.caged,me.slave_to_radar,contactPoint!=nil,me.getContact() == me.Tgt,me.noCommonTarget);
 		# Time interval since lock time or last track loop.
 		#if (me.status == MISSILE_LOCK) {
