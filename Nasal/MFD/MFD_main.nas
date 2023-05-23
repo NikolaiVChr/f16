@@ -4679,10 +4679,6 @@ var MFD_Device =
                 return;
             #print("\nHAD update:\n=======");
 
-            # make sure it can maddog
-            # filters for table
-            # when having 2 HAS displays, sensor might get table confused, and check for other issues.
-            # test
             me.harmSelected = 0;
             if (pylons.fcs != nil) {
                 me.radWeap = pylons.fcs.getSelectedWeapon();
@@ -4745,8 +4741,6 @@ var MFD_Device =
             if (noti.getproper("viewName") != "TGP" and me.IMSOI) {
                 f16.resetSlew();
             }
-
-            me.dt = noti.getproper("elapsed") - me.elapsed;
 
             if (me.IMSOI) {
                 if ((me.slew_x != 0 or me.slew_y != 0 or slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.root.index) and noti.getproper("viewName") != "TGP" and me.sensor.handoffTarget == nil) {
@@ -4837,7 +4831,7 @@ var MFD_Device =
                 }
             }
             if (me.sensor.enabled) {
-                me.cycleTimeLeft = math.max(0,me.sensor.dura-(systime()-me.sensor.searchStart));
+                me.cycleTimeLeft = math.max(0,me.sensor.dura-(me.elapsed-me.sensor.searchStart));
                 me.root.searchText.setText(sprintf("%d:%02d   SCT-%d",(me.cycleTimeLeft)/60, math.mod(me.cycleTimeLeft,60),me.sensor.searchCounter));
                 me.root.searchText.show();
             } else {
@@ -4849,7 +4843,7 @@ var MFD_Device =
 
             if (me.harmSelected and me.sensor.handoffTarget != nil and me.radWeap.status < armament.MISSILE_LOCK) {
                 # This makes sure we go from handover back to search when missile loses lock
-                if (systime()-me.sensor.handoffTime > 1) {
+                if (me.elapsed-me.sensor.handoffTime > 1) {
                     # It had time to get lock, but failed or masterarm was off
                     me.radWeap.setContacts([]);
                     me.sensor.handoffTarget = nil;
@@ -4928,7 +4922,7 @@ var MFD_Device =
                 me.clickableItems = [];
                 for (me.txt_count = 0; me.txt_count < 5; me.txt_count += 1) {
                     me.check = !(me.txt_count > me.iter);
-                    me.checkFresh = me.check and me.items[me.txt_count].discover < systime()-me.sensor.searchStart and me.items[me.txt_count].discoverSCT==me.sensor.searchCounter;
+                    me.checkFresh = me.check and me.items[me.txt_count].discover < me.elapsed-me.sensor.searchStart and me.items[me.txt_count].discoverSCT==me.sensor.searchCounter;
                     me.checkFading = me.check and me.items[me.txt_count]["discoverSCTShown"] == me.sensor.searchCounter-1;
                     #if (me.check) print(" fresh ",me.checkFresh,", fading ",me.checkFading, ", timetoshow ", me.items[me.txt_count].discover);
                     #if (me.check) print("  time ",me.items[me.txt_count].discover > systime()-me.sensor.searchStart,",  shown ",me.items[me.txt_count].discoverSCT," now",me.sensor.searchCounter);
@@ -4956,7 +4950,7 @@ var MFD_Device =
                 if (cursor_click == me.root.index) {
                     me.handoffTarget = me.click(me.clickableItems);
                     if (me.handoffTarget != nil) {
-                        me.sensor.handoffTime = systime();
+                        me.sensor.handoffTime = me.elapsed;
                         me.sensor.handoffTarget = me.handoffTarget;
                         #print("MFD: Clicked handoff on ",!cursor_click?"LEFT":"RIGHT");#TODO: need right display
                     }

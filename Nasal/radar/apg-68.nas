@@ -2672,7 +2672,7 @@ var RadSensor = {
         	me.timing = math.min(5, me.timing);
         	me.timer.restart(me.timing);
 			me.timer.start();
-			me.searchStart = systime();
+			me.searchStart = elapsedProp.getValue();
 
 			#print("setEnabled again");
 		} elsif (!e) {
@@ -2682,7 +2682,7 @@ var RadSensor = {
 	},
 	reset: func {
 		me.searchTime = 0;
-		me.searchStart = systime();
+		me.searchStart = elapsedProp.getValue();
 		foreach(me.seen;me.vector_aicontacts_seen) {
     		me.seen.discover = 0;
     		me.seen.discoverSCT = -2;
@@ -2701,11 +2701,12 @@ var RadSensor = {
             me.vector_aicontacts_seen = [];
             return;
         }
+        me.elapsed = elapsedProp.getValue();
         
-        me.searchTime = systime()-me.searchStart;
+        me.searchTime = me.elapsed-me.searchStart;
         if (me.searchTime > me.dura) {
         	me.index = -1;
-        	me.searchStart = systime();
+        	me.searchStart = me.elapsed;
         	me.searchCounter += 1;
         	me.searchTime = 0;
         	#print("finished search");
