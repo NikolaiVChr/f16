@@ -2764,7 +2764,7 @@ var RadSensor = {
 	                        if (me.candidate.mdl == me.tableitem) {
 	                            me.ok = 1;
 	                            me.candidate.tblIdx = me.i;
-	                            if (me.candidate["discoverSCT"] != me.searchCounter) {
+	                            if (me.candidate["discoverSCT"] != me.searchCounter) {# If we have seen this contact before in this cycle we don't recalc its discover time
 	                            	me.candidate.discover = me.dura*rand();
 	                            	me.candidate.discoverSCT = me.searchCounter;
 	                            }
@@ -2774,6 +2774,7 @@ var RadSensor = {
 	                    if (me.ok) {
 	                    	if (!me.containsVector(me.vector_aicontacts_seen, me.candidate)) {
 	                    		append(me.vector_aicontacts_seen, me.candidate);
+	                    		#print("Sensor: seen ",me.candidate.mdl,", planning reveal at ",int(me.dura-me.candidate.discover));
 	                    	}
 	                    }
                     }
@@ -2781,6 +2782,7 @@ var RadSensor = {
             }
         }
         if (!me.ok and me.containsVector(me.vector_aicontacts_seen, me.candidate)) {
+        	#print("Sensor: unseen ",me.candidate.mdl);
         	me.temp = [];
         	foreach(me.seen;me.vector_aicontacts_seen) {
         		if (me.seen == me.candidate) continue;

@@ -1160,19 +1160,22 @@ var MFD_Device =
             #me.dt = math.min(noti.getproper("elapsed") - me.elapsed, 0.05);
             me.dt = noti.getproper("elapsed") - me.elapsed;
 
-            if ((me.slew_x != 0 or me.slew_y != 0 or slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.root.index) and noti.getproper("viewName") != "TGP") {
-                cursor_destination = nil;
-                cursor_pos[0] += me.slew_x*175;
-                cursor_pos[1] -= me.slew_y*175;
-                cursor_pos[0] = math.clamp(cursor_pos[0], -552*0.5*0.795, 552*0.5*0.795);
-                cursor_pos[1] = math.clamp(cursor_pos[1], -482, 0);
-                cursor_click = (slew_c and !me.slew_c_last)?me.root.index:-1;
-                cursor_lock = me.root.index;
-            } elsif (cursor_lock == me.root.index or (me.slew_x == 0 or me.slew_y == 0 or slew_c == 0)) {
-                cursor_lock = -1;
+            if (me.IMSOI) {
+                if ((me.slew_x != 0 or me.slew_y != 0 or slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.root.index) and noti.getproper("viewName") != "TGP") {
+                    cursor_destination = nil;
+                    cursor_pos[0] += me.slew_x*175;
+                    cursor_pos[1] -= me.slew_y*175;
+                    cursor_pos[0] = math.clamp(cursor_pos[0], -552*0.5*0.795, 552*0.5*0.795);
+                    cursor_pos[1] = math.clamp(cursor_pos[1], -482, 0);
+                    cursor_click = (slew_c and !me.slew_c_last)?me.root.index:-1;
+                    cursor_lock = me.root.index;
+                } elsif (cursor_lock == me.root.index or (me.slew_x == 0 or me.slew_y == 0 or slew_c == 0)) {
+                    cursor_lock = -1;
+                }
+
+                me.slew_c_last = slew_c;
+                slew_c = 0;
             }
-            me.slew_c_last = slew_c;
-            slew_c = 0;
 
             # This is old cursor system for clicking in 3D, part 2
             #if (cursor_destination != nil and cursor_destination[2] == me.root.index) {
@@ -4744,20 +4747,22 @@ var MFD_Device =
 
             me.dt = noti.getproper("elapsed") - me.elapsed;
 
-            if ((me.slew_x != 0 or me.slew_y != 0 or slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.root.index) and noti.getproper("viewName") != "TGP" and me.sensor.handoffTarget == nil) {
-                cursor_destination = nil;
-                cursor_posHAS[0] += me.slew_x*175;
-                cursor_posHAS[1] -= me.slew_y*175;
-                cursor_posHAS[0] = math.clamp(cursor_posHAS[0], -552*0.5*0.795, 552*0.5*0.795);
-                cursor_posHAS[1] = math.clamp(cursor_posHAS[1], -482, 0);
-                cursor_click = (slew_c and !me.slew_c_last)?me.root.index:-1;
-                cursor_lock = me.root.index;
-            } elsif (cursor_lock == me.root.index or (me.slew_x == 0 or me.slew_y == 0 or slew_c == 0)) {
-                cursor_lock = -1;
-            }
-            me.slew_c_last = slew_c;
-            slew_c = 0;
+            if (me.IMSOI) {
+                if ((me.slew_x != 0 or me.slew_y != 0 or slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.root.index) and noti.getproper("viewName") != "TGP" and me.sensor.handoffTarget == nil) {
+                    cursor_destination = nil;
+                    cursor_posHAS[0] += me.slew_x*175;
+                    cursor_posHAS[1] -= me.slew_y*175;
+                    cursor_posHAS[0] = math.clamp(cursor_posHAS[0], -552*0.5*0.795, 552*0.5*0.795);
+                    cursor_posHAS[1] = math.clamp(cursor_posHAS[1], -482, 0);
+                    cursor_click = (slew_c and !me.slew_c_last)?me.root.index:-1;
+                    cursor_lock = me.root.index;
+                } elsif (cursor_lock == me.root.index or (me.slew_x == 0 or me.slew_y == 0 or slew_c == 0)) {
+                    cursor_lock = -1;
+                }
             
+                me.slew_c_last = slew_c;
+                slew_c = 0;
+            }
             me.elapsed = noti.getproper("elapsed");
             me.root.cursor.setTranslation(cursor_posHAS);
             me.root.cursor.setVisible(me.sensor.handoffTarget == nil);
@@ -4886,6 +4891,9 @@ var MFD_Device =
                     if (me.sensor.handoffTarget["tblIdx"] == me.jj) {
                         me.root.obsL[me.jj].hide();
                         me.root.obsLb[me.jj].show();
+                    } else {
+                        me.root.obsL[me.jj].show();
+                        me.root.obsLb[me.jj].hide();
                     }
                 }
 
@@ -4927,7 +4935,6 @@ var MFD_Device =
                         me.root.rdrTxt[me.txt_count].hide();
                         continue;
                     }
-                    me.root.rdrTxt[me.txt_count].show();
                     me.data = me.items[me.txt_count];
                     append(me.clickableItems, me.data);
                     if (me.checkFresh) {
@@ -4938,6 +4945,7 @@ var MFD_Device =
                     me.data.xyPos = me.dataPos;
                     me.root.rdrTxt[me.txt_count].setText(me.data.mdl~me.data.radiSpike);
                     me.root.rdrTxt[me.txt_count].setTranslation(me.dataPos);
+                    me.root.rdrTxt[me.txt_count].show();
                     if (!me.topCheck[me.data.tblIdx]) {
                         me.topLine ~= me.data.mdl~"   ";
                         me.topCheck[me.data.tblIdx] = 1;
@@ -4949,8 +4957,11 @@ var MFD_Device =
                     if (me.handoffTarget != nil) {
                         me.sensor.handoffTime = systime();
                         me.sensor.handoffTarget = me.handoffTarget;
+                        #print("MFD: Clicked handoff on ",!cursor_click?"LEFT":"RIGHT");#TODO: need right display
                     }
                     cursor_click = -1;
+                } elsif(cursor_click != -1) {
+                    #print("MFD: Failed click. It was ",!cursor_click?"LEFT":"RIGHT");#TODO: need right display
                 }
             } else {
                 me.root.crossX.show();
