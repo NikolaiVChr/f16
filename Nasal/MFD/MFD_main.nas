@@ -4310,6 +4310,7 @@ var MFD_Device =
                         .setFontSize(20, 1.0)
                         .setColor(colorText1);
         }
+        
         svg.cursor = svg.groupCursor.createChild("path")
                     .moveTo(-8,-9)
                     .vert(18)
@@ -4324,7 +4325,7 @@ var MFD_Device =
         svg.fieldW = fieldW;
         svg.fieldX = -fieldW * 0.5;
         svg.fieldY = svg.height * 0.25;
-        svg.topBox = svg.groupRdr.createChild("path")
+        svg.detectedThreatStatusBox = svg.groupRdr.createChild("path")
                 .moveTo(-fieldW*0.5, 40)
                 .horiz(fieldW)
                 .vert(svg.height * 0.10)
@@ -4333,7 +4334,7 @@ var MFD_Device =
                 .setColor(colorLine1)
                 .set("z-index",12)
                 .setStrokeLineWidth(2);
-        svg.topBoxText = svg.groupRdr.createChild("text")
+        svg.detectedThreatStatusBoxText = svg.groupRdr.createChild("text")
                         .setAlignment("left-center")
                         .setTranslation(-fieldW*0.5, 40+svg.height * 0.10*0.5)
                         .setFontSize(20, 1.0)
@@ -4348,6 +4349,13 @@ var MFD_Device =
                 .setStrokeDashArray([20,20])
                 .set("z-index",12)
                 .setStrokeLineWidth(2);
+
+        svg.handoffGrp = svg.groupRdr.createChild("group");
+        svg.handoffRot = svg.handoffGrp.createTransform().setTranslation(0, svg.fieldY + svg.fieldH*0.5);;
+        svg.handoffTxt = svg.handoffGrp.createChild("text")
+                        .setAlignment("center-center")
+                        .setFontSize(20, 1.0)
+                        .setColor(colorText1);
 
         svg.searchText = svg.groupRdr.createChild("text")
                         .setAlignment("center-top")
@@ -4860,10 +4868,17 @@ var MFD_Device =
             }
 
             if (me.sensor.handoffTarget != nil) {
-                #me.handoffTarget
-                me.root.rdrTxt[0].setText(me.sensor.handoffTarget.mdl~me.sensor.handoffTarget.radiSpike);
-                me.root.rdrTxt[0].setTranslation(0, me.root.fieldY + me.root.fieldH*0.5);
+                # Handoff
+                # whow only if in fov: todo
+                me.rot = radar_system.self.getRoll()*D2R;
+                me.root.handoffRot.setRotation(-me.rot);
+                me.dataPos = [me.extrapolate(me.data.get_bearing()-radar_system.self.getHeading(), -30, 30, -me.root.fieldW*0.5, me.root.fieldW*0.5), me.extrapolate(me.data.getElevation()-radar_system.self.getPitch(), -30, 30, me.root.fieldW*0.5, -me.root.fieldW*0.5)];
+                me.root.handoffTxt.setTranslation(me.dataPos);
+                me.root.handoffTxt.setRotation(me.rot);
+                me.root.handoffTxt.setText(me.sensor.handoffTarget.mdl~me.sensor.handoffTarget.radiSpike);
+                me.root.handoffTxt.show();
                 me.root.cross.setTranslation(0, me.root.fieldY + me.root.fieldH*0.5);
+                me.root.rdrTxt[0].hide();
                 me.root.rdrTxt[1].hide();
                 me.root.rdrTxt[2].hide();
                 me.root.rdrTxt[3].hide();
@@ -4904,6 +4919,7 @@ var MFD_Device =
                     me.radWeap.setContacts([me.sensor.handoffTarget]);
                 }
             } elsif (me.sensor.enabled) {
+                # Search
                 me.root.crossX.show();
                 me.root.crossY.show();
                 me.root.crossX1.show();
@@ -4917,6 +4933,7 @@ var MFD_Device =
                 me.root.crossY2.show();
                 #me.root.dashBox.show();
                 me.root.cross.hide();
+                me.root.handoffTxt.hide();
                 me.topLine = "   ";
                 me.topCheck = [0,0,0,0,0];
                 me.clickableItems = [];
@@ -4946,7 +4963,7 @@ var MFD_Device =
                         me.topCheck[me.data.tblIdx] = 1;
                     }
                 }
-                me.root.topBoxText.setText(me.topLine);
+                me.root.detectedThreatStatusBoxText.setText(me.topLine);
                 if (cursor_click == me.root.index) {
                     me.handoffTarget = me.click(me.clickableItems);
                     if (me.handoffTarget != nil) {
@@ -4959,6 +4976,7 @@ var MFD_Device =
                     #print("MFD: Failed click. It was ",!cursor_click?"LEFT":"RIGHT");#TODO: need right display
                 }
             } else {
+                # Not searching
                 me.root.crossX.show();
                 me.root.crossY.show();
                 me.root.crossX1.show();
@@ -4972,9 +4990,10 @@ var MFD_Device =
                 me.root.crossY2.show();
                 #me.root.dashBox.show();
                 me.root.cross.hide();
+                me.root.handoffTxt.hide();
                 me.topLine = "   ";
                 me.topCheck = [0,0,0,0,0];
-                me.root.topBoxText.setText(me.topLine);
+                me.root.detectedThreatStatusBoxText.setText(me.topLine);
 
                 for (me.txt_count = 0; me.txt_count < 5; me.txt_count += 1) {
                     me.root.rdrTxt[me.txt_count].hide();
