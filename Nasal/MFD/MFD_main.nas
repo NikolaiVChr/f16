@@ -4711,6 +4711,7 @@ var MFD_Device =
                         if (me.sensor.fov != me.sensor.fov_desired) {
                             me.sensor.fov = me.sensor.fov_desired;
                             me.sensor.reset();
+                            me.sensor.searchCounter = 0;
                         }
                         me.sensor.setEnabled(me.sensor.handoffTarget == nil);
                         me.harmSelected = 1;

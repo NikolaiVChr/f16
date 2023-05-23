@@ -2681,7 +2681,6 @@ var RadSensor = {
 		}
 	},
 	reset: func {
-		me.searchCounter = 0;
 		me.searchTime = 0;
 		me.searchStart = systime();
 		foreach(me.seen;me.vector_aicontacts_seen) {
