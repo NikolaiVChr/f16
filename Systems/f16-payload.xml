@@ -843,7 +843,7 @@
             <fire-msg type="string">Bruiser</fire-msg>
             <ready-time type="double">25</ready-time> <!-- INS alignment -->
             <requires-power-on type="bool">true</requires-power-on>
-            <power-on-battery-time type="double">2700</power-on-battery-time>
+            <power-on-battery-time type="double">900</power-on-battery-time><!-- Source: GPT 4 lol -->
         </agm-84>
         <agm-88>
             <type-id type="int">2</type-id>
