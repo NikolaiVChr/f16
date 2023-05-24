@@ -1527,10 +1527,8 @@ var AIM = {
 		me.elapsed_last = systime();
 		me.status = MISSILE_FLYING;
 
-		if (!me.hasPowerEnough()) {
-			# Smart weapon reduced to dumb weapon
-			me.free = 1;
-		}
+		me.powerOnLastCheck = 0;# switch to use me.life_time from elapsed sim time.
+		me.powerOn = 1;# If pilot releases while power off, we make sure it on now.
 
 		if (vect!= nil) {
 
@@ -2141,6 +2139,13 @@ var AIM = {
 		}
 
 		me.life_time += me.dt;
+
+		me.consumeBattery(me.life_time);
+		if (!me.hasPowerEnough()) {
+			# Smart weapon reduced to dumb weapon
+			me.free = 1;
+			me.printStats("Ran out of battery, stopped guiding");
+		}
 
 		me.handleMidFlightFunc();
 
