@@ -3410,18 +3410,15 @@ var MFD_Device =
             }
         };
         me.p_WPN.setWeaponStatus = func {
+            # The order of these IF is delicate
             if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                 me.status = "MAL";
             } elsif (me.wpn.powerOnRequired and me.wpn.isPowerOn() and !me.wpn.hasPowerEnough()) {
                 me.status = "MAL";
-            } elsif (me.wpn.status < armament.MISSILE_STARTING) {
+            } elsif (me.wpn.status < armament.MISSILE_STARTING or (me.wpn.powerOnRequired and !me.wpn.isPowerOn())) {
                 me.status = "OFF";
-            } elsif (me.wpn.powerOnRequired and me.wpn.status == armament.MISSILE_STARTING) {
-                if (me.wpn.isPowerOn() and me.wpn.hasPowerEnough()) {
-                    me.status = "NOT TIMED OUT";
-                } elsif (!me.wpn.isPowerOn()) {
-                    me.status = "OFF";
-                }
+            } elsif (me.wpn.powerOnRequired and me.wpn.status == armament.MISSILE_STARTING and me.wpn.hasPowerEnough()) {
+                me.status = "NOT TIMED OUT";
             } elsif (me.wpn.status == armament.MISSILE_STARTING) {
                 me.status = "NOT TIMED OUT";
             } else {
