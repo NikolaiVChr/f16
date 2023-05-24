@@ -2729,7 +2729,7 @@ var RadSensor = {
         }
         me.index += 1;
 
-        me.candidate = me.vector_aicontacts[me.index][0];
+        me.candidate = me.vector_aicontacts[me.index];
         #print(size(me.vector_aicontacts)," me.candidate.rd is nil: ",me.candidate["isRadiating"]==nil);
         me.ownCoord = self.getCoord();
         me.myHeading = radar_system.self.getHeading();
