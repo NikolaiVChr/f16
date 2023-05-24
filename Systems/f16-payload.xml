@@ -977,7 +977,7 @@
             <ejector-speed-fps type="double">5</ejector-speed-fps>
             <telemetry type="bool">true</telemetry>
             <requires-power-on type="bool">true</requires-power-on>
-            <power-on-battery-time type="double">2700</power-on-battery-time>
+            <power-on-battery-time type="double">900</power-on-battery-time><!-- Source: Sammy. inflight time -->
         </agm-154a>
         <agm-158>
             <type-id type="int">6</type-id>
