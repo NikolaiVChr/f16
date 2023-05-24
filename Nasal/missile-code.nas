@@ -5258,14 +5258,16 @@ var AIM = {
 		me.coolingSyst();
 		me.computeSeekerPos();
 		if (me.status != MISSILE_STANDBY ) {#TODO: should this also check for starting up?
-			me.in_view = me.check_t_in_fov();
 
-			if (!me.in_view) {
-				if (me.noCommonTarget and me.guidance == "radiation") me.Tgt = nil;#Hack, todo fix this
-				me.printSearch("out of view");
-				me.return_to_search();
-				return;
-			}
+			# This code does not seem needed anymore:
+			#me.in_view = me.check_t_in_fov();
+			#
+			#if (!me.in_view) {
+			#	if (me.noCommonTarget and me.guidance == "radiation") me.Tgt = nil;#Hack, todo fix this
+			#	me.printSearch("out of view");
+			#	me.return_to_search();
+			#	return;
+			#}
 
 			if (!me.caged or me.slave_to_radar) {
 				me.convertGlobalToSeekerViewDirection(me.Tgt.get_bearing(), me.Tgt.getElevation(), OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue());
@@ -5285,7 +5287,8 @@ var AIM = {
 			# Notice: seeker_xxxx_target is used both for denoting where seeker should move towards and where the target is. In this case its the latter:
 			me.convertGlobalToSeekerViewDirection(me.Tgt.get_bearing(), me.Tgt.getElevation(), OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue());
 			me.testSeeker();
-			if (!me.inBeam or (me.guidance == "semi-radar" and !me.is_painted(me.Tgt))) {
+			me.tagt = me.Tgt;# Used in checkForLock
+			if (!me.inBeam or !me.checkForLock()) {
 				me.printSearch("out of beam or no beam for fox 1");
 				me.status = MISSILE_SEARCH;
 				me.Tgt = nil;
