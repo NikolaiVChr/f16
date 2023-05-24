@@ -806,7 +806,7 @@
             <hit-everything-nearby type="bool">true</hit-everything-nearby>
             <ready-time type="double">180</ready-time>
             <requires-power-on type="bool">true</requires-power-on>
-            <power-on-battery-time type="double">2700</power-on-battery-time>
+            <power-on-battery-time type="double">2700</power-on-battery-time><!-- Official sources: 30 to 60 mins for (think was) D version. And 105 seconds after launch for G version. -->
         </agm-65d>
         <agm-84>                    <!-- A variant: 0.85 mach cruise, E is calibrated to just under 1.00 -->
             <type-id type="int">1</type-id>
