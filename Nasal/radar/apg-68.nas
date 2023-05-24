@@ -2617,7 +2617,21 @@ var RWR = {
 
 
 
-
+var radiation_list = {
+	"buk-m2": "11",
+    "s-300": "20",
+    "s-200": "5",
+    "S-75": "2",
+    "missile_frigate": "SH",
+    "fleet": "SH",
+    "SA-6": "6",
+    "MIM104D": "P",
+    "ZSU-23-4M": "AAA",
+    "gci": "S",
+    "A-50": "S",
+    "EC-137R": "S",
+    "E-3": "S",
+};
 
 var RadSensor = {
 	# inherits from Radar
@@ -2667,9 +2681,8 @@ var RadSensor = {
 	setEnabled: func (e) {
 		me.enabled = e;
 		if (e and !me.timer.isRunning) {
-			me.dura = me.maxDura * me.area/me.maxArea * size(me.table)/5;
-        	me.timing = 0.95*me.dura/size(me.vector_aicontacts);# Give time to scan the last
-        	me.timing = math.min(5, me.timing);
+			me.calcDura();
+        	me.timing = 0.05;
         	me.timer.restart(me.timing);
 			me.timer.start();
 			me.searchStart = elapsedProp.getValue();
@@ -2688,9 +2701,11 @@ var RadSensor = {
     		me.seen.discoverSCT = -2;
     	}
 		me.vector_aicontacts_seen = [];
+		me.calcDura();
+    	me.timing = 0.05;
+	},
+	calcDura: func {
 		me.dura = me.maxDura * me.area/me.maxArea * size(me.table)/5;
-    	me.timing = 0.95*me.dura/size(me.vector_aicontacts);# Give time to scan the last
-    	me.timing = math.min(5, me.timing);
 	},
 	scan: func {
 		if (!me.enabled) {
@@ -2731,34 +2746,21 @@ var RadSensor = {
 
         me.candidate = me.vector_aicontacts[me.index];
         #print(size(me.vector_aicontacts)," me.candidate.rd is nil: ",me.candidate["isRadiating"]==nil);
-        me.ownCoord = self.getCoord();
-        me.myHeading = radar_system.self.getHeading();
-        me.ok = 0;
-        if (me.candidate.isRadiating(me.ownCoord)) {
-        	me.testBearing = me.candidate.getBearing();
-            me.testElevation = me.candidate.getElevation();
-            me.testDev = geo.normdeg180(me.testBearing-me.myHeading);
-            if (me.testDev > me.x[0] and me.testDev < me.x[1] and me.candidate.get_range() < me.range) {
-	            if (me.testElevation < me.y[1] and me.testElevation > me.y[0]) {
-    	            me.candidate.radiSpike = me.candidate.isSpikingMe()?"T":"A";
-    	            me.candidate.pos = [me.testDev, me.testElevation];
-    	            me.candidate.mdl = "";
-    	            me.candidateModel = me.candidate.getModel();
-                    if (me.candidateModel=="buk-m2") me.candidate.mdl="11";
-                    elsif (me.candidateModel=="s-300") me.candidate.mdl="20";
-                    elsif (me.candidateModel=="s-200") me.candidate.mdl="5";
-                    elsif (me.candidateModel=="S-75") me.candidate.mdl="2";
-                    elsif (me.candidateModel=="missile_frigate") me.candidate.mdl="SH";
-                    elsif (me.candidateModel=="fleet") me.candidate.mdl="SH";
-                    elsif (me.candidateModel=="SA-6") me.candidate.mdl="6";
-                    elsif (me.candidateModel=="MIM104D") me.candidate.mdl="P";
-                    elsif (me.candidateModel=="ZSU-23-4M") me.candidate.mdl="AAA";
-                    elsif (me.candidateModel=="gci") me.candidate.mdl="S";
-                    elsif (me.candidateModel=="A-50") me.candidate.mdl="S";
-                    elsif (me.candidateModel=="EC-137R") me.candidate.mdl="S";
-                    elsif (me.candidateModel=="E-3") me.candidate.mdl="S";
-                    if (me.candidate.mdl != "") {
-                    	
+        me.candidateModel = me.candidate.getModel();
+        if (contains(radiation_list, me.candidateModel)) {
+	        me.ownCoord = self.getCoord();
+	        me.myHeading = radar_system.self.getHeading();
+	        me.ok = 0;
+	        if (me.candidate.isRadiating(me.ownCoord)) {
+	        	me.testBearing = me.candidate.getBearing();
+	            me.testElevation = me.candidate.getElevation();
+	            me.testDev = geo.normdeg180(me.testBearing-me.myHeading);
+	            if (me.testDev > me.x[0] and me.testDev < me.x[1] and me.candidate.get_range() < me.range) {
+		            if (me.testElevation < me.y[1] and me.testElevation > me.y[0]) {
+	    	            me.candidate.radiSpike = me.candidate.isSpikingMe()?"T":"A";
+	    	            me.candidate.pos = [me.testDev, me.testElevation];
+	    	            me.candidate.mdl = radiation_list[me.candidateModel];
+	                    
 	                    for (me.i = 0; me.i < size(me.table);me.i+=1) {
 	                        me.tableitem = me.table[me.i];
 	                        if (me.candidate.mdl == me.tableitem) {
@@ -2777,22 +2779,22 @@ var RadSensor = {
 	                    		#print("Sensor: seen ",me.candidate.mdl,", planning reveal at ",int(me.dura-me.candidate.discover));
 	                    	}
 	                    }
-                    }
-    	        }
-            }
-        }
-        if (!me.ok and me.containsVector(me.vector_aicontacts_seen, me.candidate)) {
-        	#print("Sensor: unseen ",me.candidate.mdl);
-        	me.temp = [];
-        	foreach(me.seen;me.vector_aicontacts_seen) {
-        		if (me.seen == me.candidate) continue;
-        		append(me.temp,me.seen);
-        	}
-        	me.vector_aicontacts_seen = me.temp;
-        }
-        me.dura = me.maxDura * me.area/me.maxArea * size(me.table)/5;
-        me.timing = 0.95*me.dura/size(me.vector_aicontacts);# Give time to scan the last
-        me.timing = math.min(5, me.timing);
+	    	        }
+	            }
+	        }
+	        if (!me.ok and me.containsVector(me.vector_aicontacts_seen, me.candidate)) {
+	        	#print("Sensor: unseen ",me.candidate.mdl);
+	        	me.temp = [];
+	        	foreach(me.seen;me.vector_aicontacts_seen) {
+	        		if (me.seen == me.candidate) continue;
+	        		append(me.temp,me.seen);
+	        	}
+	        	me.vector_aicontacts_seen = me.temp;
+	        }
+	    }
+        me.calcDura();
+        me.timing = 2/size(me.vector_aicontacts);# Expect there to be 1 to 100 contacts. The last ones in the vector should also be able to show up in the first seconds.
+        me.timing = math.clamp(me.timing, 0.01, 0.15);
         #printf("dura %.3f  size %d  sleep %.3f",me.dura,size(me.vector_aicontacts),0.95*me.dura/size(me.vector_aicontacts));
         me.timer.restart(me.timing);
         if (!me.timer.isRunning) {
