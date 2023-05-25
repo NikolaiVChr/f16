@@ -3424,7 +3424,7 @@ var MFD_Device =
             } elsif (me.wpn.powerOnRequired and me.wpn.status == armament.MISSILE_STARTING and me.wpn.hasPowerEnough()) {
                 me.status = "NOT TIMED OUT";
             } elsif (me.wpn.status == armament.MISSILE_STARTING) {
-                me.status = "NOT TIMED OUT";
+                me.status = "INIT";
             } else {
                 if (getprop("controls/armament/master-arm-switch") == pylons.ARM_SIM) me.status = "SIM";
                 else me.status = "RDY";
