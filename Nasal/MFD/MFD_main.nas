@@ -2838,10 +2838,10 @@ var MFD_Device =
                     .lineTo(-276*0.795,-482*0.5-105-27.5)
                     .setStrokeLineWidth(3)
                     .hide()
-                    .setTranslation(0,140)
+                    .setTranslation(0,140+70)
                     .setColor(colorText1);
         svg.distA = svg.p_WPN.createChild("text")
-                .setTranslation(-276*0.795, -482*0.5+35)
+                .setTranslation(-276*0.795, -482*0.5+35+70)
                 .setAlignment("left-center")
                 .setColor(colorText1)
                 .hide()
@@ -2853,7 +2853,7 @@ var MFD_Device =
                     .lineTo(-276*0.795,-482*0.5-105+27.5)
                     .setStrokeLineWidth(3)
                     .hide()
-                    .setTranslation(0,140)
+                    .setTranslation(0,140+70)
                     .setColor(colorText1);
 		svg.notSOI = svg.p_WPN.createChild("text")
            .setTranslation(0, -482*0.55)
@@ -3080,21 +3080,11 @@ var MFD_Device =
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
-                    if (me.wpnType == "fall") {
-                        me.ar = 25;
-                    } elsif (me.wpnType == "heat") {
+                    if (me.wpnType == "heat") {
                         var auto = pylons.fcs.isAutocage();
                         auto = !auto;
                         pylons.fcs.setAutocage(auto);
                     }
-                } elsif (eventi == 3) {
-                    if (getprop("sim/variant-id") == 0) {
-                        return;
-                    }
-                    if (me.wpnType == "fall") {
-                        me.ar = -25;
-                    }
-                } elsif (eventi == 4) {
                     me.wpn_ = pylons.fcs.getSelectedWeapon();
                     if (me.wpn_ != nil and me.wpn_.type == "GBU-54") {
                         me.guide54 = me.wpn_.guidance;
@@ -3103,6 +3093,20 @@ var MFD_Device =
                         } else {
                             me.wpn_.guidance = "gps";
                         }
+                    }
+                } elsif (eventi == 3) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
+                    if (me.wpnType == "fall") {
+                        me.ar = 25;
+                    }                    
+                } elsif (eventi == 4) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
+                    if (me.wpnType == "fall") {
+                        me.ar = -25;
                     }
                 } elsif (eventi == 5) {
                     if (getprop("sim/variant-id") == 0) {
@@ -3284,9 +3288,9 @@ var MFD_Device =
                     me.upAd = rpd<400 and me.showDist;
                     if (me.wpn.type == "GBU-54") {
                         if (me.wpn.guidance == "gps-laser") {
-                            me.obs5 = "GPS-LASR";
+                            me.obs3 = "GPS-LASR";
                         } else {
-                            me.obs5 = "GPS";
+                            me.obs3 = "GPS";
                         }
                     }
                     me.rippleDist = sprintf("RP %3d FT",math.round(rpd));
