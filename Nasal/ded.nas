@@ -283,9 +283,13 @@ var dataEntryDisplay = {
 	updateAlow: func() {
 		me.text[0] = sprintf("         ALOW        %s ",me.no);
 		me.text[1] = sprintf("                        ");
-		me.text[2] = sprintf("   CARA ALOW %sFT   ", pALOW.vector[0].getText());
-		me.text[3] = sprintf("   MSL FLOOR %sFT   ", pALOW.vector[1].getText());
-		me.text[4] = sprintf("TF ADV (MSL)  %sFT   ", pALOW.vector[2].getText());
+		me.text[2] = sprintf("  CARA ALOW  %sFT   ", pALOW.vector[0].getText());
+		me.text[3] = sprintf("  MSL FLOOR  %sFT   ", pALOW.vector[1].getText());
+		if (getprop("sim/variant-id") != 1) {
+			me.text[4] = sprintf("TF ADV (MSL)  %sFT   ", pALOW.vector[2].getText());
+		} else {
+			me.text[4] = sprintf("                        ");
+		}
 	},
 
 	updateFack: func() {
@@ -605,7 +609,7 @@ var dataEntryDisplay = {
             if (fp != nil and stnum < 100) {
                 var max = fp.getPlanSize();
                 if (max > 0) {
-                    maxS =""~max;
+                    maxS = sprintf("%2d"~utf8.chstr(0x2195),max);
                     var ete = getprop("autopilot/route-manager/ete");
                     if (ete != nil and ete > 0) {
                         var pph = getprop("engines/engine[0]/fuel-flow_pph");
@@ -623,7 +627,7 @@ var dataEntryDisplay = {
                 }
             } elsif (stnum >= 100) {
                 var stpt = steerpoints.getCurrent();
-                maxS = ""~stnum;
+                maxS = sprintf("%2d"~utf8.chstr(0x2195),stnum);
                 var ete = steerpoints.getCurrentETA();
                 if (ete != nil and ete > 0) {
                     var pph = getprop("engines/engine[0]/fuel-flow_pph");
@@ -647,10 +651,10 @@ var dataEntryDisplay = {
             }
             windkts = sprintf("% 3dKTS",getprop("environment/wind-speed-kt"));
             winddir = sprintf("%03d\xc2\xb0",getprop("environment/wind-from-heading-deg"));
-            me.text[1] = sprintf("      STPT   %s  ",maxS);
-            me.text[2] = sprintf("      FUEL %s",fuel);#fuel remaining after getting to last steerpoint at current fuel consumption.
+            me.text[1] = sprintf("   STPT    %s   ",maxS);
+            me.text[2] = sprintf("   FUEL   %s",fuel);#fuel remaining after getting to last steerpoint at current fuel consumption.
             me.text[3] = sprintf("                        ");
-            me.text[4] = sprintf("      WIND %s %s",winddir,windkts);
+            me.text[4] = sprintf("   WIND   %s     %s",winddir,windkts);
         }
 	},
 
@@ -876,7 +880,11 @@ var dataEntryDisplay = {
 	updateMode: func() {
 		me.text[0] = sprintf("      MODE * NAV *   %s ",me.no);
 		me.text[1] = sprintf("                        ");
-		me.text[2] = sprintf("      AACMI RECORD      ");
+	if (getprop("sim/variant-id") == 2) {
+			me.text[2] = sprintf("      AACMI RECORD      ", date);
+		} else {
+			me.text[2] = sprintf("                        ");
+		}
 		me.text[3] = sprintf("                        ");
 		me.text[4] = sprintf("                        ");
 	},
