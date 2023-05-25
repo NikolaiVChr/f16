@@ -733,11 +733,11 @@ var dataEntryDisplay = {
 	acalModeSelected: 1,
 	updateAcal: func() {
 		if (me.acalModeSelected) {
-			me.text[0] = sprintf(" ACAL    *%s*       %s", me.acalMode, me.no);
+			me.text[0] = sprintf(" ACAL    *%s*      %s", me.acalMode, me.no);
 		} else {
-			me.text[0] = sprintf(" ACAL     %s        %s", me.acalMode, me.no);
+			me.text[0] = sprintf(" ACAL     %s       %s", me.acalMode, me.no);
 		}
-		me.text[1] = sprintf("          AUTO");
+		me.text[1] = sprintf("          AUTO   ");
 		me.text[2] = sprintf("                 ");
 		me.text[3] = sprintf("                 ");
 		me.text[4] = sprintf("                 ");
@@ -874,9 +874,9 @@ var dataEntryDisplay = {
 	},
 
 	updateMode: func() {
-		me.text[0] = sprintf("        MODE *NAV*    %s ",me.no);
+		me.text[0] = sprintf("      MODE * NAV *   %s ",me.no);
 		me.text[1] = sprintf("                        ");
-		me.text[2] = sprintf("                        ");
+		me.text[2] = sprintf("      AACMI RECORD      ");
 		me.text[3] = sprintf("                        ");
 		me.text[4] = sprintf("                        ");
 	},
@@ -1525,12 +1525,12 @@ setlistener("f16/avionics/rtn-seq", func() {
 		}
 
 		if (dataEntryDisplay.page == pACAL and dataEntryDisplay.acalModeSelected) {
-			if (dataEntryDisplay.acalMode == "GPS") {
-				dataEntryDisplay.acalMode = "DTS";
-			} elsif (dataEntryDisplay.acalMode == "DTS") {
+			if (dataEntryDisplay.acalMode == " GPS") {
+				dataEntryDisplay.acalMode = " DTS";
+			} elsif (dataEntryDisplay.acalMode == " DTS") {
 				dataEntryDisplay.acalMode = "BOTH";
 			} else {
-				dataEntryDisplay.acalMode = "GPS";
+				dataEntryDisplay.acalMode = " GPS";
 			}
 			return;
 		}
