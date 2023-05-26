@@ -951,10 +951,10 @@ var AIM = {
 				}
 			}
 			if(getprop("payload/armament/msg")) {
-				thread.lock(mutexTimer);
+				lockTimer(me.unique_id);
 				#lat,lon,alt,rdar,typeID,typ,unique,thrustOn,callsign, heading, pitch, speed, is_deleted=0
 				append(AIM.timerQueue, [AIM, AIM.notifyInFlight, [nil, -1, -1, 0, 0, me.typeID, "delete()", me.unique_id, 0,"", 0, 0, 0, 1], -1]);
-				thread.unlock(mutexTimer);
+				unlockTimer(me.unique_id);
 			}
 		} else {
 			delete(AIM.active, me.ID);
@@ -2183,10 +2183,10 @@ var AIM = {
 			if (!(me.canSwitch and me.reaquire)) {
 				me.printStats(me.type~": Target went away, deleting missile.");
 				#me.sendMessage(me.type~" missed "~me.callsign~": Target logged off.");
-				thread.lock(mutexTimer);
+				lockTimer(me.unique_id);
 				append(AIM.timerQueue, [me,me.del,[],0]);
 				append(AIM.timerQueue, [me,me.log,[me.callsign~" logged off. Deleting "~me.typeLong],0]);
-				thread.unlock(mutexTimer);
+				unlockTimer(me.unique_id);
 				AIM.setETA(nil);
 				return;
 			} else {
@@ -2586,13 +2586,13 @@ var AIM = {
 				me.sndDistance = 0;
 				me.elapsed_last_snd = systime();
 				if (me.explodeSound) {
-					thread.lock(mutexTimer);
+					lockTimer(me.unique_id);
 					append(AIM.timerQueue, [me,me.sndPropagate,[],0]);
-					thread.unlock(mutexTimer);
+					unlockTimer(me.unique_id);
 				} else {
-					thread.lock(mutexTimer);
+					lockTimer(me.unique_id);
 					append(AIM.timerQueue, [me,me.del,[],10]);
-					thread.unlock(mutexTimer);
+					unlockTimer(me.unique_id);
 				}
 				AIM.setETA(nil);
 				return;
@@ -2672,11 +2672,11 @@ var AIM = {
         if (me.life_time - me.last_noti > me.noti_time and getprop("payload/armament/msg")) {
             # notify in flight using Emesary.
             me.last_noti = me.life_time;
-        	thread.lock(mutexTimer);
+        	lockTimer(me.unique_id);
         	var rdr = me.guidance=="radar";
         	var semiRdr = (me.guidance=="semi-radar" and !me.semiLostLock) or (me.guidance=="command" and me.guiding);# Continous wave illuminator active on the target
 			append(AIM.timerQueue, [AIM, AIM.notifyInFlight, [me.latN.getValue(), me.lonN.getValue(), me.altN.getValue()*FT2M,rdr,semiRdr,me.typeID,me.type,me.unique_id,me.thrust_lbf>0,(me.free or me.lostLOS or me.tooLowSpeed or me.flareLock or me.chaffLock)?"":me.callsign, me.hdg, me.pitch, me.new_speed_fps, 0], -1]);
-			thread.unlock(mutexTimer);
+			unlockTimer(me.unique_id);
         }
 
 		me.last_dt = me.dt;
@@ -2686,9 +2686,9 @@ var AIM = {
 		if (me.counter > -1 and !me.ai.getNode("valid").getBoolValue()) {
 			# TODO: Why is this placed so late? Don't remember.
 			me.ai.getNode("valid").setBoolValue(1);
-			thread.lock(mutexTimer);
+			lockTimer(me.unique_id);
 			append(AIM.timerQueue, [me, me.setModelAdded, [], -1]);
-			thread.unlock(mutexTimer);
+			unlockTimer(me.unique_id);
 		}
 		#############################################################################################################
 		#
@@ -4205,9 +4205,9 @@ var AIM = {
 			me.event = "exploded";
 			if(me.life_time < me.arming_time) {
 				me.event = "landed disarmed";
-				#thread.lock(mutexTimer);
+				#lockTimer(me.unique_id);
 				#append(AIM.timerQueue, [me,me.log,[me.typeLong~" landed disarmed."],0]);
-				#thread.unlock(mutexTimer);
+				#unlockTimer(me.unique_id);
 			}
 			if (me.Tgt != nil and me.direct_dist_m == nil) {
 				# maddog might go here
@@ -4414,16 +4414,16 @@ var AIM = {
 		me.coord = coordinates;  # Set the current missile coordinates at the explosion point.
 
 		if(getprop("payload/armament/msg")) {
-			thread.lock(mutexTimer);
+			lockTimer(me.unique_id);
 			append(AIM.timerQueue, [AIM, AIM.notifyInFlight, [me.coord.lat(), me.coord.lon(), me.coord.alt(),0,0,me.typeID,me.type,me.unique_id,0,"", me.hdg, me.pitch, 0, 0], -1]);
-			thread.unlock(mutexTimer);
+			unlockTimer(me.unique_id);
 		}
 
 		var wh_mass = (event == "exploded" and !me.inert) ? me.weight_whead_lbm : 0; #will report 0 mass if did not have time to arm
 
-		thread.lock(mutexTimer);
+		lockTimer(me.unique_id);
 		append(AIM.timerQueue, [me,impact_report,[coordinates, wh_mass, "munition", me.type, me.new_speed_fps*FT2M],0]);
-		thread.unlock(mutexTimer);
+		unlockTimer(me.unique_id);
 
 		if (!me.inert) {
 			var phrase = nil;
@@ -4448,28 +4448,28 @@ var AIM = {
 			if (phrase != nil) {
 				me.printStats("%s  time %.1f", phrase, me.life_time);
 				if(getprop("payload/armament/msg") and hitPrimaryTarget and wh_mass > 0){
-					thread.lock(mutexTimer);
+					lockTimer(me.unique_id);
 					append(AIM.timerQueue, [AIM, AIM.notifyHit, [coordinates.alt() - me.t_coord.alt(),range,me.callsign,coordinates.course_to(me.t_coord),reason,me.typeID, me.typeLong, 0], -1]);
-					thread.unlock(mutexTimer);
+					unlockTimer(me.unique_id);
                 } else {
-	                thread.lock(mutexTimer);
+	                lockTimer(me.unique_id);
 	                append(AIM.timerQueue, [AIM, AIM.log, [phrase], 0]);
-	                thread.unlock(mutexTimer);
+	                unlockTimer(me.unique_id);
 	            }
 			}
 			if (me.multiHit and !me.multiExplosion(coordinates, event, wh_mass) and me.Tgt != nil and me.Tgt.isVirtual()) {
 				phrase = sprintf(me.type~" "~event);
 				me.printStats("%s  Reason: %s time %.1f", phrase, reason, me.life_time);
-                thread.lock(mutexTimer);
+                lockTimer(me.unique_id);
                 append(AIM.timerQueue, [AIM, AIM.log, [phrase], 0]);
-                thread.unlock(mutexTimer);
+                unlockTimer(me.unique_id);
 			}
 		}
 
 		me.ai.getNode("valid", 1).setBoolValue(0);
-		thread.lock(mutexTimer);
+		lockTimer(me.unique_id);
 		append(AIM.timerQueue, [me, me.setModelRemoved, [], -1]);
-		thread.unlock(mutexTimer);
+		unlockTimer(me.unique_id);
 		if (event == "exploded" and !me.inert and wh_mass > 0) {
 			me.animate_explosion(hitGround);
 			me.explodeSound = 1;
@@ -4496,13 +4496,13 @@ var AIM = {
  				if(getprop("payload/armament/msg") and wh_mass > 0){
  					var cs = damage.processCallsign(me.testMe.get_Callsign());
  					var cc = me.testMe.get_Coord();
- 					thread.lock(mutexTimer);
+ 					lockTimer(me.unique_id);
 					append(AIM.timerQueue, [AIM, AIM.notifyHit, [explode_coord.alt() - cc.alt(),min_distance,cs,explode_coord.course_to(cc),"mhit1",me.typeID, me.typeLong,0], -1]);
-					thread.unlock(mutexTimer);
+					unlockTimer(me.unique_id);
 				} elsif (wh_mass > 0) {
-	                thread.lock(mutexTimer);
+	                lockTimer(me.unique_id);
 	                append(AIM.timerQueue, [AIM, AIM.log, [phrase], 0]);
-	                thread.unlock(mutexTimer);
+	                unlockTimer(me.unique_id);
 	            }
 
 				me.sendout = 1;
@@ -4516,9 +4516,9 @@ var AIM = {
 			var phrase = sprintf("%s %s: %.1f meters from: %s", me.type,event, min_distance, cs);# if we mention ourself then we need to explicit add ourself as author.
 			me.printStats(phrase);
 			if (wh_mass > 0) {
-				thread.lock(mutexTimer);
+				lockTimer(me.unique_id);
 				append(AIM.timerQueue, [AIM, AIM.notifyHit, [explode_coord.alt() - geo.aircraft_position().alt(),min_distance,cs,explode_coord.course_to(geo.aircraft_position()),"mhit2",me.typeID, me.typeLong, 1], -1]);
-				thread.unlock(mutexTimer);
+				unlockTimer(me.unique_id);
 			}
 			me.sendout = 1;
 		}
@@ -5490,21 +5490,21 @@ var AIM = {
 
 		me.explode_prop.setBoolValue(1);
 		me.explode_angle_prop.setDoubleValue((rand() - 0.5) * 50);
-		thread.lock(mutexTimer);
+		lockTimer(me.unique_id);
 		append(AIM.timerQueue, [me, func me.explode_prop.setBoolValue(0), [], 0.5]);
 		append(AIM.timerQueue, [me, func me.explode_smoke_prop.setBoolValue(1), [], 0.5]);
 		append(AIM.timerQueue, [me, func {me.explode_smoke_prop.setBoolValue(0);if (me.first and size(keys(AIM.flying))>1) {me.resetFirst();}}, [], 3]);
-		thread.unlock(mutexTimer);
+		unlockTimer(me.unique_id);
 		if (info == nil or !hitGround or getprop("payload/armament/enable-craters") == nil or !getprop("payload/armament/enable-craters")) {return;};
-		thread.lock(mutexTimer);
+		lockTimer(me.unique_id);
 		append(AIM.timerQueue, [me, func {
 		 	if (info[1] == nil) {
 				#print ("Building hit..smoking");
 		       	var static = geo.put_model(getprop("payload/armament/models") ~ "bomb_hit_smoke.xml", me.coord.lat(), me.coord.lon());
 		       	if(getprop("payload/armament/msg") and info[0] != nil) {
-		       		thread.lock(mutexTimer);
+		       		lockTimer(me.unique_id);
 					append(AIM.timerQueue, [AIM, AIM.notifyCrater, [me.coord.lat(), me.coord.lon(), info[0], 2, 0, static], 0]);
-					thread.unlock(mutexTimer);
+					unlockTimer(me.unique_id);
 				}
 		    } else if ((info[1] != nil) and info[1].solid) {
 		        var crater_model = "";
@@ -5523,14 +5523,14 @@ var AIM = {
 		            var static = geo.put_model(crater_model, me.coord.lat(), me.coord.lon());
 					#print("put crater");
 					if(getprop("payload/armament/msg") and info[0] != nil) {
-						thread.lock(mutexTimer);
+						lockTimer(me.unique_id);
 						append(AIM.timerQueue, [AIM, AIM.notifyCrater, [me.coord.lat(), me.coord.lon(),info[0],siz, 0, static], 0]);
-						thread.unlock(mutexTimer);
+						unlockTimer(me.unique_id);
 					}
 		        }
 		    }
         }, [], 0.5]);
-		thread.unlock(mutexTimer);
+		unlockTimer(me.unique_id);
 	},
 
 	animate_dud: func {
@@ -5737,79 +5737,79 @@ var AIM = {
 
 	printFlight: func {
 		if (DEBUG_FLIGHT) {
-			thread.lock(mutexTimer);
+			lockTimer(me.unique_id);
 			append(AIM.timerQueue, [nil, printff, arg, -1]);
-			thread.unlock(mutexTimer);
+			unlockTimer(me.unique_id);
 		}
 	},
 
 	printFlightDetails: func {
 		if (DEBUG_FLIGHT_DETAILS) {
-			thread.lock(mutexTimer);
+			lockTimer(me.unique_id);
 			append(AIM.timerQueue, [nil, printff, arg, -1]);
-			thread.unlock(mutexTimer);
+			unlockTimer(me.unique_id);
 		}
 	},
 
 	printStats: func {
 		if (DEBUG_STATS) {
-			thread.lock(mutexTimer);
+			lockTimer(me.unique_id);
 			append(AIM.timerQueue, [nil, printff, arg, -1]);
-			thread.unlock(mutexTimer);
+			unlockTimer(me.unique_id);
 		}
 	},
 
 	printStatsDetails: func {
 		if (DEBUG_STATS_DETAILS) {
-			thread.lock(mutexTimer);
+			lockTimer(me.unique_id);
 			append(AIM.timerQueue, [nil, printff, arg, -1]);
-			thread.unlock(mutexTimer);
+			unlockTimer(me.unique_id);
 		}
 	},
 
 	printGuide: func {
 		if (DEBUG_GUIDANCE) {
-			thread.lock(mutexTimer);
+			lockTimer(me.unique_id);
 			append(AIM.timerQueue, [nil, printff, arg, -1]);
-			thread.unlock(mutexTimer);
+			unlockTimer(me.unique_id);
 		}
 	},
 
 	printGuideDetails: func {
 		if (DEBUG_GUIDANCE_DETAILS) {
-			thread.lock(mutexTimer);
+			lockTimer(me.unique_id);
 			append(AIM.timerQueue, [nil, printff, arg, -1]);
-			thread.unlock(mutexTimer);
+			unlockTimer(me.unique_id);
 		}
 	},
 
 	printCode: func {
 		if (DEBUG_CODE) {
-			thread.lock(mutexTimer);
+			lockTimer(me.unique_id);
 			append(AIM.timerQueue, [nil, printff, arg, -1]);
-			thread.unlock(mutexTimer);
+			unlockTimer(me.unique_id);
 		}
 	},
 
 	printSearch: func {
 		if (DEBUG_SEARCH) {
-			thread.lock(mutexTimer);
+			lockTimer(me.unique_id);
 			append(AIM.timerQueue, [nil, printff, arg, -1]);
-			thread.unlock(mutexTimer);
+			unlockTimer(me.unique_id);
 		}
 	},
 
 	printAlways: func {
-		thread.lock(mutexTimer);
+		lockTimer(me.unique_id);
 		append(AIM.timerQueue, [nil, printff, arg, -1]);
-		thread.unlock(mutexTimer);
+		unlockTimer(me.unique_id);
 	},
 
 	timerLoop: func {
-		thread.lock(mutexTimer);
+		lockTimer(-1);
 		AIM.tq = AIM.timerQueue;
 		AIM.timerQueue = [];
-		thread.unlock(mutexTimer);
+		unlockTimer(-1);
 		foreach(var cmd; AIM.tq) {
 			AIM.timerCall(cmd);
 		}
@@ -5850,7 +5850,7 @@ var AIM = {
 
 	setETA: func (eta, prev = -1) {
 		# Class method
-		thread.lock(mutexETA);
+		lockETA();
 		if (eta == -1 and prev == AIM.lowestETA) {
 			AIM.lowestETA = nil;
 		} elsif (eta == nil) {
@@ -5858,14 +5858,14 @@ var AIM = {
 		} elsif (AIM.lowestETA == nil or eta < AIM.lowestETA and eta < 1800) {
 			AIM.lowestETA = eta;
 		}
-		thread.unlock(mutexETA);
+		unlockETA();
 	},
 	getETA: func {
 		# Class method
 		var retur = 0;
-		thread.lock(mutexETA);
+		lockETA();
 		retur = AIM.lowestETA;
-		thread.unlock(mutexETA);
+		unlockETA();
 		return retur;
 	},
 
@@ -5974,17 +5974,56 @@ var deviation_normdeg = func(our_heading, target_bearing) {
 	return dev_norm;
 }
 
+var mutexMsg = thread.newlock();
+var mutexTimer = thread.newlock();
+var mutexETA = thread.newlock();
+
+var lockMsg = func () {
+	print("lock msg ");
+	thread.lock(mutexMsg);
+	print("lock msg passed");
+}
+
+var unlockMsg = func () {
+	print("Unlock msg ");
+	thread.unlock(mutexMsg);
+	print("Unlock msg passed");
+}
+
+var lockTimer = func (missile) {
+	print("lock timer ", missile);
+	thread.lock(mutexTimer);
+	print("lock timer ", missile, " passed");
+}
+
+var unlockTimer = func (missile) {
+	print("Unlock timer ", missile);
+	thread.unlock(mutexTimer);
+	print("Unlock timer ", missile, " passed");
+}
+
+var lockETA = func () {
+	print("lock eta ");
+	thread.lock(mutexETA);
+	print("lock eta  passed");
+}
+
+var unlockETA = func () {
+	print("Unlock eta ");
+	thread.unlock(mutexETA);
+	print("Unlock eta passed");
+}
+
+
+
 #
 # this code make sure messages don't trigger the MP spam filter:
 
 var spams = 0;
 var spamList = [];
-var mutexMsg = thread.newlock();
-var mutexTimer = thread.newlock();
-var mutexETA = thread.newlock();
 
 var defeatSpamFilter = func (str) {
-  thread.lock(mutexMsg);
+  lockMsg();
   spams += 1;
   if (spams == 15) {
     spams = 1;
@@ -6002,13 +6041,13 @@ var defeatSpamFilter = func (str) {
     append(newList, spamList[i]);
   }
   spamList = newList;
-  thread.unlock(mutexMsg);
+  unlockMsg();
 }
 
 var spamLoop = func {
-  thread.lock(mutexMsg);
+  lockMsg();
   var spam = pop(spamList);
-  thread.unlock(mutexMsg);
+  unlockMsg();
   if (spam != nil) {
     setprop("/sim/multiplay/chat", spam);
   }
