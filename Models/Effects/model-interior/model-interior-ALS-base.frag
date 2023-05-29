@@ -146,7 +146,7 @@ void main()
     if (NdotL > 0.0) {
 
 	diffuse.rgb += 2.0 * diffuse.rgb * (1.0 - opacity.a);
-        color += diffuse * NdotL * opacity;
+        color = diffuse * NdotL * opacity;
         NdotHV = max(dot(n, halfVector), 0.0);
         if (gl_FrontMaterial.shininess > 0.0)
             specular.rgb = (gl_FrontMaterial.specular.rgb
