@@ -202,7 +202,7 @@ void main()
 
 
     fragColor = color * texel;
-    fragColor.rgb += specular.rgb;
+    //fragColor.rgb += specular.rgb;
 
    // implicit lightmap - the user gets to select a color which is then made emissive
 

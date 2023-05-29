@@ -173,7 +173,7 @@ void main()
  	color.rgb += secondary_light * light_distance_fading(dist);
 
     texel = texture2D(texture, gl_TexCoord[0].st);
-    fragColor = color * texel + specular;
+    fragColor = color * texel;
 
    // implicit lightmap - the user gets to select 
 
