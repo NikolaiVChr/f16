@@ -245,7 +245,7 @@ void main()
 
 fragColor.rgb = filter_combined(fragColor.rgb);
 
-gl_FragColor = texel;
+gl_FragColor = gl_Color;
 
 
 }
