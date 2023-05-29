@@ -286,6 +286,7 @@ var DamageRecipient =
 #                      " Flags=",notification.Flags,
 #                      " Radar=",bits.test(notification.Flags, 0),
 #                      " Thrust=",bits.test(notification.Flags, 1));
+#                      " CWI=",bits.test(notification.Flags, 2));
                 #
                 # todo:
                 #   animate missiles
