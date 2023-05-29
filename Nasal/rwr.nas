@@ -495,7 +495,7 @@ RWRCanvas = {
         me.noiseup += 1;
         if (me.noiseup > 20) me.noiseup = 1;
 #        printf("list %d type %s", size(list), type);
-        me.sep = getprop("f16/avionics/rwr-seperate");
+        me.sep = getprop("f16/avionics/rwr-separate");
         me.elapsed = getprop("sim/time/elapsed-sec");
         var sorter = func(a, b) {
             if(a[1] > b[1]){

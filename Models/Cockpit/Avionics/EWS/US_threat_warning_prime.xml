@@ -75,13 +75,13 @@
             <button>0</button>
             <binding>
                 <command>property-assign</command>
-                <property>f16/avionics/rwr-seperate</property>
+                <property>f16/avionics/rwr-separate</property>
                 <value>1</value>
             </binding>
             <mod-up>
                 <binding>
                     <command>property-assign</command>
-                    <property>f16/avionics/rwr-seperate</property>
+                    <property>f16/avionics/rwr-separate</property>
                     <value>0</value>
                 </binding>
             </mod-up>
@@ -90,7 +90,7 @@
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>button-sep</tooltip-id>
-                <label>Seperate RWR contacts</label>
+                <label>Hold down to separate RWR contacts</label>
             </binding>
         </hovered>
     </animation>
@@ -103,7 +103,7 @@
       <property>controls/test/test-panel/mal-ind-lts</property>
       <and>
         <equals>
-            <property>f16/avionics/rwr-seperate</property>
+            <property>f16/avionics/rwr-separate</property>
             <value>1</value>
         </equals>
         <greater-than-equals>
