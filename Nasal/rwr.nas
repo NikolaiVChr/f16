@@ -5,6 +5,11 @@ RWRCanvas = {
         var radius = diameter/2;
         rwr.inner_radius = radius*0.30;# field where inner IDs are placed
         rwr.outer_radius = radius*0.65;# field where outer IDs are placed
+
+        rwr.sep1_radius = radius*0.300;
+        rwr.sep2_radius = radius*0.525;
+        rwr.sep3_radius = radius*0.775;
+
         rwr.circle_radius_full = radius*0.974;
         rwr.circle_radius_big = radius*0.5;
         rwr.circle_radius_small = radius*0.125;
@@ -439,6 +444,48 @@ RWRCanvas = {
         rwr.noiseup = 10;
         return rwr;
     },
+    assignSepSpot: func {
+        # me.dev        angle_deg
+        # me.sep_spots  0 to 2  45, 20, 15
+        # me.threat     0 to 2
+        # me.sep_angles 
+        # return   me.dev,  me.threat
+        me.newdev = me.dev;
+        me.assignIdealSepSpot();
+        me.plus = me.sep_angles[me.threat];
+        me.dir  = 0;
+        me.count = 1;
+        while(me.sep_spots[me.threat][me.spot] and me.count < size(me.sep_spots[me.threat])) {
+
+            if (me.dir == 0) me.dir = 1;
+            elsif (me.dir > 0) me.dir = -me.dir;
+            elsif (me.dir < 0) me.dir = -me.dir+1;
+
+            #printf("%2s: Spot %d taken. Trying %d direction.",me.typ, me.spot, me.dir);
+
+            me.newdev = me.dev + me.plus * me.dir;
+
+            me.assignIdealSepSpot();
+            me.count += 1;
+        }
+
+        me.sep_spots[me.threat][me.spot] += 1;
+
+        # finished assigning spot
+        #printf("%2s: Spot %d assigned. Ring=%d",me.typ, me.spot, me.threat);
+        me.dev = me.spot * me.plus;
+        if (me.threat == 0) {
+            me.threat = me.sep1_radius;
+        } elsif (me.threat == 1) {
+            me.threat = me.sep2_radius;
+        } elsif (me.threat == 2) {
+            me.threat = me.sep3_radius;
+        }
+    },
+    assignIdealSepSpot: func {
+        me.spot = math.round(geo.normdeg(me.newdev)/me.sep_angles[me.threat]);
+        if (me.spot >= size(me.sep_spots[me.threat])) me.spot = 0;
+    },
     update: func (list, type) {
         if (me.noiseup == 10) {
             me.noisebar.setTranslation(0,me.circle_radius_small*0.25);
@@ -448,6 +495,7 @@ RWRCanvas = {
         me.noiseup += 1;
         if (me.noiseup > 20) me.noiseup = 1;
 #        printf("list %d type %s", size(list), type);
+        me.sep = getprop("f16/avionics/rwr-seperate");
         me.elapsed = getprop("sim/time/elapsed-sec");
         var sorter = func(a, b) {
             if(a[1] > b[1]){
@@ -459,6 +507,25 @@ RWRCanvas = {
             }
         }
         me.sortedlist = sort(list, sorter);
+
+#        me.sortedlist = [# This is for testing. Uncomment as needed.
+#            [{getModel:func{return "buk-m2";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "";},equals:func (it){return it.getModel()==me.getModel();}}, 0.45, -0],
+#            [{getModel:func{return "s-300";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "";},equals:func (it){return it.getModel()==me.getModel();}}, 0.45, -5],
+#            [{getModel:func{return "A-50";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "";},equals:func (it){return it.getModel()==me.getModel();}}, 0.45, -15],
+#            [{getModel:func{return "s-200";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "";},equals:func (it){return it.getModel()==me.getModel();}}, 0.20, -25],
+#            [{getModel:func{return "S-75";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "";},equals:func (it){return it.getModel()==me.getModel();}}, 0.20, -30],
+#            [{getModel:func{return "MIM104D";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "";},equals:func (it){return it.getModel()==me.getModel();}}, 0.20, -30],
+#            [{getModel:func{return "fleet";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "";},equals:func (it){return it.getModel()==me.getModel();}}, 0.20, -25],
+#            [{getModel:func{return "SA-6";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "";},equals:func (it){return it.getModel()==me.getModel();}}, 0.20, -30],
+#            [{getModel:func{return "missile_frigate";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "";},equals:func (it){return it.getModel()==me.getModel();}}, 0.20, -30],
+#        ];
+
+
+        me.sep_spots = [[0,0,0,0,0,0,0,0],#45 degs  8
+                        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],# 20 degs  18
+                        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]];# 15 degs  24
+        me.sep_angles = [45,20,15];
+
         me.newList = [];
         me.i = 0;
         me.prio = 0;
@@ -475,19 +542,42 @@ RWRCanvas = {
                 me.unk = 1;                
             }
             #print("show "~me.i~" "~me.typ~" "~contact[0].getModel()~"  "~contact[1]);
-            me.threat = me.contact[1];#print(me.threat);
-            
-            if (me.threat > 0.5 and me.typ != me.AIRCRAFT_UNKNOWN and me.typ != me.ASSET_AI and me.typ != me.AIRCRAFT_SEARCH) {
-                me.threat = me.inner_radius;# inner circle
-            } elsif (me.threat > 0 and me.typ != me.ASSET_AI) {
-                me.threat = me.outer_radius;# outer circle
-            } else {
-                continue;
-            }
+
             if (me.contact[0].get_range() > 150) {
                 continue;
             }
-            me.dev = -me.contact[2]+90;
+
+            me.threat = me.contact[1];#print(me.threat);
+
+            if (!me.sep) {
+            
+                if (me.threat > 0.5 and me.typ != me.AIRCRAFT_UNKNOWN and me.typ != me.ASSET_AI and me.typ != me.AIRCRAFT_SEARCH) {
+                    me.threat = me.inner_radius;# inner circle
+                } elsif (me.threat > 0 and me.typ != me.ASSET_AI) {
+                    me.threat = me.outer_radius;# outer circle
+                } else {
+                    continue;
+                }
+            
+                me.dev = -me.contact[2]+90;
+            } else {
+                me.dev = -me.contact[2]+90;
+
+                if (me.threat > 0.5 and me.typ != me.AIRCRAFT_UNKNOWN and me.typ != me.ASSET_AI and me.typ != me.AIRCRAFT_SEARCH) {
+                    me.threat = 0;
+                } elsif (me.threat > 0.25 and me.typ != me.ASSET_AI) {
+                    me.threat = 1;
+                } elsif (me.threat > 0.00 and me.typ != me.ASSET_AI) {
+                    me.threat = 2;
+                } else {
+                    continue;
+                }
+                me.assignSepSpot();
+            }
+
+
+
+
             me.x = math.cos(me.dev*D2R)*me.threat;
             me.y = -math.sin(me.dev*D2R)*me.threat;
             me.texts[me.i].setTranslation(me.x,me.y);

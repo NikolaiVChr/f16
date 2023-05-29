@@ -69,6 +69,100 @@
  </animation>
 
  <animation>
+        <type>pick</type>
+        <object-name>sep</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>property-assign</command>
+                <property>f16/avionics/rwr-seperate</property>
+                <value>1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/avionics/rwr-seperate</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-sep</tooltip-id>
+                <label>Seperate RWR contacts</label>
+            </binding>
+        </hovered>
+    </animation>
+
+ <animation>
+  <object-name>sep</object-name>
+  <type>material</type>
+  <condition>
+    <or>
+      <property>controls/test/test-panel/mal-ind-lts</property>
+      <and>
+        <equals>
+            <property>f16/avionics/rwr-seperate</property>
+            <value>1</value>
+        </equals>
+        <greater-than-equals>
+                <property>f16/avionics/power-ufc-warm</property>
+                <value>0.90</value>
+        </greater-than-equals>
+      </and>
+    </or>
+  </condition>
+  <emission>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <object-name>test</object-name>
+  <type>material</type>
+  <condition>
+    <or>
+      <property>controls/test/test-panel/mal-ind-lts</property>
+      <and>
+        <greater-than-equals>
+            <property>f16/avionics/power-ufc-warm</property>
+            <value>0.90</value>
+        </greater-than-equals>
+      </and>
+    </or>
+  </condition>
+  <emission>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <object-name>handoff</object-name>
+  <type>material</type>
+  <condition>
+    <or>
+      <property>controls/test/test-panel/mal-ind-lts</property>
+      <and>
+        <greater-than-equals>
+            <property>f16/avionics/power-ufc-warm</property>
+            <value>0.90</value>
+        </greater-than-equals>
+      </and>
+    </or>
+  </condition>
+  <emission>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+  </emission>
+ </animation>
+
+ <animation>
   <object-name>unk</object-name>
   <type>material</type>
   <condition>
