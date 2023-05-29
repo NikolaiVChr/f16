@@ -3463,7 +3463,7 @@ var wndprop = props.globals.getNode("environment/wind-speed-kt",0);
 # start generic radar system
 var baser = AIToNasal.new();
 var partitioner = NoseRadar.new();
-var omni = OmniRadar.new(1.0, 150, 55);
+var omni = OmniRadar.new(1.0, 150, -1);
 var terrain = TerrainChecker.new(0.05, 1, 30);# 0.05 or 0.10 is fine here
 var callsignToContact = CallsignToContact.new();
 var dlnkRadar = DatalinkRadar.new(0.03, 110, 225);# 3 seconds because cannot be too slow for DLINK targets
