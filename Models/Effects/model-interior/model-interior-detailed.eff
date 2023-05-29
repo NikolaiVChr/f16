@@ -63,6 +63,10 @@
     </sun_atlas_size>
     <!-- END shadows include -->
     <ambient-factor type="float">0.0</ambient-factor>
+    <material>
+      <color-mode-uniform>0</color-mode-uniform>
+      <!-- MODE OFF -->
+    </material>
   </parameters>
 
 

@@ -187,7 +187,7 @@ void main()
 
 fragColor.rgb = filter_combined(fragColor.rgb);
 
-gl_FragColor = gl_Color;
+gl_FragColor = fragColor;
 
 }
 
