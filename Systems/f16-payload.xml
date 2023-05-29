@@ -884,7 +884,7 @@
             <fire-msg type="string">Magnum</fire-msg>
             <requires-power-on type="bool">true</requires-power-on>
             <ready-time type="double">3</ready-time>
-            <power-on-battery-time type="double">1200</power-on-battery-time>
+            <power-on-battery-time type="double">1800</power-on-battery-time>
         </agm-88>
         <agm-119>
             <type-id type="int">4</type-id>
