@@ -156,7 +156,7 @@ void main()
    
 
     vec4 diffuse = diffuse_term;
-    NdotL = dot(n, lightDir);
+    NdotL = dot(n, normalize(lightDir));
     //NdotL = dot(n, (gl_ModelViewMatrix * vec4 (light_vec,0.0)).xyz);
     if (NdotL > 0.0) {
 
@@ -245,8 +245,8 @@ void main()
 
 fragColor.rgb = filter_combined(fragColor.rgb);
 
-//gl_FragColor = fragColor;
+gl_FragColor = fragColor;
 
-gl_FragColor = max(0,vec4(NdotL,NdotL,NdotL,1.0));
+
 }
 
