@@ -79,7 +79,7 @@ void main (void) {
 
     // apply contrast
     color.rgb = ((color.rgb - 0.5) * contrast) + 0.5;
-
+    color = max(color, 0.0);
     color = pow(color, gammaInv);
     
 
