@@ -158,7 +158,7 @@ void main()
     vec4 diffuse = diffuse_term;
     NdotL = dot(n, lightDir);
     //NdotL = dot(n, (gl_ModelViewMatrix * vec4 (light_vec,0.0)).xyz);
-    if (NdotL > 0.0) {
+    if (NdotL > 0.0 && NdotL < 0.0) {
 
 	diffuse.rgb += 2.0 * diffuse.rgb * (1.0 - opacity.a);
         color += diffuse * NdotL * opacity;
@@ -202,7 +202,7 @@ void main()
 
 
     fragColor = color * texel;
-    //fragColor.rgb += specular.rgb;
+    fragColor.rgb += specular.rgb;
 
    // implicit lightmap - the user gets to select a color which is then made emissive
 
