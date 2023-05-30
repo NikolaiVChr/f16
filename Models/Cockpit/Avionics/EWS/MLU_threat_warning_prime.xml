@@ -27,12 +27,16 @@
       <property>controls/test/test-panel/mal-ind-lts</property>
       	<and>
       		<property>f16/avionics/cockpit_blinker3hz/state</property>
-    	    <not>
-    	      <equals>
-    	          <property>sound/rwr-launch</property>
-    	          <value type="string"></value>
-    	      </equals>
-    	    </not>
+          <or>
+        	    <not>
+        	      <equals>
+        	          <property>sound/rwr-launch</property>
+        	          <value type="string"></value>
+        	      </equals>
+        	    </not>
+              <property>payload/armament/MAW-active</property>
+              <property>payload/armament/MAW-semiactive</property>
+          </or>
           <greater-than-equals>
                     <property>f16/avionics/power-ufc-warm</property>
                     <value>0.90</value>

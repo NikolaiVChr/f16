@@ -50,6 +50,7 @@
         <MLW-launcher type="string"></MLW-launcher>
         <MAW-bearing type="double">0</MAW-bearing>
         <MAW-active type="bool">false</MAW-active>
+        <MAW-semiactive type="bool">false</MAW-semiactive>
         <spike type="bool">false</spike>
         <station>
             <id-0-set type="string">Empty</id-0-set>
