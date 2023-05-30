@@ -676,21 +676,23 @@ RWRCanvas = {
         }
     },
 };
-
+var test_equals = func {
+    return it.get_Callsign()==me.get_Callsign() and it.getModel()==me.getModel();
+};
 var test_list = [
-            [{test:1,getModel:func{return "buk-m2";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "j";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.45, -0],
-            [{test:1,getModel:func{return "s-300";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "i";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.45, -5],
-            [{test:1,getModel:func{return "A-50";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "h";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.45, -15],
-            [{test:1,getModel:func{return "s-200";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "g";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.20, -25],
-            [{test:1,getModel:func{return "S-75";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "f";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.20, -30],
-            [{test:1,getModel:func{return "MIM104D";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "e";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.20, -30],
-            [{test:1,getModel:func{return "fleet";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "d";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.20, -25],
-            [{test:1,getModel:func{return "SA-6";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "c";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.20, -30],
-            [{test:1,getModel:func{return "missile_frigate";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "b";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.20, -30],
-            [{test:1,getModel:func{return "theUFO";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "a";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.20, -100],# This one will show up as unknown
-            [{test:1,getModel:func{return "s-300";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "k";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.70, 180],
-            [{test:1,getModel:func{return "s-300";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "l";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.75, 180],
-            [{test:1,getModel:func{return "AI";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "m";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.01, 100],
+            [{test:1,getModel:func{return "buk-m2";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "j";},equals:test_equals}, 0.45, -0],
+            [{test:1,getModel:func{return "s-300";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "i";},equals:test_equals}, 0.45, -5],
+            [{test:1,getModel:func{return "A-50";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "h";},equals:test_equals}, 0.45, -15],
+            [{test:1,getModel:func{return "s-200";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "g";},equals:test_equals}, 0.20, -25],
+            [{test:1,getModel:func{return "S-75";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "f";},equals:test_equals}, 0.20, -30],
+            [{test:1,getModel:func{return "MIM104D";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "e";},equals:test_equals}, 0.20, -30],
+            [{test:1,getModel:func{return "fleet";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "d";},equals:test_equals}, 0.20, -25],
+            [{test:1,getModel:func{return "SA-6";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "c";},equals:test_equals}, 0.20, -30],
+            [{test:1,getModel:func{return "missile_frigate";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "b";},equals:test_equals}, 0.20, -30],
+            [{test:1,getModel:func{return "theUFO";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "a";},equals:test_equals}, 0.20, -100],# This one will show up as unknown
+            [{test:1,getModel:func{return "s-300";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "k";},equals:test_equals}, 0.70, 180],
+            [{test:1,getModel:func{return "s-300";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "l";},equals:test_equals}, 0.75, 180],
+            [{test:1,getModel:func{return "AI";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "m";},equals:test_equals}, 0.01, 100],
 ];
 
 
