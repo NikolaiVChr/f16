@@ -500,6 +500,14 @@ RWRCanvas = {
         me.showUnknowns = getprop("f16/ews/rwr-show-unknowns");
         me.pri5 = getprop("f16/ews/rwr-show-priority-only");
         me.elapsed = getprop("sim/time/elapsed-sec");
+        me.semiCallsign = getprop("payload/armament/MAW-semiactive-callsign");
+        me.launchCallsign = getprop("sound/rwr-launch");
+        if (me.launchCallsign == "" or me.launchCallsign == nil) {
+            me.launchCallsign = "-........-";
+        }
+        if (me.semiCallsign == "" or me.semiCallsign == nil) {
+            me.semiCallsign = "-........-";
+        }
         var sorter = func(a, b) {
             if(a[1] > b[1]){
                 return -1; # A should before b in the returned vector
@@ -608,7 +616,7 @@ RWRCanvas = {
             } else {
                 me.symbol_hat[me.i].hide();
             }
-            if (me.contact[0].get_Callsign()==getprop("sound/rwr-launch") and 10*(me.elapsed-int(me.elapsed))>5) {#blink 2Hz
+            if ((me.contact[0].get_Callsign()==me.launchCallsign or me.contact[0].get_Callsign()==me.semiCallsign) and 5*(me.elapsed-int(me.elapsed))>2.5) {#blink 4Hz
                 me.symbol_launch[me.i].setTranslation(me.x,me.y);
                 me.symbol_launch[me.i].show();
             } else {

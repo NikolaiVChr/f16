@@ -402,6 +402,7 @@ var DamageRecipient =
                     setprop("payload/armament/MAW-active", 1);# resets every 1 seconds
                 } elsif (CWIOn) {
                     setprop("payload/armament/MAW-semiactive", 1);# resets every 1 seconds
+                    setprop("payload/armament/MAW-semiactive-callsign", notification.Callsign);# resets every 1 seconds
                 }
                 MAW_elapsed = elapsed;
                 var appr = approached[notification.Callsign~notification.UniqueIdentity];
@@ -1268,6 +1269,7 @@ var processCallsigns = func () {
   if (getprop("sim/time/elapsed-sec")-MAW_elapsed > 1.1) {
       setprop("payload/armament/MAW-active", 0);# resets every 1.1 seconds without warning
       setprop("payload/armament/MAW-semiactive", 0);
+      setprop("payload/armament/MAW-semiactive-callsign", "");
   }
 
   # spike handling:
