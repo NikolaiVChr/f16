@@ -29,6 +29,7 @@
 #                       Added ANSI art to be able to quicker navigate this file.
 # v9.1 Jan 6th 2022 - Many kinks ironed out.
 # v10.0 Jan 17th 2022 - Chaff handling. Re-coded antennae movement code. Code cleanup.
+# v10.1 May 30th 2023 - Some beautifying of OmniRadar code.
 #
 # 
 # Properties is only being read in the modules that represent RadarSystem.
