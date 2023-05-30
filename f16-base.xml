@@ -1279,6 +1279,8 @@
             <hud-depr-ret type="double">0.0</hud-depr-ret>
             <rwr-int type="double">1.0</rwr-int>
             <rwr-separate type="bool">false</rwr-separate>
+            <rwr-show-priority-only type="bool">false</rwr-show-priority-only>
+            <rwr-show-unknowns type="bool">false</rwr-show-unknowns>
             <mfd-l-brt type="double">1.0</mfd-l-brt>
             <mfd-l-con type="double">1.0</mfd-l-con>
             <mfd-r-brt type="double">1.0</mfd-r-brt>

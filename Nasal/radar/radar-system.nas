@@ -2053,17 +2053,35 @@ var OmniRadar = {
 		me.vector_aicontacts_for = [];
 		foreach(contact ; me.vector_aicontacts) {
 			if (!contact.isVisible()) {
-				# This is expensive as hell, so don't run OmniRadar with too high rate.
+				# This is not expensive as terrain manager set this in a loop.
 				continue;
 			}
-			me.ber = contact.getBearing();
-			me.head = contact.getHeading();
-			me.test = me.ber+180-me.head;
+			me.rangeDirectNM = contact.getRangeDirect()*M2NM;
+			if (me.rangeDirectNM > me.max_dist_nm) {
+				continue;
+			}
+			me.bearing = contact.getBearing();
+			me.heading = contact.getHeading();
+			me.test = me.bearing+180-me.heading;# The deviation of us seen from his nose
 			me.tp = contact.isTransponderEnable();
 			me.radar = contact.isRadarEnable();
-			me.spiking = contact.isSpikingMe();
-            if ((me.radar and math.abs(geo.normdeg180(me.test)) < getRadarFieldRadius(contact.getModel()) or (me.tp and contact.getRangeDirect()*M2NM < me.tp_dist_nm) or me.spiking) and contact.getRangeDirect()*M2NM < me.max_dist_nm) {
-            	contact.storeThreat([me.ber,me.head,contact.getCoord(),me.tp,me.radar,contact.getDeviationHeading(),contact.getRangeDirect()*M2NM, contact.getCallsign(), contact.getSpeed(), contact.getClosureRate(), me.spiking]);
+			me.seeSpike = contact.isSpikingMe();
+			me.seeRadar = me.radar and math.abs(geo.normdeg180(me.test)) < getRadarFieldRadius(contact.getModel());
+			me.seeTp = me.tp and me.rangeDirectNM < me.tp_dist_nm;
+            if (me.seeRadar or me.seeSpike or me.seeTp) {
+            	contact.storeThreat([
+            		me.bearing,  #  0
+            		me.heading,
+            		contact.getCoord(),
+            		me.tp,
+            		me.radar,    #  4
+            		contact.getDeviationHeading(),
+            		me.rangeDirectNM, 
+            		contact.getCallsign(), 
+            		contact.getSpeed(), 
+            		contact.getClosureRate(), 
+            		me.seeSpike  # 10
+            	]);
 				append(me.vector_aicontacts_for, contact);
 				#printf("In omni Field: %s %d", contact.getModel(), contact.getRange()*M2NM);
 			}

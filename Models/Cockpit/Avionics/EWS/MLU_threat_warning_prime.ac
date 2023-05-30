@@ -1,9 +1,10 @@
 AC3Db
 MATERIAL "Knobs9"       rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 050 trans 0.000
 MATERIAL "ac3dmat1"     rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 010 trans 0.000
+MATERIAL "lights"       rgb 0.000 0.000 0.000  amb 0.500 0.500 0.500  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 010 trans 0.000
 OBJECT world
 name "Blender_exporter_v2.27__MLU_threat_warning_prime.ac"
-kids 6
+kids 8
 OBJECT poly
 name "brt-knob"
 data 32
@@ -2014,6 +2015,32 @@ refs 3
 1 0.775709 0.634795
 kids 0
 OBJECT poly
+name "button_pri"
+data 8
+Mesh.002
+crease 30.0
+texture "../../Textures/panels-MLU-1.png"
+texrep 1 1
+numvert 4
+0.00076 -0.02963 0.00755
+0.00076 -0.02382 0.00755
+0.00076 -0.02963 0.01358
+0.00076 -0.02382 0.01358
+numsurf 2
+SURF 0X10
+mat 1
+refs 3
+1 0.684152 0.516965
+2 0.665434 0.498929
+0 0.684152 0.498929
+SURF 0X10
+mat 1
+refs 3
+2 0.665434 0.498929
+1 0.684152 0.516965
+3 0.665434 0.516965
+kids 0
+OBJECT poly
 name "button_sep"
 data 8
 Mesh.003
@@ -2040,6 +2067,32 @@ refs 3
 3 0.711436 0.517258
 kids 0
 OBJECT poly
+name "button_unk"
+data 8
+Mesh.006
+crease 30.0
+texture "../../Textures/panels-MLU-1.png"
+texrep 1 1
+numvert 4
+0.00076 -0.02954 -0.02214
+0.00076 -0.02372 -0.02214
+0.00076 -0.02954 -0.01611
+0.00076 -0.02372 -0.01611
+numsurf 2
+SURF 0X10
+mat 1
+refs 3
+1 0.776301 0.517256
+2 0.757583 0.499219
+0 0.776301 0.499219
+SURF 0X10
+mat 1
+refs 3
+2 0.757583 0.499219
+1 0.776301 0.517256
+3 0.757583 0.517256
+kids 0
+OBJECT poly
 name "launch"
 data 8
 Mesh.001
@@ -2054,13 +2107,13 @@ numvert 5
 0 -0.01922 -0.02646
 numsurf 2
 SURF 0X10
-mat 1
+mat 2
 refs 3
 1 0.801571 0.519764
 2 0.801462 0.531233
 0 0.799346 0.531233
 SURF 0X10
-mat 1
+mat 2
 refs 4
 0 0.799346 0.531233
 4 0.789703 0.531233
@@ -2081,7 +2134,7 @@ numvert 4
 0 -0.01782 0.0125
 numsurf 1
 SURF 0X10
-mat 1
+mat 2
 refs 4
 3 0.668795 0.535577
 0 0.669068 0.524926
@@ -2146,7 +2199,7 @@ numvert 50
 0 -0.01773 -0.02077
 0 -0.01773 -0.01716
 0 -0.02117 -0.01716
-numsurf 43
+numsurf 39
 SURF 0X10
 mat 1
 refs 6
@@ -2196,18 +2249,6 @@ mat 1
 refs 3
 11 0.756593 0.518209
 9 0.757583 0.499219
-10 0.757583 0.517256
-SURF 0X10
-mat 1
-refs 3
-6 0.776301 0.517256
-9 0.757583 0.499219
-5 0.776301 0.499219
-SURF 0X10
-mat 1
-refs 3
-9 0.757583 0.499219
-6 0.776301 0.517256
 10 0.757583 0.517256
 SURF 0X10
 mat 1
@@ -2304,18 +2345,6 @@ mat 1
 refs 3
 27 0.664445 0.517919
 25 0.665434 0.498929
-26 0.665434 0.516965
-SURF 0X10
-mat 1
-refs 3
-22 0.684152 0.516965
-25 0.665434 0.498929
-21 0.684152 0.498929
-SURF 0X10
-mat 1
-refs 3
-25 0.665434 0.498929
-22 0.684152 0.516965
 26 0.665434 0.516965
 SURF 0X10
 mat 1
@@ -2437,7 +2466,7 @@ numvert 4
 0 -0.02117 -0.01716
 numsurf 1
 SURF 0X10
-mat 1
+mat 2
 refs 4
 2 0.760836 0.53585
 3 0.760833 0.525198

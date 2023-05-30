@@ -1,7 +1,8 @@
 RWRCanvas = {
     new: func (_ident, root, center, diameter) {
         var rwr = {parents: [RWRCanvas]};
-        rwr.max_icons = 12;
+        var block = getprop("sim/variant-id");
+        rwr.max_icons = block==0 or block==1 or block==3?12:16;# Page 209 of MLU tape 1
         var radius = diameter/2;
         rwr.inner_radius = radius*0.30;# field where inner IDs are placed
         rwr.outer_radius = radius*0.65;# field where outer IDs are placed
@@ -496,6 +497,8 @@ RWRCanvas = {
         if (me.noiseup > 20) me.noiseup = 1;
 #        printf("list %d type %s", size(list), type);
         me.sep = getprop("f16/avionics/rwr-separate");
+        me.showUnknowns = getprop("f16/avionics/rwr-show-unknowns");
+        me.pri5 = getprop("f16/avionics/rwr-show-priority-only");
         me.elapsed = getprop("sim/time/elapsed-sec");
         var sorter = func(a, b) {
             if(a[1] > b[1]){
@@ -506,20 +509,11 @@ RWRCanvas = {
                 return 1; # A should after b in the returned vector
             }
         }
+        
+
+        #list ~= test_list;# Uncomment this line to test the RWR display.
+
         me.sortedlist = sort(list, sorter);
-
-#        me.sortedlist = [# This is for testing. Uncomment as needed.
-#            [{getModel:func{return "buk-m2";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "";},equals:func (it){return it.getModel()==me.getModel();}}, 0.45, -0],
-#            [{getModel:func{return "s-300";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "";},equals:func (it){return it.getModel()==me.getModel();}}, 0.45, -5],
-#            [{getModel:func{return "A-50";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "";},equals:func (it){return it.getModel()==me.getModel();}}, 0.45, -15],
-#            [{getModel:func{return "s-200";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "";},equals:func (it){return it.getModel()==me.getModel();}}, 0.20, -25],
-#            [{getModel:func{return "S-75";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "";},equals:func (it){return it.getModel()==me.getModel();}}, 0.20, -30],
-#            [{getModel:func{return "MIM104D";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "";},equals:func (it){return it.getModel()==me.getModel();}}, 0.20, -30],
-#            [{getModel:func{return "fleet";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "";},equals:func (it){return it.getModel()==me.getModel();}}, 0.20, -25],
-#            [{getModel:func{return "SA-6";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "";},equals:func (it){return it.getModel()==me.getModel();}}, 0.20, -30],
-#            [{getModel:func{return "missile_frigate";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "";},equals:func (it){return it.getModel()==me.getModel();}}, 0.20, -30],
-#        ];
-
 
         me.sep_spots = [[0,0,0,0,0,0,0,0],#45 degs  8
                         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],# 20 degs  18
@@ -530,7 +524,9 @@ RWRCanvas = {
         me.i = 0;
         me.prio = 0;
         me.newsound = 0;
-        me.unk = 0;
+        me.priCount = 0;
+        me.priFlash = 0;# Flash the PRI light
+        me.unkFlash = 0;# Flash the UNK light
         foreach(me.contact; me.sortedlist) {
             me.typ=me.lookupType[me.contact[0].getModel()];
             if (me.i > me.max_icons-1) {
@@ -538,8 +534,16 @@ RWRCanvas = {
             }
             if (me.typ == nil) {
                 me.typ = me.AIRCRAFT_UNKNOWN;
-                continue;
-                me.unk = 1;                
+                if (!me.showUnknowns) {
+                  me.unkFlash = 1;
+                  continue;
+                }
+            }
+            if (me.typ == me.ASSET_AI) {
+                if (!me.showUnknowns) {
+                  #me.unkFlash = 1; # We don't flash for AI, that would just be distracting
+                  continue;
+                }
             }
             #print("show "~me.i~" "~me.typ~" "~contact[0].getModel()~"  "~contact[1]);
 
@@ -549,28 +553,36 @@ RWRCanvas = {
 
             me.threat = me.contact[1];#print(me.threat);
 
+            if (me.threat <= 0) {
+                continue;
+            }
+
+            if (me.pri5 and me.priCount >= 5) {
+                me.priFlash = 1;
+                continue;
+            }
+            me.priCount += 1;
+
+            
+
             if (!me.sep) {
             
-                if (me.threat > 0.5 and me.typ != me.AIRCRAFT_UNKNOWN and me.typ != me.ASSET_AI and me.typ != me.AIRCRAFT_SEARCH) {
+                if (me.threat > 0.5 and me.typ != me.AIRCRAFT_UNKNOWN and me.typ != me.AIRCRAFT_SEARCH) {
                     me.threat = me.inner_radius;# inner circle
-                } elsif (me.threat > 0 and me.typ != me.ASSET_AI) {
-                    me.threat = me.outer_radius;# outer circle
                 } else {
-                    continue;
+                    me.threat = me.outer_radius;# outer circle
                 }
             
                 me.dev = -me.contact[2]+90;
             } else {
                 me.dev = -me.contact[2]+90;
 
-                if (me.threat > 0.5 and me.typ != me.AIRCRAFT_UNKNOWN and me.typ != me.ASSET_AI and me.typ != me.AIRCRAFT_SEARCH) {
+                if (me.threat > 0.5 and me.typ != me.AIRCRAFT_UNKNOWN and me.typ != me.AIRCRAFT_SEARCH) {
                     me.threat = 0;
-                } elsif (me.threat > 0.25 and me.typ != me.ASSET_AI) {
+                } elsif (me.threat > 0.25) {
                     me.threat = 1;
-                } elsif (me.threat > 0.00 and me.typ != me.ASSET_AI) {
-                    me.threat = 2;
                 } else {
-                    continue;
+                    me.threat = 2;
                 }
                 me.assignSepSpot();
             }
@@ -604,7 +616,13 @@ RWRCanvas = {
             }
             me.popupNew = me.elapsed;
             foreach(me.old; me.shownList) {
-                if(me.old[0].equals(me.contact[0])) {
+                if(me.contact[0]["test"] == 1 or me.old[0]["test"] == 1) {
+                    # this is just to handle the test cases if you uncomment them
+                    if (me.old[0].get_Callsign() == me.contact[0].get_Callsign()) {
+                      me.popupNew = me.old[1];
+                      break;
+                    }
+                } elsif(me.contact[0].equals(me.old[0])) {
                     me.popupNew = me.old[1];
                     break;
                 }
@@ -624,7 +642,6 @@ RWRCanvas = {
             me.i += 1;
         }
         me.shownList = me.newList;
-        if (me.newsound == 1) setprop("sound/rwr-new", !getprop("sound/rwr-new"));
         for (;me.i<me.max_icons;me.i+=1) {
             me.texts[me.i].hide();
             me.symbol_hat[me.i].hide();
@@ -634,8 +651,10 @@ RWRCanvas = {
         if (me.prio == 0) {
             me.symbol_priority.hide();
         }
-        setprop("sound/rwr-pri", me.prio);
-        setprop("sound/rwr-unk", me.unk);
+        if (me.newsound == 1) setprop("sound/rwr-new", !getprop("sound/rwr-new"));
+        #TODO: Rename these 2 props whenever you don't feel lazy:
+        setprop("sound/rwr-pri", me.pri5 and (!me.priFlash or math.mod(me.noiseup, 5) < 2.5));        # PRI light 
+        setprop("sound/rwr-unk", me.showUnknowns or (me.unkFlash and math.mod(me.noiseup, 5) < 2.5)); # UNK light
         
         if (getprop("payload/armament/MAW-active")) {
           me.mawdegs = getprop("payload/armament/MAW-bearing");
@@ -651,26 +670,42 @@ RWRCanvas = {
     },
 };
 
-                var diam = 512;
-                var cv = canvas.new({
-                                     "name": "F16 RWR",
-                                     "size": [diam,diam], 
-                                     "view": [diam,diam],
-                                     "mipmapping": 1
-                                    });  
+var test_list = [
+            [{test:1,getModel:func{return "buk-m2";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "j";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.45, -0],
+            [{test:1,getModel:func{return "s-300";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "i";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.45, -5],
+            [{test:1,getModel:func{return "A-50";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "h";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.45, -15],
+            [{test:1,getModel:func{return "s-200";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "g";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.20, -25],
+            [{test:1,getModel:func{return "S-75";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "f";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.20, -30],
+            [{test:1,getModel:func{return "MIM104D";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "e";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.20, -30],
+            [{test:1,getModel:func{return "fleet";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "d";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.20, -25],
+            [{test:1,getModel:func{return "SA-6";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "c";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.20, -30],
+            [{test:1,getModel:func{return "missile_frigate";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "b";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.20, -30],
+            [{test:1,getModel:func{return "theUFO";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "a";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.20, -100],# This one will show up as unknown
+            [{test:1,getModel:func{return "s-300";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "k";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.70, 180],
+            [{test:1,getModel:func{return "s-300";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "l";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.75, 180],
+];
 
-                cv.addPlacement({"node": "bkg", "texture":"rwr-bkg.png"});
-                if (getprop("sim/variant-id") == 2) {
-                cv.setColorBackground(0, 0.0625, 0);
-                } else if (getprop("sim/variant-id") == 4) {
-                cv.setColorBackground(0, 0.0625, 0);
-                } else if (getprop("sim/variant-id") == 5) {
-                cv.setColorBackground(0, 0.0625, 0);
-                } else if (getprop("sim/variant-id") == 6) {
-                cv.setColorBackground(0, 0.0625, 0);
-                } else {
-                cv.setColorBackground(0.01, 0.105, 0);
-                };
-                var root = cv.createGroup();
-                var rwr = RWRCanvas.new("RWRCanvas", root, [diam/2,diam/2],diam);
+
+var diam = 512;
+var cv = canvas.new({
+                     "name": "F16 RWR",
+                     "size": [diam,diam], 
+                     "view": [diam,diam],
+                     "mipmapping": 1
+                    });  
+
+cv.addPlacement({"node": "bkg", "texture":"rwr-bkg.png"});
+if (getprop("sim/variant-id") == 2) {
+cv.setColorBackground(0, 0.0625, 0);
+} else if (getprop("sim/variant-id") == 4) {
+cv.setColorBackground(0, 0.0625, 0);
+} else if (getprop("sim/variant-id") == 5) {
+cv.setColorBackground(0, 0.0625, 0);
+} else if (getprop("sim/variant-id") == 6) {
+cv.setColorBackground(0, 0.0625, 0);
+} else {
+cv.setColorBackground(0.01, 0.105, 0);
+};
+var root = cv.createGroup();
+var rwr = RWRCanvas.new("RWRCanvas", root, [diam/2,diam/2],diam);
 

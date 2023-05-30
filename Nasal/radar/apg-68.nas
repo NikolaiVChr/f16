@@ -2469,6 +2469,11 @@ var F16GMTFTTMode = {
 #  ██             ██  ██████      ██   ██  ███ ███  ██   ██ 
 #                                                           
 #
+
+var noRadarList = {
+	depot:nil, point:nil, struct:nil, rig:nil, truck:nil, hunter:nil,
+};
+
 var RWR = {
 	# inherits from Radar
 	# will check radar/transponder and ground occlusion.
@@ -2581,6 +2586,8 @@ var RWR = {
                 if (me.threatDB[10]) me.threat += 0.30;# has me locked
                 me.threat += ((me.danger-me.rn)/me.danger)>0?((me.danger-me.rn)/me.danger)*0.60:0;# if inside danger zone then add threat, the closer the more.
                 me.threat += me.threatDB[9]>0?(me.threatDB[9]/500)*0.10:0;# more closing speed means more threat.
+                if (me.u.getModel() == "AI") me.threat = 0.01;
+                if (contains(noRadarList, me.u.getModel())) me.threat = - 1;
                 if (me.threat > me.closestThreat) me.closestThreat = me.threat;
                 #printf("A %s threat:%.2f range:%d dev:%d", me.u.get_Callsign(),me.threat,me.u.get_range(),me.deviation);
                 if (me.threat > 1) me.threat = 1;

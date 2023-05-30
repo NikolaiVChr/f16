@@ -70,6 +70,25 @@
 
  <animation>
         <type>pick</type>
+        <object-name>pri</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>property-toggle</command>
+                <property>f16/avionics/rwr-show-priority-only</property>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-pri</tooltip-id>
+                <label>Show only highest priorities</label>
+            </binding>
+        </hovered>
+    </animation>
+
+ <animation>
+        <type>pick</type>
         <object-name>sep</object-name>
         <action>
             <button>0</button>
@@ -91,6 +110,25 @@
                 <command>set-tooltip</command>
                 <tooltip-id>button-sep</tooltip-id>
                 <label>Hold down to separate RWR contacts</label>
+            </binding>
+        </hovered>
+    </animation>
+
+    <animation>
+        <type>pick</type>
+        <object-name>unk</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>property-toggle</command>
+                <property>f16/avionics/rwr-show-unknowns</property>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-unk-tt</tooltip-id>
+                <label>Show unknown emitters</label>
             </binding>
         </hovered>
     </animation>
