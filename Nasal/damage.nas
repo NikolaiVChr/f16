@@ -402,7 +402,7 @@ var DamageRecipient =
                     setprop("payload/armament/MAW-active", 1);# resets every 1 seconds
                 } elsif (CWIOn) {
                     setprop("payload/armament/MAW-semiactive", 1);# resets every 1 seconds
-                    setprop("payload/armament/MAW-semiactive-callsign", notification.Callsign);# resets every 1 seconds
+                    if (notification.Callsign != nil) setprop("payload/armament/MAW-semiactive-callsign", notification.Callsign);# resets every 1 seconds
                 }
                 MAW_elapsed = elapsed;
                 var appr = approached[notification.Callsign~notification.UniqueIdentity];
@@ -1445,6 +1445,7 @@ setlistener("sim/signals/exit", writeDamageLog, 0, 0);
 #screen.property_display.add("payload/armament/MAW-bearing");
 #screen.property_display.add("payload/armament/MAW-active");
 #screen.property_display.add("payload/armament/MAW-semiactive");
+#screen.property_display.add("payload/armament/MAW-semiactive-callsign");
 #screen.property_display.add("payload/armament/MLW-bearing");
 #screen.property_display.add("payload/armament/MLW-count");
 #screen.property_display.add("payload/armament/MLW-launcher");
