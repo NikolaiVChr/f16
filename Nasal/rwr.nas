@@ -496,9 +496,9 @@ RWRCanvas = {
         me.noiseup += 1;
         if (me.noiseup > 20) me.noiseup = 1;
 #        printf("list %d type %s", size(list), type);
-        me.sep = getprop("f16/avionics/rwr-separate");
-        me.showUnknowns = getprop("f16/avionics/rwr-show-unknowns");
-        me.pri5 = getprop("f16/avionics/rwr-show-priority-only");
+        me.sep = getprop("f16/ews/rwr-separate");
+        me.showUnknowns = getprop("f16/ews/rwr-show-unknowns");
+        me.pri5 = getprop("f16/ews/rwr-show-priority-only");
         me.elapsed = getprop("sim/time/elapsed-sec");
         var sorter = func(a, b) {
             if(a[1] > b[1]){
@@ -652,9 +652,8 @@ RWRCanvas = {
             me.symbol_priority.hide();
         }
         if (me.newsound == 1) setprop("sound/rwr-new", !getprop("sound/rwr-new"));
-        #TODO: Rename these 2 props whenever you don't feel lazy:
-        setprop("sound/rwr-pri", me.pri5 and (!me.priFlash or math.mod(me.noiseup, 5) < 2.5));        # PRI light 
-        setprop("sound/rwr-unk", me.showUnknowns or (me.unkFlash and math.mod(me.noiseup, 5) < 2.5)); # UNK light
+        setprop("f16/ews/rwr-pri", me.pri5 and (!me.priFlash or math.mod(me.noiseup, 5) < 2.5));        # PRI light 
+        setprop("f16/ews/rwr-unk", me.showUnknowns or (me.unkFlash and math.mod(me.noiseup, 5) < 2.5)); # UNK light
         
         if (getprop("payload/armament/MAW-active")) {
           me.mawdegs = getprop("payload/armament/MAW-bearing");
@@ -683,6 +682,7 @@ var test_list = [
             [{test:1,getModel:func{return "theUFO";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "a";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.20, -100],# This one will show up as unknown
             [{test:1,getModel:func{return "s-300";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "k";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.70, 180],
             [{test:1,getModel:func{return "s-300";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "l";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.75, 180],
+            [{test:1,getModel:func{return "AI";}, get_range:func{return 30;}, get_Speed:func{return 65;}, get_Callsign:func{return "m";},equals:func (it){return it.get_Callsign()==me.get_Callsign();}}, 0.01, 100],
 ];
 
 

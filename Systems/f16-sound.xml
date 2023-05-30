@@ -3196,7 +3196,7 @@
                 <factor>0.6</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
@@ -3225,7 +3225,7 @@
                 <factor>0.6</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <!--<rwr>
@@ -3262,7 +3262,7 @@
                 <factor>1</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
@@ -3299,7 +3299,7 @@
                 <factor>1</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>-->
         <rwr>
@@ -3328,7 +3328,7 @@
                 <factor>0.70</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
@@ -3357,7 +3357,7 @@
                 <factor>0.70</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
@@ -3386,7 +3386,7 @@
                 <factor>0.70</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
@@ -3415,7 +3415,7 @@
                 <factor>0.70</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
@@ -3444,7 +3444,7 @@
                 <factor>0.70</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
@@ -3473,7 +3473,7 @@
                 <factor>0.70</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
@@ -3502,7 +3502,7 @@
                 <factor>0.70</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
@@ -3531,7 +3531,7 @@
                 <factor>0.70</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
@@ -3560,7 +3560,7 @@
                 <factor>0.70</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
 
@@ -3582,7 +3582,7 @@
                 <factor>1</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
@@ -3611,7 +3611,7 @@
                 <factor>1</factor>
             </volume>
             <volume><!-- Is both a betty sound and a RWR sound -->
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
                 <factor>1</factor>
             </volume>
         </rwr>
@@ -4274,7 +4274,7 @@
                 <property>sim/current-view/internal</property>
             </volume>
             <volume>
-                <property>f16/avionics/msl-vol-knob</property>
+                <property>f16/ews/msl-vol-knob</property>
             </volume>
         </lock-tone>
         <lock-tone>
@@ -4310,7 +4310,7 @@
                 <property>sim/current-view/internal</property>
             </volume>
             <volume>
-                <property>f16/avionics/msl-vol-knob</property>
+                <property>f16/ews/msl-vol-knob</property>
             </volume>
         </lock-tone>
         <lock-tone>
@@ -4346,7 +4346,7 @@
                 <property>sim/current-view/internal</property>
             </volume>
             <volume>
-                <property>f16/avionics/msl-vol-knob</property>
+                <property>f16/ews/msl-vol-knob</property>
             </volume>
         </lock-tone>
         <!--lock-tone>

@@ -185,7 +185,7 @@
                 <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
                 <value>20</value>
             </greater-than-equals>
-            <property>f16/avionics/ew-disp-switch</property>
+            <property>f16/ews/ew-disp-switch</property>
           </condition>
         <emission>
             <red>1</red>
@@ -698,7 +698,7 @@
     <animation>
         <type>knob</type>
         <object-name>DISP_switch</object-name>
-        <property>f16/avionics/ew-disp-switch</property>
+        <property>f16/ews/ew-disp-switch</property>
         <factor>60</factor>
         <offset-deg>-30</offset-deg>
         <drag-direction>vertical</drag-direction>
@@ -711,7 +711,7 @@
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/ew-disp-switch</property>
+                <property>f16/ews/ew-disp-switch</property>
                 <factor>1</factor>
                 <min>0</min>
                 <max>1</max>
@@ -723,7 +723,7 @@
     <animation>
         <type>knob</type>
         <object-name>RWR_switch</object-name>
-        <property>f16/avionics/ew-rwr-switch</property>
+        <property>f16/ews/ew-rwr-switch</property>
         <factor>60</factor>
         <offset-deg>-30</offset-deg>
         <drag-direction>vertical</drag-direction>
@@ -736,7 +736,7 @@
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/ew-rwr-switch</property>
+                <property>f16/ews/ew-rwr-switch</property>
                 <factor>1</factor>
                 <min>0</min>
                 <max>1</max>
@@ -748,7 +748,7 @@
     <animation>
         <type>knob</type>
         <object-name>JTSN_switch</object-name>
-        <property>f16/avionics/ew-jett-switch</property>
+        <property>f16/ews/ew-jett-switch</property>
         <factor>60</factor>
         <offset-deg>-30</offset-deg>
         <drag-direction>vertical</drag-direction>
@@ -765,7 +765,7 @@
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/ew-jett-switch</property>
+                <property>f16/ews/ew-jett-switch</property>
                 <factor>1</factor>
                 <min>0</min>
                 <max>1</max>
@@ -777,7 +777,7 @@
     <animation>
         <type>knob</type>
         <object-name>RWR_50_switch</object-name>
-        <property>f16/avionics/ew-rwr-switch</property>
+        <property>f16/ews/ew-rwr-switch</property>
         <factor>60</factor>
         <offset-deg>-30</offset-deg>
         <drag-direction>vertical</drag-direction>
@@ -794,7 +794,7 @@
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/ew-rwr-switch</property>
+                <property>f16/ews/ew-rwr-switch</property>
                 <factor>1</factor>
                 <min>0</min>
                 <max>1</max>
@@ -806,7 +806,7 @@
     <animation>
         <type>knob</type>
         <object-name>MWS_switch</object-name>
-        <property>f16/avionics/ew-mws-switch</property>
+        <property>f16/ews/ew-mws-switch</property>
         <factor>60</factor>
         <offset-deg>-30</offset-deg>
         <drag-direction>vertical</drag-direction>
@@ -819,7 +819,7 @@
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/ew-mws-switch</property>
+                <property>f16/ews/ew-mws-switch</property>
                 <factor>1</factor>
                 <min>0</min>
                 <max>1</max>
@@ -831,7 +831,7 @@
     <animation>
         <type>knob</type>
         <object-name>MWS_50_switch</object-name>
-        <property>f16/avionics/ew-mws-switch</property>
+        <property>f16/ews/ew-mws-switch</property>
         <factor>60</factor>
         <offset-deg>-30</offset-deg>
         <drag-direction>vertical</drag-direction>
@@ -848,7 +848,7 @@
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/ew-mws-switch</property>
+                <property>f16/ews/ew-mws-switch</property>
                 <factor>1</factor>
                 <min>0</min>
                 <max>1</max>
@@ -860,7 +860,7 @@
 	 <animation>
         <type>knob</type>
         <object-name>JETT_50_switch</object-name>
-        <property>f16/avionics/ew-jett-switch</property>
+        <property>f16/ews/ew-jett-switch</property>
         <factor>60</factor>
         <offset-deg>-30</offset-deg>
         <drag-direction>vertical</drag-direction>
@@ -877,7 +877,7 @@
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/ew-jett-switch</property>
+                <property>f16/ews/ew-jett-switch</property>
                 <factor>1</factor>
                 <min>0</min>
                 <max>1</max>
@@ -889,7 +889,7 @@
     <animation>
         <type>knob</type>
         <object-name>JMR_switch</object-name>
-        <property>f16/avionics/ew-jmr-switch</property>
+        <property>f16/ews/ew-jmr-switch</property>
         <factor>60</factor>
         <offset-deg>-30</offset-deg>
         <drag-direction>vertical</drag-direction>
@@ -902,7 +902,7 @@
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/ew-jmr-switch</property>
+                <property>f16/ews/ew-jmr-switch</property>
                 <factor>1</factor>
                 <min>0</min>
                 <max>1</max>
@@ -914,7 +914,7 @@
     <animation>
         <type>knob</type>
         <object-name>JMR_50_switch</object-name>
-        <property>f16/avionics/ew-jmr-switch</property>
+        <property>f16/ews/ew-jmr-switch</property>
         <factor>60</factor>
         <offset-deg>-30</offset-deg>
         <drag-direction>vertical</drag-direction>
@@ -929,7 +929,7 @@
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/ew-jmr-switch</property>
+                <property>f16/ews/ew-jmr-switch</property>
                 <factor>1</factor>
                 <min>0</min>
                 <max>1</max>
@@ -1057,7 +1057,7 @@
     <animation>
         <type>knob</type>
         <object-name>EW_KNOB_MODE</object-name>
-        <property>f16/avionics/ew-mode-knob</property>
+        <property>f16/ews/ew-mode-knob</property>
         <factor>65</factor>
         <offset-deg>-65</offset-deg>
         <drag-direction>vertical</drag-direction>
@@ -1074,7 +1074,7 @@
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/ew-mode-knob</property>
+                <property>f16/ews/ew-mode-knob</property>
                 <factor>1</factor>
                 <min>0</min>
                 <max>2</max>
@@ -1086,7 +1086,7 @@
     <animation>
         <type>knob</type>
         <object-name>MODE_50_knob</object-name>
-        <property>f16/avionics/ew-mode-knob</property>
+        <property>f16/ews/ew-mode-knob</property>
         <factor>60</factor>
         <offset-deg>-120</offset-deg>
         <drag-direction>vertical</drag-direction>
@@ -1103,7 +1103,7 @@
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/ew-mode-knob</property>
+                <property>f16/ews/ew-mode-knob</property>
                 <factor>1</factor>
                 <min>0</min>
                 <max>2</max>

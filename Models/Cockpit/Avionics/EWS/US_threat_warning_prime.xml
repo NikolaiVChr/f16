@@ -21,7 +21,7 @@
   <condition>
     <or>
 	    <and>
-      		<property>f16/avionics/cockpit_blinker/state</property>
+      		<property>f16/avionics/cockpit_blinker3hz/state</property>
     	    <not>
     	      <equals>
     	          <property>sound/rwr-launch</property>
@@ -51,7 +51,7 @@
       <property>controls/test/test-panel/mal-ind-lts</property>
       <and>
 	      <equals>
-	          <property>sound/rwr-pri</property>
+	          <property>f16/ews/rwr-pri</property>
 	          <value>1</value>
 	      </equals>
         <greater-than-equals>
@@ -75,7 +75,7 @@
             <button>0</button>
             <binding>
                 <command>property-toggle</command>
-                <property>f16/avionics/rwr-show-priority-only</property>
+                <property>f16/ews/rwr-show-priority-only</property>
             </binding>
         </action>
         <hovered>
@@ -94,13 +94,13 @@
             <button>0</button>
             <binding>
                 <command>property-assign</command>
-                <property>f16/avionics/rwr-separate</property>
+                <property>f16/ews/rwr-separate</property>
                 <value>1</value>
             </binding>
             <mod-up>
                 <binding>
                     <command>property-assign</command>
-                    <property>f16/avionics/rwr-separate</property>
+                    <property>f16/ews/rwr-separate</property>
                     <value>0</value>
                 </binding>
             </mod-up>
@@ -121,7 +121,7 @@
             <button>0</button>
             <binding>
                 <command>property-toggle</command>
-                <property>f16/avionics/rwr-show-unknowns</property>
+                <property>f16/ews/rwr-show-unknowns</property>
             </binding>
         </action>
         <hovered>
@@ -141,7 +141,7 @@
       <property>controls/test/test-panel/mal-ind-lts</property>
       <and>
         <equals>
-            <property>f16/avionics/rwr-separate</property>
+            <property>f16/ews/rwr-separate</property>
             <value>1</value>
         </equals>
         <greater-than-equals>
@@ -208,7 +208,7 @@
       <property>controls/test/test-panel/mal-ind-lts</property>
       <and>
 	      <equals>
-	          <property>sound/rwr-unk</property>
+	          <property>f16/ews/rwr-unk</property>
 	          <value>1</value>
 	      </equals>
         <greater-than-equals>

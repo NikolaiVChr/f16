@@ -36,9 +36,9 @@
             <path>/instrumentation/tacan/frequencies/selected-channel[2]</path>
             <path>/instrumentation/tacan/frequencies/selected-channel[3]</path>
             <path>/instrumentation/tacan/frequencies/selected-channel[4]</path>
-            <path>/f16/avionics/msl-vol-knob</path>
+            <path>/f16/ews/msl-vol-knob</path>
             <path>/f16/avionics/ils-volume</path>
-            <path>/f16/avionics/rwr-volume</path>
+            <path>/f16/ews/rwr-volume</path>
             <path>/f16/avionics/intercom-volume</path>
             <path>/f16/effects/dirt</path>
             <path>/f16/effects/rust</path>
@@ -1208,8 +1208,6 @@
         <rwr-new type="int">-1</rwr-new>
         <rwr-launch type="string"></rwr-launch>
         <rwr-launch-sam type="bool">false</rwr-launch-sam>
-        <rwr-pri type="bool">false</rwr-pri>
-        <rwr-unk type="bool">false</rwr-unk>
     </sound>
     <f16>
         <stores-cat type="int">1</stores-cat>
@@ -1264,6 +1262,22 @@
             <alt type="int">0.0</alt>
             <stpt-auto type="string">AUTO</stpt-auto><!-- if change this then also change steerpoint.autoMode -->
         </ded>
+        <ews>
+            <ew-disp-switch type="bool">false</ew-disp-switch>
+            <ew-rwr-switch type="bool">false</ew-rwr-switch>
+            <ew-mws-switch type="bool">false</ew-mws-switch>
+            <ew-jett-switch type="bool">false</ew-jett-switch>
+            <ew-jmr-switch type="bool">false</ew-jmr-switch>
+            <ew-mode-knob type="int">0</ew-mode-knob>
+            <msl-vol-knob type="double">0.5</msl-vol-knob>
+            <rwr-volume type="double">0.7</rwr-volume>
+            <rwr-int type="double">1.0</rwr-int>
+            <rwr-separate type="bool">false</rwr-separate>
+            <rwr-show-priority-only type="bool">false</rwr-show-priority-only>
+            <rwr-show-unknowns type="bool">false</rwr-show-unknowns>
+            <rwr-pri type="bool">false</rwr-pri>
+            <rwr-unk type="bool">false</rwr-unk>
+        </ews>
         <avionics>
 			<probe-heat-switch type="int">0</probe-heat-switch>
 			<probe-heat-light type="bool">false</probe-heat-light>
@@ -1277,10 +1291,6 @@
             <hud-sym type="double">0.0</hud-sym>
             <hud-cont type="double">0.0</hud-cont>
             <hud-depr-ret type="double">0.0</hud-depr-ret>
-            <rwr-int type="double">1.0</rwr-int>
-            <rwr-separate type="bool">false</rwr-separate>
-            <rwr-show-priority-only type="bool">false</rwr-show-priority-only>
-            <rwr-show-unknowns type="bool">false</rwr-show-unknowns>
             <mfd-l-brt type="double">1.0</mfd-l-brt>
             <mfd-l-con type="double">1.0</mfd-l-con>
             <mfd-r-brt type="double">1.0</mfd-r-brt>
@@ -1344,18 +1354,10 @@
             <power-right-hdpt-warm type="double">0</power-right-hdpt-warm>
             <power-right-hdpt-warming type="bool">true</power-right-hdpt-warming>
             <ins-knob type="int">0</ins-knob>
-            <ew-disp-switch type="bool">false</ew-disp-switch>
-            <ew-rwr-switch type="bool">false</ew-rwr-switch>
-            <ew-mws-switch type="bool">false</ew-mws-switch>
-            <ew-jett-switch type="bool">false</ew-jett-switch>
-            <ew-jmr-switch type="bool">false</ew-jmr-switch>
-            <ew-mode-knob type="int">0</ew-mode-knob>
             <cmds-01-switch type="bool">false</cmds-01-switch>
             <cmds-02-switch type="bool">false</cmds-02-switch>
             <cmds-ch-switch type="bool">false</cmds-ch-switch>
             <cmds-fl-switch type="bool">false</cmds-fl-switch>
-            <msl-vol-knob type="double">0.5</msl-vol-knob>
-            <rwr-volume type="double">0.7</rwr-volume>
             <oxy-psi type="double">0.0</oxy-psi>
             <pbg-switch type="int">-1</pbg-switch>
             <plain-cipher type="int">0</plain-cipher>

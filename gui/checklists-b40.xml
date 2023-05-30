@@ -1244,7 +1244,7 @@
                 <value>ON</value>
                 <condition>
                     <equals>
-                        <property>f16/avionics/ew-mws-switch</property>
+                        <property>f16/ews/ew-mws-switch</property>
                         <value>1</value>
                     </equals>
                 </condition>
@@ -1256,7 +1256,7 @@
                 </marker>
                 <binding>
                     <command>property-assign</command>
-                    <property>f16/avionics/ew-mws-switch</property>
+                    <property>f16/ews/ew-mws-switch</property>
                     <value>1</value>
                 </binding>
             </item>
@@ -1265,7 +1265,7 @@
                 <value>ON</value>
                 <condition>
                     <equals>
-                        <property>f16/avionics/ew-jmr-switch</property>
+                        <property>f16/ews/ew-jmr-switch</property>
                         <value>1</value>
                     </equals>
                 </condition>
@@ -1277,7 +1277,7 @@
                 </marker>
                 <binding>
                     <command>property-assign</command>
-                    <property>f16/avionics/ew-jmr-switch</property>
+                    <property>f16/ews/ew-jmr-switch</property>
                     <value>1</value>
                 </binding>
             </item>
@@ -1286,7 +1286,7 @@
                 <value>ON</value>
                 <condition>
                     <equals>
-                        <property>f16/avionics/ew-rwr-switch</property>
+                        <property>f16/ews/ew-rwr-switch</property>
                         <value>1</value>
                     </equals>
                 </condition>
@@ -1298,7 +1298,7 @@
                 </marker>
                 <binding>
                     <command>property-assign</command>
-                    <property>f16/avionics/ew-rwr-switch</property>
+                    <property>f16/ews/ew-rwr-switch</property>
                     <value>1</value>
                 </binding>
             </item>
@@ -1307,7 +1307,7 @@
                 <value>MAN</value>
                 <condition>
                     <equals>
-                        <property>f16/avionics/ew-mode-knob</property>
+                        <property>f16/ews/ew-mode-knob</property>
                         <value>1</value>
                     </equals>
                 </condition>
@@ -1319,7 +1319,7 @@
                 </marker>
                 <binding>
                     <command>property-assign</command>
-                    <property>f16/avionics/ew-mode-knob</property>
+                    <property>f16/ews/ew-mode-knob</property>
                     <value>1</value>
                 </binding>
             </item>

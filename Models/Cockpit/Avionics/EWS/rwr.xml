@@ -10,7 +10,7 @@
             <inner-angle type="float">78</inner-angle><!-- 0-90, use 90 for LED or plasma display-->
             <outer-angle type="float">79</outer-angle><!-- 0-90, but greater than inner -->
             <black-angle type="float">80</black-angle><!-- 0-90, but greater than outer -->
-            <contrast type="float"><use>f16/avionics/rwr-int</use></contrast>
+            <contrast type="float"><use>f16/ews/rwr-int</use></contrast>
             <dirt-factor>0.09</dirt-factor>
         </parameters>
         <object-name>bkg</object-name>
@@ -33,7 +33,7 @@
                 <property>f16/avionics/power-ufc-warm</property>
                 <value>0.90</value>
             </greater-than-equals>
-            <property>f16/avionics/ew-rwr-switch</property>
+            <property>f16/ews/ew-rwr-switch</property>
         </condition>
         <emission>
             <red>  1</red>
@@ -45,7 +45,7 @@
     <animation>
         <type>knob</type>
         <object-name>button</object-name>
-        <property>f16/avionics/rwr-int</property>
+        <property>f16/ews/rwr-int</property>
         <factor>-180</factor>
         <offset-deg>0</offset-deg>
         <center>
@@ -61,7 +61,7 @@
         <increase>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/rwr-int</property>
+                <property>f16/ews/rwr-int</property>
                 <factor>1</factor>
                 <step>0.1</step>
                 <min>0.2</min>
@@ -72,7 +72,7 @@
         <decrease>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/rwr-int</property>
+                <property>f16/ews/rwr-int</property>
                 <factor>1</factor>
                 <step>-0.1</step>
                 <min>0.2</min>

@@ -3084,7 +3084,7 @@
     <animation>
         <type>knob</type>
         <object-name>msl-vol-knob</object-name>
-        <property>f16/avionics/msl-vol-knob</property>
+        <property>f16/ews/msl-vol-knob</property>
         <factor>250</factor>
         <offset-deg>-170</offset-deg>
         <interval-sec>0.10</interval-sec>
@@ -3101,7 +3101,7 @@
         <increase>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/msl-vol-knob</property>
+                <property>f16/ews/msl-vol-knob</property>
                 <step>0.05</step>
                 <min>0</min>
                 <max>1</max>
@@ -3111,7 +3111,7 @@
         <decrease>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/msl-vol-knob</property>
+                <property>f16/ews/msl-vol-knob</property>
                 <step>-0.05</step>
                 <min>0</min>
                 <max>1</max>
@@ -3176,7 +3176,7 @@
     <animation>
         <type>knob</type>
         <object-name>threat-vol-knob</object-name>
-        <property>f16/avionics/rwr-volume</property>
+        <property>f16/ews/rwr-volume</property>
         <factor>250</factor>
         <offset-deg>-170</offset-deg>
         <interval-sec>0.10</interval-sec>
@@ -3193,7 +3193,7 @@
         <increase>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
                 <step>0.05</step>
                 <min>0</min>
                 <max>1</max>
@@ -3203,7 +3203,7 @@
         <decrease>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
                 <step>-0.05</step>
                 <min>0</min>
                 <max>1</max>

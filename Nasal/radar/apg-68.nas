@@ -2524,7 +2524,7 @@ var RWR = {
 		#       IFF info
 		#       ECM
 		#       radar on/off
-		if (!getprop("instrumentation/rwr/serviceable") or getprop("f16/avionics/power-ufc-warm") != 1 or getprop("f16/avionics/ew-rwr-switch") != 1) {
+		if (!getprop("instrumentation/rwr/serviceable") or getprop("f16/avionics/power-ufc-warm") != 1 or getprop("f16/ews/ew-rwr-switch") != 1) {
             setprop("sound/rwr-lck", 0);
             setprop("ai/submodels/submodel[0]/flare-auto-release-cmd", 0);
             return;
@@ -2606,7 +2606,7 @@ var RWR = {
         me.spike = 0;#getprop("payload/armament/spike")*(getprop("ai/submodels/submodel[0]/count")>15);
         me.autoFlare = me.spike?math.max(me.closestThreat*0.25,0.05):0;
 
-        if (0 and getprop("f16/avionics/ew-mode-knob") == 2)
+        if (0 and getprop("f16/ews/ew-mode-knob") == 2)
         	print("wow: ", getprop("/fdm/jsbsim/gear/unit[0]/WOW"),"  spiked: ",me.spike,"  incoming: ",me.incoming, "  launch: ",me.launchClose,"  spikeResult:", me.autoFlare,"  aggresive:",me.launchClose * 0.85 + me.incoming * 0.85,"  total:",me.launchClose * 0.85 + me.incoming * 0.85+me.autoFlare);
 
         me.autoFlare += me.launchClose * 0.85 + me.incoming * 0.85;

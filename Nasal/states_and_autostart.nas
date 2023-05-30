@@ -219,11 +219,11 @@ var autostartengine = func {
   setprop("f16/avionics/hud-sym", 1);
   setprop("f16/avionics/hud-brt", 0);
 
-  setprop("f16/avionics/ew-mws-switch",1);
-  setprop("f16/avionics/ew-jmr-switch",1);
-  setprop("f16/avionics/ew-rwr-switch",1);
-  setprop("f16/avionics/ew-disp-switch",1);
-  setprop("f16/avionics/ew-mode-knob",1);
+  setprop("f16/ews/ew-mws-switch",1);
+  setprop("f16/ews/ew-jmr-switch",1);
+  setprop("f16/ews/ew-rwr-switch",1);
+  setprop("f16/ews/ew-disp-switch",1);
+  setprop("f16/ews/ew-mode-knob",1);
   setprop("f16/avionics/cmds-01-switch",1);
   setprop("f16/avionics/cmds-02-switch",1);
   setprop("f16/avionics/cmds-ch-switch",1);
@@ -299,11 +299,11 @@ var coldndark = func {
   setprop("f16/avionics/ins-knob", 0);#OFF
   setprop("f16/avionics/hud-sym", 0);
   setprop("f16/avionics/hud-brt", 0);
-  setprop("f16/avionics/ew-rwr-switch",0);
-  setprop("f16/avionics/ew-disp-switch",0);
-  setprop("f16/avionics/ew-mws-switch",0);
-  setprop("f16/avionics/ew-jmr-switch",0);
-  setprop("f16/avionics/ew-mode-knob",0);
+  setprop("f16/ews/ew-rwr-switch",0);
+  setprop("f16/ews/ew-disp-switch",0);
+  setprop("f16/ews/ew-mws-switch",0);
+  setprop("f16/ews/ew-jmr-switch",0);
+  setprop("f16/ews/ew-mode-knob",0);
   setprop("f16/avionics/cmds-01-switch",0);
   setprop("f16/avionics/cmds-02-switch",0);
   setprop("f16/avionics/cmds-ch-switch",0);

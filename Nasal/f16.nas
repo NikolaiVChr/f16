@@ -57,6 +57,9 @@ var msgB = "Please land before changing payload.";
 var msgC = "Please land before refueling.";
 var cockpit_blink = props.globals.getNode("f16/avionics/cockpit_blink", 1);
 aircraft.light.new("f16/avionics/cockpit_blinker", [0.25, 0.25], cockpit_blink);
+var cockpit_blink3 = props.globals.getNode("f16/avionics/cockpit_blink_3z", 1);
+aircraft.light.new("f16/avionics/cockpit_blinker3hz", [0.166, 0.166], cockpit_blink);
+
 setprop("f16/avionics/cockpit_blink", 1);
 
 var extrapolate = func (x, x1, x2, y1, y2) {
@@ -243,8 +246,8 @@ var medium_fast = {
             setprop("ai/submodels/submodel[0]/flare-release-snd", 0);
             setprop("ai/submodels/submodel[0]/flare-release-out-snd", 0);
         }
-        var flareOn = getprop("ai/submodels/submodel[0]/flare-release-cmd") and getprop("f16/avionics/ew-mode-knob") == 1;
-        var flareOnA = getprop("ai/submodels/submodel[0]/flare-auto-release-cmd") > rand() and getprop("f16/avionics/ew-mode-knob") == 2 and getprop("ai/submodels/submodel[0]/flare-release-cmd") == 0;
+        var flareOn = getprop("ai/submodels/submodel[0]/flare-release-cmd") and getprop("f16/ews/ew-mode-knob") == 1;
+        var flareOnA = getprop("ai/submodels/submodel[0]/flare-auto-release-cmd") > rand() and getprop("f16/ews/ew-mode-knob") == 2 and getprop("ai/submodels/submodel[0]/flare-release-cmd") == 0;
         flareOn = flareOn or flareOnA;
 
         if (flareOn == 1 and getprop("ai/submodels/submodel[0]/flare-release") == 0
