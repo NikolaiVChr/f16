@@ -319,7 +319,8 @@ var dataEntryDisplay = {
 			wp_num = steerpoints.getCurrentNumber();
 			setprop("f16/ded/stpt-edit", wp_num);
 		}
-		if (wp_num != nil and (wp_num < 100 or (wp_num < 300 and wp_num >= 100))) {
+		if (wp_num != nil and (wp_num < 100 or (wp_num < 300 and wp_num >= 100) or (wp_num < 800 and wp_num >= 600))) {
+			# Route and HSD lines
 			var wp = steerpoints.getNumber(wp_num);
 			if (wp != nil) {
 				lat = convertDegreeToStringLat(wp.lat);
@@ -440,7 +441,7 @@ var dataEntryDisplay = {
 				wp_num_lastT = "   ";
 			}
 		} elsif (wp_num != nil and ((wp_num < 359 and wp_num >= 350) or (wp_num < 405 and wp_num >= 400) or (wp_num < 455 and wp_num >= 450) or (wp_num == 500) or (wp_num == 555))) {
-			# Own markpoints, DLNK markpoints, HSD-lines, WPN GPS and Bulls-eye
+			# Own markpoints, DLNK markpoints, WPN GPS and Bulls-eye
 			var stpt = steerpoints.getNumber(wp_num);
 
 			if 	(stpt != nil) {

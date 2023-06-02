@@ -1,7 +1,7 @@
  #
 # F-16 Steerpoint/route/mark/bulls-eye system.
 #
-var lines = [nil,nil];
+var lines = [nil,nil, nil, nil];
 
 var desired_tos = {};
 
@@ -17,7 +17,9 @@ var index_of_markpoints_dlnk  = 450;
 var index_of_weapon_gps       = 500;
 var index_of_bullseye         = 555;
 var index_of_lines_1          = 100;
-var index_of_lines_1          = 200;
+var index_of_lines_2          = 200;
+var index_of_lines_3          = 600;
+var index_of_lines_4          = 700;
 
 var stpt300 = setsize([],number_of_threat_circles);#Threat circles
 var stpt350 = setsize([],10);#Generic
@@ -87,6 +89,28 @@ var getNumber = func (number) {
 	# Return a specific steerpoint, nil if none
 	if (!_isOccupiedNumber(number)) {
 		return nil;
+	}
+	if (number >= 700 and lines[3] != nil) {
+		var fp = lines[3];
+		var leg = fp.getWP(number-700);
+		var new = STPT.new();
+		new.lat = leg.lat;
+		new.lon = leg.lon;
+		if (leg.alt_cstr != nil) {
+			new.alt = leg.alt_cstr;
+		}
+		return new;
+	}
+	if (number >= 600 and lines[2] != nil) {
+		var fp = lines[2];
+		var leg = fp.getWP(number-600);
+		var new = STPT.new();
+		new.lat = leg.lat;
+		new.lon = leg.lon;
+		if (leg.alt_cstr != nil) {
+			new.alt = leg.alt_cstr;
+		}
+		return new;
 	}
 	if (number == 555) {
 		return stpt555[0];
@@ -680,6 +704,10 @@ var _isValidNumber = func (number) {
 		return 1;
 	} elsif (number >= 1 and number < 300) {
 		return 1;
+	} elsif (number >= 600 and number < 700) {
+		return 1;
+	} elsif (number >= 700 and number < 800) {
+		return 1;
 	}
 	return 0;
 }
@@ -687,6 +715,20 @@ var _isValidNumber = func (number) {
 var _isOccupiedNumber = func (number) {
 	# Is a steerpoint stored at this memory address?
 	if (!_isValidNumber(number)) {
+		return 0;
+	}
+	if (number < 800 and number >= 700) {
+		if (lines[3] != nil) {
+			var fp = lines[3];
+			return fp.getPlanSize() > number-700;
+		}
+		return 0;
+	}
+	if (number < 700 and number >= 600) {
+		if (lines[2] != nil) {
+			var fp = lines[2];
+			return fp.getPlanSize() > number-600;
+		}
 		return 0;
 	}
 	if (number == 555) {
@@ -792,6 +834,18 @@ var serialize = func() {
 		  	ret = ret~sprintf("LINE,%d,%.6f,%.6f|",s+200,key.lat,key.lon);
 	  	}
 	}
+	if (lines[2] != nil) {
+		for (var s = 0; s < lines[2].getPlanSize() and s < 100; s+=1) {
+			var key = lines[2].getWP(s);
+		  	ret = ret~sprintf("LINE,%d,%.6f,%.6f|",s+600,key.lat,key.lon);
+	  	}
+	}
+	if (lines[3] != nil) {
+		for (var s = 0; s < lines[3].getPlanSize() and s < 100; s+=1) {
+			var key = lines[3].getWP(s);
+		  	ret = ret~sprintf("LINE,%d,%.6f,%.6f|",s+700,key.lat,key.lon);
+	  	}
+	}
 	if (flightplan() != nil) {
 		var plan = flightplan();
 		for (var s = 0; s < plan.getPlanSize(); s+=1) {
@@ -869,7 +923,7 @@ var unserialize = func(m) {
   var planned = nil;
 
   # clear memory:
-  lines = [nil,nil];
+  lines = [nil,nil,nil,nil];
   stpt300 = setsize([],number_of_threat_circles);#Threat circles
   stpt350 = setsize([],10);#Generic
   stpt400 = setsize([],5);#Markpoints Own
@@ -900,11 +954,16 @@ var unserialize = func(m) {
       } elsif (key == "LINE") {
       	var number = num(items[1]);
       	var no = number >= 200;
+      	if (number >= 700) {
+      		no = 3;
+      	} elsif (number >= 600) {
+      		no = 2;
+      	}
       	if (lines[no] == nil) {
       		lines[no] = createFlightplan();
       	}
       	var wp = createWP(num(items[2]), num(items[3]), ""~number);
-      	number = no?number-200:number-100;
+      	number = no==1?number-200:(no==0?number-100:(no==2?number-600:number-700));
 		lines[no].insertWP(wp, number);
       } elsif (key == "STPT") {
       	var newST = nil;

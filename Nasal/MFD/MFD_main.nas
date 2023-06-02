@@ -3990,7 +3990,7 @@ var MFD_Device =
                     }
                 }
 
-                for (var u = 0;u<2;u+=1) {
+                for (var u = 0;u<4;u+=1) {
                     if (steerpoints.lines[u] != nil) {
                         # lines
                         me.plan = steerpoints.lines[u];
@@ -4026,7 +4026,7 @@ var MFD_Device =
                                     .set("z-index",4)
                                     .setColor(colorLines)
                                     .update();
-                            } else if (me.prevX != nil and u == 1) {
+                            } else if (me.prevX != nil and u > 0) {
                                 me.root.cone.createChild("path")
                                     .moveTo(me.legX,me.legY)
                                     .lineTo(me.prevX,me.prevY)

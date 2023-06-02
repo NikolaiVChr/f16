@@ -952,7 +952,7 @@ var CDU = {
 
     updateLines: func {
         me.linesGroup.removeAllChildren();
-        for (var u = 0;u<2;u+=1) {
+        for (var u = 0;u<4;u+=1) {
             if (steerpoints.lines[u] != nil) {
                 # lines
                 me.plan = steerpoints.lines[u];
@@ -978,7 +978,7 @@ var CDU = {
                             .set("z-index",4)
                             .setColor(COLOR_WHITE)
                             .update();
-                    } else if (me.stptPrevPos != nil and u == 1) {
+                    } else if (me.stptPrevPos != nil and u > 0) {
                         me.linesGroup.createChild("path")
                             .moveTo(me.stptPos)
                             .lineTo(me.stptPrevPos)
