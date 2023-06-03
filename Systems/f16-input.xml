@@ -284,10 +284,7 @@
             <binding>
                 <command>nasal</command>
                 <script>
-                    if (getprop("sim/variant-id") == 0) {
-                        return;
-                    }
-                    pylons.fcs.toggleCage();
+                    fgcommand("reinit", props.Node.new( {"subsystem": "aircraft-model"} ));
                 </script>
             </binding>
         </key>
