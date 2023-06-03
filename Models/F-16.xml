@@ -491,8 +491,8 @@
   </condition>
  </animation>
 
-
-<effect>
+<!-- logos -->
+<!--effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
       <parameters>
           <metallic type="float">0.80</metallic>
@@ -508,6 +508,33 @@
           </render-bin>
           <opaque type="int">0</opaque>
       </parameters>
+      <condition>
+        <not>
+          <equals>
+              <property>sim/rendering/hdr/ambient-occlusion/enabled</property>
+              <value>1</value>
+          </equals>
+        </not>
+      </condition>
+      
+      <object-name>VstabBandLeftAft</object-name>
+      <object-name>VstabBandLeftFront</object-name>
+      <object-name>VstabBandRightAft</object-name>
+      <object-name>VstabBandRightFront</object-name>
+      <object-name>VstabLogoLeftBottom</object-name>
+      <object-name>VstabLogoLeftTop</object-name>
+      <object-name>VstabLogoRightBottom</object-name>
+      <object-name>VstabLogoRightTop</object-name>
+      <object-name>LogoPilotRight</object-name>
+      <object-name>FuselageLogoRight</object-name>
+      <object-name>FuselageLogoLeft</object-name>
+  </effect-->
+
+  <effect>
+      <!--inherits-from>Effects/model-pbr-transparent</inherits-from-->
+      <inherits-from>Effects/model-transparent</inherits-from>
+      <parameters>
+      </parameters>
       <!-- logos -->
       <object-name>VstabBandLeftAft</object-name>
       <object-name>VstabBandLeftFront</object-name>
@@ -520,6 +547,10 @@
       <object-name>LogoPilotRight</object-name>
       <object-name>FuselageLogoRight</object-name>
       <object-name>FuselageLogoLeft</object-name>
+      <object-name>WinglogoLeftTop</object-name>
+      <object-name>WinglogoRightBottom</object-name>
+      <object-name>WinglogoRightTop</object-name>
+      <object-name>Rect</object-name>
   </effect>
 
   <animation>
@@ -545,16 +576,16 @@
     <object-name>CanopyBackInside</object-name>
   </animation>
 
-  <animation>
+  <!-- logos -->
+  <!--animation>
     <type>select</type>
-      <inherits-from>Effects/model-transparent</inherits-from>
       <condition>
         <equals>
           <property>/sim/rendering/rembrandt/enabled</property>
           <value>0</value>
         </equals>
       </condition>
-      <!-- logos -->
+      
       <object-name>WinglogoLeftTop</object-name>
       <object-name>WinglogoRightBottom</object-name>
       <object-name>WinglogoRightTop</object-name>
@@ -570,7 +601,7 @@
       <object-name>LogoPilotRight</object-name>
       <object-name>FuselageLogoRight</object-name>
       <object-name>FuselageLogoLeft</object-name>
-  </animation>
+  </animation-->
 
   <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
