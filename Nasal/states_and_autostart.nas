@@ -30,7 +30,7 @@ var repair2 = func {
   setprop("f16/ejected",0);
   setprop("f16/chute/done",0);
   setprop("sim/view[0]/enabled",1);
-  setprop("sim/current-view/view-number",0);
+  view.setViewByIndex(0);
   setprop("f16/cockpit/hydrazine-minutes", 10);
   setprop("f16/cockpit/oxygen-liters", 5);
   setprop("f16/cockpit/alt-gear-pneu",1);

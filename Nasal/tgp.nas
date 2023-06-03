@@ -218,7 +218,7 @@ var list = func (node) {
     var button = getprop("controls/MFD[2]/button-pressed");
     
     if (button == 20) {#BACK
-        setprop("sim/current-view/view-number",0);
+        view.setViewByIndex(0);
         #setprop("/aircraft/flir/target/auto-track", 0);
         #lock.hide();
         #setprop("f16/avionics/lock-flir",0.05);
@@ -405,7 +405,7 @@ var fast_loop = func {
     if (viewName == "TGP" and (getprop("/fdm/jsbsim/gear/unit[0]/WOW") or !getprop("f16/stores/tgp-mounted"))) {
         # deselect view back to pilot default
         masterMode = STBY;
-        setprop("sim/current-view/view-number",0);
+        view.setViewByIndex(0);
         setprop("sim/rendering/als-filters/use-IR-vision", 0);
         setprop("sim/view[105]/enabled", 0);
         pullup_cue_3.setVisible(0);

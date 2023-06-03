@@ -305,7 +305,7 @@
             </config>
         </view>
         <view n="101">
-            <!-- also used for ejection view -->
+            <!-- also used for ejection view, if change this number, also change it in MissileView.nas -->
             <name>Missile View</name>
             <type>lookat</type>
             <enabled>true</enabled>
