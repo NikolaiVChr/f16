@@ -104400,6 +104400,7 @@ refs 3
 kids 0
 OBJECT poly
 name "CanopyBackOutside"
+texture "semi-trans.png"
 data 8
 Mesh.001
 crease 80.0
@@ -106287,6 +106288,7 @@ refs 4
 kids 0
 OBJECT poly
 name "CanopyForwardOutside"
+texture "semi-trans.png"
 data 8
 Mesh.005
 crease 80.0
