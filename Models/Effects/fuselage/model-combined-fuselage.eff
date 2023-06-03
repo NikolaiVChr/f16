@@ -117,6 +117,28 @@ Modifications author: Nikolai V. Chr.
 			<use>/sim/rendering/shadows/sun-atlas-size</use>
 		</sun_atlas_size>
 		<!-- END shadows include -->
+
+		<!-- PBR HDR -->
+		<texture n="9">
+			<image>Aircraft/f16/Models/Effects/fuselage/orm.png</image>
+			<filter>linear</filter>
+			<wrap-s>clamp</wrap-s>
+			<wrap-t>clamp</wrap-t>
+			<internal-format>normalized</internal-format>
+		</texture>
+		<texture n="12"><!-- normal -->
+			<type>null-normalmap</type>
+		</texture>
+		<texture n="13"><!-- emissive -->
+			<type>white</type>
+		</texture>
+		<base-color-factor type="vec4d">1.0 1.0 1.0 1.0</base-color-factor>
+		<metallic-factor type="float">1.0</metallic-factor>
+    	<roughness-factor type="float">1.0</roughness-factor>
+		<!-- Double Sided -->
+    	<cull-face>back</cull-face>
+    	<!-- Whether to flip the texture vertically -->
+    	<flip-vertically>false</flip-vertically>
 	</parameters>
 	<technique n="0">
 		<!-- ALS shadows -->
@@ -6039,4 +6061,130 @@ Modifications author: Nikolai V. Chr.
 		</pass>
 	</technique>
 	<!-- Techn 4 is broken somehow -->
+
+	<technique n="109">
+    <scheme>hdr-geometry</scheme>
+    <pass>
+      <!-- Reverse floating point depth buffer -->
+      <depth>
+        <function>gequal</function>
+        <near>1.0</near>
+        <far>0.0</far>
+      </depth>
+      <stencil>
+        <function>always</function>
+        <value>8</value>
+        <pass>replace</pass>
+      </stencil>
+      <texture-unit>
+        <unit>0</unit>
+        <type><use>texture[0]/type</use></type>
+        <image><use>texture[0]/image</use></image>
+        <filter><use>texture[0]/filter</use></filter>
+        <mag-filter><use>texture[0]/mag-filter</use></mag-filter>
+        <wrap-s><use>texture[0]/wrap-s</use></wrap-s>
+        <wrap-t><use>texture[0]/wrap-t</use></wrap-t>
+      </texture-unit>
+      <texture-unit>
+        <unit>1</unit>
+        <type><use>texture[12]/type</use></type>
+        <image><use>texture[12]/image</use></image>
+        <filter><use>texture[12]/filter</use></filter>
+        <mag-filter><use>texture[12]/mag-filter</use></mag-filter>
+        <wrap-s><use>texture[12]/wrap-s</use></wrap-s>
+        <wrap-t><use>texture[12]/wrap-t</use></wrap-t>
+      </texture-unit>
+      <texture-unit>
+        <unit>2</unit>
+        <type><use>texture[9]/type</use></type>
+        <image><use>texture[9]/image</use></image>
+        <filter><use>texture[9]/filter</use></filter>
+        <mag-filter><use>texture[9]/mag-filter</use></mag-filter>
+        <wrap-s><use>texture[9]/wrap-s</use></wrap-s>
+        <wrap-t><use>texture[9]/wrap-t</use></wrap-t>
+      </texture-unit>
+      <texture-unit>
+        <unit>3</unit>
+        <type><use>texture[13]/type</use></type>
+        <image><use>texture[13]/image</use></image>
+        <filter><use>texture[13]/filter</use></filter>
+        <mag-filter><use>texture[13]/mag-filter</use></mag-filter>
+        <wrap-s><use>texture[13]/wrap-s</use></wrap-s>
+        <wrap-t><use>texture[13]/wrap-t</use></wrap-t>
+      </texture-unit>
+      <blend>0</blend>
+      <rendering-hint>opaque</rendering-hint>
+      <cull-face><use>cull-face</use></cull-face>
+      <program>
+        <vertex-shader>Shaders/HDR/model_pbr.vert</vertex-shader>
+        <fragment-shader>Shaders/HDR/model_pbr.frag</fragment-shader>
+        <fragment-shader>Shaders/HDR/gbuffer_pack.glsl</fragment-shader>
+        <fragment-shader>Shaders/HDR/normal_encoding.glsl</fragment-shader>
+        <fragment-shader>Shaders/HDR/normalmap.glsl</fragment-shader>
+        <fragment-shader>Shaders/HDR/color.glsl</fragment-shader>
+      </program>
+      <uniform>
+        <name>base_color_tex</name>
+        <type>sampler-2d</type>
+        <value type="int">0</value>
+      </uniform>
+      <uniform>
+        <name>normal_tex</name>
+        <type>sampler-2d</type>
+        <value type="int">1</value>
+      </uniform>
+      <uniform>
+        <name>orm_tex</name>
+        <type>sampler-2d</type>
+        <value type="int">2</value>
+      </uniform>
+      <uniform>
+        <name>emissive_tex</name>
+        <type>sampler-2d</type>
+        <value type="int">3</value>
+      </uniform>
+      <uniform>
+        <name>base_color_factor</name>
+        <type>float-vec4</type>
+        <value><use>base-color-factor</use></value>
+      </uniform>
+      <uniform>
+        <name>metallic_factor</name>
+        <type>float</type>
+        <value><use>metallic-factor</use></value>
+      </uniform>
+      <uniform>
+        <name>roughness_factor</name>
+        <type>float</type>
+        <value><use>roughness-factor</use></value>
+      </uniform>
+      <uniform>
+        <name>emissive_factor</name>
+        <type>float-vec3</type>
+        <value><use>emissive-factor</use></value>
+      </uniform>
+      <uniform>
+        <name>flip_vertically</name>
+        <type>bool</type>
+        <value><use>flip-vertically</use></value>
+      </uniform>
+    </pass>
+  </technique>
+
+  <technique n="119">
+    <scheme>hdr-shadow</scheme>
+    <pass>
+      <color-mask type="vec4d">0 0 0 0</color-mask>
+      <cull-face>back</cull-face>
+      <blend>0</blend>
+      <polygon-offset>
+        <factor>1.1</factor>
+        <units>4.0</units>
+      </polygon-offset>
+      <program>
+        <vertex-shader>Shaders/HDR/model_shadow.vert</vertex-shader>
+        <fragment-shader>Shaders/HDR/model_shadow.frag</fragment-shader>
+      </program>
+    </pass>
+  </technique>
 </PropertyList>
