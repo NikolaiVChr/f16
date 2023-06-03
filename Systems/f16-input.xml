@@ -285,6 +285,8 @@
                 <command>nasal</command>
                 <script>
                     fgcommand("reinit", props.Node.new( {"subsystem": "aircraft-model"} ));
+                    getprop("sim/model/livery/texture","Liveries/Block20/80-3664.png");
+                    print(getprop("sim/model/livery/texture"));
                 </script>
             </binding>
         </key>
