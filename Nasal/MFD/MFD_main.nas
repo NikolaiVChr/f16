@@ -661,6 +661,23 @@ var MFD_Device =
             .set("z-index",1)
             .hide();
 
+        # OBS 11
+        svg.mod = svg.p_RDR.createChild("text")
+                .setTranslation(276*0.795*-0.71, -482*0.5-225)
+                .setText("CRM")
+                .setAlignment("left-top")
+                .setColor(colorText1)
+                .set("z-index",20000)
+                .setFontSize(20, 1.0);
+
+        # OBS 12
+        svg.acm = svg.p_RDR.createChild("text")
+                .setTranslation(276*0.795*-0.30, -482*0.5-225)
+                .setText("ACM")
+                .setAlignment("center-top")
+                .setColor(colorText1)
+                .hide()
+                .setFontSize(18, 1.0);
 
         # OBS 13
         svg.norm = svg.p_RDR.createChild("text")
@@ -670,14 +687,7 @@ var MFD_Device =
                 .setColor(colorText1)
                 .set("z-index",1)
                 .setFontSize(18, 1.0);
-        # OBS 12
-        svg.acm = svg.p_RDR.createChild("text")
-                .setTranslation(276*0.795*-0.30, -482*0.5-225)
-                .setText("ACM")
-                .setAlignment("center-top")
-                .setColor(colorText1)
-                .hide()
-                .setFontSize(18, 1.0);
+        
         # OBS 9
         svg.cz = svg.p_RDR.createChild("text")
                 .setTranslation(276*0.775, -482*0.5+55+10)
@@ -718,14 +728,7 @@ var MFD_Device =
                 .setColor(colorText1)
                 .set("z-index",1)
                 .setFontSize(20, 1.0);
-        # OBS 11
-        svg.mod = svg.p_RDR.createChild("text")
-                .setTranslation(276*0.795*-0.71, -482*0.5-215)
-                .setText("CRM")
-                .setAlignment("top-center")
-                .setColor(colorText1)
-                .set("z-index",20000)
-                .setFontSize(20, 1.0);
+        
         # OBS 5
         svg.M  = svg.p_RDR.createChild("text")
                 .setTranslation(-276*0.795+10, -482*0.5+125+10)
@@ -5115,7 +5118,7 @@ var MFD_Device =
     #Update this when adding new buttons or changing button order/positions.
     setSelection: func(curPage, nextPage, nextPageIndex) {
         if (nextPageIndex == 10) {
-            me.selectionBox.setTranslation(65,7);
+            me.selectionBox.setTranslation(65,12);
             me.selectionBox.setScale(1,1);
         } else if (nextPageIndex == 13) {
             me.selectionBox.setTranslation(272,7);
