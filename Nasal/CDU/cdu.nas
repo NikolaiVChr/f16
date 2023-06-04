@@ -975,6 +975,7 @@ var CDU = {
                             .moveTo(me.stptPos)
                             .lineTo(me.stptPrevPos)
                             .setStrokeLineWidth(lineWidth.lines)
+                            .setStrokeDashArray([10, 10])
                             .set("z-index",4)
                             .setColor(COLOR_WHITE)
                             .update();

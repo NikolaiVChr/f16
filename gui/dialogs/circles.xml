@@ -513,7 +513,7 @@
 	    </button>
     </group>
     <empty><stretch>1</stretch></empty>
-    <text><label>Load .fgfp or .gpx route file to enable lines on HSD page. (Lines 1 solid, Lines 2, 3 and 4 dashed).</label></text>
+    <text><label>Load .fgfp or .gpx route file to enable lines on HSD page.</label></text>
     <empty><stretch>1</stretch></empty>
     
     <hrule/>

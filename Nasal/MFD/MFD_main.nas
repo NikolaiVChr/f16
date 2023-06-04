@@ -4026,8 +4026,9 @@ var MFD_Device =
                                     .moveTo(me.legX,me.legY)
                                     .lineTo(me.prevX,me.prevY)
                                     .setStrokeLineWidth(2)
+                                    .setStrokeDashArray([10, 10])
                                     .set("z-index",4)
-                                    .setColor(colorLines)
+                                    .setColor(colorLines[0]*0.70,colorLines[1]*0.70,colorLines[2]*0.70)
                                     .update();
                             } else if (me.prevX != nil and u > 0) {
                                 me.root.cone.createChild("path")
@@ -4036,7 +4037,7 @@ var MFD_Device =
                                     .setStrokeLineWidth(2)
                                     .setStrokeDashArray([10, 10])
                                     .set("z-index",4)
-                                    .setColor(colorLines)
+                                    .setColor(colorLines[0]*0.70,colorLines[1]*0.70,colorLines[2]*0.70)
                                     .update();
                             }
                             me.prevX = me.legX;
