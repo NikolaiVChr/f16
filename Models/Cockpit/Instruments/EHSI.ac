@@ -1,6 +1,6 @@
 AC3Db
 MATERIAL "mountMat" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.118 0.11 0.118  shi 21  trans 0
-MATERIAL "displayMat" rgb 0 0 0  amb 0 0 0  emis 0 0 0  spec 0.25 0.25 0.25  shi 128  trans 0
+MATERIAL "displayMat" rgb 1 1 1  amb 1 1 1  emis 1 1 1  spec 0.25 0.25 0.25  shi 128  trans 0
 OBJECT world
 kids 3
 OBJECT poly
