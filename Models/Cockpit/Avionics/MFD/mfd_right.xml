@@ -947,16 +947,6 @@
            </binding>
        </action>
    </animation>-->
-    <effect>
-        <inherits-from>Aircraft/f16/Models/Effects/displays/lcd</inherits-from>
-        <parameters>
-            <inner-angle type="float">45</inner-angle><!-- 0-90, use 90 for LED or plasma display-->
-            <outer-angle type="float">60</outer-angle><!-- 0-90, but greater than inner -->
-            <black-angle type="float">80</black-angle><!-- 0-90, but greater than outer -->
-            <contrast><use>f16/avionics/mfd-r-con</use></contrast>
-        </parameters>
-        <object-name>MFDimage2</object-name>
-    </effect>
 
     <animation><!-- must be at end of file -->
       <object-name>MFDButtonL1</object-name>
