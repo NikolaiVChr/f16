@@ -98,7 +98,7 @@ var F16_HUD = {
         obj.sx = sx*uv_used;
 
         obj.canvas.addPlacement({"node": canvas_item});
-        obj.canvas.setColorBackground(0.30, 1, 0.3, 0.00);
+        obj.canvas.setColorBackground(1, 1, 1, -1);
 
         # Create a group for the parsed elements
         obj.svg = obj.canvas.createGroup().hide();
