@@ -853,7 +853,7 @@ var AIContact = {
 	    # 
         if (prop_name == "carrier") {
         	return MARINE;
-        } elsif (prop_name == "aircraft" or prop_name == "Mig-28") {
+        } elsif (prop_name == "aircraft" or prop_name == "swift" or prop_name == "Mig-28") {
         	return AIR;
         } elsif (ordnance != nil) {
         	return ORDNANCE;
