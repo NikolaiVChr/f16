@@ -111,7 +111,7 @@
 
 	<hrule/>
 	<text><halign>left</halign><label>Levels description:</label></text>
-	<text><halign>left</halign><label>0 (BFM) - One bandit, one wingman (beginners)</label></text>
+	<text><halign>left</halign><label>0 (ACM) - One bandit, one wingman (beginners)</label></text>
 	<text><halign>left</halign><label>1 (BFM) - One bandit (beginner)</label></text>
 	<text><halign>left</halign><label>2 (BFM) - One bandit (experienced)</label></text>
 	<text><halign>left</halign><label>3 (BFM) - One bandit (veteran)</label></text>
