@@ -222,7 +222,7 @@ RWRCanvas = {
 #                   .hide();
 #        }
 # Threat list ID:
-        #REVISION: 2022/12/07
+        #REVISION: 2023/06/06
         #OPRF Fleet
         rwr.AIRCRAFT_WARTHOG  = "10";
         rwr.AIRCRAFT_TOMCAT   = "14";
@@ -266,6 +266,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_MB339    = "M3";
         rwr.AIRCRAFT_ALPHAJET = "AJ";
         rwr.AIRCRAFT_INTRUDER = "A6";
+        rwr.AIRCRAFT_PROWLER  = "E6";
         rwr.AIRCRAFT_FROGFOOT = "25";
         rwr.AIRCRAFT_NIGHTHAWK = "17";
         rwr.AIRCRAFT_RAPTOR   = "22";
@@ -396,6 +397,7 @@ RWRCanvas = {
                 "MiG-25":                   rwr.AIRCRAFT_FOXBAT,
                 "A-6E-model":               rwr.AIRCRAFT_INTRUDER,
                 "A-6E":                     rwr.AIRCRAFT_INTRUDER,
+                "ea-6b":                    rwr.AIRCRAFT_PROWLER,
                 "F-117":                    rwr.AIRCRAFT_NIGHTHAWK,
                 "F-22-Raptor":              rwr.AIRCRAFT_RAPTOR,
                 "F-35A":                    rwr.AIRCRAFT_JSF,
