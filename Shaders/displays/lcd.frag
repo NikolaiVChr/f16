@@ -15,18 +15,18 @@ uniform float contrast;//0.0001 - 255.0, 1.0 is normal
 uniform int use_als;
 uniform int use_filters;
 
-const vec4  kRGBToYPrime = vec4 (0.299, 0.587, 0.114, 0.0);
-const vec4  kRGBToI     = vec4 (0.596, -0.275, -0.321, 0.0);
-const vec4  kRGBToQ     = vec4 (0.212, -0.523, 0.311, 0.0);
+const vec3  kRGBToYPrime = vec3 (0.299, 0.587, 0.114);
+const vec3  kRGBToI     = vec3 (0.596, -0.275, -0.321);
+const vec3  kRGBToQ     = vec3 (0.212, -0.523, 0.311);
 
-const vec4  kYIQToR   = vec4 (1.0, 0.956, 0.621, 0.0);
-const vec4  kYIQToG   = vec4 (1.0, -0.272, -0.647, 0.0);
-const vec4  kYIQToB   = vec4 (1.0, -1.107, 1.704, 0.0);
+const vec3  kYIQToR   = vec3 (1.0, 0.956, 0.621);
+const vec3  kYIQToG   = vec3 (1.0, -0.272, -0.647);
+const vec3  kYIQToB   = vec3 (1.0, -1.107, 1.704);
 
 vec3 filter_combined (in vec3 color) ;
 float getShadowing();
 
-vec3 rotateHue (in vec4 color) {
+vec3 rotateHue (in vec3 color) {
     // Convert to YIQ
     float   YPrime  = dot (color, kRGBToYPrime);
     float   I      = dot (color, kRGBToI);
@@ -45,7 +45,7 @@ vec3 rotateHue (in vec4 color) {
     I = chroma * cos (hue);
 
     // Convert back to RGB
-    vec4    yIQ   = vec4 (YPrime, I, Q, 0.0);
+    vec3    yIQ   = vec3 (YPrime, I, Q);
     color.r = dot (yIQ, kYIQToR);
     color.g = dot (yIQ, kYIQToG);
     color.b = dot (yIQ, kYIQToB);
@@ -69,12 +69,12 @@ void main (void) {
     if (angle <= innerAngle) {
         color = texel.rgb;
     } else if (angle <= outerAngle) {
-        vec3 hsl = rotateHue(texel);
-        float amount = (angle - innerAngle)/(outerAngle-innerAngle);
+        vec3 hsl = rotateHue(texel.rgb);
+        float amount = clamp((angle - innerAngle)/(outerAngle-innerAngle),0.0,1.0);
         color = mix(texel.rgb, hsl, amount);
     } else if (angle <= blackAngle) {
-        vec3 hsl = rotateHue(texel);
-        float amount = (angle - outerAngle)/(blackAngle-outerAngle);
+        vec3 hsl = rotateHue(texel.rgb);
+        float amount = clamp((angle - outerAngle)/(blackAngle-outerAngle),0.0,1.0);
         color = mix(hsl, vec3(0,0,0), amount);
     }
 
