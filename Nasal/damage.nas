@@ -185,6 +185,8 @@ var radar_signatures = {
                 "MiG-29":                   AIR_RADAR,
                 "SU-27":                    AIR_RADAR,
                 "EC-137R":                  AIR_RADAR,
+                "E-3R":                     AIR_RADAR,
+                "E-3":                      AIR_RADAR,
                 "RC-137R":                  AIR_RADAR,
                 "E-8R":                     AIR_RADAR,
                 "EC-137D":                  AIR_RADAR,

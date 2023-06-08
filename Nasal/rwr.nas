@@ -222,7 +222,7 @@ RWRCanvas = {
 #                   .hide();
 #        }
 # Threat list ID:
-        #REVISION: 2023/06/06
+        #REVISION: 2023/06/08
         #OPRF Fleet
         rwr.AIRCRAFT_WARTHOG  = "10";
         rwr.AIRCRAFT_TOMCAT   = "14";
@@ -299,6 +299,7 @@ RWRCanvas = {
                 "MiG-29":                   rwr.AIRCRAFT_FULCRUM,
                 "SU-27":                    rwr.AIRCRAFT_FLANKER,
                 "EC-137R":                  rwr.AIRCRAFT_SEARCH,
+                "E-3R":                     rwr.AIRCRAFT_SEARCH,
                 "E-3":                      rwr.AIRCRAFT_SEARCH,
                 "RC-137R":                  rwr.AIRCRAFT_SEARCH,
                 "E-8R":                     rwr.AIRCRAFT_SEARCH,

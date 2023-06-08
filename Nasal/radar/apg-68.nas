@@ -2640,6 +2640,7 @@ var radiation_list = {
     "A-50": "S",
     "EC-137R": "S",
     "E-3": "S",
+    "E-3R": "S",
 };
 
 var RadSensor = {
