@@ -1174,7 +1174,6 @@
             <terrain-follow type="bool">false</terrain-follow>
             <FCS-field-deg type="int">200</FCS-field-deg>
             <seeker-field-deg type="int">45</seeker-field-deg>
-            <reaquire type="bool">true</reaquire>
             <max-g type="double">1.8</max-g>
             <thrust-lbf-stage-1 type="double">0</thrust-lbf-stage-1>
             <thrust-lbf-stage-2 type="double">0</thrust-lbf-stage-2>
@@ -1216,7 +1215,7 @@
             <max-fire-range-nm type="double">25</max-fire-range-nm>
             <min-fire-range-nm type="double">0</min-fire-range-nm>
             <guidance type="string">gps</guidance>
-            <navigation type="string">PN</navigation>
+            <navigation type="string">APN</navigation>
             <loft-altitude type="int"> 0 </loft-altitude>
             <terrain-follow type="bool">false</terrain-follow>
             <FCS-field-deg type="int">240</FCS-field-deg>
@@ -1252,6 +1251,8 @@
             <ready-time type="double">900</ready-time>
             <require-lock-to-fire type="bool">true</require-lock-to-fire>
             <ejector-speed-fps type="double">15</ejector-speed-fps>
+            <requires-power-on type="bool">true</requires-power-on>
+            <power-on-battery-time type="double">0</power-on-battery-time><!-- infinite -->
         </b61-12>
         <es>                   <!-- Ejection seat ACES II. Source: A-DA-133 628 -->
                 <type-id type="int">93</type-id>
