@@ -11,7 +11,7 @@ Suitable for: FlightGear **2020.3.x** and **2020.4.0**
 The General Dynamics F-16 Fighting Falcon (nicknamed Viper by pilots) is a single-engine supersonic multirole fighter aircraft in use by the United States Air Force and exported to many countries, becoming world's most numerous fixed-wing aircraft in military service. Designed as an air superiority day fighter, it evolved into a successful all-weather multirole aircraft.
 The Fighting Falcon has key features including a frameless bubble canopy for better visibility, side-mounted control stick to ease control while maneuvering, a seat reclined 30 degrees to reduce the effect of g-forces on the pilot, and the first use of a relaxed static stability/fly-by-wire flight control system which helps to make it a nimble aircraft.
 
-![Image](https://i.ibb.co/mRKjgLD/fgfs-20230618193940.png)
+![Image](https://i.ibb.co/TY8Z2hW/fgfs-20230618192150.png)
 
 Includes the following Aircraft variants:
 
@@ -37,7 +37,11 @@ Each Block has slight differences regarding engine specifics, FBW system, aerody
 
 ![Image](https://i.ibb.co/C2wBn6h/fgfs-20230618200807.png)
 
+This project has been worked on by Erik Hofman, Martin "Pegasus" Schmitt, Pensacola, Nikolai V. Chr., J Maverick 16, Richard Harrison, Josh Davidson, Martien Van Der Plas, Jonathan Redpath, Gary Brown, Justin Nicholson, Enrico Castaldi, Timi, Barszczisbad, PH-JAKE, Baptiste Campion and LJQCN101 alongside several others.
+
 For the full list of contributors see authors.txt.
+
+![Image](https://i.ibb.co/9svDvnj/fgfs-20230608191242.png)
 
 Useful links:
 -----------
