@@ -97,7 +97,7 @@ var fuelqty = func {# 0.5 Hz loop
     # - This does not take into consideration any unusable fuel, but does try to prevent
     #   'ghost fuel' from being created.
     # - Transfer rate is unknown. The assumed value fits flight idle to AB burn rates.
-    if (dc_emerg_2.getValue() > 20 and qty_selector == FUEL_QTY_NORM and (fwdFuel+aftFuel) < 2800) {
+    if (dc_emerg_2.getValue() > 20 and qty_selector == FUEL_QTY_NORM and fwdFuel < 2800) {
         if (fwdFuel - aftFuel < 300 and
             getprop("consumables/fuel/tank[0]/level-norm") < 0.99 and
             getprop("consumables/fuel/tank[3]/level-norm") > 0.01) {
