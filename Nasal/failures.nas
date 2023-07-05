@@ -313,6 +313,9 @@ var init = func {
     # Add failure for HUD to the compatible failures. This will setup the property tree in the normal way; 
     # but it will not add it to the gui dialog.
     #append(compat_failure_modes.compat_modes,{ id: "instrumentation/hud", type: compat_failure_modes.MTBF, failure: compat_failure_modes.SERV, desc: "HUD" });
+
+    # Start fault list loop
+    loop_timer.start();
 }
 
 
@@ -351,7 +354,6 @@ var loop = func {
     }
     fail_master = fail_master_tmp;
     loop_caution();
-    settimer(loop,1);
 }
 
 var fail_master = [0,0,0,0];
@@ -563,7 +565,7 @@ setlistener("f16/avionics/caution/probe-heat",caution,0,0);
 setlistener("f16/avionics/caution/engine-fault",caution,0,0);
 setlistener("f16/avionics/caution/flcs",caution,0,0);
 
-loop();
+var loop_timer = maketimer(1, loop);
  
 # NOTES:
 #
