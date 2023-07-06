@@ -4100,11 +4100,11 @@
             <delay-sec>1.5</delay-sec>
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>0.75</factor>
+                <factor>0.6</factor>
             </volume>
             <volume>
                 <property>f16/avionics/intercom-volume</property>
-                <factor>0.4</factor>
+                <factor>0.5</factor>
             </volume>
         </aural>
         <aural>
