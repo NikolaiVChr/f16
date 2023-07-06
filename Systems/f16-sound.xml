@@ -4143,14 +4143,16 @@
                             <value>120</value>
                         </less-than>
                     </and-->
-                    <and>
+                    <equals>
                         <!-- source: Dash-1 1-95 and AD-A145-469 -->
                         <property>f16/avionics/low-speed-warning-tone-a</property>
-                    </and>
-                    <and>
+                        <value>1</value>
+                    </equals>
+                    <equals>
                         <!-- source: AD-A145-469 -->
                         <property>f16/avionics/low-speed-warning-tone-b</property>
-                    </and>
+                        <value>1</value>
+                    </equals>
                 </or>
             </condition>
             <volume>
