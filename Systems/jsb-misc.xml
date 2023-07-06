@@ -1063,7 +1063,7 @@
             <description>AD-A145-469</description>
             <default value="0"/>
             <test  logic="OR" value="1">
-                fcs/fly-by-wire/tef/tef-pos-norm ne 0
+                fcs/fly-by-wire/tef/tef-pos-norm gt 0.025
                 /controls/gear/gear-down ne 0
             </test>
         </switch>
