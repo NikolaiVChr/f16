@@ -527,6 +527,13 @@ var loop_caution = func {# TODO: unlit the caution lights except elec-sys when m
     var enableCatIII = getprop("fdm/jsbsim/fcs/fly-by-wire/enable-cat-III");
     var standbyGains = getprop("fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains");
     var fuelTest = getprop("controls/fuel/qty-selector") == 0;
+    var airSource = getprop("controls/ventilation/airconditioning-source");
+    # NORM, DUMP or RAM,
+    # while assuming ram air below 30 deg C at speeds higher
+    # than 70 kts is enough ventilation to cool the avionics
+    var cooling = airSource == 1 or airSource == 2 or
+                  (airSource == 3 and getprop("/environment/aircraft-effects/temperature-outside-ram-degC") < 30.0 and getprop("fdm/jsbsim/velocities/vtrue-kts") > 70.0);
+
     # GR1F-16CJ-1 page 121 : DBU - STORES CONFIG switch inoperative
     setprop("f16/avionics/caution/stores-config",  (batt2 and ((storesCat>1 and enableCatIII<1) or (storesCat==1 and enableCatIII==1)) and !getprop("fdm/jsbsim/fcs/fly-by-wire/digital-backup")));
     setprop("f16/avionics/caution/seat-not-armed", (batt2 and !getprop("controls/seat/ejection-safety-lever")));
@@ -538,7 +545,7 @@ var loop_caution = func {# TODO: unlit the caution lights except elec-sys when m
     setprop("f16/avionics/caution/elec-sys",       (batt2 and getprop("fdm/jsbsim/elec/bus/light/elec-sys")));
     setprop("f16/avionics/caution/cabin-press",    (batt2 and getprop("f16/cockpit/pressure-ft")>27000));
     setprop("f16/avionics/caution/adc",            (batt2 and standbyGains));
-    setprop("f16/avionics/caution/equip-hot",      (batt2 and (!getprop("controls/ventilation/airconditioning-source") and getprop("f16/avionics/power-ufc-warm"))));
+    setprop("f16/avionics/caution/equip-hot",      (batt2 and !cooling and getprop("f16/avionics/power-ufc-warm")));
     setprop("f16/avionics/caution/overheat",       (batt2 and (!getprop("damage/fire/serviceable") or getprop("controls/test/test-panel/fire-ovht-test"))));
     setprop("f16/avionics/caution/sec",            (batt2 and (getprop("f16/engine/sec-self-test") or getprop("f16/engine/ctl-sec"))));
     setprop("f16/avionics/caution/avionics",       (batt2 and fail_master[3]));

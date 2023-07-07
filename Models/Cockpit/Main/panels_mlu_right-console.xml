@@ -275,7 +275,7 @@
                 <property>controls/ventilation/airconditioning-source</property>
                 <factor>1</factor>
                 <min>0</min>
-                <max>2</max>
+                <max>3</max>
                 <wrap>false</wrap>
             </binding>
         </action>
