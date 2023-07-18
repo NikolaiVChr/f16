@@ -1413,14 +1413,16 @@
             <bit-fail type="bool">false</bit-fail>
         </fcs>
         <engine>
-			<ctl-sec type="bool">false</ctl-sec>
+            <ctl-sec type="bool">false</ctl-sec>
             <feed type="int">0</feed><!-- OFF/NORM prevents starter, cutoff -->
             <jet-fuel type="int">0</jet-fuel><!-- starter -1=1 1=2 0=off  goes to off at 55% rpm -->
             <running-state type="bool">false</running-state>
             <ab-reset type="int">0</ab-reset>
             <max-power type="bool">false</max-power>
+            <eec-cover type="int">0</eec-cover>
+            <eec-switch type="int">1</eec-switch>
             <jfs-rpm-normalized type="double">0</jfs-rpm-normalized>
-			<sec-self-test type="bool">false</sec-self-test>
+            <sec-self-test type="bool">false</sec-self-test>
             <cutoff-release-lever type="bool">true</cutoff-release-lever>
             <jfs-spool-up-start1-s type="double">12</jfs-spool-up-start1-s>
             <jfs-spool-up-start2-s type="double">8</jfs-spool-up-start2-s>

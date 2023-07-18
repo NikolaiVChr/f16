@@ -2954,6 +2954,134 @@
 		</release>
     </animation>
 
+    <animation>
+        <type>rotate</type>
+        <object-name>eec-cover</object-name>
+        <property>/f16/engine/eec-cover</property>
+        <factor>-40</factor>
+        <offset-deg>0</offset-deg>
+        <center>
+          <x-m>0.2308</x-m>
+          <y-m>-0.4445</y-m>
+          <z-m>0.02505</z-m>
+        </center>
+        <axis>
+          <x>0</x>
+          <y>-1</y>
+          <z>0</z>
+        </axis>
+    </animation>
+
+    <animation>
+        <type>knob</type>
+        <object-name>eec-switch</object-name>
+        <visible>true</visible>
+        <property>f16/engine/eec-switch</property>
+        <drag-direction>horizontal</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.75</interval-sec>
+        <factor>-30</factor>
+        <center>
+          <x-m>0.217x</x-m>
+          <y-m>-0.452864</y-m>
+          <z-m>0.021975</z-m>
+        </center>
+        <axis>
+          <x>0</x>
+          <y>1</y>
+          <z>0</z>
+        </axis>
+        <!--
+        This animation is ready to go when the Engine Control switch functionality is implemented.
+        For now it just makes the switch look good together with the model.
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/engine/eec-switch</property>
+                <step>1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+            <binding>
+                <condition>
+                    <or>
+                        <equals>
+                            <property>sim/aircraft</property>
+                            <value>f16-block-30</value>
+                        </equals>
+                        <equals>
+                            <property>sim/aircraft</property>
+                            <value>f16-block-40</value>
+                        </equals>
+                        <equals>
+                            <property>sim/aircraft</property>
+                            <value>f16-block-50</value>
+                        </equals>
+                        <equals>
+                            <property>sim/aircraft</property>
+                            <value>f16-block-60</value>
+                        </equals>
+                    </or>
+                </condition>
+                <command>nasal</command>
+                <script>
+                    setprop("f16/engine/eec-switch", 1)
+                </script>
+            </binding>
+            <binding>
+                <command>nasal</command>
+                <script>
+                    setprop("f16/engine/eec-cover", 1 - getprop("f16/engine/eec-switch"));
+                </script>
+            </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/engine/eec-switch</property>
+                <step>-1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+            <binding>
+                <condition>
+                    <or>
+                        <equals>
+                            <property>sim/aircraft</property>
+                            <value>f16-block-30</value>
+                        </equals>
+                        <equals>
+                            <property>sim/aircraft</property>
+                            <value>f16-block-40</value>
+                        </equals>
+                        <equals>
+                            <property>sim/aircraft</property>
+                            <value>f16-block-50</value>
+                        </equals>
+                        <equals>
+                            <property>sim/aircraft</property>
+                            <value>f16-block-60</value>
+                        </equals>
+                    </or>
+                </condition>
+                <command>nasal</command>
+                <script>
+                    setprop("f16/engine/eec-switch", -1)
+                </script>
+            </binding>
+            <binding>
+                <command>nasal</command>
+                <script>
+                    setprop("f16/engine/eec-cover", 1 - getprop("f16/engine/eec-switch"));
+                </script>
+            </binding>
+        </decrease>
+        -->
+    </animation>
+
   <animation>
         <type>knob</type>
         <object-name>SW_EPU</object-name>
