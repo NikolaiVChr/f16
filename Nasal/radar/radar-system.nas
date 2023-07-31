@@ -2057,6 +2057,9 @@ var OmniRadar = {
 				# This is not expensive as terrain manager set this in a loop.
 				continue;
 			}
+			if (contact.getType() == ORDNANCE) {
+				continue;
+			}
 			me.rangeDirectNM = contact.getRangeDirect()*M2NM;
 			if (me.rangeDirectNM > me.max_dist_nm) {
 				continue;
@@ -2442,6 +2445,9 @@ var getRadarFieldRadius = func (model) {
 	if (model == "fleet" or model == "missile-frigate") {
 		return 180;
 	}
+	if (knownSurface[model] == 0) {
+		return 0;
+	}
 	return 60;
 }
 
@@ -2496,17 +2502,18 @@ var knownShips = {
 };
 
 var knownSurface = {
+	# 0 = has no radar
     "S-75":       nil,
     "buk-m2":       nil,
     "SA-6":       nil,
     "s-300":       nil,
     "s-200":       nil,
-    "depot":       nil,
-    "struct":       nil,
-    "point":       nil,
-    "rig":       nil,
+    "depot":       0,
+    "struct":       0,
+    "point":       0,
+    "rig":       0,
     "gci":       nil,
-    "truck":     nil,
+    "truck":     0,
     "tower":     nil,
     "MIM104D":       nil,
     "ZSU-23-4M":       nil,
