@@ -18,7 +18,7 @@ var STPTlonFE = EditableLON.new("f16/ded/lon", convertDegreeToStringLon);
 var STPTnumFE = EditableField.new("f16/ded/stpt-edit", "%3d", 3);
 var STPTradFE = EditableField.new("f16/ded/stpt-rad", "%2d", 2);
 var STPTaltFE = EditableField.new("f16/ded/alt", "%5d", 5);
-var CRUSmodeTF = toggleableMode.new(["TOS", "RNG"], "f16/ded/crus-mode", "f16/ded/cur-crus-mode");
+var CRUSmodeTF = toggleableMode.new(["TOS", "RNG", "EDR"], "f16/ded/crus-mode", "f16/ded/cur-crus-mode");
 var CRUSdesTosEF = EditableTime.new("f16/ded/crus-des-tos", steerpoints.getAbsoluteTOS);
 #var CRUSstptEF = EditableField.new("f16/ded/crus-stpt", "%3d", 3);
 var STPTtypeTF = toggleableField.new(["   ", " 2 ", " 5 ", " 6 ", " 11", " 20", " SH", " P ", " AAA"], "f16/ded/stpt-type");
@@ -655,6 +655,20 @@ var dataEntryDisplay = {
             me.text[1] = sprintf("      STPT  %s   ",maxS);
             me.text[2] = sprintf("      FUEL   %s",fuel);#fuel remaining after getting to last steerpoint at current fuel consumption.
             me.text[3] = sprintf("                        ");
+            me.text[4] = sprintf("      WIND %s %s",winddir,windkts);
+        } elsif (crusMode == "EDR") {
+            var windkts = getprop("environment/wind-speed-kt");
+            var winddir = getprop("environment/wind-from-heading-deg");
+            if (windkts == nil or winddir == nil) {
+                windkts = -1;
+                winddir = -1;
+            }
+            windkts = sprintf("%2dKTS",getprop("environment/wind-speed-kt"));
+            winddir = sprintf("%03d\xc2\xb0",getprop("environment/wind-from-heading-deg"));
+
+            me.text[1] = sprintf("      STPT  %s   ",me.no);
+            me.text[2] = sprintf("   TO BNGO   %s",steerpoints._getTOS(getprop("consumables/fuel/total-fuel-lbs")/getprop("engines/engine[0]/fuel-flow_pph")*3600,1));
+            me.text[3] = sprintf("  OPT MACH   %s", "");
             me.text[4] = sprintf("      WIND %s %s",winddir,windkts);
         }
 	},
