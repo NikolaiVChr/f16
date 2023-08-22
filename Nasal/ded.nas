@@ -665,9 +665,10 @@ var dataEntryDisplay = {
             }
             windkts = sprintf("%2dKTS",getprop("environment/wind-speed-kt"));
             winddir = sprintf("%03d\xc2\xb0",getprop("environment/wind-from-heading-deg"));
+            var toBingo = (getprop("consumables/fuel/total-fuel-lbs")-getprop("f16/settings/bingo"))/getprop("engines/engine[0]/fuel-flow_pph")*3600;
 
             me.text[1] = sprintf("      STPT  %s   ",me.no);
-            me.text[2] = sprintf("   TO BNGO   %s",steerpoints._getTOS(getprop("consumables/fuel/total-fuel-lbs")/getprop("engines/engine[0]/fuel-flow_pph")*3600,1));
+            me.text[2] = sprintf("   TO BNGO   %s",steerpoints.formatTime(toBingo));
             me.text[3] = sprintf("  OPT MACH   %s", "");
             me.text[4] = sprintf("      WIND %s %s",winddir,windkts);
         }

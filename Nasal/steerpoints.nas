@@ -462,15 +462,10 @@ var getLastTOS = func {
 	return _getTOS(eta);
 }
 
-var _getTOS = func (eta, absolute = 0) {
-	# Get string with time on station for a specific time in seconds
-	# eta is allowed to be nil
-	# if absolute the eta is assumed to be an exact time, otherwise eta is assumed to be relative to current time
-	var TOS = "--:--:--";
-	if (getCurrentNumber() == 0) return TOS;
-
-	if (eta == nil or eta>3600*24 or eta == -1) {
-		return TOS;
+var formatTime = func(time, absolute = 1) {
+    var result = "--:--:--";
+    if (time == nil or time>3600*24 or time < 0) {
+		return result;
 	} else {
 	    if (!absolute) {
             var hour   = getprop("sim/time/utc/hour");
@@ -481,11 +476,21 @@ var _getTOS = func (eta, absolute = 0) {
             var minute = 0;
             var second = 0;
         }
-        var final = addSeconds(eta,second,minute,hour);
+        var final = addSeconds(time,second,minute,hour);
 
-		TOS = sprintf("%02d:%02d:%02d",final[1],final[2],final[3]);
-	}      
-	return TOS;
+		result = sprintf("%02d:%02d:%02d",final[1],final[2],final[3]);
+	}
+	return result;
+}
+
+var _getTOS = func (eta, absolute = 0) {
+	# Get string with time on station for a specific time in seconds
+	# eta is allowed to be nil
+	# if absolute the eta is assumed to be an exact time, otherwise eta is assumed to be relative to current time
+	var TOS = "--:--:--";
+	if (getCurrentNumber() == 0) return TOS;
+
+	return formatTime(eta, !absolute);
 }
 
 var addSeconds = func (add_secs, secs, mins, hours) {
