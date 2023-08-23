@@ -18,7 +18,7 @@ var STPTlonFE = EditableLON.new("f16/ded/lon", convertDegreeToStringLon);
 var STPTnumFE = EditableField.new("f16/ded/stpt-edit", "%3d", 3);
 var STPTradFE = EditableField.new("f16/ded/stpt-rad", "%2d", 2);
 var STPTaltFE = EditableField.new("f16/ded/alt", "%5d", 5);
-var CRUSmodeTF = toggleableMode.new(["TOS", "RNG"], "f16/ded/crus-mode", "f16/ded/cur-crus-mode");
+var CRUSmodeTF = toggleableMode.new(["TOS", "RNG", "EDR"], "f16/ded/crus-mode", "f16/ded/cur-crus-mode");
 var CRUSdesTosEF = EditableTime.new("f16/ded/crus-des-tos", steerpoints.getAbsoluteTOS);
 #var CRUSstptEF = EditableField.new("f16/ded/crus-stpt", "%3d", 3);
 var STPTtypeTF = toggleableField.new(["   ", " 2 ", " 5 ", " 6 ", " 11", " 20", " SH", " P ", " AAA"], "f16/ded/stpt-type");
@@ -535,7 +535,7 @@ var dataEntryDisplay = {
 
 	updateCrus: func() {
 		# Source: F-16 A/B Mid-Life Update Production Tape M1: Pilot's guide to new to new capabilities & cockpit enhancements.
-		# This page does not yet support HOME or EDR
+		# This page does not yet support HOME
 
         # The top right STPT number should be hidden except on the TOS page
         var tempNo = "";
@@ -556,7 +556,7 @@ var dataEntryDisplay = {
         }
 
 
-        me.text[0] = sprintf("      CRUS %s     %s ", tempCrusMode, tempNo);
+        me.text[0] = sprintf("      CRUS  %s     %s ", tempCrusMode, tempNo);
 		# me.text[0] = sprintf("     CRUS  RNG  ",me.no);
 		if (crusMode == "TOS") {
 		    var time = getprop("/sim/time/gmt-string");
@@ -590,10 +590,10 @@ var dataEntryDisplay = {
 		    if (gs_num == nil or cur_des == nil) {
 		        req_gs = "";
 		    }
-            me.text[1] = sprintf("      TIME  %s", time);
-            me.text[2] = sprintf("   DES TOS %s", TOS);
-            me.text[3] = sprintf("       ETA  %s", ETA);
-            me.text[4] = sprintf("   REQ G/S   %s", req_gs);
+            me.text[1] = sprintf("      TIME   %s", time);
+            me.text[2] = sprintf("   DES TOS  %s", TOS);
+            me.text[3] = sprintf("       ETA   %s", ETA);
+            me.text[4] = sprintf("   REQ G/S    %s", req_gs);
 
             if (cur_wp != nil) {
                 des_tos_last = cur_des;
@@ -610,7 +610,7 @@ var dataEntryDisplay = {
             if (fp != nil and stnum < 100) {
                 var max = fp.getPlanSize();
                 if (max > 0) {
-                    maxS = sprintf("%2d"~utf8.chstr(0x2195),max);
+                    maxS = sprintf("%3d "~utf8.chstr(0x2195),max);
                     var ete = getprop("autopilot/route-manager/ete");
                     if (ete != nil and ete > 0) {
                         var pph = getprop("engines/engine[0]/fuel-flow_pph");
@@ -628,7 +628,7 @@ var dataEntryDisplay = {
                 }
             } elsif (stnum >= 100) {
                 var stpt = steerpoints.getCurrent();
-                maxS = sprintf("%2d"~utf8.chstr(0x2195),stnum);
+                maxS = sprintf("%3d "~utf8.chstr(0x2195),stnum);
                 var ete = steerpoints.getCurrentETA();
                 if (ete != nil and ete > 0) {
                     var pph = getprop("engines/engine[0]/fuel-flow_pph");
@@ -650,12 +650,27 @@ var dataEntryDisplay = {
                 windkts = -1;
                 winddir = -1;
             }
-            windkts = sprintf("% 3dKTS",getprop("environment/wind-speed-kt"));
+            windkts = sprintf("%2dKTS",getprop("environment/wind-speed-kt"));
             winddir = sprintf("%03d\xc2\xb0",getprop("environment/wind-from-heading-deg"));
-            me.text[1] = sprintf("   STPT    %s   ",maxS);
-            me.text[2] = sprintf("   FUEL   %s",fuel);#fuel remaining after getting to last steerpoint at current fuel consumption.
+            me.text[1] = sprintf("      STPT  %s   ",maxS);
+            me.text[2] = sprintf("      FUEL   %s",fuel);#fuel remaining after getting to last steerpoint at current fuel consumption.
             me.text[3] = sprintf("                        ");
-            me.text[4] = sprintf("   WIND   %s     %s",winddir,windkts);
+            me.text[4] = sprintf("      WIND %s %s",winddir,windkts);
+        } elsif (crusMode == "EDR") {
+            var windkts = getprop("environment/wind-speed-kt");
+            var winddir = getprop("environment/wind-from-heading-deg");
+            if (windkts == nil or winddir == nil) {
+                windkts = -1;
+                winddir = -1;
+            }
+            windkts = sprintf("%2dKTS",getprop("environment/wind-speed-kt"));
+            winddir = sprintf("%03d\xc2\xb0",getprop("environment/wind-from-heading-deg"));
+            var toBingo = (getprop("consumables/fuel/total-fuel-lbs")-getprop("f16/settings/bingo"))/getprop("engines/engine[0]/fuel-flow_pph")*3600;
+
+            me.text[1] = sprintf("      STPT  %s   ",me.no);
+            me.text[2] = sprintf("   TO BNGO   %s",steerpoints.formatTime(toBingo));
+            me.text[3] = sprintf("  OPT MACH   %s", "");
+            me.text[4] = sprintf("      WIND %s %s",winddir,windkts);
         }
 	},
 
