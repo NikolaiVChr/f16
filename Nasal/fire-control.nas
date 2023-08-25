@@ -838,6 +838,31 @@ var FireControl = {
 				me.guidanceEnabled = 1;
 			}
 			if (me.aim != nil and me.aim.parents[0] == armament.AIM and (me.aim.status == armament.MISSILE_LOCK or me.aim.guidance=="unguided" or me.aim.loal or !me.guidanceEnabled)) {
+			    if (me.getDropMode() == 0) {
+			        me.distCCRP = getprop("f16/hud/distCCRP");
+			        me.distCCRPLast = me.distCCRP;
+			        if (me.distCCRP >= 500 or me.distCCRP < me.distCCRPLast) {
+			            print("Trigger was pressed, waiting for launch parameters");
+                        me.distCCRPListen = setlistener("f16/hud/distCCRP", func (distCCRP) {
+                            me.distCCRPLast = me.distCCRP;
+                            # the variable passed to this method is a string, so let's just fetch it again
+                            me.distCCRP = getprop("f16/hud/distCCRP");
+
+                            if (getprop("controls/armament/trigger") < 1) {
+                                print("Trigger was let go, cancel the listener");
+                                removelistener(me.distCCRPListen);
+                                return;
+                            }
+                            if (me.distCCRP < 500 and me.distCCRP >= me.distCCRPLast) {
+                                print("Launch parameters met, re-run the trigger function");
+                                me.trigger();
+                                removelistener(me.distCCRPListen);
+                                return;
+                            }
+                        });
+                        return;  # The listener will call this function again when we are ready
+                    }
+			    }
 				me.aim = me.fireAIM(me.selected[0],me.selected[1], me.guidanceEnabled);
 				if (me.selectedAdd != nil) {
 					foreach(me.seldual ; me.selectedAdd) {

@@ -3042,6 +3042,7 @@ append(obj.total, obj.speed_curr);
                     me.maxFallTime = 45;
                 }
                 me.distCCRP = pylons.fcs.getSelectedWeapon().getCCRP(me.maxFallTime,me.dt);
+                setprop("f16/hud/distCCRP", me.distCCRP);
                 if (me.distCCRP == nil or (me.distCCRP*M2NM > 13.2 and selW.guidance == "laser")) {#1F-F16CJ-34-1: max laser dist is 13.2nm
                     me.solutionCue.hide();
                     me.ccrpMarker.hide();
