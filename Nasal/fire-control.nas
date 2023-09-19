@@ -838,7 +838,7 @@ var FireControl = {
 				me.guidanceEnabled = 1;
 			}
 			if (me.aim != nil and me.aim.parents[0] == armament.AIM and (me.aim.status == armament.MISSILE_LOCK or me.aim.guidance=="unguided" or me.aim.loal or !me.guidanceEnabled)) {
-			    if (me.getDropMode() == 0) {
+			    if (me.getDropMode() == 0 and (me.aim.type=="MK-82" or me.aim.type=="MK-82AIR" or me.aim.type=="MK-83" or me.aim.type=="MK-84" or me.aim.type=="GBU-12" or me.aim.type=="GBU-31" or me.aim.type=="GBU-54" or me.aim.type=="GBU-24" or me.aim.type=="CBU-87" or me.aim.type=="CBU-105" or me.aim.type=="AGM-154A" or me.aim.type=="B61-7" or me.aim.type=="B61-12") and me.aim.status == armament.MISSILE_LOCK) {
 			        me.distCCRP = getprop("f16/hud/distCCRP");
 			        me.distCCRPLast = me.distCCRP;
 			        if (me.distCCRP >= 500 or me.distCCRP < me.distCCRPLast) {
