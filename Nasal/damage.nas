@@ -60,6 +60,7 @@ var shells = {
     "DEFA 554":          [14,0.060], # 30x113mm Mirage, 220g
     "20mm APDS":         [15,0.030], # CIWS
     "LAU-10":            [16,0.500], # 127mm, ~4-7kg warhead
+    # Max id is 41
 };
 
 # lbs of warheads is explosive+fragmentation+fuse, so total warhead mass.
@@ -166,6 +167,7 @@ var warheads = {
     "5V28V":             [97,  478.00,0,0],# Missile used with S-200D/SA-5
     "AIM-9X":            [98,   20.80,0,0],
     "R-23R":             [99,   55.00,0,0],# mig23 fox 1
+    # Max id is 180
 };
 
 var AIR_RADAR = "air";
@@ -312,7 +314,7 @@ var DamageRecipient =
                 var radarOn = bits.test(notification.Flags, 0);
                 var thrustOn = bits.test(notification.Flags, 1);
                 var CWIOn = bits.test(notification.Flags, 2);
-                var index = notification.SecondaryKind-21;
+                var index = me.emesaryID2typeID(notification.SecondaryKind);
                 var typ = id2warhead[index];
 
                 if (notification.Kind == MOVE) {
@@ -440,9 +442,9 @@ var DamageRecipient =
                     #
                     if (tacview_supported and tacview.starttime and (getprop("sim/multiplay/txhost") != "mpserver.opredflag.com" or m28_auto)) {
                     var node = getCallsign(notification.RemoteCallsign);
-                      if (node != nil and notification.SecondaryKind > 20) {
+                      if (node != nil and (notification.SecondaryKind > 20 or notification.SecondaryKind < -40)) {
                         # its a warhead
-                        var wh = id2warhead[notification.SecondaryKind - 21];
+                        var wh = id2warhead[me.emesaryID2typeID(notification.SecondaryKind)];
                         var lbs = wh[1];
                         var hitCoord = geo.Coord.new();
                         hitCoord.set_latlon(node.getNode("position/latitude-deg").getValue(), node.getNode("position/longitude-deg").getValue(), node.getNode("position/altitude-ft").getValue()*FT2M+notification.RelativeAltitude);
@@ -479,11 +481,11 @@ var DamageRecipient =
                                 damageLog.push(sprintf("%s hit you with %d %s.", notification.Callsign, hit_count, typ));
                                 nearby_explosion();
                             }
-                        } elsif (notification.SecondaryKind > 20) {
+                        } elsif (notification.SecondaryKind > 20 or notification.SecondaryKind < -40) {
                             # its a warhead
                             if (m28_auto) mig28.engagedBy(notification.Callsign, 1);
                             var dist     = notification.Distance;
-                            var wh = id2warhead[notification.SecondaryKind - 21];
+                            var wh = id2warhead[me.emesaryID2typeID(notification.SecondaryKind)];
                             var type = wh[4];#test code
                             if (wh[3] == 1) {
                                 # cluster munition
@@ -608,7 +610,29 @@ var DamageRecipient =
             return emesary.Transmitter.ReceiptStatus_NotProcessed;
         };
         return new_class;
-    }
+    },
+
+    typeID2emesaryID: func (typeID) {
+      if (typeID <= 100) {
+        return typeID + 21;
+      } elsif (typeID <= 180)
+        return (typeID - 100) * -1 - 40;
+      } else {
+        print("Missile TypeID too large value, max is 180");
+        return 0;
+      }
+    },
+
+    emesaryID2typeID: func (emesaryID) {
+      if (typeID > 20) {
+        return emesaryID - 21;
+      } elsif (typeID < -40)
+        return (emesaryID + 40) * -1 + 100;
+      } else {
+        print("Missile emesaryID not a warhead");
+        return 0;
+      }
+    },
 };
 
 damage_recipient = DamageRecipient.new("DamageRecipient");
