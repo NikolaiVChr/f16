@@ -825,6 +825,7 @@ var FireControl = {
 	trigger: func {
 		# trigger pressed down should go here, this will fire weapon
 		# cannon is fired in another way, but this method will print the brevity.
+        setprop("payload/armament/releasedCCRP", 0);
 		printfDebug("trigger called %d %d %d",getprop("controls/armament/master-arm"),getprop("controls/armament/trigger"),me.selected != nil);
 		if (me.getSelectedPylon() == nil or !me.getSelectedPylon().isActive()) return;
 		if (me.isRippling) return;
@@ -857,6 +858,7 @@ var FireControl = {
                                 print("Launch parameters met, re-run the trigger function");
                                 me.trigger();
                                 removelistener(me.distCCRPListen);
+                                setprop("payload/armament/releasedCCRP", 1);
                                 return;
                             }
                         });
@@ -1311,6 +1313,7 @@ var printfDebug = func {if (debug == 1) call(printf,arg);};
 
 
 var ccrp_loop = func () {
+    if (getprop("payload/armament/releasedCCRP") == nil) setprop("payload/armament/releasedCCRP", 0);
     var selW = pylons.fcs.getSelectedWeapon();
 
     # Exit if master switch off, no selected weapon, ccip, not A/G bomb, or not locked on a target

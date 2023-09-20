@@ -1468,7 +1468,12 @@ append(obj.total, obj.speed_curr);
                                                 obj.bank_angle_indicator.setTranslation (hdp.VV_x, hdp.VV_y);
                                                 obj.r_show = 0;
                                             }
-                                            obj.VV.show();
+                                            # If we're holding the trigger and dropped a bomb in CCRP, flash the FPM twice per second
+                                            if (getprop("controls/armament/trigger") < 1 or getprop("payload/armament/releasedCCRP") < 1 or math.mod(math.mod(getprop("sim/time/steady-clock-sec"),1),0.5) < 0.25) {
+                                                obj.VV.show();
+                                            } else {
+                                                obj.VV.hide();
+                                            }
                                             obj.VV.update();
                                         } else {
                                             obj.VV.hide();
