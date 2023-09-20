@@ -2627,7 +2627,7 @@ var RWR = {
 
 
 var radiation_list = {
-	"buk-m2": "11",
+	"buk-m2": "17",
     "s-300": "20",
     "s-200": "5",
     "S-75": "2",
@@ -2679,7 +2679,7 @@ var RadSensor = {
 	index: -1,
 	timing: 0.05,
 	table: [],
-    tables: [["2","11","20","P","S"],["6","5"],["AAA","SH"]],
+    tables: [["2","17","20","P","S"],["6","5"],["AAA","SH"]],
 	currtable: 0,
 	handoffTarget: nil,
 	handoffTime: 0,
