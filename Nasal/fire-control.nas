@@ -1317,6 +1317,7 @@ var ccrp_loop = func () {
     if (getprop(masterArmSwitch) == 0 or
         !(selW != nil and !(pylons.fcs.getDropMode == 1) and
             (selW.type=="MK-82" or selW.type=="MK-82AIR" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selW.type=="GBU-54" or selW.type=="GBU-24" or selW.type=="CBU-87" or selW.type=="CBU-105" or selW.type=="AGM-154A" or selW.type=="B61-7" or selW.type=="B61-12") and selW.status == armament.MISSILE_LOCK )) {
+        setprop("payload/armament/distCCRP", -1);
         return;
     }
     var trgt = armament.contactPoint;
