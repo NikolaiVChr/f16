@@ -183,6 +183,7 @@ var radar_signatures = {
                 "m2000-5B":                 AIR_RADAR,
                 "MiG-21bis":                AIR_RADAR,
                 "MiG-21MF-75":              AIR_RADAR,
+                "Mig-23MLD":                AIR_RADAR,
                 "MiG-29":                   AIR_RADAR,
                 "SU-27":                    AIR_RADAR,
                 "EC-137R":                  AIR_RADAR,
