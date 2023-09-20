@@ -4343,7 +4343,7 @@ var AIM = {
 
 	notifyInFlight: func (lat,lon,alt,rdar,semiRdr,typeID,typ,unique,thrustOn,callsign, heading, pitch, speed, is_deleted=0) {
 		## thrustON cannot be named 'thrust' as FG for some reason will then think its a function (probably fixed by the way call() now is used)
-		var msg = notifications.ArmamentInFlightNotification.new("mfly", unique, is_deleted?damage.DESTROY:damage.MOVE, 21+typeID);
+		var msg = notifications.ArmamentInFlightNotification.new("mfly", unique, is_deleted?damage.DESTROY:damage.MOVE, damage.damage_recipient.typeID2emesaryID(typeID));
         if (lat != nil) {
         	msg.Position.set_latlon(lat,lon,alt);
         } else {
@@ -4382,7 +4382,7 @@ var AIM = {
 	},
 
 	notifyHit: func (RelativeAltitude, Distance, callsign, Bearing, reason, typeID, type, self) {
-		var msg = notifications.ArmamentNotification.new("mhit", 4, 21+typeID);
+		var msg = notifications.ArmamentNotification.new("mhit", 4, damage.damage_recipient.typeID2emesaryID(typeID));
         msg.RelativeAltitude = RelativeAltitude;
         msg.Bearing = Bearing;
         msg.Distance = Distance;
