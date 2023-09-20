@@ -839,14 +839,14 @@ var FireControl = {
 			}
 			if (me.aim != nil and me.aim.parents[0] == armament.AIM and (me.aim.status == armament.MISSILE_LOCK or me.aim.guidance=="unguided" or me.aim.loal or !me.guidanceEnabled)) {
 			    if (me.getDropMode() == 0 and (me.aim.type=="MK-82" or me.aim.type=="MK-82AIR" or me.aim.type=="MK-83" or me.aim.type=="MK-84" or me.aim.type=="GBU-12" or me.aim.type=="GBU-31" or me.aim.type=="GBU-54" or me.aim.type=="GBU-24" or me.aim.type=="CBU-87" or me.aim.type=="CBU-105" or me.aim.type=="AGM-154A" or me.aim.type=="B61-7" or me.aim.type=="B61-12") and me.aim.status == armament.MISSILE_LOCK) {
-			        me.distCCRP = getprop("f16/hud/distCCRP");
+			        me.distCCRP = getprop("payload/armament/distCCRP");
 			        me.distCCRPLast = me.distCCRP;
-			        if (me.distCCRP >= 500 or me.distCCRP < me.distCCRPLast) {
+			        if (me.distCCRP == -1 or me.distCCRPLast == -1 or me.distCCRP >= 500 or me.distCCRP < me.distCCRPLast) {
 			            print("Trigger was pressed, waiting for launch parameters");
-                        me.distCCRPListen = setlistener("f16/hud/distCCRP", func (distCCRP) {
+                        me.distCCRPListen = setlistener("payload/armament/distCCRP", func (distCCRP) {
                             me.distCCRPLast = me.distCCRP;
                             # the variable passed to this method is a string, so let's just fetch it again
-                            me.distCCRP = getprop("f16/hud/distCCRP");
+                            me.distCCRP = getprop("payload/armament/distCCRP");
 
                             if (getprop("controls/armament/trigger") < 1) {
                                 print("Trigger was let go, cancel the listener");
@@ -1308,6 +1308,43 @@ var debug = 0;
 var printDebug = func (msg) {if (debug == 1) print(msg);};
 var printfDebug = func {if (debug == 1) call(printf,arg);};
 
+
+
+var ccrp_loop = func () {
+    var selW = pylons.fcs.getSelectedWeapon();
+
+    # Exit if master switch off, no selected weapon, ccip, not A/G bomb, or not locked on a target
+    if (getprop(masterArmSwitch) == 0 or
+        !(selW != nil and !(pylons.fcs.getDropMode == 1) and
+            (selW.type=="MK-82" or selW.type=="MK-82AIR" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selW.type=="GBU-54" or selW.type=="GBU-24" or selW.type=="CBU-87" or selW.type=="CBU-105" or selW.type=="AGM-154A" or selW.type=="B61-7" or selW.type=="B61-12") and selW.status == armament.MISSILE_LOCK )) {
+        return;
+    }
+    var trgt = armament.contactPoint;
+    if (trgt == nil and radar_system.apg68Radar.getPriorityTarget() != nil) {
+        trgt = radar_system.apg68Radar.getPriorityTarget();
+    } elsif (trgt == nil) {
+        print("tgt not found");
+    }
+    if (selW.guidance == "unguided") {
+        var dt = 0.1;
+        var maxFallTime = 20;
+    } else {
+        var agl = (getprop("position/altitude-ft")-trgt.get_altitude())*FT2M;
+        var dt = agl*0.000025;#4000 ft = ~0.1
+        if (dt < 0.1) dt = 0.1;
+        var maxFallTime = 45;
+    }
+    var distCCRP = pylons.fcs.getSelectedWeapon().getCCRP(maxFallTime,dt);
+    if (distCCRP == nil) {
+        distCCRP = -1;
+    }
+    setprop("payload/armament/distCCRP", distCCRP);
+}
+
+setprop("payload/armament/distCCRP", -1);
+var ccrp_loopTimer = maketimer(0.1, ccrp_loop);
+ccrp_loopTimer.simulatedTime = 1;
+ccrp_loopTimer.start();
 
 
 # This is non-generic methods, please edit it to fit your radar setup:
