@@ -269,7 +269,7 @@ var F16GPSDeleagte = {
             # standard leq sequencing
             var nextIndex = me.flightplan.current + 1;
             if (nextIndex >= me.flightplan.numWaypoints()) {
-                logprint(LOG_INFO, "default GPS sequencing, not finishing flightplan");
+                #logprint(LOG_INFO, "default GPS sequencing, not finishing flightplan");
                 #me.flightplan.finish();
             } elsif (me.flightplan.nextWP().wp_type == 'discontinuity') {
                 logprint(LOG_INFO, "default GPS sequencing DISCONTINUITY in flightplan, switching to OBS mode");
