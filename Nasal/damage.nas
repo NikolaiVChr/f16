@@ -615,7 +615,7 @@ var DamageRecipient =
     typeID2emesaryID: func (typeID) {
       if (typeID <= 100) {
         return typeID + 21;
-      } elsif (typeID <= 180)
+      } elsif (typeID <= 180) {
         return (typeID - 100) * -1 - 40;
       } else {
         print("Missile TypeID too large value, max is 180");
@@ -624,9 +624,9 @@ var DamageRecipient =
     },
 
     emesaryID2typeID: func (emesaryID) {
-      if (typeID > 20) {
+      if (emesaryID > 20) {
         return emesaryID - 21;
-      } elsif (typeID < -40)
+      } elsif (emesaryID < -40) {
         return (emesaryID + 40) * -1 + 100;
       } else {
         print("Missile emesaryID not a warhead");
