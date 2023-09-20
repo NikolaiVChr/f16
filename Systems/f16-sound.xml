@@ -3419,7 +3419,7 @@
             </volume>
         </rwr>
         <rwr>
-            <name>rwr-spike-11</name>
+            <name>rwr-spike-17</name>
             <path>Aircraft/f16/Sounds/rwr/rwr-rf-demma.wav</path>
             <mode>looped</mode>
             <type>avionics</type>
@@ -3435,7 +3435,7 @@
                     </greater-than>
                 </or>
                 <equals>
-                    <property>payload/armament/spike-gnd-11</property>
+                    <property>payload/armament/spike-gnd-17</property>
                     <value>1</value>
                 </equals>
             </condition>
