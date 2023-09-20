@@ -853,7 +853,7 @@ var FireControl = {
                                 removelistener(me.distCCRPListen);
                                 return;
                             }
-                            if (me.distCCRP < 500 and me.distCCRP >= me.distCCRPLast) {
+                            if (me.distCCRP != -1 and me.distCCRPLast != -1 and me.distCCRP < 500 and me.distCCRP >= me.distCCRPLast) {
                                 print("Launch parameters met, re-run the trigger function");
                                 me.trigger();
                                 removelistener(me.distCCRPListen);
@@ -1325,6 +1325,8 @@ var ccrp_loop = func () {
         trgt = radar_system.apg68Radar.getPriorityTarget();
     } elsif (trgt == nil) {
         print("tgt not found");
+        setprop("payload/armament/distCCRP", -1);
+        return;
     }
     if (selW.guidance == "unguided") {
         var dt = 0.1;
