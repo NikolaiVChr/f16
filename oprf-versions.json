@@ -24,7 +24,7 @@
     "path": "Nasal/datalink.nas"
   },
   "station-manager": {
-    "version": "1.0.1",
+    "version": "1.1.0",
     "path": "Nasal/station-manager.nas"
   },
   "rcs-mand": {
@@ -40,15 +40,15 @@
     "path": "Nasal/ArmamentNotification.nas"
   },
   "geo-bridged-transmitter": {
-    "version": null,
+    "version": "1.0.0",
     "path": "Nasal/GeoBridgedTransmitter.nas"
   },
   "hack-canvas": {
-    "version": null,
+    "version": "1.0.0",
     "path": "Nasal/hackCanvas.nas"
   },
   "crash-and-stress": {
-    "version": null,
+    "version": "0.1.9",
     "path": "Nasal/crash-and-stress.nas"
   }
 }
