@@ -38,9 +38,13 @@
   "armament-notification": {
     "version": "1.1.0",
     "path": "Nasal/ArmamentNotification.nas"
-  }
+  },
   "geo-bridged-transmitter": {
     "version": null,
     "path": "Nasal/GeoBridgedTransmitter.nas"
+  },
+  "hack-canvas": {
+    "version": null,
+    "path": "Nasal/hackCanvas.nas"
   }
 }
