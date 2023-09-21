@@ -1630,6 +1630,7 @@
         </pylons>
         <crash>
             <file>Aircraft/f16/Nasal/crash-and-stress.nas</file>
+            <file>Aircraft/f16/Nasal/crash-and-stress-custom.nas</file>
         </crash>
         <mig28>
             <file>Aircraft/f16/Nasal/mig28.nas</file>

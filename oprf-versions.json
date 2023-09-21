@@ -46,5 +46,9 @@
   "hack-canvas": {
     "version": null,
     "path": "Nasal/hackCanvas.nas"
+  },
+  "crash-and-stress": {
+    "version": null,
+    "path": "Nasal/crash-and-stress.nas"
   }
 }
