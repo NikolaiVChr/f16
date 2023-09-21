@@ -1,6 +1,6 @@
 {
   "vector": {
-    "version": null,
+    "version": "2.0.3",
     "path": "Nasal/vector.nas"
   },
   "missile-code": {
@@ -8,7 +8,7 @@
     "path": "Nasal/missile-code.nas"
   },
   "radar-system": {
-    "version": null,
+    "version": "1.0.1",
     "path": "Nasal/radar/radar-system.nas"
   },
   "damage": {
@@ -16,27 +16,27 @@
     "path": "Nasal/damage.nas"
   },
   "iff": {
-    "version": null,
+    "version": "1.1.0",
     "path": "Nasal/iff.nas"
   },
   "datalink": {
-    "version": null,
+    "version": "1.1.0",
     "path": "Nasal/datalink.nas"
   },
   "station-manager": {
-    "version": null,
+    "version": "1.0.1",
     "path": "Nasal/station-manager.nas"
   },
   "rcs-mand": {
-    "version": null,
+    "version": "1.0.1",
     "path": "Nasal/rcs_mand.nas"
   },
   "hud-math": {
-    "version": null,
+    "version": "1.0.0",
     "path": "Nasal/HUD/hud_math.nas"
   },
   "armament-notification": {
-    "version": null,
+    "version": "1.1.0",
     "path": "Nasal/ArmamentNotification.nas"
   }
 }
