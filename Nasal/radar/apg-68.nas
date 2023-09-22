@@ -2473,7 +2473,9 @@ var F16GMTFTTMode = {
 var noRadarList = {
 	# These have no radar
 	depot:nil, point:nil, struct:nil, rig:nil, truck:nil, hunter:nil,
-	"alphajet":nil, "jaguar":nil, "Jaguar-GR3":nil, "A-10-modelB":nil, "Jaguar-GR1":nil, "A-10-model":nil, "A-10":nil, "G91-R1B":nil, "G91":nil, "g91":nil, "mb339":nil, "mb339pan":nil, "F-117":nil,
+	"alphajet":nil, "jaguar":nil, "Jaguar-GR3":nil, "A-10-modelB":nil,
+	"Jaguar-GR1":nil, "A-10-model":nil, "A-10":nil, "G91-R1B":nil,
+	"G91":nil, "g91":nil, "mb339":nil, "mb339pan":nil, "F-117":nil,
 };
 
 var RWR = {
