@@ -3030,7 +3030,7 @@ append(obj.total, obj.speed_curr);
             }
             var selW = pylons.fcs.getSelectedWeapon();
             if (selW != nil and !hdp.CCIP_active and
-                (me.containsVector(fc.CCIP_CCRP, selW.type) and selW.status == armament.MISSILE_LOCK ) {
+               me.containsVector(fc.CCIP_CCRP, selW.type) and selW.status == armament.MISSILE_LOCK ) {
 
                 if (selW.guidance == "unguided") {
                     me.dt = 0.1;
