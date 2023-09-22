@@ -29,7 +29,7 @@
   },
   "rcs-mand": {
     "version": "1.0.1",
-    "path": "Nasal/rcs_mand.nas"
+    "path": "Nasal/radar/rcs_mand.nas"
   },
   "hud-math": {
     "version": "1.0.0",
