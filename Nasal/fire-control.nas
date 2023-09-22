@@ -1279,9 +1279,9 @@ var FireControl = {
 	},
 };
 
-var debug = 0;
-var printDebug = func (msg) {if (debug == 1) print(msg);};
-var printfDebug = func {if (debug == 1) call(printf,arg);};
+var debugFC = 0;
+var printDebug = func (msg) {if (debugFC == 1) print(msg);};
+var printfDebug = func {if (debugFC == 1) call(printf,arg);};
 
 
 
