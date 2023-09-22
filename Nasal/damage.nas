@@ -1468,6 +1468,19 @@ var writeDamageLog = func {
   io.close(file);
 }
 
+var unitTest = func {
+  for (var i= 0; i<=180;i+=1) {
+    var em = DamageRecipient.typeID2emesaryID(i);
+    var b = DamageRecipient.emesaryID2typeID(em);
+    if (b != i) {
+      print("unit test failed for index "~i);
+      return;
+    }
+  }
+  print("unit test passed");
+}
+#unitTest();
+
 setlistener("sim/signals/exit", writeDamageLog, 0, 0);
 
 #screen.property_display.add("payload/armament/MAW-bearing");
