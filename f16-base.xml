@@ -1684,6 +1684,7 @@
             <file>Aircraft/f16/Nasal/help.nas</file>
         </help>
         <radar_system>
+            <file>Aircraft/f16/Nasal/radar/radar-system-database.nas</file>
             <file>Aircraft/f16/Nasal/radar/radar-system.nas</file>
             <file>Aircraft/f16/Nasal/radar/apg-68.nas</file>
         </radar_system>

@@ -240,19 +240,27 @@ var Database = {
 	"F-23C_BlackWidow-II":    {},
 };
 
-if (defined(rcs.rcs_database)) {
-	foreach(entry : keys(rcs.rcs_database)) {
-		Database[entry].rcsFrontal = rcs_database[entry];
+if (rcs["rcs_database"] != nil) {
+	foreach(entry ; keys(rcs.rcs_database)) {
+		if (Database[entry] == nil) {
+			Database[entry] = {};
+		}
+		Database[entry].rcsFrontal = rcs.rcs_database[entry];
 	}
 }
 
-foreach(entry : keys(rcs.rcs_oprf_database)) {
+foreach(entry ; keys(rcs.rcs_oprf_database)) {
+	if (Database[entry] == nil) {
+		Database[entry] = {};
+	}
 	Database[entry].rcsFrontal = rcs.rcs_oprf_database[entry];
 }
 
-foreach (entry : keys(Database)) {
-	if (Database[entry].rcsFrontal == nil) {
-		print("Database: ",entry," is missing ",rcsFrontal);
+foreach (entry ; keys(Database)) {
+	if (Database[entry]["rcsFrontal"] == nil) {
+		if (debugLevel > 0) print("Database: ",entry," is missing rcsFrontal, using default");
 	}
 	Database[entry]["parents"] = [BaseEntry];
 }
+
+var debugLevel = 1;
