@@ -22,6 +22,12 @@ var defaultMissileShipThreat = func (my_deviation_from_him_deg) {return 0.30;};
 var defaultSurfaceThreat = func (my_deviation_from_him_deg) {return 0.30;};
 
 var Database = {
+	# The key is the model filename without the .xml extension.
+	# They all inherit from BaseEntry, so if something is not listed it uses default values from that.
+	# RCS values are populated from the rcs database inside rcs namespace.
+	#
+	# This database is used by radar-system, rwr and anti-radiation systems.
+
 	"default": BaseEntry,
 # Small aircraft (emesary enabled)
     "A-10":                   {baseDangerNM: 15, baseThreat:defaultFighterThreat},
@@ -52,6 +58,7 @@ var Database = {
     "MiG-23ML":               {hasAirRadar:1, rwrCode:"23", baseThreat:defaultFighterThreat},
     "MiG-23MLD":              {hasAirRadar:1, rwrCode:"23", baseThreat:defaultFighterThreat},
 # Big aircraft
+	# TODO: Verify which of these really has A/A radars
     "B-1B":                   {hasAirRadar:1, rwrCode:"B1"},
     "C-137R":                 {},
     "c130":                   {},
@@ -107,6 +114,7 @@ var Database = {
     "MQ-9":                   {isSlow: 1},
     "MQ-9-2":                 {isSlow: 1},
 # Helis 
+	# TODO: put threat on hunter helis that has IR capability
     "212-TwinHuey":           {isSlow: 1},
     "212-TwinHuey":           {isSlow: 1},
     "412-Griffin":            {isSlow: 1},
