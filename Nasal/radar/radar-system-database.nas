@@ -58,7 +58,7 @@ var Database = {
     "MiG-23ML":               {hasAirRadar:1, rwrCode:"23", baseThreat:defaultFighterThreat},
     "MiG-23MLD":              {hasAirRadar:1, rwrCode:"23", baseThreat:defaultFighterThreat},
 # Big aircraft
-	# TODO: Verify which of these really has A/A radars
+	# TODO: Verify which of these big birds really has A/A radars
     "B-1B":                   {hasAirRadar:1, rwrCode:"B1"},
     "C-137R":                 {},
     "c130":                   {},
@@ -110,7 +110,7 @@ var Database = {
 	"mp-nimitz":              {hasAirRadar:1, canFly: 0, isShip: 1, isCarrier: 1, radarFieldRadius: 180, baseThreat:defaultMissileShipThreat},
 	"mp-vinson":              {hasAirRadar:1, canFly: 0, isShip: 1, isCarrier: 1, radarFieldRadius: 180, baseThreat:defaultMissileShipThreat},
 # Drones
-    "QF-4E":                  {hasAirRadar:1},
+    "QF-4E":                  {hasAirRadar:1, rwrCode:"F4"},
     "MQ-9":                   {baseDangerNM: 15, baseThreat:defaultFighterThreat},
     "MQ-9-2":                 {baseDangerNM: 15, baseThreat:defaultFighterThreat},
 # Helis 
@@ -125,12 +125,12 @@ var Database = {
     "ch53e":                  {isSlow: 1},
     "ch53e":                  {isSlow: 1},
     "Gazelle":                {isSlow: 1},
-    "ka50":                   {isSlow: 1, hasAirRadar:1, baseDangerNM: 15, baseThreat:defaultFighterThreat},
+    "ka50":                   {isSlow: 1, hasAirRadar:1, , rwrCode:"50", baseDangerNM: 15, baseThreat:defaultFighterThreat},
     "Lynx-HMA8":              {isSlow: 1},
     "Lynx_Wildcat":           {isSlow: 1},
     "Merlin-HM1":             {isSlow: 1},
-    "mi24":                   {isSlow: 1, hasAirRadar:1, baseDangerNM: 15, baseThreat:defaultFighterThreat},
-    "Mil-Mi-8":               {isSlow: 1, hasAirRadar:1, baseDangerNM: 15, baseThreat:defaultFighterThreat},
+    "mi24":                   {isSlow: 1, hasAirRadar:1, rwrCode:"24", baseDangerNM: 15, baseThreat:defaultFighterThreat},
+    "Mil-Mi-8":               {isSlow: 1, hasAirRadar:1, rwrCode:"8", baseDangerNM: 15, baseThreat:defaultFighterThreat},
     "OH-58D":                 {isSlow: 1},
     "rah-66":                 {isSlow: 1},
     "SH-60J":                 {isSlow: 1},
@@ -168,8 +168,8 @@ var Database = {
 	"daVinci_F-111G":         {hasAirRadar:1, rwrCode:"F1", baseThreat:defaultFighterThreat},
 	"A-10-modelB":            {},
 	"Su-15":                  {hasAirRadar:1, rwrCode:"SU", baseThreat:defaultFighterThreat},
-	"jaguar":                 {hasAirRadar:1, rwrCode:"JA", baseThreat:defaultFighterThreat},
-	"Jaguar-GR3":             {hasAirRadar:1, rwrCode:"JA", baseThreat:defaultFighterThreat},
+	"jaguar":                 {baseThreat:defaultFighterThreat},
+	"Jaguar-GR3":             {baseThreat:defaultFighterThreat},
 	"E3B":                    {hasAirRadar:1, rwrCode:"S", radarFieldRadius: 180, isAwacs: 1},
 	"E-2C-Hawkeye":           {hasAirRadar:1, rwrCode:"S", radarFieldRadius: 180, isAwacs: 1},
 	"onox-awacs":             {hasAirRadar:1, rwrCode:"S", radarFieldRadius: 180, isAwacs: 1},
