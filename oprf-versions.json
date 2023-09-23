@@ -12,7 +12,7 @@
     "path": "Nasal/radar/radar-system.nas"
   },
   "radar-system-database": {
-    "version": null,
+    "version": "1.0.1",
     "path": "Nasal/radar/radar-system-database.nas"
   },
   "damage": {

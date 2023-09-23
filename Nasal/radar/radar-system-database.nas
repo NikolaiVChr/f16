@@ -1,20 +1,20 @@
 # A database of flying, surface and marine entities. Inspired from pinto's MiG-21bis mp_db.nas
 
 var BaseEntry = {
-	isReal: 1, # Radar and RWR will ignore this if false
-	isSlow: 0, # Slow aircraft, so heli or drone (can cruise slower than 50 to 60 kt)
+	isDetectable: 1,       # Radar and RWR will never show this entity if false
+	isSlow: 0,             # Slow aircraft, so heli or drone (can cruise slower than 50 to 60 kt)
 	canFly: 1,
 	isShip: 0,
 	isSurfaceAsset: 0,
 	isAwacs: 0,
 	isCarrier: 0,
-	rcsFrontal: 150,
-	hasAirRadar: 0, # If it only has A/G radar or none then set this to 0
-	passiveRadarRange: 70,# Distance in nm that antiradiation weapons can home in on the the radiation.		
-	radarFieldRadius: 60, 
-	rwrCode: "U",          # Used by RWR and anti-radiation weapon systems (Radar Emitter Code)
+	rcsFrontal: 150,       # Side, back, top, bottom is auto computed from frontal
+	hasAirRadar: 0,        # If it only has A/G radar or none then set this to 0
+	passiveRadarRange: 70, # Distance in nm that antiradiation weapons can home in on the the radiation.		
+	radarHorzRadius: 60,   # Radar field horizontal radius
+	rwrCode: "U",          # Used by RWR display and anti-radiation weapon systems (Radar Emitter Code)
 	baseThreat: func (my_deviation_from_him_deg) {return 0;},
-	baseDangerNM: 50,
+	killZone: 50,
 };
 
 var defaultFighterThreat = func (my_deviation_from_him_deg) {return ((180-my_deviation_from_him_deg)/180)*0.30;};
@@ -30,28 +30,28 @@ var Database = {
 
 	"default": BaseEntry,
 # Small aircraft (emesary enabled)
-    "A-10":                   {baseDangerNM: 15, baseThreat:defaultFighterThreat},
-    "A-10-model":             {baseDangerNM: 15, baseThreat:defaultFighterThreat},
-    "A-10-modelB":            {baseDangerNM: 15, baseThreat:defaultFighterThreat},
-    "AJ37-Viggen":            {hasAirRadar:1, rwrCode:"37", baseDangerNM: 15, baseThreat:defaultFighterThreat},
-    "AJS37-Viggen":           {hasAirRadar:1, rwrCode:"37", baseDangerNM: 15, baseThreat:defaultFighterThreat},
+    "A-10":                   {killZone: 15, baseThreat:defaultFighterThreat},
+    "A-10-model":             {killZone: 15, baseThreat:defaultFighterThreat},
+    "A-10-modelB":            {killZone: 15, baseThreat:defaultFighterThreat},
+    "AJ37-Viggen":            {hasAirRadar:1, rwrCode:"37", killZone: 15, baseThreat:defaultFighterThreat},
+    "AJS37-Viggen":           {hasAirRadar:1, rwrCode:"37", killZone: 15, baseThreat:defaultFighterThreat},
     "Blackbird-SR71A":        {},
     "Blackbird-SR71A-BigTail":{},
     "Blackbird-SR71B":        {},
-	"f-14b":                  {hasAirRadar:1, rwrCode:"14", baseDangerNM: 80, baseThreat:defaultFighterThreat},
-    "f-14b-bs":               {isReal: 0},
-    "F-14D":                  {hasAirRadar:1, rwrCode:"14", baseDangerNM: 80, baseThreat:defaultFighterThreat},
+	"f-14b":                  {hasAirRadar:1, rwrCode:"14", killZone: 80, baseThreat:defaultFighterThreat},
+    "f-14b-bs":               {isDetectable: 0},
+    "F-14D":                  {hasAirRadar:1, rwrCode:"14", killZone: 80, baseThreat:defaultFighterThreat},
     "F-15C":                  {hasAirRadar:1, rwrCode:"15", baseThreat:defaultFighterThreat},
     "F-15D":                  {hasAirRadar:1, rwrCode:"15", baseThreat:defaultFighterThreat},
     "F-16":                   {hasAirRadar:1, rwrCode:"16", baseThreat:defaultFighterThreat},
-    "f15-bs":                 {isReal: 0},
+    "f15-bs":                 {isDetectable: 0},
     "JA37-Viggen":            {hasAirRadar:1, rwrCode:"37", baseThreat:defaultFighterThreat},
     "JA37Di-Viggen":          {hasAirRadar:1, rwrCode:"37", baseThreat:defaultFighterThreat},
-    "Jaguar-GR1":             {baseDangerNM: 15, baseThreat:defaultFighterThreat},
-    "Jaguar-GR3":             {baseDangerNM: 15, baseThreat:defaultFighterThreat},
+    "Jaguar-GR1":             {killZone: 15, baseThreat:defaultFighterThreat},
+    "Jaguar-GR3":             {killZone: 15, baseThreat:defaultFighterThreat},
     "m2000-5":                {hasAirRadar:1, rwrCode:"M2", baseThreat:defaultFighterThreat},
     "m2000-5B":               {hasAirRadar:1, rwrCode:"M2", baseThreat:defaultFighterThreat},
-    "m2000-5B-backseat":      {isReal: 0},
+    "m2000-5B-backseat":      {isDetectable: 0},
     "MiG-21bis":              {hasAirRadar:1, rwrCode:"21", baseThreat:defaultFighterThreat},
     "MiG-21MF-75":            {hasAirRadar:1, rwrCode:"21", baseThreat:defaultFighterThreat},
     "Typhoon":                {hasAirRadar:1, rwrCode:"EF", baseThreat:defaultFighterThreat},
@@ -62,10 +62,10 @@ var Database = {
     "B-1B":                   {hasAirRadar:1, rwrCode:"B1"},
     "C-137R":                 {},
     "c130":                   {},
-    "E-3R":                   {hasAirRadar:1, rwrCode:"S", isAwacs: 1, radarFieldRadius: 180},
+    "E-3R":                   {hasAirRadar:1, rwrCode:"S", isAwacs: 1, radarHorzRadius: 180},
     "E-8R":                   {},
-    "EC-137D":                {hasAirRadar:1, rwrCode:"S", isAwacs: 1, radarFieldRadius: 180},
-    "EC-137R":                {hasAirRadar:1, rwrCode:"S", isAwacs: 1, radarFieldRadius: 180},
+    "EC-137D":                {hasAirRadar:1, rwrCode:"S", isAwacs: 1, radarHorzRadius: 180},
+    "EC-137R":                {hasAirRadar:1, rwrCode:"S", isAwacs: 1, radarHorzRadius: 180},
     "KC-10A":                 {},
     "KC-10A-GE":              {},
     "KC-137R":                {},
@@ -75,44 +75,44 @@ var Database = {
     "Voyager-KC":             {},
 # OPRF assets (emesary enabled)
     "depot":                  {isSurfaceAsset: 1, canFly: 0},
-    "ZSU-23-4M":              {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, rwrCode:"AA", baseDangerNM: 7.5, radarFieldRadius: 180, baseThreat:defaultSurfaceThreat},
-    "SA-6":                   {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, rwrCode:"6", baseDangerNM: 15, radarFieldRadius: 180, baseThreat:defaultSurfaceThreat},
-    "buk-m2":                 {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, rwrCode:"17", baseDangerNM: 35, radarFieldRadius: 180, baseThreat:defaultSurfaceThreat},
-    "buk-m1-2":               {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, rwrCode:"17", baseDangerNM: 35, radarFieldRadius: 180, baseThreat:defaultSurfaceThreat},
-    "S-75":                   {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, rwrCode:"2", baseDangerNM: 35, radarFieldRadius: 180, baseThreat:defaultSurfaceThreat},
-    "s-200":                  {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, rwrCode:"5", baseDangerNM: 150, radarFieldRadius: 180, baseThreat:defaultSurfaceThreat},
-    "s-300":                  {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, rwrCode:"20", baseDangerNM: 80, radarFieldRadius: 180, baseThreat:defaultSurfaceThreat},
-    "MIM104D":                {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, rwrCode:"P", baseDangerNM: 45, radarFieldRadius: 180, baseThreat:defaultSurfaceThreat},
+    "ZSU-23-4M":              {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, rwrCode:"AA", killZone: 7.5, radarHorzRadius: 180, baseThreat:defaultSurfaceThreat},
+    "SA-6":                   {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, rwrCode:"6", killZone: 15, radarHorzRadius: 180, baseThreat:defaultSurfaceThreat},
+    "buk-m2":                 {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, rwrCode:"17", killZone: 35, radarHorzRadius: 180, baseThreat:defaultSurfaceThreat},
+    "buk-m1-2":               {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, rwrCode:"17", killZone: 35, radarHorzRadius: 180, baseThreat:defaultSurfaceThreat},
+    "S-75":                   {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, rwrCode:"2", killZone: 35, radarHorzRadius: 180, baseThreat:defaultSurfaceThreat},
+    "s-200":                  {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, rwrCode:"5", killZone: 150, radarHorzRadius: 180, baseThreat:defaultSurfaceThreat},
+    "s-300":                  {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, rwrCode:"20", killZone: 80, radarHorzRadius: 180, baseThreat:defaultSurfaceThreat},
+    "MIM104D":                {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, rwrCode:"P", killZone: 45, radarHorzRadius: 180, baseThreat:defaultSurfaceThreat},
     "truck":                  {isSurfaceAsset: 1, canFly: 0},
-    "missile_frigate":        {isShip: 1, canFly: 0, hasAirRadar:1, rwrCode:"SH", baseDangerNM: 80, radarFieldRadius: 180, baseThreat:defaultMissileShipThreat},
-    "fleet":                  {isShip: 1, canFly: 0, hasAirRadar:1, rwrCode:"SH", baseDangerNM: 80, radarFieldRadius: 180, baseThreat:defaultMissileShipThreat},
-    "frigate":                {isShip: 1, canFly: 0, hasAirRadar:1, rwrCode:"SH", baseDangerNM: 80, radarFieldRadius: 180, baseThreat:defaultMissileShipThreat},
-    "tower":                  {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, radarFieldRadius: 180},
-    "gci":                    {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, radarFieldRadius: 180},
+    "missile_frigate":        {isShip: 1, canFly: 0, hasAirRadar:1, rwrCode:"SH", killZone: 80, radarHorzRadius: 180, baseThreat:defaultMissileShipThreat},
+    "fleet":                  {isShip: 1, canFly: 0, hasAirRadar:1, rwrCode:"SH", killZone: 80, radarHorzRadius: 180, baseThreat:defaultMissileShipThreat},
+    "frigate":                {isShip: 1, canFly: 0, hasAirRadar:1, rwrCode:"SH", killZone: 80, radarHorzRadius: 180, baseThreat:defaultMissileShipThreat},
+    "tower":                  {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, radarHorzRadius: 180},
+    "gci":                    {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, radarHorzRadius: 180},
     "struct":                 {isSurfaceAsset: 1, canFly: 0},
     "rig":                    {isSurfaceAsset: 1, canFly: 0},
     "point":                  {isSurfaceAsset: 1, canFly: 0},
-    "hunter":                 {isReal: 0},
+    "hunter":                 {isDetectable: 0},
 # Automats (emesary enabled)
     "MiG-29":                 {hasAirRadar:1, rwrCode:"29", baseThreat:defaultFighterThreat},
     "SU-27":                  {hasAirRadar:1, rwrCode:"27", baseThreat:defaultFighterThreat},
     "daVinci_SU-34":          {hasAirRadar:1, rwrCode:"34", baseThreat:defaultFighterThreat},
-    "A-50":                   {hasAirRadar:1, rwrCode:"S", radarFieldRadius: 180, isAwacs: 1},
-    "E-3":                    {hasAirRadar:1, rwrCode:"S", radarFieldRadius: 180, isAwacs: 1},
+    "A-50":                   {hasAirRadar:1, rwrCode:"S", radarHorzRadius: 180, isAwacs: 1},
+    "E-3":                    {hasAirRadar:1, rwrCode:"S", radarHorzRadius: 180, isAwacs: 1},
 # Hunter ships (emesary enabled)
-    "USS-NORMANDY":           {hasAirRadar:1, canFly: 0, isShip: 1, radarFieldRadius: 180, rwrCode:"SH", baseDangerNM: 80, baseThreat:defaultMissileShipThreat},
-    "USS-LakeChamplain":      {hasAirRadar:1, canFly: 0, isShip: 1, radarFieldRadius: 180, rwrCode:"SH", baseDangerNM: 80, baseThreat:defaultMissileShipThreat},
-    "USS-OliverPerry":        {hasAirRadar:1, canFly: 0, isShip: 1, radarFieldRadius: 180, rwrCode:"SH", baseDangerNM: 80, baseThreat:defaultMissileShipThreat},
-    "USS-SanAntonio":         {hasAirRadar:1, canFly: 0, isShip: 1, radarFieldRadius: 180, rwrCode:"SH", baseDangerNM: 80, baseThreat:defaultMissileShipThreat},
+    "USS-NORMANDY":           {hasAirRadar:1, canFly: 0, isShip: 1, radarHorzRadius: 180, rwrCode:"SH", killZone: 80, baseThreat:defaultMissileShipThreat},
+    "USS-LakeChamplain":      {hasAirRadar:1, canFly: 0, isShip: 1, radarHorzRadius: 180, rwrCode:"SH", killZone: 80, baseThreat:defaultMissileShipThreat},
+    "USS-OliverPerry":        {hasAirRadar:1, canFly: 0, isShip: 1, radarHorzRadius: 180, rwrCode:"SH", killZone: 80, baseThreat:defaultMissileShipThreat},
+    "USS-SanAntonio":         {hasAirRadar:1, canFly: 0, isShip: 1, radarHorzRadius: 180, rwrCode:"SH", killZone: 80, baseThreat:defaultMissileShipThreat},
 # Carriers
-	"mp-clemenceau":          {hasAirRadar:1, canFly: 0, isShip: 1, isCarrier: 1, radarFieldRadius: 180, baseThreat:defaultMissileShipThreat},
-	"mp-eisenhower":          {hasAirRadar:1, canFly: 0, isShip: 1, isCarrier: 1, radarFieldRadius: 180, baseThreat:defaultMissileShipThreat},
-	"mp-nimitz":              {hasAirRadar:1, canFly: 0, isShip: 1, isCarrier: 1, radarFieldRadius: 180, baseThreat:defaultMissileShipThreat},
-	"mp-vinson":              {hasAirRadar:1, canFly: 0, isShip: 1, isCarrier: 1, radarFieldRadius: 180, baseThreat:defaultMissileShipThreat},
+	"mp-clemenceau":          {hasAirRadar:1, rwrCode:"SH", canFly: 0, isShip: 1, isCarrier: 1, radarHorzRadius: 180, baseThreat:defaultMissileShipThreat},
+	"mp-eisenhower":          {hasAirRadar:1, rwrCode:"SH", canFly: 0, isShip: 1, isCarrier: 1, radarHorzRadius: 180, baseThreat:defaultMissileShipThreat},
+	"mp-nimitz":              {hasAirRadar:1, rwrCode:"SH", canFly: 0, isShip: 1, isCarrier: 1, radarHorzRadius: 180, baseThreat:defaultMissileShipThreat},
+	"mp-vinson":              {hasAirRadar:1, rwrCode:"SH", canFly: 0, isShip: 1, isCarrier: 1, radarHorzRadius: 180, baseThreat:defaultMissileShipThreat},
 # Drones
     "QF-4E":                  {hasAirRadar:1, rwrCode:"F4"},
-    "MQ-9":                   {baseDangerNM: 15, baseThreat:defaultFighterThreat},
-    "MQ-9-2":                 {baseDangerNM: 15, baseThreat:defaultFighterThreat},
+    "MQ-9":                   {killZone: 15, baseThreat:defaultFighterThreat},
+    "MQ-9-2":                 {killZone: 15, baseThreat:defaultFighterThreat},
 # Helis 
     "212-TwinHuey":           {isSlow: 1},
     "212-TwinHuey":           {isSlow: 1},
@@ -125,12 +125,12 @@ var Database = {
     "ch53e":                  {isSlow: 1},
     "ch53e":                  {isSlow: 1},
     "Gazelle":                {isSlow: 1},
-    "ka50":                   {isSlow: 1, hasAirRadar:1, , rwrCode:"50", baseDangerNM: 15, baseThreat:defaultFighterThreat},
+    "ka50":                   {isSlow: 1, hasAirRadar:1, , rwrCode:"50", killZone: 15, baseThreat:defaultFighterThreat},
     "Lynx-HMA8":              {isSlow: 1},
     "Lynx_Wildcat":           {isSlow: 1},
     "Merlin-HM1":             {isSlow: 1},
-    "mi24":                   {isSlow: 1, hasAirRadar:1, rwrCode:"24", baseDangerNM: 15, baseThreat:defaultFighterThreat},
-    "Mil-Mi-8":               {isSlow: 1, hasAirRadar:1, rwrCode:"8", baseDangerNM: 15, baseThreat:defaultFighterThreat},
+    "mi24":                   {isSlow: 1, hasAirRadar:1, rwrCode:"24", killZone: 15, baseThreat:defaultFighterThreat},
+    "Mil-Mi-8":               {isSlow: 1, hasAirRadar:1, rwrCode:"8", killZone: 15, baseThreat:defaultFighterThreat},
     "OH-58D":                 {isSlow: 1},
     "rah-66":                 {isSlow: 1},
     "SH-60J":                 {isSlow: 1},
@@ -170,9 +170,9 @@ var Database = {
 	"Su-15":                  {hasAirRadar:1, rwrCode:"SU", baseThreat:defaultFighterThreat},
 	"jaguar":                 {baseThreat:defaultFighterThreat},
 	"Jaguar-GR3":             {baseThreat:defaultFighterThreat},
-	"E3B":                    {hasAirRadar:1, rwrCode:"S", radarFieldRadius: 180, isAwacs: 1},
-	"E-2C-Hawkeye":           {hasAirRadar:1, rwrCode:"S", radarFieldRadius: 180, isAwacs: 1},
-	"onox-awacs":             {hasAirRadar:1, rwrCode:"S", radarFieldRadius: 180, isAwacs: 1},
+	"E3B":                    {hasAirRadar:1, rwrCode:"S", radarHorzRadius: 180, isAwacs: 1},
+	"E-2C-Hawkeye":           {hasAirRadar:1, rwrCode:"S", radarHorzRadius: 180, isAwacs: 1},
+	"onox-awacs":             {hasAirRadar:1, rwrCode:"S", radarHorzRadius: 180, isAwacs: 1},
 	"u-2s":                   {},
 	"U-2S-model":             {},
 	"F-4C":                   {hasAirRadar:1, rwrCode:"F4", baseThreat:defaultFighterThreat},
@@ -251,5 +251,8 @@ foreach(entry : keys(rcs.rcs_oprf_database)) {
 }
 
 foreach (entry : keys(Database)) {
+	if (Database[entry].rcsFrontal == nil) {
+		print("Database: ",entry," is missing ",rcsFrontal);
+	}
 	Database[entry]["parents"] = [BaseEntry];
 }
