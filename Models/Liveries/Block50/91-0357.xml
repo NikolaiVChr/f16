@@ -4,15 +4,15 @@
  <sim>
   <model>
    <livery>
-    <name type="string">35FW, 14FS WW #808 "10,000 hours"</name>
-    <texture>Liveries/Block50/90-0808.png</texture>
+    <name type="string">35FW, 14FS WW "Wing Flagship"</name>
+    <texture>Liveries/Block50/91-0357.png</texture>
     <owner type="string">USAF</owner>
     <pilot type="string"></pilot>
     <scheme type="string"></scheme>
     <block type="int">50</block>
-    <serial type="string">90-0808</serial>
+    <serial type="string">91-0357</serial>
     <squad type="string">14th FS "Samurais"</squad>
-    <year type="string">2020</year>
+    <year type="string">2023</year>
    </livery>
 
    <livery-logo>
