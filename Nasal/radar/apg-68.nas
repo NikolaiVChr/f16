@@ -523,15 +523,7 @@ var AirborneRadar = {
 		#
 		# test method. Belongs in rcs.nas.
 		#
-	    me.target_front_rcs = nil;
-	    if ( contains(rcs.rcs_oprf_database,targetModel) ) {
-	        me.target_front_rcs = rcs.rcs_oprf_database[targetModel];
-	    } elsif ( contains(rcs.rcs_database,targetModel) ) {
-	        me.target_front_rcs = rcs.rcs_database[targetModel];
-	    } else {
-	        # GA/Commercial return most likely
-	        me.target_front_rcs = rcs.rcs_oprf_database["default"];
-	    }
+	    me.target_front_rcs = getDBEntry(targetModel).rcsFrontal;
 	    me.target_rcs = rcs.getRCS(targetCoord, targetHeading, targetPitch, targetRoll, aircraftCoord, me.target_front_rcs);
 
 	    # standard formula
@@ -2470,14 +2462,6 @@ var F16GMTFTTMode = {
 #                                                           
 #
 
-var noRadarList = {
-	# These have no radar
-	depot:nil, point:nil, struct:nil, rig:nil, truck:nil, hunter:nil,
-	"alphajet":nil, "jaguar":nil, "Jaguar-GR3":nil, "A-10-modelB":nil,
-	"Jaguar-GR1":nil, "A-10-model":nil, "A-10":nil, "G91-R1B":nil,
-	"G91":nil, "g91":nil, "mb339":nil, "mb339pan":nil, "F-117":nil,
-};
-
 var RWR = {
 	# inherits from Radar
 	# will check radar/transponder and ground occlusion.
@@ -2541,6 +2525,7 @@ var RWR = {
         me.elapsed = elapsedProp.getValue();
         foreach(me.u ; me.vector_aicontacts) {
         	# [me.ber,me.head,contact.getCoord(),me.tp,me.radar,contact.getDeviationHeading(),contact.getRangeDirect()*M2NM, contact.getCallsign()]
+        	me.dbEntry = radar_system.getDBEntry(me.u.getModel());
         	me.threatDB = me.u.getThreatStored();
             me.cs = me.threatDB[7];
             me.rn = me.threatDB[6];
@@ -2563,35 +2548,15 @@ var RWR = {
                         me.heatDefense = me.heatDefenseNow;
                     }
                 }
-                me.threat = 0;
-                if (me.u.getModel() != "missile_frigate" and me.u.getModel() != "S-75" and me.u.getModel() != "SA-6" and me.u.getModel() != "buk-m2" and me.u.getModel() != "MIM104D" and me.u.getModel() != "s-200" and me.u.getModel() != "s-300" and me.u.getModel() != "fleet" and me.u.getModel() != "ZSU-23-4M") {
-                    me.threat += ((180-me.dev)/180)*0.30;# most threat if I am in front of his nose
-                    me.spd = (60-me.threatDB[8])/60;
-                    #me.threat -= me.spd>0?me.spd:0;# if his speed is lower than 60kt then give him minus threat else positive
-                } elsif (me.u.getModel() == "missile_frigate" or me.u.getModel() == "fleet") {
-                    me.threat += 0.30;
-                } else {
-                    me.threat += 0.30;
-                }
-                me.danger = 50;# within this range he is most dangerous
-                if (me.u.getModel() == "missile_frigate" or me.u.getModel() == "fleet" or me.u.getModel() == "s-300") {
-                    me.danger = 80;
-                } elsif (me.u.getModel() == "buk-m2" or me.u.getModel() == "S-75") {
-                    me.danger = 35;
-                } elsif (me.u.getModel() == "SA-6") {
-                    me.danger = 15;
-                } elsif (me.u.getModel() == "s-200") {
-                    me.danger = 150;
-                } elsif (me.u.getModel() == "MIM104D") {
-                    me.danger = 45;
-                } elsif (me.u.getModel() == "ZSU-23-4M") {
-                    me.danger = 7.5;
-                }
+
+                me.threat = me.dbEntry.baseThreat(me.dev);
+                me.danger = me.dbEntry.killZone;# within this range he is most dangerous
+                
                 if (me.threatDB[10]) me.threat += 0.30;# has me locked
                 me.threat += ((me.danger-me.rn)/me.danger)>0?((me.danger-me.rn)/me.danger)*0.60:0;# if inside danger zone then add threat, the closer the more.
                 me.threat += me.threatDB[9]>0?(me.threatDB[9]/500)*0.10:0;# more closing speed means more threat.
                 if (me.u.getModel() == "AI") me.threat = 0.01;
-                if (contains(noRadarList, me.u.getModel())) me.threat = - 1;
+                if (!me.dbEntry.hasAirRadar) me.threat = - 1;
                 if (me.threat > me.closestThreat) me.closestThreat = me.threat;
                 #printf("A %s threat:%.2f range:%d dev:%d", me.u.get_Callsign(),me.threat,me.u.get_range(),me.deviation);
                 if (me.threat > 1) me.threat = 1;

@@ -221,212 +221,11 @@ RWRCanvas = {
 #                   .setColor(1,0,0)
 #                   .hide();
 #        }
-# Threat list ID:
-        #REVISION: 2023/06/08
-        #OPRF Fleet
-        rwr.AIRCRAFT_WARTHOG  = "10";
-        rwr.AIRCRAFT_TOMCAT   = "14";
-        rwr.AIRCRAFT_EAGLE    = "15";
-        rwr.AIRCRAFT_FALCON   = "16";
-        rwr.AIRCRAFT_FISHBED  = "21";
-        rwr.AIRCRAFT_FLOGGER  = "23";
-        rwr.AIRCRAFT_FLANKER  = "27";
-        rwr.AIRCRAFT_FULCRUM  = "29";
-        rwr.AIRCRAFT_VIGGEN   = "37";
-        rwr.AIRCRAFT_BLACKBIRD = "71";
-        rwr.AIRCRAFT_JAGUAR   = "JA";
-        rwr.AIRCRAFT_MIRAGE   = "M2";
-        rwr.AIRCRAFT_SEARCH   = "S";
-        rwr.ASSET_AAA         = "A";
-        rwr.ASSET_VOLGA       = "2";
-        rwr.ASSET_DUBNA       = "5";
-        rwr.ASSET_2K12        = "6";
-        rwr.ASSET_BUK         = "17";
-        rwr.ASSET_GARGOYLE    = "20"; # Other namings for tracking and radar: BB, CS.
-        rwr.ASSET_PAC2        = "P";
-        rwr.ASSET_FRIGATE     = "SH";
-        rwr.SCENARIO_OPPONENT = "28";
-        #MISC
-        rwr.AIRCRAFT_FAGOT    = "MG";
-        rwr.AIRCRAFT_FOXBAT   = "FB";
-        rwr.AIRCRAFT_FULLBACK = "34";
-        rwr.AIRCRAFT_PAKFA    = "57";
-        rwr.AIRCRAFT_TYPHOON  = "EF";
-        rwr.AIRCRAFT_HORNET   = "18";
-        rwr.AIRCRAFT_FLAGON   = "SU";
-        rwr.AIRCRAFT_PHANTOM  = "F4";
-        rwr.AIRCRAFT_SKYHAWK  = "A4";
-        rwr.AIRCRAFT_TIGER    = "F5";
-        rwr.AIRCRAFT_TONKA    = "TO";
-        rwr.AIRCRAFT_AARDVARK = "F1";
-        rwr.AIRCRAFT_RAFALE   = "RF";
-        rwr.AIRCRAFT_HARRIER  = "HA";
-        rwr.AIRCRAFT_HARRIERII = "AV";
-        rwr.AIRCRAFT_GINA     = "91";
-        rwr.AIRCRAFT_MB339    = "M3";
-        rwr.AIRCRAFT_ALPHAJET = "AJ";
-        rwr.AIRCRAFT_INTRUDER = "A6";
-        rwr.AIRCRAFT_PROWLER  = "E6";
-        rwr.AIRCRAFT_FROGFOOT = "25";
-        rwr.AIRCRAFT_NIGHTHAWK = "17";
-        rwr.AIRCRAFT_RAPTOR   = "22";
-        rwr.AIRCRAFT_JSF      = "35";
-        rwr.AIRCRAFT_GRIPEN   = "39";
-        rwr.AIRCRAFT_MITTEN   = "Y1";
-        rwr.AIRCRAFT_ALCA     = "LC";
-        rwr.AIRCRAFT_SPRETNDRD = "ET";
-        rwr.AIRCRAFT_MIRAGEF1 = "M1";
+
         rwr.AIRCRAFT_UNKNOWN  = "U";
-        rwr.AIRCRAFT_UFO      = "UK";
         rwr.ASSET_AI          = "AI";
-        rwr.lookupType = {
-        # OPRF fleet and related aircrafts:
-                "f-14b":                    rwr.AIRCRAFT_TOMCAT,
-                "F-14D":                    rwr.AIRCRAFT_TOMCAT,
-                "F-15C":                    rwr.AIRCRAFT_EAGLE,
-                "F-15D":                    rwr.AIRCRAFT_EAGLE,
-                "F-16":                     rwr.AIRCRAFT_FALCON,
-                "JA37-Viggen":              rwr.AIRCRAFT_VIGGEN,
-                "AJ37-Viggen":              rwr.AIRCRAFT_VIGGEN,
-                "AJS37-Viggen":             rwr.AIRCRAFT_VIGGEN,
-                "JA37Di-Viggen":            rwr.AIRCRAFT_VIGGEN,
-                "m2000-5":                  rwr.AIRCRAFT_MIRAGE,
-                "m2000-5B":                 rwr.AIRCRAFT_MIRAGE,
-                "MiG-21bis":                rwr.AIRCRAFT_FISHBED,
-                "MiG-21MF-75":              rwr.AIRCRAFT_FISHBED,
-                "MiG-23ML":                 rwr.AIRCRAFT_FLOGGER,
-                "MiG-23MLD":                rwr.AIRCRAFT_FLOGGER,
-                "MiG-29":                   rwr.AIRCRAFT_FULCRUM,
-                "SU-27":                    rwr.AIRCRAFT_FLANKER,
-                "EC-137R":                  rwr.AIRCRAFT_SEARCH,
-                "E-3R":                     rwr.AIRCRAFT_SEARCH,
-                "E-3":                      rwr.AIRCRAFT_SEARCH,
-                "RC-137R":                  rwr.AIRCRAFT_SEARCH,
-                "E-8R":                     rwr.AIRCRAFT_SEARCH,
-                "EC-137D":                  rwr.AIRCRAFT_SEARCH,
-                "gci":                      rwr.AIRCRAFT_SEARCH,
-                "A-50":                     rwr.AIRCRAFT_SEARCH,
-                "Blackbird-SR71A":          rwr.AIRCRAFT_BLACKBIRD,
-                "Blackbird-SR71A-BigTail":  rwr.AIRCRAFT_BLACKBIRD,
-                "Blackbird-SR71B":          rwr.AIRCRAFT_BLACKBIRD,
-                "A-10":                     rwr.AIRCRAFT_WARTHOG,
-                "A-10-model":               rwr.AIRCRAFT_WARTHOG,
-                "Typhoon":                  rwr.AIRCRAFT_TYPHOON,
-                "ZSU-23-4M":                rwr.ASSET_AAA,
-                "S-75":                     rwr.ASSET_VOLGA,
-                "buk-m2":                   rwr.ASSET_BUK,
-                "SA-6":                     rwr.ASSET_2K12,
-                "s-200":                    rwr.ASSET_DUBNA,
-                "s-300":                    rwr.ASSET_GARGOYLE,
-                "MIM104D":                  rwr.ASSET_PAC2,
-                "missile_frigate":          rwr.ASSET_FRIGATE,
-                "frigate":                  rwr.ASSET_FRIGATE,
-                "fleet":                    rwr.ASSET_FRIGATE,
-                "Mig-28":                   rwr.SCENARIO_OPPONENT,
-                "Jaguar-GR1":               rwr.AIRCRAFT_JAGUAR,
-        # Other threatening aircrafts (FGAddon, FGUK, etc.):
-                "AI":                       rwr.ASSET_AI,
-                "SU-37":                    rwr.AIRCRAFT_FLANKER,
-                "J-11A":                    rwr.AIRCRAFT_FLANKER,
-                "daVinci_SU-34":            rwr.AIRCRAFT_FULLBACK,
-                "Su-34":                    rwr.AIRCRAFT_FULLBACK,
-                "T-50":                     rwr.AIRCRAFT_PAKFA,
-                "MiG-21Bison":              rwr.AIRCRAFT_FISHBED,
-                "Mig-29":                   rwr.AIRCRAFT_FULCRUM,
-                "EF2000":                   rwr.AIRCRAFT_TYPHOON,
-                "F-15C_Eagle":              rwr.AIRCRAFT_EAGLE,
-                "F-15J_ADTW":               rwr.AIRCRAFT_EAGLE,
-                "F-15DJ_ADTW":              rwr.AIRCRAFT_EAGLE,
-                "f16":                      rwr.AIRCRAFT_FALCON,
-                "F-16CJ":                   rwr.AIRCRAFT_FALCON,
-                "FA-18C_Hornet":            rwr.AIRCRAFT_HORNET,
-                "FA-18D_Hornet":            rwr.AIRCRAFT_HORNET,
-                "FA-18E_CVW5":              rwr.AIRCRAFT_HORNET,
-                "FA-18":                    rwr.AIRCRAFT_HORNET,
-                "f18":                      rwr.AIRCRAFT_HORNET,
-                "F-111C":                   rwr.AIRCRAFT_AARDVARK,
-                "daVinci_F-111G":           rwr.AIRCRAFT_AARDVARK,
-                "A-10-modelB":              rwr.AIRCRAFT_WARTHOG,
-                "Su-15":                    rwr.AIRCRAFT_FLAGON,
-                "jaguar":                   rwr.AIRCRAFT_JAGUAR,
-                "Jaguar-GR3":               rwr.AIRCRAFT_JAGUAR,
-                "E3B":                      rwr.AIRCRAFT_SEARCH,
-                "E-2C-Hawkeye":             rwr.AIRCRAFT_SEARCH,
-                "onox-awacs":               rwr.AIRCRAFT_SEARCH,
-                "u-2s":                     rwr.AIRCRAFT_SEARCH,
-                "U-2S-model":               rwr.AIRCRAFT_SEARCH,
-                "F-4C":                     rwr.AIRCRAFT_PHANTOM,
-                "F-4D":                     rwr.AIRCRAFT_PHANTOM,
-                "F-4E":                     rwr.AIRCRAFT_PHANTOM,
-                "F-4EJ":                    rwr.AIRCRAFT_PHANTOM,
-                "F-4EJ_ADTW":               rwr.AIRCRAFT_PHANTOM,
-                "F-4F":                     rwr.AIRCRAFT_PHANTOM,
-                "F-4J":                     rwr.AIRCRAFT_PHANTOM,
-                "F4J":                      rwr.AIRCRAFT_PHANTOM,
-                "F-4N":                     rwr.AIRCRAFT_PHANTOM,
-                "F-4S":                     rwr.AIRCRAFT_PHANTOM,
-                "FGR2":                     rwr.AIRCRAFT_PHANTOM,
-                "FGR2-Phantom":             rwr.AIRCRAFT_PHANTOM,
-                "a4f":                      rwr.AIRCRAFT_SKYHAWK,
-                "A-4K":                     rwr.AIRCRAFT_SKYHAWK,
-                "F-5E":                     rwr.AIRCRAFT_TIGER,
-                "F-5E-TigerII":             rwr.AIRCRAFT_TIGER,
-                "F-5ENinja":                rwr.AIRCRAFT_TIGER,
-                "f-20A":                    rwr.AIRCRAFT_TIGER,
-                "f-20C":                    rwr.AIRCRAFT_TIGER,
-                "f-20prototype":            rwr.AIRCRAFT_TIGER,
-                "f-20bmw":                  rwr.AIRCRAFT_TIGER,
-                "f-20-dutchdemo":           rwr.AIRCRAFT_TIGER,
-                "Tornado-GR4a":             rwr.AIRCRAFT_TONKA,
-                "Tornado-IDS":              rwr.AIRCRAFT_TONKA,
-                "Tornado-F3":               rwr.AIRCRAFT_TONKA,
-                "Tornado-ADV":              rwr.AIRCRAFT_TONKA,
-                "brsq":                     rwr.AIRCRAFT_RAFALE,
-                "Harrier-GR1":              rwr.AIRCRAFT_HARRIER,
-                "Harrier-GR3":              rwr.AIRCRAFT_HARRIER,
-                "Harrier-GR5":              rwr.AIRCRAFT_HARRIER,
-                "Harrier-GR9":              rwr.AIRCRAFT_HARRIER,
-                "AV-8B":                    rwr.AIRCRAFT_HARRIERII,
-                "G91-R1B":                  rwr.AIRCRAFT_GINA,
-                "G91":                      rwr.AIRCRAFT_GINA,
-                "g91":                      rwr.AIRCRAFT_GINA,
-                "mb339":                    rwr.AIRCRAFT_MB339,
-                "mb339pan":                 rwr.AIRCRAFT_MB339,
-                "alphajet":                 rwr.AIRCRAFT_ALPHAJET,
-                #"MiG-15bis":               rwr.AIRCRAFT_FAGOT,
-                "Su-25":                    rwr.AIRCRAFT_FROGFOOT,
-                "MiG-25":                   rwr.AIRCRAFT_FOXBAT,
-                "A-6E-model":               rwr.AIRCRAFT_INTRUDER,
-                "A-6E":                     rwr.AIRCRAFT_INTRUDER,
-                "ea-6b":                    rwr.AIRCRAFT_PROWLER,
-                "F-117":                    rwr.AIRCRAFT_NIGHTHAWK,
-                "F-22-Raptor":              rwr.AIRCRAFT_RAPTOR,
-                "F-35A":                    rwr.AIRCRAFT_JSF,
-                "F-35B":                    rwr.AIRCRAFT_JSF,
-                "F-35C":                    rwr.AIRCRAFT_JSF,
-                "daVinci_F-35A":            rwr.AIRCRAFT_JSF,
-                "daVinci_F-35B":            rwr.AIRCRAFT_JSF,
-                "JAS-39C_Gripen":           rwr.AIRCRAFT_GRIPEN,
-                "gripen":                   rwr.AIRCRAFT_GRIPEN,
-                "Yak-130":                  rwr.AIRCRAFT_MITTEN,
-                "L-159":                    rwr.AIRCRAFT_ALCA,
-                "super-etendard":           rwr.AIRCRAFT_SPRETNDRD,
-                "Mirage_F1-model":          rwr.AIRCRAFT_MIRAGEF1,
-                "USS-NORMANDY":             rwr.ASSET_FRIGATE,
-                "USS-LakeChamplain":        rwr.ASSET_FRIGATE,
-                "USS-OliverPerry":          rwr.ASSET_FRIGATE,
-                "USS-SanAntonio":           rwr.ASSET_FRIGATE,
-                "mp-nimitz":                rwr.ASSET_FRIGATE,
-                "mp-eisenhower":            rwr.ASSET_FRIGATE,
-                "mp-vinson":                rwr.ASSET_FRIGATE,
-                "mp-clemenceau":            rwr.ASSET_FRIGATE,
-                "ufo":                      rwr.AIRCRAFT_UFO,
-                "bluebird-osg":             rwr.AIRCRAFT_UFO,
-                "Vostok-1":                 rwr.AIRCRAFT_UFO,
-                "V-1":                      rwr.AIRCRAFT_UFO,
-                "SpaceShuttle":             rwr.AIRCRAFT_UFO,
-                "F-23C_BlackWidow-II":      rwr.AIRCRAFT_UFO,
-        };
+        rwr.AIRCRAFT_SEARCH   = "S";
+        
         rwr.shownList = [];
         #
         # recipient that will be registered on the global transmitter and connect this
@@ -539,7 +338,8 @@ RWRCanvas = {
         me.priFlash = 0;# Flash the PRI light
         me.unkFlash = 0;# Flash the UNK light
         foreach(me.contact; me.sortedlist) {
-            me.typ=me.lookupType[me.contact[0].getModel()];
+            me.dbEntry = radar_system.getDBEntry(me.contact[0].getModel());
+            me.typ = me.dbEntry.rwrCode;
             if (me.i > me.max_icons-1) {
                 break;
             }
@@ -612,7 +412,7 @@ RWRCanvas = {
                 me.symbol_priority.show();
                 me.prio = 1;
             }
-            if (!(me.typ == me.ASSET_GARGOYLE or me.typ == me.ASSET_AAA or me.typ == me.ASSET_VOLGA or me.typ == me.ASSET_2K12 or me.typ == me.ASSET_BUK or me.typ == me.ASSET_PAC2 or me.typ == me.ASSET_FRIGATE) and me.contact[0].get_Speed()>60) {
+            if (me.contact[0].getType() == armament.AIR) {
                 #air-borne
                 me.symbol_hat[me.i].setTranslation(me.x,me.y);
                 me.symbol_hat[me.i].show();
