@@ -21,6 +21,8 @@ var rcs_oprf_database = {
     "Blackbird-SR71A-BigTail":  0.30,
     "MiG-21bis":                3.5,
     "MiG-21MF-75":              3.5,
+    "MiG-23MLD":                5.0,
+    "MiG-23ML":                 5.0,
     "Typhoon":                  0.5,
     "B-1B":                     6,
     "707":                      100,

@@ -12,7 +12,7 @@
     "path": "Nasal/radar/radar-system.nas"
   },
   "radar-system-database": {
-    "version": "1.0.2",
+    "version": "1.0.4",
     "path": "Nasal/radar/radar-system-database.nas"
   },
   "damage": {
@@ -32,7 +32,7 @@
     "path": "Nasal/station-manager.nas"
   },
   "rcs-mand": {
-    "version": "1.0.1",
+    "version": "1.0.2",
     "path": "Nasal/radar/rcs_mand.nas"
   },
   "hud-math": {
@@ -56,7 +56,7 @@
     "path": "Nasal/crash-and-stress.nas"
   },
   "airbases": {
-    "version": null,
+    "version": "1.0.0",
     "path": "Nasal/airbases.nas"
   }
 }
