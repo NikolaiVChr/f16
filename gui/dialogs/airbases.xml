@@ -39,6 +39,7 @@
   <nasal>
     <!-- Generalize all this, turn into helpers and load defaults via XML -->
     <open><![CDATA[
+      setprop("/sim/gui/dialogs/airports/show-helipads", 0);
       var update_info = func(open = 0) {
           var info = airportinfo(airport_id);
           if (!contains(airbases.db, info.id)) return;
@@ -255,6 +256,25 @@
       }
 
       canvas.register_callback(update_info); # FIXME: this is a workaround to run dialog-specific code in the canvas block
+
+      var res = props.globals.getNode("/sim/gui/dialogs/airports/search-result",1);
+      setprop("/sim/gui/dialogs/airports/list-me", "");
+      append(listeners, setlistener("/sim/gui/dialogs/airports/list-me", func{        
+        res.removeChildren("value");
+        var searcher = getprop("/sim/gui/dialogs/airports/list-me");
+        if (searcher != nil and searcher != "") {
+            var listMil = findAirportsByICAO(searcher);
+            val = 0;
+            foreach (var base ; listMil) {
+              if (!contains(airbases.db, base.id)) continue;
+              var icao = base.id;
+              var name = base.name;
+              var present = name~" ("~icao~")";
+              setprop("/sim/gui/dialogs/airports/search-result/value["~val~"]", present);
+              val += 1;
+            }
+        }
+      }));
       ]]>
     </open>
     <close><![CDATA[
@@ -284,20 +304,20 @@
         <default-padding>4</default-padding>
 
         <text>
-          <label>Airport:</label>
+          <label>ICAO:</label>
         </text>
 
-        <!--input>
+        <input>
           <name>input</name>
           <pref-width>120</pref-width>
           <halign>fill</halign>
           <stretch>true</stretch>
-          <property>/sim/gui/dialogs/airports/list</property>
+          <property>/sim/gui/dialogs/airports/search-me</property>
           <binding>
             <command>dialog-apply</command>
             <object-name>input</object-name>
           </binding>
-        </input-->
+        </input>
 
 <!--
 
@@ -323,7 +343,7 @@
           </binding>
         </button>
 -->
-        <!--button>
+        <button>
           <legend>Search</legend>
           <default>true</default>
           <binding>
@@ -340,7 +360,7 @@
             <script>
               var apt_type = "airport:";
               var heli_type = "heliport:";
-              var search_term = getprop("/sim/gui/dialogs/airports/list");
+              var search_term = getprop("/sim/gui/dialogs/airports/search-me");
 
               # strip off airport type prefix
               if (string.match(search_term,heli_type)) {
@@ -358,14 +378,14 @@
               else {
                 new_value = apt_type ~ search_term;
               }
-              setprop("/sim/gui/dialogs/airports/list", new_value);
+              setprop("/sim/gui/dialogs/airports/list-me", search_term);
             </script>
           </binding>
           <binding>
             <command>dialog-update</command>
             <object-name>airport-list</object-name>
           </binding>
-        </button-->
+        </button>
 
         <button>
           <legend>&lt;100nm</legend>
@@ -433,7 +453,40 @@
           </binding>
         </button>
 
-        <checkbox>
+        <!--button>
+          <legend>&lt;300nm</legend>
+          <binding>
+            <command>property-assign</command>
+            <property>/sim/gui/dialogs/airports/mode</property>
+            <value>100nm</value>
+          </binding>
+          <binding>
+            <command>nasal</command>
+            <script>
+              # change airport type to heliport if checkbox is set
+              var apt_type = "airport";
+              if (getprop("/sim/gui/dialogs/airports/show-helipads")) {
+                 apt_type = "heliport";
+              }
+              var airports = findAirportsWithinRange(300,apt_type);
+
+              var list = dlg.getNode("close-airports", 1);
+
+              list.removeChildren("value");
+
+              forindex (var idx; airports) {
+                if (!contains(airbases.db, airports[idx].id)) continue;
+                list.getNode("value["~ idx ~ "]", 1).setValue(airports[idx].name ~ "  (" ~ airports[idx].id ~ ")");
+              }
+            </script>
+          </binding>
+          <binding>
+            <command>dialog-update</command>
+            <object-name>close-airport-list</object-name>
+          </binding>
+        </button-->
+
+        <!--checkbox>
           <name>show-helipads</name>
           <label>Helipads</label>
           <property>/sim/gui/dialogs/airports/show-helipads</property>
@@ -441,7 +494,7 @@
             <command>dialog-apply</command>
             <object-name>show-helipads</object-name>
           </binding>
-        </checkbox>
+        </checkbox-->
 
       </group>
 
@@ -475,7 +528,7 @@
           </binding>
         </list>
 
-        <airport-list>
+        <list>
           <row>0</row><col>0</col>
           <visible>
             <equals>
@@ -489,7 +542,8 @@
           <halign>fill</halign>
           <valign>fill</valign>
           <stretch>true</stretch>
-          <property>/sim/gui/dialogs/airports/list</property>
+          <property>/sim/gui/dialogs/airports/search-me</property>
+          <properties>/sim/gui/dialogs/airports/search-result</properties>
           <binding>
             <command>dialog-apply</command>
             <object-name>airport-list</object-name>
@@ -498,7 +552,7 @@
             <command>nasal</command>
             <script>listbox()</script>
           </binding>
-        </airport-list>
+        </list>
 
       </group>
 
