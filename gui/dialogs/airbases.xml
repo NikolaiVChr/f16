@@ -368,6 +368,39 @@
         </button-->
 
         <button>
+          <legend>&lt;100nm</legend>
+          <binding>
+            <command>property-assign</command>
+            <property>/sim/gui/dialogs/airports/mode</property>
+            <value>100nm</value>
+          </binding>
+          <binding>
+            <command>nasal</command>
+            <script>
+              # change airport type to heliport if checkbox is set
+              var apt_type = "airport";
+              if (getprop("/sim/gui/dialogs/airports/show-helipads")) {
+                 apt_type = "heliport";
+              }
+              var airports = findAirportsWithinRange(100,apt_type);
+
+              var list = dlg.getNode("close-airports", 1);
+
+              list.removeChildren("value");
+
+              forindex (var idx; airports) {
+                if (!contains(airbases.db, airports[idx].id)) continue;
+                list.getNode("value["~ idx ~ "]", 1).setValue(airports[idx].name ~ "  (" ~ airports[idx].id ~ ")");
+              }
+            </script>
+          </binding>
+          <binding>
+            <command>dialog-update</command>
+            <object-name>close-airport-list</object-name>
+          </binding>
+        </button>
+
+        <button>
           <legend>&lt;200nm</legend>
           <binding>
             <command>property-assign</command>
