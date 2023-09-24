@@ -41,6 +41,7 @@
     <open><![CDATA[
       var update_info = func(open = 0) {
           var info = airportinfo(airport_id);
+          if (!contains(airbases.db, info.id)) return;
           setprop("/sim/gui/dialogs/airports/selected-airport/id", airport_id);
           setprop("/sim/gui/dialogs/airports/selected-airport/name", info.name);
           setprop("/sim/gui/dialogs/airports/selected-airport/location", sprintf("%.3f / %.3f", info.lat, info.lon));
@@ -1385,7 +1386,7 @@
       <empty><stretch>true</stretch></empty>
 
       <button>
-        <legend>Go To Airport</legend>
+        <legend>Go To Airbase</legend>
         <equal>true</equal>
         <binding>
           <command>dialog-apply</command>
