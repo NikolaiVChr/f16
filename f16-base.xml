@@ -475,6 +475,17 @@
                         </binding>
                     </item>
                 </menu>
+                <menu n="116">
+                    <label>Reset</label>
+                    <enabled type="bool">true</enabled>
+                    <item>
+                        <label>Reset to Airbase (military only)</label>
+                        <binding>
+                            <command>dialog-show</command>
+                            <dialog-name>airbases</dialog-name>
+                        </binding>
+                    </item>
+                </menu>
             </default>
         </menubar>
         <multiplay>
@@ -1694,6 +1705,9 @@
         <delegate>
             <file>Aircraft/f16/Nasal/flightPlanDelegate.nas</file>
         </delegate>
+        <airbases>
+            <file>Aircraft/f16/Nasal/airbases.nas</file>
+        </airbases>
     </nasal>
 
 
