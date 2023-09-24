@@ -2433,7 +2433,7 @@ var isOmniRadiating = func (model) {
 
 var getRadarFieldRadius = func (model) {
 	# Override this method in your aircraft to do this in another way
-	var entry = Database.getDBEntry(model);
+	var entry = getDBEntry(model);
 	if (entry.hasAirRadar) {
 		return entry.radarHorzRadius;
 	}
@@ -2443,28 +2443,28 @@ var getRadarFieldRadius = func (model) {
 var getRadarRange = func (model) {
 	# Override this method in your aircraft to do this in another way
 	# Distance in nm that antiradiation weapons can home in on the the radiation.
-	var entry = Database.getDBEntry(model);
+	var entry = getDBEntry(model);
 	return entry.passiveRadarRange;
 }
 
 var isKnownShip = func (model) {
-	return Database.getDBEntry(model).isShip;
+	return getDBEntry(model).isShip;
 }
 
 var isKnownSurface = func (model) {
-	return Database.getDBEntry(model).isSurfaceAsset;
+	return getDBEntry(model).isSurfaceAsset;
 }
 
 var isKnownAwacs = func (model) {
-	return Database.getDBEntry(model).isAwacs;
+	return getDBEntry(model).isAwacs;
 }
 
 var isKnownHeli = func (model) {
-	return Database.getDBEntry(model).isSlow;
+	return getDBEntry(model).isSlow;
 }
 
 var isKnownCarrier = func (model) {
-	return Database.getDBEntry(model).isCarrier;
+	return getDBEntry(model).isCarrier;
 }
 
 
