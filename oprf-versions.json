@@ -32,7 +32,7 @@
     "path": "Nasal/station-manager.nas"
   },
   "rcs-mand": {
-    "version": "1.0.2",
+    "version": "1.0.3",
     "path": "Nasal/radar/rcs_mand.nas"
   },
   "hud-math": {

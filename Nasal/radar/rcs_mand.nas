@@ -71,7 +71,8 @@ var rcs_oprf_database = {
     "s-300":                    0.16,
     "MIM104D":                  0.15,
     "truck":                    0.02,
-    "missile_frigate":          450, 
+    "missile_frigate":          450,
+    "fleet":                    1000, 
     "frigate":                  450,
     "tower":                    0.25,   #gone
     "gci":                      0.50,
