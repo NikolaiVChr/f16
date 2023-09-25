@@ -56,7 +56,7 @@ if (getprop("sim/variant-id") == 2) {
     colorBackground = [0.01,0.01,0.07, 1];
 } else if (getprop("sim/variant-id") == 5) {
     colorBackground = [0.01,0.01,0.07, 1];
-} else if (getprop("sim/variant-id") == 6) {
+} else if (getprop("sim/variant-id") >= 6) {
     colorBackground = [0.01,0.01,0.07, 1];
 } else {
     colorBackground = [0.005,0.1,0.005, 1];

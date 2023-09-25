@@ -42,7 +42,6 @@
       setprop("/sim/gui/dialogs/airbases/show-helipads", 0);
       var update_info = func(open = 0) {
           var info = airportinfo(airport_id);
-          print(airport_id);
           if (!contains(airbases.db, airport_id)) return;
           setprop("/sim/gui/dialogs/airbases/selected-airport/id", airport_id);
           setprop("/sim/gui/dialogs/airbases/selected-airport/name", info.name);

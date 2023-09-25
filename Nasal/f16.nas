@@ -1837,7 +1837,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
         hmd.setMainFile("hmd.nas");
         hmd.load();
         #-- load CDU as reloadable module
-        if (getprop("sim/variant-id") == 6) {
+        if (getprop("sim/variant-id") >= 6) {
             var cdu = modules.Module.new("f16_CDU"); # Module name
             cdu.setDebug(0); # 0=(mostly) silent; 1=print setlistener and maketimer calls to console; 2=print also each listener hit, be very careful with this!
             cdu.setFilePath(getprop("/sim/aircraft-dir")~"/Nasal/CDU");
