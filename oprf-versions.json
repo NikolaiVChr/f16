@@ -8,7 +8,7 @@
     "path": "Nasal/missile-code.nas"
   },
   "radar-system": {
-    "version": "1.0.1",
+    "version": "2.0.1",
     "path": "Nasal/radar/radar-system.nas"
   },
   "radar-system-database": {
