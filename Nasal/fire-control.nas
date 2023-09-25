@@ -839,7 +839,7 @@ var FireControl = {
 				me.guidanceEnabled = 1;
 			}
 			if (me.aim != nil and me.aim.parents[0] == armament.AIM and (me.aim.status == armament.MISSILE_LOCK or me.aim.guidance=="unguided" or me.aim.loal or !me.guidanceEnabled)) {
-			    if (me.getDropMode() == 0 and containsVector(CCIP_CCRP, selW.type) and me.aim.status == armament.MISSILE_LOCK) {
+			    if (me.getDropMode() == 0 and containsVector(CCIP_CCRP, me.aim.type) and me.aim.status == armament.MISSILE_LOCK) {
 			        me.distCCRP = getprop("payload/armament/distCCRP");
 			        me.distCCRPLast = me.distCCRP;
 			        if (me.distCCRP == -1 or me.distCCRPLast == -1 or me.distCCRP >= 500 or me.distCCRP < me.distCCRPLast) {
