@@ -1317,7 +1317,7 @@ var containsVector = func (vec, item) {
         }
     }
     return 0;
-},
+}
 
 var ccrp_loop = func () {
     if (getprop("payload/armament/releasedCCRP") == nil) setprop("payload/armament/releasedCCRP", 0);
