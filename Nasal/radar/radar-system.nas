@@ -290,6 +290,12 @@ var AIToNasal = {
         	me.sign = me.sign.getValue();
         	me.sign = me.sign == nil?"":me.sign;
         }
+
+        if (me.model != nil and me.model != "" and !getDBEntry(me.model).isDetectable) {
+        	me.nextReadTreeFrame();
+		    return;
+        }
+
         #AIcontact needs 2 calls to work. new() [cheap] and init() [expensive]. Only new is called here, updateVector will do init():
         me.aicontact = AIContact.new(me.prop_ai, me.model, me.callsign, me.pos_type, me.id, me.ainame, me.subid, me.aitype, me.sign);
 
@@ -2422,127 +2428,46 @@ var enable_tacobject = 0;
 var isOmniRadiating = func (model) {
 	# Override this method in your aircraft to do this in another way
 	# Return 1 if this contacts radar is not constricted to a cone.
-	return model == "gci" or model == "S-75" or model == "SA-6" or model == "buk-m2" or model == "MIM104D" or model == "missile_frigate" or model == "fleet" or model == "s-200" or model == "s-300" or model == "ZSU-23-4M";
+	return getDBEntry(model).radarHorzRadius == 180;
 }
 
 var getRadarFieldRadius = func (model) {
 	# Override this method in your aircraft to do this in another way
-	if (model == "A-50" or model == "EC-137R" or model == "E-3R" or model == "E-3") {
-		return 180;
+	var entry = getDBEntry(model);
+	if (entry.hasAirRadar) {
+		return entry.radarHorzRadius;
 	}
-	if (model == "S-75" or model == "s-200") {
-		return 180;
-	}
-	if (model == "SA-6" or model == "buk-m2") {
-		return 180;
-	}
-	if (model == "s-300" or model == "MIM104D") {
-		return 180;
-	}
-	if (model == "gci" or model == "ZSU-23-4M") {
-		return 180;
-	}
-	if (model == "fleet" or model == "missile-frigate") {
-		return 180;
-	}
-	if (knownSurface[model] == 0) {
-		return 0;
-	}
-	return 60;
+	return 0;
 }
 
 var getRadarRange = func (model) {
 	# Override this method in your aircraft to do this in another way
 	# Distance in nm that antiradiation weapons can home in on the the radiation.
-	return 70;
+	var entry = getDBEntry(model);
+	return entry.passiveRadarRange;
 }
 
 var isKnownShip = func (model) {
-	contains(knownShips, model);
+	return getDBEntry(model).isShip;
 }
 
 var isKnownSurface = func (model) {
-	contains(knownSurface, model);
+	return getDBEntry(model).isSurfaceAsset;
 }
 
 var isKnownAwacs = func (model) {
-	contains(knownAwacs, model);
+	return getDBEntry(model).isAwacs;
 }
 
 var isKnownHeli = func (model) {
-	contains(knownHelis, model);
+	return getDBEntry(model).isSlow;
 }
 
 var isKnownCarrier = func (model) {
-	contains(knownCarriers, model);
+	return getDBEntry(model).isCarrier;
 }
 
-var knownCarriers = {
-	"mp-clemenceau": nil,
-	"mp-eisenhower": nil,
-	"mp-nimitz": nil,
-	"mp-vinson": nil,
-};
 
-var knownAwacs = {
-	"A-50": nil,
-	"EC-137R": nil,
-	"E-3R": nil,
-	"E-3": nil,
-};
-
-var knownShips = {
-    "missile_frigate":       nil,
-    "frigate":       nil,
-    "fleet":       nil,
-    "USS-LakeChamplain":     nil,
-    "USS-NORMANDY":     nil,
-    "USS-OliverPerry":     nil,
-    "USS-SanAntonio":     nil,
-};
-
-var knownSurface = {
-	# 0 = has no radar
-    "S-75":       nil,
-    "buk-m2":       nil,
-    "SA-6":       nil,
-    "s-300":       nil,
-    "s-200":       nil,
-    "depot":       0,
-    "struct":       0,
-    "point":       0,
-    "rig":       0,
-    "gci":       nil,
-    "truck":     0,
-    "tower":     nil,
-    "MIM104D":       nil,
-    "ZSU-23-4M":       nil,
-};
-
-var knownHelis = {
-    "SH-60J":                  nil,
-    "UH-60J":                     nil,
-    "uh1":                     nil,
-    "212-TwinHuey":              nil,
-    "412-Griffin":               nil,
-    "ch53e":                     nil,
-    "Mil-Mi-8":                  nil,
-    "CH47":                     nil,
-    "mi24":                     nil,
-    "tigre":                     nil,
-    "uh60_Blackhawk":             nil,
-    "AH-1W":                       nil,
-    "WAH-64_Apache":               nil,
-    "rah-66":                      nil,
-    "Gazelle":                     nil,
-    "Westland_Gazelle":          nil,
-    "AS532-Cougar":               nil,
-    "Westland_SeaKing-HAR3":      nil,
-    "Lynx-HMA8":                  nil,
-    "Lynx_Wildcat":               nil,
-    "Merlin-HM1":             nil,
-    "OH-58D":                   nil,
-};
 
 
 # BUGS:

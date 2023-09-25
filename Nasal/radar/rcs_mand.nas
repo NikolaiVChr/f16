@@ -1,5 +1,5 @@
 var rcs_oprf_database = {
-    #Revision JUN 08 2022
+    #Revision DEC 09 2022
     # This list contains the mandatory RCS frontal values for OPRF (anno 1997), feel free to add non-OPRF to your aircraft, we don't care.
     "default":                  150,    #default value if target's model isn't listed
     "f-14b":                    12,     
@@ -21,6 +21,8 @@ var rcs_oprf_database = {
     "Blackbird-SR71A-BigTail":  0.30,
     "MiG-21bis":                3.5,
     "MiG-21MF-75":              3.5,
+    "MiG-23MLD":                5.0,
+    "MiG-23ML":                 5.0,
     "Typhoon":                  0.5,
     "B-1B":                     6,
     "707":                      100,
@@ -69,7 +71,8 @@ var rcs_oprf_database = {
     "s-300":                    0.16,
     "MIM104D":                  0.15,
     "truck":                    0.02,
-    "missile_frigate":          450, 
+    "missile_frigate":          450,
+    "fleet":                    1000, 
     "frigate":                  450,
     "tower":                    0.25,   #gone
     "gci":                      0.50,
@@ -89,3 +92,32 @@ var rcs_oprf_database = {
     "USS-OliverPerry":          450,    
     "USS-SanAntonio":           450,  
 };
+
+
+var ground_assets = ["depot", "ZSU-23-4M", "buk-m2", "SA-6", "S-75", "s-300", "s-200", "MIM104D", "truck", "tower", "gci", "struct", "point", "hunter"];
+
+### Amend table rcs_oprf_database to use real instead of reduced ground assets RCS values.
+#
+# Ground assets have very low RCS values.
+# This is to simulate ground clutter making them very hard to spot on radar.
+# Radars which themselves simulate ground clutter (e.g. a proper ground radar)
+# may however want to use the real RCS values (without this reduction).
+# They should call this function at initialisation to do so.
+#
+var use_real_ground_RCS = func {
+    foreach (var asset; ground_assets) {
+        rcs_oprf_database[asset] *= 100;
+    }
+}
+
+
+#RADARS:
+#=======
+#JA37       40 3.2     PS 46/A
+#F14        89 3.2     AWG-9
+#F15        80 3.2     APG-63 v1
+#F16        70 3.2     APG-68
+#MIG21       ?   ?
+#E-3R      300 150 
+#AJ37        ?   ?     PS 37
+#M2000      60 3.2     RDY

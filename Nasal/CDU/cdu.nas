@@ -1257,7 +1257,7 @@ var CDU = {
             .setStrokeLineWidth(lineWidth.pfd);
         me.ladderStep = (me.max_y-me.ehsiPosY)/6;# 10 degs
         me.ladderWidth = me.ehsiPosX*0.15;
-        if(me.input.linker.getValue()!=3*2) settimer(4, unload);
+        if(me.input.linker.getValue()<3*2) settimer(4, unload);
         me.pfdLadderGroup = me.pfdRoot.createChild("group")
             .set("z-index", 20);
         me.pfdLadder = me.pfdLadderGroup.createChild("path")

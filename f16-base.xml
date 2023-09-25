@@ -475,6 +475,17 @@
                         </binding>
                     </item>
                 </menu>
+                <menu n="116">
+                    <label>Reset</label>
+                    <enabled type="bool">true</enabled>
+                    <item>
+                        <label>Reset to Airbase (military only)</label>
+                        <binding>
+                            <command>dialog-show</command>
+                            <dialog-name>airbases</dialog-name>
+                        </binding>
+                    </item>
+                </menu>
             </default>
         </menubar>
         <multiplay>
@@ -1563,11 +1574,13 @@
             <file>Aircraft/f16/Nasal/damage.nas</file>
         </damage>
         <vector>
-            <file>Aircraft/f16/Nasal/vector.nas</file><!-- must be before RCS, armament and radar -->
+            <!-- must be before RCS, armament and radar -->
+            <file>Aircraft/f16/Nasal/vector.nas</file>
         </vector>
         <rcs>
-            <file>Aircraft/f16/Nasal/rcs_mand.nas</file><!-- must be before radar -->
-            <file>Aircraft/f16/Nasal/rcs.nas</file><!-- must be before radar -->
+            <!-- must be before radar -->
+            <file>Aircraft/f16/Nasal/radar/rcs_mand.nas</file>
+            <file>Aircraft/f16/Nasal/radar/rcs.nas</file>
         </rcs>
         <controls>
             <file>Aircraft/f16/Nasal/f16_controls.nas</file>
@@ -1630,6 +1643,7 @@
         </pylons>
         <crash>
             <file>Aircraft/f16/Nasal/crash-and-stress.nas</file>
+            <file>Aircraft/f16/Nasal/crash-and-stress-custom.nas</file>
         </crash>
         <mig28>
             <file>Aircraft/f16/Nasal/mig28.nas</file>
@@ -1681,6 +1695,7 @@
             <file>Aircraft/f16/Nasal/help.nas</file>
         </help>
         <radar_system>
+            <file>Aircraft/f16/Nasal/radar/radar-system-database.nas</file>
             <file>Aircraft/f16/Nasal/radar/radar-system.nas</file>
             <file>Aircraft/f16/Nasal/radar/apg-68.nas</file>
         </radar_system>
@@ -1690,6 +1705,9 @@
         <delegate>
             <file>Aircraft/f16/Nasal/flightPlanDelegate.nas</file>
         </delegate>
+        <airbases>
+            <file>Aircraft/f16/Nasal/airbases.nas</file>
+        </airbases>
     </nasal>
 
 

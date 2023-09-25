@@ -839,7 +839,7 @@ var FireControl = {
 				me.guidanceEnabled = 1;
 			}
 			if (me.aim != nil and me.aim.parents[0] == armament.AIM and (me.aim.status == armament.MISSILE_LOCK or me.aim.guidance=="unguided" or me.aim.loal or !me.guidanceEnabled)) {
-			    if (me.getDropMode() == 0 and (me.aim.type=="MK-82" or me.aim.type=="MK-82AIR" or me.aim.type=="MK-83" or me.aim.type=="MK-84" or me.aim.type=="GBU-12" or me.aim.type=="GBU-31" or me.aim.type=="GBU-54" or me.aim.type=="GBU-24" or me.aim.type=="CBU-87" or me.aim.type=="CBU-105" or me.aim.type=="AGM-154A" or me.aim.type=="B61-7" or me.aim.type=="B61-12") and me.aim.status == armament.MISSILE_LOCK) {
+			    if (me.getDropMode() == 0 and containsVector(CCIP_CCRP, selW.type) and me.aim.status == armament.MISSILE_LOCK) {
 			        me.distCCRP = getprop("payload/armament/distCCRP");
 			        me.distCCRPLast = me.distCCRP;
 			        if (me.distCCRP == -1 or me.distCCRPLast == -1 or me.distCCRP >= 500 or me.distCCRP < me.distCCRPLast) {
@@ -1306,11 +1306,18 @@ var FireControl = {
 	},
 };
 
-var debug = 0;
-var printDebug = func (msg) {if (debug == 1) print(msg);};
-var printfDebug = func {if (debug == 1) call(printf,arg);};
+var debugFC = 0;
+var printDebug = func (msg) {if (debugFC == 1) print(msg);};
+var printfDebug = func {if (debugFC == 1) call(printf,arg);};
 
-
+var containsVector = func (vec, item) {
+    foreach(test; vec) {
+        if (test == item) {
+            return 1;
+        }
+    }
+    return 0;
+},
 
 var ccrp_loop = func () {
     if (getprop("payload/armament/releasedCCRP") == nil) setprop("payload/armament/releasedCCRP", 0);
@@ -1319,7 +1326,7 @@ var ccrp_loop = func () {
     # Exit if master switch off, no selected weapon, ccip, not A/G bomb, or not locked on a target
     if (getprop(masterArmSwitch) == 0 or
         !(selW != nil and !(pylons.fcs.getDropMode == 1) and
-            (selW.type=="MK-82" or selW.type=="MK-82AIR" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selW.type=="GBU-54" or selW.type=="GBU-24" or selW.type=="CBU-87" or selW.type=="CBU-105" or selW.type=="AGM-154A" or selW.type=="B61-7" or selW.type=="B61-12") and selW.status == armament.MISSILE_LOCK )) {
+            containsVector(CCIP_CCRP, selW.type) and selW.status == armament.MISSILE_LOCK )) {
         setprop("payload/armament/distCCRP", -1);
         return;
     }
@@ -1353,9 +1360,12 @@ ccrp_loopTimer.simulatedTime = 1;
 ccrp_loopTimer.start();
 
 
-# This is non-generic methods, please edit it to fit your radar setup:
+# This is non-generic methods, please edit it to fit your radar/weapon setup:
+
+# List of weapons that can be CCIP/CCRP dropped:
+var CCIP_CCRP = ["MK-82","MK-82AIR","MK-83","MK-84","GBU-12","GBU-24","GBU-54","CBU-87","CBU-105","GBU-31","B61-7","B61-12"];
 # List of weapons that can be ripple/dual dropped:
-var dualWeapons = ["MK-82","MK-82AIR","MK-83","MK-84","GBU-12","GBU-24","GBU-54","CBU-87","CBU-105","GBU-31","AGM-154A","B61-7","B61-12"];
+var dualWeapons = ["MK-82","MK-82AIR","MK-83","MK-84","GBU-12","GBU-24","GBU-54","CBU-87","CBU-105","GBU-31","B61-7","B61-12","AGM-154A"];
 var defaultCannon = "20mm Cannon";
 var defaultRocket = "LAU-68";
 var getCompleteRadarTargetsList = func {

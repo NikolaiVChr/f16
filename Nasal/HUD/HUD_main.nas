@@ -3035,7 +3035,7 @@ append(obj.total, obj.speed_curr);
             }
             var selW = pylons.fcs.getSelectedWeapon();
             if (selW != nil and !hdp.CCIP_active and
-                (selW.type=="MK-82" or selW.type=="MK-82AIR" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selW.type=="GBU-54" or selW.type=="GBU-24" or selW.type=="CBU-87" or selW.type=="CBU-105" or selW.type=="AGM-154A" or selW.type=="B61-7" or selW.type=="B61-12") and selW.status == armament.MISSILE_LOCK ) {
+               fc.containsVector(fc.CCIP_CCRP, selW.type) and selW.status == armament.MISSILE_LOCK ) {
                 me.distCCRP = getprop("payload/armament/distCCRP");
                 if (me.distCCRP == -1 or (me.distCCRP*M2NM > 13.2 and selW.guidance == "laser")) {#1F-F16CJ-34-1: max laser dist is 13.2nm
                     me.solutionCue.hide();
@@ -3091,7 +3091,7 @@ append(obj.total, obj.speed_curr);
         if(hdp.CCIP_active) {
             if (hdp.fcs_available and hdp.getproper("master_arm") != 0) {
                 var selW = pylons.fcs.getSelectedWeapon();
-                if (selW != nil and (selW.type=="MK-82" or selW.type=="MK-82AIR" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selW.type=="GBU-54" or selW.type=="GBU-24" or selW.type=="CBU-87" or selW.type=="CBU-105" or selW.type=="B61-7" or selW.type=="B61-12")) {
+                if (selW != nil and fc.containsVector(fc.CCIP_CCRP, selW.type)) {
                     me.showmeCCIP = 1;
                     me.ccipPos = pylons.fcs.getSelectedWeapon().getCCIPadv(18,0.20);
                     if (me.ccipPos == nil) {

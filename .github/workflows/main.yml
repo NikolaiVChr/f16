@@ -1,0 +1,44 @@
+name: OPRF Asset Updater
+
+on:
+  # Once Daily
+  schedule: 
+    - cron: "0 0 * * *"
+  # When the workflow is manually run
+  workflow_dispatch:
+    inputs:
+      include:
+        description: "Files to update, separated by commas."
+        required: false
+        default: "*"
+      exclude:
+        description: "Files to skip, separated by commas."
+        required: false
+        default: ""
+      major:
+        description: "Allow major updates, not recommended until after verifying compatibility"
+        required: true
+        default: "false"
+        type: choice
+        options:
+          - "true"
+          - "false"
+
+jobs:
+  update:
+    # Needs to be a UNIX system
+    runs-on: ubuntu-latest
+    # Needs permission to write files in order to update them
+    permissions:
+      contents: write
+    steps:
+      - name: "Manual Update"
+        uses: BobDotCom/OPRFAssetUpdater@v0.4
+        if: "${{ github.event_name == 'workflow_dispatch' }}"
+        with:
+          include: ${{ inputs.include }}
+          exclude: ${{ inputs.exclude }}
+          major: ${{ inputs.major }}
+      - name: "Scheduled Update"
+        uses: BobDotCom/OPRFAssetUpdater@v0.4
+        if: "${{ github.event_name != 'workflow_dispatch' }}"

@@ -434,7 +434,7 @@ var HudMath = {
 	        viewZ:            "sim/current-view/y-offset-m",
 	        viewX:            "sim/current-view/z-offset-m",
       	};
-   
+
       	foreach(var name; keys(me.input)) {
         	me.input[name] = props.globals.getNode(me.input[name], 1);
       	}

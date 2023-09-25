@@ -107,6 +107,11 @@ var rcs_database = {
     "T-50":                     0.5,    #low end of sources
     "u-2s":                     0.01,
     "U-2S-model":               0.01,
+    #Carriers
+    "mp-clemenceau":            500,
+    "mp-eisenhower":            500,
+    "mp-nimitz":                500,
+    "mp-vinson":                500,
 };
 
 var prevVisible = {};
@@ -177,7 +182,7 @@ var targetRCSSignal = func(targetCoord, targetModel, targetHeading, targetPitch,
         target_front_rcs = rcs_database[targetModel];
     } else {
         return 1;
-        target_front_rcs = rcs_database["default"];
+        target_front_rcs = rcs_oprf_database["default"];
     }
     #print(target_front_rcs," RCS from ", targetModel, " m:", myRadarDistance_m, " rcs:",myRadarStrength_rcs);
     var target_rcs = getRCS(targetCoord, targetHeading, targetPitch, targetRoll, myCoord, target_front_rcs);

@@ -314,7 +314,7 @@ var DamageRecipient =
                 var radarOn = bits.test(notification.Flags, 0);
                 var thrustOn = bits.test(notification.Flags, 1);
                 var CWIOn = bits.test(notification.Flags, 2);
-                var index = me.emesaryID2typeID(notification.SecondaryKind);
+                var index = DamageRecipient.emesaryID2typeID(notification.SecondaryKind);
                 var typ = id2warhead[index];
 
                 if (notification.Kind == MOVE) {
@@ -444,7 +444,7 @@ var DamageRecipient =
                     var node = getCallsign(notification.RemoteCallsign);
                       if (node != nil and (notification.SecondaryKind > 20 or notification.SecondaryKind < -40)) {
                         # its a warhead
-                        var wh = id2warhead[me.emesaryID2typeID(notification.SecondaryKind)];
+                        var wh = id2warhead[DamageRecipient.emesaryID2typeID(notification.SecondaryKind)];
                         var lbs = wh[1];
                         var hitCoord = geo.Coord.new();
                         hitCoord.set_latlon(node.getNode("position/latitude-deg").getValue(), node.getNode("position/longitude-deg").getValue(), node.getNode("position/altitude-ft").getValue()*FT2M+notification.RelativeAltitude);
@@ -485,7 +485,7 @@ var DamageRecipient =
                             # its a warhead
                             if (m28_auto) mig28.engagedBy(notification.Callsign, 1);
                             var dist     = notification.Distance;
-                            var wh = id2warhead[me.emesaryID2typeID(notification.SecondaryKind)];
+                            var wh = id2warhead[DamageRecipient.emesaryID2typeID(notification.SecondaryKind)];
                             var type = wh[4];#test code
                             if (wh[3] == 1) {
                                 # cluster munition
@@ -1467,6 +1467,19 @@ var writeDamageLog = func {
   io.write(file, str);
   io.close(file);
 }
+
+var unitTest = func {
+  for (var i= 0; i<=180;i+=1) {
+    var em = DamageRecipient.typeID2emesaryID(i);
+    var b = DamageRecipient.emesaryID2typeID(em);
+    if (b != i) {
+      print("unit test failed for index "~i);
+      return;
+    }
+  }
+  print("unit test passed");
+}
+#unitTest();
 
 setlistener("sim/signals/exit", writeDamageLog, 0, 0);
 
