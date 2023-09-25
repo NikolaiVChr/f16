@@ -221,6 +221,10 @@ light: ecm lamp off
                 	<property>sim/variant-id</property>
                 	<value>6</value>
             	</equals>
+                <equals>
+                    <property>sim/variant-id</property>
+                    <value>7</value>
+                </equals>
             </or>
         </condition>
         <property>controls/armament/master-arm-switch</property>
