@@ -1206,40 +1206,49 @@ var repairYasim = func {
 }
 
 var setupYasimEngines = func {
-    if (getprop("engines/engine/n1") != nil and !contains(FailureMgr.get_failure_modes(), "engines/engine")) {
+    if (getprop("engines/engine/n1") != nil and !hasMode("engines/engine")) {
         var e0 = compat_failure_modes.fail_engine("engine");
         FailureMgr.add_failure_mode("engines/engine", "Engine 1", e0);
     }
-    if (getprop("engines/engine[1]/n1") != nil and !contains(FailureMgr.get_failure_modes(), "engines/engine[1]")) {
+    if (getprop("engines/engine[1]/n1") != nil and !hasMode("engines/engine[1]")) {
         var e1 = compat_failure_modes.fail_engine("engine[1]");
         FailureMgr.add_failure_mode("engines/engine[1]", "Engine 2", e1);
     }
-    if (getprop("engines/engine[2]/n1") != nil and !contains(FailureMgr.get_failure_modes(), "engines/engine[2]")) {
+    if (getprop("engines/engine[2]/n1") != nil and !hasMode("engines/engine[2]")) {
         var e2 = compat_failure_modes.fail_engine("engine[2]");
         FailureMgr.add_failure_mode("engines/engine[2]", "Engine 3", e2);
     }
-    if (getprop("engines/engine[3]/n1") != nil and !contains(FailureMgr.get_failure_modes(), "engines/engine[3]")) {
+    if (getprop("engines/engine[3]/n1") != nil and !hasMode("engines/engine[3]")) {
         var e3 = compat_failure_modes.fail_engine("engine[3]");
         FailureMgr.add_failure_mode("engines/engine[3]", "Engine 4", e3);
     }
-    if (getprop("engines/engine[4]/n1") != nil and !contains(FailureMgr.get_failure_modes(), "engines/engine[4]")) {
+    if (getprop("engines/engine[4]/n1") != nil and !hasMode("engines/engine[4]")) {
         var e4 = compat_failure_modes.fail_engine("engine[4]");
         FailureMgr.add_failure_mode("engines/engine[4]", "Engine 5", e4);
     }
-    if (getprop("engines/engine[5]/n1") != nil and !contains(FailureMgr.get_failure_modes(), "engines/engine[5]")) {
+    if (getprop("engines/engine[5]/n1") != nil and !hasMode("engines/engine[5]")) {
         var e5 = compat_failure_modes.fail_engine("engine[5]");
         FailureMgr.add_failure_mode("engines/engine[5]", "Engine 6", e5);
     }
-    if (getprop("engines/engine[6]/n1") != nil and !contains(FailureMgr.get_failure_modes(), "engines/engine[6]")) {
+    if (getprop("engines/engine[6]/n1") != nil and !hasMode("engines/engine[6]")) {
         var e6 = compat_failure_modes.fail_engine("engine[6]");
         FailureMgr.add_failure_mode("engines/engine[6]", "Engine 7", e6);
     }
-    if (getprop("engines/engine[7]/n1") != nil and !contains(FailureMgr.get_failure_modes(), "engines/engine[7]")) {
+    if (getprop("engines/engine[7]/n1") != nil and !hasMode("engines/engine[7]")) {
         var e7 = compat_failure_modes.fail_engine("engine[7]");
         FailureMgr.add_failure_mode("engines/engine[7]", "Engine 8", e7);
     }
 }
-settimer(setupYasimEngines, 300);
+settimer(setupYasimEngines, 150);
+
+var hasMode = func (test) {
+  # Tests if a failure mode exist already
+  var modes = FailureMgr.get_failure_modes();
+  foreach(mode;modes) {
+    if (mode["id"]==test) return 1;
+  }
+  return 0;
+}
 
 setlistener("/sim/signals/reinit", repairYasim);
 
