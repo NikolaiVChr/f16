@@ -143,3 +143,13 @@ setlistener(cycleS, func (prop) {
     # Only TWS mode
     if (prop.getIntValue() == 1) pylons.fcs.cycleStation();
 });
+
+controls.applyPickle = func (value) {
+    var trigger = getprop("/controls/armament/trigger");
+    if (value == 1 and trigger == 0) {
+        setprop("/controls/armament/trigger", value);
+    }
+    if (value == 0 and trigger == 1) {
+        setprop("/controls/armament/trigger", value);
+    }
+}
