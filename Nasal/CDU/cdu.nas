@@ -16,6 +16,8 @@ var MM2TEX = 2;
 var texel_per_degree = 2*MM2TEX;
 var KT2KMH = 1.85184;
 
+var maxBases    = 50;
+
 # map setup
 
 var tile_size = 256;
@@ -159,6 +161,7 @@ var font = {
     targets: 25,
     markpoints: 25,
     power: 25,
+    airbase: 25,
 };
 
 var symbolSize = {
@@ -190,9 +193,10 @@ var layer_z = {
         targets: 11,
         markpoints: 10,
         lines_and_route: 8,
-        threatRings: 4,
-        grid: 2,
-        gridText: 3,
+        threatRings: 5,
+        grid: 3,
+        gridText: 4,
+        airbase: 2,
     },
     mapOverlay: {
         ownship: 10,
@@ -205,6 +209,7 @@ var layer_z = {
 var loopTimer = nil;
 var loopTimerFast = nil;
 var loopTimerVerySlow = nil;
+var loopTimerSlow = nil;
 
 
 #   ██████ ██████  ██    ██ 
@@ -253,6 +258,8 @@ var CDU = {
         me.setupPower();
         me.setupAttr();
         me.setupCrash();
+        me.setupBases();
+        me.updateBasesNear();
         
         me.setRangeInfo();
         me.loadedCDU = 1;
@@ -263,6 +270,9 @@ var CDU = {
         loopTimerFast.start();
         loopTimerVerySlow = maketimer(3600, me, me.calcZoomLevels);
         loopTimerVerySlow.start();
+        loopTimerSlow = maketimer(300, me, me.updateBasesNear);
+        loopTimerSlow.start();
+        
         #me.loop();
 
         startDLListener();
@@ -318,6 +328,7 @@ var CDU = {
         me.updateEHSI();
         me.updateHUD();
         me.updatePower();
+        me.showBasesNear();
         #print("CDU Looping ",me.loadedCDU);
     },
 
@@ -336,6 +347,7 @@ var CDU = {
         me.mapSelfCentered = 1;
         me.day = 1;
         me.mapShowGrid = 0;
+        me.mapShowAFB = 0;
     },
 
     calcGeometry: func {
@@ -471,6 +483,7 @@ var CDU = {
             b5: {pos: [0,575]},
             b8: {pos: [0,950]},
             b9: {method: me.toggleHdgUp, pos: [me.max_x,90]},
+            b11: {method: me.toggleAFB, pos: [me.max_x,325]},
             b12: {method: me.toggleMAP, pos: [me.max_x,450]},
             b13: {method: me.toggleGrid, pos: [me.max_x,575]},
             b16: {pos: [me.max_x,950]},
@@ -500,6 +513,11 @@ var CDU = {
     toggleGrid: func {
         if (!me.instrConf[me.instrView].showMap) return;
         me.mapShowGrid = !me.mapShowGrid;
+    },
+
+    toggleAFB: func {
+        if (!me.instrConf[me.instrView].showMap) return;
+        me.mapShowAFB = !me.mapShowAFB;
     },
 
     toggleHdgUp: func {
@@ -668,6 +686,14 @@ var CDU = {
             .setAlignment("right-center")
             .setTranslation(me.buttonMap.b13.pos[0]-20, me.buttonMap.b13.pos[1])
             .setFont("NotoMono-Regular.ttf");
+
+        me.afbText = me.root.createChild("text")
+            .set("z-index",layer_z.display.buttonSymbols)
+            .setColor(COLOR_YELLOW)
+            .setFontSize(font.range, 1.0)
+            .setAlignment("right-center")
+            .setTranslation(me.buttonMap.b11.pos[0]-20, me.buttonMap.b11.pos[1])
+            .setFont("NotoMono-Regular.ttf");
     },
 
     updateSymbols: func {
@@ -707,14 +733,13 @@ var CDU = {
         me.instrText.setText(me.instrConf[me.instrView].descr);
         me.mapText.setText(providerOption==0?"DRAWN":"PHOTO");
         me.gridText.setText(me.mapShowGrid?"GRID":"CLEAN");
-
+        me.afbText.setText(me.mapShowAFB?"AFB  ON":"AFB OFF");
+        me.afbText.setVisible(me.instrConf[me.instrView].showMap);
         me.gridText.setVisible(me.instrConf[me.instrView].showMap);
         me.mapText.setVisible(me.instrConf[me.instrView].showMap);
         me.dayText.setVisible(me.instrConf[me.instrView].showMap);
         me.hdgUpText.setVisible(me.instrConf[me.instrView].showMap);
         me.rangeArrowDown.setVisible(me.instrConf[me.instrView].showMap);
-        me.rangeArrowUp.setVisible(me.instrConf[me.instrView].showMap);
-        me.rangeText.setVisible(me.instrConf[me.instrView].showMap);
     },
 
     setupTargets: func {
@@ -1064,8 +1089,8 @@ var CDU = {
     setRangeInfo: func  {
         me.range = zoomLevels[zoom_curr];#(me.outerRadius/M2TEX)*M2NM;
         me.rangeText.setText(sprintf("%d", me.range));#print(sprintf("Map range %5.1f NM", me.range));
-        me.rangeArrowDown.setVisible(zoom_curr < size(zoomLevels)-1);
-        me.rangeArrowUp.setVisible(zoom_curr > 0);
+        me.rangeArrowDown.setVisible(me.instrConf[me.instrView].showMap and zoom_curr < size(zoomLevels)-1);
+        me.rangeArrowUp.setVisible(me.instrConf[me.instrView].showMap and zoom_curr > 0);
     },
 
     updateRadarCone: func {
@@ -1219,6 +1244,85 @@ var CDU = {
             me.crashCross.setVisible(math.mod(me.input.timeElapsed.getValue(), 0.50) < 0.25);
         } else {
             me.crashCross.setVisible(0);
+        }
+    },
+
+    setupBases: func {
+        # airport overlay
+        me.base_grp = me.rootCenter.createChild("group")
+            .set("z-index", layer_z.map.airbase);
+
+        # large airports
+        me.baseLargeText = [];
+        me.baseLarge = [];
+        for(var i = 0; i < maxBases; i+=1) {
+            #append(me.baseLarge,
+            #    me.base_grp.createChild("path")
+            #       .moveTo(-20, 0)
+            #       .arcSmallCW(20, 20, 0, 40, 0)
+            #       .arcSmallCW(20, 20, 0, -40, 0)
+            #       .setStrokeLineWidth(w)
+            #       .setColor(COLOR_TYRK));
+            append(me.baseLargeText,
+                me.base_grp.createChild("text")
+                    .setText("ICAO")
+                    .setColor(COLOR_WHITE)
+                    .setAlignment("center-center")
+                    .setTranslation(0,0)
+                    .hide()
+                    .setFontSize(font.airbase));
+        }
+    },
+
+    updateBasesNear: func {
+        # this function is run in a slow loop as its very expensive
+        me.basesNear = [];
+        me.ports = findAirportsWithinRange(75);
+        foreach(var port; me.ports) {
+            if (!contains(airbases.db, port.id)) continue;
+            append(me.basesNear, {"icao": port.id, "lat": port.lat, "lon": port.lon, "elev": port.elevation});
+        }
+    },
+
+    showBasesNear: func {
+        if (me.mapShowAFB and zoomLevels[zoom_curr] >= 40) {
+            me.numL = 0;
+            foreach(var base; me.basesNear) {
+                me.coord = geo.Coord.new();
+                me.coord.set_latlon(base["lat"], base["lon"], base["elev"]);
+                me.distance = me.selfCoord.distance_to(me.coord);
+                #if (me.distance < height/M2TEX) {
+                    me.baseIcao = base["icao"];
+                    if (size(me.baseIcao) != nil and me.baseIcao != "") {
+                        me.xa_rad = (me.selfCoord.course_to(me.coord) - me.input.headTrue.getValue()) * D2R;
+                        me.pixelDistance = -me.distance*M2TEX; #distance in pixels
+                        #translate from polar coords to cartesian coords
+                        me.pixelX =  me.pixelDistance * math.cos(me.xa_rad + math.pi/2);
+                        me.pixelY =  me.pixelDistance * math.sin(me.xa_rad + math.pi/2);
+                        if (me.numL < maxBases) {
+                            #me.baseLarge[me.numL].setTranslation(me.pixelX, me.pixelY);
+                            #me.baseLarge[me.numL].show();
+                            me.baseLargeText[me.numL].setTranslation(me.pixelX, me.pixelY);
+                            me.baseLargeText[me.numL].setText(me.baseIcao);
+                            if (!me.hdgUp) {
+                                me.baseLargeText[me.numL].setRotation(-me.input.heading.getValue()*D2R);
+                            } else {
+                                me.baseLargeText[me.numL].setRotation(0);
+                            }
+                            me.baseLargeText[me.numL].show();
+                            me.numL += 1;
+                        }
+                    }
+                #}
+                
+            }
+            for(var i = me.numL; i < maxBases; i += 1) {
+                me.baseLargeText[i].hide();
+                #me.baseLarge[i].hide();
+            }
+            me.base_grp.show();
+        } else {
+            me.base_grp.hide();
         }
     },
 
@@ -1922,7 +2026,7 @@ var CDU = {
     },
 };
 
-var reinit_listener = setlistener("/sim/signals/reinit", func {CDU.calcZoomLevels();});
+var reinit_listener = setlistener("/sim/signals/reinit", func {CDU.calcZoomLevels();CDU.updateBasesNear();});
 
 var looper = nil;
 var main = func (module) {

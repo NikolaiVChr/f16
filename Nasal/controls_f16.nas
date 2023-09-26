@@ -140,7 +140,6 @@ setlistener(cycleT, func (prop) {
 var cycleS = props.globals.getNode("/controls/armament/missile-reject", 1);
 cycleS.setBoolValue(0);
 setlistener(cycleS, func (prop) {
-    # Only TWS mode
     if (prop.getIntValue() == 1) pylons.fcs.cycleStation();
 });
 
