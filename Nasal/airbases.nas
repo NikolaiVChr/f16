@@ -789,14 +789,12 @@ var db = {
 	EGXT: "GBR United Kingdom",
 	EGXZ: "GBR United Kingdom",
 	EGYM: "GBR United Kingdom",
-	EHDP: "NLD Netherlands",
+	EHAM: "NLD Netherlands",
+	EHDR: "NLD Netherlands",
 	EHEH: "NLD Netherlands",
 	EHGR: "NLD Netherlands",
-	EHKD: "NLD Netherlands",
+	EHLE: "NLD Netherlands",
 	EHLW: "NLD Netherlands",
-	EHSB: "NLD Netherlands",
-	EHTW: "NLD Netherlands",
-	EHVB: "NLD Netherlands",
 	EHVK: "NLD Netherlands",
 	EHWO: "NLD Netherlands",
 	EICK: "IRL Ireland",
@@ -1597,3 +1595,23 @@ var db = {
 	ZYJX: "CHN China",
 };
 # Contains 1590 bases
+
+# The above list is auto-generated, put custom changes here:
+
+# ADD
+#
+db.EHDP = "NLD Netherlands";
+db.EHSB = "NLD Netherlands";
+db.EHTW = "NLD Netherlands";
+db.EHVB = "NLD Netherlands";
+db.EHKD = "NLD Netherlands";
+db.EKAV = "DNK Denmark";
+db.EKVL = "DNK Denmark";
+
+# REMOVE
+#
+delete(db.EHAM);
+delete(db.EHDR);
+delete(db.EHLE);
+delete(db.EKMB);
+delete(db.EKAH);

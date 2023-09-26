@@ -24,7 +24,7 @@ var defaultMissileShipThreat = func (my_deviation_from_him_deg) {return 0.30;};
 var defaultSurfaceThreat = func (my_deviation_from_him_deg) {return 0.30;};
 
 var Database = {
-	# The key is the model filename without the .xml extension.
+	# The key is the model filename without the .xml extension. If it ends with -model or -anim then don't add that, its ignored.
 	# They all inherit from BaseEntry, so if something is not listed it uses default values from that.
 	# RCS values are populated from the rcs database inside rcs namespace.
 	#
@@ -34,7 +34,6 @@ var Database = {
 # Small aircraft (emesary enabled)
 	"AI":                     {rwrCode:"AI"},
     "A-10":                   {killZone: 15, baseThreat:defaultFighterThreat},
-    "A-10-model":             {killZone: 15, baseThreat:defaultFighterThreat},
     "A-10-modelB":            {killZone: 15, baseThreat:defaultFighterThreat},
     "AJ37-Viggen":            {hasAirRadar:1, rwrCode:"37", killZone: 15, baseThreat:defaultFighterThreat},
     "AJS37-Viggen":           {hasAirRadar:1, rwrCode:"37", killZone: 15, baseThreat:defaultFighterThreat},
@@ -177,7 +176,7 @@ var Database = {
 	"E-2C-Hawkeye":           {hasAirRadar:1, rwrCode:"S", radarHorzRadius: 180, isAwacs: 1},
 	"onox-awacs":             {hasAirRadar:1, rwrCode:"S", radarHorzRadius: 180, isAwacs: 1},
 	"u-2s":                   {},
-	"U-2S-model":             {},
+	"U-2S":                   {},
 	"F-4C":                   {hasAirRadar:1, rwrCode:"F4", baseThreat:defaultFighterThreat},
 	"F-4D":                   {hasAirRadar:1, rwrCode:"F4", baseThreat:defaultFighterThreat},
 	"F-4E":                   {hasAirRadar:1, rwrCode:"F4", baseThreat:defaultFighterThreat},
@@ -219,7 +218,6 @@ var Database = {
 	"MiG-15bis":              {hasAirRadar:1, rwrCode:"15", baseThreat:defaultFighterThreat},
 	"Su-25":                  {hasAirRadar:1, rwrCode:"25", baseThreat:defaultFighterThreat},
 	"MiG-25":                 {hasAirRadar:1, rwrCode:"25", baseThreat:defaultFighterThreat},
-	"A-6E-model":             {hasAirRadar:1, rwrCode:"A6", baseThreat:defaultFighterThreat},
 	"A-6E":                   {hasAirRadar:1, rwrCode:"A6", baseThreat:defaultFighterThreat},
 	"ea-6b":                  {hasAirRadar:1, rwrCode:"A6", baseThreat:defaultFighterThreat},
 	"F-117":                  {},
@@ -234,7 +232,7 @@ var Database = {
 	"Yak-130":                {hasAirRadar:1, rwrCode:"Y1", baseThreat:defaultFighterThreat},
 	"L-159":                  {hasAirRadar:1, rwrCode:"LC", baseThreat:defaultFighterThreat},
 	"super-etendard":         {hasAirRadar:1, rwrCode:"ET", baseThreat:defaultFighterThreat},
-	"Mirage_F1-model":        {hasAirRadar:1, rwrCode:"M1", baseThreat:defaultFighterThreat},
+	"Mirage_F1":              {hasAirRadar:1, rwrCode:"M1", baseThreat:defaultFighterThreat},
 	"ufo":                    {},
 	"bluebird-osg":           {},
 	"Vostok-1":               {},
@@ -243,7 +241,7 @@ var Database = {
 	"F-23C_BlackWidow-II":    {},
 };
 
-var debugDatabaseLevel = 1;
+var debugDatabaseLevel = 0;
 
 if (rcs["rcs_database"] != nil) {
 	foreach(entry ; keys(rcs.rcs_database)) {

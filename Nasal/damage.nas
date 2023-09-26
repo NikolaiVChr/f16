@@ -27,7 +27,7 @@ var mlw_max=getprop("payload/d-config/mlw_max"); #
 var auto_flare_caller = getprop("payload/d-config/auto_flare_caller"); # If damage.nas should detect flare releases, or if function is called from somewhere in aircraft
 ############################################################################################################################
 
-
+srand();
 var hp = hp_max;
 setprop("sam/damage", math.max(0,100*hp/hp_max));#used in HUD
 
@@ -1136,6 +1136,46 @@ var fail_systems = func (probability, factor = 100) {#this factor needs tuning a
               }
           }
       }
+      if (rand() < probability and rand() < probability and getprop("sim/flight-model") == "yasim") {
+          setprop("consumables/fuel/tank[0]/level-norm", 0);
+          setprop("consumables/fuel/tank[1]/level-norm", 0);
+          setprop("consumables/fuel/tank[2]/level-norm", 0);
+          setprop("consumables/fuel/tank[3]/level-norm", 0);
+          setprop("consumables/fuel/tank[4]/level-norm", 0);
+          setprop("consumables/fuel/tank[5]/level-norm", 0);
+          setprop("consumables/fuel/tank[6]/level-norm", 0);
+          setprop("consumables/fuel/tank[7]/level-norm", 0);
+          setprop("consumables/fuel/tank[8]/level-norm", 0);
+          setprop("consumables/fuel/tank[9]/level-norm", 0);
+          setprop("consumables/fuel/tank[10]/level-norm", 0);
+          setprop("consumables/fuel/tank[11]/level-norm", 0);
+          # Somtimes these needs to be set too:
+          setprop("consumables/fuel/tank[0]/level-lbs", 0);
+          setprop("consumables/fuel/tank[1]/level-lbs", 0);
+          setprop("consumables/fuel/tank[2]/level-lbs", 0);
+          setprop("consumables/fuel/tank[3]/level-lbs", 0);
+          setprop("consumables/fuel/tank[4]/level-lbs", 0);
+          setprop("consumables/fuel/tank[5]/level-lbs", 0);
+          setprop("consumables/fuel/tank[6]/level-lbs", 0);
+          setprop("consumables/fuel/tank[7]/level-lbs", 0);
+          setprop("consumables/fuel/tank[8]/level-lbs", 0);
+          setprop("consumables/fuel/tank[9]/level-lbs", 0);
+          setprop("consumables/fuel/tank[10]/level-lbs", 0);
+          setprop("consumables/fuel/tank[11]/level-lbs", 0);
+          # these will make the fraction indicator in fuel dialog not work after relocation, but they are needed:
+          setprop("consumables/fuel/tank[0]/capacity-m3", 0);
+          setprop("consumables/fuel/tank[1]/capacity-m3", 0);
+          setprop("consumables/fuel/tank[2]/capacity-m3", 0);
+          setprop("consumables/fuel/tank[3]/capacity-m3", 0);
+          setprop("consumables/fuel/tank[4]/capacity-m3", 0);
+          setprop("consumables/fuel/tank[5]/capacity-m3", 0);
+          setprop("consumables/fuel/tank[6]/capacity-m3", 0);
+          setprop("consumables/fuel/tank[7]/capacity-m3", 0);
+          setprop("consumables/fuel/tank[8]/capacity-m3", 0);
+          setprop("consumables/fuel/tank[9]/capacity-m3", 0);
+          setprop("consumables/fuel/tank[10]/capacity-m3", 0);
+          setprop("consumables/fuel/tank[11]/capacity-m3", 0);
+      }
 
       return failed;
     }
@@ -1164,6 +1204,42 @@ var repairYasim = func {
       FailureMgr.set_failure_level(failure_mode_id, 0);
     }
 }
+
+var setupYasimEngines = func {
+    if (getprop("engines/engine/n1") != nil and !contains(FailureMgr.get_failure_modes(), "engines/engine")) {
+        var e0 = compat_failure_modes.fail_engine("engine");
+        FailureMgr.add_failure_mode("engines/engine", "Engine 1", e0);
+    }
+    if (getprop("engines/engine[1]/n1") != nil and !contains(FailureMgr.get_failure_modes(), "engines/engine[1]")) {
+        var e1 = compat_failure_modes.fail_engine("engine[1]");
+        FailureMgr.add_failure_mode("engines/engine[1]", "Engine 2", e1);
+    }
+    if (getprop("engines/engine[2]/n1") != nil and !contains(FailureMgr.get_failure_modes(), "engines/engine[2]")) {
+        var e2 = compat_failure_modes.fail_engine("engine[2]");
+        FailureMgr.add_failure_mode("engines/engine[2]", "Engine 3", e2);
+    }
+    if (getprop("engines/engine[3]/n1") != nil and !contains(FailureMgr.get_failure_modes(), "engines/engine[3]")) {
+        var e3 = compat_failure_modes.fail_engine("engine[3]");
+        FailureMgr.add_failure_mode("engines/engine[3]", "Engine 4", e3);
+    }
+    if (getprop("engines/engine[4]/n1") != nil and !contains(FailureMgr.get_failure_modes(), "engines/engine[4]")) {
+        var e4 = compat_failure_modes.fail_engine("engine[4]");
+        FailureMgr.add_failure_mode("engines/engine[4]", "Engine 5", e4);
+    }
+    if (getprop("engines/engine[5]/n1") != nil and !contains(FailureMgr.get_failure_modes(), "engines/engine[5]")) {
+        var e5 = compat_failure_modes.fail_engine("engine[5]");
+        FailureMgr.add_failure_mode("engines/engine[5]", "Engine 6", e5);
+    }
+    if (getprop("engines/engine[6]/n1") != nil and !contains(FailureMgr.get_failure_modes(), "engines/engine[6]")) {
+        var e6 = compat_failure_modes.fail_engine("engine[6]");
+        FailureMgr.add_failure_mode("engines/engine[6]", "Engine 7", e6);
+    }
+    if (getprop("engines/engine[7]/n1") != nil and !contains(FailureMgr.get_failure_modes(), "engines/engine[7]")) {
+        var e7 = compat_failure_modes.fail_engine("engine[7]");
+        FailureMgr.add_failure_mode("engines/engine[7]", "Engine 8", e7);
+    }
+}
+settimer(setupYasimEngines, 300);
 
 setlistener("/sim/signals/reinit", repairYasim);
 
