@@ -1462,18 +1462,14 @@ append(obj.total, obj.speed_curr);
              func(hdp)
                                       {
                                         obj.r_show = 1;
-                                        if (hdp.getproper("fpm") > 0 and !hdp.getproper("dgft") and (!obj.showmeCCIP or !isDropping or math.mod(int(8*(systime()-int(systime()))),2)>0)) {
+                                        if (hdp.getproper("fpm") > 0 and !hdp.getproper("dgft") and
+                                        (((!obj.showmeCCIP or !isDropping) and (getprop("controls/armament/trigger") < 1 or getprop("payload/armament/releasedCCRP") < 1)) or math.mod(int(8*(systime()-int(systime()))),2)>0)) {
                                             obj.VV.setTranslation (hdp.VV_x, hdp.VV_y);
                                             if (hdp.getproper("HUD_SCA") == 2) {
                                                 obj.bank_angle_indicator.setTranslation (hdp.VV_x, hdp.VV_y);
                                                 obj.r_show = 0;
                                             }
-                                            # If we're holding the trigger and dropped a bomb in CCRP, flash the FPM twice per second
-                                            if (getprop("controls/armament/trigger") < 1 or getprop("payload/armament/releasedCCRP") < 1 or math.mod(math.mod(getprop("sim/time/steady-clock-sec"),1),0.5) < 0.25) {
-                                                obj.VV.show();
-                                            } else {
-                                                obj.VV.hide();
-                                            }
+                                            obj.VV.show();
                                             obj.VV.update();
                                         } else {
                                             obj.VV.hide();
