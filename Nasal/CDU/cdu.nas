@@ -1279,7 +1279,7 @@ var CDU = {
         me.basesNear = [];
         me.ports = findAirportsWithinRange(75);
         foreach(var port; me.ports) {
-            if (!contains(airbases.db, port.id)) continue;
+            if (!airbases.lookUp(port.id)) continue;
             append(me.basesNear, {"icao": port.id, "lat": port.lat, "lon": port.lon, "elev": port.elevation});
         }
     },

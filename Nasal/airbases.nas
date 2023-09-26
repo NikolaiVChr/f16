@@ -1634,7 +1634,7 @@ var db = {
 # Contains 1624 bases
 
 
-# Countries checked: Netherlands, Denmark, UK.
+# Countries checked: Netherlands (PHJake), Denmark (Leto), UK (Sammy), Cyprus (Leto).
 #
 # The above list is auto-generated, put custom changes here:
 
@@ -1645,7 +1645,7 @@ db.EHSB = "NLD Netherlands";
 db.EHTW = "NLD Netherlands";
 db.EHVB = "NLD Netherlands";
 db.EHKD = "NLD Netherlands";
-db.EKAV = "DNK Denmark";      # Avnø Air Base
+db.EKAV = "DNK Denmark";        # Avnø Air Base
 db.EGKN = "GBR United Kingdom";
 db.EGKT = "GBR United Kingdom";
 db.EGQL = "GBR United Kingdom";
@@ -1654,6 +1654,24 @@ db.EGDI = "GBR United Kingdom";
 db.EGOQ = "GBR United Kingdom";
 db.EGDN = "GBR United Kingdom";
 db.EGOW = "GBR United Kingdom";
+db.EGXY = "GBR United Kingdom";
+db.EGOE = "GBR United Kingdom";
+db.EGDJ = "GBR United Kingdom";
+db.EGXW = "GBR United Kingdom";
+db.EGUW = "GBR United Kingdom";
+db.EGPK = "GBR United Kingdom";
+db.EGVA = "GBR United Kingdom";
+db.EGYD = "GBR United Kingdom";
+db.EGXC = "GBR United Kingdom";
+db.EGYE = "GBR United Kingdom";
+db.EGUB = "GBR United Kingdom";
+db.LCRE = "CYP Cyprus [UK]";#British Overseas Territory on the island of Cyprus
+db.LCGK = "CYP Turkish Republic of Northern Cyprus";
+db.KSKA = "USA United States"; # Fairchild (USAF)
+db.KGFA = "USA United States"; # Malmstrom (USAF)
+db.FJDG = "USA United States"; # Diego Garcia (British Royal Navy/USN/CIA)
+db.KPUB = "USA United States"; # Pueblo Memorial (USAF)
+
 
 # REMOVE
 #
@@ -1688,6 +1706,8 @@ db.UAOL = "KAZ Kazakhstan";
 db.VEAB = "IND India";
 db.VERP = "IND India";
 db.VEBR = "IND India";
+db.LCPH = "CYP Republic of Cyprus";
+db.LCRA = "CYP Cyprus [UK]";#British Overseas Territory on the island of Cyprus
 
 var pruneDB = func {
 	# Optimize DB by removing airbases FG does not support
@@ -1699,3 +1719,28 @@ var pruneDB = func {
 	print("Optimized airbase DB, it now has "~size(keys(db))~" entries.");
 }
 #pruneDB(); # it only removes around 150 bases, so not worth it
+
+
+# These 2 function is how you use the DB:
+
+var lookUp = func (icao) {
+	icao = string.uc(icao);
+	if (contains(db, icao)) return 1;
+	if (icao == "8KS3") {
+		# ICAOs that starts with number go in these functions
+		#
+		# 8KS3  Davis Airfield (USAF)
+		#
+		return 1;
+	}
+	return 0;
+}
+
+var country = func (icao) {
+	icao = string.uc(icao);
+	if (contains(db, icao)) return db[icao];
+	if (icao == "8KS3") {
+		return "USA United States";
+	}
+	return "";
+}

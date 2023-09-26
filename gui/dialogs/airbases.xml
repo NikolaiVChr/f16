@@ -42,7 +42,7 @@
       setprop("/sim/gui/dialogs/airbases/show-helipads", 0);
       var update_info = func(open = 0) {
           var info = airportinfo(airport_id);
-          if (!contains(airbases.db, airport_id)) return;
+          if (!airbases.lookUp(airport_id)) return;
           setprop("/sim/gui/dialogs/airbases/selected-airport/id", airport_id);
           setprop("/sim/gui/dialogs/airbases/selected-airport/name", info.name);
           setprop("/sim/gui/dialogs/airbases/selected-airport/location", sprintf("%.3f / %.3f", info.lat, info.lon));
@@ -266,10 +266,10 @@
             var listMil = findAirportsByICAO(searcher);
             val = 0;
             foreach (var base ; listMil) {
-              if (!contains(airbases.db, base.id)) continue;
+              if (airbases.lookUp(base.id)) continue;
               var icao = base.id;
               var name = base.name;
-              var country = airbases.db[base.id];
+              var country = airbases.country(base.id);
               var present = name~"   ("~icao~")   "~country~"                                                                       ("~icao~")";
               setprop("/sim/gui/dialogs/airbases/search-result/value["~val~"]", present);
               val += 1;
@@ -410,8 +410,8 @@
               list.removeChildren("value");
 
               forindex (var idx; airports) {
-                if (!contains(airbases.db, airports[idx].id)) continue;
-                var country = airbases.db[airports[idx].id];
+                if (!airbases.lookUp(airports[idx].id)) continue;
+                var country = airbases.country(airports[idx].id);
                 list.getNode("value["~ idx ~ "]", 1).setValue(airports[idx].name ~ "   (" ~ airports[idx].id ~ ")   " ~ country ~"                                                                       (" ~ airports[idx].id ~ ")");
               }
             </script>
@@ -444,8 +444,8 @@
               list.removeChildren("value");
 
               forindex (var idx; airports) {
-                if (!contains(airbases.db, airports[idx].id)) continue;
-                var country = airbases.db[airports[idx].id];
+                if (!airbases.lookUp(airports[idx].id)) continue;
+                var country = airbases.country(airports[idx].id);
                 list.getNode("value["~ idx ~ "]", 1).setValue(airports[idx].name ~ "   (" ~ airports[idx].id ~ ")   " ~ country ~"                                                                          (" ~ airports[idx].id ~ ")");
               }
             </script>
