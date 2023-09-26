@@ -1333,7 +1333,7 @@ var ccrp_loop = func () {
     if (trgt == nil and radar_system.apg68Radar.getPriorityTarget() != nil) {
         trgt = radar_system.apg68Radar.getPriorityTarget();
     } elsif (trgt == nil) {
-        print("tgt not found");
+        printDebug("CCRP: tgt not found");
         setprop("payload/armament/distCCRP", -1);
         return;
     }
