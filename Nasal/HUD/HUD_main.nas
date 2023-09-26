@@ -1462,7 +1462,8 @@ append(obj.total, obj.speed_curr);
              func(hdp)
                                       {
                                         obj.r_show = 1;
-                                        if (hdp.getproper("fpm") > 0 and !hdp.getproper("dgft") and (!obj.showmeCCIP or !isDropping or math.mod(int(8*(systime()-int(systime()))),2)>0)) {
+                                        if (hdp.getproper("fpm") > 0 and !hdp.getproper("dgft") and
+                                        (((!obj.showmeCCIP or !isDropping) and (getprop("controls/armament/trigger") < 1 or getprop("payload/armament/releasedCCRP") < 1)) or math.mod(int(8*(systime()-int(systime()))),2)>0)) {
                                             obj.VV.setTranslation (hdp.VV_x, hdp.VV_y);
                                             if (hdp.getproper("HUD_SCA") == 2) {
                                                 obj.bank_angle_indicator.setTranslation (hdp.VV_x, hdp.VV_y);
@@ -3030,19 +3031,9 @@ append(obj.total, obj.speed_curr);
             }
             var selW = pylons.fcs.getSelectedWeapon();
             if (selW != nil and !hdp.CCIP_active and
-               me.containsVector(fc.CCIP_CCRP, selW.type) and selW.status == armament.MISSILE_LOCK ) {
-
-                if (selW.guidance == "unguided") {
-                    me.dt = 0.1;
-                    me.maxFallTime = 20;
-                } else {
-                    me.agl = (hdp.getproper("altitude_ft")-trgt.get_altitude())*FT2M;
-                    me.dt = me.agl*0.000025;#4000 ft = ~0.1
-                    if (me.dt < 0.1) me.dt = 0.1;
-                    me.maxFallTime = 45;
-                }
-                me.distCCRP = pylons.fcs.getSelectedWeapon().getCCRP(me.maxFallTime,me.dt);
-                if (me.distCCRP == nil or (me.distCCRP*M2NM > 13.2 and selW.guidance == "laser")) {#1F-F16CJ-34-1: max laser dist is 13.2nm
+               fc.containsVector(fc.CCIP_CCRP, selW.type) and selW.status == armament.MISSILE_LOCK ) {
+                me.distCCRP = getprop("payload/armament/distCCRP");
+                if (me.distCCRP == -1 or (me.distCCRP*M2NM > 13.2 and selW.guidance == "laser")) {#1F-F16CJ-34-1: max laser dist is 13.2nm
                     me.solutionCue.hide();
                     me.ccrpMarker.hide();
                     me.bombFallLine.hide();
@@ -3096,7 +3087,7 @@ append(obj.total, obj.speed_curr);
         if(hdp.CCIP_active) {
             if (hdp.fcs_available and hdp.getproper("master_arm") != 0) {
                 var selW = pylons.fcs.getSelectedWeapon();
-                if (selW != nil and me.containsVector(fc.CCIP_CCRP, selW.type)) {
+                if (selW != nil and fc.containsVector(fc.CCIP_CCRP, selW.type)) {
                     me.showmeCCIP = 1;
                     me.ccipPos = pylons.fcs.getSelectedWeapon().getCCIPadv(18,0.20);
                     if (me.ccipPos == nil) {
@@ -3437,14 +3428,6 @@ append(obj.total, obj.speed_curr);
                 me.eegsMe.pitch = math.atan2(-me.eegsMe.speed_down_fps,me.eegsMe.speed_horizontal_fps)*R2D;
             }
         }
-    },
-    containsVector: func (vec, item) {
-        foreach(test; vec) {
-                if (test == item) {
-                        return 1;
-                }
-        }
-        return 0;
     },
     extrapolate: func (x, x1, x2, y1, y2) {
         return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);

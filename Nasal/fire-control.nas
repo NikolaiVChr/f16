@@ -825,6 +825,7 @@ var FireControl = {
 	trigger: func {
 		# trigger pressed down should go here, this will fire weapon
 		# cannon is fired in another way, but this method will print the brevity.
+        setprop("payload/armament/releasedCCRP", 0);
 		printfDebug("trigger called %d %d %d",getprop("controls/armament/master-arm"),getprop("controls/armament/trigger"),me.selected != nil);
 		if (me.getSelectedPylon() == nil or !me.getSelectedPylon().isActive()) return;
 		if (me.isRippling) return;
@@ -838,6 +839,32 @@ var FireControl = {
 				me.guidanceEnabled = 1;
 			}
 			if (me.aim != nil and me.aim.parents[0] == armament.AIM and (me.aim.status == armament.MISSILE_LOCK or me.aim.guidance=="unguided" or me.aim.loal or !me.guidanceEnabled)) {
+			    if (me.getDropMode() == 0 and containsVector(CCIP_CCRP, me.aim.type) and me.aim.status == armament.MISSILE_LOCK) {
+			        me.distCCRP = getprop("payload/armament/distCCRP");
+			        me.distCCRPLast = me.distCCRP;
+			        if (me.distCCRP == -1 or me.distCCRPLast == -1 or me.distCCRP >= 500 or me.distCCRP < me.distCCRPLast) {
+			            print("Trigger was pressed, waiting for launch parameters");
+                        me.distCCRPListen = setlistener("payload/armament/distCCRP", func (distCCRP) {
+                            me.distCCRPLast = me.distCCRP;
+                            # the variable passed to this method is a string, so let's just fetch it again
+                            me.distCCRP = getprop("payload/armament/distCCRP");
+
+                            if (getprop("controls/armament/trigger") < 1) {
+                                print("Trigger was let go, cancel the listener");
+                                removelistener(me.distCCRPListen);
+                                return;
+                            }
+                            if (me.distCCRP != -1 and me.distCCRPLast != -1 and me.distCCRP < 500 and me.distCCRP >= me.distCCRPLast) {
+                                print("Launch parameters met, re-run the trigger function");
+                                me.trigger();
+                                removelistener(me.distCCRPListen);
+                                setprop("payload/armament/releasedCCRP", 1);
+                                return;
+                            }
+                        });
+                        return;  # The listener will call this function again when we are ready
+                    }
+			    }
 				me.aim = me.fireAIM(me.selected[0],me.selected[1], me.guidanceEnabled);
 				if (me.selectedAdd != nil) {
 					foreach(me.seldual ; me.selectedAdd) {
@@ -1283,6 +1310,52 @@ var debugFC = 0;
 var printDebug = func (msg) {if (debugFC == 1) print(msg);};
 var printfDebug = func {if (debugFC == 1) call(printf,arg);};
 
+var containsVector = func (vec, item) {
+    foreach(test; vec) {
+        if (test == item) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+var ccrp_loop = func () {
+    var selW = pylons.fcs.getSelectedWeapon();
+
+    # Exit if master switch off, no selected weapon, ccip, not A/G bomb, or not locked on a target
+    if (getprop(masterArmSwitch) == 0 or
+        !(selW != nil and !(pylons.fcs.getDropMode == 1) and
+            containsVector(CCIP_CCRP, selW.type) and selW.status == armament.MISSILE_LOCK )) {
+        setprop("payload/armament/distCCRP", -1);
+        return;
+    }
+    var trgt = armament.contactPoint;
+    if (trgt == nil and radar_system.apg68Radar.getPriorityTarget() != nil) {
+        trgt = radar_system.apg68Radar.getPriorityTarget();
+    } elsif (trgt == nil) {
+        printDebug("CCRP: tgt not found");
+        setprop("payload/armament/distCCRP", -1);
+        return;
+    }
+    if (selW.guidance == "unguided") {
+        var dt = 0.1;
+        var maxFallTime = 20;
+    } else {
+        var agl = (getprop("position/altitude-ft")-trgt.get_altitude())*FT2M;
+        var dt = agl*0.000025;#4000 ft = ~0.1
+        if (dt < 0.1) dt = 0.1;
+        var maxFallTime = 45;
+    }
+    var distCCRP = pylons.fcs.getSelectedWeapon().getCCRP(maxFallTime,dt);
+    if (distCCRP == nil) {
+        distCCRP = -1;
+    }
+    setprop("payload/armament/distCCRP", distCCRP);
+}
+
+var ccrp_loopTimer = maketimer(0.1, ccrp_loop);
+ccrp_loopTimer.simulatedTime = 1;
+ccrp_loopTimer.start();
 
 
 # This is non-generic methods, please edit it to fit your radar/weapon setup:

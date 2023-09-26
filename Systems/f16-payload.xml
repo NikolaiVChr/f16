@@ -53,6 +53,8 @@
         <MAW-semiactive type="bool">false</MAW-semiactive>
         <MAW-semiactive-callsign type="string"></MAW-semiactive-callsign>
         <spike type="bool">false</spike>
+        <releasedCCRP type="bool">false</releasedCCRP>
+        <distCCRP type="int">-1</distCCRP>
         <station>
             <id-0-set type="string">Empty</id-0-set>
             <id-1-set type="string">Empty</id-1-set>
