@@ -121,3 +121,25 @@ var pause = func {
         }
     }
 }
+
+var cycleW = props.globals.getNode("/controls/armament/weapon-selected", 1);
+cycleW.setIntValue(0);
+setlistener(cycleW, func (prop) {
+    if (prop.getIntValue() == 1) pylons.fcs.cycleLoadedWeapon();
+    if (prop.getIntValue() == -1) pylons.fcs.cycleBackLoadedWeapon();
+});
+
+var cycleT = props.globals.getNode("/controls/armament/target-selected", 1);
+cycleT.setIntValue(0);
+setlistener(cycleT, func (prop) {
+    # Only TWS mode
+    if (prop.getIntValue() == 1) radar_system.apg68Radar.cycleDesignate();
+});
+
+
+var cycleS = props.globals.getNode("/controls/armament/missile-reject", 1);
+cycleS.setBoolValue(0);
+setlistener(cycleS, func (prop) {
+    # Only TWS mode
+    if (prop.getIntValue() == 1) pylons.fcs.cycleStation();
+});
