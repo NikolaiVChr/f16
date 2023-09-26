@@ -1634,7 +1634,7 @@ var db = {
 # Contains 1624 bases
 
 
-# Countries checked: Netherlands (PHJake), Denmark (Leto), UK (Sammy), Cyprus (Leto).
+# Countries checked: Netherlands (PHJake), Denmark (Leto), UK (Sammy), Cyprus (Leto), part of USA (pinto).
 #
 # The above list is auto-generated, put custom changes here:
 
