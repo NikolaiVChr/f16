@@ -1638,8 +1638,8 @@ db.EKAV = "DNK Denmark";
 
 # REMOVE
 #
-delete(db.EHAM);
-delete(db.EHDR);
-delete(db.EHLE);
-delete(db.EKMB);
-delete(db.EKAH);
+delete(db,"EHAM");
+delete(db,"EHDR");
+delete(db,"EHLE");
+delete(db,"EKMB");
+delete(db,"EKAH");
