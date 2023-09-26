@@ -1320,7 +1320,6 @@ var containsVector = func (vec, item) {
 }
 
 var ccrp_loop = func () {
-    if (getprop("payload/armament/releasedCCRP") == nil) setprop("payload/armament/releasedCCRP", 0);
     var selW = pylons.fcs.getSelectedWeapon();
 
     # Exit if master switch off, no selected weapon, ccip, not A/G bomb, or not locked on a target
@@ -1354,7 +1353,6 @@ var ccrp_loop = func () {
     setprop("payload/armament/distCCRP", distCCRP);
 }
 
-setprop("payload/armament/distCCRP", -1);
 var ccrp_loopTimer = maketimer(0.1, ccrp_loop);
 ccrp_loopTimer.simulatedTime = 1;
 ccrp_loopTimer.start();
