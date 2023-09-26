@@ -1643,3 +1643,4 @@ delete(db,"EHDR");
 delete(db,"EHLE");
 delete(db,"EKMB");
 delete(db,"EKAH");
+delete(db,"KLAS");

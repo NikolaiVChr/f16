@@ -16,7 +16,7 @@
     "path": "Nasal/radar/radar-system-database.nas"
   },
   "damage": {
-    "version": "1.2.0",
+    "version": "1.2.1",
     "path": "Nasal/damage.nas"
   },
   "iff": {
@@ -56,7 +56,7 @@
     "path": "Nasal/crash-and-stress.nas"
   },
   "airbases": {
-    "version": "1.0.2",
+    "version": "1.0.4",
     "path": "Nasal/airbases.nas"
   }
 }
