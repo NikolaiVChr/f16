@@ -1,1600 +1,1629 @@
 #
 # License: GPL 2.0, Copyright: Laminar research
 #
-# Requirements to be in list: Must have ICAO. Must have country listed. Must have either a MIL sign, parking spots for fighters or runways used for military.
+# Requirements to be in list:
+#  Must have ICAO. Must have country listed. Must have either a MIL sign, parking spots for fighters or runways used for military.
+# List was auto-generated from APT 1100 file. Heliports are auto commented.
+#
 var db = {
-	KDWA: "USA United States",
-	BGGH: "GRL Greenland",
-	BGQQ: "GRL Greenland",
-	BGSF: "GRL Greenland",
-	BGTL: "GRL Greenland",
-	CYWN: "CAN Canada",
-	CYAM: "CAN Canada",
-	CYAW: "CAN Canada",
-	CYBG: "CAN Canada",
-	CYCS: "CAN Canada",
-	CYED: "CAN Canada",
-	CYER: "CAN Canada",
-	CYFB: "CAN Canada",
-	CYGM: "CAN Canada",
-	CYGT: "CAN Canada",
-	CYJQ: "CAN Canada",
-	CYJT: "CAN Canada",
-	CYKF: "CAN Canada",
-	CYMJ: "CAN Canada",
-	CYMX: "CAN Canada",
-	CYNM: "CAN Canada",
-	CYOD: "CAN Canada",
-	CYOW: "CAN Canada",
-	CYPH: "CAN Canada",
-	CYPQ: "CAN Canada",
-	CYQB: "CAN Canada",
-	CYQI: "CAN Canada",
-	CYQQ: "CAN Canada",
-	CYQX: "CAN Canada",
-	CYSA: "CAN Canada",
-	CYSN: "CAN Canada",
-	CYSU: "CAN Canada",
-	CYTH: "CAN Canada",
-	CYTR: "CAN Canada",
-	CYUX: "CAN Canada",
-	CYWA: "CAN Canada",
-	CYWG: "CAN Canada",
-	CYWK: "CAN Canada",
-	CYXX: "CAN Canada",
-	CYYB: "CAN Canada",
-	CYYC: "CAN Canada",
-	CYYG: "CAN Canada",
-	CYYT: "CAN Canada",
-	CYZE: "CAN Canada",
-	CYZF: "CAN Canada",
-	CYZH: "CAN Canada",
-	EGYP: "GBR United Kingdom",
-	KAAO: "USA United States",
-	KABQ: "USA United States",
-	KABR: "USA United States",
-	KACV: "USA United States",
-	KACY: "USA United States",
-	KADS: "USA United States",
-	KADW: "USA United States",
-	KAEX: "USA United States",
-	KAFF: "USA United States",
-	KAIK: "USA United States",
-	KALB: "USA United States",
-	KALI: "USA United States",
-	KALM: "USA United States",
-	KALO: "USA United States",
-	KAND: "USA United States",
-	KANE: "USA United States",
-	KAPG: "USA United States",
-	KAPH: "USA United States",
-	KAPN: "USA United States",
-	KARM: "USA United States",
-	KAST: "USA United States",
-	KASW: "USA United States",
-	KATS: "USA United States",
-	KATW: "USA United States",
-	KAUS: "USA United States",
-	KAUW: "USA United States",
-	KAWM: "USA United States",
-	KAXS: "USA United States",
-	KBAB: "USA United States",
-	KBAD: "USA United States",
-	KBAF: "USA United States",
-	KBBG: "USA",
-	KBDL: "USA United States",
-	KBFD: "USA United States",
-	KBFI: "USA United States",
-	KBGM: "USA United States",
-	KBGR: "USA United States",
-	KBHM: "USA United States",
-	KBIE: "USA United States",
-	KBIF: "USA United States",
-	KBIS: "USA United States",
-	KBIX: "USA United States",
-	KBKF: "USA United States",
-	KBKV: "USA United States",
-	KBLV: "USA United States",
-	KBNA: "USA United States",
-	KBOI: "USA United States",
-	KBOW: "USA United States",
-	KBRO: "USA United States",
-	KBTL: "USA United States",
-	KBTR: "USA United States",
-	KBTV: "USA",
-	KBUF: "USA United States",
-	KBUR: "USA United States",
-	KBWI: "USA United States",
-	KBXM: "USA",
-	KBZN: "USA United States",
-	KCAK: "USA United States",
-	KCBF: "USA United States",
-	KCBM: "USA United States",
-	KCGF: "USA United States",
-	KCHD: "USA",
-	KCHS: "USA United States",
-	KCJR: "USA United States",
-	KCLT: "USA United States",
-	KCNW: "USA United States",
-	KCOF: "USA United States",
-	KCON: "USA United States",
-	KCOS: "USA United States",
-	KCRG: "USA",
-	KCRQ: "USA United States",
-	KCRW: "USA United States",
-	KCUB: "USA",
-	KCVS: "USA United States",
-	KCWF: "USA United States",
-	KCXO: "USA United States",
-	KCXY: "USA United States",
-	KCYS: "USA United States",
-	KCZG: "USA United States",
-	KDAA: "USA United States",
-	KDDC: "USA United States",
-	KDEC: "USA United States",
-	KDEN: "USA United States",
-	KDHN: "USA United States",
-	KDKX: "USA United States",
-	KDLF: "USA United States",
-	KDLH: "USA United States",
-	KDMA: "USA United States",
-	KDOV: "USA United States",
-	KDPG: "USA United States",
-	KDRO: "USA United States",
-	KDSM: "USA United States",
-	KDTA: "USA United States",
-	KDTO: "USA United States",
-	KDVO: "USA United States",
-	KDYS: "USA United States",
-	KECG: "USA United States",
-	KEDC: "USA United States",
-	KEDW: "USA United States",
-	KEET: "USA United States",
-	KEFD: "USA United States",
-	KEGE: "USA",
-	KEGI: "USA United States",
-	KEHR: "USA United States",
-	KEKQ: "USA United States",
-	KELP: "USA",
-	KEND: "USA United States",
-	KENV: "USA United States",
-	KEQY: "USA United States",
-	KETB: "USA United States",
-	KEVV: "USA United States",
-	KEVY: "USA United States",
-	KEYE: "USA",
-	KFAR: "USA United States",
-	KFAT: "USA United States",
-	KFBG: "USA United States",
-	KFCI: "USA United States",
-	KFCS: "USA United States",
-	KFFO: "USA United States",
-	KFFZ: "USA United States",
-	KFHB: "USA United States (Contiguous)",
-	KFHU: "USA United States",
-	KFIN: "USA United States",
-	KFKL: "USA United States",
-	KFLG: "USA United States",
-	KFOE: "USA United States",
-	KFOK: "USA United States",
-	KFRI: "USA United States",
-	KFSD: "USA United States",
-	KFSM: "USA United States",
-	KFTK: "USA United States",
-	KFTW: "USA United States",
-	KFWA: "USA United States",
-	KFXE: "USA United States",
-	KFYJ: "USA United States",
-	KGAO: "USA United States",
-	KGBG: "USA United States",
-	KGCD: "USA United States",
-	KGCK: "USA United States",
-	KGED: "USA United States",
-	KGEG: "USA United States",
-	KGEU: "USA United States",
-	KGEY: "USA United States",
-	KGJT: "USA United States",
-	KGKT: "USA United States",
-	KGKY: "USA United States",
-	KGLD: "USA United States",
-	KGLE: "USA United States",
-	KGON: "USA United States",
-	KGOV: "USA United States",
-	KGPI: "USA United States",
-	KGPT: "USA United States",
-	KGRB: "USA United States",
-	KGRD: "USA United States",
-	KGRI: "USA United States",
-	KGRK: "USA United States",
-	KGSB: "USA United States",
-	KGTB: "USA United States",
-	KGTF: "USA United States",
-	KGTR: "USA United States",
-	KGTU: "USA United States",
-	KGUR: "USA United States",
-	KGUS: "USA United States",
-	KGVE: "USA United States",
-	KGVQ: "USA United States",
-	KGVT: "USA United States",
-	PAGX: "USA United States",
-	KGYH: "USA United States",
-	KGYY: "USA United States",
-	KHAF: "USA United States",
-	KHDC: "USA United States",
-	KHEF: "USA United States",
-	KHEY: "USA United States",
-	KHFY: "USA United States",
-	KHGR: "USA United States",
-	KHHG: "USA United States",
-	KHIF: "USA United States",
-	KHII: "USA United States",
-	KHKY: "USA",
-	KHLN: "USA United States",
-	KHMN: "USA United States",
-	KHOP: "USA United States",
-	KHQZ: "USA United States",
-	KHSA: "USA United States",
-	KHST: "USA United States",
-	KHUF: "USA United States",
-	KHUM: "USA United States",
-	KIAB: "USA United States",
-	KIAG: "USA United States",
-	KIDA: "USA United States",
-	KIFP: "USA United States",
-	KILG: "USA United States",
-	KINS: "USA United States",
-	KISP: "USA United States",
-	KIWA: "USA United States",
-	KJAN: "USA United States",
-	KJAX: "USA United States",
-	KJHW: "USA United States",
-	KJKL: "USA United States",
-	KJST: "USA United States",
-	KJWN: "USA United States",
-	KJWY: "USA United States",
-	KJZI: "USA United States",
-	KLAF: "USA United States",
-	KLAS: "USA",
-	KLAX: "USA",
-	KLBL: "USA United States",
-	KLCH: "USA United States",
-	KLCK: "USA United States",
-	KLEB: "USA United States",
-	KLEX: "USA United States",
-	KLFI: "USA United States",
-	KLFT: "USA United States",
-	KLLR: "USA United States",
-	KLNC: "USA United States",
-	KLNK: "USA United States",
-	KLOM: "USA United States",
-	KLOZ: "USA United States",
-	KLRD: "USA United States",
-	KLRF: "USA United States",
-	KLRU: "USA United States",
-	KLSF: "USA United States",
-	KLSV: "USA United States",
-	KLTS: "USA United States",
-	KLUF: "USA United States",
-	KLVK: "USA United States",
-	KLWC: "USA United States",
-	KLWM: "USA United States",
-	KLZU: "USA United States",
-	KMCC: "USA United States",
-	KMCF: "USA United States",
-	KMCI: "USA United States",
-	KMDA: "USA United States",
-	KMDT: "USA United States",
-	KMEB: "USA United States",
-	KMEM: "USA United States",
-	KMER: "USA United States",
-	KMEV: "USA United States",
-	KMFD: "USA United States",
-	KMFE: "USA United States",
-	KMFR: "USA United States",
-	KMFV: "USA United States",
-	KMGE: "USA United States",
-	KMGM: "USA United States",
-	KMHR: "USA United States",
-	KMIE: "USA United States",
-	KMJD: "USA United States",
-	KMJX: "USA United States",
-	KMKE: "USA",
-	KMKG: "USA United States",
-	KMKL: "USA United States",
-	KMLB: "USA United States",
-	KMLI: "USA United States",
-	KMMI: "USA United States",
-	KMML: "USA United States",
-	KMQI: "USA United States",
-	KMRB: "USA United States",
-	KMRN: "USA United States",
-	KMRY: "USA United States",
-	KMSN: "USA United States",
-	KMSP: "USA United States",
-	KMTC: "USA United States",
-	KMTN: "USA United States",
-	KMUI: "USA United States",
-	KMUO: "USA United States",
-	KMWH: "USA United States",
-	KMXF: "USA United States",
-	KMYR: "USA United States",
-	KNBC: "USA United States",
-	KNBG: "USA United States",
-	KNCA: "USA United States",
-	KNDZ: "USA United States",
-	KNEN: "USA United States",
-	KNFD: "USA United States",
-	KNFE: "USA United States",
-	KNFG: "USA United States",
-	KNFL: "USA United States",
-	KNFW: "USA United States",
-	KNGP: "USA United States",
-	KNGT: "USA United States",
-	KNGU: "USA United States",
-	KNIP: "USA United States",
-	KNJK: "USA United States",
-	KNKX: "USA United States",
-	KNMM: "USA United States",
-	KNPA: "USA United States",
-	KNQA: "USA United States",
-	KNQI: "USA United States",
-	KNQX: "USA United States",
-	KNRA: "USA United States",
-	KNRQ: "USA United States",
-	KNRS: "USA United States",
-	KNSE: "USA United States",
-	KNSI: "USA United States",
-	KNTD: "USA United States",
-	KNTU: "USA United States",
-	KNUQ: "USA United States",
-	KNUW: "USA United States",
-	KNYL: "USA United States",
-	KNZY: "USA United States",
-	KOAR: "USA United States",
-	KOCH: "USA United States",
-	KOFF: "USA United States",
-	KOGB: "USA United States",
-	KOKC: "USA United States",
-	KOKV: "USA United States",
-	KOPF: "USA United States",
-	KOQU: "USA United States",
-	KOSH: "USA United States",
-	KOSU: "USA United States",
-	KOTH: "USA United States",
-	KOWB: "USA United States",
-	KOXR: "USA United States",
-	KOZR: "USA United States",
-	KPAE: "USA United States",
-	KPAM: "USA United States",
-	KPBI: "USA United States",
-	KPCA: "USA United States",
-	KPDX: "USA United States",
-	KPGR: "USA United States",
-	KPHF: "USA United States",
-	KPHX: "USA United States",
-	KPIA: "USA United States",
-	KPIE: "USA United States",
-	KPIT: "USA United States",
-	KPMD: "USA United States",
-	KPNE: "USA United States",
-	KPOB: "USA United States",
-	KPOE: "USA United States",
-	KPOU: "USA United States",
-	KPRB: "USA United States",
-	KPRC: "USA United States",
-	KPSF: "USA United States",
-	KPSM: "USA United States",
-	KPTB: "USA United States",
-	KPWA: "USA United States",
-	KPWK: "USA United States",
-	KPWT: "USA United States",
-	KRBM: "USA United States",
-	KRDD: "USA United States",
-	KRDU: "USA United States",
-	KRIC: "USA United States",
-	KRID: "USA United States",
-	KRIV: "USA United States",
-	KRKW: "USA United States",
-	KRMN: "USA",
-	KRND: "USA United States",
-	KRNO: "USA United States",
-	KROC: "USA United States",
-	KROG: "USA United States",
-	KRST: "USA United States",
-	KRUG: "USA United States",
-	KRUT: "USA United States",
-	KRYM: "USA United States",
-	KRZL: "USA United States",
-	KRZR: "USA United States",
-	KSAF: "USA United States",
-	KSAN: "USA United States",
-	KSBN: "USA United States",
-	KSCK: "USA United States",
-	KSDC: "USA United States",
-	KSDF: "USA",
-	KSEA: "USA United States",
-	KSEQ: "USA United States",
-	KSHD: "USA United States",
-	KSHN: "USA United States",
-	KSIY: "USA United States",
-	KSKF: "USA United States",
-	KSLC: "USA United States",
-	KSLI: "USA United States",
-	KSMN: "USA United States",
-	KSMS: "USA United States",
-	KSOW: "USA United States",
-	KSPA: "USA United States",
-	KSPI: "USA United States",
-	KSPS: "USA United States",
-	KSRQ: "USA United States",
-	KSSC: "USA United States",
-	KSSI: "USA United States",
-	KSTC: "USA",
-	KSTJ: "USA United States",
-	KSTL: "USA United States",
-	KSTP: "USA United States",
-	KSTS: "USA United States",
-	KSUT: "USA United States",
-	KSUU: "USA United States",
-	KSUW: "USA United States",
-	KSUX: "USA United States",
-	KSVC: "USA United States",
-	KSVN: "USA United States",
-	KSWF: "USA United States",
-	KSYR: "USA United States",
-	KSZL: "USA United States",
-	KTBN: "USA United States",
-	KTCM: "USA United States",
-	KTDF: "USA United States",
-	KTDZ: "USA United States",
-	KTIK: "USA United States",
-	KTKI: "USA United States",
-	KTMB: "USA United States",
-	KTNP: "USA United States",
-	KTNX: "USA United States",
-	KTOC: "USA United States",
-	KTOL: "USA United States",
-	KTTS: "USA United States",
-	KTUL: "USA United States",
-	KTUP: "USA United States",
-	KTUS: "USA United States",
-	KTVC: "USA United States",
-	KTYR: "USA United States",
-	KTYS: "USA United States",
-	KTZV: "USA United States",
-	KUKI: "USA United States",
-	KUMP: "USA United States",
-	KVAD: "USA United States",
-	KVBW: "USA",
-	KVCV: "USA United States",
-	KVKX: "USA United States",
-	KVOK: "USA United States",
-	KVPZ: "USA United States",
-	KVQQ: "USA United States",
-	KVUJ: "USA United States",
-	KWDR: "USA United States",
-	KWRB: "USA United States",
-	KWWD: "USA United States",
-	KXNO: "USA United States",
-	KXTA: "USA United States",
-	KYIP: "USA United States",
-	KYNG: "USA United States",
-	LFVM: "SPM Saint Pierre and Miquelon",
-	MBNC: "TCA Turks and Caicos Islands",
-	MDPP: "DOM Dominican Republic",
-	MGGT: "GTM Guatemala",
-	MHLM: "HND Honduras",
-	MHPR: "HND Honduras",
-	MHTG: "HND Honduras",
-	MKJP: "JAM Jamaica",
-	MMCE: "MEX Mexico",
-	MMCV: "MEX Mexico",
-	MMCZ: "MEX Mexico",
-	MMDO: "MEX MEXICO",
-	MMHO: "MEX Mexico",
-	MMLM: "MEX Mexico",
-	MMLP: "MEX Mexico",
-	MMMD: "MEX Mexico",
-	MMMT: "MEX Mexico",
-	MMMX: "MEX Mexico",
-	MMNL: "MEX Mexico",
-	MMPA: "MEX Mexico",
-	MMPE: "MEX Mexico",
-	MMSM: "MEX Mexico",
-	MMTM: "MEX Mexico",
-	MMTP: "MEX Mexico",
-	MMUN: "MEX Mexico",
-	MMVR: "MEX Mexico",
-	MMZP: "MEX Mexico",
-	MNMG: "NIC Nicaragua",
-	MPEJ: "PAN Panama",
-	MRCC: "CRI Costa Rica",
-	MRGP: "CRI Costa Rica",
-	MRLB: "CRI Costa Rica",
-	MRLE: "CRI Costa Rica",
-	MRPD: "CRI Costa Rica",
-	MRQP: "CRI Costa Rica",
-	MRSO: "CRI Costa Rica",
-	MSLP: "SLV El Salvador",
-	MSSS: "SLV El Salvador",
-	MUCM: "CUB Cuba",
-	MUGM: "CUB Cuba",
-	MUHA: "CUB Cuba",
-	MUHG: "CUB Cuba",
-	MWCB: "CYM Cayman Islands",
-	MYAF: "BHS Bahamas",
-	MYEF: "BHS Bahamas",
-	MYER: "BHS Bahamas",
-	MYNN: "BHS Bahamas",
-	MZBZ: "BLZ Belize",
-	NCMR: "COK Cook Islands",
-	NCPK: "COK Cook Islands",
-	NCPY: "COK Cook Islands",
-	NCRG: "COK Cook Islands",
-	NFTV: "TON Tonga",
-	NTGY: "PYF French Polynesia",
-	NTTX: "PYF French Polynesia",
-	PABE: "USA United States",
-	PABU: "USA United States",
-	PADK: "USA United States",
-	PAED: "USA United States",
-	PAEI: "USA United States",
-	PAFB: "USA United States",
-	PAFE: "USA United States",
-	PAFR: "USA United States",
-	PAGL: "USA United States",
-	PAGM: "USA United States",
-	PAJN: "USA United States",
-	PAKN: "USA United States",
-	PANC: "USA United States",
-	PASI: "USA United States",
-	PAWN: "USA United States",
-	PAYA: "USA United States",
-	PHBK: "USA United States",
-	PHJR: "USA United States",
-	PHNL: "USA United States",
-	PHNY: "USA United States",
-	PHTO: "USA United States",
-	SAAP: "ARG Argentina",
-	SACE: "ARG Argentina",
-	SADL: "ARG Argentina",
-	SADO: "ARG Argentina",
-	SAOS: "ARG Argentina",
-	SARI: "ARG Argentina",
-	SASO: "ARG Argentina",
-	SAVB: "ARG Argentina",
-	SAVT: "ARG Argentina",
-	SAZB: "ARG Argentina",
-	SAZF: "ARG Argentina",
-	SAZP: "ARG Argentina",
-	SAZT: "ARG Argentina",
-	SBAF: "BRA Brazil",
-	SBAN: "BRA Brazil",
-	SBBE: "BRA Brazil",
-	SBBH: "BRA Brazil",
-	SBBI: "BRA Brazil",
-	SBBV: "BRA Brazil",
-	SBCC: "BRA Brazil",
-	SBCG: "BRA Brazil",
-	SBCO: "BRA Brazil",
-	SBEG: "BRA Brazil",
-	SBFL: "BRA Brazil",
-	SBFZ: "BRA Brazil",
-	SBGL: "BRA",
-	SBGP: "BRA Brazil",
-	SBGW: "BRA Brazil",
-	SBLS: "BRA Brazil",
-	SBMN: "BRA Brazil",
-	SBMT: "BRA Brazil",
-	SBNF: "BRA Brazil",
-	SBPA: "BRA Brazil",
-	SBPV: "BRA Brazil",
-	SBRF: "BRA Brazil",
-	SBRJ: "BRA Brazil",
-	SBSC: "BRA Brazil",
-	SBSJ: "BRA Brazil",
-	SBSM: "BRA Brazil",
-	SBSP: "BRA Brazil",
-	SBST: "BRA Brazil",
-	SBSV: "BRA Brazil",
-	SBTA: "BRA Brazil",
-	SBUA: "BRA Brazil",
-	SBVH: "BRA Brazil",
-	SBYS: "BRA Brazil",
-	SCCI: "CHL Chile",
-	SCDA: "CHL Chile",
-	SCES: "CHL Chile",
-	SCFA: "CHL Chile",
-	SCIP: "CHL Chile",
-	SDCO: "BRA Brazil",
-	SECU: "ECU Ecuador",
-	SEGU: "ECU Ecuador",
-	SEGZ: "ECU Ecuador",
-	SEMT: "ECU Ecuador",
-	SETA: "ECU Ecuador",
-	SFAL: "FLK Falkland Islands",
-	SGAY: "PRY Paraguay",
-	SKBG: "COL Colombia",
-	SKBQ: "COL Colombia",
-	SKCL: "COL Colombia",
-	SKCO: "COL Colombia",
-	SKLC: "COL Colombia",
-	SKPQ: "COL Colombia",
-	SKQU: "COL Colombia",
-	SKRG: "COL Colombia",
-	SKSM: "COL Colombia",
-	SKSP: "COL Colombia",
-	SKTQ: "COL Colombia",
-	SKVG: "COL Colombia",
-	SKYP: "COL Colombia",
-	SLCB: "BOL Bolivia",
-	SNCW: "BRA Brazil",
-	SNKN: "BRA Brazil",
-	SNPX: "BRA Brazil",
-	SNRM: "BRA Brazil",
-	SOCA: "GUF French Guiana",
-	SPEO: "PER Perú",
-	SPJC: "PER Peru",
-	SPLP: "PER Perú",
-	SPPB: "PER Perú",
-	SPQT: "PER Perú",
-	SPSO: "PER Perú",
-	SPTU: "PER Perú",
-	SUDU: "URY Uruguay",
-	SVAS: "VEN Venezuela",
-	SVBS: "VEN Venezuela",
-	SVLO: "VEN Venezuela",
-	SVMC: "VEN Venezuela",
-	SVMG: "VEN Venezuela",
-	SVPC: "VEN Venezuela",
-	SVPM: "VEN",
-	SVPR: "VEN Venezuela",
-	SVSB: "VEN Venezuela",
-	SVSP: "VEN Venezuela",
-	SVSR: "VEN Venezuela",
-	SWPB: "BRA Brazil",
-	TAPA: "ATG Antigua and Barbuda",
-	TBPB: "BRB Barbados",
-	TFFF: "MTQ Martinique",
-	TFFG: "MAF Saint Martin",
-	TGPZ: "GRD Grenada",
-	TISX: "U.S. Virgin Islands",
-	TJBQ: "PRI Puerto Rico",
-	TJIG: "PRI Puerto Rico",
-	TJSJ: "PRI Puerto Rico",
-	TKPK: "KNA Saint Kitts and Nevis",
-	TNCC: "Curaçao",
-	UHMD: "RUS Russia",
-	KGZN: "USA United States",
-	LFPR: "FRA France",
-	ANYN: "NRU Nauru",
-	AYJB: "PNG Papua New Guinea",
-	AYMD: "PNG Papua New Guinea",
-	AYMO: "PNG Papua New Guinea",
-	AYPY: "PNG Papua New Guinea",
-	AYTK: "PNG Papua New Guinea",
-	BGCO: "GRL Greenland",
-	BGNO: "GRL Greenland",
-	BIKF: "ISL Iceland",
-	DAAD: "DZA Algeria",
-	DAAG: "DZA Algeria",
-	DAAK: "DZA Algeria",
-	DAAN: "DZA Algeria",
-	DAAQ: "DZA Algeria",
-	DAAS: "DZA Algeria",
-	DAAT: "DZA Algeria",
-	DAAY: "DZA Algeria",
-	DABB: "DZA Algeria",
-	DABT: "DZA Algeria",
-	DAFH: "DZA Algeria",
-	DAOF: "DZA Algeria",
-	DAOR: "DZA Algeria",
-	DAOV: "DZA Algeria",
-	DAUA: "DZA Algeria",
-	DAUB: "DZA Algeria",
-	DAUG: "DZA Algeria",
-	DAUH: "DZA Algeria",
-	DAUU: "DZA Algeria",
-	DAUZ: "DZA Algeria",
-	DBBP: "BEN Benin",
-	DFFD: "BFA Burkina Faso",
-	DIAP: "CIV Côte d'Ivoire",
-	DNAI: "NGA Nigeria",
-	DNAS: "NGA Nigeria",
-	DNBE: "NGA Nigeria",
-	DNIM: "NGA Nigeria",
-	DNJO: "NGA Nigeria",
-	DNKN: "NGA Nigeria",
-	DNMA: "NGA Nigeria",
-	DNMK: "NGA Nigeria",
-	DNMM: "NGA Nigeria",
-	DRRN: "NER Niger",
-	DTTB: "TUN Tunisia",
-	DTTD: "TUN Tunisia",
-	DTTI: "TUN Tunisia",
-	EBBR: "BEL Belgium",
-	EBCV: "BEL Belgium",
-	EBLE: "BEL Belgium",
-	EBOS: "BEL Belgium",
-	EBSU: "BEL Belgium",
-	EBTN: "BEL Belgium",
-	EDDB: "DEU Germany",
-	EDDC: "DEU Germany",
-	EDDN: "DEU Germany",
-	EDDS: "DEU Germany",
-	EDDW: "DEU Germany",
-	EDFE: "DEU Germany",
-	EDLW: "DEU Germany",
-	EDVM: "DEU Germany",
-	EDWE: "DEU Germany",
-	EEEI: "EST Estonia",
-	EEPU: "EST Estonia",
-	EETN: "EST Estonia",
-	EFHA: "FIN Finland",
-	EFHF: "FIN Finland",
-	EFHK: "FIN Finland",
-	EFKI: "FIN Finland",
-	EFKU: "FIN Finland",
-	EFOU: "FIN Finland",
-	EFPU: "FIN Finland",
-	EFRO: "FIN Finland",
-	EFSO: "FIN Finland",
-	EFTU: "FIN Finland",
-	EFYL: "FIN Finland",
-	EGAA: "GBR United Kingdom",
-	EGBJ: "GBR United Kingdom",
-	EGDC: "GBR United Kingdom",
-	EGDL: "GBR United Kingdom",
-	EGDM: "GBR United Kingdom",
-	EGDO: "GBR United Kingdom",
-	EGDR: "GBR United Kingdom",
-	EGDW: "GBR United Kingdom",
-	EGSY: "GBR United Kingdom",
-	EGDY: "GBR United Kingdom",
-	EGGP: "GBR United Kingdom",
-	EGHF: "GBR United Kingdom",
-	EGHG: "GBR United Kingdom",
-	EGHH: "GBR United Kingdom",
-	EGHI: "GBR United Kingdom",
-	EGHQ: "GBR United Kingdom",
-	EGHR: "GBR United Kingdom",
-	EGKA: "GBR United Kingdom",
-	EGLL: "GBR United Kingdom",
-	EGMH: "GBR United Kingdom",
-	EGNB: "GBR United Kingdom",
-	EGNO: "GBR United Kingdom",
-	EGOS: "GBR United Kingdom",
-	EGOV: "GBR United Kingdom",
-	EGOY: "GBR United Kingdom",
-	EGPB: "GBR United Kingdom",
-	EGPO: "GBR United Kingdom",
-	EGQK: "GBR United Kingdom",
-	EGQS: "GBR United Kingdom",
-	EGSC: "GBR United Kingdom",
-	EGSH: "GBR United Kingdom",
-	EGTD: "GBR United Kingdom",
-	EGTE: "GBR United Kingdom",
-	EGUL: "GBR United Kingdom",
-	EGUN: "GBR United Kingdom",
-	EGUO: "GBR United Kingdom",
-	EGVN: "GBR United Kingdom",
-	EGVO: "GBR United Kingdom",
-	EGVP: "GBR United Kingdom",
-	EGWC: "GBR United Kingdom",
-	EGWN: "GBR United Kingdom",
-	EGWU: "GBR United Kingdom",
-	EGXE: "GBR United Kingdom",
-	EGXH: "GBR United Kingdom",
-	EGXP: "GBR United Kingdom",
-	EGXT: "GBR United Kingdom",
-	EGXZ: "GBR United Kingdom",
-	EGYM: "GBR United Kingdom",
-	EHAM: "NLD Netherlands",
-	EHDR: "NLD Netherlands",
-	EHEH: "NLD Netherlands",
-	EHGR: "NLD Netherlands",
-	EHLE: "NLD Netherlands",
-	EHLW: "NLD Netherlands",
-	EHVK: "NLD Netherlands",
-	EHWO: "NLD Netherlands",
-	EICK: "IRL Ireland",
-	EIFR: "IRL Ireland",
-	EIGM: "IRL Ireland",
-	EIKH: "IRL Ireland",
-	EIME: "IRL Ireland",
-	EIRT: "IRL Ireland",
-	EKAH: "DNK Denmark",
-	EKKA: "DNK Denmark",
-	EKMB: "DNK Denmark",
-	EKSP: "DNK Denmark",
-	EKYT: "DNK Denmark",
-	ENAN: "NOR Norway",
-	ENBO: "NOR Norway",
-	ENDU: "NOR Norway",
-	ENEV: "NOR Norway",
-	ENGM: "NOR Norway",
-	ENKR: "NOR Norway",
-	ENNA: "NOR Norway",
-	ENVA: "NOR Norway",
-	ENZV: "NOR Norway",
-	EPBC: "POL Poland",
-	EPBK: "POL Poland",
-	EPBP: "POL Poland",
-	EPBY: "POL Poland",
-	EPCE: "POL Poland",
-	EPDA: "POL Poland",
-	EPDE: "POL Poland",
-	EPGD: "POL Poland",
-	EPKA: "POL Poland",
-	EPKK: "POL Poland",
-	EPLK: "POL Poland",
-	EPMM: "POL Poland",
-	EPNM: "POL Poland",
-	EPNT: "POL Poland",
-	EPOK: "POL Poland",
-	EPPO: "POL Poland",
-	EPTM: "POL Poland",
-	EPWA: "POL Poland",
-	ESDF: "SWE Sweden",
-	ESGG: "SWE Sweden",
-	ESMT: "SWE Sweden",
-	ESOE: "SWE Sweden",
-	ESOK: "SWE Sweden",
-	ESPA: "SWE Sweden",
-	ETEB: "DEU Germany",
-	ETHE: "DEU Germany",
-	ETHS: "DEU Germany",
-	ETMN: "DEU Germany",
-	ETNL: "DEU Germany",
-	ETOU: "DEU Germany",
-	ETSH: "DEU Germany",
-	ETSI: "DEU Germany",
-	ETWM: "DEU Germany",
-	EYSA: "LTU Lithuania",
-	FAAP: "ZAF South Africa",
-	FABL: "ZAF South Africa",
-	FADN: "ZAF South Africa",
-	FAFK: "ZAF South Africa",
-	FAHS: "ZAF South Africa",
-	FALE: "ZAF South Africa",
-	FALM: "ZAF South Africa",
-	FALS: "ZAF South Africa",
-	FALW: "ZAF South Africa",
-	FAMO: "ZAF South Africa",
-	FAOB: "ZAF South Africa",
-	FASD: "ZAF South Africa",
-	FASK: "ZAF South Africa",
-	FAYP: "ZAF South Africa",
-	FCPP: "COG Congo (Brazzaville)",
-	FHAW: "SHN Saint Helena",
-	FIMP: "MUS Mauritius",
-	FKKD: "CMR Cameroon",
-	FKKY: "CMR Cameroon",
-	FKYS: "CMR Cameroon",
-	FMEE: "Réunion",
-	FMEP: "Réunion",
-	FMMA: "MDG Madagascar",
-	FMSD: "MDG Madagascar",
-	FMSF: "MDG Madagascar",
-	FMSG: "MDG Madagascar",
-	FMSK: "MDG Madagascar",
-	FNCA: "AGO Angola",
-	FNUB: "AGO Angola",
-	FOOG: "GAB Gabon",
-	FOON: "GAB Gabon",
-	FPPR: "STP Sao Tome and Principe",
-	FPST: "STP Sao Tome and Principe",
-	FQBR: "MOZ Mozambique",
-	FQMA: "MOZ Mozambique",
-	FQNC: "MOZ Mozambique",
-	FSIA: "SYC Seychelles",
-	FVTL: "ZWE Zimbabwe",
-	FYGF: "NAM Namibia",
-	FYKA: "NAM Namibia",
-	FZAI: "COG Congo (Kinshasa)",
-	FZBO: "COG Congo (Kinshasa)",
-	FZIC: "COG Congo (Kinshasa)",
-	FZKJ: "COG Congo (Kinshasa)",
-	FZMA: "COG Congo (Kinshasa)",
-	FZNA: "COG Congo (Kinshasa)",
-	FZSA: "COG Congo (Kinshasa)",
-	FZUA: "COG Congo (Kinshasa)",
-	GABS: "MLI Mali",
-	GAGO: "MLI Mali",
-	GCGM: "ESP Spain",
-	GCLP: "ESP Spain",
-	GCRR: "ESP Spain",
-	GCTS: "ESP Spain",
-	GLRB: "LBR Liberia",
-	GMAA: "MAR Morocco",
-	GMAG: "MAR Morocco",
-	GMFM: "MAR Morocco",
-	GMME: "MAR Morocco",
-	GMMH: "ESH Western Sahara",
-	GMML: "ESH Western Sahara",
-	GMMY: "MAR Morocco",
-	GMSL: "MAR Morocco",
-	GOBD: "SEN Senegal",
-	GOOK: "SEN Senegal",
-	GQND: "MRT Mauritania",
-	GQNI: "MRT Mauritania",
-	GQNO: "MRT Mauritania",
-	GQPA: "MRT Mauritania",
-	GVAC: "CPV Cape Verde",
-	HABD: "ETH Ethiopia",
-	HADR: "ETH Ethiopia",
-	HAMK: "ETH Ethiopia",
-	HCMB: "SOM Somalia",
-	HCMR: "SOM Somalia",
-	HDAM: "DJI Djibouti",
-	HEBR: "EGY Egypt",
-	HEAX: "EGY Egypt",
-	HEBL: "EGY Egypt",
-	HEDK: "EGY Egypt",
-	HEGN: "EGY Egypt",
-	HEKG: "EGY Egypt",
-	HEOW: "EGY Egypt",
-	HESH: "EGY Egypt",
-	HESX: "EGY Egypt",
-	HHAS: "ERI Eritrea",
-	HHMS: "ERI Eritrea",
-	HKJK: "KEN Kenya",
-	HKMO: "KEN Kenya",
-	HKWJ: "KEN Kenya",
-	HLMS: "LBY",
-	HLGT: "LBY Libya",
-	HLKF: "LBY Libya",
-	HLLB: "LBY Libya",
-	HLLT: "LBY Libya",
-	HRYR: "RWA Rwanda",
-	HSLI: "SSD Sudan",
-	HJRB: "SSD South Sudan",
-	HSNN: "SSD Sudan",
-	HSOB: "SSD Sudan",
-	HJJJ: "SSD South Sudan",
-	HJMK: "SSD South Sudan",
-	HSSW: "SSD Sudan",
-	HTMS: "TZA Tanzania",
-	HUEN: "UGA Uganda",
-	HUMI: "UGA Uganda",
-	LBPD: "BGR Bulgaria",
-	LBSF: "BGR Bulgaria",
-	LCPH: "CYP Cyprus",
-	LCRA: "GBR United Kingdom",
-	LDOS: "HRV Croatia",
-	LDPL: "HRV Croatia",
-	LDRI: "HRV Croatia",
-	LDSP: "HRV Croatia",
-	LDZA: "HRV Croatia",
-	LDZD: "HRV Croatia",
-	LEAS: "ESP Spain",
-	LEBL: "ESP",
-	LECO: "ESP Spain",
-	LEGT: "ESP Spain",
-	LEJR: "ESP Spain",
-	LELC: "ESP Spain",
-	LEMD: "ESP Spain",
-	LEMO: "ESP Spain",
-	LERJ: "ESP",
-	LERT: "ESP Spain",
-	LESA: "ESP Spain",
-	LEST: "ESP Spain",
-	LETO: "ESP Spain",
-	LECU: "ESP Spain",
-	LEZG: "ESP Spain",
-	LEZL: "ESP Spain",
-	LFBC: "FRA France",
-	LFBD: "FRA France",
-	LFBF: "FRA France",
-	LFBG: "FRA France",
-	LFBM: "FRA France",
-	LFBP: "FRA France",
-	LFBR: "FRA France",
-	LFBY: "FRA France",
-	LFCB: "FRA France",
-	LFCK: "FRA France",
-	LFCP: "FRA France",
-	LFCV: "FRA France",
-	LFDB: "FRA France",
-	LFDJ: "FRA France",
-	LFDN: "FRA France",
-	LFDO: "FRA France",
-	LFDT: "FRA France",
-	LFEF: "FRA France",
-	LFFX: "FRA France",
-	LFGE: "FRA France",
-	LFGH: "FRA France",
-	LFIT: "FRA France",
-	LFKB: "FRA France",
-	LFKJ: "FRA France",
-	LFKS: "FRA France",
-	LFLE: "FRA France",
-	LFLH: "FRA France",
-	LFLU: "FRA France",
-	LFLX: "FRA France",
-	LFLY: "FRA France",
-	LFMD: "FRA France",
-	LFMG: "FRA France",
-	LFMI: "FRA France",
-	LFMN: "FRA France",
-	LFMV: "FRA France",
-	LFMW: "FRA France",
-	LFMY: "FRA France",
-	LFNO: "FRA France",
-	LFOA: "FRA France",
-	LFOC: "FRA France",
-	LFOE: "FRA France",
-	LFOH: "FRA France",
-	LFOJ: "FRA France",
-	LFOT: "FRA France",
-	LFPB: "FRA France",
-	LFPM: "FRA France",
-	LFPN: "FRA France",
-	LFPO: "FRA",
-	LFPV: "FRA France",
-	LFQE: "FRA France",
-	LFQN: "FRA France",
-	LFQP: "FRA France",
-	LFQQ: "FRA France",
-	LFQT: "FRA France",
-	LFRB: "FRA",
-	LFRC: "FRA France",
-	LFRH: "FRA France",
-	LFRJ: "FRA France",
-	LFRL: "FRA France",
-	LFRN: "FRA France",
-	LFSC: "FRA France",
-	LFSD: "FRA France",
-	LFSI: "FRA France",
-	LFSO: "FRA France",
-	LFSX: "FRA France",
-	LFTF: "FRA France",
-	LFTH: "FRA France",
-	LFTZ: "FRA France",
-	LFXA: "FRA France",
-	LFXB: "FRA France",
-	LFXQ: "FRA France",
-	LGAD: "GRC Greece",
-	LGAX: "GRC Greece",
-	LGHI: "GRC Greece",
-	LGIR: "GRC Greece",
-	LGKL: "GRC Greece",
-	LGKM: "GRC Greece",
-	LGKZ: "GRC Greece",
-	LGLM: "GRC Greece",
-	LGLR: "GRC Greece",
-	LGMG: "GRC Greece",
-	LGMT: "GRC Greece",
-	LGPZ: "GRC Greece",
-	LGRD: "GRC Greece",
-	LGRX: "GRC Greece",
-	LGSA: "GRC Greece",
-	LGSM: "GRC Greece",
-	LGSP: "GRC Greece",
-	LGSV: "GRC Greece",
-	LGTG: "GRC Greece",
-	LGTL: "GRC Greece",
-	LGTP: "GRC Greece",
-	LGTS: "GRC Greece",
-	LGTT: "GRC Greece",
-	LHBD: "HUN Hungary",
-	LHKE: "HUN Hungary",
-	LHPA: "HUN Hungary",
-	LHPP: "HUN Hungary",
-	LHST: "HUN Hungary",
-	LHSY: "HUN Hungary",
-	LHSZ: "HUN Hungary",
-	LHTA: "HUN Hungary",
-	LHUD: "HUN Hungary",
-	LIAP: "ITA Italy",
-	LIBA: "ITA Italy",
-	LIBJ: "ITA Italy",
-	LIBN: "ITA Italy",
-	LIBP: "ITA Italy",
-	LICA: "ITA Italy",
-	LICD: "ITA Italy",
-	LICP: "ITA Italy",
-	LICR: "ITA Italy",
-	LICT: "ITA Italy",
-	LIDT: "ITA Italy",
-	LIEE: "ITA Italy",
-	LILH: "ITA Italy",
-	LILN: "ITA Italy",
-	LIMB: "ITA Italy",
-	LIMG: "ITA Italy",
-	LIMJ: "ITA Italy",
-	LIMN: "ITA Italy",
-	LIPA: "ITA Italy",
-	LIPH: "ITA",
-	LIPK: "ITA Italy",
-	LIPO: "ITA Italy",
-	LIPR: "ITA Italy",
-	LIPS: "ITA Italy",
-	LIPX: "ITA Italy",
-	LIPZ: "ITA Italy",
-	LIQW: "ITA Italy",
-	LIRA: "ITA Italy",
-	LIRP: "ITA Italy",
-	LIRS: "ITA Italy",
-	LJCE: "SVN Slovenia",
-	LJLJ: "SVN Slovenia",
-	LKBC: "CZE Czechia",
-	LKCH: "CZE Czechia",
-	LKKU: "CZE Czechia",
-	LKLT: "CZE Czechia",
-	LKNA: "CZE Czechia",
-	LKNM: "CZE Czechia",
-	LKPD: "CZE Czechia",
-	LKPV: "CZE Czechia",
-	LKSK: "CZE Czechia",
-	LKTA: "CZE Czechia",
-	LKTV: "CZE Czechia",
-	LKVO: "CZE Czechia",
-	LLBG: "ISR Israel",
-	LLEK: "ISR Israel",
-	LLHS: "ISR Israel",
-	LMML: "MLT Malta",
-	LOWK: "AUT Austria",
-	LOWL: "AUT Austria",
-	LOXA: "AUT Austria",
-	LOXT: "AUT Austria",
-	LOXZ: "AUT Austria",
-	LPAR: "PRT Portugal",
-	LPAV: "PRT Portugal",
-	LPAZ: "PRT Portugal",
-	LPLA: "PRT Portugal",
-	LPMA: "PRT Portugal",
-	LPMP: "PRT Portugal",
-	LPMR: "PRT Portugal",
-	LPMT: "PRT Portugal",
-	LPOT: "PRT Portugal",
-	LPOV: "PRT Portugal",
-	LPPT: "PRT Portugal",
-	LPSA: "PRT",
-	LPST: "PRT Portugal",
-	LPTN: "PRT Portugal",
-	LQBK: "BIH Bosnia and Herzegovina",
-	LRFT: "ROU Romania",
-	LRBO: "ROU Romania",
-	LRCT: "ROU Romania",
-	LROD: "ROU Romania",
-	LROP: "ROU Romania",
-	LSGC: "CHE Switzerland",
-	LSGS: "CHE Switzerland",
-	LSMA: "CHE Switzerland",
-	LSMD: "CHE Switzerland",
-	LSME: "CHE Switzerland",
-	LSMF: "CHE Switzerland",
-	LSMM: "CHE Switzerland",
-	LSTS: "CHE Switzerland",
-	LSZB: "CHE Switzerland",
-	LSZL: "CHE Switzerland",
-	LTAB: "TUR Turkey",
-	LTAC: "TUR Turkey",
-	LTAD: "TUR Turkey",
-	LTAE: "TUR Turkey",
-	LTAF: "TUR Turkey",
-	LTAG: "TUR Turkey",
-	LTAJ: "TUR Turkey",
-	LTAN: "TUR Turkey",
-	LTAR: "TUR Turkey",
-	LTAT: "TUR Turkey",
-	LTAU: "TUR Turkey",
-	LTAY: "TUR Turkey",
-	LTBA: "TUR Turkey",
-	LTBG: "TUR Turkey",
-	LTBH: "TUR Turkey",
-	LTBK: "TUR Turkey",
-	LTBL: "TUR Turkey",
-	LTBO: "TUR Turkey",
-	LTBP: "TUR Turkey",
-	LTBR: "TUR Turkey",
-	LTBS: "TUR Turkey",
-	LTBV: "TUR Turkey",
-	LTCE: "TUR Turkey",
-	LTCI: "TUR Turkey",
-	LTCL: "TUR Turkey",
-	LTCR: "TUR Turkey",
-	LTCS: "TUR Turkey",
-	LTCT: "TUR Turkey",
-	LTFA: "TUR Turkey",
-	LTFC: "TUR Turkey",
-	LTFD: "TUR Turkey",
-	LTFE: "TUR Turkey",
-	LTFM: "TUR Turkey",
-	LWSK: "MKD North Macedonia",
-	LXGB: "GIB Gibraltar",
-	LYBT: "SRB Serbia",
-	LZKZ: "SVK Slovakia",
-	NFFN: "FJI Fiji",
-	NVSS: "VUT Vanuatu",
-	NWWA: "NCL New Caledonia",
-	NWWE: "NCL New Caledonia",
-	NWWH: "NCL New Caledonia",
-	NWWW: "NCL New Caledonia",
-	NZNR: "NZL New Zealand",
-	NZOH: "NZL New Zealand",
-	NZRU: "NZL New Zealand",
-	NZWN: "NZL New Zealand",
-	NZWP: "NZL New Zealand",
-	OAHR: "AFG Afghanistan",
-	OAIX: "AFG Afghanistan",
-	OAJL: "AFG Afghanistan",
-	OAKB: "AFG Afghanistan",
-	OAKN: "AFG Afghanistan",
-	OAUZ: "AFG Afghanistan",
-	OBBI: "BHR Bahrain",
-	OBBS: "BHR Bahrain",
-	OEBT: "SAU Saudi Arabia",
-	OEDR: "SAU Saudi Arabia",
-	OEJB: "SAU Saudi Arabia",
-	OEMA: "SAU Saudi Arabia",
-	OEPS: "SAU Saudi Arabia",
-	OERY: "SAU Saudi Arabia",
-	OESH: "SAU Saudi Arabia",
-	OETF: "SAU Saudi Arabia",
-	OIAI: "IRN Iran",
-	OIBB: "IRN Iran",
-	OIBK: "IRN Iran",
-	OICC: "IRN Iran",
-	OIFM: "IRN Iran",
-	OIII: "IRN Iran",
-	OIKB: "IRN Iran",
-	OIKK: "IRN Iran",
-	OIMM: "IRN Iran",
-	OISS: "IRN Iran",
-	OITR: "IRN Iran",
-	OITT: "IRN Iran",
-	OIYY: "IRN Iran",
-	OIZC: "IRN Iran",
-	OIZH: "IRN Iran",
-	OJAM: "JOR Jordan",
-	OKAS: "KWT Kuwait",
-	OKBK: "KWT Kuwait",
-	OLBA: "LBN Lebanon",
-	OLKA: "LBN Lebanon",
-	OLRA: "LBN Lebanon",
-	OMAA: "ARE United Arab Emirates",
-	OOKB: "OMN Oman",
-	OOMS: "OMN Oman",
-	OOSA: "OMN Oman",
-	OPCH: "PAK Pakistan",
-	OPKC: "PAK Pakistan",
-	OPMA: "PAK Pakistan",
-	OPMT: "PAK Pakistan",
-	OPQS: "PAK Pakistan",
-	OPSF: "PAK Pakistan",
-	OPSK: "PAK Pakistan",
-	ORBD: "IRQ Iraq",
-	ORBI: "IRQ Iraq",
-	ORBR: "IRQ Iraq",
-	ORWH: "IRQ Iraq",
-	OSAP: "SYR Syria",
-	OSDI: "SYR Syria",
-	OSKL: "SYR Syria",
-	OSPR: "SYR Syria",
-	OTBD: "QAT Qatar",
-	OTBH: "QAT Qatar",
-	OYSN: "Sanaa Intl",
-	PASY: "USA United States",
-	PGUA: "GUM Guam",
-	PWAK: "USA United States Minor Outlying Islands",
-	RCDI: "TWN Taiwan",
-	RCFG: "TWN Taiwan",
-	RCKW: "TWN Taiwan",
-	RCLM: "TWN Taiwan",
-	RCPO: "TWN Taiwan",
-	RCSP: "TWN Taiwan",
-	RCSS: "TWN Taiwan",
-	RJAK: "JPN Japan",
-	RJAW: "JPN Japan",
-	RJBB: "JPN Japan",
-	RJBE: "JPN Japan",
-	RJBM: "JPN Japan",
-	RJCJ: "JPN Japan",
-	RJCO: "JPN Japan",
-	RJCT: "JPN Japan",
-	RJDM: "JPN Japan",
-	RJDU: "JPN Japan",
-	RJFA: "JPN Japan",
-	RJFF: "JPN Japan",
-	RJFN: "JPN Japan",
-	RJFT: "JPN Japan",
-	RJFU: "JPN Japan",
-	RJFY: "JPN Japan",
-	RJFZ: "JPN Japan",
-	RJNA: "JPN Japan",
-	RJNK: "JPN Japan",
-	RJNW: "JPN Japan",
-	RJNY: "JPN Japan",
-	RJOF: "JPN Japan",
-	RJOH: "JPN Japan",
-	RJOI: "JPN Japan",
-	RJOS: "JPN Japan",
-	RJOY: "JPN Japan",
-	RJOZ: "JPN Japan",
-	RJSH: "JPN Japan",
-	RJSM: "JPN Japan",
-	RJSN: "JPN Japan",
-	RJSO: "JPN Japan",
-	RJST: "JPN Japan",
-	RJSU: "JPN Japan",
-	RJTA: "JPN Japan",
-	RJTE: "JPN Japan",
-	RJTK: "JPN Japan",
-	RJTR: "JPN Japan",
-	RJTU: "JPN Japan",
-	RKJM: "KOR South Korea",
-	RKJY: "KOR South Korea",
-	RKNY: "KOR South Korea",
-	RKPE: "KOR South Korea",
-	RKPK: "KOR South Korea",
-	RKPS: "KOR South Korea",
-	RKRB: "KOR South Korea",
-	RKSG: "KOR South Korea",
-	RKSM: "KOR South Korea",
-	RKSO: "KOR South Korea",
-	RKSS: "KOR South Korea",
-	RKSW: "KOR South Korea",
-	RKTP: "KOR South Korea",
-	RKTU: "KOR South Korea",
-	RKTY: "KOR South Korea",
-	RKUC: "KOR South Korea",
-	RKUL: "KOR South Korea",
-	RODE: "JPN Japan",
-	RODN: "JPN Japan",
-	ROMY: "JPN Japan",
-	ROTM: "JPN Japan",
-	RPLC: "PHL Philippines",
-	RPLL: "PHL Philippines",
-	RPLM: "PHL Philippines",
-	RPLS: "PHL Philippines",
-	RPLV: "PHL Philippines",
-	RPMB: "PHL Philippines",
-	RPMI: "PHL Philippines",
-	RPMZ: "PHL Philippines",
-	RPPN: "PHL Philippines",
-	RPUF: "PHL Philippines",
-	RPUL: "PHL Philippines",
-	RPUY: "PHL Philippines",
-	RPVF: "PHL Philippines",
-	RPVP: "PHL Philippines",
-	UAAR: "KAZ Kazakhstan",
-	UACC: "KAZ Kazakhstan",
-	UAII: "KAZ Kazakhstan",
-	UEEE: "RUS Russia",
-	UELL: "RUS Russia",
-	UEST: "RUS Russia",
-	UGKO: "GEO Georgia",
-	UHPP: "RUS Russia",
-	UIII: "RUS Russia",
-	UIKK: "RUS Russia",
-	UITT: "RUS Russia",
-	UKLL: "UKR Ukraine",
-	ULLP: "RUS Russian Federation",
-	ULOO: "RUS Russia",
-	UMBB: "BLR Belarus",
-	UMMS: "BLR Belarus",
-	UNNE: "RUS Russia",
-	UNNT: "RUS Russia",
-	UNOS: "RUS Russia",
-	UOOO: "RUS Russia",
-	URKA: "RUS Russia",
-	URKE: "RUS Russia",
-	URKK: "RUS Russia",
-	URMN: "RUS Russia",
-	URMT: "RUS Russia",
-	URWA: "RUS Russia",
-	URWW: "RUS Russia",
-	USCG: "RUS Russia",
-	USNN: "RUS Russia",
-	USSK: "RUS Russia",
-	USSS: "RUS Russia",
-	USTR: "RUS Russia",
-	UTAM: "TKM Turkmenistan",
-	UUBW: "RUS Russia",
-	UUEM: "RUS Russia",
-	UUMB: "RUS",
-	UUMO: "RUS Russia",
-	UUYH: "RUS Russia",
-	UUYS: "RUS Russia",
-	UWLW: "RUS Russia",
-	VADN: "IND India",
-	VAOZ: "IND India",
-	VAPO: "IND India",
-	VAPR: "IND India",
-	VCCS: "LKA Sri Lanka",
-	VCBI: "LKA Sri Lanka",
-	VCCA: "LKA Sri Lanka",
-	VCCC: "LKA Sri Lanka",
-	VCCJ: "LKA Sri Lanka",
-	VCCT: "LKA Sri Lanka",
-	VDBG: "KHM Cambodia",
-	VEBR: "IN",
-	VEBS: "IND India",
-	VECC: "IND India",
-	VEGT: "IND India",
-	VEJH: "IND India",
-	VEMN: "IND India",
-	VETZ: "IND India",
-	VGBG: "BGD Bangladesh",
-	VGBR: "BGD Bangladesh",
-	VGEG: "BGD Bangladesh",
-	VGHS: "BGD Bangladesh",
-	VGJR: "BGD Bangladesh",
-	VGRJ: "BGD Bangladesh",
-	VGSH: "BGD Bangladesh",
-	VGTJ: "BGD Bangladesh",
-	ZJYX: "CHN China",
-	VHSK: "CHN China",
-	VITE: "IND India",
-	VIAW: "IND India",
-	VICG: "IND India",
-	VICX: "IND India",
-	VIDP: "IND INDIA",
-	VIJO: "IND India",
-	VIJU: "IND India",
-	VILH: "IND India",
-	VISP: "IND India",
-	VISR: "IND India",
-	VIUT: "IND India",
-	VIUX: "IND India",
-	VLAP: "LAO Laos",
-	VLLB: "LAO Laos",
-	VLPS: "LAO Laos",
-	VLVT: "LAO Laos",
-	VNJP: "NPL Nepal",
-	VNKT: "NPL Nepal",
-	VNMA: "NPL Nepal",
-	VOAR: "IND India",
-	VOBG: "IND India",
-	VOCC: "IND India",
-	VOGO: "IND India",
-	VOHY: "IND India",
-	VOML: "IND India",
-	VOMM: "IND India",
-	VOSX: "IND India",
-	VOVZ: "IND India",
-	VOYK: "IND India",
-	VRMV: "MDV Maldives",
-	VTBD: "THA Thailand",
-	VTBP: "THA Thailand",
-	VTBU: "THA Thailand",
-	VTCC: "THA Thailand",
-	VTCL: "THA Thailand",
-	VTCT: "THA Thailand",
-	VTPH: "THA Thailand",
-	VTPP: "THA Thailand",
-	VTPT: "THA Thailand",
-	VTSB: "THA Thailand",
-	VTSC: "THA Thailand",
-	VTSP: "THA Thailand",
-	VTUD: "THA Thailand",
-	VTUO: "THA Thailand",
-	VTUW: "THA Thailand",
-	VVCR: "VNM Vietnam",
-	VVDN: "VNM Vietnam",
-	VVPR: "VNM Vietnam",
-	VVTS: "VNM Vietnam",
-	VYCI: "MMR Myanmar",
-	VYNP: "MMR Burma",
-	VYNT: "MMR Burma",
-	VYXG: "MMR Myanmar",
-	VYYY: "MMR Burma",
-	WABB: "IDN Indonesia",
-	WAHS: "IDN Indonesia",
-	WAMG: "IDN Indonesia",
-	WAGG: "IDN Indonesia",
-	WARI: "IDN Indonesia",
-	WAHQ: "IDN Indonesia",
-	WARR: "IDN Indonesia",
-	WBGG: "MYS Malaysia",
-	WBKK: "MYS Malaysia",
-	WBKL: "MYS Malaysia",
-	WBKT: "MYS Malaysia",
-	WBSB: "BRN Brunei",
-	WIBB: "IDN Indonesia",
-	WICC: "IDN Indonesia",
-	WICM: "IDN Indonesia",
-	WIHH: "IDN Indonesia",
-	WIMK: "IDN Indonesia",
-	WIOO: "IDN Indonesia",
-	WITT: "IDN Indonesia",
-	WMKA: "MYS Malaysia",
-	WMKD: "MYS Malaysia",
-	WMKK: "MYS Malaysia",
-	WMSA: "MYS Malaysia",
-	WPDL: "TLS Timor-Leste",
-	WSAG: "SGP Singapore",
-	WSAT: "SGP Singapore",
-	WSSS: "SGP Singapore",
-	AYAQ: "PNG Papua New Guinea",
-	DTTG: "TUN Tunisia",
-	EDHX: "DEU Germany",
-	EGUP: "GBR United Kingdom",
-	EGOM: "GBR United Kingdom",
-	EVGA: "LVA Latvia",
-	HAHM: "ETH Ethiopia",
-	HSSP: "SSD Sudan",
-	HSWS: "SSD Sudan",
-	LEUC: "ESP Spain",
-	LEMX: "ESP Spain",
-	LIQQ: "ITA Italy",
-	LOAM: "AUT Austria",
-	LYPA: "SRB Serbia",
-	OAZI: "AFG Afghanistan",
-	ULDW: "RUS Russia",
-	URKR: "RUS Russia",
-	UUMU: "RUS Russia",
-	URFB: "RUS Russia",
-	UKOM: "UKR",
-	UKCK: "UKR Ukraine",
-	UKBM: "UKR Ukraine",
-	UKDM: "UKR Ukraine",
-	UKLA: "UKR Ukraine",
-	WBGK: "MYS",
-	YHER: "AUS Australia",
-	ZSSZ: "CHN China",
-	ZKKD: "PRK North Korea",
-	YAMB: "AUS Australia",
-	YAYR: "AUS Australia",
-	YBEG: "AUS Australia",
-	YBHB: "AUS Australia",
-	YBON: "AUS Australia",
-	YBRK: "AUS Australia",
-	YBTL: "AUS Australia",
-	YCMT: "AUS Australia",
-	YCNN: "AUS Australia",
-	YDNB: "AUS Australia",
-	YFBS: "AUS Australia",
-	YGFN: "AUS Australia",
-	YGMP: "AUS Australia",
-	YGYM: "AUS Australia",
-	YIGM: "AUS Australia",
-	YILA: "AUS Australia",
-	YLED: "AUS Australia",
-	YMAV: "AUS Australia",
-	YMES: "AUS Australia",
-	YNKR: "AUS Australia",
-	YNRG: "AUS Australia",
-	YOAS: "AUS Australia",
-	YOOD: "AUS Australia",
-	YPDN: "AUS Australia",
-	YPEA: "AUS Australia",
-	YPED: "AUS Australia",
-	YPKL: "AUS Australia",
-	YPPD: "AUS Australia",
-	YSCB: "AUS Australia",
-	YSMH: "AUS",
-	YSNW: "AUS Australia",
-	YSRI: "AUS Australia",
-	YSWG: "AUS Australia",
-	YTCK: "AUS Australia",
-	YWLM: "AUS Australia",
-	ZBCZ: "CHN China",
-	ZBZJ: "CHN China",
-	ZGGG: "CHN China",
-	ZGLG: "CHN China",
-	ZGNN: "CHN China",
-	ZKPY: "PRK North Korea",
-	ZKSD: "PRK",
-	ZKUJ: "PRK North Korea",
-	ZLDH: "CHN China",
-	ZSHC: "CHN China",
-	ZSJU: "CHN China",
-	ZSNB: "CHN China",
-	ZSWX: "CHN China",
-	ZSYT: "CHN China",
-	ZUAL: "CHN China",
-	ZUGY: "CHN China",
-	ZULS: "CHN China",
-	ZUUU: "CHN China",
-	ZUXC: "CHN China",
-	ZWAK: "CHN China",
-	ZWTN: "CHN China",
-	ZYJX: "CHN China",
+	OAHR: "AFG Afghanistan",                              # Khwaja Abdullah Ansari Intl
+	OAIX: "AFG Afghanistan",                              # Bagram
+	OAJL: "AFG Afghanistan",                              # Jalalabad
+	OAKB: "AFG Afghanistan",                              # Hamid Karzai Intl
+	OAKN: "AFG Afghanistan",                              # Kandahar
+	OAUZ: "AFG Afghanistan",                              # Kunduz
+	OAZI: "AFG Afghanistan",                              # Bastion Airfield
+	FNCA: "AGO Angola",                                   # Cabinda
+	FNUB: "AGO Angola",                                   # Lubango
+	OMAA: "ARE United Arab Emirates",                     # Abu Dhabi Intl
+	SAAP: "ARG Argentina",                                # General Urquiza
+	SACE: "ARG Argentina",                                # Cordoba Escuela de Aviacion
+	SADL: "ARG Argentina",                                # La Plata
+	SADO: "ARG Argentina",                                # Campo de Mayo
+	SAOS: "ARG Argentina",                                # Valle del Conlara
+	SARI: "ARG Argentina",                                # Cataratus del Iguazu
+	SASO: "ARG Argentina",                                # Oran
+	SAVB: "ARG Argentina",                                # El Bolson
+	SAVT: "ARG Argentina",                                # Almirante Zar
+	SAWO: "ARG Argentina",                                # Ushuaia Est. Aeronaval
+	SAZB: "ARG Argentina",                                # Comandante Espora
+	SAZF: "ARG Argentina",                                # Olavarria
+	SAZP: "ARG Argentina",                                # Comodoro Pedro Zanni
+	SAZT: "ARG Argentina",                                # Héroes de Malvinas
+	TAPA: "ATG Antigua and Barbuda",                      # Antigua - V C Bird Intl
+	YSMH: "AUS",                                          # Samuel Hill
+	YAMB: "AUS Australia",                                # Amberley
+	YAYR: "AUS Australia",                                # Ayr
+	YBEG: "AUS Australia",                                # Bening Field
+	YBHB: "AUS Australia",                                # Bathurst Harbour
+	YBON: "AUS Australia",                                # Bindoon
+	YBRK: "AUS Australia",                                # Rockhampton
+	YBTL: "AUS Australia",                                # Townsville Intl
+	YCIN: "AUS Australia",                                # Curtin
+	YCMT: "AUS Australia",                                # Clermont
+	YCNN: "AUS Australia",                                # Coonana
+	YDNB: "AUS Australia",                                # Doongmabulla
+	YFBS: "AUS Australia",                                # Forbes
+	YGFN: "AUS Australia",                                # Grafton
+	YGMP: "AUS Australia",                                # Grampians
+	YGYM: "AUS Australia",                                # Gympie
+	YHER: "AUS Australia",                                # Hervey Range
+	YIGM: "AUS Australia",                                # Ingham
+	YILA: "AUS Australia",                                # Milawa
+	YLED: "AUS Australia",                                # Lethbridge
+	YMAV: "AUS Australia",                                # Avalon
+	YMES: "AUS Australia",                                # East Sale (Military)
+	YNKR: "AUS Australia",                                # Nackeroo
+	YNRG: "AUS Australia",                                # Narrogin
+	YOAS: "AUS Australia",                                # The Oaks
+	YOOD: "AUS Australia",                                # Oodnadatta
+	YPDN: "AUS Australia",                                # Darwin Intl
+	YPEA: "AUS Australia",                                # Pearce
+	YPED: "AUS Australia",                                # Edinburgh
+	YPKL: "AUS Australia",                                # Puckapunyal
+	YPPD: "AUS Australia",                                # Port Hedland Intl
+	YPTN: "AUS Australia",                                # Tindal (Military)
+	YSCB: "AUS Australia",                                # Canberra
+	YSHW: "AUS Australia",                                # Holsworthy
+	YSNW: "AUS Australia",                                # HMAS Albatross
+	YSRI: "AUS Australia",                                # Richmond (NSW)
+	YSWG: "AUS Australia",                                # Wagga Wagga
+	YTCK: "AUS Australia",                                # Torrens Creek
+	YWLM: "AUS Australia",                                # Williamtown
+#	LOAM: "AUT Austria",                                  # [H] Wien Meidling  (heliport)
+	LOWK: "AUT Austria",                                  # Klagenfurt
+	LOWL: "AUT Austria",                                  # Linz Hoersching
+	LOXA: "AUT Austria",                                  # Aigen im Ennstal
+	LOXN: "AUT Austria",                                  # Wr Neustadt West
+	LOXT: "AUT Austria",                                  # Tulln
+	LOXZ: "AUT Austria",                                  # Zeltweg AB
+	EBBR: "BEL Belgium",                                  # Brussels National
+	EBCV: "BEL Belgium",                                  # Chievres Air Base
+	EBFN: "BEL Belgium",                                  # KOKSIJDE
+	EBLE: "BEL Belgium",                                  # Sanicole
+	EBOS: "BEL Belgium",                                  # Oostende
+	EBSU: "BEL Belgium",                                  # Saint Hubert Mil
+	EBTN: "BEL Belgium",                                  # Goetsenhoven
+	DBBP: "BEN Benin",                                    # Parakou
+	DFFD: "BFA Burkina Faso",                             # Ouagadougou
+	VGBG: "BGD Bangladesh",                               # Bogra
+	VGBR: "BGD Bangladesh",                               # BARISAL
+	VGEG: "BGD Bangladesh",                               # Shah Amanat Intl
+	VGHS: "BGD Bangladesh",                               # Hazrat Shahjalal International Airport
+	VGJR: "BGD Bangladesh",                               # JESSORE
+	VGRJ: "BGD Bangladesh",                               # SHAH MOKHDUM
+	VGSH: "BGD Bangladesh",                               # Shamshernagar
+	VGTJ: "BGD Bangladesh",                               # TEJGAON
+	LBPD: "BGR Bulgaria",                                 # Plovdiv
+	LBSF: "BGR Bulgaria",                                 # Sofia
+	OBBI: "BHR Bahrain",                                  # Bahrain Intl
+	OBBS: "BHR Bahrain",                                  # Shaikh Isa AB
+	MYAF: "BHS Bahamas",                                  # Andros Town Intl
+	MYEF: "BHS Bahamas",                                  # Exuma Intl
+	MYER: "BHS Bahamas",                                  # Rock Sound
+	MYNN: "BHS Bahamas",                                  # Lynden Pindling Intl (Nassau)
+	LQBK: "BIH Bosnia and Herzegovina",                   # Banja Luka
+	UMBB: "BLR Belarus",                                  # Brest
+	UMMI: "BLR Belarus",                                  # Lipki
+	UMMS: "BLR Belarus",                                  # Minsk National
+	MZBZ: "BLZ Belize",                                   # Philip S W Goldson Intl
+	SLCB: "BOL Bolivia",                                  # Jorge Wilsterman
+	SBGL: "BRA",                                          # Rio de Janeiro - Galeão Intl
+	SBAF: "BRA Brazil",                                   # Campo Delio Jardim de Mattos
+	SBAN: "BRA Brazil",                                   # Base Aerea
+	SBBE: "BRA Brazil",                                   # Val De Cans Intl
+	SBBH: "BRA Brazil",                                   # Pampulha
+	SBBI: "BRA Brazil",                                   # Curitiba Bacacheri
+	SBBV: "BRA Brazil",                                   # Boa Vista Intl
+	SBCC: "BRA Brazil",                                   # Cachimbo Air Base
+	SBCG: "BRA Brazil",                                   # Campo Grande
+	SBCO: "BRA Brazil",                                   # Canoas
+	SBEG: "BRA Brazil",                                   # Eduardo Gomes
+	SBFL: "BRA Brazil",                                   # Hercillo Luz Intl
+	SBFZ: "BRA Brazil",                                   # Fortaleza Pinto Martins Intl
+	SBGP: "BRA Brazil",                                   # Embraer Unidade Gaviao Peixoto
+	SBGW: "BRA Brazil",                                   # Guaratingueta
+	SBLS: "BRA Brazil",                                   # Lagoa Santa
+	SBMN: "BRA Brazil",                                   # Ponta Pelada
+	SBMT: "BRA Brazil",                                   # Campo de Marte Airport
+	SBNF: "BRA Brazil",                                   # Ministro Victor Konder
+	SBPA: "BRA Brazil",                                   # Salgado Filho
+	SBPV: "BRA Brazil",                                   # Porto Velho Intl
+	SBRF: "BRA Brazil",                                   # Recife Intl
+	SBRJ: "BRA Brazil",                                   # Santos-Dumont
+	SBSC: "BRA Brazil",                                   # Campo Nero Moura / Santa Cruz
+	SBSJ: "BRA Brazil",                                   # Sao Jose Dos Campos
+	SBSM: "BRA Brazil",                                   # Santa Maria
+	SBSP: "BRA Brazil",                                   # Sao Paulo Congonhas
+	SBST: "BRA Brazil",                                   # BASE AEREA DE SANTOS
+	SBSV: "BRA Brazil",                                   # Dep L. E. Magalhaes Intl
+	SBTA: "BRA Brazil",                                   # Base de Aviacao de Taubate
+	SBUA: "BRA Brazil",                                   # Sao Gabriel da Cachoeira
+	SBVH: "BRA Brazil",                                   # Vilhena Airport
+	SBYS: "BRA Brazil",                                   # Campo Fontenelle
+	SDCO: "BRA Brazil",                                   # Sorocaba
+	SNCW: "BRA Brazil",                                   # Centro de Lancamento de Alcantara
+	SNKN: "BRA Brazil",                                   # Currais Novos
+	SNPX: "BRA Brazil",                                   # Pirapora
+	SNRM: "BRA Brazil",                                   # Remanso
+	SWPB: "BRA Brazil",                                   # Forte Principe Da Beira
+	TBPB: "BRB Barbados",                                 # Barbados/Grantley Adams Intl
+	WBSB: "BRN Brunei",                                   # Brunei
+	CYAM: "CAN Canada",                                   # Sault Ste Marie
+#	CYAW: "CAN Canada",                                   # [H] Shearwater  (heliport)
+	CYBG: "CAN Canada",                                   # CFB Bagotville
+	CYCS: "CAN Canada",                                   # Chesterfield Inlet
+#	CYED: "CAN Canada",                                   # [H] Edmonton Namao  (heliport)
+	CYER: "CAN Canada",                                   # Ft Severn
+	CYFB: "CAN Canada",                                   # Iqaluit
+	CYGM: "CAN Canada",                                   # Gimli Industrial Park
+	CYGT: "CAN Canada",                                   # Igloolik
+	CYJQ: "CAN Canada",                                   # Denny Island
+	CYJT: "CAN Canada",                                   # Stephenville
+	CYKF: "CAN Canada",                                   # Waterloo Intl
+	CYMJ: "CAN Canada",                                   # Air Vice Marshall C.M. McEwan
+	CYMX: "CAN Canada",                                   # Montreal Mirabel Intl
+	CYNM: "CAN Canada",                                   # Matagami
+	CYOD: "CAN Canada",                                   # Cold Lake
+	CYOW: "CAN Canada",                                   # Ottawa MacDonald-Cartier Intl
+	CYPH: "CAN Canada",                                   # Inukjuak
+	CYPQ: "CAN Canada",                                   # Peterborough
+	CYQB: "CAN Canada",                                   # Quebec Jean Lesage Intl
+	CYQI: "CAN Canada",                                   # Yarmouth
+	CYQQ: "CAN Canada",                                   # Comox
+	CYQX: "CAN Canada",                                   # Gander Intl
+	CYSA: "CAN Canada",                                   # Stratford Muni
+	CYSN: "CAN Canada",                                   # Niagara District
+	CYSU: "CAN Canada",                                   # Summerside
+	CYTH: "CAN Canada",                                   # Thompson
+	CYTR: "CAN Canada",                                   # CFB Trenton
+	CYUX: "CAN Canada",                                   # Hall Beach
+	CYWA: "CAN Canada",                                   # Petawawa
+	CYWG: "CAN Canada",                                   # James A Richardson Intl
+	CYWK: "CAN Canada",                                   # Wabush
+	CYWN: "CAN Canada",                                   # Wainwright (Field 21)
+	CYXX: "CAN Canada",                                   # Abbotsford
+	CYYB: "CAN Canada",                                   # North Bay Jack Garland
+	CYYC: "CAN Canada",                                   # Calgary Intl
+	CYYG: "CAN Canada",                                   # Charlottetown
+	CYYT: "CAN Canada",                                   # St Johns Intl
+	CYZE: "CAN Canada",                                   # GORE BAY MANITOULIN
+	CYZF: "CAN Canada",                                   # Yellowknife
+	CYZH: "CAN Canada",                                   # Slave Lake
+	LSGC: "CHE Switzerland",                              # Les Eplatures
+	LSGS: "CHE Switzerland",                              # Sion
+	LSMA: "CHE Switzerland",                              # Alpnach
+	LSMD: "CHE Switzerland",                              # Duebendorf
+	LSME: "CHE Switzerland",                              # Emmen
+	LSMF: "CHE Switzerland",                              # Mollis
+	LSMM: "CHE Switzerland",                              # Meiringen
+	LSTS: "CHE Switzerland",                              # St Stephan
+	LSZB: "CHE Switzerland",                              # Bern-Belp
+	LSZL: "CHE Switzerland",                              # Locarno
+	SCCI: "CHL Chile",                                    # Carlos Ibanez del Campo Intl
+	SCDA: "CHL Chile",                                    # Diego Aracena Intl
+	SCES: "CHL Chile",                                    # Ricardo Garcia Posada
+	SCFA: "CHL Chile",                                    # Andres Sabella Galvez Intl
+	SCIP: "CHL Chile",                                    # Mataveri Intl
+	VHSK: "CHN China",                                    # Shek Kong Airfield
+	ZBCZ: "CHN China",                                    # Changzhi Wangcun
+	ZBZJ: "CHN China",                                    # ZhangJiaKou NingYuan
+	ZGGG: "CHN China",                                    # Guangzhou Baiyun Intl
+	ZGLG: "CHN China",                                    # Yongzhou Lingling
+	ZGNN: "CHN China",                                    # Wuxu
+	ZJYX: "CHN China",                                    # Yongxing Island
+	ZLDH: "CHN China",                                    # Dunhuang
+	ZSHC: "CHN China",                                    # Hangzhou Xiaoshan Intl
+	ZSJU: "CHN China",                                    # Quzhou
+	ZSNB: "CHN China",                                    # Lishe
+	ZSSZ: "CHN China",                                    # Suzhou Guangfu
+	ZSWX: "CHN China",                                    # Sunan Shuofang Intl.
+	ZSYT: "CHN China",                                    # Yantai Penglai Intl
+	ZUAL: "CHN China",                                    # Ngari Gunsa
+	ZUGY: "CHN China",                                    # Longdongbao
+	ZULS: "CHN China",                                    # Lhasa-Gonggar
+	ZUUU: "CHN China",                                    # Chengdu Shuangliu Intl
+	ZUXC: "CHN China",                                    # Xichang Qingshan
+	ZWAK: "CHN China",                                    # Aksu
+	ZWTN: "CHN China",                                    # Hotan
+	ZYJX: "CHN China",                                    # Jixi Xingkaihu
+	ZYMD: "CHN China",                                    # Hailang
+	DIAP: "CIV Côte d'Ivoire",                            # Abidjan Felix Houphouet Boigny Intl
+	FKKD: "CMR Cameroon",                                 # Douala Intl.
+	FKKY: "CMR Cameroon",                                 # Yaounde Ville
+	FKYS: "CMR Cameroon",                                 # Yaounde Nsimalen
+	FCPP: "COG Congo (Brazzaville)",                      # Pointe Noire
+	FZAI: "COG Congo (Kinshasa)",                         # Kitona Base
+	FZBO: "COG Congo (Kinshasa)",                         # Bandundu
+	FZIC: "COG Congo (Kinshasa)",                         # Bangoka INTL
+	FZKJ: "COG Congo (Kinshasa)",                         # Buta Zega
+	FZMA: "COG Congo (Kinshasa)",                         # Bukavu Kavuma
+	FZNA: "COG Congo (Kinshasa)",                         # Goma
+	FZSA: "COG Congo (Kinshasa)",                         # Kamina Base
+	FZUA: "COG Congo (Kinshasa)",                         # Kananga
+	NCMR: "COK Cook Islands",                             # Mitiaro/Nukuroa
+	NCPK: "COK Cook Islands",                             # Pukapuka Island
+	NCPY: "COK Cook Islands",                             # Penrhyyn/Tongareva
+	NCRG: "COK Cook Islands",                             # Rarotonga Intl
+	SKBG: "COL Colombia",                                 # Palonegro
+	SKBQ: "COL Colombia",                                 # Ernesto Cortissoz Intl
+	SKCL: "COL Colombia",                                 # Alfonso Bonilla Aragón Intl
+	SKCO: "COL Colombia",                                 # La Florida
+	SKLC: "COL Colombia",                                 # ANTONIO ROLDAN BETANCOURT
+	SKPQ: "COL Colombia",                                 # German Olano AB
+	SKQU: "COL Colombia",                                 # Jose Celestino Mutis
+	SKRG: "COL Colombia",                                 # Jose Maria Cordova
+	SKSM: "COL Colombia",                                 # Simón Bolívar
+	SKSP: "COL Colombia",                                 # Gustavo Rojas Pinilla
+	SKTQ: "COL Colombia",                                 # Tres Esquinas AB
+	SKVG: "COL Colombia",                                 # Villa Garzon
+	SKYP: "COL Colombia",                                 # El Alcaravan
+	GVAC: "CPV Cape Verde",                               # Amilcar Cabral Intl
+	MRCC: "CRI Costa Rica",                               # Coto 47
+	MRGP: "CRI Costa Rica",                               # Guapiles
+	MRLB: "CRI Costa Rica",                               # Daniel Oduber Quiros Intl
+	MRLE: "CRI Costa Rica",                               # Laurel
+	MRPD: "CRI Costa Rica",                               # Pandora
+	MRQP: "CRI Costa Rica",                               # La Managua
+	MRSO: "CRI Costa Rica",                               # Santa Maria De Guacimo
+	MUCM: "CUB Cuba",                                     # Ignacio Agramonte Intl
+	MUGM: "CUB Cuba",                                     # Guantanamo Bay Ns
+	MUHA: "CUB Cuba",                                     # Havana Jose Marti Intl
+	MUHG: "CUB Cuba",                                     # Frank Pais Intl
+	TNCC: "Curaçao",                                      # Curacao Hato
+	YPXM: "CXR Christmas Island",                         # Christmas Island
+	MWCB: "CYM Cayman Islands",                           # Cpt Charles Kirkconnell Intl
+	LCPH: "CYP Cyprus",                                   # Pafos Intl
+	LKBC: "CZE Czechia",                                  # Bechyne
+	LKCH: "CZE Czechia",                                  # Chomutov
+	LKKU: "CZE Czechia",                                  # Kunovice
+	LKLT: "CZE Czechia",                                  # Letnany
+	LKNA: "CZE Czechia",                                  # Namest
+	LKNM: "CZE Czechia",                                  # Nove Mesto
+	LKPD: "CZE Czechia",                                  # Pardubice
+	LKPV: "CZE Czechia",                                  # Pacov
+	LKSK: "CZE Czechia",                                  # Skutec
+	LKTA: "CZE Czechia",                                  # Tabor
+	LKTV: "CZE Czechia",                                  # Vsechov
+	LKVO: "CZE Czechia",                                  # Vodochody
+	EDDB: "DEU Germany",                                  # Berlin Brandenburg
+	EDDC: "DEU Germany",                                  # Dresden
+	EDDK: "DEU Germany",                                  # Koeln - Bonn
+	EDDN: "DEU Germany",                                  # Nurnberg
+	EDDS: "DEU Germany",                                  # Stuttgart Manfred Rommel
+	EDDW: "DEU Germany",                                  # Bremen
+	EDFE: "DEU Germany",                                  # Frankfurt-Egelsbach
+#	EDHX: "DEU Germany",                                  # [H] Bad Bramstedt  (heliport)
+	EDLW: "DEU Germany",                                  # Dortmund - Wickede
+	EDVM: "DEU Germany",                                  # Hildesheim
+	EDWE: "DEU Germany",                                  # Emden
+	ETEB: "DEU Germany",                                  # [H] Ansbach-Katterbach
+	ETHE: "DEU Germany",                                  # Rheine - Bentlage AAF
+	ETHS: "DEU Germany",                                  # Fassberg
+	ETMN: "DEU Germany",                                  # Nordholz AB
+	ETNL: "DEU Germany",                                  # Rostock-Laage
+	ETOU: "DEU Germany",                                  # Wiesbaden Erbenheim AAF
+	ETSH: "DEU Germany",                                  # Holzdorf
+	ETSI: "DEU Germany",                                  # Ingolstadt-Manching
+	ETWM: "DEU Germany",                                  # Meppen AB
+	HDAM: "DJI Djibouti",                                 # Djibouti Ambouli
+	EKAH: "DNK Denmark",                                  # Aarhus
+	EKKA: "DNK Denmark",                                  # Karup / Midtjyllands Lufthavn
+	EKMB: "DNK Denmark",                                  # Lolland Falster Maribo
+	EKSP: "DNK Denmark",                                  # Skrydstrup
+	EKVL: "DNK Denmark",                                  # [X] Vaerlose AB
+	EKYT: "DNK Denmark",                                  # Aalborg
+	MDPP: "DOM Dominican Republic",                       # Puerto Plata Gregorio Luperon
+	DAAD: "DZA Algeria",                                  # Bou Saada
+	DAAG: "DZA Algeria",                                  # Houari Boumediene
+	DAAK: "DZA Algeria",                                  # Boufarik AB
+	DAAN: "DZA Algeria",                                  # Reggane
+	DAAQ: "DZA Algeria",                                  # Ain Oussera
+	DAAS: "DZA Algeria",                                  # 8 Mai 45
+	DAAT: "DZA Algeria",                                  # TAMANRASSET
+	DAAY: "DZA Algeria",                                  # Mecheria
+	DABB: "DZA Algeria",                                  # Rabah Bitat
+	DABT: "DZA Algeria",                                  # Batna
+	DAFH: "DZA Algeria",                                  # Hassi R Mel
+	DAOF: "DZA Algeria",                                  # Tindouf
+	DAOR: "DZA Algeria",                                  # Bechar
+	DAOV: "DZA Algeria",                                  # Ghriss
+	DAUA: "DZA Algeria",                                  # Touat-Cheikh Sidi Mohamed
+	DAUB: "DZA Algeria",                                  # Biskra
+	DAUG: "DZA Algeria",                                  # Noumerat
+	DAUH: "DZA Algeria",                                  # Oued Irara
+	DAUU: "DZA Algeria",                                  # Ouargla
+	DAUZ: "DZA Algeria",                                  # In Amenas
+	SECU: "ECU Ecuador",                                  # Cuenca - Mariscal Lamar
+	SEGU: "ECU Ecuador",                                  # Guayaquil - Jose J de Olmedo
+	SEGZ: "ECU Ecuador",                                  # Gualaquiza
+	SEMT: "ECU Ecuador",                                  # Manta - Eloy Alfaro
+	SETA: "ECU Ecuador",                                  # Taura
+	HEAX: "EGY Egypt",                                    # 
+	HEBL: "EGY Egypt",                                    # Abu Simbel
+	HEBR: "EGY Egypt",                                    # Berenice Intl / Ras Banas AB
+	HEDK: "EGY Egypt",                                    # Dakhla
+	HEGN: "EGY Egypt",                                    # Hurghada Intl
+	HEKG: "EGY Egypt",                                    # El Kharga
+	HEOW: "EGY Egypt",                                    # Sharq El Owainat Airport
+	HESH: "EGY Egypt",                                    # Sharm El Sheikh Intl
+	HESX: "EGY Egypt",                                    # Sphinx Intl
+	HHAS: "ERI Eritrea",                                  # Asmara Intl
+	HHMS: "ERI Eritrea",                                  # Massawa INTL
+	GMMH: "ESH Western Sahara",                           # Dakhla
+	GMML: "ESH Western Sahara",                           # HASSAN I
+	LEBL: "ESP",                                          # Barcelona - El Prat
+	LERJ: "ESP",                                          # Legrono
+	GCGM: "ESP Spain",                                    # La Gomera
+	GCLP: "ESP Spain",                                    # Gran Canaria
+	GCRR: "ESP Spain",                                    # Lanzarote
+	GCTS: "ESP Spain",                                    # Tenerife Sur
+	LEAB: "ESP Spain",                                    # Albacete
+	LEAS: "ESP Spain",                                    # Asturias
+	LECO: "ESP Spain",                                    # A Coruna
+	LECU: "ESP Spain",                                    # Cuatro Vientos
+	LEGT: "ESP Spain",                                    # Getafe
+	LEJR: "ESP Spain",                                    # Jerez de la Frontera
+	LELC: "ESP Spain",                                    # Murcia San Javier
+	LEMD: "ESP Spain",                                    # Adolfo Suárez Madrid-Barajas
+	LEMO: "ESP Spain",                                    # Moron Air Base
+	LEMX: "ESP Spain",                                    # La Mancha
+	LERT: "ESP Spain",                                    # Cadiz Rota
+	LESA: "ESP Spain",                                    # Salamanca
+	LEST: "ESP Spain",                                    # Santiago
+	LETO: "ESP Spain",                                    # Torrejon
+	LEUC: "ESP Spain",                                    # Cillamayor
+	LEZG: "ESP Spain",                                    # Zaragoza
+	LEZL: "ESP Spain",                                    # Sevilla San Pablo
+	EEEI: "EST Estonia",                                  # Ämari Military Aerodrome
+	EEPU: "EST Estonia",                                  # Parnu
+	EETN: "EST Estonia",                                  # Lennart Meri Tallinn
+	HABD: "ETH Ethiopia",                                 # Bahir Dar
+	HADR: "ETH Ethiopia",                                 # Dire Dawa INTL
+	HAHM: "ETH Ethiopia",                                 # Harar Meda
+	HAMK: "ETH Ethiopia",                                 # Alula Aba Nega Mekele Intl
+	EFHA: "FIN Finland",                                  # Halli
+	EFHF: "FIN Finland",                                  # Helsinki Malmi
+	EFHK: "FIN Finland",                                  # Helsinki Vantaa
+	EFKI: "FIN Finland",                                  # Kajaani
+	EFKU: "FIN Finland",                                  # Kuopio
+	EFOU: "FIN Finland",                                  # Oulu
+	EFPU: "FIN Finland",                                  # Pudasjarvi
+	EFRO: "FIN Finland",                                  # Rovaniemi
+	EFSO: "FIN Finland",                                  # Sodankyla
+	EFTU: "FIN Finland",                                  # Turku
+	EFYL: "FIN Finland",                                  # Ylivieska
+	NFFN: "FJI Fiji",                                     # Nadi Intl
+	SFAL: "FLK Falkland Islands",                         # Stanley
+	LFPO: "FRA",                                          # Paris Orly
+	LFRB: "FRA",                                          # Brest Bretagne
+	LFBC: "FRA France",                                   # Cazaux
+	LFBD: "FRA France",                                   # Bordeaux Merignac
+	LFBF: "FRA France",                                   # Francazal AB
+	LFBG: "FRA France",                                   # Cognac Chateaubernard
+	LFBM: "FRA France",                                   # Mont de Marsan
+	LFBP: "FRA France",                                   # Pau Pyrenees
+	LFBR: "FRA France",                                   # Muret Lherm
+	LFBY: "FRA France",                                   # Dax Seyresse
+	LFCB: "FRA France",                                   # Bagneres de Luchon
+	LFCK: "FRA France",                                   # Castres Mazamet
+	LFCP: "FRA France",                                   # Pons Avy
+	LFCV: "FRA France",                                   # Villefranche de Rouergue
+	LFDB: "FRA France",                                   # Montauban
+	LFDJ: "FRA France",                                   # Pamiers Les Pujols
+	LFDN: "FRA France",                                   # Rochefort Saint Agnant
+	LFDO: "FRA France",                                   # [X] Souge
+	LFDT: "FRA France",                                   # Tarbes Laloubere
+	LFEF: "FRA France",                                   # Amboise Dierre
+	LFFX: "FRA France",                                   # Tournus Cuisery
+	LFGE: "FRA France",                                   # Avallon
+	LFGH: "FRA France",                                   # Cosne sur Loire
+	LFIT: "FRA France",                                   # Toulouse Bourg Saint Bernard
+	LFKB: "FRA France",                                   # Bastia Poretta
+	LFKJ: "FRA France",                                   # Napoleon Bonaparte
+	LFKS: "FRA France",                                   # Solenzara
+	LFLE: "FRA France",                                   # Chambéry Challes les Eaux
+	LFLH: "FRA France",                                   # Chalon Champforgueil
+	LFLU: "FRA France",                                   # Valence Chabeuil
+	LFLX: "FRA France",                                   # Chateauroux Deols
+	LFLY: "FRA France",                                   # Lyon Bron
+	LFMD: "FRA France",                                   # Mandelieu
+	LFMG: "FRA France",                                   # La Montagne Noire
+	LFMI: "FRA France",                                   # Istres Le Tube
+	LFMN: "FRA France",                                   # Nice/Cote d'Azur
+	LFMO: "FRA France",                                   # Caritat AB
+	LFMV: "FRA France",                                   # Avignon Caumont
+	LFMW: "FRA France",                                   # Castelnaudary Villeneuve
+	LFMY: "FRA France",                                   # Salon de Provence
+	LFNO: "FRA France",                                   # Florac Sainte Enimie
+	LFOA: "FRA France",                                   # Avord
+	LFOC: "FRA France",                                   # Chateaudun
+	LFOE: "FRA France",                                   # Evreux Fauville
+	LFOH: "FRA France",                                   # Le Havre Octeville
+	LFOJ: "FRA France",                                   # Orleans Bricy
+	LFOT: "FRA France",                                   # Tours Val De Loire
+	LFPB: "FRA France",                                   # Paris Le Bourget
+	LFPM: "FRA France",                                   # Melun Villaroche
+	LFPN: "FRA France",                                   # Toussus-le-Noble
+	LFPR: "FRA France",                                   # Orange Plan de Dieu
+	LFPV: "FRA France",                                   # Villacoublay Velizy
+	LFQE: "FRA France",                                   # Etain Rouvres
+	LFQN: "FRA France",                                   # Wizernes
+	LFQP: "FRA France",                                   # Phalsbourg Bourscheid
+	LFQQ: "FRA France",                                   # Lille Lesquin
+	LFQT: "FRA France",                                   # Merville Calonne
+	LFRC: "FRA France",                                   # Cherbourg Maupertus
+	LFRH: "FRA France",                                   # Lorient Lann-Bihoue
+	LFRJ: "FRA France",                                   # Landivisiau
+	LFRL: "FRA France",                                   # Lanveoc Poulmic Navy
+	LFRN: "FRA France",                                   # Rennes Saint Jacques
+	LFSC: "FRA France",                                   # [X] Meyenheim
+	LFSD: "FRA France",                                   # Dijon Longvic
+	LFSI: "FRA France",                                   # Saint Dizier Robinson
+	LFSO: "FRA France",                                   # Nancy Ochey
+	LFSX: "FRA France",                                   # Luxeuil St Sauveur
+	LFTF: "FRA France",                                   # Cuers Pierrefeu
+	LFTH: "FRA France",                                   # Hyeres Le Palyvestre
+	LFTW: "FRA France",                                   # Nimes Garons
+	LFTZ: "FRA France",                                   # La Môle
+	LFXA: "FRA France",                                   # Amberieu
+	LFXB: "FRA France",                                   # Saintes Thenac
+	LFXQ: "FRA France",                                   # Coëtquidan
+	FOOG: "GAB Gabon",                                    # Port Gentil
+	FOON: "GAB Gabon",                                    # MVENGUE
+	EGKB: "GBR",                                          # Biggin Hill
+	EGAA: "GBR United Kingdom",                           # Belfast Aldergrove
+	EGBJ: "GBR United Kingdom",                           # Gloucester
+	EGDC: "GBR United Kingdom",                           # Royal Marines Base Chivenor
+	EGDL: "GBR United Kingdom",                           # [X] RAF Lyneham
+	EGDM: "GBR United Kingdom",                           # Boscombe Down
+	EGDO: "GBR United Kingdom",                           # RNAS Predannack
+	EGDR: "GBR United Kingdom",                           # RNAS Culdrose
+	EGDW: "GBR United Kingdom",                           # RNAS Merryfield
+	EGDY: "GBR United Kingdom",                           # RNAS Yeovilton
+	EGGP: "GBR United Kingdom",                           # Liverpool
+	EGHF: "GBR United Kingdom",                           # Lee on Solent
+	EGHG: "GBR United Kingdom",                           # Yeovil Westland
+	EGHH: "GBR United Kingdom",                           # Bournemouth
+	EGHI: "GBR United Kingdom",                           # Southampton
+	EGHQ: "GBR United Kingdom",                           # Newquay
+	EGHR: "GBR United Kingdom",                           # Chichester Goodwood
+	EGKA: "GBR United Kingdom",                           # Shoreham
+	EGLL: "GBR United Kingdom",                           # London Heathrow
+	EGMH: "GBR United Kingdom",                           # [X] Manston
+	EGNB: "GBR United Kingdom",                           # Brough
+	EGNO: "GBR United Kingdom",                           # Warton Aerodrome
+	EGOM: "GBR United Kingdom",                           # RAF Spadeadam
+	EGOS: "GBR United Kingdom",                           # RAF Shawbury
+	EGOV: "GBR United Kingdom",                           # RAF Valley
+	EGOY: "GBR United Kingdom",                           # West Freugh
+	EGPB: "GBR United Kingdom",                           # Sumburgh
+	EGPO: "GBR United Kingdom",                           # Stornoway
+	EGQK: "GBR United Kingdom",                           # Kinloss Barracks
+	EGQS: "GBR United Kingdom",                           # RAF Lossiemouth
+	EGSC: "GBR United Kingdom",                           # Cambridge
+	EGSH: "GBR United Kingdom",                           # Norwich
+	EGSY: "GBR United Kingdom",                           # St Athan
+	EGTD: "GBR United Kingdom",                           # Dunsfold
+	EGTE: "GBR United Kingdom",                           # Exeter
+	EGUL: "GBR United Kingdom",                           # RAF Lakenheath
+	EGUN: "GBR United Kingdom",                           # RAF Mildenhall
+	EGUO: "GBR United Kingdom",                           # [X] RAF Colerne
+	EGUP: "GBR United Kingdom",                           # RAF Sculthorpe
+	EGVN: "GBR United Kingdom",                           # RAF Brize Norton
+	EGVO: "GBR United Kingdom",                           # RAF Odiham
+	EGVP: "GBR United Kingdom",                           # AAC Middle Wallop
+	EGWC: "GBR United Kingdom",                           # RAF Cosford
+	EGWN: "GBR United Kingdom",                           # RAF Halton
+	EGWU: "GBR United Kingdom",                           # RAF Northolt
+	EGXE: "GBR United Kingdom",                           # RAF Leeming
+	EGXH: "GBR United Kingdom",                           # RAF Honington
+	EGXP: "GBR United Kingdom",                           # RAF Scampton
+	EGXT: "GBR United Kingdom",                           # RAF Witerring
+	EGXZ: "GBR United Kingdom",                           # RAF Topcliffe
+	EGYM: "GBR United Kingdom",                           # RAF Marham
+	EGYP: "GBR United Kingdom",                           # Mount Pleasant
+	LCRA: "GBR United Kingdom",                           # Akrotiri
+	UGKO: "GEO Georgia",                                  # Kopitnari
+	LXGB: "GIB Gibraltar",                                # Gibraltar
+	LGAD: "GRC Greece",                                   # Andravida
+	LGAX: "GRC Greece",                                   # Alexandria
+	LGHI: "GRC Greece",                                   # Chios
+	LGIR: "GRC Greece",                                   # Iraklion Nikos Kazantzakis
+	LGKL: "GRC Greece",                                   # Kalamata
+	LGKM: "GRC Greece",                                   # Amigdhaleon
+	LGKZ: "GRC Greece",                                   # Filippos
+	LGLM: "GRC Greece",                                   # Limnos
+	LGLR: "GRC Greece",                                   # Larissa
+	LGMG: "GRC Greece",                                   # Megara
+	LGMT: "GRC Greece",                                   # Mitilini
+	LGPZ: "GRC Greece",                                   # Aktion
+	LGRD: "GRC Greece",                                   # Maritsa
+	LGRX: "GRC Greece",                                   # Araxos
+	LGSA: "GRC Greece",                                   # Chania Ioannis Daskalogiannis
+	LGSM: "GRC Greece",                                   # Samos
+	LGSP: "GRC Greece",                                   # Sparti
+	LGSV: "GRC Greece",                                   # Stefanovikion
+	LGTG: "GRC Greece",                                   # Tanagra
+	LGTL: "GRC Greece",                                   # Kasteli
+	LGTP: "GRC Greece",                                   # Tripolis
+	LGTS: "GRC Greece",                                   # Thessaloniki Makedonia
+	LGTT: "GRC Greece",                                   # Tatoi
+	TGPZ: "GRD Grenada",                                  # Carriacou/Lauristo
+	BGCO: "GRL Greenland",                                # Nerlerit Inaat/Constable Pynt
+	BGGH: "GRL Greenland",                                # Nuuk
+	BGNO: "GRL Greenland",                                # Station Nord
+	BGQQ: "GRL Greenland",                                # Qaanaaq
+	BGSF: "GRL Greenland",                                # Kangerlussuaq
+	BGTL: "GRL Greenland",                                # Thule Air Base
+	MGGT: "GTM Guatemala",                                # La Aurora
+	SOCA: "GUF French Guiana",                            # Felix Eboue
+	PGUA: "GUM Guam",                                     # Andersen AFB
+	MHLM: "HND Honduras",                                 # La Mesa Intl
+	MHPR: "HND Honduras",                                 # Palmerola Intl
+	MHTG: "HND Honduras",                                 # Tegucigalpa Toncontin Intl
+	LDOS: "HRV Croatia",                                  # Zracna luka Osijek
+	LDPL: "HRV Croatia",                                  # Pula
+	LDRI: "HRV Croatia",                                  # Rijeka
+	LDSP: "HRV Croatia",                                  # Split
+	LDZA: "HRV Croatia",                                  # Zagreb
+	LDZD: "HRV Croatia",                                  # Zadar
+	LHBD: "HUN Hungary",                                  # Börgönd
+	LHKE: "HUN Hungary",                                  # Kecskemét (Titán)
+	LHPA: "HUN Hungary",                                  # Pápa (Párduc)
+	LHPP: "HUN Hungary",                                  # Pécs-Pogány
+	LHST: "HUN Hungary",                                  # Szatymaz
+	LHSY: "HUN Hungary",                                  # Szombathely
+	LHSZ: "HUN Hungary",                                  # Szentes
+	LHTA: "HUN Hungary",                                  # Taszár (Kaland)
+	LHUD: "HUN Hungary",                                  # Szeged
+	WABB: "IDN Indonesia",                                # Biak Frans Kaisiepo
+	WAGG: "IDN Indonesia",                                # Tjilik Riwut
+	WAHQ: "IDN Indonesia",                                # Adi Sumarmo Intl
+	WAHS: "IDN Indonesia",                                # Semarang Ahmad Yani
+	WAMG: "IDN Indonesia",                                # Gorontalo Jalaluddin
+	WARI: "IDN Indonesia",                                # Madiun Iswahyudi
+	WARR: "IDN Indonesia",                                # Juanda Intl
+	WIBB: "IDN Indonesia",                                # Sultan Syarif Kasim II
+	WICC: "IDN Indonesia",                                # Bandung Husein Sastranegara
+	WICM: "IDN Indonesia",                                # Wiriadinata
+	WIHH: "IDN Indonesia",                                # Jakarta Halim Perdanakusuma Intl
+	WIMK: "IDN Indonesia",                                # Soewondo AFB
+	WIOO: "IDN Indonesia",                                # Supadio Intl
+	WITT: "IDN Indonesia",                                # Banda Aceh Sultan Iskandarmuda
+	VEBR: "IN",                                           # Barrackpore Air Force Station
+	VADN: "IND India",                                    # Daman
+	VAOZ: "IND India",                                    # Nashik
+	VAPO: "IND India",                                    # Pune Intl
+	VAPR: "IND India",                                    # Porbandar
+	VEBS: "IND India",                                    # Bhubaneswar
+	VECC: "IND India",                                    # Kolkota Chandra Bose Intl
+	VEGT: "IND India",                                    # Guwahati
+	VEJH: "IND India",                                    # Jharsuguda
+	VEMN: "IND India",                                    # Dibrugarh
+	VETZ: "IND India",                                    # Tezpur
+	VIAG: "IND India",                                    # Agra AB
+	VIAW: "IND India",                                    # Awantipur
+	VICG: "IND India",                                    # Chandigarh International
+	VICX: "IND India",                                    # Kanpur Chakeri
+	VIDP: "IND INDIA",                                    # Indira Gandhi Int
+	VIJO: "IND India",                                    # Jodhpur
+	VIJU: "IND India",                                    # Jammu
+	VILH: "IND India",                                    # Kushok Bakula Rimpochee
+	VISP: "IND India",                                    # Sarsawa
+	VISR: "IND India",                                    # Srinagar
+	VITE: "IND India",                                    # Thoise
+	VIUT: "IND India",                                    # Uttarlai
+	VIUX: "IND India",                                    # Udhampur
+	VOAR: "IND India",                                    # Arkonam
+	VOBG: "IND India",                                    # Bangalore
+	VOCC: "IND India",                                    # INS Garuda
+	VOGO: "IND India",                                    # Dabolim
+	VOHY: "IND India",                                    # Begumpet
+	VOML: "IND India",                                    # Mangalore
+	VOMM: "IND India",                                    # Chennai Intl
+	VOSX: "IND India",                                    # Sulur
+	VOVZ: "IND India",                                    # Vishakhapatnam
+	VOYK: "IND India",                                    # Yelahanka Air Force Station
+	EICK: "IRL Ireland",                                  # Cork
+#	EIFR: "IRL Ireland",                                  # [H] Finner Camp  (heliport)
+	EIGM: "IRL Ireland",                                  # [X] Gormanston
+	EIKH: "IRL Ireland",                                  # Kilrush
+	EIME: "IRL Ireland",                                  # Casement AB
+	EIRT: "IRL Ireland",                                  # Rathcoole
+	OIAI: "IRN Iran",                                     # Shahid Asyaee
+	OIBB: "IRN Iran",                                     # Bushehr
+	OIBK: "IRN Iran",                                     # Kish Island
+	OICC: "IRN Iran",                                     # Shahid Ashrafi Esfahani
+	OIFM: "IRN Iran",                                     # Esfahan Shahid Beheshti Intl
+	OIII: "IRN Iran",                                     # Mehrabad Intl
+	OIKB: "IRN Iran",                                     # Bandar Abbas Intl
+	OIKK: "IRN Iran",                                     # Ayatollah Hashemi Rafsanjani
+	OIMM: "IRN Iran",                                     # Mashhad intl
+	OISS: "IRN Iran",                                     # Shiraz Shahid Dastgheib Intl
+	OITR: "IRN Iran",                                     # Uromiyeh
+	OITT: "IRN Iran",                                     # Tabriz Intl
+	OIYY: "IRN Iran",                                     # Yazd Shahid Sadooghi Intl
+	OIZC: "IRN Iran",                                     # Chah Bahar
+	OIZH: "IRN Iran",                                     # Zahedan Intl
+	ORBD: "IRQ Iraq",                                     # Balad Southeast
+	ORBI: "IRQ Iraq",                                     # Baghdad Intl
+	ORBR: "IRQ Iraq",                                     # Bashur
+#	ORWH: "IRQ Iraq",                                     # Washington AHP  (heliport)
+	BIKF: "ISL Iceland",                                  # Keflavík
+	LLBG: "ISR Israel",                                   # Tel Aviv Ben Gurion
+	LLEK: "ISR Israel",                                   # Tel Nof
+	LLHS: "ISR Israel",                                   # Hatzor
+	LIPH: "ITA",                                          # Treviso Sant Angelo
+	LIAP: "ITA Italy",                                    # Aeroporto dei Parchi
+	LIBA: "ITA Italy",                                    # Amendola
+#	LIBJ: "ITA Italy",                                    # [H] Vibo Valentia Mil.  (heliport)
+	LIBN: "ITA Italy",                                    # Lecce - Galatina
+	LIBP: "ITA Italy",                                    # Pescara
+	LICA: "ITA Italy",                                    # Lamezia Terme
+	LICD: "ITA Italy",                                    # Lampedusa
+	LICP: "ITA Italy",                                    # Palermo Bocca di Falco
+	LICR: "ITA Italy",                                    # Reggio Calabria
+	LICT: "ITA Italy",                                    # Trapani Birgi
+	LIDT: "ITA Italy",                                    # Trento - Mattarello G. Caproni
+	LIEE: "ITA Italy",                                    # Cagliari Elmas
+	LILH: "ITA Italy",                                    # VOGHERA
+	LILN: "ITA Italy",                                    # Venegono
+	LIMB: "ITA Italy",                                    # Bresso
+	LIMG: "ITA Italy",                                    # Albenga
+	LIMJ: "ITA Italy",                                    # Genova Sestri
+	LIMN: "ITA Italy",                                    # Cameri
+	LIPA: "ITA Italy",                                    # Aviano AB
+	LIPK: "ITA Italy",                                    # Forli
+	LIPO: "ITA Italy",                                    # Montichiari
+	LIPR: "ITA Italy",                                    # Rimini
+	LIPS: "ITA Italy",                                    # Istrana
+	LIPX: "ITA Italy",                                    # Verona Villafranca
+	LIPZ: "ITA Italy",                                    # Venezia Tessera
+	LIQQ: "ITA Italy",                                    # Serristori
+	LIQW: "ITA Italy",                                    # Sarzana Luni
+	LIRA: "ITA Italy",                                    # Ciampino
+	LIRP: "ITA Italy",                                    # Pisa
+	LIRS: "ITA Italy",                                    # Grosseto
+	MKJP: "JAM Jamaica",                                  # Norman Manley Intl
+	OJAM: "JOR Jordan",                                   # Amman Marka Intl
+	RJAK: "JPN Japan",                                    # Kasumigaura AB
+	RJAW: "JPN Japan",                                    # Iwo Jima
+	RJBB: "JPN Japan",                                    # Kansai Intl
+	RJBE: "JPN Japan",                                    # Kobe
+#	RJBM: "JPN Japan",                                    # Maizuru Heliport  (heliport)
+	RJCJ: "JPN Japan",                                    # JASDF Airbase Chitose
+	RJCO: "JPN Japan",                                    # Saporro Okadama
+	RJCT: "JPN Japan",                                    # Tokachi
+	RJDM: "JPN Japan",                                    # Metabaru
+	RJDU: "JPN Japan",                                    # JMSDF AB Omura
+	RJFA: "JPN Japan",                                    # Ashiya
+	RJFF: "JPN Japan",                                    # Fukuoka
+	RJFN: "JPN Japan",                                    # Nyutabaru
+	RJFT: "JPN Japan",                                    # Kumamoto
+	RJFU: "JPN Japan",                                    # Nagasaki
+	RJFY: "JPN Japan",                                    # Kanoya
+	RJFZ: "JPN Japan",                                    # Tsuiki
+	RJNA: "JPN Japan",                                    # Nagoya
+	RJNK: "JPN Japan",                                    # Komatsu
+	RJNW: "JPN Japan",                                    # Noto
+	RJNY: "JPN Japan",                                    # Shizuhama
+	RJOF: "JPN Japan",                                    # Hofu
+	RJOH: "JPN Japan",                                    # Miho Yonago Kitaro
+	RJOI: "JPN Japan",                                    # MCAS-Iwakuni
+	RJOS: "JPN Japan",                                    # Tokushima
+	RJOY: "JPN Japan",                                    # Yao
+	RJOZ: "JPN Japan",                                    # Ozuki
+	RJSH: "JPN Japan",                                    # Hachinohe
+	RJSM: "JPN Japan",                                    # Misawa AB
+	RJSN: "JPN Japan",                                    # Niigata
+	RJSO: "JPN Japan",                                    # Ominato NAS
+	RJST: "JPN Japan",                                    # Matsushima AB
+	RJSU: "JPN Japan",                                    # Kasuminome AB
+	RJTA: "JPN Japan",                                    # Atsugi NAF
+	RJTE: "JPN Japan",                                    # Tateyama
+	RJTK: "JPN Japan",                                    # Kisarazu
+	RJTR: "JPN Japan",                                    # Kastner AAF
+	RJTU: "JPN Japan",                                    # Utsunomiya
+	RODE: "JPN Japan",                                    # Ie Shima Aux AB
+	RODN: "JPN Japan",                                    # Kadena AB
+	ROMY: "JPN Japan",                                    # Miyako
+	ROTM: "JPN Japan",                                    # Futenma MCAS
+	UAAR: "KAZ Kazakhstan",                               # Boralday
+	UACC: "KAZ Kazakhstan",                               # Nur-Sultan Nazarbayev Intl
+	UAII: "KAZ Kazakhstan",                               # Shymkent
+	HKJK: "KEN Kenya",                                    # Nairobi Jomo Kanyatta Intl
+	HKMO: "KEN Kenya",                                    # Mombasa Moi Intl
+	HKWJ: "KEN Kenya",                                    # Wajir
+	VDBG: "KHM Cambodia",                                 # Battambang
+	TKPK: "KNA Saint Kitts and Nevis",                    # St. Kitts/Bradshaw Intl
+#	RKJM: "KOR South Korea",                              # Mokpo Naval Airbase  (heliport)
+	RKJY: "KOR South Korea",                              # Yeosu
+	RKNY: "KOR South Korea",                              # Yangyang Intl
+	RKPE: "KOR South Korea",                              # Jinhae
+	RKPK: "KOR South Korea",                              # Gimhae
+	RKPS: "KOR South Korea",                              # Sacheon AB
+	RKRB: "KOR South Korea",                              # G 103
+	RKSG: "KOR South Korea",                              # Pyongtaek-Desiderio AAF
+	RKSM: "KOR South Korea",                              # Seoul AB
+	RKSO: "KOR South Korea",                              # Osan AB
+	RKSS: "KOR South Korea",                              # Gimpo
+	RKSW: "KOR South Korea",                              # Suwon
+	RKTP: "KOR South Korea",                              # Seosan AB
+	RKTU: "KOR South Korea",                              # Cheongju Intl
+	RKTY: "KOR South Korea",                              # Yecheon
+	RKUC: "KOR South Korea",                              # Jochiwon airfield
+	RKUL: "KOR South Korea",                              # Nonsan
+	OKAS: "KWT Kuwait",                                   # Ali Al Salem Airbase
+	OKBK: "KWT Kuwait",                                   # Kuwait Intl
+	VLAP: "LAO Laos",                                     # Attepeu Intl
+	VLLB: "LAO Laos",                                     # Luang Prabang
+	VLPS: "LAO Laos",                                     # Pakse
+	VLVT: "LAO Laos",                                     # Vientiane Wattay
+	OLBA: "LBN Lebanon",                                  # Rafic Hariri International
+	OLKA: "LBN Lebanon",                                  # Rene Mouawad
+	OLRA: "LBN Lebanon",                                  # Rayak
+	GLRB: "LBR Liberia",                                  # Monrovia Roberts International
+	HLMS: "LBY",                                          # Misrata
+	HLGT: "LBY Libya",                                    # Ghat
+	HLKF: "LBY Libya",                                    # Kufra
+	HLLB: "LBY Libya",                                    # Benina
+	HLLT: "LBY Libya",                                    # Tripoli Intl
+	VCBI: "LKA Sri Lanka",                                # Bandaranaike Intl.
+	VCCA: "LKA Sri Lanka",                                # Anuradhapura
+	VCCC: "LKA Sri Lanka",                                # Colombo Ratmalana Intl.
+	VCCJ: "LKA Sri Lanka",                                # Palaly
+	VCCS: "LKA Sri Lanka",                                # Sigiriya
+	VCCT: "LKA Sri Lanka",                                # China Bay
+	EYSA: "LTU Lithuania",                                # Siauliai Intl
+	EVGA: "LVA Latvia",                                   # Lielvarde
+	TFFG: "MAF Saint Martin",                             # St Martin Grand Case
+	GMAA: "MAR Morocco",                                  # Inezgane
+	GMAG: "MAR Morocco",                                  # Guelmim
+	GMFM: "MAR Morocco",                                  # Bassatine
+	GMME: "MAR Morocco",                                  # Sale Intl
+	GMMY: "MAR Morocco",                                  # Kenitra
+	GMSL: "MAR Morocco",                                  # Sidi Slimane
+	FMMA: "MDG Madagascar",                               # Arivonimamo
+	FMSD: "MDG Madagascar",                               # Tolagnaro
+	FMSF: "MDG Madagascar",                               # Fianarantsoa
+	FMSG: "MDG Madagascar",                               # Farafangana
+	FMSK: "MDG Madagascar",                               # Manakara
+	VRMV: "MDV Maldives",                                 # Villa Maamigili Intl
+	MMCE: "MEX Mexico",                                   # Ciudad del Carmen Intl
+	MMCV: "MEX Mexico",                                   # Gnl. Pedro Jose M Intl
+	MMCZ: "MEX Mexico",                                   # Cozumel Intl
+	MMDO: "MEX MEXICO",                                   # Durango Intl
+	MMES: "MEX Mexico",                                   # Ensenada
+	MMGL: "MEX Mexico",                                   # Don Miguel Hidalgo Intl
+	MMHO: "MEX Mexico",                                   # Gral Ignacio P Garcia Intl
+	MMLM: "MEX Mexico",                                   # Valle Del Fuerte INTL
+	MMLP: "MEX Mexico",                                   # Gral M. Marquez de Leon Intl
+	MMMD: "MEX Mexico",                                   # Merida Intl
+	MMMT: "MEX Mexico",                                   # Minatitlan Intl
+	MMMX: "MEX Mexico",                                   # Licenciado Benito Juarez Intl
+	MMNL: "MEX Mexico",                                   # Quetzalcoatl Intl
+	MMPA: "MEX Mexico",                                   # Poza Rica
+	MMPE: "MEX Mexico",                                   # Puerto Penasco
+	MMSM: "MEX Mexico",                                   # Gen. Felipe Angeles Intl
+	MMTM: "MEX Mexico",                                   # General Francisco Javier Mina
+	MMTP: "MEX Mexico",                                   # Tapachula Intl
+	MMUN: "MEX Mexico",                                   # Cancun Intl
+	MMVR: "MEX Mexico",                                   # General Heriberto Jara Intl
+	MMZP: "MEX Mexico",                                   # Zapopan
+	LWSK: "MKD North Macedonia",                          # Skopje Intl
+	GABS: "MLI Mali",                                     # Bamako Senou
+	GAGO: "MLI Mali",                                     # gao
+	LMML: "MLT Malta",                                    # La Valette Luqa
+	VYNP: "MMR Burma",                                    # Nampong
+	VYNT: "MMR Burma",                                    # Naypyitaw Intl
+	VYYY: "MMR Burma",                                    # Yangon INTL
+	VYCI: "MMR Myanmar",                                  # Coco Island
+	VYXG: "MMR Myanmar",                                  # Kyaukhtu South
+	FQBR: "MOZ Mozambique",                               # Beira
+	FQMA: "MOZ Mozambique",                               # Maputo Intl
+	FQNC: "MOZ Mozambique",                               # Nacala
+	GQND: "MRT Mauritania",                               # Tidjikja
+	GQNI: "MRT Mauritania",                               # Nema
+	GQNO: "MRT Mauritania",                               # Nouakchott-Oumtounsy
+	GQPA: "MRT Mauritania",                               # Atar
+	TFFF: "MTQ Martinique",                               # Martinique/Aime Cesaire Intl
+	FIMP: "MUS Mauritius",                                # Sir Seewoosagur Ramgoolam Intl
+	WBGK: "MYS",                                          # Mukah Lapangan Terbang
+	WBGG: "MYS Malaysia",                                 # Kuching Intl
+	WBKK: "MYS Malaysia",                                 # Kota Kinabalu Intl
+	WBKL: "MYS Malaysia",                                 # Labuan
+	WBKT: "MYS Malaysia",                                 # Kudat
+	WMKA: "MYS Malaysia",                                 # Alor Setar Sultan Abdul Halim
+	WMKD: "MYS Malaysia",                                 # Sultan Haji Ahmad Shah
+	WMKK: "MYS Malaysia",                                 # Kuala Lumpur Intl - Sepang
+	WMSA: "MYS Malaysia",                                 # Kuala Lumpur S Abdul Aziz Shah
+	FYGF: "NAM Namibia",                                  # Grootfontein
+	FYKA: "NAM Namibia",                                  # Karibib
+	NWWA: "NCL New Caledonia",                            # Tiga
+	NWWE: "NCL New Caledonia",                            # Moue
+	NWWH: "NCL New Caledonia",                            # Nesson
+	NWWW: "NCL New Caledonia",                            # Noumea La Tontouta
+	DRRN: "NER Niger",                                    # Diori Hamani
+	DNAI: "NGA Nigeria",                                  # Victor Attah Intl
+	DNAS: "NGA Nigeria",                                  # Asaba Intl
+	DNBE: "NGA Nigeria",                                  # Benin
+	DNIM: "NGA Nigeria",                                  # Sam Mbakwe Intl Cargo
+	DNJO: "NGA Nigeria",                                  # Yakubu Gowon
+	DNKN: "NGA Nigeria",                                  # Mallam Aminu Kano Intl
+	DNMA: "NGA Nigeria",                                  # Maiduguri
+	DNMK: "NGA Nigeria",                                  # Makurdi
+	DNMM: "NGA Nigeria",                                  # Murtala Muhammed Intl
+	MNMG: "NIC Nicaragua",                                # Managua Sandino Intl
+	EHAM: "NLD Netherlands",                              # 
+	EHDR: "NLD Netherlands",                              # Drachten
+	EHEH: "NLD Netherlands",                              # Eindhoven
+	EHGR: "NLD Netherlands",                              # Gilze Rijen
+	EHLE: "NLD Netherlands",                              # 
+	EHLW: "NLD Netherlands",                              # Leeuwarden
+	EHVK: "NLD Netherlands",                              # Volkel
+	EHWO: "NLD Netherlands",                              # Woensdrecht
+	ENAN: "NOR Norway",                                   # Andøya Andenes
+	ENBO: "NOR Norway",                                   # Bodø
+	ENDU: "NOR Norway",                                   # Bardufoss
+	ENEV: "NOR Norway",                                   # Harstad Narvik Evenes
+	ENGM: "NOR Norway",                                   # Oslo Gardermoen
+	ENKR: "NOR Norway",                                   # Kirkenes Høybuktmoen
+	ENNA: "NOR Norway",                                   # BANAK
+	ENVA: "NOR Norway",                                   # Trondheim Vaernes
+	ENZV: "NOR Norway",                                   # Stavanger Lufthavn Sola
+	VNJP: "NPL Nepal",                                    # Janakpur
+	VNKT: "NPL Nepal",                                    # Kathmandu Tribhuvan Intl
+	VNMA: "NPL Nepal",                                    # Manang
+	ANYN: "NRU Nauru",                                    # Nauru Intl
+	NZNR: "NZL New Zealand",                              # Napier
+	NZOH: "NZL New Zealand",                              # Ohakea
+	NZRU: "NZL New Zealand",                              # Waiouru
+	NZWN: "NZL New Zealand",                              # Wellington Intl
+	NZWP: "NZL New Zealand",                              # Whenuapai
+	OOKB: "OMN Oman",                                     # Khasab
+	OOMS: "OMN Oman",                                     # Muscat Intl
+	OOSA: "OMN Oman",                                     # Salalah
+	OPCH: "PAK Pakistan",                                 # Chitral
+	OPKC: "PAK Pakistan",                                 # Karachi Jinnah Intl
+	OPMA: "PAK Pakistan",                                 # Mangla
+	OPMT: "PAK Pakistan",                                 # MULTAN INTL
+	OPQS: "PAK Pakistan",                                 # QASIM
+	OPRQ: "PAK Pakistan",                                 # PAF Base Rafiqui
+	OPSF: "PAK Pakistan",                                 # PNS Mehran/Faisal AFB
+	OPSK: "PAK Pakistan",                                 # Begum Nusrat Bhutto
+	MPEJ: "PAN Panama",                                   # Colon Enrique A. Jimenez
+	SPJC: "PER Peru",                                     # Jorge Chavez Intl
+	SPEO: "PER Perú",                                     # Teniente
+	SPLP: "PER Perú",                                     # Las Palmas
+	SPPB: "PER Perú",                                     # Tipishsa
+	SPQT: "PER Perú",                                     # Francisco Secada Vignetta Intl
+	SPSO: "PER Perú",                                     # Pisco
+	SPTU: "PER Perú",                                     # Padre Aldamiz
+	RPLC: "PHL Philippines",                              # Clark Intl
+	RPLL: "PHL Philippines",                              # Ninoy Aquino Intl
+#	RPLM: "PHL Philippines",                              # Camp Capinpin  (heliport)
+	RPLS: "PHL Philippines",                              # Sangley Point AB
+	RPLV: "PHL Philippines",                              # Fort Magsaysay
+	RPMB: "PHL Philippines",                              # Rajah Buayan AB
+	RPMI: "PHL Philippines",                              # Iligan
+	RPMZ: "PHL Philippines",                              # Zamboanga Intl
+	RPPN: "PHL Philippines",                              # Rancudo
+	RPUF: "PHL Philippines",                              # Basa Air Base
+	RPUL: "PHL Philippines",                              # Fernando AB
+	RPUY: "PHL Philippines",                              # Cauayan
+	RPVF: "PHL Philippines",                              # Catarman
+	RPVP: "PHL Philippines",                              # Puerto Princesa
+	AYAQ: "PNG Papua New Guinea",                         # Kompiam
+	AYJB: "PNG Papua New Guinea",                         # Jacquinot Bay
+	AYMD: "PNG Papua New Guinea",                         # Madang
+	AYMO: "PNG Papua New Guinea",                         # Momote
+	AYPY: "PNG Papua New Guinea",                         # Port Moresby Jacksons Intl
+	AYTK: "PNG Papua New Guinea",                         # Tokua
+	EPBC: "POL Poland",                                   # Babice
+	EPBK: "POL Poland",                                   # Bialystok-Krywlany
+	EPBP: "POL Poland",                                   # Airfield Biala Podlaska
+	EPBY: "POL Poland",                                   # Bydgoszcz Szwederowo
+	EPCE: "POL Poland",                                   # Cewice
+	EPDA: "POL Poland",                                   # Darlowo
+	EPDE: "POL Poland",                                   # Deblin-Irena
+	EPGD: "POL Poland",                                   # Gdansk Lech Walesa
+	EPKA: "POL Poland",                                   # Kielce Maslow
+	EPKK: "POL Poland",                                   # Krakow-Balice
+	EPLK: "POL Poland",                                   # Lask
+	EPMM: "POL Poland",                                   # Minsk Mazowiecki
+	EPNM: "POL Poland",                                   # Nowe Miasto nad Pilica
+	EPNT: "POL Poland",                                   # Nowy Targ
+	EPOK: "POL Poland",                                   # Oksywie
+	EPPO: "POL Poland",                                   # Poznan Lawica
+	EPTM: "POL Poland",                                   # Tomaszow Mazowiecki
+	EPWA: "POL Poland",                                   # Warsaw Chopin
+	TJBQ: "PRI Puerto Rico",                              # Aguadilla Rafael Hernandez
+	TJIG: "PRI Puerto Rico",                              # Fernando Luis Ribas Dominicci
+	TJSJ: "PRI Puerto Rico",                              # San Juan Luis Munoz Marin Intl
+	ZKSD: "PRK",                                          # Sondok
+	ZKKD: "PRK North Korea",                              # Kangdong
+	ZKPY: "PRK North Korea",                              # Pyongyang Intl
+	ZKUJ: "PRK North Korea",                              # Uiju
+#	LPSA: "PRT",                                          # Salemas  (heliport)
+	LPAR: "PRT Portugal",                                 # Alverca
+	LPAV: "PRT Portugal",                                 # Aveiro
+	LPAZ: "PRT Portugal",                                 # Santa Maria
+	LPLA: "PRT Portugal",                                 # Lajes
+	LPMA: "PRT Portugal",                                 # Madeira
+#	LPMP: "PRT Portugal",                                 # Mafra  (heliport)
+	LPMR: "PRT Portugal",                                 # Monte Real AB
+	LPMT: "PRT Portugal",                                 # Montijo
+	LPOT: "PRT Portugal",                                 # Ota
+	LPOV: "PRT Portugal",                                 # Ovar
+	LPPT: "PRT Portugal",                                 # Lisboa
+	LPST: "PRT Portugal",                                 # Sintra
+	LPTN: "PRT Portugal",                                 # Tancos
+	SGAY: "PRY Paraguay",                                 # Juan De Ayolas
+	NTGY: "PYF French Polynesia",                         # Tureia
+	NTTX: "PYF French Polynesia",                         # Mururoa
+	OTBD: "QAT Qatar",                                    # Doha Intl
+	OTBH: "QAT Qatar",                                    # Al Udeid AB
+	LRBO: "ROU Romania",                                  # Boboc
+	LRCT: "ROU Romania",                                  # Campia Turzii
+	LRFT: "ROU Romania",                                  # Fetesti
+	LROD: "ROU Romania",                                  # Oradea
+	LROP: "ROU Romania",                                  # Otopeni / Henri Coanda
+	UUMB: "RUS",                                          # Kubinka
+	UEEE: "RUS Russia",                                   # Yakutsk
+	UELL: "RUS Russia",                                   # Neryungri
+	UEST: "RUS Russia",                                   # Tiksi
+	UHMD: "RUS Russia",                                   # Provideniya Bay
+	UHPP: "RUS Russia",                                   # Yelizovo
+	UIII: "RUS Russia",                                   # Irkutsk
+	UIKK: "RUS Russia",                                   # Kirensk
+	UITT: "RUS Russia",                                   # Ust-Kut
+	ULDW: "RUS Russia",                                   # Varandey
+	ULOO: "RUS Russia",                                   # Pskov / Псков
+	UNNE: "RUS Russia",                                   # Novosibirsk Yeltsovka
+	UNNT: "RUS Russia",                                   # Novosibirsk Tolmachevo
+	UNOS: "RUS Russia",                                   # Omsk Severny
+	UOOO: "RUS Russia",                                   # Norilsk
+	URFB: "RUS Russia",                                   # Belbek
+	URKA: "RUS Russia",                                   # Anapa Intl
+	URKE: "RUS Russia",                                   # Yeysk
+	URKK: "RUS Russia",                                   # Krasnodar Intl. (Pashkovskiy)
+	URKR: "RUS Russia",                                   # Armavir Tsentralny
+	URMN: "RUS Russia",                                   # Nalchik
+	URMT: "RUS Russia",                                   # Stavropol Shpakovskoye
+	URWA: "RUS Russia",                                   # 
+	URWW: "RUS Russia",                                   # GUMRAK
+	USCG: "RUS Russia",                                   # Chelyabinks Shagol AFB
+	USNN: "RUS Russia",                                   # Nizhnevartovsk
+	USSK: "RUS Russia",                                   # Aramil
+	USSS: "RUS Russia",                                   # Yekaterinburg-Koltsovo
+	USTR: "RUS Russia",                                   # Roschino Intl
+	UUBW: "RUS Russia",                                   # Zhukovsky Internationl
+	UUEM: "RUS Russia",                                   # Tver (Migalovo)
+	UUMO: "RUS Russia",                                   # Ostafievo
+	UUMU: "RUS Russia",                                   # Chkalovsky AB
+	UUYH: "RUS Russia",                                   # Ukhta
+	UUYS: "RUS Russia",                                   # Usinsk
+	UWLW: "RUS Russia",                                   # Vostochny
+	ULLP: "RUS Russian Federation",                       # Pushkin
+	HRYR: "RWA Rwanda",                                   # Kigali
+	FMEE: "Réunion",                                      # St Denis Gillot
+	FMEP: "Réunion",                                      # Saint Pierre Pierrefonds
+	OYSN: "Sanaa Intl",                                   # Sanaa Intl
+	OEBT: "SAU Saudi Arabia",                             # Batha
+	OEDR: "SAU Saudi Arabia",                             # King Abdulaziz AB
+	OEJB: "SAU Saudi Arabia",                             # Jubail
+	OEMA: "SAU Saudi Arabia",                             # Prince Mohammad bin Abdulaziz
+	OEPS: "SAU Saudi Arabia",                             # Prince Sultan AB
+	OERY: "SAU Saudi Arabia",                             # King Salman AB
+	OESH: "SAU Saudi Arabia",                             # Sharurah
+	OETF: "SAU Saudi Arabia",                             # TA'IF
+	GOBD: "SEN Senegal",                                  # Blaise Diagne Intl
+	GOOK: "SEN Senegal",                                  # Kaolack
+	GOOY: "SEN Senegal",                                  # Dakar Leopold Sedar Senghor Intl
+	WSAG: "SGP Singapore",                                # Sembawang
+	WSAT: "SGP Singapore",                                # Tengah
+	WSSS: "SGP Singapore",                                # Singapore Changi Intl
+	FHAW: "SHN Saint Helena",                             # Ascension Wideawake Field
+	MSLP: "SLV El Salvador",                              # El Salvador Intl
+	MSSS: "SLV El Salvador",                              # Ilopango Intl
+	HCMB: "SOM Somalia",                                  # Baidoa
+	HCMR: "SOM Somalia",                                  # Abdullahi Yusuf
+	LFVM: "SPM Saint Pierre and Miquelon",                # Miquelon
+	LYBT: "SRB Serbia",                                   # Batajnica
+	LYPA: "SRB Serbia",                                   # Pancevo
+	HJJJ: "SSD South Sudan",                              # Juba
+	HJMK: "SSD South Sudan",                              # Malakal
+	HJRB: "SSD South Sudan",                              # Rumbek
+	HSLI: "SSD Sudan",                                    # Kadugli
+	HSNN: "SSD Sudan",                                    # Nyala
+	HSOB: "SSD Sudan",                                    # El Obeid
+	HSSP: "SSD Sudan",                                    # Port Sudan AB
+	HSSW: "SSD Sudan",                                    # Wadi Halfa
+	HSWS: "SSD Sudan",                                    # Wadi Seidna AB
+	FPPR: "STP Sao Tome and Principe",                    # Principe
+	FPST: "STP Sao Tome and Principe",                    # Sao Tome Intl
+	LZKZ: "SVK Slovakia",                                 # Kosice
+	LJCE: "SVN Slovenia",                                 # Cerklje pri Krki
+	LJLJ: "SVN Slovenia",                                 # Ljubljana Joze Pucnik
+	ESCM: "SWE Sweden",                                   # Uppsala-Ärna
+	ESDF: "SWE Sweden",                                   # Ronneby Kallinge
+	ESGG: "SWE Sweden",                                   # Göteborg Landvetter
+	ESMT: "SWE Sweden",                                   # Halmstad
+	ESOE: "SWE Sweden",                                   # Orebro
+	ESOK: "SWE Sweden",                                   # Karlstad
+	ESPA: "SWE Sweden",                                   # Luleå Kallax
+	FSIA: "SYC Seychelles",                               # Seychelles Intl
+	OSAP: "SYR Syria",                                    # Aleppo Intl
+	OSDI: "SYR Syria",                                    # Damascus Intl
+	OSKL: "SYR Syria",                                    # Kamishly
+	OSPR: "SYR Syria",                                    # Palmyra
+	MBNC: "TCA Turks and Caicos Islands",                 # North Caicos Intl
+	DXNG: "TGO Togo",                                     # Niamtougou
+	VTBD: "THA Thailand",                                 # Bangkok Don Mueang Intl
+	VTBP: "THA Thailand",                                 # Prachuap Khiri Khan RTAF
+	VTBU: "THA Thailand",                                 # Rayon U-Taphao Intl
+	VTCC: "THA Thailand",                                 # Chiang Mai Intl
+	VTCL: "THA Thailand",                                 # Lampang
+	VTCT: "THA Thailand",                                 # Chiang Rai Intl
+	VTPH: "THA Thailand",                                 # Hua Hin
+	VTPP: "THA Thailand",                                 # Phitsanulok
+	VTPT: "THA Thailand",                                 # Tak
+	VTSB: "THA Thailand",                                 # Surat Thani
+	VTSC: "THA Thailand",                                 # Narathiwat
+	VTSP: "THA Thailand",                                 # Phuket Intl
+	VTUD: "THA Thailand",                                 # Udon Thani Intl
+	VTUO: "THA Thailand",                                 # Buri Ram
+	VTUW: "THA Thailand",                                 # Nakhon Phanom
+	UTAM: "TKM Turkmenistan",                             # Mary
+	WPDL: "TLS Timor-Leste",                              # Dili Presidente Nicolau Lobato Intl
+	NFTV: "TON Tonga",                                    # Vava'u Intl
+	DTTB: "TUN Tunisia",                                  # Sidi Ahmed Air Base
+	DTTD: "TUN Tunisia",                                  # Remada Air Base
+	DTTG: "TUN Tunisia",                                  # Gabes
+	DTTI: "TUN Tunisia",                                  # Borj El Amri
+	LTAB: "TUR Turkey",                                   # Guvercinlik AB
+	LTAC: "TUR Turkey",                                   # Esenboga
+	LTAD: "TUR Turkey",                                   # Etimesgut
+	LTAE: "TUR Turkey",                                   # Akinci AB
+	LTAF: "TUR Turkey",                                   # Adana
+	LTAG: "TUR Turkey",                                   # Incirlik AB
+	LTAJ: "TUR Turkey",                                   # Oguzeli
+	LTAN: "TUR Turkey",                                   # Konya AB
+	LTAO: "TUR Turkey",                                   # Tulga
+	LTAR: "TUR Turkey",                                   # Sivas
+	LTAT: "TUR Turkey",                                   # Erhac AB
+	LTAU: "TUR Turkey",                                   # Erkilet
+	LTAY: "TUR Turkey",                                   # Cardak
+	LTBA: "TUR Turkey",                                   # Istanbul Ataturk
+	LTBG: "TUR Turkey",                                   # Bandirma AB
+	LTBH: "TUR Turkey",                                   # Canakkale
+	LTBK: "TUR Turkey",                                   # Gaziemir
+	LTBL: "TUR Turkey",                                   # Cigli AB
+	LTBO: "TUR Turkey",                                   # Usak
+	LTBP: "TUR Turkey",                                   # Yalova
+	LTBR: "TUR Turkey",                                   # Yenisehir AB
+	LTBS: "TUR Turkey",                                   # Dalaman
+	LTBV: "TUR Turkey",                                   # Imsik
+	LTCE: "TUR Turkey",                                   # Erzurum
+	LTCI: "TUR Turkey",                                   # Ferit Melen
+	LTCJ: "TUR Turkey",                                   # Batman
+	LTCL: "TUR Turkey",                                   # Siirt
+	LTCR: "TUR Turkey",                                   # MARDIN
+	LTCS: "TUR Turkey",                                   # Sanliurfa GAP
+	LTCT: "TUR Turkey",                                   # Igdir
+	LTFA: "TUR Turkey",                                   # Kaklic AB
+	LTFC: "TUR Turkey",                                   # Suleyman Demirel
+	LTFD: "TUR Turkey",                                   # Balikesir Koca Seyit
+	LTFE: "TUR Turkey",                                   # Milas Bodrum
+	LTFM: "TUR Turkey",                                   # Istanbul
+	RCDI: "TWN Taiwan",                                   # Longtan
+	RCFG: "TWN Taiwan",                                   # Nagan
+	RCKW: "TWN Taiwan",                                   # Hengchun
+	RCLM: "TWN Taiwan",                                   # Dongsha
+	RCPO: "TWN Taiwan",                                   # Hsinchu
+	RCSP: "TWN Taiwan",                                   # Taiping
+	RCSS: "TWN Taiwan",                                   # Taipei Songshan Intl
+	HTMS: "TZA Tanzania",                                 # Moshi
+	TISX: "U.S. Virgin Islands",                          # St Croix - Henry E Rohlsen
+	HUEN: "UGA Uganda",                                   # Entebbe Intl
+	HUMI: "UGA Uganda",                                   # Masindi
+	UKOM: "UKR",                                          # Lymanske
+	UKBM: "UKR Ukraine",                                  # UKBM Myrhorod AB
+	UKCK: "UKR Ukraine",                                  # Kramatorsk
+	UKDM: "UKR Ukraine",                                  # Melitopol AB
+	UKLA: "UKR Ukraine",                                  # Novyi Kalyniv
+	UKLL: "UKR Ukraine",                                  # Lviv Intl
+	SUDU: "URY Uruguay",                                  # Santa Bernardina Intl
+	KBBG: "USA",                                          # Branson Rgnl
+	KBTV: "USA",                                          # Burlington Intl
+	KBXM: "USA",                                          # Brunswick Executive
+	KCHD: "USA",                                          # Chandler Muni
+	KCRG: "USA",                                          # Jacksonville Executive at Craig Airport
+	KCUB: "USA",                                          # Jim Hamilton L.B. Owens
+	KEGE: "USA",                                          # Eagle County Regl
+	KELP: "USA",                                          # El Paso Intl
+	KEYE: "USA",                                          # Eagle Creek Airpark
+	KHKY: "USA",                                          # Hickory Rgnl
+	KLAS: "USA",                                          # Harry Reid Intl
+	KLAX: "USA",                                          # Los Angeles Intl
+	KMKE: "USA",                                          # General Mitchell Intl
+	KRMN: "USA",                                          # Stafford Regl
+	KSDF: "USA",                                          # Louisville Muhammad Ali Intl
+	KSTC: "USA",                                          # St Cloud Regl
+	KVBW: "USA",                                          # Bridgewater Air Park
+	KAAO: "USA United States",                            # Colonel James Jabara
+	KABQ: "USA United States",                            # Albuquerque Intl Sunport
+	KABR: "USA United States",                            # Aberdeen Regl
+	KACV: "USA United States",                            # Cali Redwood Humboldt Co
+	KACY: "USA United States",                            # Atlantic City Intl
+	KADS: "USA United States",                            # Addison
+	KADW: "USA United States",                            # Joint Base Andrews
+	KAEX: "USA United States",                            # Alexandria Intl
+	KAFF: "USA United States",                            # USAF Academy Airfield
+	KAIK: "USA United States",                            # Aiken Municipal
+	KALB: "USA United States",                            # Albany Intl
+	KALI: "USA United States",                            # ALICE INTL
+	KALM: "USA United States",                            # Alamogordo White Sands Rgnl
+	KALO: "USA United States",                            # Waterloo Regl
+	KAND: "USA United States",                            # Anderson Regl
+	KANE: "USA United States",                            # Anoka Co Blaine (Janes Field)
+	KAPG: "USA United States",                            # Phillips AAF
+	KAPH: "USA United States",                            # AP Hill AAF
+	KAPN: "USA United States",                            # Alpena County Regl
+	KARM: "USA United States",                            # Wharton Regl
+	KAST: "USA United States",                            # Astoria Regl
+	KASW: "USA United States",                            # Warsaw Muni
+	KATS: "USA United States",                            # Artesia Muni
+	KATW: "USA United States",                            # Appleton Intl
+	KAUS: "USA United States",                            # Austin-Bergstrom Intl
+	KAUW: "USA United States",                            # Wausau Downtown
+	KAWM: "USA United States",                            # West Memphis Muni
+	KAXS: "USA United States",                            # Altus/Quartz Mountain Regl
+	KBAB: "USA United States",                            # Beale AFB
+	KBAD: "USA United States",                            # Barksdale AFB
+	KBAF: "USA United States",                            # BARNES MUNI
+	KBDL: "USA United States",                            # Bradley Intl
+	KBFD: "USA United States",                            # Bradford Regl
+	KBFI: "USA United States",                            # Boeing Field King County Intl
+	KBGM: "USA United States",                            # Greater Binghamton
+	KBGR: "USA United States",                            # Bangor Intl
+	KBHM: "USA United States",                            # Birmingham–Shuttlesworth Intl
+	KBIE: "USA United States",                            # Beatrice Municipal Airport
+	KBIF: "USA United States",                            # Biggs AAF
+	KBIS: "USA United States",                            # Bismarck Municipal
+	KBIX: "USA United States",                            # Keesler AFB
+	KBKF: "USA United States",                            # Buckley AFB
+	KBKV: "USA United States",                            # Brooksville-Tampa Bay Rgnl
+	KBLV: "USA United States",                            # Scott AFB MidAmerica
+	KBNA: "USA United States",                            # Nashville Intl
+	KBOI: "USA United States",                            # Boise Air Terminal Gowen Field
+	KBOW: "USA United States",                            # Bartow Muni
+	KBRO: "USA United States",                            # Brownsville South Padre Island Intl
+	KBTL: "USA United States",                            # W K Kellogg
+	KBTR: "USA United States",                            # Baton Rouge Metro Ryan
+	KBUF: "USA United States",                            # Buffalo Niagara Intl
+	KBUR: "USA United States",                            # Bob Hope Burbank
+	KBWI: "USA United States",                            # BWI Marshall
+	KBZN: "USA United States",                            # Bozeman Yellowstone Intl
+	KCAK: "USA United States",                            # Akron Canton Rgnl
+	KCBF: "USA United States",                            # Council Bluffs Muni
+	KCBM: "USA United States",                            # COLUMBUS AFB
+	KCGF: "USA United States",                            # CUYAHOGA CO
+	KCHS: "USA United States",                            # Charleston AFB Intl
+	KCJR: "USA United States",                            # Culpeper Regl
+	KCLT: "USA United States",                            # Charlotte Douglas Intl
+	KCNW: "USA United States",                            # TSTC Waco
+	KCOF: "USA United States",                            # Patrick AFB
+	KCON: "USA United States",                            # Concord Muni
+	KCOS: "USA United States",                            # Colorado Springs Muni
+	KCRQ: "USA United States",                            # Mc Clellan Palomar
+	KCRW: "USA United States",                            # Charleston Yeager
+	KCVS: "USA United States",                            # CANNON AFB
+	KCWF: "USA United States",                            # Chennault Intl
+	KCXO: "USA United States",                            # Conroe-North Houston Rgnl
+	KCXY: "USA United States",                            # Capital City
+	KCYS: "USA United States",                            # CHEYENNE RGNL JERRY OLSON FLD
+	KCZG: "USA United States",                            # Tri-Cities
+	KDAA: "USA United States",                            # Davison AAF
+	KDDC: "USA United States",                            # Dodge City Regl
+	KDEC: "USA United States",                            # Decatur Muni
+	KDEN: "USA United States",                            # Denver Intl
+	KDHN: "USA United States",                            # Dothan Rgnl
+	KDKX: "USA United States",                            # Knoxville Downtown Island
+	KDLF: "USA United States",                            # Laughlin AFB
+	KDLH: "USA United States",                            # Duluth Intl
+	KDMA: "USA United States",                            # Davis-Monthan AFB
+	KDOV: "USA United States",                            # Dover AFB
+	KDPG: "USA United States",                            # Michael AAF
+	KDRO: "USA United States",                            # Durango La Plata Co
+	KDSM: "USA United States",                            # Des Moines Intl
+	KDTA: "USA United States",                            # Delta Muni
+	KDTO: "USA United States",                            # Denton Enterprise
+	KDVO: "USA United States",                            # Gnoss Field
+	KDWA: "USA United States",                            # Yolo County
+	KDYS: "USA United States",                            # DYESS AFB
+	KECG: "USA United States",                            # ELIZABETH CITY CGAS RGNL
+	KEDC: "USA United States",                            # Austin Executive
+	KEDW: "USA United States",                            # Edwards AFB Rogers Dry Lake
+	KEET: "USA United States",                            # Shelby County
+	KEFD: "USA United States",                            # Ellington Fld
+	KEGI: "USA United States",                            # Duke Field
+	KEHR: "USA United States",                            # Henderson City Co
+	KEKQ: "USA United States",                            # Wayne Co
+	KEND: "USA United States",                            # Vance AFB
+	KENV: "USA United States",                            # Wendover
+	KEQY: "USA United States",                            # Charlotte-Monroe Executive
+	KETB: "USA United States",                            # West Bend Muni
+	KEVV: "USA United States",                            # Evansville Rgnl
+	KEVY: "USA United States",                            # Summit
+	KFAR: "USA United States",                            # Hector Intl
+	KFAT: "USA United States",                            # Fresno Air Terminal
+	KFBG: "USA United States",                            # Simmons Army Airfield
+	KFCI: "USA United States",                            # Richmond - Chesterfield County
+	KFCS: "USA United States",                            # Butts Army Airfield
+	KFFO: "USA United States",                            # Wright-Patterson AFB
+	KFFZ: "USA United States",                            # Falcon Field
+	KFHU: "USA United States",                            # SIERRA VISTA MUNI LIBBY AAF
+	KFIN: "USA United States",                            # Flagler Executive
+	KFKL: "USA United States",                            # Venango Rgnl
+	KFLG: "USA United States",                            # Flagstaff Pulliam
+	KFOE: "USA United States",                            # Topeka Regl
+	KFOK: "USA United States",                            # Francis S Gabreski
+	KFRI: "USA United States",                            # Marshall AAF
+	KFSD: "USA United States",                            # Joe Foss Fld
+	KFSM: "USA United States",                            # Fort Smith Rgnl
+	KFTK: "USA United States",                            # Godman AAF
+	KFTW: "USA United States",                            # Fort Worth Meacham Intl
+	KFWA: "USA United States",                            # Ft Wayne Intl
+	KFXE: "USA United States",                            # Fort Lauderdale Executive
+	KFYJ: "USA United States",                            # Middle Peninsula Regl
+	KGAO: "USA United States",                            # South Lafourche
+	KGBG: "USA United States",                            # Galesburg Muni
+	KGCD: "USA United States",                            # Grant Co Regl Ogilvie Field
+	KGCK: "USA United States",                            # Garden City Regl
+	KGED: "USA United States",                            # Delaware Coastal
+	KGEG: "USA United States",                            # Spokane Intl
+	KGEU: "USA United States",                            # Glendale Muni
+	KGEY: "USA United States",                            # South Big Horn County
+	KGJT: "USA United States",                            # Grand Junction Regl
+	KGKT: "USA United States",                            # Gatlinburg Pigeon Forge
+	KGKY: "USA United States",                            # Arlington Muni
+	KGLD: "USA United States",                            # Renner Fld
+	KGLE: "USA United States",                            # Gainesville Municipal
+	KGON: "USA United States",                            # Groton New London
+	KGOV: "USA United States",                            # GRAYLING AAF
+	KGPI: "USA United States",                            # Glacier Park Intl
+	KGPT: "USA United States",                            # Gulfport Biloxi Intl
+	KGRB: "USA United States",                            # Green Bay A. Straubel Intl.
+	KGRD: "USA United States",                            # Greenwood County Airport
+	KGRI: "USA United States",                            # Central Nebraska Regional
+	KGRK: "USA United States",                            # ROBERT GRAY AAF
+	KGSB: "USA United States",                            # Seymour Johnson AFB
+	KGTB: "USA United States",                            # WHEELER SACK AAF
+	KGTF: "USA United States",                            # Great Falls Intl
+	KGTR: "USA United States",                            # Golden Triangle Rgnl
+	KGTU: "USA United States",                            # Georgetown Muni
+	KGUR: "USA United States",                            # Camp Guernsey
+	KGUS: "USA United States",                            # Grissom ARB
+	KGVE: "USA United States",                            # Gordonsville Muni
+	KGVQ: "USA United States",                            # Genesee County
+	KGVT: "USA United States",                            # Majors
+	KGYH: "USA United States",                            # Donaldson Field
+	KGYY: "USA United States",                            # Gary Chicago Intl
+	KGZN: "USA United States",                            # Gregory M Simmons Memorial
+	KHAF: "USA United States",                            # Half Moon Bay
+	KHDC: "USA United States",                            # Hammond Northshore Regl
+	KHEF: "USA United States",                            # Manassas Regl Harry P. Davis
+#	KHEY: "USA United States",                            # [H] Hanchey AHP  (heliport)
+	KHFY: "USA United States",                            # Indy South Greenwood
+	KHGR: "USA United States",                            # Hagerstown Regl
+	KHHG: "USA United States",                            # Huntington Muni
+	KHIF: "USA United States",                            # Hill AFB
+	KHII: "USA United States",                            # Lake Havasu City
+	KHLN: "USA United States",                            # Helena Regl
+	KHMN: "USA United States",                            # Holloman AFB
+	KHOP: "USA United States",                            # Campbell AAF
+	KHQZ: "USA United States",                            # Mesquite Metro
+	KHSA: "USA United States",                            # Stennis Intl
+	KHST: "USA United States",                            # Homestead ARB
+	KHUF: "USA United States",                            # Terre Haute Rgnl
+	KHUM: "USA United States",                            # HOUMA TERREBONNE
+	KIAB: "USA United States",                            # Mc Connell AFB
+	KIAG: "USA United States",                            # Niagra Falls Intl
+	KIDA: "USA United States",                            # Idaho Falls Rgnl
+	KIFP: "USA United States",                            # Laughlin Bullhead Intl
+	KILG: "USA United States",                            # New Castle
+	KINS: "USA United States",                            # Creech AFB
+	KISP: "USA United States",                            # Long Island Mac Arthur
+	KIWA: "USA United States",                            # Williams Gateway
+	KJAN: "USA United States",                            # Jackson Evers Intl
+	KJAX: "USA United States",                            # Jacksonville Intl
+	KJHW: "USA United States",                            # CHAUTAUQUA CO JAMESTOWN
+	KJKL: "USA United States",                            # Julian Carroll
+	KJST: "USA United States",                            # John Murtha Johnstown/Cambria
+	KJWN: "USA United States",                            # John C Tune
+	KJWY: "USA United States",                            # Waxahachie/Mid-Way Regl
+	KJZI: "USA United States",                            # Charleston Executive
+	KLAF: "USA United States",                            # Purdue University
+	KLBL: "USA United States",                            # Liberal Mid-America RGNL
+	KLCH: "USA United States",                            # Lake Charles Regl
+	KLCK: "USA United States",                            # Rickenbacker Intl
+	KLEB: "USA United States",                            # Lebanon Muni
+	KLEX: "USA United States",                            # Lexington Blue Grass
+	KLFI: "USA United States",                            # Langley AFB
+	KLFT: "USA United States",                            # Lafayette Regl
+	KLLR: "USA United States",                            # Little River
+	KLNC: "USA United States",                            # Lancaster Rgnl
+	KLNK: "USA United States",                            # Lincoln
+	KLOM: "USA United States",                            # Wings Field
+	KLOZ: "USA United States",                            # London Corbin
+	KLRD: "USA United States",                            # Laredo Intl
+	KLRF: "USA United States",                            # LITTLE ROCK AFB
+	KLRU: "USA United States",                            # Las Cruces Intl
+	KLSF: "USA United States",                            # Lawson AAF
+	KLSV: "USA United States",                            # Nellis AFB
+	KLTS: "USA United States",                            # Altus AFB
+	KLUF: "USA United States",                            # Luke AFB
+	KLVK: "USA United States",                            # Livermore
+	KLWC: "USA United States",                            # Lawrence Muni
+	KLWM: "USA United States",                            # Lawrence Muni
+	KLZU: "USA United States",                            # Gwinnett Co Briscoe Fld
+	KMCC: "USA United States",                            # Mc Clellan Airfield
+	KMCF: "USA United States",                            # MacDILL AFB
+	KMCI: "USA United States",                            # Kansas City Intl
+#	KMDA: "USA United States",                            # Martindale AHP  (heliport)
+	KMDT: "USA United States",                            # Harrisburg Intl
+	KMEB: "USA United States",                            # Laurinburg-Maxton
+	KMEM: "USA United States",                            # Memphis Intl
+	KMER: "USA United States",                            # Castle
+	KMEV: "USA United States",                            # Minden Tahoe
+	KMFD: "USA United States",                            # Mansfield Lahm Rgnl
+	KMFE: "USA United States",                            # McAllen Miller Intl
+	KMFR: "USA United States",                            # Rogue Valley Intl Medford
+	KMFV: "USA United States",                            # Accomack County
+	KMGE: "USA United States",                            # DOBBINS ARB
+	KMGM: "USA United States",                            # Montgomery Regl
+	KMHR: "USA United States",                            # Sacramento Mather
+	KMHV: "USA United States",                            # Mojave
+	KMIE: "USA United States",                            # Delaware Co Johnson Field
+	KMJD: "USA United States",                            # Picayune Muni
+	KMJX: "USA United States",                            # Ocean County
+	KMKG: "USA United States",                            # MUSKEGON CO
+	KMKL: "USA United States",                            # MC KELLAR SIPES RGNL
+	KMLB: "USA United States",                            # Orlando Melbourne Intl
+	KMLI: "USA United States",                            # Quad Cities Intl
+	KMMI: "USA United States",                            # Mc Minn Co
+	KMML: "USA United States",                            # Southwest Minnesota Regl
+	KMQI: "USA United States",                            # Dare County Regl
+	KMRB: "USA United States",                            # Eastern Wv Rgnl Shepherd Fld
+	KMRN: "USA United States",                            # Foothills Regl
+	KMRY: "USA United States",                            # Monterey Regl
+	KMSN: "USA United States",                            # Dane County Regl
+	KMSP: "USA United States",                            # Minneapolis Saint Paul Intl
+	KMTC: "USA United States",                            # Selfridge Angb
+	KMTN: "USA United States",                            # Martin State
+	KMUI: "USA United States",                            # Muir AAF
+	KMUO: "USA United States",                            # Mountain Home AFB
+	KMWH: "USA United States",                            # Grant Co Intl
+	KMXF: "USA United States",                            # Maxwell AFB
+	KMYR: "USA United States",                            # Myrtle Beach Intl
+	KNBC: "USA United States",                            # Beaufort MCAS
+	KNBG: "USA United States",                            # New Orleans N A S
+	KNCA: "USA United States",                            # New River MCAS
+	KNDZ: "USA United States",                            # Whiting Field NAS South
+	KNEN: "USA United States",                            # Whitehouse Naval OLF
+	KNFD: "USA United States",                            # Summerdale NOLF
+	KNFE: "USA United States",                            # Fentress NALF
+	KNFG: "USA United States",                            # Camp Pendleton MCAS
+	KNFL: "USA United States",                            # Fallon NAS
+	KNFW: "USA United States",                            # Fort Worth NAS JRB
+	KNGP: "USA United States",                            # Corpus Christi NAS
+	KNGT: "USA United States",                            # Goliad Naval Outlying Field
+	KNGU: "USA United States",                            # Naval Air Station Norfolk
+	KNIP: "USA United States",                            # Jacksonville NAS
+	KNJK: "USA United States",                            # 
+	KNKX: "USA United States",                            # Miramar MCAS
+	KNMM: "USA United States",                            # Meridian NAS
+	KNPA: "USA United States",                            # Pensacola NAS
+	KNQA: "USA United States",                            # Millington Muni
+	KNQI: "USA United States",                            # KINGSVILLE NAS
+	KNQX: "USA United States",                            # Key West NAS
+	KNRA: "USA United States",                            # Coupeville NOLF
+	KNRQ: "USA United States",                            # Spencer NOLF
+	KNRS: "USA United States",                            # Imperial Beach
+	KNSE: "USA United States",                            # Whiting Field NAS North
+	KNSI: "USA United States",                            # San Nicolas NOLF
+	KNTD: "USA United States",                            # Point Mugu
+	KNTU: "USA United States",                            # Naval Air  Station Oceana
+	KNUQ: "USA United States",                            # Moffett Federal AFLD
+	KNUW: "USA United States",                            # Whidbey Island NAS
+	KNYL: "USA United States",                            # Yuma MCAS
+	KNZY: "USA United States",                            # San Diego North Island NAS
+	KOAR: "USA United States",                            # Marina Muni
+	KOCH: "USA United States",                            # A L Mangham JR REGL
+	KOFF: "USA United States",                            # Offutt AFB
+	KOGB: "USA United States",                            # Orangeburg Muni
+	KOKC: "USA United States",                            # Will Rogers World
+	KOKV: "USA United States",                            # Winchester Regl
+	KOPF: "USA United States",                            # Opa Locka Executive
+	KOQU: "USA United States",                            # Quonset State
+	KOSH: "USA United States",                            # Wittman Regl.
+	KOSU: "USA United States",                            # Ohio State University
+	KOTH: "USA United States",                            # Southwest Oregon Rgnl
+	KOWB: "USA United States",                            # Owensboro Regl
+	KOXR: "USA United States",                            # Oxnard
+	KOZR: "USA United States",                            # Cairns AAF
+	KPAE: "USA United States",                            # Paine Field Snohomish County
+	KPAM: "USA United States",                            # Tyndall AFB
+	KPBI: "USA United States",                            # Palm Beach Intl
+	KPCA: "USA United States",                            # Picacho ANG Heliport
+	KPDX: "USA United States",                            # Portland Intl
+	KPGR: "USA United States",                            # KIRK FLD
+	KPHF: "USA United States",                            # Newport News/Williamsburg International
+	KPHX: "USA United States",                            # Phoenix Sky Harbor Intl
+	KPIA: "USA United States",                            # Peoria Intenational
+	KPIE: "USA United States",                            # St Pete Clearwater Intl
+	KPIT: "USA United States",                            # Pittsburgh Intl
+	KPMD: "USA United States",                            # Palmdale Regl USAF PLT 42
+	KPNE: "USA United States",                            # Northeast Philadelphia
+	KPOB: "USA United States",                            # Pope AAF
+	KPOE: "USA United States",                            # Polk AAF
+	KPOU: "USA United States",                            # Hudson Valley Rgnl
+	KPRB: "USA United States",                            # Paso Robles Muni
+	KPRC: "USA United States",                            # Prescott Ernest A. Love Field
+	KPSF: "USA United States",                            # Pittsfield Muni
+	KPSM: "USA United States",                            # PORTSMOUTH INTL AT PEASE
+	KPTB: "USA United States",                            # Dinwiddie County
+	KPWA: "USA United States",                            # Wiley Post
+	KPWK: "USA United States",                            # Chicago Executive
+	KPWT: "USA United States",                            # Bremerton National
+	KRBM: "USA United States",                            # Robinson AAF
+	KRDD: "USA United States",                            # Redding Muni
+	KRDU: "USA United States",                            # Raleigh Durham Intl
+	KRIC: "USA United States",                            # Richmond Intl
+	KRID: "USA United States",                            # Richmond Muni
+	KRIV: "USA United States",                            # March ARB
+	KRKW: "USA United States",                            # Rockwood Muni
+	KRND: "USA United States",                            # Randolph AFB
+	KRNO: "USA United States",                            # Reno Tahoe Intl
+	KROC: "USA United States",                            # Greater Rochester Intl
+	KROG: "USA United States",                            # Rogers Muni Carter Fld
+	KRST: "USA United States",                            # Rochester Intl
+	KRUG: "USA United States",                            # Rugby Muni
+	KRUT: "USA United States",                            # Rutland Southern Vermont Rgnl
+	KRYM: "USA United States",                            # Ray S Miller AAF
+	KRZL: "USA United States",                            # Jasper Co
+	KRZR: "USA United States",                            # Cleveland Regl Jetport
+	KSAF: "USA United States",                            # Santa Fe Muni
+	KSAN: "USA United States",                            # San Diego Intl
+	KSBN: "USA United States",                            # South Bend Intl
+	KSCK: "USA United States",                            # Stockton Metropolitan
+	KSDC: "USA United States",                            # WILLIAMSON SODUS
+	KSEA: "USA United States",                            # Seattle Tacoma Intl
+	KSEQ: "USA United States",                            # Randolph AFB AUX
+	KSHD: "USA United States",                            # Shenandoah Valley Regl
+	KSHN: "USA United States",                            # SANDERSON FLD
+	KSIY: "USA United States",                            # Siskiyou Co
+	KSKF: "USA United States",                            # Lackland AFB / Kelly Field
+	KSLC: "USA United States",                            # Salt Lake City Intl
+	KSLI: "USA United States",                            # Los Alamitos AAF
+	KSMN: "USA United States",                            # Lemhi County
+	KSMS: "USA United States",                            # Sumter
+	KSOW: "USA United States",                            # Show Low
+	KSPA: "USA United States",                            # Spartanburg Downtown
+	KSPI: "USA United States",                            # Abraham Lincoln Capital
+	KSPS: "USA United States",                            # Sheppard AFB
+	KSRQ: "USA United States",                            # Sarasota Bradenton Intl
+	KSSC: "USA United States",                            # Shaw AFB
+	KSSI: "USA United States",                            # Malcolm McKinnon StSimons Is.
+	KSTJ: "USA United States",                            # ROSECRANS MEM
+	KSTL: "USA United States",                            # St Louis Lambert Intl
+	KSTP: "USA United States",                            # St Paul Downtown Holman Fld
+	KSTS: "USA United States",                            # Charles M. Schulz - Sonoma Co
+	KSUT: "USA United States",                            # Cape Fear Regl
+	KSUU: "USA United States",                            # Travis AFB
+	KSUW: "USA United States",                            # Richard I Bong
+	KSUX: "USA United States",                            # SIOUX GATEWAY COL BUD DAY FLD
+	KSVC: "USA United States",                            # Grant Co
+	KSVN: "USA United States",                            # Hunter AAF
+	KSWF: "USA United States",                            # New York Stewart
+	KSYR: "USA United States",                            # Syracuse Hancock Intl
+	KSZL: "USA United States",                            # Whiteman AFB
+	KTBN: "USA United States",                            # Waynesville St Robert Regl
+	KTCM: "USA United States",                            # McChord AFB
+	KTDF: "USA United States",                            # Person Co
+	KTDZ: "USA United States",                            # Toledo Executive
+	KTIK: "USA United States",                            # Tinker AFB
+	KTKI: "USA United States",                            # Mckinney National
+	KTMB: "USA United States",                            # Miami Executive
+	KTNP: "USA United States",                            # Twentynine Palms
+	KTNX: "USA United States",                            # Tonopah Test Range
+	KTOC: "USA United States",                            # Toccoa RG Letourneau Fld
+	KTOL: "USA United States",                            # Eugene F Kranz Toledo Express
+	KTTS: "USA United States",                            # NASA Shuttle Landing Facility
+	KTUL: "USA United States",                            # Tulsa Intl
+	KTUP: "USA United States",                            # TUPELO RGNL
+	KTUS: "USA United States",                            # Tucson Intl
+	KTVC: "USA United States",                            # Cherry Capital
+	KTYR: "USA United States",                            # Tyler Pounds Rgnl
+	KTYS: "USA United States",                            # Mc Ghee Tyson
+	KTZV: "USA United States",                            # Tomkinsville Monroe Co
+	KUKI: "USA United States",                            # Ukiah Muni
+	KUMP: "USA United States",                            # Indianapolis Metro
+	KVAD: "USA United States",                            # Moody AFB
+	KVCV: "USA United States",                            # Southern California Logistics
+	KVKX: "USA United States",                            # Potomac
+	KVOK: "USA United States",                            # VOLK FLD
+	KVPZ: "USA United States",                            # Porter Co Muni
+	KVQQ: "USA United States",                            # Cecil Fld
+	KVUJ: "USA United States",                            # Stanly Co
+	KWDR: "USA United States",                            # WINDER BARROW
+	KWRB: "USA United States",                            # Robins AFB
+	KWWD: "USA United States",                            # Cape May County
+	KXNO: "USA United States",                            # North AF Auxiliary
+	KXTA: "USA United States",                            # Homey Airport
+	KYIP: "USA United States",                            # Willow Run
+	KYNG: "USA United States",                            # Youngstown Warren Rgnl
+	PABE: "USA United States",                            # Bethel
+	PABU: "USA United States",                            # BULLEN POINT AIRFORCE STATION
+	PADK: "USA United States",                            # Adak
+	PAED: "USA United States",                            # Elmendorf AFB
+	PAEI: "USA United States",                            # Eielson AFB
+	PAFB: "USA United States",                            # Ladd Army Airfield
+	PAFE: "USA United States",                            # Kake
+	PAFR: "USA United States",                            # Bryant AAF
+	PAGL: "USA United States",                            # Golovin
+	PAGM: "USA United States",                            # Gambell
+	PAGX: "USA United States",                            # Grayling
+	PAJN: "USA United States",                            # Juneau Intl
+	PAKN: "USA United States",                            # King Salmon
+	PANC: "USA United States",                            # Ted Stevens Anchorage Intl
+	PASI: "USA United States",                            # Sitka Rocky Gutierrez
+	PASY: "USA United States",                            # Eareckson AS
+	PAWN: "USA United States",                            # Noatak
+	PAYA: "USA United States",                            # Yakutat
+	PHBK: "USA United States",                            # Barking Sands PMRF
+	PHJR: "USA United States",                            # Kalaeloa
+	PHNL: "USA United States",                            # Daniel K. Inouye Intl
+	PHNY: "USA United States",                            # Lanai
+	PHTO: "USA United States",                            # Hilo Intl
+	KFHB: "USA United States (Contiguous)",               # Fernandina Beach Muni
+	PWAK: "USA United States Minor Outlying Islands",     # Wake Island Airfield
+	SVPM: "VEN",                                          # Paramillo
+	SVAS: "VEN Venezuela",                                # Armando Schwarck
+	SVBS: "VEN Venezuela",                                # Mariscal Sucre AB
+	SVLO: "VEN Venezuela",                                # La Orchila
+	SVMC: "VEN Venezuela",                                # La Chinita
+	SVMG: "VEN Venezuela",                                # Del Caribe Gen Santiago Marino
+	SVPC: "VEN Venezuela",                                # General Bartolome Salom Intl
+	SVPR: "VEN Venezuela",                                # General Manuel Carlos Piar
+	SVSB: "VEN Venezuela",                                # Santa Barbara de Barinas
+	SVSP: "VEN Venezuela",                                # Sub Teniente Nestor Arias
+	SVSR: "VEN Venezuela",                                # Las Flecheras
+	VVCR: "VNM Vietnam",                                  # Cam Ranh
+	VVDN: "VNM Vietnam",                                  # Danang Intl
+	VVPR: "VNM Vietnam",                                  # Phan Rang
+	VVTS: "VNM Vietnam",                                  # Tan Son Nhat Intl
+	NVSS: "VUT Vanuatu",                                  # Santo Pekoa Intl
+	FAAP: "ZAF South Africa",                             # Arnot Power Station
+	FABL: "ZAF South Africa",                             # Bloemfontein
+	FADN: "ZAF South Africa",                             # AFB Durban
+	FAFK: "ZAF South Africa",                             # Fisantekraal Airfield
+	FAHS: "ZAF South Africa",                             # Hoedspruit AFB
+	FALE: "ZAF South Africa",                             # King Shaka Intl
+	FALM: "ZAF South Africa",                             # Makhado AFB
+	FALS: "ZAF South Africa",                             # Somersveld AB
+	FALW: "ZAF South Africa",                             # Langebaanweg AB
+	FAMO: "ZAF South Africa",                             # Mosselbay Aerodrome
+	FAOB: "ZAF South Africa",                             # Overberg AB
+	FASD: "ZAF South Africa",                             # Saldanha Vredenburg
+	FASK: "ZAF South Africa",                             # Swartkop
+	FAUP: "ZAF South Africa",                             # Upington
+	FAYP: "ZAF South Africa",                             # Ysterplaat
+	FVTL: "ZWE Zimbabwe",                                 # Gweru-Thornhill Air Base
 };
-# Contains 1590 bases
+# Contains 1616 bases
 
 # The above list is auto-generated, put custom changes here:
 
@@ -1606,7 +1635,6 @@ db.EHTW = "NLD Netherlands";
 db.EHVB = "NLD Netherlands";
 db.EHKD = "NLD Netherlands";
 db.EKAV = "DNK Denmark";
-db.EKVL = "DNK Denmark";
 
 # REMOVE
 #
