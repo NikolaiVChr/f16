@@ -1,11 +1,16 @@
 #
 # License: GPL 2.0, Copyright: Laminar research
 #
-# Requirements to be in list:
-#  Must have ICAO. Must have country listed. Must have either a MIL sign, parking spots for fighters or runways used for military.
+# Requirements used for making list:
+#  Must have ICAO. Must have either a MIL sign, parking spots for fighters or runways used for military.
 # List was auto-generated from APT 1100 file. Heliports are auto commented.
 #
 var db = {
+	DNGO: "",                                             # Gombe
+	HESG: "",                                             # Sohag Intl
+	UAOL: "",                                             # Krayniy
+	VEAB: "",                                             # Allahabad
+	VERP: "",                                             # Raipur
 	OAHR: "AFG Afghanistan",                              # Khwaja Abdullah Ansari Intl
 	OAIX: "AFG Afghanistan",                              # Bagram
 	OAJL: "AFG Afghanistan",                              # Jalalabad
@@ -358,6 +363,7 @@ var db = {
 	GCLP: "ESP Spain",                                    # Gran Canaria
 	GCRR: "ESP Spain",                                    # Lanzarote
 	GCTS: "ESP Spain",                                    # Tenerife Sur
+	GEML: "ESP Spain",                                    # Melilla
 	LEAB: "ESP Spain",                                    # Albacete
 	LEAS: "ESP Spain",                                    # Asturias
 	LECO: "ESP Spain",                                    # A Coruna
@@ -1211,6 +1217,7 @@ var db = {
 	KCBM: "USA United States",                            # COLUMBUS AFB
 	KCGF: "USA United States",                            # CUYAHOGA CO
 	KCHS: "USA United States",                            # Charleston AFB Intl
+	KCID: "USA United States",                            # The Eastern Iowa
 	KCJR: "USA United States",                            # Culpeper Regl
 	KCLT: "USA United States",                            # Charlotte Douglas Intl
 	KCNW: "USA United States",                            # TSTC Waco
@@ -1321,6 +1328,7 @@ var db = {
 	KHHG: "USA United States",                            # Huntington Muni
 	KHIF: "USA United States",                            # Hill AFB
 	KHII: "USA United States",                            # Lake Havasu City
+	KHKS: "USA United States",                            # HAWKINS FLD
 	KHLN: "USA United States",                            # Helena Regl
 	KHMN: "USA United States",                            # Holloman AFB
 	KHOP: "USA United States",                            # Campbell AAF
@@ -1623,8 +1631,11 @@ var db = {
 	FAYP: "ZAF South Africa",                             # Ysterplaat
 	FVTL: "ZWE Zimbabwe",                                 # Gweru-Thornhill Air Base
 };
-# Contains 1616 bases
+# Contains 1624 bases
 
+
+# Countries checked: Netherlands, Denmark, UK.
+#
 # The above list is auto-generated, put custom changes here:
 
 # ADD
@@ -1634,7 +1645,15 @@ db.EHSB = "NLD Netherlands";
 db.EHTW = "NLD Netherlands";
 db.EHVB = "NLD Netherlands";
 db.EHKD = "NLD Netherlands";
-db.EKAV = "DNK Denmark";
+db.EKAV = "DNK Denmark";      # Avnø Air Base
+db.EGKN = "GBR United Kingdom";
+db.EGKT = "GBR United Kingdom";
+db.EGQL = "GBR United Kingdom";
+db.EGVL = "GBR United Kingdom";
+db.EGDI = "GBR United Kingdom";
+db.EGOQ = "GBR United Kingdom";
+db.EGDN = "GBR United Kingdom";
+db.EGOW = "GBR United Kingdom";
 
 # REMOVE
 #
@@ -1644,3 +1663,39 @@ delete(db,"EHLE");
 delete(db,"EKMB");
 delete(db,"EKAH");
 delete(db,"KLAS");
+delete(db,"EGKB");
+delete(db,"EGBJ");
+delete(db,"EGDL");
+delete(db,"EGGP");
+delete(db,"EGHF");# 1990's
+delete(db,"EGHG");
+delete(db,"EGHH"); #- 1969
+delete(db,"EGHI"); #- 1946?
+delete(db,"EGHR"); #- 1940s
+delete(db,"EGKA"); #- ~1945
+delete(db,"EGLL"); #- Never. It's Heathrow.
+delete(db,"EGMH");
+delete(db,"EGSC");
+delete(db,"EGSH");
+delete(db,"EGTD");
+delete(db,"EGTE");
+
+# MODIFY
+#
+db.DNGO = "NGA Nigeria";
+db.HESG = "EGY Egypt";
+db.UAOL = "KAZ Kazakhstan";
+db.VEAB = "IND India";
+db.VERP = "IND India";
+db.VEBR = "IND India";
+
+var pruneDB = func {
+	# Optimize DB by removing airbases FG does not support
+	foreach (var key ; keys(db)) {
+		if (airportinfo(key) == nil) {
+			delete(db, key);
+		}
+	}
+	print("Optimized airbase DB, it now has "~size(keys(db))~" entries.");
+}
+#pruneDB(); # it only removes around 150 bases, so not worth it
