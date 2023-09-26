@@ -739,7 +739,7 @@ var CDU = {
         me.mapText.setVisible(me.instrConf[me.instrView].showMap);
         me.dayText.setVisible(me.instrConf[me.instrView].showMap);
         me.hdgUpText.setVisible(me.instrConf[me.instrView].showMap);
-        me.rangeArrowDown.setVisible(me.instrConf[me.instrView].showMap);
+        me.rangeText.setVisible(me.instrConf[me.instrView].showMap);
     },
 
     setupTargets: func {
