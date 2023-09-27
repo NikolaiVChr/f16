@@ -1634,7 +1634,8 @@ var db = {
 # Contains 1624 bases
 
 
-# Countries checked: Netherlands (PHJake), Denmark (Leto), UK (Sammy), Cyprus (Leto), part of USA (pinto).
+# Countries checked: Netherlands (PHJake), Denmark (Leto), UK (Sammy), Cyprus (Leto), part of USA (pinto),
+#                    Australia (sryu1).
 #
 # The above list is auto-generated, put custom changes here:
 
@@ -1671,7 +1672,9 @@ db.KSKA = "USA United States"; # Fairchild (USAF)
 db.KGFA = "USA United States"; # Malmstrom (USAF)
 db.FJDG = "USA United States"; # Diego Garcia (British Royal Navy/USN/CIA)
 db.KPUB = "USA United States"; # Pueblo Memorial (USAF)
-
+db.YPLM = "AUS Australia";#  RAAF Base Learmonth
+db.YGNB = "AUS Australia";#  RAAF Base Glenbrook
+db.YBSG = "AUS Australia";#  RAAF Base Scherger
 
 # REMOVE
 #
@@ -1697,6 +1700,32 @@ delete(db,"EGSC");
 delete(db,"EGSH");
 delete(db,"EGTD");
 delete(db,"EGTE");
+delete(db,"YAYR"); #: "AUS Australia",                                # Ayr
+delete(db,"YBEG"); #: "AUS Australia",                                # Bening Field
+delete(db,"YBHB"); #: "AUS Australia",                                # Bathurst Harbour
+delete(db,"YBON"); #: "AUS Australia",                                # Bindoon
+delete(db,"YBRK"); #: "AUS Australia",                                # Rockhampton
+delete(db,"YCMT"); #: "AUS Australia",                                # Clermont
+delete(db,"YCNN"); #: "AUS Australia",                                # Coonana
+delete(db,"YDNB"); #: "AUS Australia",                                # Doongmabulla
+delete(db,"YFBS"); #: "AUS Australia",                                # Forbes
+delete(db,"YGFN"); #: "AUS Australia",                                # Grafton
+delete(db,"YGMP"); #: "AUS Australia",                                # Grampians
+delete(db,"YGYM"); #: "AUS Australia",                                # Gympie
+delete(db,"YHER"); #: "AUS Australia",                                # Hervey Range
+delete(db,"YIGM"); #: "AUS Australia",                                # Ingham
+delete(db,"YILA"); #: "AUS Australia",                                # Milawa
+delete(db,"YLED"); #: "AUS Australia",                                # Lethbridge
+delete(db,"YMAV"); #: "AUS Australia",                                # Avalon
+delete(db,"YNKR"); #: "AUS Australia",                                # Nackeroo
+delete(db,"YNRG"); #: "AUS Australia",                                # Narrogin
+delete(db,"YOAS"); #: "AUS Australia",                                # The Oaks
+delete(db,"YOOD"); #: "AUS Australia",                                # Oodnadatta
+delete(db,"YPKL"); #: "AUS Australia",                                # Puckapunyal
+delete(db,"YPPD"); #: "AUS Australia",                                # Port Hedland Intl
+delete(db,"YSCB"); #: "AUS Australia",                                # Canberra
+delete(db,"YSHW"); #: "AUS Australia",                                # Holsworthy
+delete(db,"YTCK"); #: "AUS Australia",                                # Torrens Creek
 
 # MODIFY
 #
