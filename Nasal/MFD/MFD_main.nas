@@ -5486,14 +5486,16 @@ var get_intercept = func(bearingToRunner, dist_m, runnerHeading, runnerSpeed, ch
     var a = chaserSpeed * chaserSpeed - runnerSpeed * runnerSpeed;
     var b = 2 * vector.Math.dotProduct(VectorFromRunner, RunnerVelocity);
     var c = -dist_m * dist_m;
-
-    if ((b*b-4*a*c)<0) {
+    
+    if (a == 0) a = 1000;# Otherwise same speeds will produce no intercept even though possible.
+    var dd = b*b-4*a*c;
+    if (dd<0) {
       # intercept not possible
       return nil;
     }
 
-    var t1 = (-b+math.sqrt(b*b-4*a*c))/(2*a);
-    var t2 = (-b-math.sqrt(b*b-4*a*c))/(2*a);
+    var t1 = (-b+math.sqrt(dd))/(2*a);
+    var t2 = (-b-math.sqrt(dd))/(2*a);
 
     if (t1 < 0 and t2 < 0) {
       # intercept not possible
