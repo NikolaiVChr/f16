@@ -1278,9 +1278,25 @@ var CDU = {
         # this function is run in a slow loop as its very expensive
         me.basesNear = [];
         me.ports = findAirportsWithinRange(75);
+        me.first = nil;
+        me.firstBases = {};
         foreach(var port; me.ports) {
             if (!airbases.lookUp(port.id)) continue;
+            if (me.first == nil) {
+                me.first = port.id;
+            }
+            me.firstBases[port.id] = 1;
             append(me.basesNear, {"icao": port.id, "lat": port.lat, "lon": port.lon, "elev": port.elevation});
+        }
+        if (me.first != nil and left(me.first,1) != "K") {
+            # If not US airbase (looking for just 1 letter takes too long), then we find all airbases starting with first 2 letters:
+            me.first = left(me.first,2);
+            me.ports = findAirportsByICAO(me.first);
+            foreach(var port; me.ports) {
+                if (!airbases.lookUp(port.id)) continue;
+                if (contains(me.firstBases, port.id)) continue;
+                append(me.basesNear, {"icao": port.id, "lat": port.lat, "lon": port.lon, "elev": port.elevation});
+            }
         }
     },
 
