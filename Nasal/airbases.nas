@@ -1635,7 +1635,7 @@ var db = {
 
 
 # Countries checked: Netherlands (PHJake), Denmark (Leto), UK (Sammy), Cyprus (Leto), part of USA (pinto),
-#                    Australia (sryu1), Sweden (Leto), Norway (Leto), Belgium (Bat).
+#                    Australia (sryu1), Sweden (Johan), Norway (Leto), Belgium (Bat).
 #
 # The above list is auto-generated, put custom changes here:
 
@@ -1684,6 +1684,7 @@ db.ESFR = "SWE Sweden";
 db.ESPE = "SWE Sweden";
 db.ESSV = "SWE Sweden";
 db.ESIB = "SWE Sweden";
+db.ESSF = "SWE Sweden";
 db.ENOL = "NOR Norway";
 db.ENRY = "NOR Norway";
 db.EBFS = "BEL Belgium"; # Florennes
