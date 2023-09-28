@@ -389,6 +389,14 @@ var medium_fast = {
         setprop("f16/external", !getprop("sim/current-view/internal"));
 
         setprop("sim/multiplay/generic/float[19]",  getprop("controls/engines/engine/throttle"));
+
+        if (getprop("f16/avionics/tacan-receive-only") == 0 and getprop("instrumentation/tacan/display/channel") != nil) {
+            # Transmit TACAN
+            setprop("sim/multiplay/generic/string[14]", getprop("instrumentation/tacan/display/channel"));
+        } else {
+            # Only receive TACAN
+            setprop("sim/multiplay/generic/string[14]", "");
+        }
     },
 };
 

@@ -550,6 +550,7 @@
                 <string n="6" type="string"></string><!-- string 6 used by radar lock RWR warning -->
                 <string n="7" type="string"></string><!-- string 7 used by DLINK -->
                 <string n="8" type="string"></string><!-- string 8 used by DLINK -->
+                <string n="14" type="string"></string><!-- string 14 used by TACAN Transmit -->
             </generic>
             <visibility-range-nm type="int">160</visibility-range-nm>
             <!--<chat-menu n="0" include="Aircraft/f16/Systems/f16-chat-menu-entries.xml"/> done in Nasal instead -->

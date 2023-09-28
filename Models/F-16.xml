@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 
 <PropertyList>
 
@@ -41,7 +41,8 @@
     }
     var livery_update = aircraft.livery_update.new(folder, 10);
 
-    
+    var tacanSend = self.getNode("navaids/tacan/channel-ID", 1);
+    tacanSend.alias(self.getNode("sim/multiplay/generic/string[14]"));
 
     if (!(left(getprop("sim/version/flightgear"),6) == "2020.3")) {
         props.globals.getNode("/sim/version/compositor-support", 1).setBoolValue(1);
@@ -101,6 +102,7 @@
   <unload><![CDATA[
    livery_update.stop();
    looping = 0;
+   tacanSend.unalias();
   ]]></unload>
  </nasal>
 
@@ -802,7 +804,6 @@
   </parameters>
   <object-name>CanopyForwardOutside</object-name>
   <object-name>CanopyBackOutside</object-name>
-  <!--<object-name>cylinder.007</object-name>-->       <!-- HUD -->
  </effect>
 
  <!-- start effects -->
