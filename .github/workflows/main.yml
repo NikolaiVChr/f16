@@ -45,7 +45,7 @@ jobs:
           exclude: ${{ inputs.exclude }}
           compatibility: ${{ inputs.compatibility }}
       - name: "Scheduled Update"
-      - uses: BobDotCom/OPRFAssetUpdater@v0.7
+        uses: BobDotCom/OPRFAssetUpdater@v0.7
         with:
           # Optional. The title of the commit that is made
           # Default: "Update OPRF Assets"
