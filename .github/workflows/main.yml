@@ -34,7 +34,7 @@ jobs:
       contents: write
     steps:
       - name: "Manual Update"
-      - uses: BobDotCom/OPRFAssetUpdater@v0.7
+        uses: BobDotCom/OPRFAssetUpdater@v0.7
         with:
           # Optional. The title of the commit that is made
           # Default: "Update OPRF Assets"
