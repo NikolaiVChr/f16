@@ -8,21 +8,22 @@ on:
   workflow_dispatch:
     inputs:
       include:
-        description: "Files to update, separated by commas."
+        description: "Files to update, separated by commas"
         required: false
         default: "*"
       exclude:
-        description: "Files to skip, separated by commas."
+        description: "Files to skip, separated by commas"
         required: false
         default: ""
-      major:
-        description: "Allow major updates, not recommended until after verifying compatibility"
+      compatibility:
+        description: "Compatibility level, will only allow updates of this level or lower"
         required: true
-        default: "false"
+        default: "minor"
         type: choice
         options:
-          - "true"
-          - "false"
+          - "major"
+          - "minor"
+          - "patch"
 
 jobs:
   update:
@@ -33,12 +34,12 @@ jobs:
       contents: write
     steps:
       - name: "Manual Update"
-        uses: BobDotCom/OPRFAssetUpdater@v0.4
+        uses: BobDotCom/OPRFAssetUpdater@v0.7
         if: "${{ github.event_name == 'workflow_dispatch' }}"
         with:
           include: ${{ inputs.include }}
           exclude: ${{ inputs.exclude }}
-          major: ${{ inputs.major }}
+          compatibility: ${{ inputs.compatibility }}
       - name: "Scheduled Update"
-        uses: BobDotCom/OPRFAssetUpdater@v0.4
+        uses: BobDotCom/OPRFAssetUpdater@v0.7
         if: "${{ github.event_name != 'workflow_dispatch' }}"
