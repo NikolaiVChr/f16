@@ -10,13 +10,13 @@
     <layout>hbox</layout>
     <default-padding>1</default-padding>
 
-	  <empty><stretch>1</stretch></empty>
+    <empty><stretch>1</stretch></empty>
 
     <text>
       <label>Select an Airbase</label>
     </text>
 
-	  <empty><stretch>1</stretch></empty>
+    <empty><stretch>1</stretch></empty>
 
     <button>
       <pref-width>16</pref-width>
@@ -279,7 +279,7 @@
       ]]>
     </open>
     <close><![CDATA[
-	fgcommand("clear-metar", var n = props.Node.new({ "path": "/sim/gui/dialogs/airbases/selected-airport/metar",
+  fgcommand("clear-metar", var n = props.Node.new({ "path": "/sim/gui/dialogs/airbases/selected-airport/metar",
                                                              "station": airport_id}));
         #map.cleanup_listeners(); #TODO: We should be setting a signal when closing the dialog, so that cleanup code can be invoked automatically
         AirportChart.del();

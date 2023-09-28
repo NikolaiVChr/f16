@@ -233,12 +233,12 @@ var Database = {
 	"L-159":                  {hasAirRadar:1, rwrCode:"LC", baseThreat:defaultFighterThreat},
 	"super-etendard":         {hasAirRadar:1, rwrCode:"ET", baseThreat:defaultFighterThreat},
 	"Mirage_F1":              {hasAirRadar:1, rwrCode:"M1", baseThreat:defaultFighterThreat},
-	"ufo":                    {},
+	"ufo":                    {hasAirRadar:1, rwrCode:"U",  baseThreat:defaultFighterThreat},
 	"bluebird-osg":           {},
 	"Vostok-1":               {},
 	"V-1":                    {},
 	"SpaceShuttle":           {},
-	"F-23C_BlackWidow-II":    {},
+	"F-23C_BlackWidow-II":    {hasAirRadar:1, rwrCode:"U",  baseThreat:defaultFighterThreat},
 };
 
 var debugDatabaseLevel = 0;

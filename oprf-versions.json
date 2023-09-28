@@ -12,7 +12,7 @@
     "path": "Nasal/radar/radar-system.nas"
   },
   "radar-system-database": {
-    "version": "1.0.7",
+    "version": "1.0.9",
     "path": "Nasal/radar/radar-system-database.nas"
   },
   "damage": {
@@ -44,7 +44,7 @@
     "path": "Nasal/ArmamentNotification.nas"
   },
   "geo-bridged-transmitter": {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "path": "Nasal/GeoBridgedTransmitter.nas"
   },
   "hack-canvas": {
@@ -56,11 +56,11 @@
     "path": "Nasal/crash-and-stress.nas"
   },
   "airbases": {
-    "version": "1.0.13",
+    "version": "1.0.19",
     "path": "Nasal/airbases.nas"
   },
   "airbases-dialog": {
-    "version": "1.0.0",
+    "version": "1.1.0",
     "path": "gui/dialogs/airbases.xml"
   }
 }
