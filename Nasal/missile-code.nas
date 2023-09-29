@@ -536,7 +536,7 @@ var AIM = {
         	m.vector_thrust = 0;
         }
         if (m.flareResistance == nil or !m.gnd_launch) {
-        	m.flareResistance = 0.85;
+        	m.flareResistance = 0.80;
         }
         if (m.chaffResistance == nil or !m.gnd_launch) {
         	m.chaffResistance = 0.85;
@@ -3321,8 +3321,8 @@ var AIM = {
 						# target has released a new flare, lets check if it fools us
 						me.flareTime = me.life_time;
 						me.flareLast = me.flareNumber;
-						me.aspectDeg = me.aspectToExhaust(me.coord, me.Tgt) / 180;
-						me.flareLock = rand() < (1-me.flareResistance + ((1-me.flareResistance) * 0.5 * me.aspectDeg));# 50% extra chance to be fooled if front aspect
+						me.aspectDeg = me.aspectToExhaust(me.coord, me.Tgt) / 180;# 0 = viewing engine, 1 = front
+						me.flareLock = rand() < (1-me.flareResistance);
 						if (me.flareLock) {
 							# fooled by the flare
 							me.printStats(me.type~": Missile locked on flare from "~me.callsign);
@@ -3357,7 +3357,7 @@ var AIM = {
 						me.aspectDeg = me.aspectToExhaust(me.coord, me.Tgt) / 180;# 0 = viewing engine, 1 = front
 						me.redux = me.guidance == "semi-radar" or me.guidance == "command" or me.guidance == "tvm"?(me.gnd_launch?0.5:0.75):1;
 						me.chaffChance = (1-me.chaffResistance)*me.redux;
-						me.chaffLock = rand() < (me.chaffChance - (me.chaffChance * 0.5 * me.aspectDeg));# 50% less chance to be fooled if front aspect
+						me.chaffLock = rand() < (me.chaffChance - (me.chaffChance * 0.70 * me.aspectDeg));# 70% less chance to be fooled if front aspect
 
 						if (me.chaffLock) {
 							me.printStats(me.type~": Missile locked on chaff from "~me.callsign);
@@ -3514,7 +3514,7 @@ var AIM = {
 			# To make sure deviation_deg is updated in midflight function.
             me.FOV_check(me.hdg, me.pitch, me.curr_deviation_h, me.curr_deviation_e, me.max_seeker_dev, me.myMath);
         }
-		if (me.chaffLock and (me.guidance == "command" or me.guidance == "semi-radar" or me.guidance == "tvm") and (me.life_time - me.chaffLockTime) > (me.gnd_launch?4:6)) {
+		if (me.chaffLock and (me.guidance == "command" or me.guidance == "semi-radar" or me.guidance == "tvm") and (me.life_time - me.chaffLockTime) > (me.gnd_launch?4:8)) {
 			me.chaffLock = 0;
 			me.printStats(me.type~": Chaff dissipated, regained track.");
 		}

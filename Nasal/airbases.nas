@@ -1635,7 +1635,7 @@ var db = {
 
 
 # Countries checked: Netherlands (PHJake), Denmark (Leto), UK (Sammy), Cyprus (Leto), part of USA (pinto),
-#                    Australia (sryu1), Sweden (Johan), Norway (Leto), Belgium (Bat).
+#                    Australia (sryu1), Sweden (Johan), Norway (Leto), Belgium (Bat), Italy (J-mav16).
 #
 # The above list is auto-generated, put custom changes here:
 
@@ -1689,6 +1689,21 @@ db.ENOL = "NOR Norway";
 db.ENRY = "NOR Norway";
 db.EBFS = "BEL Belgium"; # Florennes
 db.EBBL = "BEL Belgium"; # Kleine-Brogel
+db.LIRL = "ITA Italy";                                    # Latina
+db.LIPC = "ITA Italy";                                    # Cervia
+db.LIPE = "ITA Italy";                                    # Pratica di Mare
+db.LIPI = "ITA Italy";                                    # Rivolto
+db.LIPH = "ITA Italy";                                    # Treviso Sant'Angelo
+db.LIPK = "ITA Italy";                                    # Forlì
+db.LIPL = "ITA Italy";                                    # Ghedi
+db.LIBR = "ITA Italy";                                    # Brindisi Casale
+db.LIBV = "ITA Italy";                                    # Gioia Del Colle
+db.LIRH = "ITA Italy";                                    # Frosinone
+db.LICG = "ITA Italy";                                    # Pantelleria
+db.LIRG = "ITA Italy";                                    # Guidonia
+db.LICZ = "ITA Italy";                                    # Sigonella NAS
+db.LIED = "ITA Italy";                                    # Decimomannu
+db.LIRM = "ITA Italy";                                    # Grazzanise
 
 # REMOVE
 #
@@ -1750,6 +1765,16 @@ delete(db,"ENVA");# "NOR Norway",                                   # Trondheim 
 delete(db,"EBSU");# BEL
 delete(db,"EBTN");# BEL
 delete(db,"EBBR");# BEL
+delete(db,"LIQQ");# ITA
+delete(db,"LIPK");# ITA
+delete(db,"LIPO");# ITA
+delete(db,"LIMJ");# ITA
+delete(db,"LIEE");# ITA
+delete(db,"LICP");# ITA
+delete(db,"LICA");# ITA
+delete(db,"LIBP");# ITA
+delete(db,"LIPH");# ITA
+delete(db,"LIAP");# ITA
 
 # MODIFY
 #
