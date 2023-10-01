@@ -908,8 +908,8 @@ var FireControl = {
 
                             if (me.distCCRP != -1 and me.distCCRPLast != -1 and me.distCCRP < 500 and me.distCCRP >= me.distCCRPLast) {
                                 printDebug("CCRP: Launch parameters met, re-run the trigger function");
-                                me.trigger();
                                 me.cancelCCRPListener();
+                                me.trigger();                                
                                 setprop("payload/armament/releasedCCRP", 1);
                             }
                         });
