@@ -305,10 +305,10 @@
   <type>select</type>
   <object-name>irst</object-name>
   <condition>
-                <equals>
+                <greater-than-equals>
                     <property>sim/variant-id</property>
                     <value>6</value>
-                </equals>
+                </greater-than-equals>
   </condition>
  </animation>
 

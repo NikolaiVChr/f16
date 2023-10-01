@@ -33,7 +33,7 @@ var hyd70rh7 = stations.SubModelWeapon.new("LAU-68", 23.6, 7, [7], [], props.glo
 hyd70rh7.typeShort = "M151";
 hyd70rh7.brevity = "Rockets away";
 var fuelTankCFT = nil;
-if (getprop("sim/variant-id")>=5) {
+if (block >= 5) {
 	fuelTankCFT = stations.FuelTank.new("Conformant Fuel Tanks", "CFT450", 9, 450, "sim/model/f16/cft-tanks-3d");
 	fuelTankCFT.del();
 }
@@ -158,7 +158,7 @@ var pylonSets = {
     podACMIWT: {name: "AN/ASQ-T50(V)2 ACMI Pod", pylon: "1 MRLW", content: [acmi], fireOrder: [0], launcherDragArea: 0, launcherMass: 234, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 };
 
-if (getprop("sim/variant-id")>=5) {
+if (block >= 5) {
 	pylonSets.cft450 = {name: fuelTankCFT.type, pylon: "Hardmount", rack: nil, content: [fuelTankCFT], fireOrder: [0], launcherDragArea: 0.40, launcherMass: 486, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1};
 }
 
@@ -240,7 +240,7 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 		fuselageRset = [pylonSets.empty, pylonSets.podIrst, pylonSets.podHarm, pylonSets.podSAtp, pylonSets.podLite, pylonSets.podLTgp];
         fuselageLset = [pylonSets.empty, pylonSets.podHarm, pylonSets.podLNav];
 
-	} elsif (block == 5) {
+	} elsif (block == 5 or block > 6) {# Block 70 gets b50 loadout
 		pylon2set = [pylonSets.empty, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim9x, pylonSets.aim120, pylonSets.dumb1, pylonSets.podACMI];
 		pylon8set = [pylonSets.empty, pylonSets.aim9l, pylonSets.aim9m, pylonSets.aim9x, pylonSets.aim120, pylonSets.dumb1, pylonSets.podACMI];
 		pylon1set = [pylonSets.dumb1WT, pylonSets.dumb2WT, pylonSets.dumb3WT, pylonSets.aim9lWT, pylonSets.aim9mWT, pylonSets.aim9xWT, pylonSets.aim120WT, pylonSets.podACMIWT, pylonSets.smokeRL, pylonSets.smokeGL, pylonSets.smokeBL, pylonSets.smokeWL];# wingtips are normally not empty, so CATM-9L dummy is loaded instead.
@@ -420,7 +420,7 @@ var default = func {
         pylon7.loadSet(pylonSets.empty);
         pylon8.loadSet(pylonSets.empty);
         pylon9.loadSet(pylonSets.dumb1WT);
-        if (block == 6) {
+        if (block >= 6) {
         	pylon10.loadSet(pylonSets.empty);
         	pylon11.loadSet(pylonSets.podIfts);
         } else {
@@ -446,7 +446,7 @@ var clean = func {
         pylon7.loadSet(pylonSets.empty);
         pylon8.loadSet(pylonSets.empty);
         pylon9.loadSet(pylonSets.empty);
-        if (block == 6) {
+        if (block >= 6) {
         	pylon10.loadSet(pylonSets.empty);
         	pylon11.loadSet(pylonSets.podIfts);
         } else {
@@ -472,7 +472,7 @@ var airshow = func {
         pylon7.loadSet(pylonSets.empty);
         pylon8.loadSet(pylonSets.empty);
         pylon9.loadSet(pylonSets.smokeWR);
-        if (block == 6) {
+        if (block >= 6) {
         	pylon10.loadSet(pylonSets.empty);
         	pylon11.loadSet(pylonSets.podIfts);
         } else {
@@ -607,7 +607,7 @@ var ferry1 = func {
         pylon7.loadSet(pylonSets.podTrvl);
         pylon8.loadSet(pylonSets.empty);
         pylon9.loadSet(pylonSets.dumb2WT);
-        if (block == 6) {
+        if (block >= 6) {
         	pylon10.loadSet(pylonSets.empty);
         	pylon11.loadSet(pylonSets.podIfts);
         } else {
@@ -633,7 +633,7 @@ var ferry2 = func {
         pylon7.loadSet(pylonSets.podTrvl);
         pylon8.loadSet(pylonSets.empty);
         pylon9.loadSet(pylonSets.dumb2WT);
-        if (block == 6) {
+        if (block >= 6) {
         	pylon10.loadSet(pylonSets.empty);
         	pylon11.loadSet(pylonSets.podIfts);
         } else {
@@ -853,7 +853,7 @@ var a2g_sead = func {
         pylon7.loadSet(pylonSets.a88);
         pylon8.loadSet(pylonSets.aim9m);
         pylon9.loadSet(pylonSets.aim120WT);
-        if (block == 6) {
+        if (block >= 6) {
         	pylon10.loadSet(pylonSets.empty);
         	pylon11.loadSet(pylonSets.podIfts);
         } else {
@@ -879,7 +879,7 @@ var a2g_dead = func {
         pylon7.loadSet(pylonSets.g12);
         pylon8.loadSet(pylonSets.aim9m);
         pylon9.loadSet(pylonSets.aim120WT);
-        if (block == 6) {
+        if (block >= 6) {
         	pylon10.loadSet(pylonSets.empty);
         	pylon11.loadSet(pylonSets.podIfts);
         } else {
@@ -968,7 +968,7 @@ var a2s_antiship = func {
         pylon7.loadSet(pylonSets.a84);
         pylon8.loadSet(pylonSets.aim9l);
         pylon9.loadSet(pylonSets.aim120WT);
-        if (block == 6) {
+        if (block >= 6) {
         	pylon10.loadSet(pylonSets.empty);
         	pylon11.loadSet(pylonSets.podIfts);
         } else {

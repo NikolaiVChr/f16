@@ -128,7 +128,7 @@ var dataEntryDisplay = {
 			me.canvasNode.setColorBackground(0.00, 0.04, 0.01, 1.00);
 		} else if (getprop("sim/variant-id") == 5) {
 			me.canvasNode.setColorBackground(0.00, 0.04, 0.01, 1.00);
-		} else if (getprop("sim/variant-id") == 6) {
+		} else if (getprop("sim/variant-id") >= 6) {
 			me.canvasNode.setColorBackground(0.00, 0.04, 0.01, 1.00);
 		} else {
 			me.canvasNode.setColorBackground(0.01, 0.075, 0.00, 1.00);

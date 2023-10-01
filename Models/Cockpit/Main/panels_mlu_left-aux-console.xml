@@ -1151,10 +1151,10 @@
                 <property>sim/variant-id</property>
                 <value>2</value>
             </equals>
-            <equals>
+            <greater-than-equals>
                 <property>sim/variant-id</property>
                 <value>6</value>
-            </equals>
+            </greater-than-equals>
           </or>
         </condition>
     </animation>
@@ -1179,10 +1179,10 @@
 						<property>sim/variant-id</property>
 						<value>2</value>
 					</equals>
-					<equals>
+					<greater-than-equals>
 						<property>sim/variant-id</property>
 						<value>6</value>
-					</equals>
+					</greater-than-equals>
 				</or>
 			</not>
         </condition>
@@ -1199,10 +1199,10 @@
                 <property>sim/variant-id</property>
                 <value>2</value>
             </equals>
-            <equals>
+            <greater-than-equals>
                 <property>sim/variant-id</property>
                 <value>6</value>
-            </equals>
+            </greater-than-equals>
           </or>
         </condition>
     </animation>
@@ -1349,10 +1349,10 @@
                 <property>sim/variant-id</property>
                 <value>5</value>
             </equals>
-            <equals>
+            <greater-than-equals>
                 <property>sim/variant-id</property>
                 <value>6</value>
-            </equals>
+            </greater-than-equals>
           </or>
         </condition>
     </animation>

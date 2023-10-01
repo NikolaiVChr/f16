@@ -514,7 +514,7 @@ cv.setColorBackground(0, 0.0625, 0);
 cv.setColorBackground(0, 0.0625, 0);
 } else if (getprop("sim/variant-id") == 5) {
 cv.setColorBackground(0, 0.0625, 0);
-} else if (getprop("sim/variant-id") == 6) {
+} else if (getprop("sim/variant-id") >= 6) {
 cv.setColorBackground(0, 0.0625, 0);
 } else {
 cv.setColorBackground(0.01, 0.105, 0);
