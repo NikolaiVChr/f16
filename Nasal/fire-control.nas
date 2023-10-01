@@ -191,10 +191,12 @@ var FireControl = {
 	},
 	
 	getRippleDist: func {
+		# meters
 		me.rippleDist;
 	},
 	
 	setRippleDist: func (rippleDist) {
+		# meters
 		if (rippleDist >= 0) {
 			me.rippleDist = rippleDist;
 		}
@@ -897,6 +899,7 @@ var FireControl = {
 			}
 			if (me.aim != nil and me.aim.parents[0] == armament.AIM and (me.aim.status == armament.MISSILE_LOCK or me.aim.guidance=="unguided" or me.aim.loal or !me.guidanceEnabled)) {
 			    if (me.getDropMode() == DROP_CCRP and containsVector(CCIP_CCRP, me.aim.type) and me.aim.status == armament.MISSILE_LOCK) {
+			    	# CCRP
 			        me.distCCRP = getprop("payload/armament/distCCRP");
 			        me.distCCRPLast = me.distCCRP;
 			        if (me.distCCRP == -1 or me.distCCRPLast == -1 or me.distCCRP >= 500 or me.distCCRP < me.distCCRPLast) {
@@ -918,6 +921,7 @@ var FireControl = {
 			    }
 				me.aim = me.fireAIM(me.selected[0],me.selected[1], me.guidanceEnabled);
 				if (me.selectedAdd != nil) {
+					# Fire dual weapons
 					foreach(me.seldual ; me.selectedAdd) {
 						me.fireAIM(me.seldual[0],me.seldual[1], me.guidanceEnabled);
 					}
@@ -976,6 +980,7 @@ var FireControl = {
 	
 	fireAIM: func (p,w,g) {
 		# fire a weapon (that is a missile-code instance)
+		printDebug("fireAIM called. pylon="~p~" weapon="~w~" guide="~g);
 		me.aim = me._getSpecificWeapon(p,w);
 		if (!g) me.aim.guidanceEnabled = 0;
 		me.lockedfire = me.aim.status == armament.MISSILE_LOCK;
@@ -1059,7 +1064,7 @@ var FireControl = {
 			me.rippleInterval == RIPPLE_INTERVAL_SECONDS and getprop("sim/time/elapsed-sec") > me.rippleTime + me.rippleDelay*(me.rippleThis-1)
 			) {
 			me.aim = me.getSelectedWeapon();
-			if (me.aim != nil and me.aim.parents[0] == armament.AIM and (me.aim.status == armament.MISSILE_LOCK or me.aim.guidance=="unguided")) {
+			if (me.aim != nil and me.aim.parents[0] == armament.AIM and (me.aim.status == armament.MISSILE_LOCK or me.aim.guidance=="unguided" or me.getDropMode() == DROP_CCIP)) {
 				me.fireAIM(me.selected[0],me.selected[1],me.guidanceEnabled);
 				if (me.selectedAdd != nil) {
 					foreach(me.seldual ; me.selectedAdd) {
@@ -1428,8 +1433,9 @@ var FireControl = {
 };
 
 var debugFC = 0;
-var printDebug = func (msg) {if (debugFC == 1) print(msg);};
-var printfDebug = func {if (debugFC == 1) call(printf,arg);};
+var printDebug = func (msg) {if (debugFC) print(msg);};
+var printfDebug = func {if (debugFC) {var str = call(sprintf,arg,nil,nil,var err = []);if(size(err))print(err[0]);else print (str);}};
+# Note calling printf directly with call() will sometimes crash the sim, so we call sprintf instead.
 
 var containsVector = func (vec, item) {
     foreach(test; vec) {
@@ -1485,6 +1491,7 @@ var ccrp_loop = func () {
     setprop("payload/armament/distCCRP", distCCRP);
 }
 if (debugFC) screen.property_display.add("payload/armament/distCCRP");
+if (debugFC) screen.property_display.add("payload/armament/gravity-dropping");
 
 var ccrp_loopTimer = maketimer(0.1, ccrp_loop);
 ccrp_loopTimer.simulatedTime = 1;
