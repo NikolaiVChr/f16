@@ -1462,14 +1462,22 @@ append(obj.total, obj.speed_curr);
              func(hdp)
                                       {
                                         obj.r_show = 1;
-                                        if (hdp.getproper("fpm") > 0 and !hdp.getproper("dgft") and
-                                        (((!obj.showmeCCIP or !isDropping) and (getprop("controls/armament/trigger") < 1 or getprop("payload/armament/releasedCCRP") < 1)) or math.mod(int(8*(systime()-int(systime()))),2)>0)) {
+                                        
+                                        if (hdp.getproper("fpm") > 0 and !hdp.getproper("dgft")) {
                                             obj.VV.setTranslation (hdp.VV_x, hdp.VV_y);
                                             if (hdp.getproper("HUD_SCA") == 2) {
                                                 obj.bank_angle_indicator.setTranslation (hdp.VV_x, hdp.VV_y);
                                                 obj.r_show = 0;
                                             }
-                                            obj.VV.show();
+
+                                            obj.ccrpReleased = getprop("payload/armament/releasedCCRP");
+                                            obj.controlTrigger = getprop("controls/armament/trigger");
+
+                                            obj.blinkRockets = hdp.getproper("rocketsBusy");
+                                            obj.blinkCCRP = obj.controlTrigger > 0 and obj.ccrpReleased > 0;
+                                            obj.blinkCCIP = obj.showmeCCIP and isDropping;
+
+                                            obj.VV.setVisible((!obj.blinkCCIP and !obj.blinkCCRP and !obj.blinkRockets) or math.mod(int(8*(systime()-int(systime()))),2)>0);
                                             obj.VV.update();
                                         } else {
                                             obj.VV.hide();

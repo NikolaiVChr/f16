@@ -26,6 +26,7 @@ var FireControl = {
 		fc.triggerTime = 0;       # a timer for firing maddog
 		fc.gunTriggerTime = 0;    # a timer for how often to use gun brevity
 		fc.ripple = 1;            # ripple setting, from 1 to x.
+		fc.rippleR = 1;           # ripple setting for submodels, from 1 to x. Seperate from fc.ripple due to allowing different max count.
 		fc.rippleDist = 150*FT2M; # ripple setting, in meters.
 		fc.rippleDelay = 2.0;     # ripple setting, in seconds.
 		fc.rippleInterval = RIPPLE_INTERVAL_METERS;
@@ -166,6 +167,16 @@ var FireControl = {
 	setRippleMode: func (ripple) {
 		if (ripple >= 1) {
 			me.ripple = int(ripple);
+		}
+	},
+
+	getRRippleMode: func {
+		me.rippleR;
+	},
+	
+	setRRippleMode: func (rippleR) {
+		if (rippleR >= 1) {
+			me.rippleR = int(rippleR);
 		}
 	},
 
@@ -944,6 +955,10 @@ var FireControl = {
 					me.gunTriggerTime = getprop("sim/time/elapsed-sec");
 				}
 				damage.damageLog.push(me.aim.type~" fired");
+				if (me.rippleR > 1) {
+					me.isRipplingRockets = 1;
+					me.rippleRocketFireStart();
+				}
 				me.triggerTime = 0;
 			}
 		} elsif (getprop("controls/armament/trigger") < 1) {
@@ -951,6 +966,7 @@ var FireControl = {
 			me.triggerTime = 0;
 			me.aim = me.getSelectedWeapon();
 			if (me.aim != nil and me.aim.parents[0] == stations.SubModelWeapon) {
+				me.isRipplingRockets = 0;
 				if (me.aim.alternate) {
 					me.stopCurrent();
 					me.nextWeapon(me.selectedType);
@@ -975,6 +991,56 @@ var FireControl = {
 		}
 		if (me.changeListener != nil) me.changeListener();
 		return me.aim;
+	},
+
+	rippleRocketFireStart: func {
+		# First has been fired, now start system to fire the ripple ones.
+		if (me.getSelectedWeapon() != nil) {
+			me.rippleTime  = getprop("sim/time/elapsed-sec");
+			me.rippleThis  = 1;# One has already been released
+			me.rippleCount = 0;
+			setprop("payload/armament/rockets-rippling", 1);
+			me.rippleRocketTest();
+		}
+	},
+
+	rippleRocketTest: func {
+		# test for if we should fire ripple rockets.
+		me.rippleCount += 1;
+		if (me.isRipplingRockets and getprop("sim/time/elapsed-sec") > me.rippleTime + 0.75) {
+			me.rocket = me.getSelectedWeapon();
+			if (me.rocket != nil and me.rocket.parents[0] == stations.SubModelWeapon) {
+				if (me.aim.alternate) {
+					me.stopCurrent();
+					me.nextWeapon(me.selectedType);
+				} else {
+					me.rocket.stop();
+					me.rocket.start();
+				}
+				me.rippleThis += 1;
+				me.rippleTime  = getprop("sim/time/elapsed-sec");
+				if (me.rippleThis >= me.rippleR or me.getSelectedWeapon() == nil) {
+					me.isRipplingRockets = 0;
+					printDebug("Finished ripple");
+					setprop("payload/armament/rockets-rippling", 0);
+					return;
+				}
+			} else {
+				me.isRipplingRockets = 0;
+				printDebug("Aborted ripple");
+				setprop("payload/armament/rockets-rippling", 0);
+				return;
+			}
+		}
+		var delayTimer = 0.025;
+		if (me.rippleCount > 30/delayTimer) {
+			# after 30 seconds if its not finished rippling, cancel it. Might happen if the aircraft is still.
+			me.isRipplingRockets = 0;
+			printDebug("Cancelled ripple");
+			setprop("payload/armament/rockets-rippling", 0);
+			return;
+		}
+		settimer(func me.rippleRocketTest(), delayTimer);
 	},
 	
 	rippleFireStart: func {

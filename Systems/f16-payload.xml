@@ -45,6 +45,7 @@
         <MP-lon type="string">rotors/main/blade[1]/flap-deg</MP-lon>
         <MP-alt type="string">rotors/main/blade[2]/flap-deg</MP-alt>
         <gravity-dropping type="bool">false</gravity-dropping>
+        <rockets-rippling type="bool">false</rockets-rippling>
         <MLW-bearing type="double">0</MLW-bearing>
         <MLW-count type="int">0</MLW-count>
         <MLW-launcher type="string"></MLW-launcher>

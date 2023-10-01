@@ -1208,6 +1208,7 @@ var SubSystem_Main = {
             weapon_mode               : "sim/model/f16/controls/armament/weapon-selector",
             yaw                       : "fdm/jsbsim/aero/beta-deg",
             # Properties used in HUD:
+            rocketsBusy               : "payload/armament/rockets-rippling",
             calibrated                : "fdm/jsbsim/velocities/vc-kts",
             TAS                       : "fdm/jsbsim/velocities/vtrue-kts",
             HUD_VEL                   : "f16/avionics/hud-velocity",

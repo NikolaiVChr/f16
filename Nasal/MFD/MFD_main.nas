@@ -3136,7 +3136,15 @@ var MFD_Device =
                             rp = 1;
                         }
                         pylons.fcs.setRippleMode(rp);
-                    } 
+                    } elsif (me.wpnType == "rocket") {
+                        var rp = pylons.fcs.getRRippleMode();
+                        if (rp < 28) {
+                            rp += 1;
+                        } elsif (rp == 28) {
+                            rp = 1;
+                        }
+                        pylons.fcs.setRRippleMode(rp);
+                    }
                 } elsif (eventi == 8) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
@@ -3358,6 +3366,8 @@ var MFD_Device =
                 } elsif (me.wpn.type == "LAU-68") {
                     me.wpnType ="rocket";
                     me.obs14 = "A-G";
+                    var rp = pylons.fcs.getRRippleMode();
+                    me.obs8 = "RP "~rp;
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.status = "MAL";
                     } else {
