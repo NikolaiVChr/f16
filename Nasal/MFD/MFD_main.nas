@@ -3280,8 +3280,8 @@ var MFD_Device =
                     or me.wpn.type == "GBU-54" or me.wpn.type == "CBU-87" or me.wpn.type == "CBU-105" or me.wpn.type == "GBU-31" or me.wpn.type == "B61-7" or me.wpn.type == "B61-12") {
                     me.wpnType ="fall";
                     var nm = pylons.fcs.getDropMode();
-                    if (nm == 1) {me.obs12 = "CCIP";me.obs13=armament.contact != nil and armament.contact.get_type() != armament.AIR?"PRE":"VIS";}
-                    if (nm == 0) {me.obs12 = "CCRP";me.obs13="PRE"}
+                    if (nm == fc.DROP_CCIP) {me.obs12 = "CCIP";me.obs13=armament.contact != nil and armament.contact.get_type() != armament.AIR?"PRE":"VIS";}
+                    if (nm == fc.DROP_CCRP) {me.obs12 = "CCRP";me.obs13="PRE"}
                     var rp = pylons.fcs.getRippleMode();
                     var rpd = pylons.fcs.getRippleDist()*M2FT;
                     me.obs8 = "RP "~rp;

@@ -1380,7 +1380,7 @@ append(obj.total, obj.speed_curr);
              func(hdp)
                                       {
                                           if (hdp.fcs_available) {
-                                            if (pylons.fcs.getDropMode() == 1) {
+                                            if (pylons.fcs.getDropMode() == fc.DROP_CCIP) {
                                                 hdp.CCIP_active = 1;
                                             } else {
                                                 hdp.CCIP_active = 0;

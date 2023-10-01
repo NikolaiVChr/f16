@@ -11,6 +11,8 @@ var VectorNotification = {
 };
 var RIPPLE_INTERVAL_METERS = 0;
 var RIPPLE_INTERVAL_SECONDS = 1;
+var DROP_CCRP = 0;
+var DROP_CCIP = 1;
 var FireControl = {
 	new: func (pylons, pylonOrder, typeOrder) {
 		var fc = {parents:[FireControl]};
@@ -894,27 +896,21 @@ var FireControl = {
 				me.guidanceEnabled = 1;
 			}
 			if (me.aim != nil and me.aim.parents[0] == armament.AIM and (me.aim.status == armament.MISSILE_LOCK or me.aim.guidance=="unguided" or me.aim.loal or !me.guidanceEnabled)) {
-			    if (me.getDropMode() == 0 and containsVector(CCIP_CCRP, me.aim.type) and me.aim.status == armament.MISSILE_LOCK) {
+			    if (me.getDropMode() == DROP_CCRP and containsVector(CCIP_CCRP, me.aim.type) and me.aim.status == armament.MISSILE_LOCK) {
 			        me.distCCRP = getprop("payload/armament/distCCRP");
 			        me.distCCRPLast = me.distCCRP;
 			        if (me.distCCRP == -1 or me.distCCRPLast == -1 or me.distCCRP >= 500 or me.distCCRP < me.distCCRPLast) {
-			            print("Trigger was pressed, waiting for launch parameters");
-                        me.distCCRPListen = setlistener("payload/armament/distCCRP", func (distCCRP) {
+			            printDebug("CCRP: Trigger was pressed, waiting for launch parameters");
+                        if (me["distCCRPListen"] == nil) me.distCCRPListen = setlistener("payload/armament/distCCRP", func (distCCRP) {
                             me.distCCRPLast = me.distCCRP;
-                            # the variable passed to this method is a string, so let's just fetch it again
-                            me.distCCRP = getprop("payload/armament/distCCRP");
+                            
+                            me.distCCRP = distCCRP.getValue();
 
-                            if (getprop("controls/armament/trigger") < 1) {
-                                print("Trigger was let go, cancel the listener");
-                                removelistener(me.distCCRPListen);
-                                return;
-                            }
                             if (me.distCCRP != -1 and me.distCCRPLast != -1 and me.distCCRP < 500 and me.distCCRP >= me.distCCRPLast) {
-                                print("Launch parameters met, re-run the trigger function");
+                                printDebug("CCRP: Launch parameters met, re-run the trigger function");
                                 me.trigger();
-                                removelistener(me.distCCRPListen);
+                                me.cancelCCRPListener();
                                 setprop("payload/armament/releasedCCRP", 1);
-                                return;
                             }
                         });
                         return;  # The listener will call this function again when we are ready
@@ -972,6 +968,9 @@ var FireControl = {
 					me.nextWeapon(me.selectedType);
 				}
 			}
+			me.cancelCCRPListener();
+		} else {
+			me.cancelCCRPListener();
 		}
 	},
 	
@@ -1112,8 +1111,17 @@ var FireControl = {
 			setprop("controls/armament/master-arm", 1);
 		} else {
 			setprop("controls/armament/master-arm", 0);
+			me.cancelCCRPListener();
 		}
 		me.updateCurrent();
+	},
+
+	cancelCCRPListener: func {
+		if (me["distCCRPListen"] != nil) {
+            printDebug("CCRP: Masterarm/Trigger is off or no weapon, cancel the listener");
+            removelistener(me.distCCRPListen);
+            me.distCCRPListen = nil;
+        }
 	},
 
 	updateCurrent: func {
@@ -1433,14 +1441,16 @@ var ccrp_loop = func () {
     var selW = pylons.fcs.getSelectedWeapon();
 
     # Exit if master switch off, no selected weapon, ccip, not A/G bomb, or not locked on a target
-    if (getprop(masterArmSwitch) == 0 or
-        !(selW != nil and !(pylons.fcs.getDropMode == 1) and
-            containsVector(CCIP_CCRP, selW.type) and selW.status == armament.MISSILE_LOCK )) {
+    if (getprop(masterArmSwitch) == pylons.ARM_OFF or
+        !(selW != nil and pylons.fcs.getDropMode == DROP_CCRP and
+            containsVector(CCIP_CCRP, selW.type)) and selW.status == armament.MISSILE_LOCK) {
         setprop("payload/armament/distCCRP", -1);
         return;
     }
     var trgt = armament.contactPoint;
-    if (trgt == nil and radar_system.apg68Radar.getPriorityTarget() != nil) {
+    var prio = radar_system.apg68Radar.getPriorityTarget();
+    if (trgt == nil and prio != nil
+    		and (prio.getType() == armament.SURFACE or prio.getType() == armament.MARINE)) {
         trgt = radar_system.apg68Radar.getPriorityTarget();
     } elsif (trgt == nil) {
         printDebug("CCRP: tgt not found");
@@ -1448,6 +1458,7 @@ var ccrp_loop = func () {
         return;
     }
     if (selW.guidance == "unguided") {
+    	# TODO: Scour manual to see if unguided can be dropped with CCRP. Also remove lock requirement if they can.
         var dt = 0.1;
         var maxFallTime = 20;
     } else {
@@ -1456,7 +1467,7 @@ var ccrp_loop = func () {
         if (dt < 0.1) dt = 0.1;
         var maxFallTime = 45;
     }
-    var distCCRP = pylons.fcs.getSelectedWeapon().getCCRP(maxFallTime,dt);
+    var distCCRP = selW.getCCRP(maxFallTime,dt);
     if (distCCRP == nil) {
         distCCRP = -1;
     }
