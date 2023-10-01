@@ -3030,22 +3030,32 @@ append(obj.total, obj.speed_curr);
     },
 
     CCRP: func(hdp) {
-        if (hdp.fcs_available and hdp.getproper("master_arm") != 0) {
-            var trgt = armament.contactPoint;
-            if(trgt == nil and radar_system.apg68Radar.getPriorityTarget() != nil) {
-                trgt = radar_system.apg68Radar.getPriorityTarget();
-            } elsif (trgt == nil) {
+        if (hdp.fcs_available and hdp.getproper("master_arm") != 0 and pylons.fcs.getDropMode() == fc.DROP_CCRP) {
+            var selW = pylons.fcs.getSelectedWeapon();
+            if (selW == nil) {
+                me.solutionCue.hide();
+                me.ccrpMarker.hide();
+                me.bombFallLine.hide();
                 return 0;
             }
-            var selW = pylons.fcs.getSelectedWeapon();
-            if (selW != nil and !hdp.CCIP_active and
-               fc.containsVector(fc.CCIP_CCRP, selW.type) and selW.status == armament.MISSILE_LOCK ) {
+            var trgt = fc.getCCRPTarget();
+            
+            if (trgt == nil) {
+                # We must return 1 if its a bomb and were in CCRP drop mode
+                me.solutionCue.hide();
+                me.ccrpMarker.hide();
+                me.bombFallLine.hide();
+                return fc.containsVector(fc.CCIP_CCRP, selW.type);
+            }
+            
+            if (!hdp.CCIP_active and
+                    fc.containsVector(fc.CCIP_CCRP, selW.type) and selW.status == armament.MISSILE_LOCK ) {
                 me.distCCRP = getprop("payload/armament/distCCRP");
                 if (me.distCCRP == -1 or (me.distCCRP*M2NM > 13.2 and selW.guidance == "laser")) {#1F-F16CJ-34-1: max laser dist is 13.2nm
                     me.solutionCue.hide();
                     me.ccrpMarker.hide();
                     me.bombFallLine.hide();
-                    return 0;
+                    return 1;
                 }
                 if (hdp.getproper("groundspeed_kt") > 0) {
                     me.timeToRelease = me.distCCRP/hdp.getproper("groundspeed_kt");
@@ -3064,7 +3074,7 @@ append(obj.total, obj.speed_curr);
                         me.solutionCue.hide();
                         me.ccrpMarker.hide();
                         me.bombFallLine.hide();
-                        return 0;
+                        return 1;
                     }
                 }
                 me.bombFallLine.setTranslation(me.ldr*me.texelPerDegreeX,0);
@@ -3078,7 +3088,7 @@ append(obj.total, obj.speed_curr);
                 me.solutionCue.hide();
                 me.ccrpMarker.hide();
                 me.bombFallLine.hide();
-                return 0;
+                return 1;
             }
         } else {
             me.solutionCue.hide();

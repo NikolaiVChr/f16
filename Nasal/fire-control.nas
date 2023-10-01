@@ -1153,6 +1153,9 @@ var FireControl = {
 	
 	updateDual: func (type = nil) {
 		# will stop all current weapons, and select single and pair weapons and start em all.
+		# But only if CCRP trigger is not being held. Else the CCRP line will blink when trigger pulled,
+		# as the weapons(s) will restart init sequence and lose lock.
+		if (me["distCCRPListen"] != nil) return;
 		me.duality = getprop("controls/armament/dual");
 		me.sweaps = me.getSelectedWeapons();
 		if (me.sweaps != nil) {
@@ -1437,22 +1440,30 @@ var containsVector = func (vec, item) {
     return 0;
 }
 
+var ccrpTrgt = nil;
+
+getCCRPTarget = func {
+	# HUD uses this
+	return ccrpTrgt;
+}
+
 var ccrp_loop = func () {
     var selW = pylons.fcs.getSelectedWeapon();
 
     # Exit if master switch off, no selected weapon, ccip, not A/G bomb, or not locked on a target
     if (getprop(masterArmSwitch) == pylons.ARM_OFF or
-        !(selW != nil and pylons.fcs.getDropMode == DROP_CCRP and
-            containsVector(CCIP_CCRP, selW.type)) and selW.status == armament.MISSILE_LOCK) {
+        	selW == nil or pylons.fcs.getDropMode() != DROP_CCRP or
+            !containsVector(CCIP_CCRP, selW.type) or selW.status != armament.MISSILE_LOCK) {
+    	ccrpTrgt = nil;
         setprop("payload/armament/distCCRP", -1);
         return;
     }
-    var trgt = armament.contactPoint;
+    ccrpTrgt = armament.contactPoint;
     var prio = radar_system.apg68Radar.getPriorityTarget();
-    if (trgt == nil and prio != nil
+    if (ccrpTrgt == nil and prio != nil
     		and (prio.getType() == armament.SURFACE or prio.getType() == armament.MARINE)) {
-        trgt = radar_system.apg68Radar.getPriorityTarget();
-    } elsif (trgt == nil) {
+        ccrpTrgt = prio;
+    } elsif (ccrpTrgt == nil) {
         printDebug("CCRP: tgt not found");
         setprop("payload/armament/distCCRP", -1);
         return;
@@ -1462,7 +1473,7 @@ var ccrp_loop = func () {
         var dt = 0.1;
         var maxFallTime = 20;
     } else {
-        var agl = (getprop("position/altitude-ft")-trgt.get_altitude())*FT2M;
+        var agl = (getprop("position/altitude-ft")-ccrpTrgt.get_altitude())*FT2M;
         var dt = agl*0.000025;#4000 ft = ~0.1
         if (dt < 0.1) dt = 0.1;
         var maxFallTime = 45;
@@ -1473,6 +1484,7 @@ var ccrp_loop = func () {
     }
     setprop("payload/armament/distCCRP", distCCRP);
 }
+if (debugFC) screen.property_display.add("payload/armament/distCCRP");
 
 var ccrp_loopTimer = maketimer(0.1, ccrp_loop);
 ccrp_loopTimer.simulatedTime = 1;
