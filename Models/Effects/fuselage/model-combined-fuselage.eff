@@ -146,6 +146,10 @@ Modifications author: Nikolai V. Chr.
 				<!--property>/sim/rendering/shaders/quality-level</property-->
 				<property>/sim/rendering/shaders/model</property>
 				<property>/f16/scene/version</property>
+				<less-equal>
+					<property>/f16/pbr</property>
+					<value type="float">0.0</value>
+				</less-equal>
 				<or>
 					<less-equal>
 						<value type="float">2.0</value>
@@ -1483,6 +1487,10 @@ Modifications author: Nikolai V. Chr.
 				<property>/sim/rendering/shaders/skydome</property>
 				<!--property>/sim/rendering/shaders/quality-level</property-->
 				<property>/sim/rendering/shaders/model</property>
+				<less-equal>
+					<property>/f16/pbr</property>
+					<value type="float">0.0</value>
+				</less-equal>
 				<or>
 					<less-equal>
 						<value type="float">2.0</value>
@@ -2816,6 +2824,10 @@ Modifications author: Nikolai V. Chr.
 		<predicate>
 			<and>
 				<property>/sim/version/compositor-support</property>
+				<less-equal>
+					<property>/f16/pbr</property>
+					<value type="float">0.0</value>
+				</less-equal>
 				<!--property>/sim/rendering/shaders/quality-level</property-->				
 				<!--less-equal>
 					<value type="float">1.0</value>
@@ -3495,6 +3507,10 @@ Modifications author: Nikolai V. Chr.
 				<property>/sim/rendering/shaders/skydome</property>
 				<!--property>/sim/rendering/shaders/quality-level</property-->
 				<property>/sim/rendering/shaders/model</property>
+				<less-equal>
+					<property>/f16/pbr</property>
+					<value type="float">0.0</value>
+				</less-equal>
 				<or>
 					<less-equal>
 						<value type="float">2.0</value>
@@ -4790,6 +4806,10 @@ Modifications author: Nikolai V. Chr.
 		<predicate>
 			<and>
 				<property>/sim/rendering/rembrandt/enabled</property>
+				<less-equal>
+					<property>/f16/pbr</property>
+					<value type="float">0.0</value>
+				</less-equal>
 				<or>
 					<less-equal>
 						<value type="float">2.0</value>
@@ -5372,6 +5392,10 @@ Modifications author: Nikolai V. Chr.
 	<technique n="8">
 		<predicate>
 			<and>
+				<less-equal>
+					<property>/f16/pbr</property>
+					<value type="float">0.0</value>
+				</less-equal>
 				<or>
 					<less-equal>
 						<value type="float">2.0</value>

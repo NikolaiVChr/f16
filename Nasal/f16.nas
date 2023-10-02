@@ -43,7 +43,9 @@ var _tree = func(n, graph = 1, prefix = "", level = 0) {
 }
 
 
-
+if (getprop("sim/rendering/default-compositor") != nil) {
+    setprop("f16/pbr",1);
+}
 
 
 
