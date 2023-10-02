@@ -119,9 +119,9 @@ Modifications author: Nikolai V. Chr.
 		<!-- END shadows include -->
 
 		<!-- PBR HDR -->
-		<texture n="9">
-			<type>white</type>
-		</texture>
+		<!--texture n="9">
+			<type>black</type>
+		</texture-->
 		<texture n="12"><!-- normal -->
 			<type>null-normalmap</type>
 		</texture>
@@ -129,8 +129,9 @@ Modifications author: Nikolai V. Chr.
 			<type>white</type>
 		</texture>
 		<base-color-factor type="vec4d">1.0 1.0 1.0 1.0</base-color-factor>
-		<metallic-factor type="float">0.60</metallic-factor>
-    	<roughness-factor type="float">0.5</roughness-factor>
+		<emissive-factor type="vec3d">0.0 0.0 0.0</emissive-factor>
+		<metallic-factor type="float">1</metallic-factor>
+    	<roughness-factor type="float">1</roughness-factor>
 		<!-- Double Sided -->
     	<cull-face>back</cull-face>
     	<!-- Whether to flip the texture vertically -->
