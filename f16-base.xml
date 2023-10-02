@@ -1708,6 +1708,9 @@
         <airbases>
             <file>Aircraft/f16/Nasal/airbases.nas</file>
         </airbases>
+        <!--spaces>
+            <file>Aircraft/f16/Nasal/utils/namespaces.nas</file>
+        </spaces-->
     </nasal>
 
 
