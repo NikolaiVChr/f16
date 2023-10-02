@@ -684,17 +684,38 @@
       <object-name>LWStation2</object-name>
       <object-name>RWStation3</object-name>
       <object-name>LWStation3</object-name>
-      <object-name>ArresterHook</object-name>
       <object-name>Link16Antennas</object-name>
+      <object-name>FrontTire</object-name>
+      <object-name>LeftMainTire</object-name>
+      <object-name>RightMainTire</object-name>
+      <object-name>Poly.002</object-name>
+      <object-name>Tail-antenna</object-name>
+ </effect>
+
+ <effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">1.00</metallic>
+          <ambient-factor type="float">0.0</ambient-factor>
+          <rain-enabled type="int">0</rain-enabled>
+          <snow-enabled type="int">0</snow-enabled>
+          <reflection-enabled type="int">1</reflection-enabled>
+          <reflection-correction type="float">0.50</reflection-correction>
+          <grain-texture-enabled type="int"><use>f16/effects/rust</use></grain-texture-enabled>
+          <grain-magnification type="float"><use>f16/effects/rust-mag</use></grain-magnification>
+          <dirt-enabled type="int"><use>f16/effects/dirt</use></dirt-enabled>
+          <dirt-factor type="float"><use>f16/effects/dirt-fac</use></dirt-factor>
+      </parameters>
+      
+      <!-- gear struts and oleos -->
+
+      <object-name>ArresterHook</object-name>
       <object-name>FrontAftStrut</object-name>
       <object-name>FrontLowerStrut</object-name>
-      <object-name>FrontTire</object-name>
       <object-name>FrontUpperStrut</object-name>
       <object-name>LeftLowerMainStrut</object-name>
-      <object-name>LeftMainTire</object-name>
       <object-name>LeftUpperMainStrut</object-name>
       <object-name>RightLowerMainStrut</object-name>
-      <object-name>RightMainTire</object-name>
       <object-name>RightUpperMainStrut</object-name>
       <object-name>LeftInnerStrut</object-name>
       <object-name>LeftOuterLowerStrut</object-name>
@@ -702,8 +723,6 @@
       <object-name>RightInnerStrut</object-name>
       <object-name>RightOuterLowerStrut</object-name>
       <object-name>RightOuterUpperStrut</object-name>
-      <object-name>Poly.002</object-name>
-      <object-name>Tail-antenna</object-name>
  </effect>
 
  <effect>
@@ -2230,7 +2249,9 @@
   </axis>
  </animation>
 
- <animation>
+ 
+
+  <animation>
   <type>rotate</type>
   <object-name>RightOuterLowerStrut</object-name>
   <object-name>RightOuterUpperStrut</object-name>
@@ -2248,22 +2269,7 @@
   </axis>
  </animation>
 
- <animation>
-  <type>translate</type>
-  <object-name>RightOuterUpperStrut</object-name>
-  <property>gear/gear[1]/compression-norm</property>
-  <factor>0.2</factor>
-  <center>
-   <x-m>0.59</x-m>
-   <y-m>0.28</y-m>
-   <z-m>-0.75</z-m>
-  </center>
-  <axis>
-   <x>0.0</x>
-   <y>-0.457</y>
-   <z>1.0</z>
-  </axis>
- </animation>
+
 
  <animation>
   <type>rotate</type>
@@ -2367,6 +2373,21 @@
   </axis>
  </animation>
 
+ <animation>
+  <type>translate</type>
+  <object-name>RightOuterUpperStrut</object-name>
+  <property>gear/gear[1]/compression-norm</property>
+  <factor>0.2</factor>
+  <axis>
+     <x1-m> 0.573735  </x1-m>
+     <y1-m> 0.995678  </y1-m>
+     <z1-m> -1.13778 </z1-m>
+     <x2-m> 0.608042    </x2-m>
+     <y2-m> 0.589913    </y2-m>
+     <z2-m> -0.436789   </z2-m>
+  </axis>
+ </animation>
+
    <!-- spinning wheel calc
 
      radius = 1.80323 - 1.51444 = 0.28879
@@ -2432,22 +2453,7 @@
   </axis>
  </animation>
 
- <animation>
-  <type>translate</type>
-  <object-name>LeftOuterUpperStrut</object-name>
-  <property>gear/gear[2]/compression-norm</property>
-  <factor>0.2</factor>
-  <center>
-   <x-m>0.59</x-m>
-   <y-m>-0.28</y-m>
-   <z-m>-0.75</z-m>
-  </center>
-  <axis>
-   <x>0.0</x>
-   <y>0.457</y>
-   <z>1.0</z>
-  </axis>
- </animation>
+ 
 
  <animation>
   <type>rotate</type>
@@ -2528,6 +2534,21 @@
    <x>0.943612</x>
    <y>-0.262974</y>
    <z>0.201098</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>translate</type>
+  <object-name>LeftOuterUpperStrut</object-name>
+  <property>gear/gear[2]/compression-norm</property>
+  <factor>0.2</factor>
+  <axis>
+     <x1-m> 0.573735  </x1-m>
+     <y1-m> -0.995678  </y1-m>
+     <z1-m> -1.13778 </z1-m>
+     <x2-m> 0.608042    </x2-m>
+     <y2-m> -0.589913    </y2-m>
+     <z2-m> -0.436789   </z2-m>
   </axis>
  </animation>
 
