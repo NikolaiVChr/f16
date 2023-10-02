@@ -17,20 +17,40 @@
 # visibly moving. This allows fine control of the visuals dependent on any
 # number of factors desired. 
 
-var rtimer = maketimer(1.0, func {
-   var airspeed = getprop("/velocities/airspeed-kt");
+var fromNose  = props.globals.getNode("velocities/uBody-fps");
+var fromRight = props.globals.getNode("velocities/vBody-fps");
+var fromBelow = props.globals.getNode("velocities/wBody-fps");
+
+var splashX = props.globals.getNode("environment/aircraft-effects/splash-vector-x",1);
+var splashY = props.globals.getNode("environment/aircraft-effects/splash-vector-y",1);
+var splashZ = props.globals.getNode("environment/aircraft-effects/splash-vector-z",1);
+
+var airspeedProp = props.globals.getNode("velocities/airspeed-kt");
+
+var rtimer = maketimer(0.1, func {
+   var airspeed = airspeedProp.getValue();
    var airspeed_max = 120;
    if (airspeed > airspeed_max) {
-      airspeed = airspeed_max;
+      #airspeed = airspeed_max;
+
+      var vectorAC = [fromNose.getValue(),fromRight.getValue(),fromBelow.getValue()];
+
+      vectorAC = vector.Math.normalize(vectorAC);
+
+      splashX.setDoubleValue(vectorAC[0]*2);
+      splashY.setDoubleValue(vectorAC[1]*2);
+      splashZ.setDoubleValue(vectorAC[2]*2);
+      #print(vector.Math.format(vectorAC));
+   } else {
+      airspeed = math.sqrt(airspeed/airspeed_max);
+
+      var splash_x = -0.1 - 2.0 * airspeed;# -0.1 to -2.10
+      var splash_z = 1.0 - 1.35 * airspeed;#  1.0 to -0.35
+
+      splashX.setDoubleValue(-splash_x);
+      splashY.setDoubleValue(0);
+      splashZ.setDoubleValue(-splash_z);
    }
-   airspeed = math.sqrt(airspeed/airspeed_max);
-
-   var splash_x = -0.1 - 2.0 * airspeed;
-   var splash_z = 1.0 - 1.35 * airspeed;;
-
-   setprop("/environment/aircraft-effects/splash-vector-x", -splash_x);
-   setprop("/environment/aircraft-effects/splash-vector-y", 0.0);
-   setprop("/environment/aircraft-effects/splash-vector-z", -splash_z);
 
 #   setprop("environment/aircraft-effects/frost-level", getprop("/fdm/jsbsim/systems/ecs/windscreen-frost-amount"));
 
