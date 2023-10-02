@@ -7,7 +7,7 @@ OBJECT world
 name "Blender_exporter_v2.26__hud.ac"
 kids 3
 OBJECT group
-name "COCKPITh"
+name "COCKPIThud"
 kids 1
 OBJECT poly
 name "hud_sides"

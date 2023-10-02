@@ -5,7 +5,6 @@ Modifications author: Nikolai V. Chr.
 -->
 <PropertyList>
 	<name>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</name>
-	<!--inherits-from>Effects/model-combined-deferred</inherits-from-->
 	<inherits-from>Aircraft/f16/Models/Effects/fuselage/fuselage-base</inherits-from>
 	<parameters>
 		<!-- Wingflex -->
@@ -125,7 +124,6 @@ Modifications author: Nikolai V. Chr.
 			<and>
 				<property>/sim/version/compositor-support</property>
 				<property>/sim/rendering/shaders/skydome</property>
-				<!--property>/sim/rendering/shaders/quality-level</property-->
 				<property>/sim/rendering/shaders/model</property>
 				<property>/f16/scene/version</property>
 				<or>
@@ -1463,7 +1461,6 @@ Modifications author: Nikolai V. Chr.
 			<and>
 				<property>/sim/version/compositor-support</property>
 				<property>/sim/rendering/shaders/skydome</property>
-				<!--property>/sim/rendering/shaders/quality-level</property-->
 				<property>/sim/rendering/shaders/model</property>
 				<or>
 					<less-equal>
@@ -2798,11 +2795,6 @@ Modifications author: Nikolai V. Chr.
 		<predicate>
 			<and>
 				<property>/sim/version/compositor-support</property>
-				<!--property>/sim/rendering/shaders/quality-level</property-->				
-				<!--less-equal>
-					<value type="float">1.0</value>
-					<property>/sim/rendering/shaders/model</property>
-				</less-equal-->
 				<or>
 					<less-equal>
 						<value type="float">2.0</value>
@@ -3475,7 +3467,6 @@ Modifications author: Nikolai V. Chr.
 		<predicate>
 			<and>
 				<property>/sim/rendering/shaders/skydome</property>
-				<!--property>/sim/rendering/shaders/quality-level</property-->
 				<property>/sim/rendering/shaders/model</property>
 				<or>
 					<less-equal>
