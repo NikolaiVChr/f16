@@ -868,5 +868,85 @@
                 </binding>
             </mod-ctrl>
         </key>
+        <key n="53">
+            <name>CTRL-5</name>
+            <mod-ctrl>
+                <desc>new hdr weather</desc>
+                <binding>
+                    <command>nasal</command>
+                    <script>#f16.changeWeather();
+    var albedo = rand()*0.8+0.10;
+    setprop("/sim/rendering/hdr/atmos/ground-albedo[0]",      albedo);
+    setprop("/sim/rendering/hdr/atmos/ground-albedo[1]",      albedo);
+    setprop("/sim/rendering/hdr/atmos/ground-albedo[2]",      albedo);
+    setprop("/sim/rendering/hdr/atmos/ground-albedo[3]",      albedo);
+
+    setprop("/sim/rendering/hdr/atmos/ozone-mean-dobson", rand()*200+150);
+
+    setprop("/sim/rendering/hdr/atmos/aerosol-scale-height",  math.pow(10,3*rand())+0.001);#the plus is to avoid divide by zero
+    setprop("/sim/rendering/hdr/atmos/fog-density",           rand()*0.75);
+    setprop("/sim/rendering/hdr/atmos/fog-scale-height",      math.pow(10,2*rand())+0.001);
+
+    setprop("/sim/rendering/hdr/atmos/aerosol-base-density", (rand()*0.75+0.5)*1.3681e17);
+    setprop("/sim/rendering/hdr/atmos/aerosol-relative-background-density", (rand()*0.5+0.75)*1.4619e-17);
+
+    setprop("/sim/rendering/hdr/atmos/aerosol-absorption-cross-section[0]", (rand()*0.5+0.75)* 2.8722e-24);
+    setprop("/sim/rendering/hdr/atmos/aerosol-absorption-cross-section[1]", (rand()*0.5+0.75)*4.6168e-24);
+    setprop("/sim/rendering/hdr/atmos/aerosol-absorption-cross-section[2]", (rand()*0.5+0.75)*7.9706e-24);
+    setprop("/sim/rendering/hdr/atmos/aerosol-absorption-cross-section[3]", (rand()*0.5+0.75)*1.3578e-23);
+
+    setprop("/sim/rendering/hdr/atmos/aerosol-scattering-cross-section[0]", (rand()*0.5+0.75)*1.5908e-22);
+    setprop("/sim/rendering/hdr/atmos/aerosol-scattering-cross-section[1]", (rand()*0.5+0.75)*1.7711e-22);
+    setprop("/sim/rendering/hdr/atmos/aerosol-scattering-cross-section[2]", (rand()*0.5+0.75)*2.0942e-22);
+    setprop("/sim/rendering/hdr/atmos/aerosol-scattering-cross-section[3]", (rand()*0.5+0.75)*2.4033e-22);
+                    </script>
+                </binding>
+            </mod-ctrl>
+        </key>
+        <key n="54">
+            <name>CTRL-6</name>
+            <mod-ctrl>
+                <desc>hdr reload model</desc>
+                <binding>
+                    <command>reinit</command>
+                    <subsystem>aircraft-model</subsystem>
+                </binding>
+            </mod-ctrl>
+        </key>
+        <key n="55">
+            <name>CTRL-7</name>
+            <mod-ctrl>
+                <desc>hdr nice weather</desc>
+                <binding>
+                    <command>nasal</command>
+                    <script>
+    
+    print(getprop("/sim/rendering/hdr/atmos/ground-albedo[0]");
+    print(getprop("/sim/rendering/hdr/atmos/ground-albedo[1]");
+    print(getprop("/sim/rendering/hdr/atmos/ground-albedo[2]");
+    print(getprop("/sim/rendering/hdr/atmos/ground-albedo[3]");
+
+    print(getprop("/sim/rendering/hdr/atmos/ozone-mean-dobson");
+
+    print(getprop("/sim/rendering/hdr/atmos/aerosol-scale-height");
+    print(getprop("/sim/rendering/hdr/atmos/fog-density");
+    print(getprop("/sim/rendering/hdr/atmos/fog-scale-height");
+
+    print(getprop("/sim/rendering/hdr/atmos/aerosol-base-density");
+    print(getprop("/sim/rendering/hdr/atmos/aerosol-relative-background-density");
+
+    print(getprop("/sim/rendering/hdr/atmos/aerosol-absorption-cross-section[0]");
+    print(getprop("/sim/rendering/hdr/atmos/aerosol-absorption-cross-section[1]");
+    print(getprop("/sim/rendering/hdr/atmos/aerosol-absorption-cross-section[2]");
+    print(getprop("/sim/rendering/hdr/atmos/aerosol-absorption-cross-section[3]");
+
+    print(getprop("/sim/rendering/hdr/atmos/aerosol-scattering-cross-section[0]");
+    print(getprop("/sim/rendering/hdr/atmos/aerosol-scattering-cross-section[1]");
+    print(getprop("/sim/rendering/hdr/atmos/aerosol-scattering-cross-section[2]");
+    print(getprop("/sim/rendering/hdr/atmos/aerosol-scattering-cross-section[3]");
+                    </script>
+                </binding>
+            </mod-ctrl>
+        </key>
     </keyboard>
 </PropertyList>
