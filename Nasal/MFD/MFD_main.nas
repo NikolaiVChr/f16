@@ -5323,7 +5323,7 @@ var F16MfdRecipient =
     new: func(_ident)
     {
         var new_class = emesary.Recipient.new(_ident~".MFD");
-        new_class.MFDl =  MFD_Device.new("F16-MFD", "MFDimage1",0);
+        #new_class.MFDl =  MFD_Device.new("F16-MFD", "MFDimage1",0);
         new_class.MFDr =  MFD_Device.new("F16-MFD", "MFDimage2",1);
 
         new_class.Receive = func(notification)
@@ -5334,9 +5334,9 @@ var F16MfdRecipient =
                 return emesary.Transmitter.ReceiptStatus_NotProcessed;
             }
 
-            if (notification.NotificationType == "FrameNotification")
+            if (notification.NotificationType == "FrameNotification16")
             {
-                me.MFDl.update(notification);
+                #me.MFDl.update(notification);
                 me.MFDr.update(notification);
                 return emesary.Transmitter.ReceiptStatus_OK;
             }
@@ -5360,20 +5360,16 @@ PFD_Device.update = func(notification=nil)
             } else {
                 flyupVis = 0;
             }
-            pullup_cue_0.setVisible(flyupVis);
+#            pullup_cue_0.setVisible(flyupVis);
             pullup_cue_1.setVisible(flyupVis);
         }
     };
 
-#F16MfdRecipient.new("BAe-F16b-MFD");
+
 var f16_mfd = nil;
 var startupMFD = func {
     f16_mfd = F16MfdRecipient.new("F16-MFD");
 }
-#UpperMFD = f16_mfd.UpperMFD;
-#LowerMFD = f16_mfd.LowerMFD;
-
-#emesary.GlobalTransmitter.Register(f16_mfd);
 
 
 # This is old cursor system for clicking in 3D, part 3

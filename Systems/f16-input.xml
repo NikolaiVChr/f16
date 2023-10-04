@@ -869,5 +869,15 @@
                 </binding>
             </mod-ctrl>
         </key>
+        <key n="53">
+            <name>CTRL-5</name>
+            <mod-ctrl>
+                <desc>Reload MFD display system</desc>
+                <binding>
+                    <command>nasal-module-reload</command>
+                    <module>f16_MFD</module>
+                </binding>
+            </mod-ctrl>
+        </key>
     </keyboard>
 </PropertyList>

@@ -3471,7 +3471,7 @@ var F16HudRecipient =
 
             notification.range_rate = "RNGRATE";
 
-            if (notification.NotificationType == "FrameNotification")
+            if (notification.NotificationType == "FrameNotification16")
             {
 
                 me.HUDobj.update(notification);

@@ -1322,7 +1322,7 @@ var SubSystem_Main = {
 
         obj.recipient.Receive = func(notification)
         {
-            if (notification.NotificationType == "FrameNotification")
+            if (notification.NotificationType == "FrameNotification16")
             {
                 me.Main.update(notification);
                 ownship_pos.set_latlon(getprop("position/latitude-deg"), getprop("position/longitude-deg"), getprop("position/altitude-ft")*FT2M);
@@ -1805,7 +1805,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
         setprop("/consumables/fuel/total-fuel-lbs-100", 700);
         setprop("/consumables/fuel/total-fuel-lbs-1000", 1000);
         if (getprop("f16/disable-custom-view") != 1) view.manager.register("Cockpit View", pilot_view_limiter);
-                                     emesary.GlobalTransmitter.Register(f16_mfd);
+        emesary.GlobalTransmitter.Register(f16_mfd);
         emesary.GlobalTransmitter.Register(f16_hud);
         #emesary.GlobalTransmitter.Register(awg_9.aircraft_radar);
         #execTimer.start();
@@ -1851,6 +1851,12 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
         #rp.setFilePath(getprop("/sim/aircraft-dir")~"/Nasal/radar");#
         #rp.setMainFile("radar-prototype.nas");#
         #rp.load();#
+        #-- load MFD as reloadable module
+        var hmd = modules.Module.new("f16_MFD"); # Module name
+        hmd.setDebug(0); # 0=(mostly) silent; 1=print setlistener and maketimer calls to console; 2=print also each listener hit, be very careful with this!
+        hmd.setFilePath(getprop("/sim/aircraft-dir")~"/Nasal/MFD");
+        hmd.setMainFile("display-system.nas");
+        hmd.load();
         setprop("sim/rendering/headshake/enabled",0);# This does not work very well in F-16. So this makes people have to enable it explicit to have it. Don't know why its forced on us by default.
         # debug:
         #
