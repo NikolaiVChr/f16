@@ -1,4 +1,4 @@
-# OBS text
+# OSB text
 var colorText1 = [getprop("/sim/model/MFD-color/text1/red"), getprop("/sim/model/MFD-color/text1/green"), getprop("/sim/model/MFD-color/text1/blue")];
 
 # Info text
@@ -325,21 +325,21 @@ var DisplaySystem = {
 	},
 
 	initDevice: func (propertyNum, controlPositions, fontSize) {
-		me.device.addControls(PUSHBUTTON,  "OBS", 1, 20, "controls/MFD["~propertyNum~"]/button-pressed", controlPositions);
+		me.device.addControls(PUSHBUTTON,  "OSB", 1, 20, "controls/MFD["~propertyNum~"]/button-pressed", controlPositions);
 		#me.device.addControls(ROCKERSWITCH,"GAIN", 0, 1, "f16/avionics/mfd-"~(propertyNum?"r":"l")~"-gain", controlPositions);
 		me.device.fontSize = fontSize;
 
 		for (var i = 1; i <= 5; i+= 1) {
-			me.device.addControlText("OBS", "OBS"~i, [30, 0], i-1,-1);
+			me.device.addControlText("OSB", "OSB"~i, [30, 0], i-1,-1);
 		}
 		for (var i = 6; i <= 10; i+= 1) {
-			me.device.addControlText("OBS", "OBS"~i, [-30, 0], i-1,1);
+			me.device.addControlText("OSB", "OSB"~i, [-30, 0], i-1,1);
 		}
 		for (var i = 11; i <= 15; i+= 1) {
-			me.device.addControlText("OBS", "OBS"~i, [0, 20], i-1,0);
+			me.device.addControlText("OSB", "OSB"~i, [0, 20], i-1,0);
 		}
 		for (var i = 16; i <= 20; i+= 1) {
-			me.device.addControlText("OBS", "OBS"~i, [0, -20], i-1,0);
+			me.device.addControlText("OSB", "OSB"~i, [0, -20], i-1,0);
 		}
 		me.device.addSOILines();
 		me.device.addSOIText("NOT SOI");
@@ -377,9 +377,9 @@ var DisplaySystem = {
 		me.initPage("PageSMSINV");
 
 		me.initLayer("SharedStations");
-		me.initLayer("OBS1TO2ARROWS");
-		me.initLayer("OBS3TO4ARROWS");
-		me.initLayer("OBS4TO5ARROWS");
+		me.initLayer("OSB1TO2ARROWS");
+		me.initLayer("OSB3TO4ARROWS");
+		me.initLayer("OSB4TO5ARROWS");
 
 		me.device.controlAction = func (type, controlName, propvalue) {
 			me.tempLink = me.system.currPage.links[controlName];
@@ -640,10 +640,10 @@ var DisplaySystem = {
 	    },
 	},
 
-	OBS1TO2ARROWS: {
-		name: "OBS1TO2ARROWS",
+	OSB1TO2ARROWS: {
+		name: "OSB1TO2ARROWS",
 		new: func {
-			var layer = {parents:[DisplaySystem.OBS1TO2ARROWS]};
+			var layer = {parents:[DisplaySystem.OSB1TO2ARROWS]};
 			layer.offset = 0;
 			return layer;
 		},
@@ -705,19 +705,19 @@ var DisplaySystem = {
 	    },
 	},
 
-	OBS3TO4ARROWS: {
-		name: "OBS3TO4ARROWS",
+	OSB3TO4ARROWS: {
+		name: "OSB3TO4ARROWS",
 		new: func {
-			var layer = {parents:[DisplaySystem.OBS3TO4ARROWS, DisplaySystem.OBS1TO2ARROWS]};
+			var layer = {parents:[DisplaySystem.OSB3TO4ARROWS, DisplaySystem.OSB1TO2ARROWS]};
 			layer.offset = 140;
 			return layer;
 		},
 	},
 
-	OBS4TO5ARROWS: {
-		name: "OBS4TO5ARROWS",
+	OSB4TO5ARROWS: {
+		name: "OSB4TO5ARROWS",
 		new: func {
-			var layer = {parents:[DisplaySystem.OBS4TO5ARROWS, DisplaySystem.OBS1TO2ARROWS]};
+			var layer = {parents:[DisplaySystem.OSB4TO5ARROWS, DisplaySystem.OSB1TO2ARROWS]};
 			layer.offset = 210;
 			return layer;
 		},
@@ -739,38 +739,38 @@ var DisplaySystem = {
 				me.isNew = 0;
 			}
 			me.device.resetControls();
-			me.device.controls["OBS11"].setControlText("FCR");
-			me.device.controls["OBS16"].setControlText("SWAP");
-            me.device.controls["OBS17"].setControlText("HSD");
-            me.device.controls["OBS18"].setControlText("SMS");
-            me.device.controls["OBS19"].setControlText("WPN", 0);
-            me.device.controls["OBS20"].setControlText("TGP");
-            me.device.system.fetchLayer("OBS1TO2ARROWS").init(me, me.getOBS1TO2ARROWS);
-            me.device.system.fetchLayer("OBS4TO5ARROWS").init(me, me.getOBS4TO5ARROWS);
+			me.device.controls["OSB11"].setControlText("FCR");
+			me.device.controls["OSB16"].setControlText("SWAP");
+            me.device.controls["OSB17"].setControlText("HSD");
+            me.device.controls["OSB18"].setControlText("SMS");
+            me.device.controls["OSB19"].setControlText("WPN", 0);
+            me.device.controls["OSB20"].setControlText("TGP");
+            me.device.system.fetchLayer("OSB1TO2ARROWS").init(me, me.getOSB1TO2ARROWS);
+            me.device.system.fetchLayer("OSB4TO5ARROWS").init(me, me.getOSB4TO5ARROWS);
 		},
-		getOBS1TO2ARROWS: func {
+		getOSB1TO2ARROWS: func {
 			return [me.rangeVis, me.rangeText, me.showRangeDown, me.showRangeUp];
 		},
-        getOBS4TO5ARROWS: func {
+        getOSB4TO5ARROWS: func {
 			return [me.dist, me.distA, me.distDownA, me.distUpA];
 		},
 		controlAction: func (controlName) {
 			print(me.name,": ",controlName," activated on ",me.device.name);
-			if (controlName == "OBS1") {
+			if (controlName == "OSB1") {
                 if (getprop("sim/variant-id") == 0) {
                     return;
                 }
                 if (me.wpnType == "fall") {
                     me.at = 1;
                 }
-            } elsif (controlName == "OBS2") {
+            } elsif (controlName == "OSB2") {
                 if (getprop("sim/variant-id") == 0) {
                     return;
                 }
                 if (me.wpnType == "fall") {
                     me.at = -1;
                 }
-            } elsif (controlName == "OBS3") {
+            } elsif (controlName == "OSB3") {
                 if (getprop("sim/variant-id") == 0) {
                     return;
                 }
@@ -788,26 +788,26 @@ var DisplaySystem = {
                         me.wpn_.guidance = "gps";
                     }
                 }
-            } elsif (controlName == "OBS4") {
+            } elsif (controlName == "OSB4") {
                 if (getprop("sim/variant-id") == 0) {
                     return;
                 }
                 if (me.wpnType == "fall") {
                     me.ar = 25;
                 }                    
-            } elsif (controlName == "OBS5") {
+            } elsif (controlName == "OSB5") {
                 if (getprop("sim/variant-id") == 0) {
                     return;
                 }
                 if (me.wpnType == "fall") {
                     me.ar = -25;
                 }
-            } elsif (controlName == "OBS6") {
+            } elsif (controlName == "OSB6") {
                 if (getprop("sim/variant-id") == 0) {
                     return;
                 }
                 pylons.fcs.cycleLoadedWeapon();
-            } elsif (controlName == "OBS7") {
+            } elsif (controlName == "OSB7") {
                 if (getprop("sim/variant-id") == 0) {
                     return;
                 }
@@ -815,7 +815,7 @@ var DisplaySystem = {
                 if (me.wpn_ != nil and me.wpn_["powerOnRequired"] == 1) {
                     pylons.fcs.togglePowerOn();
                 }
-            } elsif (controlName == "OBS8") {
+            } elsif (controlName == "OSB8") {
                 if (getprop("sim/variant-id") == 0) {
                     return;
                 }
@@ -836,7 +836,7 @@ var DisplaySystem = {
                     }
                     pylons.fcs.setRRippleMode(rp);
                 }
-            } elsif (controlName == "OBS9") {
+            } elsif (controlName == "OSB9") {
                 if (getprop("sim/variant-id") == 0) {
                     return;
                 }
@@ -858,11 +858,11 @@ var DisplaySystem = {
                         snake.setCooling(me.cooling);
                     }
                 }
-            } elsif (controlName == "OBS10") {
+            } elsif (controlName == "OSB10") {
                 if (getprop("sim/variant-id") == 0) {
                     return;
                 }
-            } elsif (controlName == "OBS12") {
+            } elsif (controlName == "OSB12") {
                 if (getprop("sim/variant-id") == 0) {
                     return;
                 }
@@ -871,23 +871,23 @@ var DisplaySystem = {
                 } elsif (me.wpnType=="anti-rad") {
                     me.device.system.selectPage("PageHAS");
                 }
-            } elsif (controlName == "OBS13") {
+            } elsif (controlName == "OSB13") {
                 if (getprop("sim/variant-id") == 0) {
                     return;
                 }
                 if (me.wpnType == "heat") {
                     pylons.fcs.toggleXfov();
                 }
-            } elsif (controlName == "OBS14") {
+            } elsif (controlName == "OSB14") {
                 if (getprop("sim/variant-id") == 0) {
                     return;
                 }
                 if (me.wpnType == "gun") {
                     setprop("f16/avionics/strf", !getprop("f16/avionics/strf"));
                 }
-            } elsif (controlName == "OBS16") {
+            } elsif (controlName == "OSB16") {
                 me.device.swap();
-            } elsif (controlName == "OBS20") {
+            } elsif (controlName == "OSB20") {
                 switchTGP();
             }
 		},
@@ -923,20 +923,20 @@ var DisplaySystem = {
 
             me.wpnType = "";
             me.status = "";
-            me.obs3 = "";
-            me.obs5 = "";
-            me.obs6 = "";
-            me.obs8 = "";
-            me.obs7 = "";
-            me.obs9 = "";
-            me.obs10 = "";
-            me.obs12 = "";
-            me.obs13 = "";
-            me.obs14 = "";
+            me.osb3 = "";
+            me.osb5 = "";
+            me.osb6 = "";
+            me.osb8 = "";
+            me.osb7 = "";
+            me.osb9 = "";
+            me.osb10 = "";
+            me.osb12 = "";
+            me.osb13 = "";
+            me.osb14 = "";
             me.rippleDist = "";
             me.downAd = 0;
             me.upAd = 0;
-            me.obs9Frame = 0;
+            me.osb9Frame = 0;
             me.downA = 0;
             me.upA = 0;
             me.armtimer = "";            
@@ -947,11 +947,11 @@ var DisplaySystem = {
                     or me.wpn.type == "GBU-54" or me.wpn.type == "CBU-87" or me.wpn.type == "CBU-105" or me.wpn.type == "GBU-31" or me.wpn.type == "B61-7" or me.wpn.type == "B61-12") {
                     me.wpnType ="fall";
                     var nm = pylons.fcs.getDropMode();
-                    if (nm == fc.DROP_CCIP) {me.obs12 = "CCIP";me.obs13=armament.contact != nil and armament.contact.get_type() != armament.AIR?"PRE":"VIS";}
-                    if (nm == fc.DROP_CCRP) {me.obs12 = "CCRP";me.obs13="PRE"}
+                    if (nm == fc.DROP_CCIP) {me.osb12 = "CCIP";me.osb13=armament.contact != nil and armament.contact.get_type() != armament.AIR?"PRE":"VIS";}
+                    if (nm == fc.DROP_CCRP) {me.osb12 = "CCRP";me.osb13="PRE"}
                     var rp = pylons.fcs.getRippleMode();
                     var rpd = pylons.fcs.getRippleDist()*M2FT;
-                    me.obs8 = "RP "~rp;
+                    me.osb8 = "RP "~rp;
                     if (rp > 1) {
                         me.showDist = 1;
                     }
@@ -966,18 +966,18 @@ var DisplaySystem = {
                     me.upAd = rpd<400 and me.showDist;
                     if (me.wpn.type == "GBU-54") {
                         if (me.wpn.guidance == "gps-laser") {
-                            me.obs3 = "GPS-LASR";
+                            me.osb3 = "GPS-LASR";
                         } else {
-                            me.obs3 = "GPS";
+                            me.osb3 = "GPS";
                         }
                     }
                     me.rippleDist = sprintf("RP %3d FT",math.round(rpd));
 
                     if (me.wpn.powerOnRequired) {
-                        me.obs7 = me.wpn.isPowerOn()?"PWR\nON":"PWR\nOFF";
+                        me.osb7 = me.wpn.isPowerOn()?"PWR\nON":"PWR\nOFF";
                     }
 
-                    me.obs14 = "A-G";
+                    me.osb14 = "A-G";
                     me.wpn.arming_time += me.at;
                     if (me.wpn.arming_time < 0) {
                         me.wpn.arming_time = 0;
@@ -993,37 +993,37 @@ var DisplaySystem = {
                     me.downA = me.armtime>0;
                     me.upA = me.armtime<20;
                     me.armtimer = sprintf("AD %.2fSEC",me.armtime);#arming delay
-                    me.obs9 = getprop("controls/armament/dual")==1?"SGL":"PAIR";
+                    me.osb9 = getprop("controls/armament/dual")==1?"SGL":"PAIR";
                     me.setWeaponStatus();
                 } elsif (me.wpn.type == "AGM-65B" or me.wpn.type == "AGM-65D" or me.wpn.type == "AGM-84" or me.wpn.type == "AGM-119" or me.wpn.type == "AGM-158" or me.wpn.type == "AGM-154A") {
                     # Smart weapons that needs power on.
                     me.wpnType ="ground";
-                    me.obs14 = "A-G";
-                    me.obs7 = me.wpn.isPowerOn()?"PWR\nON":"PWR\nOFF";
+                    me.osb14 = "A-G";
+                    me.osb7 = me.wpn.isPowerOn()?"PWR\nON":"PWR\nOFF";
                     me.setWeaponStatus();
                 } elsif (me.wpn.type == "AGM-88") {
                     me.wpnType ="anti-rad";
-                    me.obs14 = "A-G";
-                    me.obs12 = "HAS";
-                    me.obs7 = me.wpn.isPowerOn()?"PWR\nON":"PWR\nOFF";
+                    me.osb14 = "A-G";
+                    me.osb12 = "HAS";
+                    me.osb7 = me.wpn.isPowerOn()?"PWR\nON":"PWR\nOFF";
                     me.setWeaponStatus();
                 } elsif (me.wpn.type == "AIM-9L" or me.wpn.type == "AIM-9M" or me.wpn.type == "AIM-9X") {
                     me.wpnType ="heat";
-                    me.obs9 = me.wpn.getWarm()==0?"COOL":"WARM";
-                    me.obs14 = "A-A";
-                    me.obs13 = pylons.fcs.isXfov()?"SCAN":"SPOT";
-                    me.obs9Frame = me.wpn.isCooling()==1?1:0;
-                    me.obs12 = pylons.bore>0?"BORE":"SLAV";
-                    me.obs3 = pylons.fcs.isAutocage()?"TD":"BP";
+                    me.osb9 = me.wpn.getWarm()==0?"COOL":"WARM";
+                    me.osb14 = "A-A";
+                    me.osb13 = pylons.fcs.isXfov()?"SCAN":"SPOT";
+                    me.osb9Frame = me.wpn.isCooling()==1?1:0;
+                    me.osb12 = pylons.bore>0?"BORE":"SLAV";
+                    me.osb3 = pylons.fcs.isAutocage()?"TD":"BP";
                     me.setWeaponStatus();
                 } elsif (me.wpn.type == "AIM-120" or me.wpn.type == "AIM-7") {
                     me.wpnType ="air";
-                    me.obs12 = "SLAV";
-                    me.obs14 = "A-A";
+                    me.osb12 = "SLAV";
+                    me.osb14 = "A-A";
                     me.setWeaponStatus();
                 } elsif (me.wpn.type == "20mm Cannon") {
                     me.wpnType ="gun";
-                    me.obs14 = getprop("f16/avionics/strf")?"STRF":"EEGS";
+                    me.osb14 = getprop("f16/avionics/strf")?"STRF":"EEGS";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.status = "MAL";
                     } else {
@@ -1032,9 +1032,9 @@ var DisplaySystem = {
                     }
                 } elsif (me.wpn.type == "LAU-68") {
                     me.wpnType ="rocket";
-                    me.obs14 = "A-G";
+                    me.osb14 = "A-G";
                     var rp = pylons.fcs.getRRippleMode();
-                    me.obs8 = "RP "~rp;
+                    me.osb8 = "RP "~rp;
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.status = "MAL";
                     } else {
@@ -1056,24 +1056,24 @@ var DisplaySystem = {
                     me.myammo = ""~me.myammo;
                 }
                 
-                me.obs6 = sprintf("%4s   %7s",me.status,me.myammo~me.wpn.typeShort);
+                me.osb6 = sprintf("%4s   %7s",me.status,me.myammo~me.wpn.typeShort);
                 if (0 and getprop("controls/armament/master-arm") != 1) {
-                    me.obs8 = "";# What was this for??
+                    me.osb8 = "";# What was this for??
                 }
             } else {
-                me.obs6 = "";
+                me.osb6 = "";
             }
             
-            me.device.controls["OBS3"].setControlText(me.obs3);
-            me.device.controls["OBS5"].setControlText(me.obs5);
-            me.device.controls["OBS6"].setControlText(me.obs6);
-            me.device.controls["OBS7"].setControlText(me.obs7);
-            me.device.controls["OBS8"].setControlText(me.obs8);
-            me.device.controls["OBS9"].setControlText(me.obs9, 1, me.obs9Frame);
-            me.device.controls["OBS10"].setControlText(me.obs10);
-            me.device.controls["OBS12"].setControlText(me.obs12);
-            me.device.controls["OBS13"].setControlText(me.obs13);
-            me.device.controls["OBS14"].setControlText(me.obs14);
+            me.device.controls["OSB3"].setControlText(me.osb3);
+            me.device.controls["OSB5"].setControlText(me.osb5);
+            me.device.controls["OSB6"].setControlText(me.osb6);
+            me.device.controls["OSB7"].setControlText(me.osb7);
+            me.device.controls["OSB8"].setControlText(me.osb8);
+            me.device.controls["OSB9"].setControlText(me.osb9, 1, me.osb9Frame);
+            me.device.controls["OSB10"].setControlText(me.osb10);
+            me.device.controls["OSB12"].setControlText(me.osb12);
+            me.device.controls["OSB13"].setControlText(me.osb13);
+            me.device.controls["OSB14"].setControlText(me.osb14);
 
             # send to layer:
             me.rangeVis = me.upA or me.downA;
@@ -1111,12 +1111,12 @@ var DisplaySystem = {
 			print("Exit ",me.name~" on ",me.device.name);
 		},
 		links: {
-			"OBS11": "PageFCR",
-			"OBS17": "PageHSD",
-			"OBS18": "PageSMSINV",
-			"OBS19": "PageMenu",
+			"OSB11": "PageFCR",
+			"OSB17": "PageHSD",
+			"OSB18": "PageSMSINV",
+			"OSB19": "PageMenu",
 		},
-        layers: ["SharedStations", "OBS1TO2ARROWS", "OBS4TO5ARROWS"],
+        layers: ["SharedStations", "OSB1TO2ARROWS", "OSB4TO5ARROWS"],
     },
 
 	PageFCRMenu: {
@@ -1138,27 +1138,27 @@ var DisplaySystem = {
 				me.isNew = 0;
 			}
 			me.device.resetControls();
-			me.device.controls["OBS1"].setControlText("CRM");
-			me.device.controls["OBS2"].setControlText("ACM");
-			me.device.controls["OBS3"].setControlText("SEA");
-			me.device.controls["OBS4"].setControlText("GM");
-			me.device.controls["OBS5"].setControlText("GMT");
-			me.device.controls["OBS11"].setControlText("FCR", 0);
-			me.device.controls["OBS18"].setControlText("SWAP");
+			me.device.controls["OSB1"].setControlText("CRM");
+			me.device.controls["OSB2"].setControlText("ACM");
+			me.device.controls["OSB3"].setControlText("SEA");
+			me.device.controls["OSB4"].setControlText("GM");
+			me.device.controls["OSB5"].setControlText("GMT");
+			me.device.controls["OSB11"].setControlText("FCR", 0);
+			me.device.controls["OSB18"].setControlText("SWAP");
 		},
 		controlAction: func (controlName) {
 			print(me.name,": ",controlName," activated on ",me.device.name);
-			if (controlName == "OBS18") {
+			if (controlName == "OSB18") {
 				me.device.swap();
-			} elsif (controlName == "OBS1") {
+			} elsif (controlName == "OSB1") {
                 radar_system.apg68Radar.setRootMode(0);
-            } elsif (controlName == "OBS2") {
+            } elsif (controlName == "OSB2") {
                 radar_system.apg68Radar.setRootMode(1,radar_system.apg68Radar.getPriorityTarget());
-            } elsif (controlName == "OBS3") {
+            } elsif (controlName == "OSB3") {
                 radar_system.apg68Radar.setRootMode(2);
-            } elsif (controlName == "OBS4") {
+            } elsif (controlName == "OSB4") {
                 radar_system.apg68Radar.setRootMode(3);
-            } elsif (controlName == "OBS5") {
+            } elsif (controlName == "OSB5") {
                 radar_system.apg68Radar.setRootMode(4);
             }
 		},
@@ -1169,12 +1169,12 @@ var DisplaySystem = {
 			print("Exit ",me.name~" on ",me.device.name);
 		},
 		links: {
-			"OBS1":  "PageFCR",
-			"OBS2":  "PageFCR",
-			"OBS3":  "PageFCR",
-			"OBS4":  "PageFCR",
-			"OBS5":  "PageFCR",
-			"OBS11": "PageMenu",
+			"OSB1":  "PageFCR",
+			"OSB2":  "PageFCR",
+			"OSB3":  "PageFCR",
+			"OSB4":  "PageFCR",
+			"OSB5":  "PageFCR",
+			"OSB11": "PageMenu",
 		},
 		layers: [],
 	},
@@ -1211,18 +1211,18 @@ var DisplaySystem = {
 				me.isNew = 0;
 			}
 			me.device.resetControls();
-			me.device.controls["OBS2"].setControlText("LOAD");
-			me.device.controls["OBS4"].setControlText("SAVE");
-			me.device.controls["OBS8"].setControlText("DTE", 0);
-			me.device.controls["OBS16"].setControlText("SWAP");
+			me.device.controls["OSB2"].setControlText("LOAD");
+			me.device.controls["OSB4"].setControlText("SAVE");
+			me.device.controls["OSB8"].setControlText("DTE", 0);
+			me.device.controls["OSB16"].setControlText("SWAP");
 		},
 		controlAction: func (controlName) {
 			print(me.name,": ",controlName," activated on ",me.device.name);
-			if (controlName == "OBS2") {#LOAD
+			if (controlName == "OSB2") {#LOAD
                 me.file_selector_dtc.open();
-            } elsif (controlName == "OBS4") {#SAVE
+            } elsif (controlName == "OSB4") {#SAVE
                 me.save_selector_dtc.open();
-            } elsif (controlName == "OBS16") {
+            } elsif (controlName == "OSB16") {
 				me.device.swap();
             }
 		},
@@ -1233,7 +1233,7 @@ var DisplaySystem = {
 			print("Exit ",me.name~" on ",me.device.name);
 		},
 		links: {
-			"OBS8":  "PageMenu",
+			"OSB8":  "PageMenu",
 		},
 		layers: [],
 	},
@@ -1260,39 +1260,39 @@ var DisplaySystem = {
 				me.isNew = 0;
 			}
 			me.device.resetControls();
-			me.device.controls["OBS14"].setControlText("CNTL", 0);
-			me.device.controls["OBS16"].setControlText("SWAP");
+			me.device.controls["OSB14"].setControlText("CNTL", 0);
+			me.device.controls["OSB16"].setControlText("SWAP");
 		},
 		controlAction: func (controlName) {
 			print(me.name,": ",controlName," activated on ",me.device.name);
-			if (controlName == "OBS3") {
+			if (controlName == "OSB3") {
                 radar_system.apg68Radar.targetHistory += 1;
                 if (radar_system.apg68Radar.targetHistory > 4) {
                     radar_system.apg68Radar.targetHistory = 1;
                 }
-            } elsif (controlName == "OBS6") {
+            } elsif (controlName == "OSB6") {
                 me.chan += 1;
                 if (me.chan > 4) me.chan = 1;
-            } elsif (controlName == "OBS8") {
+            } elsif (controlName == "OSB8") {
                 me.band = !me.band;
-            } elsif (controlName == "OBS16") {
+            } elsif (controlName == "OSB16") {
                 me.device.swap();
             }
 		},
 		update: func (noti = nil) {
-			me.device.controls["OBS3"].setControlText("TGT HIS\n"~radar_system.apg68Radar.targetHistory);
+			me.device.controls["OSB3"].setControlText("TGT HIS\n"~radar_system.apg68Radar.targetHistory);
             if (me.band == 0) {
-                me.device.controls["OBS8"].setControlText("BAND\nNARO");
+                me.device.controls["OSB8"].setControlText("BAND\nNARO");
             } else {
-                me.device.controls["OBS8"].setControlText("BAND\nWIDE");
+                me.device.controls["OSB8"].setControlText("BAND\nWIDE");
             }
-            me.device.controls["OBS6"].setControlText("CHAN\n"~me.chan);
+            me.device.controls["OSB6"].setControlText("CHAN\n"~me.chan);
 		},
 		exit: func {
 			print("Exit ",me.name~" on ",me.device.name);
 		},
 		links: {
-			"OBS14":  "PageFCR",
+			"OSB14":  "PageFCR",
 		},
 		layers: [],
 	},
@@ -1313,8 +1313,8 @@ var DisplaySystem = {
 			me.showRangeDown = 0;
 			me.showRangeUp = 0;
 			me.setupHSD();
-			me.device.controls["OBS3"].setControlText(me.get_HSD_centered()?"CEN":"DEP");
-            me.device.controls["OBS4"].setControlText(me.get_HSD_coupled()?"CPL":"DCPL");
+			me.device.controls["OSB3"].setControlText(me.get_HSD_centered()?"CEN":"DEP");
+            me.device.controls["OSB4"].setControlText(me.get_HSD_coupled()?"CPL":"DCPL");
 		},
 		setupHSD: func {
 			me.width  = me.device.resolution[0]*me.device.uvMap[0];
@@ -1524,20 +1524,20 @@ var DisplaySystem = {
 			}
 			me.device.resetControls();
 			
-			me.device.controls["OBS11"].setControlText("FCR");
-			me.device.controls["OBS16"].setControlText("SWAP");
-			me.device.controls["OBS17"].setControlText("HSD", 0);
-			me.device.controls["OBS18"].setControlText("SMS");
-			me.device.controls["OBS19"].setControlText("WPN");
-			me.device.controls["OBS20"].setControlText("TGP");
-			me.device.system.fetchLayer("OBS1TO2ARROWS").init(me, me.getOBS1TO2ARROWS);
+			me.device.controls["OSB11"].setControlText("FCR");
+			me.device.controls["OSB16"].setControlText("SWAP");
+			me.device.controls["OSB17"].setControlText("HSD", 0);
+			me.device.controls["OSB18"].setControlText("SMS");
+			me.device.controls["OSB19"].setControlText("WPN");
+			me.device.controls["OSB20"].setControlText("TGP");
+			me.device.system.fetchLayer("OSB1TO2ARROWS").init(me, me.getOSB1TO2ARROWS);
 		},
-		getOBS1TO2ARROWS: func {
+		getOSB1TO2ARROWS: func {
 			return [1, me.rangeText, me.showRangeDown, me.showRangeUp];
 		},
 		controlAction: func (controlName) {
 			print(me.name,": ",controlName," activated on ",me.device.name);
-			if (controlName == "OBS1") {
+			if (controlName == "OSB1") {
                 if (me.get_HSD_coupled()) return;
                 if (me.get_HSD_centered()) {
                     if (me.get_HSD_range_cen() == 5)
@@ -1566,7 +1566,7 @@ var DisplaySystem = {
                     else
                         me.set_HSD_range_dep(256);
                 }
-            } elsif (controlName == "OBS2") {
+            } elsif (controlName == "OSB2") {
                 if (me.get_HSD_coupled()) return;
                 if (me.get_HSD_centered()) {
                     if (me.get_HSD_range_cen() == 160)
@@ -1595,13 +1595,13 @@ var DisplaySystem = {
                     else
                         me.set_HSD_range_dep(8);
                 }
-            } elsif (controlName == "OBS3") {
+            } elsif (controlName == "OSB3") {
                 me.set_HSD_centered(!me.get_HSD_centered());
-            } elsif (controlName == "OBS4") {
+            } elsif (controlName == "OSB4") {
                 me.set_HSD_coupled(!me.get_HSD_coupled());
-            } elsif (controlName == "OBS16") {
+            } elsif (controlName == "OSB16") {
             	me.device.swap();
-            } elsif (controlName == "OBS20") {
+            } elsif (controlName == "OSB20") {
                 switchTGP();
             }
 		},
@@ -1614,8 +1614,8 @@ var DisplaySystem = {
             me.rdrprio = radar_system.apg68Radar.getPriorityTarget();
             me.selfCoord = geo.aircraft_position();
             me.selfHeading = radar_system.self.getHeading();
-            me.device.controls["OBS3"].setControlText(me.get_HSD_centered()?"CEN":"DEP");
-            me.device.controls["OBS4"].setControlText(me.get_HSD_coupled()?"CPL":"DCPL");
+            me.device.controls["OSB3"].setControlText(me.get_HSD_centered()?"CEN":"DEP");
+            me.device.controls["OSB4"].setControlText(me.get_HSD_coupled()?"CPL":"DCPL");
             if (me.get_HSD_coupled()) {
 
                 if (me.rdrrng == 5) {
@@ -2033,12 +2033,12 @@ var DisplaySystem = {
 			print("Exit ",me.name~" on ",me.device.name);
 		},
 		links: {
-			"OBS17":  "PageMenu",
-			"OBS18":  "PageSMSINV",
-			"OBS19":  "PageSMSWPN",
-			"OBS11":  "PageFCR",
+			"OSB17":  "PageMenu",
+			"OSB18":  "PageSMSINV",
+			"OSB19":  "PageSMSWPN",
+			"OSB11":  "PageFCR",
 		},
-		layers: ["OBS1TO2ARROWS"],
+		layers: ["OSB1TO2ARROWS"],
 	},
 
 	PageSMSINV: {
@@ -2313,13 +2313,13 @@ var DisplaySystem = {
 				me.isNew = 0;
 			}
 			me.device.resetControls();
-			me.device.controls["OBS6"].setControlText("S-J");
-			me.device.controls["OBS11"].setControlText("FCR");
-			me.device.controls["OBS16"].setControlText("SWAP");
-			me.device.controls["OBS17"].setControlText("HSD");
-			me.device.controls["OBS18"].setControlText("SMS", 0);
-			me.device.controls["OBS19"].setControlText("WPN");
-			me.device.controls["OBS20"].setControlText("TGP");
+			me.device.controls["OSB6"].setControlText("S-J");
+			me.device.controls["OSB11"].setControlText("FCR");
+			me.device.controls["OSB16"].setControlText("SWAP");
+			me.device.controls["OSB17"].setControlText("HSD");
+			me.device.controls["OSB18"].setControlText("SMS", 0);
+			me.device.controls["OSB19"].setControlText("WPN");
+			me.device.controls["OSB20"].setControlText("TGP");
 		},
 		selectPylon: func (sta) {
 			if (getprop("sim/variant-id") == 0) {
@@ -2329,32 +2329,32 @@ var DisplaySystem = {
 		},
 		controlAction: func (controlName) {
 			print(me.name,": ",controlName," activated on ",me.device.name);
-			if (controlName == "OBS2") {
+			if (controlName == "OSB2") {
                 me.selectPylon(3);
-            } elsif (controlName == "OBS3") {
+            } elsif (controlName == "OSB3") {
                 me.selectPylon(2);
-            } elsif (controlName == "OBS4") {
+            } elsif (controlName == "OSB4") {
                 me.selectPylon(1);
-            } elsif (controlName == "OBS5") {
+            } elsif (controlName == "OSB5") {
                 me.selectPylon(0);
-            } elsif (controlName == "OBS6") {
+            } elsif (controlName == "OSB6") {
                 if (getprop("sim/variant-id") == 0) {
                     return;
                 }
                 pylons.fcs.jettisonSelectedPylonContent();
-            } elsif (controlName == "OBS7") {
+            } elsif (controlName == "OSB7") {
                 me.selectPylon(5);
-            } elsif (controlName == "OBS8") {
+            } elsif (controlName == "OSB8") {
                 me.selectPylon(6);
-            } elsif (controlName == "OBS9") {
+            } elsif (controlName == "OSB9") {
                 me.selectPylon(7);
-            } elsif (controlName == "OBS10") {
+            } elsif (controlName == "OSB10") {
                 me.selectPylon(8);
-            } elsif (controlName == "OBS13") {
+            } elsif (controlName == "OSB13") {
                 me.selectPylon(4);
-            } elsif (controlName == "OBS16") {
+            } elsif (controlName == "OSB16") {
                 me.device.swap();
-            } elsif (controlName == "OBS20") {
+            } elsif (controlName == "OSB20") {
                 switchTGP();
             }
 		},
@@ -2437,10 +2437,10 @@ var DisplaySystem = {
 			print("Exit ",me.name~" on ",me.device.name);
 		},
 		links: {
-			"OBS11": "PageFCR",
-			"OBS17": "PageHSD",
-			"OBS18": "PageMenu",
-			"OBS19": "PageSMSWPN",
+			"OSB11": "PageFCR",
+			"OSB17": "PageHSD",
+			"OSB18": "PageMenu",
+			"OSB19": "PageSMSWPN",
 		},
 		layers: [],
 	},
@@ -2777,7 +2777,7 @@ var DisplaySystem = {
 	            .set("z-index",1)
 	            .hide();
 
-	        # OBS 8
+	        # OSB 8
 	        me.sp = me.p_RDR.createChild("text")
 	                .setTranslation(276*0.775, -482*0.5+10)
 	                .setText("S\nP")
@@ -2922,48 +2922,48 @@ var DisplaySystem = {
 				me.isNew = 0;
 			}
 			me.device.resetControls();
-			me.device.controls["OBS9"].setControlText("CZ");
-			me.device.controls["OBS14"].setControlText("CNTL");
-			me.device.controls["OBS16"].setControlText("SWAP");
-			me.device.controls["OBS17"].setControlText("HSD");
-			me.device.controls["OBS18"].setControlText("SMS");
-			me.device.controls["OBS19"].setControlText("WPN");
-			me.device.controls["OBS20"].setControlText("TGP");
-			me.device.system.fetchLayer("OBS1TO2ARROWS").init(me, me.getOBS1TO2ARROWS);
+			me.device.controls["OSB9"].setControlText("CZ");
+			me.device.controls["OSB14"].setControlText("CNTL");
+			me.device.controls["OSB16"].setControlText("SWAP");
+			me.device.controls["OSB17"].setControlText("HSD");
+			me.device.controls["OSB18"].setControlText("SMS");
+			me.device.controls["OSB19"].setControlText("WPN");
+			me.device.controls["OSB20"].setControlText("TGP");
+			me.device.system.fetchLayer("OSB1TO2ARROWS").init(me, me.getOSB1TO2ARROWS);
 		},
-		getOBS1TO2ARROWS: func {
+		getOSB1TO2ARROWS: func {
 			return [me.rangeVis, me.rangeText, me.showRangeDown, me.showRangeUp];
 		},
 		controlAction: func (controlName) {
 			print(me.name,": ",controlName," activated on ",me.device.name);
-			if (controlName == "OBS1") {
+			if (controlName == "OSB1") {
                 radar_system.apg68Radar.increaseRange();
-            } elsif (controlName == "OBS2") {
+            } elsif (controlName == "OSB2") {
                 radar_system.apg68Radar.decreaseRange();
-            } elsif (controlName == "OBS5") {
+            } elsif (controlName == "OSB5") {
                 #me.ppp.selectPage(me.my.rm_LIST);
                 #me.resetColor(me.ppp.buttons[4]);
                 #me.selectionBox.hide();
-            } elsif (controlName == "OBS13") {
+            } elsif (controlName == "OSB13") {
                 me.pressEXP = 1;
-            } elsif (controlName == "OBS12") {
+            } elsif (controlName == "OSB12") {
                 if (!radar_system.apg68Radar.currentMode.detectAIR) {
                     radar_system.apg68Radar.currentMode.toggleAuto();
                 } else {
                     radar_system.apg68Radar.cycleMode();
                 }
-            } elsif (controlName == "OBS3") {
+            } elsif (controlName == "OSB3") {
                 radar_system.apg68Radar.cycleAZ();
-            } elsif (controlName == "OBS4") {
+            } elsif (controlName == "OSB4") {
                 radar_system.apg68Radar.cycleBars();
-            } elsif (controlName == "OBS9") {
+            } elsif (controlName == "OSB9") {
                 cursorZero();
-            } elsif (controlName == "OBS10") {
+            } elsif (controlName == "OSB10") {
                 #if (rdrMode != RADAR_MODE_GM) return;
                 #setprop("instrumentation/radar/mode-hd-switch", me.model_index);
-            } elsif (controlName == "OBS16") {
+            } elsif (controlName == "OSB16") {
 				me.device.swap();
-            } elsif (controlName == "OBS20") {
+            } elsif (controlName == "OSB20") {
                 switchTGP();
             }
 		},
@@ -2979,8 +2979,8 @@ var DisplaySystem = {
             me.modeSwHD = noti.getproper("rdrHD");
 
 
-            me.device.controls["OBS12"].setControlText(radar_system.apg68Radar.currentMode.shortName);
-            me.device.controls["OBS11"].setControlText(radar_system.apg68Radar.currentMode.rootName, 0);
+            me.device.controls["OSB12"].setControlText(radar_system.apg68Radar.currentMode.shortName);
+            me.device.controls["OSB11"].setControlText(radar_system.apg68Radar.currentMode.rootName, 0);
 
             #
             # GM range rings
@@ -3029,9 +3029,9 @@ var DisplaySystem = {
 
             if (systime() - iff.last_interogate < 3.5) {
                 # IFF ongoing
-                me.device.controls["OBS5"].setControlText("M4",1,0,-25);
+                me.device.controls["OSB5"].setControlText("M4",1,0,-25);
             } else {
-                me.device.controls["OBS5"].setControlText("M",1,0,-25);
+                me.device.controls["OSB5"].setControlText("M",1,0,-25);
             }
             me.showExp = 0;
             if (me.DGFT or !radar_system.apg68Radar.currentMode.EXPsupport or (radar_system.apg68Radar.getPriorityTarget() != nil and radar_system.apg68Radar.currentMode.EXPfixedAim)) {
@@ -3052,10 +3052,10 @@ var DisplaySystem = {
                 radar_system.apg68Radar.currentMode.setExp(0);
             }
             if (exp) {
-                me.device.controls["OBS13"].setControlText(me.showExp?"EXP":"");
+                me.device.controls["OSB13"].setControlText(me.showExp?"EXP":"");
                 me.exp.setTranslation(cursor_pos);
             } else {
-                me.device.controls["OBS13"].setControlText(me.showExp?"NORM":"");
+                me.device.controls["OSB13"].setControlText(me.showExp?"NORM":"");
             }
             me.exp_zoom = exp;# should really be the only variable for this
             me.exp.setVisible(exp and !radar_system.apg68Radar.currentMode.EXPfixedAim);
@@ -3205,7 +3205,7 @@ var DisplaySystem = {
 
             me.az1.setVisible(radar_system.apg68Radar.showAZ());
             me.az2.setVisible(radar_system.apg68Radar.showAZ());
-            me.device.controls["OBS4"].setControlText(radar_system.apg68Radar.currentMode.showBars()?(radar_system.apg68Radar.getBars()~"B"):"",1,0,-25);
+            me.device.controls["OSB4"].setControlText(radar_system.apg68Radar.currentMode.showBars()?(radar_system.apg68Radar.getBars()~"B"):"",1,0,-25);
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
             me.rangeText = sprintf("%d",radar_system.apg68Radar.getRange());
@@ -3227,7 +3227,7 @@ var DisplaySystem = {
                 a = 6;
             }
 
-            me.device.controls["OBS3"].setControlText("A"~a,1,0,-25);
+            me.device.controls["OSB3"].setControlText("A"~a,1,0,-25);
 
             if (radar_system.apg68Radar.currentMode.detectAIR) {
                 me.az1.setTranslation((radar_system.apg68Radar.currentMode.azimuthTilt-radar_system.apg68Radar.currentMode.az)*me.wdt*0.5/60,0);
@@ -3790,13 +3790,13 @@ var DisplaySystem = {
 			if (me["p_RDR_image"] != nil) me.p_RDR_image.hide();
 		},
 		links: {
-			"OBS11": "PageFCRMenu",
-			"OBS14": "PageFCRCNTL",
-			"OBS17": "PageHSD",
-			"OBS18": "PageSMSINV",
-			"OBS19": "PageSMSWPN",
+			"OSB11": "PageFCRMenu",
+			"OSB14": "PageFCRCNTL",
+			"OSB17": "PageHSD",
+			"OSB18": "PageSMSINV",
+			"OSB19": "PageSMSWPN",
 		},
-		layers: ["OBS1TO2ARROWS"],
+		layers: ["OSB1TO2ARROWS"],
 	},
 
 	PageVoid: {
@@ -4149,7 +4149,7 @@ var DisplaySystem = {
 	                .setColor(colorLine3)
 	                .set("z-index",20)
 	                .setStrokeLineWidth(2);
-	        me.obsShow = [0,0,0,0,0];
+	        me.osbShow = [0,0,0,0,0];
         },
 		enter: func {
 			print("Enter ",me.name~" on ",me.device.name);
@@ -4158,14 +4158,14 @@ var DisplaySystem = {
 				me.isNew = 0;
 			}
 			me.device.resetControls();
-			me.device.controls["OBS7"].setControlText("RS");
-			me.device.controls["OBS11"].setControlText("HAS",0);
-			me.device.controls["OBS15"].setControlText("UFC");
-			me.device.controls["OBS16"].setControlText("SWAP");
-			me.device.controls["OBS17"].setControlText("HSD");
-			me.device.controls["OBS18"].setControlText("SMS");
-			me.device.controls["OBS19"].setControlText("WPN");
-			me.device.controls["OBS20"].setControlText("TGP");
+			me.device.controls["OSB7"].setControlText("RS");
+			me.device.controls["OSB11"].setControlText("HAS",0);
+			me.device.controls["OSB15"].setControlText("UFC");
+			me.device.controls["OSB16"].setControlText("SWAP");
+			me.device.controls["OSB17"].setControlText("HSD");
+			me.device.controls["OSB18"].setControlText("SMS");
+			me.device.controls["OSB19"].setControlText("WPN");
+			me.device.controls["OSB20"].setControlText("TGP");
 			me.device.system.fetchLayer("SharedStations").init(me, me.getType);
 		},
 		getType: func {
@@ -4173,26 +4173,26 @@ var DisplaySystem = {
 		},
 		controlAction: func (controlName) {
 			print(me.name,": ",controlName," activated on ",me.device.name);
-			if (controlName == "OBS1" or controlName == "OBS2" or controlName == "OBS3" or controlName == "OBS4" or controlName == "OBS5") {
+			if (controlName == "OSB1" or controlName == "OSB2" or controlName == "OSB3" or controlName == "OSB4" or controlName == "OSB5") {
                 if (me.sensor.handoffTarget != nil and me.sensor.handoffTarget["tblIdx"] == num(right(controlName,1))-1) {
                     me.sensor.handoffTarget = nil;
                 }
-            } elsif (controlName == "OBS7") {
+            } elsif (controlName == "OSB7") {
                 me.sensor.reset();
                 me.sensor.searchCounter += 1;
-            } elsif (controlName == "OBS12") {
+            } elsif (controlName == "OSB12") {
                 me.sensor.currtable += 1;
                 if (me.sensor.currtable > 2) me.sensor.currtable = 0;
                 me.sensor.handoffTarget = nil;
-            } elsif (controlName == "OBS13") {
+            } elsif (controlName == "OSB13") {
                 me.sensor.fov_desired += 1;
                 if (me.sensor.fov_desired > 3) me.sensor.fov_desired = 0;
-            } elsif (controlName == "OBS15") {
+            } elsif (controlName == "OSB15") {
                 ded.dataEntryDisplay.harmTablePage = me.sensor.currtable;
                 ded.dataEntryDisplay.page = ded.pHARM;
-            } elsif (controlName == "OBS16") {
+            } elsif (controlName == "OSB16") {
                 me.device.swap();
-            } elsif (controlName == "OBS20") {
+            } elsif (controlName == "OSB20") {
                 switchTGP();
             }
 		},
@@ -4278,7 +4278,7 @@ var DisplaySystem = {
 
             
             
-            me.device.controls["OBS12"].setControlText("TBL"~(me.sensor.currtable + 1));
+            me.device.controls["OSB12"].setControlText("TBL"~(me.sensor.currtable + 1));
             
             if (me.sensor.fov_desired == 1) {
                 me.fovTxt = "CTR";
@@ -4333,7 +4333,7 @@ var DisplaySystem = {
                 me.crossY2.setTranslation(0, me.fieldY+me.fieldH*0.25+2*me.fieldH*0.75/3);
                 me.crossY3.setTranslation(0, me.fieldY+me.fieldH*0.25+3*me.fieldH*0.75/3);
             }
-            me.device.controls["OBS13"].setControlText(me.fovTxt);
+            me.device.controls["OSB13"].setControlText(me.fovTxt);
 
             if (me.sensor.enabled) {
                 me.cycleTimeLeft = math.max(0,me.sensor.dura-(me.elapsed-me.sensor.searchStart));
@@ -4359,7 +4359,7 @@ var DisplaySystem = {
 
             if (noti.FrameCount == 1 and me.sensor.handoffTarget == nil) {
                 for (me.jj = 0; me.jj < 5;me.jj += 1) {
-                	me.obsShow[me.jj] = 1;
+                	me.osbShow[me.jj] = 1;
                 }
             }
 
@@ -4398,9 +4398,9 @@ var DisplaySystem = {
 
                 for (me.jj = 0; me.jj < 5;me.jj += 1) {
                     if (me.sensor.handoffTarget["tblIdx"] == me.jj) {
-                        me.obsShow[me.jj] = 0;
+                        me.osbShow[me.jj] = 0;
                     } else {
-                        me.obsShow[me.jj] = 1;
+                        me.osbShow[me.jj] = 1;
                     }
                 }
 
@@ -4506,11 +4506,11 @@ var DisplaySystem = {
                 me.radWeap.setContacts([]);
             }
             for (me.jj = 0; me.jj < 5;me.jj += 1) {
-            	var obs = "OBS"~(me.jj+1);
+            	var osb = "OSB"~(me.jj+1);
                 if (size(me.sensor.tables[me.sensor.currtable])>me.jj) {
-                    me.device.controls[obs].setControlText(me.sensor.tables[me.sensor.currtable][me.jj], me.obsShow[me.jj]);
+                    me.device.controls[osb].setControlText(me.sensor.tables[me.sensor.currtable][me.jj], me.osbShow[me.jj]);
                 } else {
-                	me.device.controls[obs].setControlText("");
+                	me.device.controls[osb].setControlText("");
                 }
             }
         },
@@ -4542,10 +4542,10 @@ var DisplaySystem = {
 			print("Exit ",me.name~" on ",me.device.name);
 		},
 		links: {
-			"OBS11": "PageMenu",
-			"OBS19": "PageSMSWPN",
-			"OBS18": "PageSMSINV",
-			"OBS17": "PageHSD",
+			"OSB11": "PageMenu",
+			"OSB19": "PageSMSWPN",
+			"OSB18": "PageSMSINV",
+			"OSB17": "PageHSD",
 		},
 		layers: ["SharedStations"],
 	},
@@ -4569,28 +4569,28 @@ var DisplaySystem = {
 				me.isNew = 0;
 			}
 			me.device.resetControls();
-			me.device.controls["OBS1"].setControlText("FCR");
-			me.device.controls["OBS2"].setControlText("TGP");
-			me.device.controls["OBS3"].setControlText("WPN");
-			me.device.controls["OBS4"].setControlText("TFR");
-			me.device.controls["OBS5"].setControlText("FLIR");
-			me.device.controls["OBS6"].setControlText("SMS");
-			me.device.controls["OBS7"].setControlText("HSD");
-			me.device.controls["OBS8"].setControlText("DTE");
-			me.device.controls["OBS9"].setControlText("TEST");
-			me.device.controls["OBS10"].setControlText("FLCS");
-			me.device.controls["OBS11"].setControlText("BLANK");
-			me.device.controls["OBS12"].setControlText("HAS");
-			me.device.controls["OBS14"].setControlText("RCCE");
-			me.device.controls["OBS15"].setControlText("RESET\n MENU");
-			me.device.controls["OBS16"].setControlText("SWAP");
-			me.device.controls["OBS20"].setControlText("TCN");
+			me.device.controls["OSB1"].setControlText("FCR");
+			me.device.controls["OSB2"].setControlText("TGP");
+			me.device.controls["OSB3"].setControlText("WPN");
+			me.device.controls["OSB4"].setControlText("TFR");
+			me.device.controls["OSB5"].setControlText("FLIR");
+			me.device.controls["OSB6"].setControlText("SMS");
+			me.device.controls["OSB7"].setControlText("HSD");
+			me.device.controls["OSB8"].setControlText("DTE");
+			me.device.controls["OSB9"].setControlText("TEST");
+			me.device.controls["OSB10"].setControlText("FLCS");
+			me.device.controls["OSB11"].setControlText("BLANK");
+			me.device.controls["OSB12"].setControlText("HAS");
+			me.device.controls["OSB14"].setControlText("RCCE");
+			me.device.controls["OSB15"].setControlText("RESET\n MENU");
+			me.device.controls["OSB16"].setControlText("SWAP");
+			me.device.controls["OSB20"].setControlText("TCN");
 		},
 		controlAction: func (controlName) {
 			print(me.name,": ",controlName," activated on ",me.device.name);
-			if (controlName == "OBS16") {
+			if (controlName == "OSB16") {
 				me.device.swap();
-			} elsif (controlName == "OBS2") {
+			} elsif (controlName == "OSB2") {
                 switchTGP();
             }
 		},
@@ -4601,12 +4601,12 @@ var DisplaySystem = {
 			print("Exit ",me.name~" on ",me.device.name);
 		},
 		links: {
-			"OBS1":  "PageFCR",
-			"OBS3":  "PageSMSWPN",
-			"OBS6":  "PageSMSINV",
-			"OBS7":  "PageHSD",
-			"OBS8":  "PageDTE",
-			"OBS12": "PageHAS",
+			"OSB1":  "PageFCR",
+			"OSB3":  "PageSMSWPN",
+			"OSB6":  "PageSMSINV",
+			"OSB7":  "PageHSD",
+			"OSB8":  "PageDTE",
+			"OSB12": "PageHAS",
 		},
 		layers: [],
 	},
@@ -4780,7 +4780,7 @@ var main = func (module) {
 
 	width *= 0.795;
 
-	var obsPositions = [
+	var osbPositions = [
 		[0, 1.5*height/7],
 		[0, 2.5*height/7],
 		[0, 3.5*height/7],
@@ -4815,8 +4815,8 @@ var main = func (module) {
 	leftMFD.setDisplaySystem(mfdSystem1);
 #	rightMFD.setDisplaySystem(mfdSystem2);
 
-	mfdSystem1.initDevice(0, obsPositions, 20);
-#	mfdSystem2.initDevice(1, obsPositions, 20);
+	mfdSystem1.initDevice(0, osbPositions, 20);
+#	mfdSystem2.initDevice(1, osbPositions, 20);
 
 	mfdSystem1.initPages();
 #	mfdSystem2.initPages();
