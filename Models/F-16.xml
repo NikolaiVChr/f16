@@ -841,8 +841,8 @@
     <texture n="2">
       <type>white</type>
     </texture>
-    <metallic-factor type="float">1.0</metallic-factor>
-    <roughness-factor type="float">0.0</roughness-factor>
+    <metallic-factor type="float">0.5</metallic-factor>
+    <roughness-factor type="float">0.00</roughness-factor>
     <!-- Emissive -->
     <texture n="3">
       <type>white</type>
