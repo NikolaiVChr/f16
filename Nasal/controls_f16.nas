@@ -41,8 +41,8 @@ var dogfight = func {
         pylons.fcs.selectWeapon("20mm Cannon");
         ded.dataEntryDisplay.page = ded.pEWS;
         radar_system.apg68Radar.setRootMode(1, prio);
-        displays.mfdSystem1.selectPage("PageRDR");
-        displays.mfdSystem2.selectPage("PageSMSWPN");
+        displays.leftMFD.system.selectPage("PageRDR");
+        displays.rightMFD.system.selectPage("PageSMSWPN");
         setprop("f16/avionics/strf",0);
         if (pylons.fcs != nil and getprop("controls/armament/master-arm")) {
             foreach(var snake;pylons.fcs.getAllOfType("AIM-9L")) {
