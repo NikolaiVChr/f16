@@ -1258,6 +1258,7 @@ var DisplaySystem = {
 			print(me.name," on ",me.device.name," is being setup");
 		},
 		enter: func {
+			if (me.device["DGFT"]) {me.device.system.selectPage("PageFCR");return;}# TODO: check it works
 			print("Enter ",me.name~" on ",me.device.name);
 			if (me.isNew) {
 				me.setup();
@@ -1379,7 +1380,6 @@ var DisplaySystem = {
         	me.chan = 2;
 		},
 		enter: func {
-			if (me["DGFT"]) me.device.system.selectPage("PageFCR");# TODO: check it works
 			print("Enter ",me.name~" on ",me.device.name);
 			if (me.isNew) {
 				me.setup();
@@ -3065,7 +3065,7 @@ var DisplaySystem = {
 			}
 			me.device.resetControls();
 			me.device.controls["OSB9"].setControlText("CZ");
-			me.device.controls["OSB14"].setControlText("CNTL");
+			me.device.controls["OSB15"].setControlText("CNTL");
 			me.device.controls["OSB16"].setControlText("SWAP");
 			me.device.controls["OSB17"].setControlText("HSD");
 			me.device.controls["OSB18"].setControlText("SMS");
@@ -3112,6 +3112,7 @@ var DisplaySystem = {
 		update: func (noti) {
             me.p_RDR_image.setVisible(radar_system.apg68Radar.enabled);
             me.DGFT = noti.getproper("dgft");
+            me.device.DGFT = me.DGFT;
             me.IMSOI = me.device.soi;
 			
             me.modeSw = noti.getproper("rdrMode");
@@ -3933,7 +3934,7 @@ var DisplaySystem = {
 		},
 		links: {
 			"OSB11": "PageFCRMenu",
-			"OSB14": "PageFCRCNTL",
+			"OSB15": "PageFCRCNTL",
 			"OSB17": "PageHSD",
 			"OSB18": "PageSMSINV",
 			"OSB19": "PageSMSWPN",
