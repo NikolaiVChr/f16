@@ -114,7 +114,7 @@ var DisplayDevice = {
 			me.tempActionValue = node.getValue();
 			
 			if (me.tempActionValue > 0) {
-				#print(me.name,": ",prefix, " action :", me.tempActionValue);
+				#printDebug(me.name,": ",prefix, " action :", me.tempActionValue);
 				me.controlAction(type, prefix~(me.tempActionValue), me.tempActionValue);
 			}
 		};
@@ -291,7 +291,7 @@ var DisplayDevice = {
 	},
 
 	initPage: func (page) {
-		print(me.name," init page ",page.name);
+		printDebug(me.name," init page ",page.name);
 		me.tempGrp = me.canvas.createGroup()
 						.set("z-index", 5)
 						.set("font","LiberationFonts/LiberationMono-Regular.ttf")
@@ -301,7 +301,7 @@ var DisplayDevice = {
 	},
 
 	initLayer: func (layer) {
-		print(me.name," init layer ",layer.name);
+		printDebug(me.name," init layer ",layer.name);
 		me.tempGrp = me.canvas.createGroup()
 						.set("z-index", 200)
 						.set("font","LiberationFonts/LiberationMono-Regular.ttf")
@@ -413,22 +413,22 @@ var DisplaySystem = {
 #				if (me.doubleTimerRunning == nil) {
 #					settimer(func me.controlActionDouble(), 0.25);
 #					me.doubleTimerRunning = me.tempLink;
-#					print("Timer starting: ",me.doubleTimerRunning);
+#					printDebug("Timer starting: ",me.doubleTimerRunning);
 #				} elsif (me.doubleTimerRunning == me.tempLink) {
 #					me.doubleTimerRunning = nil;
 #					me.system.osbSelect = [me.tempLink, me.system.currPage];
 #					me.system.selectPage("PageOSB");
-#					print("Doubleclick special");
+#					printDebug("Doubleclick special");
 #				} else {
 #					me.doubleTimerRunning = nil;
 					me.system.selectPage(me.tempLink);
-#					print("Timer interupted. Going to ",me.tempLink);
+#					printDebug("Timer interupted. Going to ",me.tempLink);
 #				}
 			}
 		};
 
 #		me.device.controlActionDouble = func {
-#			print("Timer ran: ",me.doubleTimerRunning);
+#			printDebug("Timer ran: ",me.doubleTimerRunning);
 #			if (me.doubleTimerRunning != nil) {
 #				me.system.selectPage(me.doubleTimerRunning);
 #				me.doubleTimerRunning = nil;
@@ -491,7 +491,7 @@ var DisplaySystem = {
 			return me.instance;
 		},
 		setup: func {
-			print(me.name," on ",me.device.name," is being setup");
+			printDebug(me.name," on ",me.device.name," is being setup");
 			me.pageText = me.group.createChild("text")
 				.set("z-index", 10)
 				.setColor(colorText1)
@@ -501,7 +501,7 @@ var DisplaySystem = {
 				.setText("Select desired OSB");
 		},
 		enter: func {
-			print("Enter ",me.name~" on ",me.device.name);
+			printDebug("Enter ",me.name~" on ",me.device.name);
 			if (me.isNew) {
 				me.setup();
 				me.isNew = 0;
@@ -518,7 +518,7 @@ var DisplaySystem = {
 			me.device.controls["OSB19"].setControlText("CANCEL");
 		},
 		controlAction: func (controlName) {
-			print(me.name,": ",controlName," activated on ",me.device.name);
+			printDebug(me.name,": ",controlName," activated on ",me.device.name);
 			if (controlName == "OSB19") {
 				me.device.system.selectPage(me.device.system.osbSelect[1].name);
 			} elsif (controlName == "OSB10") {
@@ -550,7 +550,7 @@ var DisplaySystem = {
 		update: func (noti = nil) {			
 		},
 		exit: func {
-			print("Exit ",me.name~" on ",me.device.name);
+			printDebug("Exit ",me.name~" on ",me.device.name);
 		},
 		links: {
 		},
@@ -818,8 +818,8 @@ var DisplaySystem = {
 	    	me.page = page;
 	    },
 	    update: func (noti = nil) {
-	    	if (me["callback"] == nil) {print("Callback is nil");return;}
-	    	if (me["page"] == nil) {print("Callback context is nil");return;}
+	    	if (me["callback"] == nil) {printDebug("Callback is nil");return;}
+	    	if (me["page"] == nil) {printDebug("Callback context is nil");return;}
 	    	me.info = call(me.callback, [], me.page, var err = []);
 	    	if(size(err)) {
 				foreach(var i;err) {
@@ -870,7 +870,7 @@ var DisplaySystem = {
 			return me.instance;
 		},
 		enter: func {
-			print("Enter ",me.name~" on ",me.device.name);
+			printDebug("Enter ",me.name~" on ",me.device.name);
 			if (me.isNew) {
 				me.setup();
 				me.isNew = 0;
@@ -892,7 +892,7 @@ var DisplaySystem = {
 			return [me.dist, me.distA, me.distDownA, me.distUpA];
 		},
 		controlAction: func (controlName) {
-			print(me.name,": ",controlName," activated on ",me.device.name);
+			printDebug(me.name,": ",controlName," activated on ",me.device.name);
 			if (controlName == "OSB1") {
                 if (getprop("sim/variant-id") == 0) {
                     return;
@@ -1029,7 +1029,7 @@ var DisplaySystem = {
             }
 		},
 		setup: func {
-			print(me.name," on ",me.device.name," is being setup");
+			printDebug(me.name," on ",me.device.name," is being setup");
 
 			# Init vars used in layer callbacks:
 	        me.rangeVis = 0;
@@ -1179,7 +1179,7 @@ var DisplaySystem = {
                         else me.status = "RDY";
                     }
                 } else {
-                    #print(me.wpn.type~" not supported in WPN page.");
+                    #printDebug(me.wpn.type~" not supported in WPN page.");
                     me.wpnType ="void";
                 }
                 me.myammo = pylons.fcs.getAmmo();
@@ -1245,7 +1245,7 @@ var DisplaySystem = {
             }
         },
         exit: func {
-			print("Exit ",me.name~" on ",me.device.name);
+			printDebug("Exit ",me.name~" on ",me.device.name);
 		},
 		links: {
 			"OSB11": "PageFCR",
@@ -1266,11 +1266,11 @@ var DisplaySystem = {
 			return me.instance;
 		},
 		setup: func {
-			print(me.name," on ",me.device.name," is being setup");
+			printDebug(me.name," on ",me.device.name," is being setup");
 		},
 		enter: func {
 			if (me.device["DGFT"]) {me.device.system.selectPage("PageFCR");return;}# TODO: check it works
-			print("Enter ",me.name~" on ",me.device.name);
+			printDebug("Enter ",me.name~" on ",me.device.name);
 			if (me.isNew) {
 				me.setup();
 				me.isNew = 0;
@@ -1285,7 +1285,7 @@ var DisplaySystem = {
 			me.device.controls["OSB18"].setControlText("SWAP");
 		},
 		controlAction: func (controlName) {
-			print(me.name,": ",controlName," activated on ",me.device.name);
+			printDebug(me.name,": ",controlName," activated on ",me.device.name);
 			if (controlName == "OSB18") {
 				me.device.swap();
 			} elsif (controlName == "OSB1") {
@@ -1304,7 +1304,7 @@ var DisplaySystem = {
 			
 		},
 		exit: func {
-			print("Exit ",me.name~" on ",me.device.name);
+			printDebug("Exit ",me.name~" on ",me.device.name);
 		},
 		links: {
 			"OSB1":  "PageFCR",
@@ -1327,7 +1327,7 @@ var DisplaySystem = {
 			return me.instance;
 		},
 		setup: func {
-			print(me.name," on ",me.device.name," is being setup");
+			printDebug(me.name," on ",me.device.name," is being setup");
 			var defaultDirInFileSelector = getprop("/sim/fg-home") ~ "/Export";
 	        var load_stpts = func(path) {
 	                        steerpoints.loadSTPTs(path.getValue());
@@ -1343,7 +1343,7 @@ var DisplaySystem = {
 	                      dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.f16dtc"]);
 		},
 		enter: func {
-			print("Enter ",me.name~" on ",me.device.name);
+			printDebug("Enter ",me.name~" on ",me.device.name);
 			if (me.isNew) {
 				me.setup();
 				me.isNew = 0;
@@ -1355,7 +1355,7 @@ var DisplaySystem = {
 			me.device.controls["OSB16"].setControlText("SWAP");
 		},
 		controlAction: func (controlName) {
-			print(me.name,": ",controlName," activated on ",me.device.name);
+			printDebug(me.name,": ",controlName," activated on ",me.device.name);
 			if (controlName == "OSB2") {#LOAD
                 me.file_selector_dtc.open();
             } elsif (controlName == "OSB4") {#SAVE
@@ -1368,7 +1368,7 @@ var DisplaySystem = {
 			
 		},
 		exit: func {
-			print("Exit ",me.name~" on ",me.device.name);
+			printDebug("Exit ",me.name~" on ",me.device.name);
 		},
 		links: {
 			"OSB8":  "PageMenu",
@@ -1394,12 +1394,12 @@ var DisplaySystem = {
 			return me.instance;
 		},
 		setup: func {
-			print(me.name," on ",me.device.name," is being setup");
+			printDebug(me.name," on ",me.device.name," is being setup");
 			me.band = 0;
         	me.chan = 2;
 		},
 		enter: func {
-			print("Enter ",me.name~" on ",me.device.name);
+			printDebug("Enter ",me.name~" on ",me.device.name);
 			if (me.isNew) {
 				me.setup();
 				me.isNew = 0;
@@ -1409,7 +1409,7 @@ var DisplaySystem = {
 			me.device.controls["OSB16"].setControlText("SWAP");
 		},
 		controlAction: func (controlName) {
-			print(me.name,": ",controlName," activated on ",me.device.name);
+			printDebug(me.name,": ",controlName," activated on ",me.device.name);
 			if (controlName == "OSB3") {
                 radar_system.apg68Radar.targetHistory += 1;
                 if (radar_system.apg68Radar.targetHistory > 4) {
@@ -1434,7 +1434,7 @@ var DisplaySystem = {
             me.device.controls["OSB6"].setControlText("CHAN\n"~me.chan);
 		},
 		exit: func {
-			print("Exit ",me.name~" on ",me.device.name);
+			printDebug("Exit ",me.name~" on ",me.device.name);
 		},
 		links: {
 			"OSB15":  "PageFCR",
@@ -1460,7 +1460,7 @@ var DisplaySystem = {
 			return me.instance;
 		},
 		setup: func {
-			print(me.name," on ",me.device.name," is being setup");
+			printDebug(me.name," on ",me.device.name," is being setup");
 			me.up = 0;
 			me.rangeText = "";
 			me.showRangeDown = 0;
@@ -1668,7 +1668,7 @@ var DisplaySystem = {
 	    get_HSD_range_cen: func DisplaySystem.PageHSD.HSD_range_cen,
 	    get_HSD_range_dep: func DisplaySystem.PageHSD.HSD_range_dep,
 		enter: func {
-			print("Enter ",me.name~" on ",me.device.name);
+			printDebug("Enter ",me.name~" on ",me.device.name);
 			if (me.isNew) {
 				me.setup();
 				me.isNew = 0;
@@ -1687,7 +1687,7 @@ var DisplaySystem = {
 			return [1, me.rangeText, me.showRangeDown, me.showRangeUp];
 		},
 		controlAction: func (controlName) {
-			print(me.name,": ",controlName," activated on ",me.device.name);
+			printDebug(me.name,": ",controlName," activated on ",me.device.name);
 			if (controlName == "OSB1") {
                 if (me.get_HSD_coupled()) return;
                 if (me.get_HSD_centered()) {
@@ -1893,7 +1893,7 @@ var DisplaySystem = {
                         me.legX = me.legRangePixels*math.sin(me.legBearing*D2R);
                         me.legY = -me.legRangePixels*math.cos(me.legBearing*D2R);
                         #if (me.j == 1) {
-                            #print();
+                            #printDebug();
                             #printf("Dist=%d bear=%d rangePix=%d   %d,%d",me.legDistance*M2NM,me.legBearing,me.legRangePixels,me.legX,me.legY);
                             #printf("%.3f, %.3f",me.wp.lat,me.wp.lon);
                             #printf("%.3f, %.3f",me.wp.wp_lat,me.wp.wp_lon);
@@ -2005,7 +2005,7 @@ var DisplaySystem = {
                         me.mark[mi].show();
                     }
                 }
-                #print("");print("");print("");
+                #printDebug("");printDebug("");printDebug("");
                 for (var l = 0; l<steerpoints.number_of_threat_circles;l+=1) {
                     # threat circles
                     me.ci = me.threat_c[l];
@@ -2015,7 +2015,7 @@ var DisplaySystem = {
                     if (me.cnu == nil) {
                         me.ci.hide();
                         me.cit.hide();
-                        #print("Ignoring ", 300+l);
+                        #printDebug("Ignoring ", 300+l);
                         continue;
                     }
                     me.la = me.cnu.lat;
@@ -2044,7 +2044,7 @@ var DisplaySystem = {
                         me.ci.setScale(me.legScale);
                         me.ci.setStrokeLineWidth(1/me.legScale);
                         me.co = me.ra > me.legDistance?colorCircle1:colorCircle2;
-                        #print("Painting ", 300+l," in ", me.ra > me.legDistance?"red":"yellow");
+                        #printDebug("Painting ", 300+l," in ", me.ra > me.legDistance?"red":"yellow");
                         me.ci.setColor(me.co);
                         me.ci.show();
                         me.cit.setText(me.ty);
@@ -2132,7 +2132,7 @@ var DisplaySystem = {
 
 
             me.distPixels = (me.c_rng/me.rdrrng)*me.rdrRangePixels;
-            #    if (me.blue) print("through ",me.desig," LoS:",!contact.get_behind_terrain());
+            #    if (me.blue) printDebug("through ",me.desig," LoS:",!contact.get_behind_terrain());
 
 
             me.rot = 22.5*math.round( geo.normdeg((me.c_hea-me.selfHeading))/22.5 )*D2R;#Show rotation in increments of 22.5 deg
@@ -2181,7 +2181,7 @@ var DisplaySystem = {
             }
         },
 		exit: func {
-			print("Exit ",me.name~" on ",me.device.name);
+			printDebug("Exit ",me.name~" on ",me.device.name);
 		},
 		links: {
 			"OSB17":  "PageMenu",
@@ -2210,7 +2210,7 @@ var DisplaySystem = {
 			return me.instance;
 		},
 		setup: func {
-			print(me.name," on ",me.device.name," is being setup");
+			printDebug(me.name," on ",me.device.name," is being setup");
 			me.setupSMS();
 		},
 		setupSMS: func {
@@ -2467,7 +2467,7 @@ var DisplaySystem = {
 	           .hide();
 	    },
 		enter: func {
-			print("Enter ",me.name~" on ",me.device.name);
+			printDebug("Enter ",me.name~" on ",me.device.name);
 			if (me.isNew) {
 				me.setup();
 				me.isNew = 0;
@@ -2488,7 +2488,7 @@ var DisplaySystem = {
             pylons.fcs.selectPylon(sta);
 		},
 		controlAction: func (controlName) {
-			print(me.name,": ",controlName," activated on ",me.device.name);
+			printDebug(me.name,": ",controlName," activated on ",me.device.name);
 			if (controlName == "OSB2") {
                 me.selectPylon(3);
             } elsif (controlName == "OSB3") {
@@ -2594,7 +2594,7 @@ var DisplaySystem = {
             }
         },
 		exit: func {
-			print("Exit ",me.name~" on ",me.device.name);
+			printDebug("Exit ",me.name~" on ",me.device.name);
 		},
 		links: {
 			"OSB11": "PageFCR",
@@ -2624,7 +2624,7 @@ var DisplaySystem = {
 			return me.instance;
 		},
 		setup: func {
-			print(me.name," on ",me.device.name," is being setup");
+			printDebug(me.name," on ",me.device.name," is being setup");
 			me.setupRadar(me.device.name=="LeftMFD"?0:1);
 			me.model_index = me.device.name=="LeftMFD"?0:1;
 
@@ -3086,7 +3086,7 @@ var DisplaySystem = {
 	            .setColor(colorLines);
 	    },
 		enter: func {
-			print("Enter ",me.name~" on ",me.device.name);
+			printDebug("Enter ",me.name~" on ",me.device.name);
 			if (me.isNew) {
 				me.setup();
 				me.isNew = 0;
@@ -3105,7 +3105,7 @@ var DisplaySystem = {
 			return [me.rangeVis, me.rangeText, me.showRangeDown, me.showRangeUp];
 		},
 		controlAction: func (controlName) {
-			print(me.name,": ",controlName," activated on ",me.device.name);
+			printDebug(me.name,": ",controlName," activated on ",me.device.name);
 			if (controlName == "OSB1") {
                 radar_system.apg68Radar.increaseRange();
             } elsif (controlName == "OSB2") {
@@ -3957,7 +3957,7 @@ var DisplaySystem = {
             }
         },
 		exit: func {
-			print("Exit ",me.name~" on ",me.device.name);
+			printDebug("Exit ",me.name~" on ",me.device.name);
 			if (me["p_RDR_image"] != nil) me.p_RDR_image.hide();
 		},
 		links: {
@@ -3980,10 +3980,10 @@ var DisplaySystem = {
 			return me.instance;
 		},
 		setup: func {
-			print(me.name," on ",me.device.name," is being setup");
+			printDebug(me.name," on ",me.device.name," is being setup");
 		},
 		enter: func {
-			print("Enter ",me.name~" on ",me.device.name);
+			printDebug("Enter ",me.name~" on ",me.device.name);
 			if (me.isNew) {
 				me.setup();
 				me.isNew = 0;
@@ -3992,13 +3992,13 @@ var DisplaySystem = {
 			me.device.pullUpCue(0);
 		},
 		controlAction: func (controlName) {
-			print(me.name,": ",controlName," activated on ",me.device.name);
+			printDebug(me.name,": ",controlName," activated on ",me.device.name);
 		},
 		update: func (noti = nil) {
 			
 		},
 		exit: func {
-			print("Exit ",me.name~" on ",me.device.name);
+			printDebug("Exit ",me.name~" on ",me.device.name);
 		},
 		links: {
 		},
@@ -4015,7 +4015,7 @@ var DisplaySystem = {
 			return me.instance;
 		},
 		setup: func {
-			print(me.name," on ",me.device.name," is being setup");
+			printDebug(me.name," on ",me.device.name," is being setup");
 			me.setupGrid();
 		},
 		setupGrid: func () {
@@ -4053,7 +4053,7 @@ var DisplaySystem = {
 	            .setColor(colorLines);
 	    },
 		enter: func {
-			print("Enter ",me.name~" on ",me.device.name);
+			printDebug("Enter ",me.name~" on ",me.device.name);
 			if (me.isNew) {
 				me.setup();
 				me.isNew = 0;
@@ -4062,13 +4062,13 @@ var DisplaySystem = {
 			me.device.pullUpCue(0);
 		},
 		controlAction: func (controlName) {
-			print(me.name,": ",controlName," activated on ",me.device.name);
+			printDebug(me.name,": ",controlName," activated on ",me.device.name);
 		},
 		update: func (noti = nil) {
 			
 		},
 		exit: func {
-			print("Exit ",me.name~" on ",me.device.name);
+			printDebug("Exit ",me.name~" on ",me.device.name);
 		},
 		links: {
 		},
@@ -4085,7 +4085,7 @@ var DisplaySystem = {
 			return me.instance;
 		},
 		setup: func {
-			print(me.name," on ",me.device.name," is being setup");
+			printDebug(me.name," on ",me.device.name," is being setup");
 			me.setupCube();
 		},
 		setupCube: func () {
@@ -4126,7 +4126,7 @@ var DisplaySystem = {
 	            .setColorFill(colorCubeGreen);
 	    },
 		enter: func {
-			print("Enter ",me.name~" on ",me.device.name);
+			printDebug("Enter ",me.name~" on ",me.device.name);
 			if (me.isNew) {
 				me.setup();
 				me.isNew = 0;
@@ -4135,13 +4135,13 @@ var DisplaySystem = {
 			me.device.pullUpCue(0);
 		},
 		controlAction: func (controlName) {
-			print(me.name,": ",controlName," activated on ",me.device.name);
+			printDebug(me.name,": ",controlName," activated on ",me.device.name);
 		},
 		update: func (noti = nil) {
 			
 		},
 		exit: func {
-			print("Exit ",me.name~" on ",me.device.name);
+			printDebug("Exit ",me.name~" on ",me.device.name);
 		},
 		links: {
 		},
@@ -4159,7 +4159,7 @@ var DisplaySystem = {
 			return me.instance;
 		},
 		setup: func {
-			print(me.name," on ",me.device.name," is being setup");
+			printDebug(me.name," on ",me.device.name," is being setup");
 			me.elapsed = 0;
 	        me.slew_c_last = slew_c;
 	        me.wdt = displayWidth;
@@ -4324,7 +4324,7 @@ var DisplaySystem = {
 	        me.osbShow = [0,0,0,0,0];
         },
 		enter: func {
-			print("Enter ",me.name~" on ",me.device.name);
+			printDebug("Enter ",me.name~" on ",me.device.name);
 			if (me.isNew) {
 				me.setup();
 				me.isNew = 0;
@@ -4344,7 +4344,7 @@ var DisplaySystem = {
 			return ["AGM-88"];
 		},
 		controlAction: func (controlName) {
-			print(me.name,": ",controlName," activated on ",me.device.name);
+			printDebug(me.name,": ",controlName," activated on ",me.device.name);
 			if (controlName == "OSB1" or controlName == "OSB2" or controlName == "OSB3" or controlName == "OSB4" or controlName == "OSB5") {
                 if (me.sensor.handoffTarget != nil and me.sensor.handoffTarget["tblIdx"] == num(right(controlName,1))-1) {
                     me.sensor.handoffTarget = nil;
@@ -4371,7 +4371,7 @@ var DisplaySystem = {
 		update: func (noti = nil) {
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
-            #print("\nHAD update:\n=======");
+            #printDebug("\nHAD update:\n=======");
 
             me.harmSelected = 0;
             if (pylons.fcs != nil) {
@@ -4446,7 +4446,7 @@ var DisplaySystem = {
             me.elapsed = noti.getproper("elapsed");
             me.cursor.setTranslation(cursor_posHAS);
             me.cursor.setVisible(me.sensor.handoffTarget == nil);
-            if (0 and cursor_click==0) print(cursor_posHAS[0],", ",cursor_posHAS[1]+displayHeight, "  click: ", cursor_click);
+            if (0 and cursor_click==0) printDebug(cursor_posHAS[0],", ",cursor_posHAS[1]+displayHeight, "  click: ", cursor_click);
 
             
             
@@ -4610,8 +4610,8 @@ var DisplaySystem = {
                     me.check = !(me.txt_count > me.iter);
                     me.checkFresh = me.check and me.items[me.txt_count].discover < me.elapsed-me.sensor.searchStart and me.items[me.txt_count].discoverSCT==me.sensor.searchCounter;
                     me.checkFading = me.check and me.items[me.txt_count]["discoverSCTShown"] == me.sensor.searchCounter-1;
-                    #if (me.check) print(" fresh ",me.checkFresh,", fading ",me.checkFading, ", timetoshow ", me.items[me.txt_count].discover);
-                    #if (me.check) print("  time ",me.items[me.txt_count].discover > systime()-me.sensor.searchStart,",  shown ",me.items[me.txt_count].discoverSCT," now",me.sensor.searchCounter);
+                    #if (me.check) printDebug(" fresh ",me.checkFresh,", fading ",me.checkFading, ", timetoshow ", me.items[me.txt_count].discover);
+                    #if (me.check) printDebug("  time ",me.items[me.txt_count].discover > systime()-me.sensor.searchStart,",  shown ",me.items[me.txt_count].discoverSCT," now",me.sensor.searchCounter);
                     if (!me.check or (!me.checkFresh and !me.checkFading) ) {
                         me.rdrTxt[me.txt_count].hide();
                         continue;
@@ -4638,11 +4638,11 @@ var DisplaySystem = {
                     if (me.handoffTarget != nil) {
                         me.sensor.handoffTime = me.elapsed;
                         me.sensor.handoffTarget = me.handoffTarget;
-                        #print("MFD: Clicked handoff on ",!cursor_click?"LEFT":"RIGHT");#TODO: need right display
+                        #printDebug("MFD: Clicked handoff on ",!cursor_click?"LEFT":"RIGHT");#TODO: need right display
                     }
                     cursor_click = -1;
                 } elsif(cursor_click != -1) {
-                    #print("MFD: Failed click. It was ",!cursor_click?"LEFT":"RIGHT");#TODO: need right display
+                    #printDebug("MFD: Failed click. It was ",!cursor_click?"LEFT":"RIGHT");#TODO: need right display
                 }
             } else {
                 # Not searching
@@ -4711,7 +4711,7 @@ var DisplaySystem = {
             return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
         },
 		exit: func {
-			print("Exit ",me.name~" on ",me.device.name);
+			printDebug("Exit ",me.name~" on ",me.device.name);
 		},
 		links: {
 			"OSB11": "PageMenu",
@@ -4732,10 +4732,10 @@ var DisplaySystem = {
 			return me.instance;
 		},
 		setup: func {
-			print(me.name," on ",me.device.name," is being setup");
+			printDebug(me.name," on ",me.device.name," is being setup");
 		},
 		enter: func {
-			print("Enter ",me.name~" on ",me.device.name);
+			printDebug("Enter ",me.name~" on ",me.device.name);
 			if (me.isNew) {
 				me.setup();
 				me.isNew = 0;
@@ -4759,7 +4759,7 @@ var DisplaySystem = {
 			me.device.controls["OSB20"].setControlText("TCN");
 		},
 		controlAction: func (controlName) {
-			print(me.name,": ",controlName," activated on ",me.device.name);
+			printDebug(me.name,": ",controlName," activated on ",me.device.name);
 			if (controlName == "OSB16") {
 				me.device.swap();
 			} elsif (controlName == "OSB2") {
@@ -4770,7 +4770,7 @@ var DisplaySystem = {
 			
 		},
 		exit: func {
-			print("Exit ",me.name~" on ",me.device.name);
+			printDebug("Exit ",me.name~" on ",me.device.name);
 		},
 		links: {
 			"OSB1":  "PageFCR",
@@ -5042,6 +5042,12 @@ var unload = func {
 	swapAircraftSOI = nil;
 	f16_mfd.del();
 }
+
+var debugDisplays = 0;
+var printDebug = func {if (debugDisplays) {call(print,arg,nil,nil,var err = []); if(size(err)) print (err[0]);}};
+var printfDebug = func {if (debugDisplays) {var str = call(sprintf,arg,nil,nil,var err = []);if(size(err))print (err[0]);else print (str);}};
+# Note calling printf directly with call() will sometimes crash the sim, so we call sprintf instead.
+
 
 #TODO: rockerbuttons as controls
 #      resolutions
