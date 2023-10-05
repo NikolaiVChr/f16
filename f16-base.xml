@@ -1599,12 +1599,12 @@
             <file>Aircraft/f16/Nasal/mfd.nas</file>
             <file>Aircraft/f16/Nasal/HUD/hud_math.nas</file>
             <file>Aircraft/f16/Nasal/HUD/HUD_main.nas</file>
-            <file>Aircraft/f16/Nasal/MFD/MFD_main.nas</file>
+            <!--file>Aircraft/f16/Nasal/MFD/MFD_main.nas</file-->
             <!--<file>Aircraft/f16/Nasal/blackout.nas</file>-->
         </f16>
-        <displays>
+        <!--displays> loaded via another method in f16.nas
             <file>Aircraft/f16/Nasal/MFD/display-system.nas</file>
-        </displays>
+        </displays-->
         <liveries>
             <file>Aircraft/f16/Nasal/liveries.nas</file>
         </liveries>

@@ -41,14 +41,8 @@ var dogfight = func {
         pylons.fcs.selectWeapon("20mm Cannon");
         ded.dataEntryDisplay.page = ded.pEWS;
         radar_system.apg68Radar.setRootMode(1, prio);
-        f16.f16_mfd.MFDl.resetColorAll();
-        f16.f16_mfd.MFDl.PFD.selectPage(f16.f16_mfd.MFDl.p_RDR);
-        f16.f16_mfd.MFDl.p_RDR.selectionBox.show();
-        f16.f16_mfd.MFDl.p_RDR.setSelection(nil, f16.f16_mfd.MFDl.PFD.buttons[10], 10);
-        f16.f16_mfd.MFDr.resetColorAll();
-        f16.f16_mfd.MFDr.PFD.selectPage(f16.f16_mfd.MFDr.p_WPN);
-        f16.f16_mfd.MFDr.p_WPN.selectionBox.show();
-        f16.f16_mfd.MFDr.p_WPN.setSelection(nil, f16.f16_mfd.MFDr.PFD.buttons[18], 18);
+        displays.mfdSystem1.selectPage("PageRDR");
+        displays.mfdSystem2.selectPage("PageSMSWPN");
         setprop("f16/avionics/strf",0);
         if (pylons.fcs != nil and getprop("controls/armament/master-arm")) {
             foreach(var snake;pylons.fcs.getAllOfType("AIM-9L")) {

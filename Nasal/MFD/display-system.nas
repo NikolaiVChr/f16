@@ -281,6 +281,10 @@ var DisplayDevice = {
 		me.aircraftSOI = no;
 	},
 
+	getSOIPrio: func {
+		return me.system.getSOIPrio();
+	},
+
 	setControlTextColors: func (foreground, background) {
 		me.colorFront = foreground;
 		me.colorBack  = background;
@@ -360,6 +364,10 @@ var DisplaySystem = {
 		me.device.addSOILines();
 		me.device.addSOIText("NOT SOI");
 		me.device.setSOI(1);
+	},
+
+	getSOIPrio: func {
+		return me.currPage.supportSOI?me.currPage.soiPrio:-1;
 	},
 
 	initPage: func (pageName) {
@@ -2622,6 +2630,7 @@ var DisplaySystem = {
 		name: "PageFCR",
 		isNew: 1,
 		supportSOI: 1,
+		soiPrio: 10,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageFCR]};
 			me.instance.group = nil;
@@ -4156,6 +4165,7 @@ var DisplaySystem = {
 		name: "PageHAS",
 		isNew: 1,
 		supportSOI: 1,
+		soiPrio: 5,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageHAS]};
 			me.instance.group = nil;
@@ -4798,7 +4808,7 @@ updateFlyup = func(notification=nil) {
             flyupVis = 0;
         }
         leftMFD.pullUpCue(flyupVis);
-#        rightMFD.pullUpCue(flyupVis);
+        rightMFD.pullUpCue(flyupVis);
     #}
 }
 
@@ -4844,7 +4854,7 @@ var F16MfdRecipient =
             {
             	updateFlyup(notification);
                 leftMFD.update(notification);
-#                rightMFD.update(notification);
+                rightMFD.update(notification);
                 return emesary.Transmitter.ReceiptStatus_OK;
             }
             return emesary.Transmitter.ReceiptStatus_NotProcessed;
@@ -4952,11 +4962,11 @@ var main = func (module) {
 	leftMFD = DisplayDevice.new("LeftMFD", [width,height], [0.795, 1], "MFDimage1", "tranbg.png");
 	leftMFD.setColorBackground(colorBackground);#todo fix
 
-#	rightMFD = DisplayDevice.new("RightMFD", [width,height], [0.795, 1], "MFDimage2", "tranbg.png");
-#	rightMFD.setColorBackground(colorBackground);
+	rightMFD = DisplayDevice.new("RightMFD", [width,height], [0.795, 1], "MFDimage2", "tranbg.png");
+	rightMFD.setColorBackground(colorBackground);
 
 	leftMFD.setControlTextColors(colorText1, colorBackground);
-#	rightMFD.setControlTextColors(colorText1, colorBackground);
+	rightMFD.setControlTextColors(colorText1, colorBackground);
 
 	width *= 0.795;
 
@@ -4986,28 +4996,28 @@ var main = func (module) {
 		[5.65*width/7, height],
 	];
 
-#	leftMFD.setSwapDevice(rightMFD);
-#	rightMFD.setSwapDevice(leftMFD);
+	leftMFD.setSwapDevice(rightMFD);
+	rightMFD.setSwapDevice(leftMFD);
 
 	var mfdSystem1 = DisplaySystem.new();
-#	var mfdSystem2 = DisplaySystem.new();
+	var mfdSystem2 = DisplaySystem.new();
 
 	leftMFD.setDisplaySystem(mfdSystem1);
-#	rightMFD.setDisplaySystem(mfdSystem2);
+	rightMFD.setDisplaySystem(mfdSystem2);
 
 	mfdSystem1.initDevice(0, osbPositions, 20);
-#	mfdSystem2.initDevice(1, osbPositions, 20);
+	mfdSystem2.initDevice(1, osbPositions, 20);
 
 	mfdSystem1.initPages();
-#	mfdSystem2.initPages();
+	mfdSystem2.initPages();
 
 	leftMFD.setF16SOI(2);
-#	rightMFD.setF16SOI(3);
+	rightMFD.setF16SOI(3);
 
 	#theMaster = leftMFD.controls.master;
 
 	mfdSystem1.selectPage("PageFCR");
-#	mfdSystem2.selectPage("PageHSD");
+	mfdSystem2.selectPage("PageHSD");
 
 	f16_mfd = F16MfdRecipient.new("F16-MFD2");
 	emesary.GlobalTransmitter.Register(f16_mfd);
@@ -5033,6 +5043,3 @@ var unload = func {
 #TODO: rockerbuttons as controls
 #      resolutions
 #      crash exit GM
-#      re-enable right
-#      soi system
-#      other places change pages here

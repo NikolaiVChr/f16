@@ -780,7 +780,7 @@ var data = nil;
 var sending = nil;
 var dlink_loop = func {
   if (getprop("instrumentation/datalink/data") != 0) return;
-  foreach(contact; f16.vector_aicontacts_links) {
+  foreach(contact; displays.vector_aicontacts_links) {
     if (contact.isVisible()) {
       data = datalink.get_data(contact.get_Callsign());
       if (data != nil  and data.on_link()) {

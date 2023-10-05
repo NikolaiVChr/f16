@@ -1671,7 +1671,7 @@ settimer( func { ignoreLoop(); }, 5);
 
 setlistener("controls/armament/alt-rel-button", func (node) {setprop("controls/armament/trigger", node.getValue());});
 
-var SOI = int(rand() * 3)+1; # 1 to 3
+var SOI = 1;#int(rand() * 3)+1; # 1 to 3
 
 var MFDControlsNodes = {
     dmsX: props.globals.getNode("controls/displays/display-management-switch-x"),
@@ -1702,7 +1702,7 @@ setlistener("controls/displays/display-management-switch-y", func() {
         SOI = 1;
     } else {
         if (SOI == 1) {
-            SOI = 2;
+            autoPrioritySOI();#As per manual
         } elsif (SOI == 2) {
             SOI = 3;
         } else {
@@ -1710,6 +1710,20 @@ setlistener("controls/displays/display-management-switch-y", func() {
         }
     }
 }, 0, 0);
+
+var autoPrioritySOI = func {
+    var hud_prio = 0;
+    var mfd_left = displays.leftMFD.getSOIPrio();
+    var mfd_right = displays.rightMFD.getSOIPrio();
+    var soi = 1;
+    if (mfd_left > hud_prio) {
+        soi = 2;
+    }
+    if (mfd_right > mfd_left) {
+        soi = 3;
+    }
+    SOI = soi;
+}
 
 setlistener("controls/displays/cursor-slew-y-delta", func() {
     if (SOI == 1) { return; }
@@ -1773,7 +1787,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
         }
 
         hack.init();
-        startupMFD();
+        #startupMFD();
         medium_fast.init();
         slow.init();
         #fx = flex.WingFlexer.new(1, 250, 25, 500, 0.375, "f16/wings/fuel-and-stores-kg","f16/wings/fuel-and-stores-kg","sim/systems/wingflexer/","f16/wings/lift-lbf");
@@ -1805,7 +1819,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
         setprop("/consumables/fuel/total-fuel-lbs-100", 700);
         setprop("/consumables/fuel/total-fuel-lbs-1000", 1000);
         if (getprop("f16/disable-custom-view") != 1) view.manager.register("Cockpit View", pilot_view_limiter);
-        emesary.GlobalTransmitter.Register(f16_mfd);
+        #emesary.GlobalTransmitter.Register(f16_mfd);
         emesary.GlobalTransmitter.Register(f16_hud);
         #emesary.GlobalTransmitter.Register(awg_9.aircraft_radar);
         #execTimer.start();
@@ -1852,17 +1866,18 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
         #rp.setMainFile("radar-prototype.nas");#
         #rp.load();#
         #-- load MFD as reloadable module
-        var hmd = modules.Module.new("f16_MFD"); # Module name
-        hmd.setDebug(0); # 0=(mostly) silent; 1=print setlistener and maketimer calls to console; 2=print also each listener hit, be very careful with this!
-        hmd.setFilePath(getprop("/sim/aircraft-dir")~"/Nasal/MFD");
-        hmd.setMainFile("display-system.nas");
-        hmd.load();
+        var mfd = modules.Module.new("f16_MFD"); # Module name
+        mfd.setDebug(0); # 0=(mostly) silent; 1=print setlistener and maketimer calls to console; 2=print also each listener hit, be very careful with this!
+        mfd.setFilePath(getprop("/sim/aircraft-dir")~"/Nasal/MFD");
+        mfd.setMainFile("display-system.nas");
+        mfd.setNamespace("displays");
+        mfd.load();
         setprop("sim/rendering/headshake/enabled",0);# This does not work very well in F-16. So this makes people have to enable it explicit to have it. Don't know why its forced on us by default.
         # debug:
         #
         #screen.property_display.add("fdm/jsbsim/fcs/fly-by-wire/pitch/pitch-rate-lower-lag");
         #screen.property_display.add("fdm/jsbsim/fcs/fly-by-wire/pitch/bias-final");
-        startDLListener();
+        displays.startDLListener();
         file_selector_dtc = gui.FileSelector.new(
             callback: load_stpts, title: "Load data", button: "Load",
             dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.f16dtc"]);
