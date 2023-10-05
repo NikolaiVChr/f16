@@ -98,11 +98,10 @@ var F16_HUD = {
         obj.sx = sx*uv_used;
 
         obj.canvas.addPlacement({"node": canvas_item});
-        obj.canvas.setColorBackground(1, 1, 1, -1);
+        obj.canvas.setColorBackground(1, 1, 1, 0);
 
         # Create a group for the parsed elements
         obj.svg = obj.canvas.createGroup().hide();
-        obj.main_mask = obj.canvas.createGroup().set("z-index",20000);
 
         # Parse an SVG file and add the parsed elements to the given group
         canvas.parsesvg(obj.svg, svgname);
@@ -113,8 +112,12 @@ var F16_HUD = {
                 "name": "F16 HUD",
                     "size": [1024,1024],
                     "view": [sx,sy],
-                    "mipmapping": 0,
-                    "additive-blend": 1# bool
+                    #"mipmapping": 1,
+                    #"additive-blend": 0,# bool
+                    #"coverage-samples":2,# int
+                    #"color-samples":2,# int
+                    #"anisotropy":2.0,# float
+                    #"render-always":0,#bool
                     });
 
         obj.svg.setTranslation (tran_x,tran_y);
@@ -323,29 +326,6 @@ var F16_HUD = {
                 .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL);
         append(obj.total, obj.speed_type);
         append(obj.total, obj.alt_type);
-        obj.super_mask = obj.main_mask.createChild("image")
-                .setTranslation(0,0)
-                #.set("blend-source-rgb","one")
-                #.set("blend-source-alpha","one")
-                .set("blend-source","zero")
-                .set("blend-destination-rgb","one")
-                .set("blend-destination-alpha","one-minus-src-alpha")
-                #.set("blend-destination","zero")
-                .set("src", "Aircraft/f16/Nasal/HUD/main_mask.png");
-        if (use_war_hud) {
-            #obj.super_mask.hide();
-            obj.super_mask.setScale(1.132,1);
-        }
-        obj.speed_mask = obj.svg.createChild("image")
-                .setTranslation(-27+0.21*sx*uv_used,sy*0.245-6)
-                .set("z-index",10000)
-                #.set("blend-source-rgb","one")
-                #.set("blend-source-alpha","one")
-                .set("blend-source","zero")
-                .set("blend-destination-rgb","one")
-                .set("blend-destination-alpha","one-minus-src-alpha")
-                #.set("blend-destination","zero")
-                .set("src", "Aircraft/f16/Nasal/HUD/speed_mask.png");
         obj.speed_frame = obj.svg.createChild("path")
                 .set("z-index",10001)
                 .moveTo(2+0.20*sx*uv_used,sy*0.245)
@@ -359,10 +339,6 @@ var F16_HUD = {
                 append(obj.total, obj.speed_frame);
         obj.speed_curr = obj.svg.createChild("text")
                 .set("z-index",10002)
-                .set("blend-source-rgb","one")
-                .set("blend-source-alpha","one")
-                .set("blend-destination-rgb","one")
-                .set("blend-destination-alpha","one")
                 .setText("425")
                 .setTranslation(0.18*sx*uv_used,sy*0.245)
                 .setAlignment("right-center")
@@ -370,16 +346,6 @@ var F16_HUD = {
                 .setFont(HUD_FONT)
                 .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL);
 append(obj.total, obj.speed_curr);
-        obj.alt_mask = obj.svg.createChild("image")
-                .setTranslation(5+3+0.79*sx*uv_used-10,sy*0.245-6)
-                .set("z-index",10000)
-                #.set("blend-source-rgb","one")
-                #.set("blend-source-alpha","one")
-                .set("blend-source","zero")
-                .set("blend-destination-rgb","one")
-                .set("blend-destination-alpha","one-minus-src-alpha")
-                #.set("blend-destination","zero")
-                .set("src", "Aircraft/f16/Nasal/HUD/alt_mask.png");
         obj.alt_frame = obj.svg.createChild("path")
                 .set("z-index",10001)
                 .moveTo(8-2+0.80*sx*uv_used-10,sy*0.245)
@@ -393,10 +359,6 @@ append(obj.total, obj.speed_curr);
                 append(obj.total, obj.alt_frame);
         obj.alt_curr = obj.svg.createChild("text")
                 .set("z-index",10002)
-                .set("blend-source-rgb","one")
-                .set("blend-source-alpha","one")
-                .set("blend-destination-rgb","one")
-                .set("blend-destination-alpha","one")
                 .setText("88888")
                 .setTranslation(4+0.82*sx*uv_used-10,sy*0.245+3.5)
                 .setAlignment("left-bottom-baseline")
@@ -404,17 +366,6 @@ append(obj.total, obj.speed_curr);
                 .setFont(HUD_FONT)
                 .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL);
                 append(obj.total, obj.alt_curr);
-        obj.head_mask = obj.svg.createChild("image")
-                .setTranslation(-10+0.5*sx*uv_used,sy*0.1-20)
-                .set("z-index",10000)
-                #.set("blend-source-rgb","one")
-                #.set("blend-source-alpha","one")
-                .set("blend-source","zero")
-                .set("blend-destination-rgb","one")
-                .set("blend-destination-alpha","one-minus-src-alpha")
-                #.set("blend-destination","zero")
-                .set("src", "Aircraft/f16/Nasal/HUD/head_mask.png");
-                #append(obj.total, obj.head_mask);
         obj.head_frame = obj.svg.createChild("path")
                 .set("z-index",10001)
                 .moveTo(10+0.50*sx*uv_used,sy*0.1-10)
@@ -427,10 +378,6 @@ append(obj.total, obj.speed_curr);
                 append(obj.total, obj.head_frame);
         obj.head_curr = obj.svg.createChild("text")
                 .set("z-index",10002)
-                .set("blend-source-rgb","one")
-                .set("blend-source-alpha","one")
-                .set("blend-destination-rgb","one")
-                .set("blend-destination-alpha","one")
                 .setText("360")
                 .setTranslation(0.5*sx*uv_used,sy*0.1-12)
                 .setAlignment("center-bottom")
@@ -1619,7 +1566,7 @@ append(obj.total, obj.speed_curr);
                                             obj.alt_type.setText("");
                                             obj.alt_range.hide();
                                             obj.alt_curr.hide();
-                                            obj.alt_mask.hide();
+                                            
                                             obj.alt_frame.hide();
                                             obj.ralt.hide();
                                             obj.radalt_box.hide();
@@ -1661,7 +1608,7 @@ append(obj.total, obj.speed_curr);
                                             obj.radalt_box.hide();
                                             obj.thermometerScaleGrp.hide();
                                             obj.alt_curr.show();
-                                            obj.alt_mask.show();
+                                            
                                             obj.alt_frame.show();
                                             if (!obj.hidingScales) {
                                                 obj.alti_indicator.show();
@@ -1677,7 +1624,7 @@ append(obj.total, obj.speed_curr);
                                             obj.radalt_box.show();
                                             obj.thermometerScaleGrp.hide();
                                             obj.alt_curr.show();
-                                            obj.alt_mask.show();
+                                            
                                             obj.alt_frame.show();
                                             if (!obj.hidingScales) {
                                                 obj.alti_indicator.show();
@@ -1748,12 +1695,12 @@ append(obj.total, obj.speed_curr);
                                           if (hdp.getproper("gear_down")) {
                                               obj.heading_tape_positionY = -10;
                                               obj.head_curr.setTranslation(0.5*sx*uv_used,sy*0.1-12);
-                                              obj.head_mask.setTranslation(-10+0.5*sx*uv_used,sy*0.1-20);
+                                              
                                               obj.head_frame.setTranslation(0,0);
                                           } else {
                                               obj.heading_tape_positionY = 95;
                                               obj.head_curr.setTranslation(0.5*sx*uv_used,sy*0.1-12+105);
-                                              obj.head_mask.setTranslation(-10+0.5*sx*uv_used,sy*0.1-20+105);
+                                              
                                               obj.head_frame.setTranslation(0,105);
                                           }
                                           if (hdp.getproper("servHead")) {
@@ -3450,7 +3397,7 @@ var F16HudRecipient =
     new: func(_ident)
     {
         var new_class = emesary.Recipient.new(_ident~".HUD");
-        new_class.HUDobj = F16_HUD.new("Nasal/HUD/HUD.svg", "HUDImage2", 340,260, 0,0);
+        new_class.HUDobj = F16_HUD.new("Nasal/HUD/HUD.svg", "HUDImage10", 340,260, 0,0);
 
         new_class.Receive = func(notification)
         {

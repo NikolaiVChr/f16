@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PropertyList>
+  <name>Aircraft/f16/Models/Effects/glass/glass-ext</name>
+  <inherits-from>Effects/model-pbr-transparent</inherits-from>
+  <parameters>
+    <metallic-factor type="float">1.0</metallic-factor>
+    <roughness-factor type="float">1.0</roughness-factor>
+    <base-color-factor type="vec4d">1.0 1.0 1.0 1.0</base-color-factor>
+    <emissive-factor type="vec3d">0.0 0.0 0.0</emissive-factor>
+  </parameters>
+</PropertyList>

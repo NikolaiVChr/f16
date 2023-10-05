@@ -831,24 +831,11 @@
  </effect>
 
  <effect>
+  <!--inherits-from>Aircraft/f16/Models/Effects/glass/glass-ext</inherits-from-->
   <inherits-from>Effects/model-pbr-transparent</inherits-from>
   <parameters>
-    <!-- Normalmap -->
-    <texture n="1">
-      <type>null-normalmap</type>
-    </texture>
-    <!-- ORM Texture (Occlusion R, Roughness G and Metallic B) -->
-    <texture n="2">
-      <type>white</type>
-    </texture>
     <metallic-factor type="float">0.5</metallic-factor>
-    <roughness-factor type="float">0.00</roughness-factor>
-    <!-- Emissive -->
-    <texture n="3">
-      <type>white</type>
-    </texture>
-    <!-- Double Sided -->
-    <cull-face>back</cull-face>
+    <roughness-factor type="float">0.01</roughness-factor>
   </parameters>
   <object-name>CanopyForwardOutside</object-name>
   <object-name>CanopyBackOutside</object-name>
@@ -3137,13 +3124,13 @@
   <shininess-prop>f16/scene/shininess</shininess-prop>
  </animation-->
 
- <animation>
+ <!--animation>
   <type>material</type>
   <object-name>Logos</object-name>
   <property-base>sim/model/livery-logo</property-base>
   <texture-prop>texture</texture-prop>
   <texture>f16trans.png</texture>
- </animation>
+ </animation-->
 
 <model>
  <name>Pushback</name>
