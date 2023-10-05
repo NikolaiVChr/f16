@@ -65,7 +65,7 @@ var DisplayDevice = {
 		var device = {parents : [DisplayDevice] };
 		device.canvas = canvas.new({
                 			"name": name,
-                           	"size": [1024,1024],
+                           	"size": resolution,
                             "view": resolution,
                     		"mipmapping": 1
                     	});
@@ -232,9 +232,9 @@ var DisplayDevice = {
         me.pullup_cue = me.canvas.createGroup().set("z-index", 20000);
         me.pullup_cue.createChild("path")
            .moveTo(0, 0)
-           .lineTo(552*0.795, 482)
-           .moveTo(0, 482)
-           .lineTo(552*0.795, 0)
+           .lineTo(me.uvMap[0]*me.resolution[0], me.uvMap[1]*me.resolution[1])
+           .moveTo(0, me.uvMap[1]*me.resolution[1])
+           .lineTo(me.uvMap[0]*me.resolution[0], 0)
            .setStrokeLineWidth(3)
            .setColor(colorCircle1);
     },
@@ -265,7 +265,7 @@ var DisplayDevice = {
 				.setColor(me.colorFront)
 				.setAlignment("center-center")
 				.setTranslation(me.uvMap[0]*me.resolution[0]*0.5, me.uvMap[1]*me.resolution[1]*0.30)
-				.setFontSize(20)
+				.setFontSize(me.fontSize)
 				.setText(info);
 		return me.soiText;
 	},
@@ -501,8 +501,8 @@ var DisplaySystem = {
 				.set("z-index", 10)
 				.setColor(colorText1)
 				.setAlignment("center-center")
-				.setTranslation(me.device.uvMap[0]*me.device.resolution[0]*0.5, me.device.uvMap[1]*me.device.resolution[1]*0.30)
-				.setFontSize(20)
+				.setTranslation(displayWidthHalf, displayHeight*0.30)
+				.setFontSize(me.device.fontSize)
 				.setText("Select desired OSB");
 		},
 		enter: func {
@@ -562,6 +562,14 @@ var DisplaySystem = {
 		layers: [],
 	},
 
+#  ██       █████  ██    ██ ███████ ██████      ███████ ████████  █████  
+#  ██      ██   ██  ██  ██  ██      ██   ██     ██         ██    ██   ██ 
+#  ██      ███████   ████   █████   ██████      ███████    ██    ███████ 
+#  ██      ██   ██    ██    ██      ██   ██          ██    ██    ██   ██ 
+#  ███████ ██   ██    ██    ███████ ██   ██     ███████    ██    ██   ██ 
+#                                                                        
+#                                                                        
+
 	SharedStations: {
 		name: "SharedStations",
 		new: func {
@@ -569,10 +577,10 @@ var DisplaySystem = {
 			return layer;
 		},
 		setup: func {
-			me.group.setTranslation(276*0.795, 482);
+			me.group.setTranslation(displayWidthHalf, displayHeight);
 			me.sta      = setsize([], 9);# 9 stations
 	        me.staFrame = setsize([], 9);
-	        var staPosY = -482*0.20;
+	        var staPosY = -displayHeight*0.20;
 	        var staFont = 17;
 	        var staStroke = 1.5;
 	        var staX = 7;
@@ -580,7 +588,7 @@ var DisplaySystem = {
 	        var staW = 15;
 	        var staH = 19;
 	        me.sta[0] = me.group.createChild("text")
-	           .setTranslation(276*0.795 * -0.85, staPosY)
+	           .setTranslation(displayWidthHalf * -0.85, staPosY)
 	           .setAlignment("center-center")
 	           .setText("1")
 	           .set("z-index",12)
@@ -588,7 +596,7 @@ var DisplaySystem = {
 	           .hide()
 	           .setColor(colorText1);
 	        me.sta[1] = me.group.createChild("text")
-	           .setTranslation(276*0.795 * -0.75, staPosY)
+	           .setTranslation(displayWidthHalf * -0.75, staPosY)
 	           .setAlignment("center-center")
 	           .setText("2")
 	           .set("z-index",12)
@@ -596,7 +604,7 @@ var DisplaySystem = {
 	           .hide()
 	           .setColor(colorText1);
 	        me.sta[2] = me.group.createChild("text")
-	           .setTranslation(276*0.795 * -0.65, staPosY)
+	           .setTranslation(displayWidthHalf * -0.65, staPosY)
 	           .setAlignment("center-center")
 	           .setText("3")
 	           .set("z-index",12)
@@ -604,7 +612,7 @@ var DisplaySystem = {
 	           .hide()
 	           .setColor(colorText1);
 	        me.sta[3] = me.group.createChild("text")
-	           .setTranslation(276*0.795 * -0.55, staPosY)
+	           .setTranslation(displayWidthHalf * -0.55, staPosY)
 	           .setAlignment("center-center")
 	           .setText("4")
 	           .set("z-index",12)
@@ -612,7 +620,7 @@ var DisplaySystem = {
 	           .hide()
 	           .setColor(colorText1);
 	        me.sta[4] = me.group.createChild("text")
-	           .setTranslation(276*0.795 * 0.0, staPosY)
+	           .setTranslation(displayWidthHalf * 0.0, staPosY)
 	           .setAlignment("center-center")
 	           .setText("5")
 	           .set("z-index",12)
@@ -620,7 +628,7 @@ var DisplaySystem = {
 	           .hide()
 	           .setColor(colorText1);
 	        me.sta[5] = me.group.createChild("text")
-	           .setTranslation(276*0.795 * 0.55, staPosY)
+	           .setTranslation(displayWidthHalf * 0.55, staPosY)
 	           .setAlignment("center-center")
 	           .setText("6")
 	           .set("z-index",12)
@@ -628,7 +636,7 @@ var DisplaySystem = {
 	           .hide()
 	           .setColor(colorText1);
 	        me.sta[6] = me.group.createChild("text")
-	           .setTranslation(276*0.795 * 0.65, staPosY)
+	           .setTranslation(displayWidthHalf * 0.65, staPosY)
 	           .setAlignment("center-center")
 	           .setText("7")
 	           .set("z-index",12)
@@ -636,7 +644,7 @@ var DisplaySystem = {
 	           .hide()
 	           .setColor(colorText1);
 	        me.sta[7] = me.group.createChild("text")
-	           .setTranslation(276*0.795 * 0.75, staPosY)
+	           .setTranslation(displayWidthHalf * 0.75, staPosY)
 	           .setAlignment("center-center")
 	           .setText("8")
 	           .set("z-index",12)
@@ -644,7 +652,7 @@ var DisplaySystem = {
 	           .hide()
 	           .setColor(colorText1);
 	        me.sta[8] = me.group.createChild("text")
-	           .setTranslation(276*0.795 * 0.85, staPosY)
+	           .setTranslation(displayWidthHalf * 0.85, staPosY)
 	           .setAlignment("center-center")
 	           .setText("9")
 	           .set("z-index",12)
@@ -652,7 +660,7 @@ var DisplaySystem = {
 	           .hide()
 	           .setColor(colorText1);
 	        me.staFrame[0] = me.group.createChild("path")
-	           .moveTo(276*0.795 * -0.85 + staX, staPosY+staY)
+	           .moveTo(displayWidthHalf * -0.85 + staX, staPosY+staY)
 	           .vert(-staH)
 	           .horiz(-staW)
 	           .vert(staH)
@@ -661,7 +669,7 @@ var DisplaySystem = {
 	           .hide()
 	           .setStrokeLineWidth(staStroke);
 	        me.staFrame[1] = me.group.createChild("path")
-	           .moveTo(276*0.795 * -0.75 + staX, staPosY+staY)
+	           .moveTo(displayWidthHalf * -0.75 + staX, staPosY+staY)
 	           .vert(-staH)
 	           .horiz(-staW)
 	           .vert(staH)
@@ -670,7 +678,7 @@ var DisplaySystem = {
 	           .hide()
 	           .setStrokeLineWidth(staStroke);
 	        me.staFrame[2] = me.group.createChild("path")
-	           .moveTo(276*0.795 * -0.65 + staX, staPosY+staY)
+	           .moveTo(displayWidthHalf * -0.65 + staX, staPosY+staY)
 	           .vert(-staH)
 	           .horiz(-staW)
 	           .vert(staH)
@@ -679,7 +687,7 @@ var DisplaySystem = {
 	           .hide()
 	           .setStrokeLineWidth(staStroke);
 	        me.staFrame[3] = me.group.createChild("path")
-	           .moveTo(276*0.795 * -0.55 + staX, staPosY+staY)
+	           .moveTo(displayWidthHalf * -0.55 + staX, staPosY+staY)
 	           .vert(-staH)
 	           .horiz(-staW)
 	           .vert(staH)
@@ -688,7 +696,7 @@ var DisplaySystem = {
 	           .hide()
 	           .setStrokeLineWidth(staStroke);
 	        me.staFrame[4] = me.group.createChild("path")
-	           .moveTo(276*0.795 * 0.0 + staX, staPosY+staY)
+	           .moveTo(displayWidthHalf * 0.0 + staX, staPosY+staY)
 	           .vert(-staH)
 	           .horiz(-staW)
 	           .vert(staH)
@@ -697,7 +705,7 @@ var DisplaySystem = {
 	           .hide()
 	           .setStrokeLineWidth(staStroke);
 	        me.staFrame[5] = me.group.createChild("path")
-	           .moveTo(276*0.795 * 0.55 + staX, staPosY+staY)
+	           .moveTo(displayWidthHalf * 0.55 + staX, staPosY+staY)
 	           .vert(-staH)
 	           .horiz(-staW)
 	           .vert(staH)
@@ -706,7 +714,7 @@ var DisplaySystem = {
 	           .hide()
 	           .setStrokeLineWidth(staStroke);
 	        me.staFrame[6] = me.group.createChild("path")
-	           .moveTo(276*0.795 * 0.65 + staX, staPosY+staY)
+	           .moveTo(displayWidthHalf * 0.65 + staX, staPosY+staY)
 	           .vert(-staH)
 	           .horiz(-staW)
 	           .vert(staH)
@@ -715,7 +723,7 @@ var DisplaySystem = {
 	           .hide()
 	           .setStrokeLineWidth(staStroke);
 	        me.staFrame[7] = me.group.createChild("path")
-	           .moveTo(276*0.795 * 0.75 + staX, staPosY+staY)
+	           .moveTo(displayWidthHalf * 0.75 + staX, staPosY+staY)
 	           .vert(-staH)
 	           .horiz(-staW)
 	           .vert(staH)
@@ -724,7 +732,7 @@ var DisplaySystem = {
 	           .hide()
 	           .setStrokeLineWidth(staStroke);
 	        me.staFrame[8] = me.group.createChild("path")
-	           .moveTo(276*0.795 * 0.85 + staX, staPosY+staY)
+	           .moveTo(displayWidthHalf * 0.85 + staX, staPosY+staY)
 	           .vert(-staH)
 	           .horiz(-staW)
 	           .vert(staH)
@@ -777,31 +785,31 @@ var DisplaySystem = {
 			me.leftMargin = 5;
 			me.up = me.group.createChild("path")
 						.set("z-index", 20)
-	                    .moveTo(me.leftMargin,me.device.resolution[1]*0.5-105-27.5)
+	                    .moveTo(me.leftMargin,displayHeightHalf-105-27.5)
 	                    .horiz(30)
-	                    .lineTo(15+me.leftMargin,me.device.resolution[1]*0.5-105-27.5-15)
-	                    .lineTo(me.leftMargin,me.device.resolution[1]*0.5-105-27.5)
+	                    .lineTo(15+me.leftMargin,displayHeightHalf-105-27.5-15)
+	                    .lineTo(me.leftMargin,displayHeightHalf-105-27.5)
 	                    .setStrokeLineWidth(3)
 	                    .hide()
 	                    .setColor(me.device.colorFront);
 	        me.txt = me.group.createChild("text")
 		        		.set("z-index", 20)
-		                .setTranslation(me.leftMargin+me.device.fontSize*0.75, me.device.resolution[1]*0.5-105)
+		                .setTranslation(me.leftMargin+me.device.fontSize*0.75, displayHeightHalf-105)
 		                .setAlignment("center-center")
 		                .setColor(me.device.colorFront)
 		                .setFontSize(me.device.fontSize, 1.0);
 	        me.down = me.group.createChild("path")
 	        			.set("z-index", 20)
-	                    .moveTo(me.leftMargin,me.device.resolution[1]*0.5-105+27.5)
+	                    .moveTo(me.leftMargin,displayHeightHalf-105+27.5)
 	                    .horiz(30)
-	                    .lineTo(me.leftMargin+15,me.device.resolution[1]*0.5-105+27.5+15)
-	                    .lineTo(me.leftMargin,me.device.resolution[1]*0.5-105+27.5)
+	                    .lineTo(me.leftMargin+15,displayHeightHalf-105+27.5+15)
+	                    .lineTo(me.leftMargin,displayHeightHalf-105+27.5)
 	                    .setStrokeLineWidth(3)
 	                    .hide()
 	                    .setColor(me.device.colorFront);
 	        me.plate = me.group.createChild("path")
 	        			.set("z-index", 10)
-	                    .moveTo(me.leftMargin,me.device.resolution[1]*0.5-105+27.5+15)
+	                    .moveTo(me.leftMargin,displayHeightHalf-105+27.5+15)
 	                    .horiz(30)
 	                    .vert(-85)
 	                    .horiz(-30)
@@ -848,6 +856,14 @@ var DisplaySystem = {
 			return layer;
 		},
 	},
+
+#  ███████ ███    ███ ███████     ██     ██ ██████  ███    ██ 
+#  ██      ████  ████ ██          ██     ██ ██   ██ ████   ██ 
+#  ███████ ██ ████ ██ ███████     ██  █  ██ ██████  ██ ██  ██ 
+#       ██ ██  ██  ██      ██     ██ ███ ██ ██      ██  ██ ██ 
+#  ███████ ██      ██ ███████      ███ ███  ██      ██   ████ 
+#                                                             
+#                                                             
 
 	PageSMSWPN: {
 		name: "PageSMSWPN",
@@ -1365,6 +1381,14 @@ var DisplaySystem = {
 		layers: [],
 	},
 
+#  ███████  ██████ ██████       ██████ ███    ██ ████████ ██      
+#  ██      ██      ██   ██     ██      ████   ██    ██    ██      
+#  █████   ██      ██████      ██      ██ ██  ██    ██    ██      
+#  ██      ██      ██   ██     ██      ██  ██ ██    ██    ██      
+#  ██       ██████ ██   ██      ██████ ██   ████    ██    ███████ 
+#                                                                 
+#                                                                 
+
 	PageFCRCNTL: {
 		name: "PageFCRCNTL",
 		isNew: 1,
@@ -1386,7 +1410,7 @@ var DisplaySystem = {
 				me.isNew = 0;
 			}
 			me.device.resetControls();
-			me.device.controls["OSB14"].setControlText("CNTL", 0);
+			me.device.controls["OSB15"].setControlText("CNTL", 0);
 			me.device.controls["OSB16"].setControlText("SWAP");
 		},
 		controlAction: func (controlName) {
@@ -1418,10 +1442,18 @@ var DisplaySystem = {
 			print("Exit ",me.name~" on ",me.device.name);
 		},
 		links: {
-			"OSB14":  "PageFCR",
+			"OSB15":  "PageFCR",
 		},
 		layers: [],
 	},
+
+#  ██   ██ ███████ ██████  
+#  ██   ██ ██      ██   ██ 
+#  ███████ ███████ ██   ██ 
+#  ██   ██      ██ ██   ██ 
+#  ██   ██ ███████ ██████  
+#                          
+#                          
 
 	PageHSD: {
 		name: "PageHSD",
@@ -1443,17 +1475,15 @@ var DisplaySystem = {
             me.device.controls["OSB4"].setControlText(me.get_HSD_coupled()?"CPL":"DCPL");
 		},
 		setupHSD: func {
-			me.width  = me.device.resolution[0]*me.device.uvMap[0];
-	        me.height = me.device.resolution[1]*me.device.uvMap[1];
 
 	        me.buttonView = me.group.createChild("group")
-	                .setTranslation(me.width*0.5,me.height);
+	                .setTranslation(displayWidth*0.5,displayHeight);
 	        me.concentricGrp = me.group.createChild("group")
-	                .setTranslation(me.width*0.5,me.height*0.75);#552,482 , 0.795 is for UV map
+	                .setTranslation(displayWidth*0.5,displayHeight*0.75);#552,displayHeight , 0.795 is for UV map
 	        me.cone = me.concentricGrp.createChild("group")
 	            .set("z-index",5);#radar cone
 
-	        me.outerRadius  = me.height*0.75;
+	        me.outerRadius  = displayHeight*0.75;
 	        me.mediumRadius = me.outerRadius*0.6666;
 	        me.innerRadius  = me.outerRadius*0.3333;
 	        #var innerTick    = 0.85*innerRadius*math.cos(45*D2R);
@@ -1503,7 +1533,7 @@ var DisplaySystem = {
 	                me.blepTriangleVel[i] = me.blepTriangle[i].createChild("group");
 	                me.blepTriangleText[i] = me.blepTriangle[i].createChild("text")
 	                                .setAlignment("center-top")
-	                                .setFontSize(20, 1.0)
+	                                .setFontSize(me.device.fontSize, 1.0)
 	                                .setTranslation(0,20)
 	                                .setColor(1, 1, 1);
 	                me.blepTriangleVelLine[i] = me.blepTriangleVel[i].createChild("path")
@@ -1535,12 +1565,12 @@ var DisplaySystem = {
 	                                .setAlignment("center-bottom")
 	                                .setColor(colorDot1)
 	                                .set("z-index",1)
-	                                .setFontSize(20, 1.0);
+	                                .setFontSize(me.device.fontSize, 1.0);
 	                me.lnkTA[i] = me.concentricGrp.createChild("text")
 	                                .setAlignment("center-top")
 	                                .setColor(colorDot1)
 	                                .set("z-index",1)
-	                                .setFontSize(20, 1.0);
+	                                .setFontSize(me.device.fontSize, 1.0);
 	        }
 	        me.selection = me.concentricGrp.createChild("path")
 	                .moveTo(-16, 0)
@@ -1783,10 +1813,10 @@ var DisplaySystem = {
                 }
             }
             if (me.get_HSD_centered()) {
-                me.concentricGrp.setTranslation(me.device.resolution[0]*me.device.uvMap[0]*0.5,0.5*me.device.resolution[1]*me.device.uvMap[1]);
+                me.concentricGrp.setTranslation(displayWidthHalf,0.5*displayHeight);
                 me.rangeText = ""~me.get_HSD_range_cen();
             } else {
-                me.concentricGrp.setTranslation(me.device.resolution[0]*me.device.uvMap[0]*0.5,0.75*me.device.resolution[1]*me.device.uvMap[1]);
+                me.concentricGrp.setTranslation(displayWidthHalf,0.75*displayHeight);
                 me.rangeText = ""~me.get_HSD_range_dep();
             }
 
@@ -2189,177 +2219,178 @@ var DisplaySystem = {
 			me.setupSMS();
 		},
 		setupSMS: func {
-	        me.group.setTranslation(0.5*me.device.resolution[0]*me.device.uvMap[0], me.device.resolution[1]);
+
+	        me.group.setTranslation(0.5*displayWidth, displayHeight);
 
 	        me.cat = me.group.createChild("text")
-	                .setTranslation(0, -me.device.resolution[1]*0.5+100)
+	                .setTranslation(0, -displayHeightHalf+100)
 	                .setText("CAT I")
 	                .setAlignment("center-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 
 	        me.gun = me.group.createChild("text")
-	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.95, -me.device.resolution[1]*0.5-155)
+	                .setTranslation(-displayWidthHalf*0.95, -displayHeightHalf-155)
 	                .setText("-----")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 	        me.gun2 = me.group.createChild("text")
-	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.95, -me.device.resolution[1]*0.5-130)
+	                .setTranslation(-displayWidthHalf*0.95, -displayHeightHalf-130)
 	                .setText("-----")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 
 	        me.p6 = me.group.createChild("text")
-	                .setTranslation(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.08, -me.device.resolution[1]*0.5-90)
+	                .setTranslation(displayWidthHalf*0.08, -displayHeightHalf-90)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 	        me.p6l1 = me.group.createChild("text")
-	                .setTranslation(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.08, -me.device.resolution[1]*0.5-65)
+	                .setTranslation(displayWidthHalf*0.08, -displayHeightHalf-65)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 	        me.p6l2 = me.group.createChild("text")
-	                .setTranslation(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.08, -me.device.resolution[1]*0.5-40)
+	                .setTranslation(displayWidthHalf*0.08, -displayHeightHalf-40)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 
 	        me.p7 = me.group.createChild("text")
-	                .setTranslation(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.37, -me.device.resolution[1]*0.5-15)
+	                .setTranslation(displayWidthHalf*0.37, -displayHeightHalf-15)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 	        me.p7l1 = me.group.createChild("text")
-	                .setTranslation(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.37, -me.device.resolution[1]*0.5+10)
+	                .setTranslation(displayWidthHalf*0.37, -displayHeightHalf+10)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 	        me.p7l2 = me.group.createChild("text")
-	                .setTranslation(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.37, -me.device.resolution[1]*0.5+35)
+	                .setTranslation(displayWidthHalf*0.37, -displayHeightHalf+35)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 
 	        me.p8 = me.group.createChild("text")
-	                .setTranslation(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.52, -me.device.resolution[1]*0.5+60)
+	                .setTranslation(displayWidthHalf*0.52, -displayHeightHalf+60)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 	        me.p8l1 = me.group.createChild("text")
-	                .setTranslation(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.52, -me.device.resolution[1]*0.5+85)
+	                .setTranslation(displayWidthHalf*0.52, -displayHeightHalf+85)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 
 	        me.p9 = me.group.createChild("text")
-	                .setTranslation(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.52, -me.device.resolution[1]*0.5+125)
+	                .setTranslation(displayWidthHalf*0.52, -displayHeightHalf+125)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 	        me.p9l1 = me.group.createChild("text")
-	                .setTranslation(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.52, -me.device.resolution[1]*0.5+150)
+	                .setTranslation(displayWidthHalf*0.52, -displayHeightHalf+150)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 
 	        me.p5 = me.group.createChild("text")
-	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.20, -me.device.resolution[1]*0.5-190)
+	                .setTranslation(-displayWidthHalf*0.20, -displayHeightHalf-190)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 	        me.p5l1 = me.group.createChild("text")
-	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.20, -me.device.resolution[1]*0.5-165)
+	                .setTranslation(-displayWidthHalf*0.20, -displayHeightHalf-165)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 	        me.p5l2 = me.group.createChild("text")
-	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.20, -me.device.resolution[1]*0.5-140)
+	                .setTranslation(-displayWidthHalf*0.20, -displayHeightHalf-140)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 
 	        me.p4 = me.group.createChild("text")
-	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.51, -me.device.resolution[1]*0.5-90)
+	                .setTranslation(-displayWidthHalf*0.51, -displayHeightHalf-90)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 	        me.p4l1 = me.group.createChild("text")
-	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.51, -me.device.resolution[1]*0.5-65)
+	                .setTranslation(-displayWidthHalf*0.51, -displayHeightHalf-65)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 	        me.p4l2 = me.group.createChild("text")
-	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.51, -me.device.resolution[1]*0.5-40)
+	                .setTranslation(-displayWidthHalf*0.51, -displayHeightHalf-40)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 
 	        me.p3 = me.group.createChild("text")
-	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.8, -me.device.resolution[1]*0.5-15)
+	                .setTranslation(-displayWidthHalf*0.8, -displayHeightHalf-15)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 	        me.p3l1 = me.group.createChild("text")
-	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.8, -me.device.resolution[1]*0.5+10)
+	                .setTranslation(-displayWidthHalf*0.8, -displayHeightHalf+10)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 	        me.p3l2 = me.group.createChild("text")
-	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.8, -me.device.resolution[1]*0.5+35)
+	                .setTranslation(-displayWidthHalf*0.8, -displayHeightHalf+35)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 
 	        me.p2 = me.group.createChild("text")
-	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.95, -me.device.resolution[1]*0.5+60)
+	                .setTranslation(-displayWidthHalf*0.95, -displayHeightHalf+60)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 	        me.p2l1 = me.group.createChild("text")
-	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.95, -me.device.resolution[1]*0.5+85)
+	                .setTranslation(-displayWidthHalf*0.95, -displayHeightHalf+85)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 
 	        me.p1 = me.group.createChild("text")
-	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.95, -me.device.resolution[1]*0.5+125)
+	                .setTranslation(-displayWidthHalf*0.95, -displayHeightHalf+125)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 	        me.p1l1 = me.group.createChild("text")
-	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.95, -me.device.resolution[1]*0.5+150)
+	                .setTranslation(-displayWidthHalf*0.95, -displayHeightHalf+150)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 
 	        me.p1f = me.group.createChild("path")
-	           .moveTo(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.97, -me.device.resolution[1]*0.5+115)
+	           .moveTo(-displayWidthHalf*0.97, -displayHeightHalf+115)
 	           .vert(50)
 	           .horiz(100)
 	           .vert(-50)
@@ -2368,7 +2399,7 @@ var DisplaySystem = {
 	           .setStrokeLineWidth(2)
 	           .hide();
 	        me.p2f = me.group.createChild("path")
-	           .moveTo(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.96, -me.device.resolution[1]*0.5+50)
+	           .moveTo(-displayWidthHalf*0.96, -displayHeightHalf+50)
 	           .vert(50)
 	           .horiz(100)
 	           .vert(-50)
@@ -2377,7 +2408,7 @@ var DisplaySystem = {
 	           .setStrokeLineWidth(2)
 	           .hide();
 	        me.p3f = me.group.createChild("path")
-	           .moveTo(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.81, -me.device.resolution[1]*0.5-25)
+	           .moveTo(-displayWidthHalf*0.81, -displayHeightHalf-25)
 	           .vert(70)
 	           .horiz(100)
 	           .vert(-70)
@@ -2386,7 +2417,7 @@ var DisplaySystem = {
 	           .setStrokeLineWidth(2)
 	           .hide();
 	        me.p4f = me.group.createChild("path")
-	           .moveTo(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.52, -me.device.resolution[1]*0.5-100)
+	           .moveTo(-displayWidthHalf*0.52, -displayHeightHalf-100)
 	           .vert(70)
 	           .horiz(100)
 	           .vert(-70)
@@ -2395,7 +2426,7 @@ var DisplaySystem = {
 	           .setStrokeLineWidth(2)
 	           .hide();
 	        me.p5f = me.group.createChild("path")
-	           .moveTo(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.21, -me.device.resolution[1]*0.5-200)
+	           .moveTo(-displayWidthHalf*0.21, -displayHeightHalf-200)
 	           .vert(70)
 	           .horiz(100)
 	           .vert(-70)
@@ -2404,7 +2435,7 @@ var DisplaySystem = {
 	           .setStrokeLineWidth(2)
 	           .hide();
 	        me.p6f = me.group.createChild("path")
-	           .moveTo(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.09, -me.device.resolution[1]*0.5-100)
+	           .moveTo(displayWidthHalf*0.09, -displayHeightHalf-100)
 	           .vert(70)
 	           .horiz(100)
 	           .vert(-70)
@@ -2413,7 +2444,7 @@ var DisplaySystem = {
 	           .setStrokeLineWidth(2)
 	           .hide();
 	        me.p7f = me.group.createChild("path")
-	           .moveTo(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.36, -me.device.resolution[1]*0.5-25)
+	           .moveTo(displayWidthHalf*0.36, -displayHeightHalf-25)
 	           .vert(70)
 	           .horiz(100)
 	           .vert(-70)
@@ -2422,7 +2453,7 @@ var DisplaySystem = {
 	           .setStrokeLineWidth(2)
 	           .hide();
 	        me.p8f = me.group.createChild("path")
-	           .moveTo(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.5, -me.device.resolution[1]*0.5+50)
+	           .moveTo(displayWidthHalf*0.5, -displayHeightHalf+50)
 	           .vert(50)
 	           .horiz(100)
 	           .vert(-50)
@@ -2431,7 +2462,7 @@ var DisplaySystem = {
 	           .setStrokeLineWidth(2)
 	           .hide();
 	        me.p9f = me.group.createChild("path")
-	           .moveTo(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.5, -me.device.resolution[1]*0.5+115)
+	           .moveTo(displayWidthHalf*0.5, -displayHeightHalf+115)
 	           .vert(50)
 	           .horiz(100)
 	           .vert(-50)
@@ -2607,7 +2638,7 @@ var DisplaySystem = {
 	        me.showRangeDown = 0;
 	        me.showRangeUp = 0;
 
-	        me.wdt = 552*0.795;
+	        me.wdt = displayWidth;
 	        me.fwd = 0;
 	        me.plc = 0;
 	        me.gmLine = 64;
@@ -2624,15 +2655,16 @@ var DisplaySystem = {
 	        me.slew_c_last = slew_c;
 		},
 		setupRadar: func (index) {
+
 	        me.p_RDR = me.group.createChild("group")
-	                .setTranslation(276*0.795,482)
+	                .setTranslation(displayWidthHalf,displayHeight)
 	                .set("z-index",2)
-	                .set("font","LiberationFonts/LiberationMono-Regular.ttf");#552,482 , 0.795 is for UV map
+	                .set("font","LiberationFonts/LiberationMono-Regular.ttf");#552,displayHeight , 0.795 is for UV map
 	        me.p_RDR_image = me.group.createChild("group")
-	                .setTranslation(276*0.795,482)
+	                .setTranslation(displayWidthHalf,displayHeight)
 	                .set("z-index",0)
 	                .hide()
-	                .set("font","LiberationFonts/LiberationMono-Regular.ttf");#552,482 , 0.795 is for UV map
+	                .set("font","LiberationFonts/LiberationMono-Regular.ttf");#552,displayHeight , 0.795 is for UV map
 
 	        me.maxB = 150;
 	        me.maxT =  15;
@@ -2663,7 +2695,7 @@ var DisplaySystem = {
 	                me.blepTriangleVel[i] = me.blepTriangle[i].createChild("group");
 	                me.blepTriangleText[i] = me.blepTriangle[i].createChild("text")
 	                                .setAlignment("center-top")
-	                                .setFontSize(20, 1.0)
+	                                .setFontSize(me.device.fontSize, 1.0)
 	                                .setTranslation(0,20)
 	                                .setColor(1, 1, 1);
 	                me.blepTriangleVelLine[i] = me.blepTriangleVel[i].createChild("path")
@@ -2714,13 +2746,13 @@ var DisplaySystem = {
 	                .setAlignment("center-bottom")
 	                .setColor(colorDot1)
 	                .set("z-index",1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 	            me.lnkTA[i] = me.p_RDR.createChild("text")
 	                                .setAlignment("center-top")
-	                                .setFontSize(20, 1.0);
+	                                .setFontSize(me.device.fontSize, 1.0);
 	        }
 	        me.gainGauge = me.p_RDR.createChild("path")
-	                    .moveTo(-552*0.5*0.65,-482*0.95)
+	                    .moveTo(-552*0.5*0.65,-displayHeight*0.95)
 	                    .horiz(-20)
 	                    .vert(65)
 	                    .horiz(20)
@@ -2728,7 +2760,7 @@ var DisplaySystem = {
 	                    .set("z-index",1)
 	                    .setColor(colorText1);
 	        me.gainGaugePointer = me.p_RDR.createChild("path")
-	                    .setTranslation(-552*0.5*0.65-20,-482*0.95+10)
+	                    .setTranslation(-552*0.5*0.65-20,-displayHeight*0.95+10)
 	                    .lineTo(10,-10)
 	                    .moveTo(0,0)
 	                    .lineTo(10, 10)
@@ -2739,17 +2771,17 @@ var DisplaySystem = {
 	        var antSideBuffer = 50;# TODO: adjust
 	        var antBottomBuffer = 50;# TODO: adjust
 	        me.ant_bottom = me.p_RDR.createChild("path")
-	                    .moveTo(-276*0.795,-antBottomBuffer+15)
+	                    .moveTo(-displayWidthHalf,-antBottomBuffer+15)
 	                    .vert(-13)
-	                    .moveTo(-276*0.795-8,-antBottomBuffer+2)
+	                    .moveTo(-displayWidthHalf-8,-antBottomBuffer+2)
 	                    .horiz(15)
 	                    .setStrokeLineWidth(5)
 	                    .set("z-index",1)
 	                    .setColor(colorLine1);
 	        me.ant_side = me.p_RDR.createChild("path")
-	                    .moveTo(-276*0.795+antSideBuffer,-482*0.5)
+	                    .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.5)
 	                    .horiz(-13)
-	                    .moveTo(-276*0.795+antSideBuffer,-482*0.5-7)
+	                    .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.5-7)
 	                    .vert(14)
 	                    .setStrokeLineWidth(5)
 	                    .set("z-index",1)
@@ -2757,50 +2789,50 @@ var DisplaySystem = {
 	        var vari = getprop("sim/variant-id");
 	        if (vari < 2 or vari == 3) {
 	            me.distl = me.p_RDR.createChild("path")
-	                        .moveTo(-276*0.795+antSideBuffer,-482*0.25)
+	                        .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.25)
 	                        .horiz(15)
-	                        .moveTo(-276*0.795+antSideBuffer,-482*0.5)
+	                        .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.5)
 	                        .horiz(25)
-	                        .moveTo(-276*0.795+antSideBuffer,-482*0.75)
+	                        .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.75)
 	                        .horiz(15)
-	                        .moveTo(-276*0.795*0.5,-antBottomBuffer)
+	                        .moveTo(-displayWidthHalf*0.5,-antBottomBuffer)
 	                        .vert(-15)
 	                        .moveTo(0,-40)
 	                        .vert(-25)
-	                        .moveTo(276*0.795*0.5,-antBottomBuffer)
+	                        .moveTo(displayWidthHalf*0.5,-antBottomBuffer)
 	                        .vert(-15)
 	                        .setStrokeLineWidth(3)
 	                        .set("z-index",1)
 	                        .setColor(colorLine1);
 	        } else {
 	            me.distl = me.p_RDR.createChild("path")
-	                    .moveTo(-276*0.795+antSideBuffer,-482*0.25)
+	                    .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.25)
 	                    .horiz(12.5)
-	                    .moveTo(-276*0.795+antSideBuffer,-482*0.3333)
+	                    .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.3333)
 	                    .horiz(12.5)
-	                    .moveTo(-276*0.795+antSideBuffer,-482*0.4166)
+	                    .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.4166)
 	                    .horiz(12.5)
-	                    .moveTo(-276*0.795+antSideBuffer,-482*0.5)
+	                    .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.5)
 	                    .horiz(20.0)
-	                    .moveTo(-276*0.795+antSideBuffer,-482*0.5833)
+	                    .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.5833)
 	                    .horiz(12.5)
-	                    .moveTo(-276*0.795+antSideBuffer,-482*0.6666)
+	                    .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.6666)
 	                    .horiz(12.5)
-	                    .moveTo(-276*0.795+antSideBuffer,-482*0.75)
+	                    .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.75)
 	                    .horiz(12.5)
-	                    .moveTo(-276*0.795*0.5,-antBottomBuffer)
+	                    .moveTo(-displayWidthHalf*0.5,-antBottomBuffer)
 	                    .vert(-12.5)
-	                    .moveTo(-276*0.795*0.3333,-antBottomBuffer)
+	                    .moveTo(-displayWidthHalf*0.3333,-antBottomBuffer)
 	                    .vert(-12.5)
-	                    .moveTo(-276*0.795*0.1666,-antBottomBuffer)
+	                    .moveTo(-displayWidthHalf*0.1666,-antBottomBuffer)
 	                    .vert(-12.5)
 	                    .moveTo(0,-antBottomBuffer)
 	                    .vert(-20.0)
-	                    .moveTo(276*0.795*0.3333,-antBottomBuffer)
+	                    .moveTo(displayWidthHalf*0.3333,-antBottomBuffer)
 	                    .vert(-12.5)
-	                    .moveTo(276*0.795*0.1666,-antBottomBuffer)
+	                    .moveTo(displayWidthHalf*0.1666,-antBottomBuffer)
 	                    .vert(-12.5)
-	                    .moveTo(276*0.795*0.5,-antBottomBuffer)
+	                    .moveTo(displayWidthHalf*0.5,-antBottomBuffer)
 	                    .vert(-12.5)
 	                    .setStrokeLineWidth(3)
 	                    .set("z-index",1)
@@ -2817,11 +2849,11 @@ var DisplaySystem = {
 	                .setStrokeLineWidth(2);
 
 	        me.lockInfoCanvas = me.p_RDR.createChild("text")
-	                .setTranslation(276*0.795*0.85, -482*0.9)
+	                .setTranslation(displayWidthHalf*0.85, -displayHeight*0.9)
 	                .setAlignment("right-center")
 	                .setColor(colorLine3)
 	                .set("z-index",1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 
 	        me.interceptCross = me.p_RDR.createChild("path")
 	                            .moveTo(10,0)
@@ -2843,10 +2875,10 @@ var DisplaySystem = {
 	                            .set("z-index",20)
 	                            .setStrokeLineWidth(2);
 
-	        me.dlzX      = 276*0.795*0.75;
-	        me.dlzY      =-482*0.25;
+	        me.dlzX      = displayWidthHalf*0.75;
+	        me.dlzY      =-displayHeight*0.25;
 	        me.dlzWidth  =  20;
-	        me.dlzHeight = 482*0.5;
+	        me.dlzHeight = displayHeight*0.5;
 	        me.dlzLW     =   2;
 	        me.dlz      = me.p_RDR.createChild("group")
 	                        .set("z-index",11)
@@ -2862,38 +2894,38 @@ var DisplaySystem = {
 	           .setStrokeLineWidth(me.dlzLW);
 	        me.az1 = me.p_RDR.createChild("path")
 	           .moveTo(0, 0)
-	           .lineTo(0, -482)
+	           .lineTo(0, -displayHeight)
 	           .setColor(colorLine1)
 	           .set("z-index",13)
 	           .setStrokeLineWidth(2);
 	        me.az2 = me.p_RDR.createChild("path")
 	           .moveTo(0, 0)
-	           .lineTo(0, -482)
+	           .lineTo(0, -displayHeight)
 	           .setColor(colorLine1)
 	           .set("z-index",13)
 	           .setStrokeLineWidth(2);
 	        me.horiz = me.p_RDR.createChild("path")
-	           .moveTo(-276*0.795*0.5, -482*0.5)
+	           .moveTo(-displayWidthHalf*0.5, -displayHeight*0.5)
 	           .vert(10)
-	           .moveTo(-276*0.795*0.5, -482*0.5)
-	           .horiz(276*0.795*0.4)
-	           .moveTo(276*0.795*0.5, -482*0.5)
+	           .moveTo(-displayWidthHalf*0.5, -displayHeight*0.5)
+	           .horiz(displayWidthHalf*0.4)
+	           .moveTo(displayWidthHalf*0.5, -displayHeight*0.5)
 	           .vert(10)
-	           .moveTo(276*0.795*0.5, -482*0.5)
-	           .horiz(-276*0.795*0.4)
-	           .setCenter(0, -482*0.5)
+	           .moveTo(displayWidthHalf*0.5, -displayHeight*0.5)
+	           .horiz(-displayWidthHalf*0.4)
+	           .setCenter(0, -displayHeight*0.5)
 	           .setColor(colorLine2)
 	           .set("z-index",15)
 	           .setStrokeLineWidth(3);
 	        me.silent = me.p_RDR.createChild("text")
-	           .setTranslation(0, -482*0.25)
+	           .setTranslation(0, -displayHeight*0.25)
 	           .setAlignment("center-center")
 	           .setText("SILENT")
 	           .set("z-index",16)
 	           .setFontSize(18, 1.0)
 	           .setColor(colorText2);
 	        me.bitText = me.p_RDR.createChild("text")
-	           .setTranslation(0, -482*0.75)
+	           .setTranslation(0, -displayHeight*0.75)
 	           .setAlignment("center-center")
 	           .setText("    VERSION C021-IPOO-MRO3258674  ")
 	           .set("z-index",16)
@@ -2901,7 +2933,7 @@ var DisplaySystem = {
 	           .setColor(colorText2);
 
 			me.notSOI = me.p_RDR.createChild("text")
-	           .setTranslation(0, -482*0.55)
+	           .setTranslation(0, -displayHeight*0.55)
 	           .setAlignment("center-center")
 	           .setText("NOT SOI")
 	           .set("z-index",16)
@@ -2921,12 +2953,12 @@ var DisplaySystem = {
 
 	        # OSB 8
 	        me.sp = me.p_RDR.createChild("text")
-	                .setTranslation(276*0.775, -482*0.5+10)
+	                .setTranslation(276*0.775, -displayHeight*0.5+10)
 	                .setText("S\nP")
 	                .setAlignment("right-center")
 	                .setColor(colorText1)
 	                .set("z-index",1)
-	                .setFontSize(20, 1.0);
+	                .setFontSize(me.device.fontSize, 1.0);
 	        me.cursor = me.p_RDR.createChild("group").set("z-index",1000);
 	        me.cursorAir = me.cursor.createChild("path")
 	                    .moveTo(-8,-9)
@@ -3034,25 +3066,25 @@ var DisplaySystem = {
 	                .set("z-index",1)
 	                .setFontSize(18, 1.0);
 
-	        # canvas: 552*0.795,482
+	        # canvas: displayWidth,displayHeight
 	        me.rangeRingLow = me.p_RDR.createChild("path")
-	            .moveTo(-552*0.795*0.25,0)
-	            .arcSmallCW(552*0.795*0.25,482*0.25, 0,  552*0.795*0.5, 0)
-	            .arcSmallCW(552*0.795*0.25,482*0.25, 0, -552*0.795*0.5, 0)
+	            .moveTo(-displayWidth*0.25,0)
+	            .arcSmallCW(displayWidth*0.25,displayHeight*0.25, 0,  displayWidth*0.5, 0)
+	            .arcSmallCW(displayWidth*0.25,displayHeight*0.25, 0, -displayWidth*0.5, 0)
 	            .setStrokeLineWidth(2)
 	            .set("z-index",1)
 	            .setColor(colorLines);
 	        me.rangeRingMid = me.p_RDR.createChild("path")
-	            .moveTo(-552*0.795*0.5,0)
-	            .arcSmallCW(552*0.795*0.5,482*0.5, 0,  552*0.795, 0)
-	            .arcSmallCW(552*0.795*0.5,482*0.5, 0, -552*0.795, 0)
+	            .moveTo(-displayWidth*0.5,0)
+	            .arcSmallCW(displayWidth*0.5,displayHeight*0.5, 0,  displayWidth, 0)
+	            .arcSmallCW(displayWidth*0.5,displayHeight*0.5, 0, -displayWidth, 0)
 	            .setStrokeLineWidth(2)
 	            .set("z-index",1)
 	            .setColor(colorLines);
 	        me.rangeRingHigh = me.p_RDR.createChild("path")
-	            .moveTo(-552*0.795*0.75,0)
-	            .arcSmallCW(552*0.795*0.75,482*0.75, 0,  552*0.795*1.5, 0)
-	            .arcSmallCW(552*0.795*0.75,482*0.75, 0, -552*0.795*1.5, 0)
+	            .moveTo(-displayWidth*0.75,0)
+	            .arcSmallCW(displayWidth*0.75,displayHeight*0.75, 0,  displayWidth*1.5, 0)
+	            .arcSmallCW(displayWidth*0.75,displayHeight*0.75, 0, -displayWidth*1.5, 0)
 	            .setStrokeLineWidth(2)
 	            .set("z-index",1)
 	            .setColor(colorLines);
@@ -3154,7 +3186,7 @@ var DisplaySystem = {
                 me.meToBull = ((me.bullDirToMe+180)-noti.getproper("heading"))*D2R;
                 me.bullOwnRing.setRotation(me.meToBull);
                 me.bullDistToMe = me.bullCoord.distance_to(me.ownCoord)*M2NM;
-                me.distPixels = me.bullDistToMe*(482/radar_system.apg68Radar.getRange());
+                me.distPixels = me.bullDistToMe*(displayHeight/radar_system.apg68Radar.getRange());
                 me.bullPos = me.calcPos(me.wdt, geo.normdeg180(me.meToBull*R2D), me.distPixels);
 
                 me.bullDirToMe = sprintf("%03d", me.bullDirToMe);
@@ -3187,8 +3219,8 @@ var DisplaySystem = {
                 me.showExp = 1;
             }            
             if (exp and radar_system.apg68Radar.currentMode.longName == radar_system.gmMode.longName) {
-                me.cursorDev   = -math.atan2(-cursor_pos[0]/(482), -cursor_pos[1]/482)*R2D;
-                me.cursorDist  = (math.sqrt(cursor_pos[0]*cursor_pos[0]+cursor_pos[1]*cursor_pos[1])/(482/radar_system.apg68Radar.getRange()));
+                me.cursorDev   = -math.atan2(-cursor_pos[0]/(displayHeight), -cursor_pos[1]/displayHeight)*R2D;
+                me.cursorDist  = (math.sqrt(cursor_pos[0]*cursor_pos[0]+cursor_pos[1]*cursor_pos[1])/(displayHeight/radar_system.apg68Radar.getRange()));
                 radar_system.apg68Radar.currentMode.setExp(1);
                 radar_system.apg68Radar.currentMode.setExpPosition(me.cursorDev, me.cursorDist);
             } elsif (radar_system.apg68Radar.currentMode.longName == radar_system.gmMode.longName) {
@@ -3218,7 +3250,7 @@ var DisplaySystem = {
 
                     me.caretPosition = radar_system.apg68Radar.getCaretPosition();
                     me.ant_bottom.setTranslation(me.wdt*0.5+me.caretPosition[0]*me.wdt*0.5,0);
-                    me.ant_side.setTranslation(0,-me.caretPosition[1]*482*0.5);
+                    me.ant_side.setTranslation(0,-me.caretPosition[1]*displayHeight*0.5);
 
                     me.ant_bottom.show();
                     me.ant_side.show();
@@ -3240,10 +3272,10 @@ var DisplaySystem = {
             }
 
             if (noti.getproper("fcrBit") == 1) {
-                me.silent.setTranslation(0, -482*0.825);
+                me.silent.setTranslation(0, -displayHeight*0.825);
                 me.bitText.show();
             } else {
-                me.silent.setTranslation(0, -482*0.25);
+                me.silent.setTranslation(0, -displayHeight*0.25);
                 me.bitText.hide();
             }
 
@@ -3263,8 +3295,8 @@ var DisplaySystem = {
                 if ((me.slew_x != 0 or me.slew_y != 0 or slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.index) and noti.getproper("viewName") != "TGP") {
                     cursor_pos[0] += me.slew_x*175;
                     cursor_pos[1] -= me.slew_y*175;
-                    cursor_pos[0] = math.clamp(cursor_pos[0], -552*0.5*0.795, 552*0.5*0.795);
-                    cursor_pos[1] = math.clamp(cursor_pos[1], -482, 0);
+                    cursor_pos[0] = math.clamp(cursor_pos[0], -displayWidthHalf, displayWidthHalf);
+                    cursor_pos[1] = math.clamp(cursor_pos[1], -displayHeight, 0);
                     cursor_click = (slew_c and !me.slew_c_last)?me.index:-1;
                     cursor_lock = me.index;
                 } elsif (cursor_lock == me.index or (me.slew_x == 0 or me.slew_y == 0 or slew_c == 0)) {
@@ -3280,20 +3312,20 @@ var DisplaySystem = {
             if (radar_system.apg68Radar.currentMode.detectAIR) {
                 radar_system.apg68Radar.setCursorDeviation(cursor_pos[0]*60/(me.wdt*0.5));
 
-                if (radar_system.apg68Radar.setCursorDistance(-cursor_pos[1]/(482/radar_system.apg68Radar.getRange()))) {
+                if (radar_system.apg68Radar.setCursorDistance(-cursor_pos[1]/(displayHeight/radar_system.apg68Radar.getRange()))) {
                     # the cursor was Y centered due to changing range
-                    cursor_pos[1] = -482*0.5;
-                    radar_system.apg68Radar.setCursorDistance(-cursor_pos[1]/(482/radar_system.apg68Radar.getRange()))
+                    cursor_pos[1] = -displayHeight*0.5;
+                    radar_system.apg68Radar.setCursorDistance(-cursor_pos[1]/(displayHeight/radar_system.apg68Radar.getRange()))
                 }
             } else {
-                radar_system.apg68Radar.setCursorDeviation(-math.atan2(-cursor_pos[0]/(482), -cursor_pos[1]/482)*R2D);
+                radar_system.apg68Radar.setCursorDeviation(-math.atan2(-cursor_pos[0]/(displayHeight), -cursor_pos[1]/displayHeight)*R2D);
 
                 # The real range not used since its only for giving cursor limits (not used in GM) and we want linear switching range:
-                #  if (radar_system.apg68Radar.setCursorDistance((math.sqrt(cursor_pos[0]*cursor_pos[0]+cursor_pos[1]*cursor_pos[1])/(482/radar_system.apg68Radar.getRange())))) {
-                if (radar_system.apg68Radar.setCursorDistance(-cursor_pos[1]/(482/radar_system.apg68Radar.getRange()))) {
+                #  if (radar_system.apg68Radar.setCursorDistance((math.sqrt(cursor_pos[0]*cursor_pos[0]+cursor_pos[1]*cursor_pos[1])/(displayHeight/radar_system.apg68Radar.getRange())))) {
+                if (radar_system.apg68Radar.setCursorDistance(-cursor_pos[1]/(displayHeight/radar_system.apg68Radar.getRange()))) {
                     # the cursor was Y centered due to changing range
-                    cursor_pos[1] = -482*0.5;
-                    radar_system.apg68Radar.setCursorDistance(-cursor_pos[1]/(482/radar_system.apg68Radar.getRange()))
+                    cursor_pos[1] = -displayHeight*0.5;
+                    radar_system.apg68Radar.setCursorDistance(-cursor_pos[1]/(displayHeight/radar_system.apg68Radar.getRange()))
                 }
             }
             me.fixedEXPwidth = nil;
@@ -3304,7 +3336,7 @@ var DisplaySystem = {
             } else {
                 me.cursor.setTranslation([0,-241]);
                 me.fixedEXPwidth = radar_system.apg68Radar.currentMode.getEXPsize();
-                pixelPerNM = 482/radar_system.apg68Radar.getRange();
+                pixelPerNM = displayHeight/radar_system.apg68Radar.getRange();
             }
             me.alimits = radar_system.apg68Radar.getCursorAltitudeLimits();
             if (me.alimits != nil and radar_system.apg68Radar.currentMode.detectAIR) {
@@ -3331,11 +3363,11 @@ var DisplaySystem = {
             if (me.bullOn) {
                 if (radar_system.apg68Radar.currentMode.detectAIR) {
                     me.cursorDev   = cursor_pos[0]*60/(me.wdt*0.5);
-                    me.cursorDist  = -NM2M*cursor_pos[1]/(482/radar_system.apg68Radar.getRange());
+                    me.cursorDist  = -NM2M*cursor_pos[1]/(displayHeight/radar_system.apg68Radar.getRange());
                 } else {
                     # TODO: verify this is correct:
-                    me.cursorDev   = -math.atan2(-cursor_pos[0]/(482), -cursor_pos[1]/482)*R2D;
-                    me.cursorDist  = NM2M*(math.sqrt(cursor_pos[0]*cursor_pos[0]+cursor_pos[1]*cursor_pos[1])/(482/radar_system.apg68Radar.getRange()));
+                    me.cursorDev   = -math.atan2(-cursor_pos[0]/(displayHeight), -cursor_pos[1]/displayHeight)*R2D;
+                    me.cursorDist  = NM2M*(math.sqrt(cursor_pos[0]*cursor_pos[0]+cursor_pos[1]*cursor_pos[1])/(displayHeight/radar_system.apg68Radar.getRange()));
                 }
                 me.ownCoord.apply_course_distance(noti.getproper("heading")+me.cursorDev, me.cursorDist);
                 me.cursorBullDist = me.ownCoord.distance_to(me.bullCoord);
@@ -3420,7 +3452,7 @@ var DisplaySystem = {
                 }
                 me.legBearing = geo.normdeg180(geo.aircraft_position().course_to(me.wpC)-noti.getproper("heading"));#relative
                 me.legDistance = geo.aircraft_position().distance_to(me.wpC)*M2NM;
-                me.distPixels = me.legDistance*(482/radar_system.apg68Radar.getRange());
+                me.distPixels = me.legDistance*(displayHeight/radar_system.apg68Radar.getRange());
                 me.steerPos = me.calcPos(me.wdt, me.legBearing, me.distPixels);
                 var vis = 1;
                 me.steerPos = me.calcEXPPos(me.steerPos);
@@ -3526,7 +3558,7 @@ var DisplaySystem = {
             if (me.intercept != nil) {
                 me.interceptCoord = me.intercept[2];
                 me.interceptDist = me.intercept[3];
-                me.distPixels = me.interceptDist*M2NM*(482/radar_system.apg68Radar.getRange());
+                me.distPixels = me.interceptDist*M2NM*(displayHeight/radar_system.apg68Radar.getRange());
                 me.echoPos = [me.wdt*0.5*geo.normdeg180(me.intercept[4])/60,-me.distPixels];
                 me.interceptCross.setTranslation(me.echoPos);
                 me.interceptCross.setVisible(1);
@@ -3594,7 +3626,7 @@ var DisplaySystem = {
                     var scaled = 512/sized;
                     me.gmImage = me.p_RDR_image.createChild("image")
                         .set("src", "Aircraft/f16/Nasal/MFD/gmSD0.png")# index is due to else the two MFD will share the underlying image and both write to it.
-                        .setTranslation(-552*0.5*0.8732,-482)# canvas: 552,482
+                        .setTranslation(-552*0.5*0.8732,-displayHeight)# canvas: 552,displayHeight
                         .setCenter(sized*0.5, -sized)# the 0.8732 factor is due to angles not drawn correct due to uneven coordinate system. TODO: fix.
                         .setScale(scaled*1.078125*0.8732,scaled*0.9414)
                         #.setTranslation(-512*0.5,-512)
@@ -3605,9 +3637,9 @@ var DisplaySystem = {
                     me.gainNode = me.model_index?props.globals.getNode("f16/avionics/mfd-l-gain",0):props.globals.getNode("f16/avionics/mfd-l-gain",0);
                     radar_system.mapper.setImage(me.gmImage, sized*0.5, 0, sized, me.mono, me.gainNode);
                 }
-                #me.gmImage.setScale(8*1.078125*getprop("a"),8*0.9414).setTranslation(-552*0.5*getprop("a"),-482);
+                #me.gmImage.setScale(8*1.078125*getprop("a"),8*0.9414).setTranslation(-552*0.5*getprop("a"),-displayHeight);
 
-                me.gainGaugePointer.setTranslation(-552*0.5*0.65-20,me.interpolate(me.gainNode.getValue(), 1.0, 2.5,-482*0.95+10,-482*0.95-10+65));
+                me.gainGaugePointer.setTranslation(-552*0.5*0.65-20,me.interpolate(me.gainNode.getValue(), 1.0, 2.5,-displayHeight*0.95+10,-displayHeight*0.95-10+65));
                 me.gainGaugePointer.show();
                 me.gainGauge.show();
                 me.gmImage.show();
@@ -3648,7 +3680,7 @@ var DisplaySystem = {
 
             me.blueBearing = geo.normdeg180(contact.getDeviationHeading());
             if (me.iffState == 0 and contact.isVisible() and contact.getRange()*M2NM < 80 and me.iii < me.maxT and math.abs(me.blueBearing) < 60) {
-                me.distPixels = contact.get_range()*(482/(radar_system.apg68Radar.getRange()));
+                me.distPixels = contact.get_range()*(displayHeight/(radar_system.apg68Radar.getRange()));
                 me.echoPos = me.calcPos(me.wdt, geo.normdeg180(me.blueBearing), me.distPixels);
                 me.echoPos = me.calcEXPPos(me.echoPos);
                 if (me.echoPos == nil) {
@@ -3679,7 +3711,7 @@ var DisplaySystem = {
                 me.calcClick(contact, me.echoPos);
                 me.iii += 1;
             } elsif (me.iffState != 0 and contact.isVisible() and me.iiii < me.maxT and math.abs(me.blueBearing) < 60) {
-                me.distPixels = contact.get_range()*(482/(radar_system.apg68Radar.getRange()));
+                me.distPixels = contact.get_range()*(displayHeight/(radar_system.apg68Radar.getRange()));
                 me.echoPos = me.calcPos(me.wdt, geo.normdeg180(me.blueBearing), me.distPixels);
                 me.echoPos = me.calcEXPPos(me.echoPos);
                 if (me.echoPos == nil) {
@@ -3700,7 +3732,7 @@ var DisplaySystem = {
                 me.echoPosition = [width*0.5*dev/60,-distPixels];
             } else {
                 # PPI-Scope
-                me.echoPosition = [(552*0.795)*(distPixels/482)*math.sin(D2R*dev), -distPixels*math.cos(D2R*dev)];
+                me.echoPosition = [(displayWidth)*(distPixels/displayHeight)*math.sin(D2R*dev), -distPixels*math.cos(D2R*dev)];
             }
             return me.echoPosition;
         },
@@ -3774,9 +3806,9 @@ var DisplaySystem = {
             foreach(me.bleppy ; me.bleps) {
                 if (me.i < me.maxB and me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.currentMode.timeToFadeBleps and me.bleppy.getDirection() != nil and (radar_system.apg68Radar.currentMode.longName != radar_system.vsMode.longName or (me.bleppy.getClosureRate() != nil and me.bleppy.getClosureRate()>0))) {
                     if (me.bleppy.getClosureRate() != nil and radar_system.apg68Radar.currentMode.longName == radar_system.vsMode.longName) {
-                        me.distPixels = math.min(950, me.bleppy.getClosureRate())*(482/(1000));
+                        me.distPixels = math.min(950, me.bleppy.getClosureRate())*(displayHeight/(1000));
                     } else {
-                        me.distPixels = me.bleppy.getRangeNow()*(482/(radar_system.apg68Radar.getRange()*NM2M));
+                        me.distPixels = me.bleppy.getRangeNow()*(displayHeight/(radar_system.apg68Radar.getRange()*NM2M));
                     }
                     me.echoPos = me.calcPos(me.wdt, geo.normdeg180(me.bleppy.getAZDeviation()), me.distPixels);
                     me.echoPos = me.calcEXPPos(me.echoPos);
@@ -3816,13 +3848,13 @@ var DisplaySystem = {
                         me.c_devheading = contact.getDeviationHeading();
                         me.c_speed      = contact.getSpeed();
                         me.c_alt        = contact.getAltitude();
-                        me.distPixels   = contact.getRange()*(482/(radar_system.apg68Radar.getRange()*NM2M));
+                        me.distPixels   = contact.getRange()*(displayHeight/(radar_system.apg68Radar.getRange()*NM2M));
                     } else {
                         me.c_heading    = me.bleppy.getHeading();
                         me.c_devheading = me.bleppy.getAZDeviation();
                         me.c_speed      = me.bleppy.getSpeed();
                         me.c_alt        = me.bleppy.getAltitude();
-                        me.distPixels   = me.bleppy.getRangeNow()*(482/(radar_system.apg68Radar.getRange()*NM2M));
+                        me.distPixels   = me.bleppy.getRangeNow()*(displayHeight/(radar_system.apg68Radar.getRange()*NM2M));
                     }
                     me.rot = 22.5*math.round((me.c_heading-radar_system.self.getHeading()-me.c_devheading)/22.5);
                     me.blepTrianglePaths[me.ii].setRotation(me.rot*D2R);
@@ -3894,7 +3926,7 @@ var DisplaySystem = {
         paintChaff: func (chaff) {
             #if (me.chaffLifetime == 0) return;
             if (me.i < me.maxB and radar_system.apg68Radar.currentMode.longName != radar_system.vsMode.longName) {
-                me.distPixels = chaff.meters*(482/(radar_system.apg68Radar.getRange()*NM2M));
+                me.distPixels = chaff.meters*(displayHeight/(radar_system.apg68Radar.getRange()*NM2M));
 
                 me.echoPos = me.calcPos(me.wdt, geo.normdeg180(chaff.bearing - radar_system.self.getHeading()), me.distPixels);
                 me.echoPos = me.calcEXPPos(me.echoPos);
@@ -4007,21 +4039,21 @@ var DisplaySystem = {
 
 	        me.block = me.group.createChild("path")
 	            .moveTo((552/2+30)*0.795, 0)
-	            .lineTo(550*0.795, (482/2-30))
-	            .moveTo(550*0.795, (482/2+30))
-	            .lineTo((552/2+30)*0.795, 482)
-	            .moveTo((552/2-30)*0.795, 482)
-	            .lineTo(0, (482/2+30))
-	            .moveTo(0, (482/2-30))
+	            .lineTo(550*0.795, (displayHeight/2-30))
+	            .moveTo(550*0.795, (displayHeight/2+30))
+	            .lineTo((552/2+30)*0.795, displayHeight)
+	            .moveTo((552/2-30)*0.795, displayHeight)
+	            .lineTo(0, (displayHeight/2+30))
+	            .moveTo(0, (displayHeight/2-30))
 	            .lineTo((552/2-30)*0.795, 0)
 	            .setColor(colorLines);
 
 	        me.box = me.group.createChild("path")
-	            .moveTo((552/3)*0.795, 482/3)
-	            .lineTo((552/3)*0.795, 482*2/3)
-	            .lineTo((552*2/3)*0.795, 482*2/3)
-	            .lineTo((552*2/3)*0.795, 482/3)
-	            .lineTo((552/3)*0.795, 482/3)
+	            .moveTo((552/3)*0.795, displayHeight/3)
+	            .lineTo((552/3)*0.795, displayHeight*2/3)
+	            .lineTo((552*2/3)*0.795, displayHeight*2/3)
+	            .lineTo((552*2/3)*0.795, displayHeight/3)
+	            .lineTo((552/3)*0.795, displayHeight/3)
 	            .setColor(colorLines);
 	    },
 		enter: func {
@@ -4074,27 +4106,27 @@ var DisplaySystem = {
 	            .setColor(colorBackground);
 
 	        me.rf = me.group.createChild("path")
-	            .moveTo((552/2)*0.795, 482/2)
-	            .lineTo((552/2)*0.795, 482/2-100)
-	            .lineTo((552/2+100)*0.795, 482/2-100+50)
-	            .lineTo((552/2+100)*0.795, 482/2+50)
-	            .lineTo((552/2)*0.795, 482/2)
+	            .moveTo((552/2)*0.795, displayHeight/2)
+	            .lineTo((552/2)*0.795, displayHeight/2-100)
+	            .lineTo((552/2+100)*0.795, displayHeight/2-100+50)
+	            .lineTo((552/2+100)*0.795, displayHeight/2+50)
+	            .lineTo((552/2)*0.795, displayHeight/2)
 	            .setColorFill(colorCubeCyan);
 
 	        me.lf = me.group.createChild("path")
-	            .moveTo((552/2)*0.795, 482/2)
-	            .lineTo((552/2)*0.795, 482/2-100)
-	            .lineTo((552/2-100)*0.795, 482/2-100+50)
-	            .lineTo((552/2-100)*0.795, 482/2+50)
-	            .lineTo((552/2)*0.795, 482/2)
+	            .moveTo((552/2)*0.795, displayHeight/2)
+	            .lineTo((552/2)*0.795, displayHeight/2-100)
+	            .lineTo((552/2-100)*0.795, displayHeight/2-100+50)
+	            .lineTo((552/2-100)*0.795, displayHeight/2+50)
+	            .lineTo((552/2)*0.795, displayHeight/2)
 	            .setColorFill(colorCubeRed);
 
 	        me.bf = me.group.createChild("path")
-	            .moveTo((552/2)*0.795, 482/2)
-	            .lineTo((552/2+100)*0.795, 482/2+50)
-	            .lineTo((552/2)*0.795, 482/2+100)
-	            .lineTo((552/2-100)*0.795, 482/2+50)
-	            .lineTo((552/2)*0.795, 482/2)
+	            .moveTo((552/2)*0.795, displayHeight/2)
+	            .lineTo((552/2+100)*0.795, displayHeight/2+50)
+	            .lineTo((552/2)*0.795, displayHeight/2+100)
+	            .lineTo((552/2-100)*0.795, displayHeight/2+50)
+	            .lineTo((552/2)*0.795, displayHeight/2)
 	            .setColorFill(colorCubeGreen);
 	    },
 		enter: func {
@@ -4133,7 +4165,7 @@ var DisplaySystem = {
 			print(me.name," on ",me.device.name," is being setup");
 			me.elapsed = 0;
 	        me.slew_c_last = slew_c;
-	        me.wdt = 552*0.795;
+	        me.wdt = displayWidth;
 	        me.items = [];
 	        me.iter = -1;
 	        me.sensor = radar_system.f16_radSensor;
@@ -4142,21 +4174,21 @@ var DisplaySystem = {
 		},
 		setupHARM: func (index) {
 	        me.buttonView = me.group.createChild("group")
-	                .setTranslation(276*0.795,482);
+	                .setTranslation(displayWidthHalf,displayHeight);
 	        me.groupRdr = me.group.createChild("group")
-	                .setTranslation(276*0.795, 0);#552,482 , 0.795 is for UV map
+	                .setTranslation(displayWidthHalf, 0);#552,displayHeight , 0.795 is for UV map
 	        me.groupCursor = me.group.createChild("group")
-	                .setTranslation(276*0.795, 482);#552,482 , 0.795 is for UV map
+	                .setTranslation(displayWidthHalf, displayHeight);#552,displayHeight , 0.795 is for UV map
 
-	        me.width  = 276*0.795*2;
-	        me.height = 482;
+	        me.width  = displayWidthHalf*2;
+	        me.height = displayHeight;
 	        me.index = index;
 	        me.maxB = 5;
 	        me.rdrTxt = setsize([],me.maxB);
 	        for (var i = 0;i<me.maxB;i+=1) {
 	                me.rdrTxt[i] = me.groupRdr.createChild("text")
 	                        .setAlignment("center-center")
-	                        .setFontSize(20, 1.0)
+	                        .setFontSize(me.device.fontSize, 1.0)
 	                        .setColor(colorText1);
 	        }
 	        
@@ -4188,7 +4220,7 @@ var DisplaySystem = {
 	        me.detectedThreatStatusBoxText = me.groupRdr.createChild("text")
 	                        .setAlignment("left-center")
 	                        .setTranslation(-fieldW*0.5, 40+me.height * 0.10*0.5)
-	                        .setFontSize(20, 1.0)
+	                        .setFontSize(me.device.fontSize, 1.0)
 	                        .setColor(colorText1);
 	        me.dashBox = me.groupRdr.createChild("path")
 	                .moveTo(-fieldW * 0.5, me.height * 0.25)
@@ -4205,13 +4237,13 @@ var DisplaySystem = {
 	        me.handoffRot = me.handoffGrp.createTransform().setTranslation(0, me.fieldY + me.fieldH*0.5);;
 	        me.handoffTxt = me.handoffGrp.createChild("text")
 	                        .setAlignment("center-center")
-	                        .setFontSize(20, 1.0)
+	                        .setFontSize(me.device.fontSize, 1.0)
 	                        .setColor(colorText1);
 
 	        me.searchText = me.groupRdr.createChild("text")
 	                        .setAlignment("center-top")
 	                        .setTranslation(0, 40+me.height * 0.10+5)
-	                        .setFontSize(20, 1.0)
+	                        .setFontSize(me.device.fontSize, 1.0)
 	                        .setColor(colorText2);
 
 	        me.crossY = me.groupRdr.createChild("path")
@@ -4403,8 +4435,8 @@ var DisplaySystem = {
                     cursor_destination = nil;
                     cursor_posHAS[0] += me.slew_x*175;
                     cursor_posHAS[1] -= me.slew_y*175;
-                    cursor_posHAS[0] = math.clamp(cursor_posHAS[0], -552*0.5*0.795, 552*0.5*0.795);
-                    cursor_posHAS[1] = math.clamp(cursor_posHAS[1], -482, 0);
+                    cursor_posHAS[0] = math.clamp(cursor_posHAS[0], -displayWidthHalf, displayWidthHalf);
+                    cursor_posHAS[1] = math.clamp(cursor_posHAS[1], -displayHeight, 0);
                     cursor_click = (slew_c and !me.slew_c_last)?me.index:-1;
                     cursor_lock = me.index;
                 } elsif (cursor_lock == me.index or (me.slew_x == 0 or me.slew_y == 0 or slew_c == 0)) {
@@ -4417,7 +4449,7 @@ var DisplaySystem = {
             me.elapsed = noti.getproper("elapsed");
             me.cursor.setTranslation(cursor_posHAS);
             me.cursor.setVisible(me.sensor.handoffTarget == nil);
-            if (0 and cursor_click==0) print(cursor_posHAS[0],", ",cursor_posHAS[1]+482, "  click: ", cursor_click);
+            if (0 and cursor_click==0) print(cursor_posHAS[0],", ",cursor_posHAS[1]+displayHeight, "  click: ", cursor_click);
 
             
             
@@ -4664,7 +4696,7 @@ var DisplaySystem = {
             foreach(me.citem; items) {
                 if (me.citem["xyPos"] == nil) continue;
                 me.xx = math.abs(me.citem.xyPos[0]-cursor_posHAS[0]);
-                me.yy = math.abs(me.citem.xyPos[1]-(cursor_posHAS[1] + 482));
+                me.yy = math.abs(me.citem.xyPos[1]-(cursor_posHAS[1] + displayHeight));
                 me.cdist = math.sqrt(me.xx*me.xx+me.yy*me.yy);
                 if (me.cdist < me.clostestDist) {
                     me.clostestDist = me.cdist;
@@ -4906,6 +4938,11 @@ var get_intercept = func(bearingToRunner, dist_m, runnerHeading, runnerSpeed, ch
 
     return [timeToIntercept, interceptHeading, interceptCoord, interceptDist, interceptRelativeBearing];
 }
+
+var displayWidth     = 552 * 0.795;
+var displayHeight    = 482 * 1;
+var displayWidthHalf = displayWidth  *  0.5;
+var displayHeightHalf= displayHeight  *  0.5;
 
 var main = func (module) {
 	# TEST CODE:
