@@ -151,9 +151,16 @@ var DisplayDevice = {
 			me.letters.setColor(positive?me.device.colorFront:me.device.colorBack);
 			me.outline.setVisible(positive and outline);
 			me.fill.setVisible(1);
-			me.fill.setTranslation(rear, 0);
 			me.fill.setColor((!positive)?me.device.colorFront:me.device.colorBack);
 			me.fill.setColorFill((!positive)?me.device.colorFront:me.device.colorBack);
+			me.linebreak = find("\n", text) != -1?2:1;
+			me.lettersCount = size(text);
+			if (me.linebreak == 2) {
+				me.split = split("\n", text);
+				if (size(me.split)>1) me.lettersCount = math.max(size(me.split[0]),size(me.split[1]));
+			}
+			me.fill.setScale(me.lettersCount/4,me.linebreak);
+			me.outline.setScale(me.lettersCount/4,me.linebreak);
 		};
 		append(me.listeners, setlistener(property, me[prefix]));
 	},
@@ -181,36 +188,44 @@ var DisplayDevice = {
 		system.setDevice(me);
 	},
 
-	addControlText: func (prefix, controlName, pos, posIndex, alignment) {
+	addControlText: func (prefix, controlName, pos, posIndex, alignmentH=0, alignmentV=0) {
 		me.tempX = me.controlPositions[prefix][posIndex][0]+pos[0];
 		me.tempY = me.controlPositions[prefix][posIndex][1]+pos[1];
+
+		me.alignment  = alignmentH==0?"center-":(alignmentH==-1?"left-":"right-");
+		me.alignment ~= alignmentV==0?"center":(alignmentV==-1?"top":"bottom");
+		me.letterWidth  = 0.55 * me.fontSize;
+		me.letterHeight = 0.8 * me.fontSize;
+		me.myCenter = [me.tempX, me.tempY];
 		me.controls[controlName].letters = me.controlGrp.createChild("text")
 				.set("z-index", 10)
-				.setAlignment(alignment==0?"center-center":(alignment==-1?"left-center":"right-center"))
-				.setTranslation(me.tempX+me.fontSize*1.5*alignment, me.tempY)
+				.setAlignment(me.alignment)
+				.setTranslation(me.tempX, me.tempY)
 				.setFontSize(me.fontSize, 1)
 				.setText(right(controlName,4))
 				.setColor(me.colorFront);
 		me.controls[controlName].outline = me.controlGrp.createChild("path")
 				.set("z-index", 11)
-				.moveTo(me.tempX-me.fontSize*1.5, me.tempY-me.fontSize*0.5-1)
-				.horiz(me.fontSize*3)
-				.vert(me.fontSize*1.0+1)
-				.horiz(-me.fontSize*3)
-				.vert(-me.fontSize*1.0-1)
+				.moveTo(me.tempX-me.letterWidth*2*alignmentH-me.letterWidth*2-me.myCenter[0], me.tempY-me.letterHeight*alignmentV*0.5-me.letterHeight*0.5-1-me.myCenter[1])
+				.horiz(me.letterWidth*4)
+				.vert(me.letterHeight*1.0+1)
+				.horiz(-me.letterWidth*4)
+				.vert(-me.letterHeight*1.0-1)
 				.setColor(me.colorFront)
 				.hide()
-				.setStrokeLineWidth(2);
+				.setStrokeLineWidth(2)
+				.setTranslation(me.myCenter);
 		me.controls[controlName].fill = me.controlGrp.createChild("path")
 				.set("z-index", 9)
-				.moveTo(me.tempX-me.fontSize*1.5, me.tempY-me.fontSize*0.5-1)
-				.horiz(me.fontSize*3)
-				.vert(me.fontSize*1.0+1)
-				.horiz(-me.fontSize*3)
-				.vert(-me.fontSize*1.0-1)
+				.moveTo(me.tempX-me.letterWidth*2*alignmentH-me.letterWidth*2-me.myCenter[0], me.tempY-me.letterHeight*alignmentV*0.5-me.letterHeight*0.5-1-me.myCenter[1])
+				.horiz(me.letterWidth*4)
+				.vert(me.letterHeight*1.0+1)
+				.horiz(-me.letterWidth*4)
+				.vert(-me.letterHeight*1.0-1)
 				.setColorFill(me.colorBack)
 				.setColor(me.colorBack)
-				.setStrokeLineWidth(2);
+				.setStrokeLineWidth(2)
+				.setTranslation(me.myCenter);
 	},
 
 	addPullUpCue: func {
@@ -229,7 +244,7 @@ var DisplayDevice = {
     },
 
 	addSOILines: func () {
-		me.tempMargin = 20;
+		me.tempMargin = 10;
 		me.soiLine = me.controlGrp.createChild("path")
 				.set("z-index", 8)
 				.moveTo(me.tempMargin,me.tempMargin)
@@ -248,7 +263,7 @@ var DisplayDevice = {
 				.set("z-index", 10)
 				.setColor(me.colorFront)
 				.setAlignment("center-center")
-				.setTranslation(me.uvMap[0]*me.resolution[0]*0.5, me.uvMap[1]*me.resolution[1]*0.5-10)
+				.setTranslation(me.uvMap[0]*me.resolution[0]*0.5, me.uvMap[1]*me.resolution[1]*0.30)
 				.setFontSize(20)
 				.setText(info);
 		return me.soiText;
@@ -330,20 +345,20 @@ var DisplaySystem = {
 		me.device.fontSize = fontSize;
 
 		for (var i = 1; i <= 5; i+= 1) {
-			me.device.addControlText("OSB", "OSB"~i, [30, 0], i-1,-1);
+			me.device.addControlText("OSB", "OSB"~i, [10, 0], i-1,-1);
 		}
 		for (var i = 6; i <= 10; i+= 1) {
-			me.device.addControlText("OSB", "OSB"~i, [-30, 0], i-1,1);
+			me.device.addControlText("OSB", "OSB"~i, [-10, 0], i-1,1);
 		}
 		for (var i = 11; i <= 15; i+= 1) {
-			me.device.addControlText("OSB", "OSB"~i, [0, 20], i-1,0);
+			me.device.addControlText("OSB", "OSB"~i, [0, 10], i-1,0,-1);
 		}
 		for (var i = 16; i <= 20; i+= 1) {
-			me.device.addControlText("OSB", "OSB"~i, [0, -20], i-1,0);
+			me.device.addControlText("OSB", "OSB"~i, [0, -10], i-1,0,1);
 		}
 		me.device.addSOILines();
 		me.device.addSOIText("NOT SOI");
-		me.device.setSOI(-1);
+		me.device.setSOI(1);
 	},
 
 	initPage: func (pageName) {
@@ -640,6 +655,14 @@ var DisplaySystem = {
 	    },
 	},
 
+#  ██       █████  ██    ██ ███████ ██████       █████  ██████  ██████   ██████  ██     ██ ███████ 
+#  ██      ██   ██  ██  ██  ██      ██   ██     ██   ██ ██   ██ ██   ██ ██    ██ ██     ██ ██      
+#  ██      ███████   ████   █████   ██████      ███████ ██████  ██████  ██    ██ ██  █  ██ ███████ 
+#  ██      ██   ██    ██    ██      ██   ██     ██   ██ ██   ██ ██   ██ ██    ██ ██ ███ ██      ██ 
+#  ███████ ██   ██    ██    ███████ ██   ██     ██   ██ ██   ██ ██   ██  ██████   ███ ███  ███████ 
+#                                                                                                  
+#                                                                                                  
+
 	OSB1TO2ARROWS: {
 		name: "OSB1TO2ARROWS",
 		new: func {
@@ -649,33 +672,34 @@ var DisplaySystem = {
 		},
 		setup: func {
 			me.group.setTranslation(0, me.offset);
+			me.leftMargin = 5;
 			me.up = me.group.createChild("path")
 						.set("z-index", 20)
-	                    .moveTo(0,me.device.resolution[1]*0.5-105-27.5)
+	                    .moveTo(me.leftMargin,me.device.resolution[1]*0.5-105-27.5)
 	                    .horiz(30)
-	                    .lineTo(15,me.device.resolution[1]*0.5-105-27.5-15)
-	                    .lineTo(0,me.device.resolution[1]*0.5-105-27.5)
+	                    .lineTo(15+me.leftMargin,me.device.resolution[1]*0.5-105-27.5-15)
+	                    .lineTo(me.leftMargin,me.device.resolution[1]*0.5-105-27.5)
 	                    .setStrokeLineWidth(3)
 	                    .hide()
 	                    .setColor(me.device.colorFront);
 	        me.txt = me.group.createChild("text")
 		        		.set("z-index", 20)
-		                .setTranslation(0, me.device.resolution[1]*0.5-105)
-		                .setAlignment("left-center")
+		                .setTranslation(me.leftMargin+me.device.fontSize*0.75, me.device.resolution[1]*0.5-105)
+		                .setAlignment("center-center")
 		                .setColor(me.device.colorFront)
 		                .setFontSize(me.device.fontSize, 1.0);
 	        me.down = me.group.createChild("path")
 	        			.set("z-index", 20)
-	                    .moveTo(0,me.device.resolution[1]*0.5-105+27.5)
+	                    .moveTo(me.leftMargin,me.device.resolution[1]*0.5-105+27.5)
 	                    .horiz(30)
-	                    .lineTo(15,me.device.resolution[1]*0.5-105+27.5+15)
-	                    .lineTo(0,me.device.resolution[1]*0.5-105+27.5)
+	                    .lineTo(me.leftMargin+15,me.device.resolution[1]*0.5-105+27.5+15)
+	                    .lineTo(me.leftMargin,me.device.resolution[1]*0.5-105+27.5)
 	                    .setStrokeLineWidth(3)
 	                    .hide()
 	                    .setColor(me.device.colorFront);
 	        me.plate = me.group.createChild("path")
 	        			.set("z-index", 10)
-	                    .moveTo(0,me.device.resolution[1]*0.5-105+27.5+15)
+	                    .moveTo(me.leftMargin,me.device.resolution[1]*0.5-105+27.5+15)
 	                    .horiz(30)
 	                    .vert(-85)
 	                    .horiz(-30)
@@ -2041,6 +2065,14 @@ var DisplaySystem = {
 		layers: ["OSB1TO2ARROWS"],
 	},
 
+#  ███████ ███    ███ ███████     ██ ███    ██ ██    ██ 
+#  ██      ████  ████ ██          ██ ████   ██ ██    ██ 
+#  ███████ ██ ████ ██ ███████     ██ ██ ██  ██ ██    ██ 
+#       ██ ██  ██  ██      ██     ██ ██  ██ ██  ██  ██  
+#  ███████ ██      ██ ███████     ██ ██   ████   ████   
+#                                                       
+#                                                       
+
 	PageSMSINV: {
 		name: "PageSMSINV",
 		isNew: 1,
@@ -2058,174 +2090,174 @@ var DisplaySystem = {
 	        me.group.setTranslation(0.5*me.device.resolution[0]*me.device.uvMap[0], me.device.resolution[1]);
 
 	        me.cat = me.group.createChild("text")
-	                .setTranslation(0, -482*0.5+100)
+	                .setTranslation(0, -me.device.resolution[1]*0.5+100)
 	                .setText("CAT I")
 	                .setAlignment("center-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 
 	        me.gun = me.group.createChild("text")
-	                .setTranslation(-276*0.795*0.95, -482*0.5-155)
+	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.95, -me.device.resolution[1]*0.5-155)
 	                .setText("-----")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 	        me.gun2 = me.group.createChild("text")
-	                .setTranslation(-276*0.795*0.95, -482*0.5-130)
+	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.95, -me.device.resolution[1]*0.5-130)
 	                .setText("-----")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 
 	        me.p6 = me.group.createChild("text")
-	                .setTranslation(276*0.795*0.08, -482*0.5-90)
+	                .setTranslation(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.08, -me.device.resolution[1]*0.5-90)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 	        me.p6l1 = me.group.createChild("text")
-	                .setTranslation(276*0.795*0.08, -482*0.5-65)
+	                .setTranslation(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.08, -me.device.resolution[1]*0.5-65)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 	        me.p6l2 = me.group.createChild("text")
-	                .setTranslation(276*0.795*0.08, -482*0.5-40)
+	                .setTranslation(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.08, -me.device.resolution[1]*0.5-40)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 
 	        me.p7 = me.group.createChild("text")
-	                .setTranslation(276*0.795*0.37, -482*0.5-15)
+	                .setTranslation(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.37, -me.device.resolution[1]*0.5-15)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 	        me.p7l1 = me.group.createChild("text")
-	                .setTranslation(276*0.795*0.37, -482*0.5+10)
+	                .setTranslation(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.37, -me.device.resolution[1]*0.5+10)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 	        me.p7l2 = me.group.createChild("text")
-	                .setTranslation(276*0.795*0.37, -482*0.5+35)
+	                .setTranslation(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.37, -me.device.resolution[1]*0.5+35)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 
 	        me.p8 = me.group.createChild("text")
-	                .setTranslation(276*0.795*0.52, -482*0.5+60)
+	                .setTranslation(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.52, -me.device.resolution[1]*0.5+60)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 	        me.p8l1 = me.group.createChild("text")
-	                .setTranslation(276*0.795*0.52, -482*0.5+85)
+	                .setTranslation(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.52, -me.device.resolution[1]*0.5+85)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 
 	        me.p9 = me.group.createChild("text")
-	                .setTranslation(276*0.795*0.52, -482*0.5+125)
+	                .setTranslation(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.52, -me.device.resolution[1]*0.5+125)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 	        me.p9l1 = me.group.createChild("text")
-	                .setTranslation(276*0.795*0.52, -482*0.5+150)
+	                .setTranslation(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.52, -me.device.resolution[1]*0.5+150)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 
 	        me.p5 = me.group.createChild("text")
-	                .setTranslation(-276*0.795*0.20, -482*0.5-190)
+	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.20, -me.device.resolution[1]*0.5-190)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 	        me.p5l1 = me.group.createChild("text")
-	                .setTranslation(-276*0.795*0.20, -482*0.5-165)
+	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.20, -me.device.resolution[1]*0.5-165)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 	        me.p5l2 = me.group.createChild("text")
-	                .setTranslation(-276*0.795*0.20, -482*0.5-140)
+	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.20, -me.device.resolution[1]*0.5-140)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 
 	        me.p4 = me.group.createChild("text")
-	                .setTranslation(-276*0.795*0.51, -482*0.5-90)
+	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.51, -me.device.resolution[1]*0.5-90)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 	        me.p4l1 = me.group.createChild("text")
-	                .setTranslation(-276*0.795*0.51, -482*0.5-65)
+	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.51, -me.device.resolution[1]*0.5-65)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 	        me.p4l2 = me.group.createChild("text")
-	                .setTranslation(-276*0.795*0.51, -482*0.5-40)
+	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.51, -me.device.resolution[1]*0.5-40)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 
 	        me.p3 = me.group.createChild("text")
-	                .setTranslation(-276*0.795*0.8, -482*0.5-15)
+	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.8, -me.device.resolution[1]*0.5-15)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 	        me.p3l1 = me.group.createChild("text")
-	                .setTranslation(-276*0.795*0.8, -482*0.5+10)
+	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.8, -me.device.resolution[1]*0.5+10)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 	        me.p3l2 = me.group.createChild("text")
-	                .setTranslation(-276*0.795*0.8, -482*0.5+35)
+	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.8, -me.device.resolution[1]*0.5+35)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 
 	        me.p2 = me.group.createChild("text")
-	                .setTranslation(-276*0.795*0.95, -482*0.5+60)
+	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.95, -me.device.resolution[1]*0.5+60)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 	        me.p2l1 = me.group.createChild("text")
-	                .setTranslation(-276*0.795*0.95, -482*0.5+85)
+	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.95, -me.device.resolution[1]*0.5+85)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 
 	        me.p1 = me.group.createChild("text")
-	                .setTranslation(-276*0.795*0.95, -482*0.5+125)
+	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.95, -me.device.resolution[1]*0.5+125)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 	        me.p1l1 = me.group.createChild("text")
-	                .setTranslation(-276*0.795*0.95, -482*0.5+150)
+	                .setTranslation(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.95, -me.device.resolution[1]*0.5+150)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(20, 1.0);
 
 	        me.p1f = me.group.createChild("path")
-	           .moveTo(-276*0.795*0.97, -482*0.5+115)
+	           .moveTo(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.97, -me.device.resolution[1]*0.5+115)
 	           .vert(50)
 	           .horiz(100)
 	           .vert(-50)
@@ -2234,7 +2266,7 @@ var DisplaySystem = {
 	           .setStrokeLineWidth(2)
 	           .hide();
 	        me.p2f = me.group.createChild("path")
-	           .moveTo(-276*0.795*0.97, -482*0.5+50)
+	           .moveTo(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.96, -me.device.resolution[1]*0.5+50)
 	           .vert(50)
 	           .horiz(100)
 	           .vert(-50)
@@ -2243,7 +2275,7 @@ var DisplaySystem = {
 	           .setStrokeLineWidth(2)
 	           .hide();
 	        me.p3f = me.group.createChild("path")
-	           .moveTo(-276*0.795*0.82, -482*0.5-25)
+	           .moveTo(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.81, -me.device.resolution[1]*0.5-25)
 	           .vert(70)
 	           .horiz(100)
 	           .vert(-70)
@@ -2252,7 +2284,7 @@ var DisplaySystem = {
 	           .setStrokeLineWidth(2)
 	           .hide();
 	        me.p4f = me.group.createChild("path")
-	           .moveTo(-276*0.795*0.57, -482*0.5-100)
+	           .moveTo(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.52, -me.device.resolution[1]*0.5-100)
 	           .vert(70)
 	           .horiz(100)
 	           .vert(-70)
@@ -2261,7 +2293,7 @@ var DisplaySystem = {
 	           .setStrokeLineWidth(2)
 	           .hide();
 	        me.p5f = me.group.createChild("path")
-	           .moveTo(-276*0.795*0.18, -482*0.5-200)
+	           .moveTo(-me.device.resolution[0]*me.device.uvMap[0]*0.5*0.21, -me.device.resolution[1]*0.5-200)
 	           .vert(70)
 	           .horiz(100)
 	           .vert(-70)
@@ -2270,7 +2302,7 @@ var DisplaySystem = {
 	           .setStrokeLineWidth(2)
 	           .hide();
 	        me.p6f = me.group.createChild("path")
-	           .moveTo(0, -482*0.5-100)
+	           .moveTo(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.09, -me.device.resolution[1]*0.5-100)
 	           .vert(70)
 	           .horiz(100)
 	           .vert(-70)
@@ -2279,7 +2311,7 @@ var DisplaySystem = {
 	           .setStrokeLineWidth(2)
 	           .hide();
 	        me.p7f = me.group.createChild("path")
-	           .moveTo(276*0.795*0.35, -482*0.5-25)
+	           .moveTo(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.36, -me.device.resolution[1]*0.5-25)
 	           .vert(70)
 	           .horiz(100)
 	           .vert(-70)
@@ -2288,7 +2320,7 @@ var DisplaySystem = {
 	           .setStrokeLineWidth(2)
 	           .hide();
 	        me.p8f = me.group.createChild("path")
-	           .moveTo(276*0.795*0.5, -482*0.5+50)
+	           .moveTo(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.5, -me.device.resolution[1]*0.5+50)
 	           .vert(50)
 	           .horiz(100)
 	           .vert(-50)
@@ -2297,7 +2329,7 @@ var DisplaySystem = {
 	           .setStrokeLineWidth(2)
 	           .hide();
 	        me.p9f = me.group.createChild("path")
-	           .moveTo(276*0.795*0.5, -482*0.5+115)
+	           .moveTo(me.device.resolution[0]*me.device.uvMap[0]*0.5*0.5, -me.device.resolution[1]*0.5+115)
 	           .vert(50)
 	           .horiz(100)
 	           .vert(-50)
@@ -2444,6 +2476,14 @@ var DisplaySystem = {
 		},
 		layers: [],
 	},
+
+#  ██████   █████  ██████   █████  ██████  
+#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██ 
+#  ██████  ███████ ██   ██ ███████ ██████  
+#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██ 
+#  ██   ██ ██   ██ ██████  ██   ██ ██   ██ 
+#                                          
+#                                          
 
 	PageFCR: {
 		name: "PageFCR",
@@ -2867,27 +2907,27 @@ var DisplaySystem = {
 	            .close()
 	            .setStrokeLineWidth(2.5)
 	            .setStrokeLineCap("round")
-	            .setTranslation(-190, -50)
+	            .setTranslation(-185, -50)
 	            .set("z-index",1)
 	            .setColor(colorBullseye);
 	        me.bullOwnDist = me.p_RDR.createChild("text")
 	                .setAlignment("center-center")
 	                .setColor(colorBullseye)
-	                .setTranslation(-190, -50)
+	                .setTranslation(-185, -50)
 	                .setText("12")
 	                .set("z-index",1)
 	                .setFontSize(18, 1.0);
 	        me.bullOwnDir = me.p_RDR.createChild("text")
 	                .setAlignment("center-top")
 	                .setColor(colorBullseye)
-	                .setTranslation(-190, -30)
+	                .setTranslation(-185, -30)
 	                .setText("270")
 	                .set("z-index",1)
 	                .setFontSize(18, 1.0);
 	        me.cursorLoc = me.p_RDR.createChild("text")
 	                .setAlignment("left-bottom")
 	                .setColor(colorBetxt)
-	                .setTranslation(-200, -75)
+	                .setTranslation(-205, -75)
 	                .setText("12")
 	                .set("z-index",1)
 	                .setFontSize(18, 1.0);
@@ -3029,9 +3069,9 @@ var DisplaySystem = {
 
             if (systime() - iff.last_interogate < 3.5) {
                 # IFF ongoing
-                me.device.controls["OSB5"].setControlText("M4",1,0,-25);
+                me.device.controls["OSB5"].setControlText("M4",1,0);
             } else {
-                me.device.controls["OSB5"].setControlText("M",1,0,-25);
+                me.device.controls["OSB5"].setControlText("M",1,0);
             }
             me.showExp = 0;
             if (me.DGFT or !radar_system.apg68Radar.currentMode.EXPsupport or (radar_system.apg68Radar.getPriorityTarget() != nil and radar_system.apg68Radar.currentMode.EXPfixedAim)) {
@@ -3205,7 +3245,7 @@ var DisplaySystem = {
 
             me.az1.setVisible(radar_system.apg68Radar.showAZ());
             me.az2.setVisible(radar_system.apg68Radar.showAZ());
-            me.device.controls["OSB4"].setControlText(radar_system.apg68Radar.currentMode.showBars()?(radar_system.apg68Radar.getBars()~"B"):"",1,0,-25);
+            me.device.controls["OSB4"].setControlText(radar_system.apg68Radar.currentMode.showBars()?(radar_system.apg68Radar.getBars()~"\nB"):"",1,0);
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
             me.rangeText = sprintf("%d",radar_system.apg68Radar.getRange());
@@ -3227,7 +3267,7 @@ var DisplaySystem = {
                 a = 6;
             }
 
-            me.device.controls["OSB3"].setControlText("A"~a,1,0,-25);
+            me.device.controls["OSB3"].setControlText("A\n"~a,1,0);
 
             if (radar_system.apg68Radar.currentMode.detectAIR) {
                 me.az1.setTranslation((radar_system.apg68Radar.currentMode.azimuthTilt-radar_system.apg68Radar.currentMode.az)*me.wdt*0.5/60,0);
@@ -4770,7 +4810,7 @@ var main = func (module) {
 	var width  = 552;
 
 	leftMFD = DisplayDevice.new("LeftMFD", [width,height], [0.795, 1], "MFDimage1", "tranbg.png");
-	leftMFD.setColorBackground(colorBackground);
+	leftMFD.setColorBackground(colorBackground);#todo fix
 
 #	rightMFD = DisplayDevice.new("RightMFD", [width,height], [0.795, 1], "MFDimage2", "tranbg.png");
 #	rightMFD.setColorBackground(colorBackground);
@@ -4793,17 +4833,17 @@ var main = func (module) {
 		[width, 4.5*height/7],
 		[width, 5.5*height/7],
 
-		[1.3*width/7, 0],
+		[1.35*width/7, 0],
 		[2.4*width/7, 0],
 		[3.5*width/7, 0],
 		[4.6*width/7, 0],
-		[5.7*width/7, 0],
+		[5.65*width/7, 0],
 
-		[1.3*width/7, height],
+		[1.35*width/7, height],
 		[2.4*width/7, height],
 		[3.5*width/7, height],
 		[4.6*width/7, height],
-		[5.7*width/7, height],
+		[5.65*width/7, height],
 	];
 
 #	leftMFD.setSwapDevice(rightMFD);
