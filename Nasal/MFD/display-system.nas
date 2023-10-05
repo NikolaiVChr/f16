@@ -399,6 +399,7 @@ var DisplaySystem = {
 		me.initPage("PageHAS");
 		me.initPage("PageReset");
 		me.initPage("PageBlank");
+		me.initPage("PageRCCE");
 		me.initPage("PageSMSINV");
 		#me.initPage("PageOSB");
 
@@ -4783,7 +4784,59 @@ var DisplaySystem = {
 			"OSB8":  "PageDTE",
 			"OSB11": "PageBlank",
 			"OSB12": "PageHAS",
+			"OSB14": "PageRCCE",
 			"OSB15": "PageReset",
+		},
+		layers: [],
+	},
+
+	PageRCCE: {
+		name: "PageRCCE",
+		isNew: 1,
+		supportSOI: 0,
+		new: func {
+			me.instance = {parents:[DisplaySystem.PageRCCE]};
+			me.instance.group = nil;
+			return me.instance;
+		},
+		setup: func {
+			printDebug(me.name," on ",me.device.name," is being setup");
+		},
+		enter: func {
+			printDebug("Enter ",me.name~" on ",me.device.name);
+			if (me.isNew) {
+				me.setup();
+				me.isNew = 0;
+			}
+			me.device.resetControls();
+			me.device.controls["OSB1"].setControlText("PRI\n18");
+			me.device.controls["OSB2"].setControlText("LAS");
+			me.device.controls["OSB3"].setControlText("FWD");
+			me.device.controls["OSB6"].setControlText("SEC\n17");
+			me.device.controls["OSB7"].setControlText("IRLS");
+			me.device.controls["OSB8"].setControlText("VT");
+			me.device.controls["OSB11"].setControlText("STBY");
+			me.device.controls["OSB14"].setControlText("FRZ");
+			me.device.controls["OSB15"].setControlText("TEST");
+			me.device.controls["OSB16"].setControlText("SWAP");
+			me.device.controls["OSB18"].setControlText("SMS");
+			me.device.controls["OSB19"].setControlText("RCCE",0);
+			me.device.controls["OSB20"].setControlText("DCLT");
+		},
+		controlAction: func (controlName) {
+			printDebug(me.name,": ",controlName," activated on ",me.device.name);
+            if (controlName == "OSB16") {
+                me.device.swap();
+            }
+		},
+		update: func (noti = nil) {			
+		},
+		exit: func {
+			printDebug("Exit ",me.name~" on ",me.device.name);
+		},
+		links: {
+			"OSB19": "PageMenu",
+			"OSB18": "PageSMSINV",
 		},
 		layers: [],
 	},
