@@ -397,6 +397,8 @@ var DisplaySystem = {
 		me.initPage("PageFCRCNTL");
 		me.initPage("PageHSD");
 		me.initPage("PageHAS");
+		me.initPage("PageReset");
+		me.initPage("PageBlank");
 		me.initPage("PageSMSINV");
 		#me.initPage("PageOSB");
 
@@ -540,10 +542,10 @@ var DisplaySystem = {
                 me.device.system.osbSelect[1].links[me.device.system.osbSelect[0]] = "PageHAS";
                 me.device.system.selectPage(me.device.system.osbSelect[1].name);
             } elsif (controlName == "OSB16") {
-                me.device.system.osbSelect[1].links[me.device.system.osbSelect[0]] = "PageFCRMENU";
+                me.device.system.osbSelect[1].links[me.device.system.osbSelect[0]] = "PageFCRMenu";
                 me.device.system.selectPage(me.device.system.osbSelect[1].name);
             } elsif (controlName == "OSB17") {
-                me.device.system.osbSelect[1].links[me.device.system.osbSelect[0]] = "PageMENU";
+                me.device.system.osbSelect[1].links[me.device.system.osbSelect[0]] = "PageMenu";
                 me.device.system.selectPage(me.device.system.osbSelect[1].name);
             }
 		},
@@ -4756,6 +4758,7 @@ var DisplaySystem = {
 			me.device.controls["OSB14"].setControlText("RCCE");
 			me.device.controls["OSB15"].setControlText("RESET\n MENU");
 			me.device.controls["OSB16"].setControlText("SWAP");
+			me.device.controls["OSB19"].setControlText("DCLT");#in mlu 1 this is on osb 20
 			me.device.controls["OSB20"].setControlText("TCN");
 		},
 		controlAction: func (controlName) {
@@ -4778,7 +4781,112 @@ var DisplaySystem = {
 			"OSB6":  "PageSMSINV",
 			"OSB7":  "PageHSD",
 			"OSB8":  "PageDTE",
+			"OSB11": "PageBlank",
 			"OSB12": "PageHAS",
+			"OSB15": "PageReset",
+		},
+		layers: [],
+	},
+
+	PageBlank: {
+		name: "PageBlank",
+		isNew: 1,
+		supportSOI: 0,
+		new: func {
+			me.instance = {parents:[DisplaySystem.PageBlank]};
+			me.instance.group = nil;
+			return me.instance;
+		},
+		setup: func {
+			printDebug(me.name," on ",me.device.name," is being setup");
+			me.pageText = me.group.createChild("text")
+				.set("z-index", 10)
+				.setColor(colorText1)
+				.setAlignment("center-center")
+				.setTranslation(displayWidthHalf, displayHeightHalf)
+				.setFontSize(me.device.fontSize)
+				.setText("BLANK");
+		},
+		enter: func {
+			printDebug("Enter ",me.name~" on ",me.device.name);
+			if (me.isNew) {
+				me.setup();
+				me.isNew = 0;
+			}
+			me.device.resetControls();
+			me.device.controls["OSB16"].setControlText("SWAP");
+			me.device.controls["OSB17"].setControlText("FCR");
+			me.device.controls["OSB18"].setControlText("SMS");
+		},
+		controlAction: func (controlName) {
+			printDebug(me.name,": ",controlName," activated on ",me.device.name);
+            if (controlName == "OSB16") {
+                me.device.swap();
+            }
+		},
+		update: func (noti = nil) {			
+		},
+		exit: func {
+			printDebug("Exit ",me.name~" on ",me.device.name);
+		},
+		links: {
+			"OSB17": "PageFCR",
+			"OSB18": "PageSMSINV",
+		},
+		layers: [],
+	},
+
+	PageReset: {
+		name: "PageReset",
+		isNew: 1,
+		supportSOI: 0,
+		new: func {
+			me.instance = {parents:[DisplaySystem.PageReset]};
+			me.instance.group = nil;
+			return me.instance;
+		},
+		setup: func {
+			printDebug(me.name," on ",me.device.name," is being setup");
+		},
+		enter: func {
+			printDebug("Enter ",me.name~" on ",me.device.name);
+			if (me.isNew) {
+				me.setup();
+				me.isNew = 0;
+			}
+			me.device.resetControls();
+			me.device.controls["OSB1"].setControlText("MSMD\nRESET");
+			me.device.controls["OSB2"].setControlText("PROC DCLT\nRESET");
+			me.device.controls["OSB3"].setControlText("NVIS\nOVRD");
+			me.device.controls["OSB6"].setControlText("SBC DAY\nRESET");
+			me.device.controls["OSB7"].setControlText("SBC NIGHT\nRESET");
+			me.device.controls["OSB8"].setControlText("SBC DFLT\nRESET");
+			me.device.controls["OSB9"].setControlText("SBC DAY\nSET");
+			me.device.controls["OSB10"].setControlText("SBC NIGHT\nSET");
+			me.device.controls["OSB11"].setControlText("BLANK");
+			me.device.controls["OSB15"].setControlText("RESET\n MENU", 0);
+			me.device.controls["OSB16"].setControlText("SWAP");
+			me.device.controls["OSB17"].setControlText("FCR");
+			me.device.controls["OSB19"].setControlText("DTE");
+			me.device.controls["OSB20"].setControlText("DCLT");
+		},
+		controlAction: func (controlName) {
+			printDebug(me.name,": ",controlName," activated on ",me.device.name);
+			if (controlName == "OSB16") {
+				me.device.swap();
+			}
+		},
+		update: func (noti = nil) {
+			
+		},
+		exit: func {
+			printDebug("Exit ",me.name~" on ",me.device.name);
+		},
+		links: {
+			"OSB11":  "PageBlank",
+			"OSB15":  "PageMenu",
+			"OSB17":  "PageFCR",
+			"OSB19":  "PageDTE",
 		},
 		layers: [],
 	},
