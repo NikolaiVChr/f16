@@ -244,14 +244,15 @@ var DisplayDevice = {
     },
 
 	addSOILines: func () {
-		me.tempMargin = 10;
+		me.tempMarginX = 11;
+		me.tempMarginY = 10;
 		me.soiLine = me.controlGrp.createChild("path")
 				.set("z-index", 8)
-				.moveTo(me.tempMargin,me.tempMargin)
-				.horiz(me.uvMap[0]*me.resolution[0]-me.tempMargin*2)
-				.vert(me.resolution[1]-me.tempMargin*2)
-				.horiz(-me.uvMap[0]*me.resolution[0]+me.tempMargin*2)
-				.lineTo(me.tempMargin,me.tempMargin)
+				.moveTo(me.tempMarginX,me.tempMarginY)
+				.horiz(me.uvMap[0]*me.resolution[0]-me.tempMarginX*2)
+				.vert(me.resolution[1]-me.tempMarginY*2)
+				.horiz(-me.uvMap[0]*me.resolution[0]+me.tempMarginX*2)
+				.lineTo(me.tempMarginX,me.tempMarginY)
 				.setColor(me.colorFront)
 				.hide()
 				.setStrokeLineWidth(2);
@@ -390,17 +391,42 @@ var DisplaySystem = {
 		me.initPage("PageHSD");
 		me.initPage("PageHAS");
 		me.initPage("PageSMSINV");
+		#me.initPage("PageOSB");
 
 		me.initLayer("SharedStations");
 		me.initLayer("OSB1TO2ARROWS");
 		me.initLayer("OSB3TO4ARROWS");
 		me.initLayer("OSB4TO5ARROWS");
 
+#		me.device.doubleTimerRunning = nil;
 		me.device.controlAction = func (type, controlName, propvalue) {
 			me.tempLink = me.system.currPage.links[controlName];
 			me.system.currPage.controlAction(controlName);
-			if (me.tempLink != nil) me.system.selectPage(me.tempLink);
+			if (me.tempLink != nil) {
+#				if (me.doubleTimerRunning == nil) {
+#					settimer(func me.controlActionDouble(), 0.25);
+#					me.doubleTimerRunning = me.tempLink;
+#					print("Timer starting: ",me.doubleTimerRunning);
+#				} elsif (me.doubleTimerRunning == me.tempLink) {
+#					me.doubleTimerRunning = nil;
+#					me.system.osbSelect = [me.tempLink, me.system.currPage];
+#					me.system.selectPage("PageOSB");
+#					print("Doubleclick special");
+#				} else {
+#					me.doubleTimerRunning = nil;
+					me.system.selectPage(me.tempLink);
+#					print("Timer interupted. Going to ",me.tempLink);
+#				}
+			}
 		};
+
+#		me.device.controlActionDouble = func {
+#			print("Timer ran: ",me.doubleTimerRunning);
+#			if (me.doubleTimerRunning != nil) {
+#				me.system.selectPage(me.doubleTimerRunning);
+#				me.doubleTimerRunning = nil;
+#			}
+#		};
 
 		append(me.device.listeners, setlistener("/f16/avionics/power-mfd-bit", func(node) {
             if (node.getValue() == 0) {
@@ -458,6 +484,82 @@ var DisplaySystem = {
 		foreach(var layer; me.currPage.layers) {
 			me.fetchLayer(layer).group.show();
 		}
+	},
+
+	PageOSB: {
+		name: "PageOSB",
+		isNew: 1,
+		supportSOI: 0,
+		new: func {
+			me.instance = {parents:[DisplaySystem.PageOSB]};
+			me.instance.group = nil;
+			return me.instance;
+		},
+		setup: func {
+			print(me.name," on ",me.device.name," is being setup");
+			me.pageText = me.group.createChild("text")
+				.set("z-index", 10)
+				.setColor(colorText1)
+				.setAlignment("center-center")
+				.setTranslation(me.device.uvMap[0]*me.device.resolution[0]*0.5, me.device.uvMap[1]*me.device.resolution[1]*0.30)
+				.setFontSize(20)
+				.setText("Select desired OSB");
+		},
+		enter: func {
+			print("Enter ",me.name~" on ",me.device.name);
+			if (me.isNew) {
+				me.setup();
+				me.isNew = 0;
+			}
+			me.device.resetControls();
+			me.device.controls["OSB10"].setControlText("FCR");
+			me.device.controls["OSB11"].setControlText("WPN");
+			me.device.controls["OSB12"].setControlText("SMS");
+			me.device.controls["OSB13"].setControlText("HSD");
+			me.device.controls["OSB14"].setControlText("DTE");
+			me.device.controls["OSB15"].setControlText("HAS");
+			me.device.controls["OSB16"].setControlText("FCR\nMODE");
+			me.device.controls["OSB17"].setControlText("MENU");
+			me.device.controls["OSB19"].setControlText("CANCEL");
+		},
+		controlAction: func (controlName) {
+			print(me.name,": ",controlName," activated on ",me.device.name);
+			if (controlName == "OSB19") {
+				me.device.system.selectPage(me.device.system.osbSelect[1].name);
+			} elsif (controlName == "OSB10") {
+                me.device.system.osbSelect[1].links[me.device.system.osbSelect[0]] = "PageFCR";
+                me.device.system.selectPage(me.device.system.osbSelect[1].name);
+            } elsif (controlName == "OSB11") {
+                me.device.system.osbSelect[1].links[me.device.system.osbSelect[0]] = "PageSMSWPN";
+                me.device.system.selectPage(me.device.system.osbSelect[1].name);
+            } elsif (controlName == "OSB12") {
+                me.device.system.osbSelect[1].links[me.device.system.osbSelect[0]] = "PageSMSINV";
+                me.device.system.selectPage(me.device.system.osbSelect[1].name);
+            } elsif (controlName == "OSB13") {
+                me.device.system.osbSelect[1].links[me.device.system.osbSelect[0]] = "PageHSD";
+                me.device.system.selectPage(me.device.system.osbSelect[1].name);
+            } elsif (controlName == "OSB14") {
+                me.device.system.osbSelect[1].links[me.device.system.osbSelect[0]] = "PageDTE";
+                me.device.system.selectPage(me.device.system.osbSelect[1].name);
+            } elsif (controlName == "OSB15") {
+                me.device.system.osbSelect[1].links[me.device.system.osbSelect[0]] = "PageHAS";
+                me.device.system.selectPage(me.device.system.osbSelect[1].name);
+            } elsif (controlName == "OSB16") {
+                me.device.system.osbSelect[1].links[me.device.system.osbSelect[0]] = "PageFCRMENU";
+                me.device.system.selectPage(me.device.system.osbSelect[1].name);
+            } elsif (controlName == "OSB17") {
+                me.device.system.osbSelect[1].links[me.device.system.osbSelect[0]] = "PageMENU";
+                me.device.system.selectPage(me.device.system.osbSelect[1].name);
+            }
+		},
+		update: func (noti = nil) {			
+		},
+		exit: func {
+			print("Exit ",me.name~" on ",me.device.name);
+		},
+		links: {
+		},
+		layers: [],
 	},
 
 	SharedStations: {
