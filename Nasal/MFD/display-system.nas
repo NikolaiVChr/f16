@@ -316,7 +316,6 @@ var DisplayDevice = {
 	},
 
 	swap: func {
-		return;#TODO: remove
 		var myPageName = me.system.currPage.name;
 		var otherPageName = me.swapWith.system.currPage.name;
 		var mySoi = me.soi;
@@ -437,20 +436,8 @@ var DisplaySystem = {
 #		};
 
 		append(me.device.listeners, setlistener("/f16/avionics/power-mfd-bit", func(node) {
-            if (node.getValue() == 0) {
-                me.selectPage("PageVoid");
-            } elsif (node.getValue() == 1) {
-                me.selectPage("PageGrid");
-            } elsif (node.getValue() == 2) {
-                me.selectPage("PageCube");
-            } elsif (node.getValue() == 3) {
-                if (me.device.name == "LeftMFD") {
-                    me.selectPage("PageFCR");
-                } else {
-                    me.selectPage("PageHSD");
-                }
-            }
-        }, 1, 0));
+            forcePages(node.getValue(), me);
+        },0,0));
 	},
 
 	fetchLayer: func (layerName) {
@@ -4954,6 +4941,22 @@ var displayHeight    = 482 * 1;
 var displayWidthHalf = displayWidth  *  0.5;
 var displayHeightHalf= displayHeight  *  0.5;
 
+var forcePages = func (v, system) {
+	if (v == 0) {
+        system.selectPage("PageVoid");
+    } elsif (v == 1) {
+        system.selectPage("PageGrid");
+    } elsif (v == 2) {
+        system.selectPage("PageCube");
+    } elsif (v == 3) {
+        if (system.device.name == "LeftMFD") {
+            system.selectPage("PageFCR");
+        } else {
+            system.selectPage("PageHSD");
+        }
+    }
+}
+
 var main = func (module) {
 	# TEST CODE:
 	var height = 482;
@@ -5016,8 +5019,8 @@ var main = func (module) {
 
 	#theMaster = leftMFD.controls.master;
 
-	mfdSystem1.selectPage("PageFCR");
-	mfdSystem2.selectPage("PageHSD");
+	forcePages(getprop("/f16/avionics/power-mfd-bit"), mfdSystem1);
+	forcePages(getprop("/f16/avionics/power-mfd-bit"), mfdSystem2);
 
 	f16_mfd = F16MfdRecipient.new("F16-MFD2");
 	emesary.GlobalTransmitter.Register(f16_mfd);
