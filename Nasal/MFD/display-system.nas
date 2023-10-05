@@ -407,6 +407,7 @@ var DisplaySystem = {
 		me.initLayer("OSB1TO2ARROWS");
 		me.initLayer("OSB3TO4ARROWS");
 		me.initLayer("OSB4TO5ARROWS");
+		me.initLayer("BULLSEYE");
 
 #		me.device.doubleTimerRunning = nil;
 		me.device.controlAction = func (type, controlName, propvalue) {
@@ -760,6 +761,77 @@ var DisplaySystem = {
                 me.sta[me.indi].setVisible(me.indices[me.indi] > -1);
                 me.staFrame[me.indi].setVisible(me.indices[me.indi] == 1);
             }
+	    },
+	},
+
+	BULLSEYE: {
+		name: "BULLSEYE",
+		new: func {
+			var layer = {parents:[DisplaySystem.BULLSEYE]};
+			layer.offset = 0;
+			return layer;
+		},
+		setup: func {
+			me.group.setTranslation(displayWidthHalf,displayHeight);
+			me.bullOwnRing = me.group.createChild("path")
+	            .moveTo(-15,0)
+	            .arcSmallCW(15,15, 0,  15*2, 0)
+	            .arcSmallCW(15,15, 0, -15*2, 0)
+	            .close()
+	            .moveTo(0,-18)
+	            .lineTo(8,-12.5)
+	            .moveTo(0,-18)
+	            .lineTo(-8,-12.5)
+	            .close()
+	            .setStrokeLineWidth(2.5)
+	            .setStrokeLineCap("round")
+	            .setTranslation(-185, -50)
+	            .set("z-index",1)
+	            .setColor(colorBullseye);
+	        me.bullOwnDist = me.group.createChild("text")
+	                .setAlignment("center-center")
+	                .setColor(colorBullseye)
+	                .setTranslation(-185, -50)
+	                .setText("12")
+	                .set("z-index",1)
+	                .setFontSize(18, 1.0);
+	        me.bullOwnDir = me.group.createChild("text")
+	                .setAlignment("center-top")
+	                .setColor(colorBullseye)
+	                .setTranslation(-185, -30)
+	                .setText("270")
+	                .set("z-index",1)
+	                .setFontSize(18, 1.0);
+	    },
+	    update: func (noti = nil) {
+	    	#
+            # Bulls-eye info
+            #
+            me.bullPt = steerpoints.getNumber(555);
+            me.bullOn = me.bullPt != nil;
+            if (me.bullOn) {
+            	# Should really only show in A-A mode
+                me.bullLat = me.bullPt.lat;
+                me.bullLon = me.bullPt.lon;
+                me.bullCoord = geo.Coord.new().set_latlon(me.bullLat,me.bullLon);
+                me.ownCoord = geo.aircraft_position();
+                me.bullDirToMe = me.bullCoord.course_to(me.ownCoord);
+                me.meToBull = ((me.bullDirToMe+180)-noti.getproper("heading"))*D2R;
+                me.bullOwnRing.setRotation(me.meToBull);
+                me.bullDistToMe = me.bullCoord.distance_to(me.ownCoord)*M2NM;
+
+                me.bullDirToMe = sprintf("%03d", me.bullDirToMe);
+                if (me.bullDistToMe > 100) {
+                    me.bullDistToMe = "  ";
+                } else {
+                    me.bullDistToMe = sprintf("%02d", me.bullDistToMe);
+                }
+                me.bullOwnDir.setText(me.bullDirToMe);
+                me.bullOwnDist.setText(me.bullDistToMe);
+            }
+            me.bullOwnRing.setVisible(me.bullOn);
+            me.bullOwnDir.setVisible(me.bullOn);
+            me.bullOwnDist.setVisible(me.bullOn);
 	    },
 	},
 
@@ -1628,31 +1700,6 @@ var DisplaySystem = {
 	            .arcSmallCW(5,5, 0, -5*2, 0)
 	            .setStrokeLineWidth(3)
 	            .setColor(colorBullseye);
-	        me.bullOwnRing = me.buttonView.createChild("path")
-	            .moveTo(-15,0)
-	            .arcSmallCW(15,15, 0,  15*2, 0)
-	            .arcSmallCW(15,15, 0, -15*2, 0)
-	            .close()
-	            .moveTo(0,-18)
-	            .lineTo(7,-13)
-	            .moveTo(0,-18)
-	            .lineTo(-7,-13)
-	            .close()
-	            .setStrokeLineWidth(2.5)
-	            .setTranslation(-190, -50)
-	            .setColor(colorBullseye);
-	        me.bullOwnDist = me.buttonView.createChild("text")
-	                .setAlignment("center-center")
-	                .setColor(colorBullseye)
-	                .setTranslation(-190, -50)
-	                .setText("12")
-	                .setFontSize(18, 1.0);
-	        me.bullOwnDir = me.buttonView.createChild("text")
-	                .setAlignment("center-top")
-	                .setColor(colorBullseye)
-	                .setTranslation(-190, -30)
-	                .setText("270")
-	                .setFontSize(18, 1.0);
 	    },
 
 	    # Static members
@@ -1826,7 +1873,6 @@ var DisplaySystem = {
                 me.bullCoord = geo.Coord.new().set_latlon(me.bullLat,me.bullLon);
                 me.bullDirToMe = me.bullCoord.course_to(me.selfCoord);
                 me.meToBull = ((me.bullDirToMe+180)-noti.getproper("heading"))*D2R;
-                me.bullOwnRing.setRotation(me.meToBull);
                 me.bullDistToMe = me.bullCoord.distance_to(me.selfCoord)*M2NM;
                 if (me.get_HSD_centered()) {
                     me.bullRangePixels = me.mediumRadius*(me.bullDistToMe/me.get_HSD_range_cen());
@@ -1836,18 +1882,7 @@ var DisplaySystem = {
                 me.legX = me.bullRangePixels*math.sin(me.meToBull);
                 me.legY = -me.bullRangePixels*math.cos(me.meToBull);
                 me.bullseye.setTranslation(me.legX,me.legY);
-                if (me.bullDistToMe > 100) {
-                    me.bullDistToMe = "  ";
-                } else {
-                    me.bullDistToMe = sprintf("%02d", me.bullDistToMe);
-                }
-                me.bullDirToMe = sprintf("%03d", me.bullDirToMe);
-                me.bullOwnDir.setText(me.bullDirToMe);
-                me.bullOwnDist.setText(me.bullDistToMe);
             }
-            me.bullOwnRing.setVisible(me.bullOn);
-            me.bullOwnDir.setVisible(me.bullOn);
-            me.bullOwnDist.setVisible(me.bullOn);
             me.bullseye.setVisible(me.bullOn);
 
             if (me.get_HSD_centered()) {
@@ -2192,7 +2227,7 @@ var DisplaySystem = {
 			"OSB19":  "PageSMSWPN",
 			"OSB11":  "PageFCR",
 		},
-		layers: ["OSB1TO2ARROWS"],
+		layers: ["OSB1TO2ARROWS","BULLSEYE"],
 	},
 
 #  ███████ ███    ███ ███████     ██ ███    ██ ██    ██ 
@@ -3028,35 +3063,7 @@ var DisplaySystem = {
 	            .setStrokeLineWidth(1)
 	            .set("z-index",1)
 	            .setColor(colorBullseye);
-	        me.bullOwnRing = me.p_RDR.createChild("path")
-	            .moveTo(-15,0)
-	            .arcSmallCW(15,15, 0,  15*2, 0)
-	            .arcSmallCW(15,15, 0, -15*2, 0)
-	            .close()
-	            .moveTo(0,-18)
-	            .lineTo(8,-12.5)
-	            .moveTo(0,-18)
-	            .lineTo(-8,-12.5)
-	            .close()
-	            .setStrokeLineWidth(2.5)
-	            .setStrokeLineCap("round")
-	            .setTranslation(-185, -50)
-	            .set("z-index",1)
-	            .setColor(colorBullseye);
-	        me.bullOwnDist = me.p_RDR.createChild("text")
-	                .setAlignment("center-center")
-	                .setColor(colorBullseye)
-	                .setTranslation(-185, -50)
-	                .setText("12")
-	                .set("z-index",1)
-	                .setFontSize(18, 1.0);
-	        me.bullOwnDir = me.p_RDR.createChild("text")
-	                .setAlignment("center-top")
-	                .setColor(colorBullseye)
-	                .setTranslation(-185, -30)
-	                .setText("270")
-	                .set("z-index",1)
-	                .setFontSize(18, 1.0);
+	        
 	        me.cursorLoc = me.p_RDR.createChild("text")
 	                .setAlignment("left-bottom")
 	                .setColor(colorBetxt)
@@ -3183,23 +3190,10 @@ var DisplaySystem = {
                 me.ownCoord = geo.aircraft_position();
                 me.bullDirToMe = me.bullCoord.course_to(me.ownCoord);
                 me.meToBull = ((me.bullDirToMe+180)-noti.getproper("heading"))*D2R;
-                me.bullOwnRing.setRotation(me.meToBull);
                 me.bullDistToMe = me.bullCoord.distance_to(me.ownCoord)*M2NM;
                 me.distPixels = me.bullDistToMe*(displayHeight/radar_system.apg68Radar.getRange());
                 me.bullPos = me.calcPos(me.wdt, geo.normdeg180(me.meToBull*R2D), me.distPixels);
-
-                me.bullDirToMe = sprintf("%03d", me.bullDirToMe);
-                if (me.bullDistToMe > 100) {
-                    me.bullDistToMe = "  ";
-                } else {
-                    me.bullDistToMe = sprintf("%02d", me.bullDistToMe);
-                }
-                me.bullOwnDir.setText(me.bullDirToMe);
-                me.bullOwnDist.setText(me.bullDistToMe);
             }
-            me.bullOwnRing.setVisible(me.bullOn);
-            me.bullOwnDir.setVisible(me.bullOn);
-            me.bullOwnDist.setVisible(me.bullOn);
 
             if (systime() - iff.last_interogate < 3.5) {
                 # IFF ongoing
@@ -3970,7 +3964,7 @@ var DisplaySystem = {
 			"OSB18": "PageSMSINV",
 			"OSB19": "PageSMSWPN",
 		},
-		layers: ["OSB1TO2ARROWS"],
+		layers: ["OSB1TO2ARROWS", "BULLSEYE"],
 	},
 
 	PageVoid: {
@@ -4787,7 +4781,7 @@ var DisplaySystem = {
 			"OSB14": "PageRCCE",
 			"OSB15": "PageReset",
 		},
-		layers: [],
+		layers: ["BULLSEYE"],
 	},
 
 	PageRCCE: {
@@ -4822,6 +4816,7 @@ var DisplaySystem = {
 			me.device.controls["OSB18"].setControlText("SMS");
 			me.device.controls["OSB19"].setControlText("RCCE",0);
 			me.device.controls["OSB20"].setControlText("DCLT");
+			#TODO: Menu items that come from the pod, should only show in update() when pod mounted when we get one.
 		},
 		controlAction: func (controlName) {
 			printDebug(me.name,": ",controlName," activated on ",me.device.name);
@@ -5213,3 +5208,5 @@ var printfDebug = func {if (debugDisplays) {var str = call(sprintf,arg,nil,nil,v
 #TODO: rockerbuttons as controls
 #      resolutions
 #      crash exit GM
+#      make nav reference (steerpoint/ground target)
+#      stop loading as module, that might be source of mapping crash
