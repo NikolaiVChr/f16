@@ -57,7 +57,7 @@ emesary_mp_bridge.IncomingMPBridge.startMPBridge(objectRoutedNotifications, 17, 
 var debugRecipient = emesary.Recipient.new("Debug");
 debugRecipient.Receive = func(notification)
 {
-    if (notification.NotificationType != "FrameNotification")  {
+    if (notification.NotificationType != "FrameNotification16")  {
         print ("recv(0): type=",notification.NotificationType, " fromIncoming=",notification.FromIncomingBridge);
 
         if (notification.NotificationType == "ArmamentInFlightNotification") {
