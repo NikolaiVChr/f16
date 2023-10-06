@@ -1866,12 +1866,12 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
         #rp.setMainFile("radar-prototype.nas");#
         #rp.load();#
         #-- load MFD as reloadable module
-        var mfd = modules.Module.new("f16_MFD"); # Module name
-        mfd.setDebug(0); # 0=(mostly) silent; 1=print setlistener and maketimer calls to console; 2=print also each listener hit, be very careful with this!
-        mfd.setFilePath(getprop("/sim/aircraft-dir")~"/Nasal/MFD");
-        mfd.setMainFile("display-system.nas");
-        mfd.setNamespace("displays");
-        mfd.load();
+        #var mfd = modules.Module.new("f16_MFD"); # Module name
+        #mfd.setDebug(0); # 0=(mostly) silent; 1=print setlistener and maketimer calls to console; 2=print also each listener hit, be very careful with this!
+        #mfd.setFilePath(getprop("/sim/aircraft-dir")~"/Nasal/MFD");
+        #mfd.setMainFile("display-system.nas");
+        #mfd.setNamespace("displays");
+        #mfd.load();
         setprop("sim/rendering/headshake/enabled",0);# This does not work very well in F-16. So this makes people have to enable it explicit to have it. Don't know why its forced on us by default.
         # debug:
         #

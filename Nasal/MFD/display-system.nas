@@ -5255,7 +5255,6 @@ var unload = func {
 	}
 	DisplayDevice = nil;
 	DisplaySystem = nil;
-	swapAircraftSOI = nil;
 	f16_mfd.del();
 }
 
@@ -5264,6 +5263,8 @@ var printDebug = func {if (debugDisplays) {call(print,arg,nil,nil,var err = []);
 var printfDebug = func {if (debugDisplays) {var str = call(sprintf,arg,nil,nil,var err = []);if(size(err))print (err[0]);else print (str);}};
 # Note calling printf directly with call() will sometimes crash the sim, so we call sprintf instead.
 
+
+main(nil);# disable this line if running as module
 
 #TODO: rockerbuttons as controls
 #      resolutions

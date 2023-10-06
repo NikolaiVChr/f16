@@ -1602,9 +1602,9 @@
             <!--file>Aircraft/f16/Nasal/MFD/MFD_main.nas</file-->
             <!--<file>Aircraft/f16/Nasal/blackout.nas</file>-->
         </f16>
-        <!--displays> loaded via another method in f16.nas
+        <displays> 
             <file>Aircraft/f16/Nasal/MFD/display-system.nas</file>
-        </displays-->
+        </displays>
         <liveries>
             <file>Aircraft/f16/Nasal/liveries.nas</file>
         </liveries>
