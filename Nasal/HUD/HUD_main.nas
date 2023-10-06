@@ -1838,7 +1838,7 @@ append(obj.total, obj.speed_curr);
                                                      if (hdp.getproper("gear_down"))
                                                        obj.gd = " G";
                                                      obj.window2_txt = sprintf("  F %d%s",hdp.getproper("flap_pos_deg"),obj.gd);
-                                                 } elsif (hdp.getproper("master_arm") != 0) {
+                                                 } elsif (hdp.getproper("master_arm") != pylons.ARM_OFF) {
                                                      var submodeVar = "";
                                                      if (hdp.CCRP_active > 0) {
                                                         submodeVar = "CCRP";
@@ -1850,7 +1850,7 @@ append(obj.total, obj.speed_curr);
                                                         submodeVar = "BORE";
                                                      }
                                                      var dgft = hdp.getproper("dgft")?"DGFT ":"";
-                                                     var armmode = hdp.getproper("master_arm")==1?"  ARM ":"  SIM ";
+                                                     var armmode = hdp.getproper("master_arm")==pylons.ARM_ARM?"  ARM ":"  SIM ";
                                                      obj.window2_txt = armmode~dgft~submodeVar;
                                                  } elsif (hdp.getproper("rotary") == 0 or hdp.getproper("rotary") == 3) {
                                                      obj.window2_txt = "  ILS";
@@ -2055,7 +2055,7 @@ append(obj.total, obj.speed_curr);
             var currASEC = nil;
             me.showFov = 0;
 
-            if(hdp.getproper("master_arm") != 0 and pylons.fcs != nil)
+            if(hdp.getproper("master_arm") != pylons.ARM_OFF and pylons.fcs != nil)
             {
                 hdp.weapon_selected = pylons.fcs.selectedType;
                 hdp.weapn = pylons.fcs.getSelectedWeapon();
@@ -2371,7 +2371,7 @@ append(obj.total, obj.speed_curr);
         me.rdT = 0;
         me.irB = 0;
         #printf("%d %d %d %s",hdp.getproper("master_arm"),pylons.fcs != nil,pylons.fcs.getAmmo(),hdp.weapon_selected);
-        if(hdp.getproper("master_arm") != 0 and pylons.fcs != nil and pylons.fcs.getAmmo() > 0) {
+        if(hdp.getproper("master_arm") != pylons.ARM_OFF and pylons.fcs != nil and pylons.fcs.getAmmo() > 0) {
             hdp.weapon_selected = pylons.fcs.selectedType;
             var aim = pylons.fcs.getSelectedWeapon();
             if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
@@ -3030,7 +3030,7 @@ append(obj.total, obj.speed_curr);
     },
 
     CCRP: func(hdp) {
-        if (hdp.fcs_available and hdp.getproper("master_arm") != 0 and pylons.fcs.getDropMode() == fc.DROP_CCRP) {
+        if (hdp.fcs_available and hdp.getproper("master_arm") != pylons.ARM_OFF and pylons.fcs.getDropMode() == fc.DROP_CCRP) {
             var selW = pylons.fcs.getSelectedWeapon();
             if (selW == nil) {
                 me.solutionCue.hide();
@@ -3103,7 +3103,7 @@ append(obj.total, obj.speed_curr);
         me.showPipperCross = 0;
         me.showmeCCIP = 0;
         if(hdp.CCIP_active) {
-            if (hdp.fcs_available and hdp.getproper("master_arm") != 0) {
+            if (hdp.fcs_available and hdp.getproper("master_arm") != pylons.ARM_OFF) {
                 var selW = pylons.fcs.getSelectedWeapon();
                 if (selW != nil and fc.containsVector(fc.CCIP_CCRP, selW.type)) {
                     me.showmeCCIP = 1;

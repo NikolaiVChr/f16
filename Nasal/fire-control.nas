@@ -13,6 +13,8 @@ var RIPPLE_INTERVAL_METERS = 0;
 var RIPPLE_INTERVAL_SECONDS = 1;
 var DROP_CCRP = 0;
 var DROP_CCIP = 1;
+var GUN_STRF = 0;
+var GUN_EEGS = 1;
 var FireControl = {
 	new: func (pylons, pylonOrder, typeOrder) {
 		var fc = {parents:[FireControl]};
@@ -514,6 +516,23 @@ var FireControl = {
 		
 		me.selectedAdd = nil;
 		me.updateDual();
+	},
+
+	isAAMode: func {
+		if (me.selectedType != nil) {
+			if (me.selectedType == defaultRocket) {
+				return 0;
+			}
+			if (me.selectedType == defaultCannon) {
+				return !getprop("f16/avionics/strf");
+			}
+			me.waa = me.getSelectedWeapon();
+			if (me.waa != nil and me.waa["parents"][0] == armament.AIM) {
+				return me.waa.target_air;
+			}
+			return 0;
+		}
+		return 0;
 	},
 
 	cycleAA: func {

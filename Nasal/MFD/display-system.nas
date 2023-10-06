@@ -803,6 +803,26 @@ var DisplaySystem = {
 	                .setText("270")
 	                .set("z-index",1)
 	                .setFontSize(18, 1.0);
+	        me.refW = me.group.createChild("path")
+	            .moveTo(-30, -5)
+	            .lineTo(-20, -5)
+	            .lineTo(-10, 15)
+	            .lineTo(  0, -5)
+	            .lineTo( 10, 15)
+	            .lineTo( 20, -5)
+	            .lineTo( 30, -5)
+	            .setStrokeLineWidth(2)
+	            .setScale(0.9, 1)
+	            .setTranslation(-180, -50)
+	            .set("z-index",1)
+	            .setColor(colorBullseye);
+	        me.refLine = me.group.createChild("path")
+	        	.moveTo(  0, -20)
+	            .lineTo(  0,  30)
+	            .setStrokeLineWidth(2)
+	            .setTranslation(-180, -50)
+	            .set("z-index",1)
+	            .setColor(colorBullseye);
 	    },
 	    update: func (noti = nil) {
 	    	#
@@ -810,8 +830,11 @@ var DisplaySystem = {
             #
             me.bullPt = steerpoints.getNumber(555);
             me.bullOn = me.bullPt != nil;
+            me.refOn = steerpoints.getCurrentNumber() > 0;
+            if (pylons.fcs != nil) {
+            	me.bullOn = me.bullOn and pylons.fcs.isAAMode();
+        	}
             if (me.bullOn) {
-            	# Should really only show in A-A mode
                 me.bullLat = me.bullPt.lat;
                 me.bullLon = me.bullPt.lon;
                 me.bullCoord = geo.Coord.new().set_latlon(me.bullLat,me.bullLon);
@@ -829,7 +852,12 @@ var DisplaySystem = {
                 }
                 me.bullOwnDir.setText(me.bullDirToMe);
                 me.bullOwnDist.setText(me.bullDistToMe);
+            } elsif (me.refOn) {
+            	me.dev = steerpoints.getCurrentDeviation();
+            	me.refLine.setTranslation(-180+math.clamp(me.dev*0.5,-25,25), -50);
             }
+            me.refLine.setVisible(!me.bullOn and me.refOn);
+            me.refW.setVisible(!me.bullOn and me.refOn);
             me.bullOwnRing.setVisible(me.bullOn);
             me.bullOwnDir.setVisible(me.bullOn);
             me.bullOwnDist.setVisible(me.bullOn);

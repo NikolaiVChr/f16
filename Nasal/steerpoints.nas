@@ -202,6 +202,16 @@ var setNumber = func (number, stpt) {
 	return 0;
 }
 
+var getCurrentDeviation = func {
+	# Get dev to current steerpoint or nil for none.
+	if (getCurrentNumber() != 0) {
+		var cc = getCurrentCoord();
+		return geo.normdeg180(getprop("orientation/heading-deg") - geo.aircraft_position().course_to(cc));
+	} else {
+		return nil;
+	}
+}
+
 var getCurrentDirection = func {
 	# Get directions to current steerpoint or [nil,nil] for none.
 	if (getCurrentNumber() != 0) {
