@@ -3185,7 +3185,9 @@ var DisplaySystem = {
 				me.setup();
 				me.isNew = 0;
 			}
-			me.device.resetControls();
+			me.device.resetControls();						
+			me.device.controls["OSB6"].setControlText("CONT");
+			me.device.controls["OSB7"].setControlText("FRZ");
 			me.device.controls["OSB9"].setControlText("CZ");
 			me.device.controls["OSB15"].setControlText("CNTL");
 			me.device.controls["OSB16"].setControlText("SWAP");
@@ -3201,28 +3203,34 @@ var DisplaySystem = {
 		controlAction: func (controlName) {
 			printDebug(me.name,": ",controlName," activated on ",me.device.name);
 			if (controlName == "OSB1") {
+				if (fcrFrz) return;
                 radar_system.apg68Radar.increaseRange();
             } elsif (controlName == "OSB2") {
+            	if (fcrFrz) return;
                 radar_system.apg68Radar.decreaseRange();
-            } elsif (controlName == "OSB5") {
-                #me.ppp.selectPage(me.my.rm_LIST);
-                #me.resetColor(me.ppp.buttons[4]);
-                #me.selectionBox.hide();
+            } elsif (controlName == "OSB7") {
+                fcrFrz = !fcrFrz;
             } elsif (controlName == "OSB13") {
+            	if (fcrFrz) return;
                 me.pressEXP = 1;
             } elsif (controlName == "OSB12") {
+            	if (fcrFrz) return;
                 if (!radar_system.apg68Radar.currentMode.detectAIR) {
                     radar_system.apg68Radar.currentMode.toggleAuto();
                 } else {
                     radar_system.apg68Radar.cycleMode();
                 }
             } elsif (controlName == "OSB3") {
+            	if (fcrFrz) return;
                 radar_system.apg68Radar.cycleAZ();
             } elsif (controlName == "OSB4") {
+            	if (fcrFrz) return;
                 radar_system.apg68Radar.cycleBars();
             } elsif (controlName == "OSB9") {
+            	if (fcrFrz) return;
                 cursorZero();
             } elsif (controlName == "OSB10") {
+            	if (fcrFrz) return;
                 #if (rdrMode != RADAR_MODE_GM) return;
                 #setprop("instrumentation/radar/mode-hd-switch", me.model_index);
             } elsif (controlName == "OSB16") {
@@ -3278,6 +3286,10 @@ var DisplaySystem = {
                 me.distPixels = me.bullDistToMe*(displayHeight/radar_system.apg68Radar.getRange());
                 me.bullPos = me.calcPos(me.wdt, geo.normdeg180(me.meToBull*R2D), me.distPixels);
             }
+
+            me.device.controls["OSB7"].setControlText("FRZ", 1, fcrFrz);
+
+            if (fcrFrz) return;
 
             if (systime() - iff.last_interogate < 3.5) {
                 # IFF ongoing
@@ -5020,7 +5032,7 @@ var DisplaySystem = {
 			"OSB17":  "PageFCR",
 			"OSB19":  "PageDTE",
 		},
-		layers: [],
+		layers: ["BULLSEYE"],
 	},
 };
 
@@ -5056,7 +5068,7 @@ cursorZero();
 
 var hsdShowNAV1 = 1;
 var hsdShowDLINK = 1;
-
+var fcrFrz = 0;
 
 var leftMFD = nil;
 var rightMFD = nil;

@@ -2856,7 +2856,7 @@ var TerrainMapper = {
 			},
 	scanGM: func (eulerX, eulerY, verticalInstantFoV, horizontalInstantFoV, bottomBar, topBar) {
 		# GM test code
-
+		if (displays.fcrFrz) return;
 		if (me.radar.currentMode.mapper and me.enabled and me.radar.horizonStabilized and me["gmPic"] != nil and !me.exp) {
 			if (me.debug > 3) {
 				me.t0 = systime();
@@ -3072,6 +3072,7 @@ var TerrainMapper = {
 		me.dirty = 1;
 	},
 	loop: func {
+		if (displays.fcrFrz) return;
 		if (me.enabled and me.radar.currentMode.mapper and me["gmPic"] != nil and me.dirty) {
 			me.gmPic.dirtyPixels();
 		}
