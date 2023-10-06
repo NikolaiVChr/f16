@@ -3205,7 +3205,7 @@ var DisplaySystem = {
 			}
 			me.device.resetControls();						
 			me.device.controls["OSB6"].setControlText("CONT");
-			me.device.controls["OSB9"].setControlText("CZ");
+			me.device.controls["OSB9"].setControlText("C\nZ");
 			me.device.controls["OSB15"].setControlText("CNTL");
 			me.device.controls["OSB16"].setControlText("SWAP");
 			me.device.controls["OSB17"].setControlText("HSD");
