@@ -3251,7 +3251,7 @@ var DisplaySystem = {
 
             me.modeSwHD = noti.getproper("rdrHD");
 
-
+            me.device.controls["OSB6"].setControlText("CONT", 1, size(datalink.get_connected_indices()));
             me.device.controls["OSB12"].setControlText(radar_system.apg68Radar.currentMode.shortName);
             me.device.controls["OSB11"].setControlText(radar_system.apg68Radar.currentMode.rootName, 0);
 
