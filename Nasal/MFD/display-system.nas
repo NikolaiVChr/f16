@@ -3187,7 +3187,6 @@ var DisplaySystem = {
 			}
 			me.device.resetControls();						
 			me.device.controls["OSB6"].setControlText("CONT");
-			me.device.controls["OSB7"].setControlText("FRZ");
 			me.device.controls["OSB9"].setControlText("CZ");
 			me.device.controls["OSB15"].setControlText("CNTL");
 			me.device.controls["OSB16"].setControlText("SWAP");
@@ -3209,7 +3208,7 @@ var DisplaySystem = {
             	if (fcrFrz) return;
                 radar_system.apg68Radar.decreaseRange();
             } elsif (controlName == "OSB7") {
-                fcrFrz = !fcrFrz;
+                #fcrFrz = !fcrFrz;
             } elsif (controlName == "OSB13") {
             	if (fcrFrz) return;
                 me.pressEXP = 1;
@@ -3287,7 +3286,7 @@ var DisplaySystem = {
                 me.bullPos = me.calcPos(me.wdt, geo.normdeg180(me.meToBull*R2D), me.distPixels);
             }
 
-            me.device.controls["OSB7"].setControlText("FRZ", 1, fcrFrz);
+            #me.device.controls["OSB7"].setControlText("FRZ", 1, fcrFrz);
 
             if (fcrFrz) return;
 
