@@ -235,7 +235,7 @@ RWRCanvas = {
 
         rwr.recipient.Receive = func(notification)
         {
-            if (notification.NotificationType == "FrameNotification" and notification.FrameCount == 2)
+            if (notification.NotificationType == "FrameNotification16" and notification.FrameCount == 2)
             {
                 me.parent_obj.update(radar_system.f16_rwr.vector_aicontacts_threats, "normal");
                 return emesary.Transmitter.ReceiptStatus_OK;
