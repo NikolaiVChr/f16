@@ -292,11 +292,13 @@ var DisplayDevice = {
 
 	initPage: func (page) {
 		printDebug(me.name," init page ",page.name);
-		me.tempGrp = me.canvas.createGroup()
-						.set("z-index", 5)
-						.set("font","LiberationFonts/LiberationMono-Regular.ttf")
-						.hide();
-		page.group = me.tempGrp;
+		if (page.needGroup) {
+			me.tempGrp = me.canvas.createGroup()
+							.set("z-index", 5)
+							.set("font","LiberationFonts/LiberationMono-Regular.ttf")
+							.hide();
+			page.group = me.tempGrp;
+		}
 		page.device = me;
 	},
 
@@ -490,6 +492,7 @@ var DisplaySystem = {
 		name: "PageOSB",
 		isNew: 1,
 		supportSOI: 0,
+		needGroup: 1,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageOSB]};
 			me.instance.group = nil;
@@ -968,6 +971,7 @@ var DisplaySystem = {
 		name: "PageSMSWPN",
 		isNew: 1,
 		supportSOI: 0,
+		needGroup: 0,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageSMSWPN]};
 			me.instance.group = nil;
@@ -1364,6 +1368,7 @@ var DisplaySystem = {
 		name: "PageFCRMenu",
 		isNew: 1,
 		supportSOI: 0,
+		needGroup: 0,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageFCRMenu]};
 			me.instance.group = nil;
@@ -1424,7 +1429,8 @@ var DisplaySystem = {
 	PageDTE: {
 		name: "PageDTE",
 		isNew: 1,
-		supportSOI: 0,
+		supportSOI: 0,		
+		needGroup: 0,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageDTE]};
 			me.instance.group = nil;
@@ -1492,6 +1498,7 @@ var DisplaySystem = {
 		name: "PageFCRCNTL",
 		isNew: 1,
 		supportSOI: 0,
+		needGroup: 0,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageFCRCNTL]};
 			me.instance.group = nil;
@@ -1550,6 +1557,7 @@ var DisplaySystem = {
 		name: "PageHSDCNTL",
 		isNew: 1,
 		supportSOI: 0,
+		needGroup: 0,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageHSDCNTL]};
 			me.instance.group = nil;
@@ -1612,6 +1620,7 @@ var DisplaySystem = {
 		name: "PageHSD",
 		isNew: 1,
 		supportSOI: 0,
+		needGroup: 1,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageHSD]};
 			me.instance.group = nil;
@@ -2326,6 +2335,7 @@ var DisplaySystem = {
 		name: "PageSMSINV",
 		isNew: 1,
 		supportSOI: 0,
+		needGroup: 1,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageSMSINV]};
 			me.instance.group = nil;
@@ -2739,6 +2749,7 @@ var DisplaySystem = {
 		name: "PageFCR",
 		isNew: 1,
 		supportSOI: 1,
+		needGroup: 1,
 		soiPrio: 10,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageFCR]};
@@ -4062,10 +4073,19 @@ var DisplaySystem = {
 		layers: ["OSB1TO2ARROWS", "BULLSEYE"],
 	},
 
+#  ███████ ████████  █████  ██████  ████████ ██    ██ ██████  
+#  ██         ██    ██   ██ ██   ██    ██    ██    ██ ██   ██ 
+#  ███████    ██    ███████ ██████     ██    ██    ██ ██████  
+#       ██    ██    ██   ██ ██   ██    ██    ██    ██ ██      
+#  ███████    ██    ██   ██ ██   ██    ██     ██████  ██      
+#                                                             
+#                                                             
+
 	PageVoid: {
 		name: "PageVoid",
 		isNew: 1,
 		supportSOI: 0,
+		needGroup: 0,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageVoid]};
 			me.instance.group = nil;
@@ -4101,6 +4121,7 @@ var DisplaySystem = {
 		name: "PageGrid",
 		isNew: 1,
 		supportSOI: 0,
+		needGroup: 1,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageGrid]};
 			me.instance.group = nil;
@@ -4171,6 +4192,7 @@ var DisplaySystem = {
 		name: "PageCube",
 		isNew: 1,
 		supportSOI: 0,
+		needGroup: 1,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageCube]};
 			me.instance.group = nil;
@@ -4240,10 +4262,19 @@ var DisplaySystem = {
 		layers: [],
 	},
 
+#  ██   ██  █████  ███████ 
+#  ██   ██ ██   ██ ██      
+#  ███████ ███████ ███████ 
+#  ██   ██ ██   ██      ██ 
+#  ██   ██ ██   ██ ███████ 
+#                          
+#                          
+
 	PageHAS: {
 		name: "PageHAS",
 		isNew: 1,
 		supportSOI: 1,
+		needGroup: 1,
 		soiPrio: 5,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageHAS]};
@@ -4814,10 +4845,19 @@ var DisplaySystem = {
 		layers: ["SharedStations"],
 	},
 
+#  ███    ███ ███████ ███    ██ ██    ██ 
+#  ████  ████ ██      ████   ██ ██    ██ 
+#  ██ ████ ██ █████   ██ ██  ██ ██    ██ 
+#  ██  ██  ██ ██      ██  ██ ██ ██    ██ 
+#  ██      ██ ███████ ██   ████  ██████  
+#                                        
+#                                        
+
 	PageMenu: {
 		name: "PageMenu",
 		isNew: 1,
 		supportSOI: 0,
+		needGroup: 0,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageMenu]};
 			me.instance.group = nil;
@@ -4883,6 +4923,7 @@ var DisplaySystem = {
 		name: "PageRCCE",
 		isNew: 1,
 		supportSOI: 0,
+		needGroup: 0,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageRCCE]};
 			me.instance.group = nil;
@@ -4935,6 +4976,7 @@ var DisplaySystem = {
 		name: "PageBlank",
 		isNew: 1,
 		supportSOI: 0,
+		needGroup: 1,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageBlank]};
 			me.instance.group = nil;
@@ -4983,6 +5025,7 @@ var DisplaySystem = {
 		name: "PageReset",
 		isNew: 1,
 		supportSOI: 0,
+		needGroup: 0,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageReset]};
 			me.instance.group = nil;
@@ -5308,9 +5351,11 @@ main(nil);# disable this line if running as module
 #TODO: rockerbuttons as controls
 #      resolutions
 #      crash exit GM
-#      make nav reference (steerpoint/ground target)
+#      make nav reference (ground target)
 #      stop loading as module, that might be source of mapping crash
-#      HSD: CNTL menu should be an overlay, ghost cursor, cursor
+#      HSDCNTL/FCRCNTL should be an overlay
+#      HSD: Ghost cursor, cursor
 #      HSD: MSG page with max 9 lines of 15 chars
 #      HSD: OSB8 FRZ freeze
-#      FCR: OVRD. CNTL on top of radar image.
+#      FCR: OVRD
+#      FCRCNTL: Additional GM options. Page 164/176 of MLU t1
