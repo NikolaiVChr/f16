@@ -160,7 +160,7 @@ var DisplayDevice = {
 				if (size(me.split)>1) me.lettersCount = math.max(size(me.split[0]),size(me.split[1]));
 			}
 			me.fill.setScale(me.lettersCount/4,me.linebreak);
-			me.outline.setScale(me.lettersCount/4,me.linebreak);
+			me.outline.setScale(1.05*me.lettersCount/4,me.linebreak);
 		};
 		append(me.listeners, setlistener(property, me[prefix]));
 	},
@@ -206,11 +206,11 @@ var DisplayDevice = {
 				.setColor(me.colorFront);
 		me.controls[controlName].outline = me.controlGrp.createChild("path")
 				.set("z-index", 11)
-				.moveTo(me.tempX-me.letterWidth*2*alignmentH-me.letterWidth*2-me.myCenter[0], me.tempY-me.letterHeight*alignmentV*0.5-me.letterHeight*0.5-1-me.myCenter[1])
-				.horiz(me.letterWidth*4)
-				.vert(me.letterHeight*1.0+1)
-				.horiz(-me.letterWidth*4)
-				.vert(-me.letterHeight*1.0-1)
+				.moveTo(me.tempX-me.letterWidth*2*alignmentH-me.letterWidth*2-me.myCenter[0]-1, me.tempY-me.letterHeight*alignmentV*0.5-me.letterHeight*0.5-1-me.myCenter[1])
+				.horiz(me.letterWidth*4+2)
+				.vert(me.letterHeight*1.0+2)
+				.horiz(-me.letterWidth*4-2)
+				.vert(-me.letterHeight*1.0-2)
 				.setColor(me.colorFront)
 				.hide()
 				.setStrokeLineWidth(2)
@@ -396,6 +396,7 @@ var DisplaySystem = {
 		me.initPage("PageFCR");
 		me.initPage("PageFCRCNTL");
 		me.initPage("PageHSD");
+		me.initPage("PageHSDCNTL");
 		me.initPage("PageHAS");
 		me.initPage("PageReset");
 		me.initPage("PageBlank");
@@ -1517,6 +1518,60 @@ var DisplaySystem = {
 		layers: [],
 	},
 
+	PageHSDCNTL: {
+		name: "PageHSDCNTL",
+		isNew: 1,
+		supportSOI: 0,
+		new: func {
+			me.instance = {parents:[DisplaySystem.PageHSDCNTL]};
+			me.instance.group = nil;
+			return me.instance;
+		},
+		setup: func {
+			printDebug(me.name," on ",me.device.name," is being setup");
+		},
+		enter: func {
+			printDebug("Enter ",me.name~" on ",me.device.name);
+			if (me.isNew) {
+				me.setup();
+				me.isNew = 0;
+			}
+			me.device.resetControls();
+			me.device.controls["OSB15"].setControlText("CNTL",0);
+		},
+		controlAction: func (controlName) {
+			printDebug(me.name,": ",controlName," activated on ",me.device.name);
+			if (controlName == "OSB6") {
+                if (steerpoints.lines[0] != nil) steerpoints.linesShow[0] = !steerpoints.linesShow[0];
+            } elsif (controlName == "OSB7") {
+                if (steerpoints.lines[1] != nil) steerpoints.linesShow[1] = !steerpoints.linesShow[1];
+            } elsif (controlName == "OSB8") {
+                if (steerpoints.lines[2] != nil) steerpoints.linesShow[2] = !steerpoints.linesShow[2];
+            } elsif (controlName == "OSB9") {
+                if (steerpoints.lines[3] != nil) steerpoints.linesShow[3] = !steerpoints.linesShow[3];
+            } elsif (controlName == "OSB4") {
+                hsdShowDLINK = !hsdShowDLINK;
+            } elsif (controlName == "OSB1") {
+                hsdShowNAV1 = !hsdShowNAV1;
+            }
+		},
+		update: func (noti = nil) {
+			me.device.controls["OSB1"].setControlText("NAV1",1,hsdShowNAV1);
+			me.device.controls["OSB4"].setControlText("DLNK",1,hsdShowDLINK);
+			me.device.controls["OSB6"].setControlText((steerpoints.lines[0] != nil)?"LINES1":"",1,steerpoints.linesShow[0]);
+            me.device.controls["OSB7"].setControlText((steerpoints.lines[1] != nil)?"LINES2":"",1,steerpoints.linesShow[1]);
+            me.device.controls["OSB8"].setControlText((steerpoints.lines[2] != nil)?"LINES3":"",1,steerpoints.linesShow[2]);
+            me.device.controls["OSB9"].setControlText((steerpoints.lines[3] != nil)?"LINES4":"",1,steerpoints.linesShow[3]);
+		},
+		exit: func {
+			printDebug("Exit ",me.name~" on ",me.device.name);
+		},
+		links: {
+			"OSB15":  "PageHSD",
+		},
+		layers: ["BULLSEYE"],
+	},
+
 #  ██   ██ ███████ ██████  
 #  ██   ██ ██      ██   ██ 
 #  ███████ ███████ ██   ██ 
@@ -1541,8 +1596,6 @@ var DisplaySystem = {
 			me.showRangeDown = 0;
 			me.showRangeUp = 0;
 			me.setupHSD();
-			me.device.controls["OSB3"].setControlText(me.get_HSD_centered()?"CEN":"DEP");
-            me.device.controls["OSB4"].setControlText(me.get_HSD_coupled()?"CPL":"DCPL");
 		},
 		setupHSD: func {
 
@@ -1724,8 +1777,10 @@ var DisplaySystem = {
 				me.isNew = 0;
 			}
 			me.device.resetControls();
-			
 			me.device.controls["OSB11"].setControlText("FCR");
+			me.device.controls["OSB12"].setControlText(me.get_HSD_centered()?"CEN":"DEP");
+            me.device.controls["OSB13"].setControlText(me.get_HSD_coupled()?"CPL":"DCPL");
+            me.device.controls["OSB15"].setControlText("CNTL");
 			me.device.controls["OSB16"].setControlText("SWAP");
 			me.device.controls["OSB17"].setControlText("HSD", 0);
 			me.device.controls["OSB18"].setControlText("SMS");
@@ -1796,9 +1851,9 @@ var DisplaySystem = {
                     else
                         me.set_HSD_range_dep(8);
                 }
-            } elsif (controlName == "OSB3") {
+            } elsif (controlName == "OSB12") {
                 me.set_HSD_centered(!me.get_HSD_centered());
-            } elsif (controlName == "OSB4") {
+            } elsif (controlName == "OSB13") {
                 me.set_HSD_coupled(!me.get_HSD_coupled());
             } elsif (controlName == "OSB16") {
             	me.device.swap();
@@ -1815,8 +1870,8 @@ var DisplaySystem = {
             me.rdrprio = radar_system.apg68Radar.getPriorityTarget();
             me.selfCoord = geo.aircraft_position();
             me.selfHeading = radar_system.self.getHeading();
-            me.device.controls["OSB3"].setControlText(me.get_HSD_centered()?"CEN":"DEP");
-            me.device.controls["OSB4"].setControlText(me.get_HSD_coupled()?"CPL":"DCPL");
+            me.device.controls["OSB12"].setControlText(me.get_HSD_centered()?"CEN":"DEP");
+            me.device.controls["OSB13"].setControlText(me.get_HSD_coupled()?"CPL":"DCPL");
             if (me.get_HSD_coupled()) {
 
                 if (me.rdrrng == 5) {
@@ -1911,7 +1966,7 @@ var DisplaySystem = {
                                     .update();
                     }
                 }
-                if (steerpoints.isRouteActive()) {
+                if (steerpoints.isRouteActive() and hsdShowNAV1) {
                     me.plan = flightplan();
                     me.planSize = me.plan.getPlanSize();
                     me.prevX = nil;
@@ -1962,7 +2017,7 @@ var DisplaySystem = {
                 }
 
                 for (var u = 0;u<4;u+=1) {
-                    if (steerpoints.lines[u] != nil) {
+                    if (steerpoints.lines[u] != nil and steerpoints.linesShow[u]) {
                         # lines
                         me.plan = steerpoints.lines[u];
                         me.planSize = me.plan.getPlanSize();
@@ -2111,7 +2166,7 @@ var DisplaySystem = {
 
                 me.rando = rand();
 
-                if (radar_system.datalink_power.getBoolValue()) {
+                if (radar_system.datalink_power.getBoolValue() and hsdShowDLINK) {
                     foreach(contact; vector_aicontacts_links) {
                         me.blue = contact.blue;
                         me.blueIndex = contact.blueIndex;
@@ -2222,10 +2277,11 @@ var DisplaySystem = {
 			printDebug("Exit ",me.name~" on ",me.device.name);
 		},
 		links: {
+			"OSB11":  "PageFCR",
+			"OSB15":  "PageHSDCNTL",
 			"OSB17":  "PageMenu",
 			"OSB18":  "PageSMSINV",
 			"OSB19":  "PageSMSWPN",
-			"OSB11":  "PageFCR",
 		},
 		layers: ["OSB1TO2ARROWS","BULLSEYE"],
 	},
@@ -4970,6 +5026,10 @@ var cursorZero = func {
 }
 cursorZero();
 
+var hsdShowNAV1 = 1;
+var hsdShowDLINK = 1;
+
+
 var leftMFD = nil;
 var rightMFD = nil;
 
@@ -5210,3 +5270,7 @@ var printfDebug = func {if (debugDisplays) {var str = call(sprintf,arg,nil,nil,v
 #      crash exit GM
 #      make nav reference (steerpoint/ground target)
 #      stop loading as module, that might be source of mapping crash
+#      HSD: CNTL menu should be an overlay, ghost cursor, cursor
+#      HSD: MSG page with max 9 lines of 15 chars
+#      HSD: OSB8 FRZ freeze
+#      FCR: OVRD. CNTL on top of radar image.

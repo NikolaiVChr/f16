@@ -2,6 +2,7 @@
 # F-16 Steerpoint/route/mark/bulls-eye system.
 #
 var lines = [nil,nil, nil, nil];
+var linesShow = [1,1,1,1];
 
 var desired_tos = {};
 
@@ -819,6 +820,7 @@ var loadLine = func  (no,path) {
         gui.showDialog("loadfail");
     } else {
     	setprop("f16/preplanning-status", "HSD lines loaded");
+    	linesShow[no] = 1;
     }
 };
 
