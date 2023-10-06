@@ -473,14 +473,14 @@ var DisplaySystem = {
 	selectPage: func (pageName) {
 		if (me.pages[pageName] == nil) {print(me.device.name," page not found: ",pageName);return;}
 		if (me["currPage"] != nil) {
-			me.currPage.group.hide();
+			if(me.currPage.needGroup) me.currPage.group.hide();
 			me.currPage.exit();
 			foreach(var layer; me.currPage.layers) {
 				me.fetchLayer(layer).group.hide();
 			}
 		}
 		me.currPage = me.pages[pageName];
-		me.currPage.group.show();
+		if(me.currPage.needGroup) me.currPage.group.show();
 		me.currPage.enter();
 		#me.currPage.update(nil);
 		foreach(var layer; me.currPage.layers) {
@@ -1149,7 +1149,6 @@ var DisplaySystem = {
             me.distA = "";
             me.dist = 0;
 		},
-
 		update: func (noti) {
             if (noti.FrameCount != 3)
                 return;
@@ -1361,8 +1360,16 @@ var DisplaySystem = {
 			"OSB18": "PageSMSINV",
 			"OSB19": "PageMenu",
 		},
-        layers: ["SharedStations", "OSB1TO2ARROWS", "OSB4TO5ARROWS"],
+        layers: ["SharedStations", "OSB1TO2ARROWS", "OSB4TO5ARROWS","BULLSEYE"],
     },
+
+#  ███████  ██████ ██████      ███    ███  ██████  ██████  ███████ 
+#  ██      ██      ██   ██     ████  ████ ██    ██ ██   ██ ██      
+#  █████   ██      ██████      ██ ████ ██ ██    ██ ██   ██ █████   
+#  ██      ██      ██   ██     ██  ██  ██ ██    ██ ██   ██ ██      
+#  ██       ██████ ██   ██     ██      ██  ██████  ██████  ███████ 
+#                                                                  
+#                                                                  
 
 	PageFCRMenu: {
 		name: "PageFCRMenu",
@@ -1423,7 +1430,7 @@ var DisplaySystem = {
 			"OSB5":  "PageFCR",
 			"OSB11": "PageMenu",
 		},
-		layers: [],
+		layers: ["BULLSEYE"],
 	},
 
 	PageDTE: {
@@ -2734,7 +2741,7 @@ var DisplaySystem = {
 			"OSB18": "PageMenu",
 			"OSB19": "PageSMSWPN",
 		},
-		layers: [],
+		layers: ["BULLSEYE"],
 	},
 
 #  ██████   █████  ██████   █████  ██████  
