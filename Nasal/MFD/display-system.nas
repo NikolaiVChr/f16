@@ -472,6 +472,7 @@ var DisplaySystem = {
 
 	selectPage: func (pageName) {
 		if (me.pages[pageName] == nil) {print(me.device.name," page not found: ",pageName);return;}
+		me.wasSOI = me.device.soi;
 		if (me["currPage"] != nil) {
 			if(me.currPage.needGroup) me.currPage.group.hide();
 			me.currPage.exit();
@@ -486,6 +487,7 @@ var DisplaySystem = {
 		foreach(var layer; me.currPage.layers) {
 			me.fetchLayer(layer).group.show();
 		}
+		if (me.wasSOI and !me.currPage.supportSOI) f16.autoPrioritySOI();
 	},
 
 	PageOSB: {
