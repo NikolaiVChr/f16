@@ -2827,6 +2827,9 @@ var FlirSensor = {
         me.color = displays.colorText1;
         return me.flirPicHD;
     },
+    extrapolate: func (x, x1, x2, y1, y2) {
+    	return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
+	},
     scan: func (hdp) {
 		# FLIR
         me.xBore = flirImageReso*0.5;
@@ -2853,7 +2856,9 @@ var FlirSensor = {
                     } else {
                         me.terrain = geo.Coord.new();
                         me.terrain.set_latlon(me.intercept.lat, me.intercept.lon ,me.intercept.elevation);
-                        me.value = math.min(1,((math.max(me.distMin-me.distMax, me.distMin-me.start.direct_distance_to(me.terrain))+(me.distMax-me.distMin))/me.distMax));
+                        me.dist_m = me.start.direct_distance_to(me.terrain);
+                        #me.value = math.min(1,((math.max(me.distMin-me.distMax, me.distMin-me.start.direct_distance_to(me.terrain))+(me.distMax-me.distMin))/me.distMax));
+                        me.value = 1-math.clamp((me.dist_m-me.distMin)/(me.distMax-me.distMin),0,1);
                     }
                     me.gain = math.min(1,1+2*me.cont*(1-2*me.value));
                     me.gain = 2.2;
