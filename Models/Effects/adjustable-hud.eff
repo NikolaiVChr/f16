@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PropertyList>
   <name>HUD adjustements</name>
-  <inherits-from>Effects/hud</inherits-from>
+  <inherits-from>Effects/glass</inherits-from>
 
   <parameters>
-	<hud-brightness><use>f16/avionics/hud-sym</use></hud-brightness>
+		<hud-brightness><use>f16/avionics/hud-sym</use></hud-brightness>
    	<glass-tint type="vec4d" n="0"> 0.75 1.0 0.75 1.0</glass-tint>
   	<overlay-color type="vec3d" n="0"> 0.8 1.0 0.9</overlay-color>
+		<!--lightmap-color type="vec3d" n="0"> 0.7 1.0 0.7 </lightmap-color>
+    <lightmap-color type="vec3d" n="1"> 0.7 1.0 0.7 </lightmap-color>
+    <lightmap-color type="vec3d" n="2"> 0.7 1.0 0.7 </lightmap-color>
+    <lightmap-color type="vec3d" n="3"> 0.7 1.0 0.7 </lightmap-color-->
   	<!--<texture n="2">
 		<image>Aircraft/f16/Effects/hud-mask.png</image>
 		<type>2d</type>

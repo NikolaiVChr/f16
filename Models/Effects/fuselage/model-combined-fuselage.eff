@@ -44,6 +44,7 @@ Modifications author: Nikolai V. Chr.
 		<snow-enabled type="int">0</snow-enabled>
 		<texture n="6">
 			<image>Aircraft/f16/Models/Effects/fuselage/ao.png</image>
+			<type>2d</type>
 			<filter>linear</filter>
 			<wrap-s>clamp</wrap-s>
 			<wrap-t>clamp</wrap-t>
@@ -119,9 +120,9 @@ Modifications author: Nikolai V. Chr.
 		<!-- END shadows include -->
 
 		<!-- PBR HDR -->
-		<!--texture n="9">
-			<type>black</type>
-		</texture-->
+		<texture n="9">
+			<type>fuchsia</type>
+		</texture>
 		<texture n="12"><!-- normal -->
 			<type>null-normalmap</type>
 		</texture>

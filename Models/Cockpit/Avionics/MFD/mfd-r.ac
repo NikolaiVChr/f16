@@ -5280,7 +5280,7 @@ OBJECT group
 name "MFDR"
 kids 1
 OBJECT poly
-name "MFDimage2"
+name "MFDimage20"
 data 14
 MFDimage2.mesh
 crease 45.0

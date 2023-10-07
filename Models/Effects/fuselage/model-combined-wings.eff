@@ -10,6 +10,7 @@
 		<wing-span>9.2</wing-span>
 		<texture n="9">
 			<image>Aircraft/f16/Models/Effects/fuselage/orm.png</image>
+			<type>2d</type>
 			<filter>linear</filter>
 			<wrap-s>clamp</wrap-s>
 			<wrap-t>clamp</wrap-t>

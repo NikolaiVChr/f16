@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+Effects/model-pbr
+Effects/model-combined
+
+-->
+
+
+<PropertyList>
+    <inherits-from>Effects/model-combined</inherits-from>
+    <parameters>
+        <!--emissive-factor type="vec3d">10.0 10.0 10.0</emissive-factor-->
+        <lightmap-enabled type="int">1</lightmap-enabled>
+        <lightmap-factor type="float" n="0">100.0</lightmap-factor>
+        <texture n="3">
+            <type>white</type>
+        </texture>
+    </parameters>
+        
+</PropertyList>

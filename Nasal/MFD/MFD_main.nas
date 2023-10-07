@@ -5313,7 +5313,7 @@ var F16MfdRecipient =
     {
         var new_class = emesary.Recipient.new(_ident~".MFD");
         new_class.MFDl =  MFD_Device.new("F16-MFD", "MFDimage1",0);
-        new_class.MFDr =  MFD_Device.new("F16-MFD", "MFDimage2",1);
+        new_class.MFDr =  MFD_Device.new("F16-MFD-", "MFDimage20",1);
 
         new_class.Receive = func(notification)
         {

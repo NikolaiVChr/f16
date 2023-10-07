@@ -909,8 +909,18 @@
           <object-name>MFDButtonSym</object-name>
           <object-name>MFDButtonGain</object-name>
     </effect>
-    <animation>
-        <object-name>MFDimage2</object-name>
+    <effect>
+        <inherits-from>Aircraft/f16/Models/Cockpit/Avionics/MFD/mfd</inherits-from>
+        <parameters>
+            <metallic-factor type="float">0.01</metallic-factor>
+            <roughness-factor type="float">0.05</roughness-factor>
+            <lightmap-enabled type="int">0</lightmap-enabled>
+        </parameters>
+        <object-name>MFDimage20</object-name>
+    </effect>
+    
+    <!--animation>
+        <object-name>MFDimage20</object-name>
         <type>material</type>
         <condition>
             <property>controls/MFD[1]/mode</property>
@@ -933,7 +943,7 @@
             <green>1</green>
             <blue> 1</blue>
         </emission>
-    </animation>
+    </animation-->
     <!--<animation>
        <type>touch</type>
        <visible>true</visible>
