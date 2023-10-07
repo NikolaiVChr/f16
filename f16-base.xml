@@ -1628,9 +1628,9 @@
         <ai>
           <file>Aircraft/f16/Nasal/AI_list.nas</file>
         </ai>
-        <view>
+        <viewMissile>
           <file>Aircraft/f16/Nasal/MissileView.nas</file>
-        </view>
+        </viewMissile>
         <armament>
             <file>Aircraft/f16/Nasal/missile-code.nas</file><!-- must be before station-manager -->
         </armament>

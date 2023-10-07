@@ -109,5 +109,5 @@ var view_firing_missile = func(myMissile)
     view.setViewByIndex(101);
     
     # We feed the handler
-    view.missile_view_handler.setup(data);
+    missile_view_handler.setup(data);
 }

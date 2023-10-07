@@ -298,7 +298,7 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 		#If auto focus on missile is activated the we call the function
         if(getprop("/controls/armament/automissileview"))# and !getprop("payload/armament/msg")
         {
-          view.view_firing_missile(obj);
+          viewMissile.view_firing_missile(obj);
         }
     };
     pylon1.setAIMListener(aimListener);

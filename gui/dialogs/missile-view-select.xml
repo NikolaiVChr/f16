@@ -18,7 +18,7 @@
       var baseline = getprop("/sim/gui/style[" ~ gui ~ "]/fonts/gui/baseline-height") or 21;
       var list = cmdarg().getNode("list");
 
-      var data = view.missile_view_handler.list;
+      var data = viewMissile.missile_view_handler.list;
       var height = size(data) * baseline;
       if (height > maxh)
         height = maxh;
@@ -40,7 +40,7 @@
       var select = func {
         var e = dlg.initNode("choice", "").getValue();
         if (e == myself or contains(view.myModel.callsign, entries[e]))
-          view.missile_view_handler.select(which: entries[e], by_callsign: 1);
+          viewMissile.missile_view_handler.select(which: entries[e], by_callsign: 1);
         else
           settimer(func fgcommand("dialog-show", self), 0);
       }

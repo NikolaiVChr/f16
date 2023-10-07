@@ -1371,7 +1371,7 @@ var eject2 = func{
     var es = armament.AIM.new(10, "es","gamma", nil ,[-3.65,0,0.7]);
     #setprop("fdm/jsbsim/fcs/canopy/hinges/serviceable",0);
     es.releaseAtNothing();
-    view.view_firing_missile(es);
+    viewMissile.view_firing_missile(es);
     #setprop("sim/view[0]/enabled",0); #disabled since it might get saved so user gets no pilotview in next aircraft he flies in.
     settimer(func {crash.eject();},3.5);
 }
