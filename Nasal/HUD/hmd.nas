@@ -1588,14 +1588,12 @@ var main = func (module) {
     var t = maketimer(1,main2);
     t.singleShot = 1;
     t.start();
-    print("hmd 1");
 }
 
 var main2 = func () {
     f16_hmd = F16HMDRecipient.new("F16-HMD");
     HUDobj = f16_hmd.HUDobj;
     emesary.GlobalTransmitter.Register(f16_hmd);
-    print("hmd registered");
 }
 
 var unload = func {

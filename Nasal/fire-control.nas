@@ -529,7 +529,10 @@ var FireControl = {
 			me.waa = me.getSelectedWeapon();
 			if (me.waa != nil and me.waa["parents"][0] == armament.AIM) {
 				return me.waa.target_air;
-			}
+			} elsif (me.selectedType == "CATM-9L" or me.selectedType == "CATM-120B" or me.selectedType == "AN-T-17") {
+				# Dummy A-A weapons
+				return 1;
+			} 
 			return 0;
 		}
 		return 0;
