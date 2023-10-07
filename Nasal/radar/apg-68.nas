@@ -2593,6 +2593,16 @@ var RWR = {
 
 
 
+
+#  ██   ██  █████  ██████  ███    ███     ███████ ███████ ███    ██ ███████  ██████  ██████  
+#  ██   ██ ██   ██ ██   ██ ████  ████     ██      ██      ████   ██ ██      ██    ██ ██   ██ 
+#  ███████ ███████ ██████  ██ ████ ██     ███████ █████   ██ ██  ██ ███████ ██    ██ ██████  
+#  ██   ██ ██   ██ ██   ██ ██  ██  ██          ██ ██      ██  ██ ██      ██ ██    ██ ██   ██ 
+#  ██   ██ ██   ██ ██   ██ ██      ██     ███████ ███████ ██   ████ ███████  ██████  ██   ██ 
+#                                                                                            
+#                                                                                            
+
+
 var radiation_list = {
 	"buk-m2": "17",
     "s-300": "20",
@@ -2794,9 +2804,68 @@ var RadSensor = {
 
 
 
+#  ███████ ██      ██ ██████      ███████ ███████ ███    ██ ███████  ██████  ██████  
+#  ██      ██      ██ ██   ██     ██      ██      ████   ██ ██      ██    ██ ██   ██ 
+#  █████   ██      ██ ██████      ███████ █████   ██ ██  ██ ███████ ██    ██ ██████  
+#  ██      ██      ██ ██   ██          ██ ██      ██  ██ ██      ██ ██    ██ ██   ██ 
+#  ██      ███████ ██ ██   ██     ███████ ███████ ██   ████ ███████  ██████  ██   ██ 
+#                                                                                    
+#                                                                                    
 
 
+var flirImageReso = 32;
+var FlirSensor = {
+	pics: [nil,nil],
+	setup: func (group, index) {
+		me.flirPicHD = group.createChild("image")
+                .set("src", "Aircraft/f16/Nasal/HUD/flir"~flirImageReso~".png")
+                #.setScale(256/flirImageReso,256/flirImageReso)#340,260
+                .set("z-index",10001);
+        me.scanY = 0;
+        me.scans = flirImageReso/(4*(getprop("f16/avionics/hud-flir-optimum")?4:2));
+        me.pics[index] = me.flirPicHD;
+        me.color = displays.colorText1;
+        return me.flirPicHD;
+    },
+    scan: func (hdp) {
+		# FLIR
+        me.xBore = flirImageReso*0.5;
+        me.yBore = flirImageReso*0.5;
+        me.distMin = hdp.getproper("groundspeed_kt")*getprop("f16/avionics/hud-flir-distance-min");
+        me.distMax = hdp.getproper("groundspeed_kt")*getprop("f16/avionics/hud-flir-distance-max");
+        me.cont = getprop("f16/avionics/mfd-flir-cont");# hmmm... would be better to be mfd controls
+        me.brt = getprop("f16/avionics/mfd-flir-brt");
+        if (getprop("f16/stores/nav-mounted")==1 and getprop("f16/avionics/power-left-hdpt")==1) {
+            for(me.x = 0; me.x < flirImageReso; me.x += 1) {
+                me.xDevi = (me.x-me.xBore);
+                #me.xDevi /= me.texelPerDegreeX;
+                for(me.y = me.scanY; me.y < me.scanY+me.scans; me.y += 1) {
+                    me.yDevi = (me.y-me.yBore);
+                    #me.yDevi /= me.texelPerDegreeY;
+                    me.value = 0;
+                    me.start = geo.viewer_position();
+                    me.vecto = [math.cos(me.xDevi*D2R)*math.cos(me.yDevi*D2R),math.sin(-me.xDevi*D2R)*math.cos(me.yDevi*D2R),math.sin(me.yDevi*D2R)];
 
+                    me.direction = vector.Math.vectorToGeoVector(vector.Math.rollPitchYawVector(getprop("orientation/roll-deg"),getprop("orientation/pitch-deg"),-getprop("orientation/heading-deg"), me.vecto),me.start);
+                    me.intercept = get_cart_ground_intersection({x:me.start.x(),y:me.start.y(),z:me.start.z()}, me.direction);
+                    if (me.intercept == nil) {
+                        me.value = 0;
+                    } else {
+                        me.terrain = geo.Coord.new();
+                        me.terrain.set_latlon(me.intercept.lat, me.intercept.lon ,me.intercept.elevation);
+                        me.value = math.min(1,((math.max(me.distMin-me.distMax, me.distMin-me.start.direct_distance_to(me.terrain))+(me.distMax-me.distMin))/me.distMax));
+                    }
+                    me.gain = math.min(1,1+2*me.cont*(1-2*me.value));
+                    me.gain = 2.2;
+                    if (me.pics[0] != nil) me.pics[0].setPixel(me.x, me.y, [me.color[0],me.color[1],me.color[2],me.brt*math.pow(me.value, me.gain)]);
+                    if (me.pics[1] != nil) me.pics[1].setPixel(me.x, me.y, [me.color[0],me.color[1],me.color[2],me.brt*math.pow(me.value, me.gain)]);
+                }
+            }
+            me.scanY+=me.scans;if (me.scanY>flirImageReso-me.scans) me.scanY=0;
+            #me.flirPicHD.setPixel(me.xBore, me.yBore, [0,0,1,1]);# blue dot at bore
+        }
+    },
+};
 
 
 

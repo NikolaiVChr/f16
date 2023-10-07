@@ -174,8 +174,10 @@ var DisplayDevice = {
 
 	update: func (noti) {
 		if (me.system.supportSOI()) {
+			# Lines or text
 			me.setSOI(me["aircraftSOI"] == f16.SOI);
 		} else {
+			# Neither
 			me.setSOI(-1);
 		}
 		me.system.update(noti);
@@ -278,6 +280,7 @@ var DisplayDevice = {
 	},
 
 	setF16SOI: func (no) {
+		# What number f16 regards this device as
 		me.aircraftSOI = no;
 	},
 
@@ -326,6 +329,7 @@ var DisplayDevice = {
 		me.swapWith.system.selectPage(myPageName);
 		me.setSOI(otherSoi);
 		me.swapWith.setSOI(mySoi);
+		# The ==1 must be here below since soi can be -1 in the device:
 		swapAircraftSOI(otherSoi == 1?me.aircraftSOI:mySoi==1?(me.swapWith.aircraftSOI):nil);
 	},
 };
@@ -403,6 +407,7 @@ var DisplaySystem = {
 		me.initPage("PageReset");
 		me.initPage("PageBlank");
 		me.initPage("PageRCCE");
+		me.initPage("PageFLIR");
 		me.initPage("PageSMSINV");
 		#me.initPage("PageOSB");
 
@@ -472,7 +477,7 @@ var DisplaySystem = {
 
 	selectPage: func (pageName) {
 		if (me.pages[pageName] == nil) {print(me.device.name," page not found: ",pageName);return;}
-		me.wasSOI = me.device.soi == 1;
+		me.wasSOI = me.device.soi == 1;# The ==1 must be here since soi can be -1 in the device
 		if (me["currPage"] != nil) {
 			if(me.currPage.needGroup) me.currPage.group.hide();
 			me.currPage.exit();
@@ -1376,7 +1381,7 @@ var DisplaySystem = {
 	PageFCRMenu: {
 		name: "PageFCRMenu",
 		isNew: 1,
-		supportSOI: 0,
+		supportSOI: 1,
 		needGroup: 0,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageFCRMenu]};
@@ -1506,7 +1511,7 @@ var DisplaySystem = {
 	PageFCRCNTL: {
 		name: "PageFCRCNTL",
 		isNew: 1,
-		supportSOI: 0,
+		supportSOI: 1,
 		needGroup: 0,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageFCRCNTL]};
@@ -4082,6 +4087,63 @@ var DisplaySystem = {
 		layers: ["OSB1TO2ARROWS", "BULLSEYE"],
 	},
 
+#  ███████ ██      ██ ██████  
+#  ██      ██      ██ ██   ██ 
+#  █████   ██      ██ ██████  
+#  ██      ██      ██ ██   ██ 
+#  ██      ███████ ██ ██   ██ 
+#                             
+#                             
+
+	PageFLIR: {
+		name: "PageFLIR",
+		isNew: 1,
+		supportSOI: 0,
+		needGroup: 1,
+		new: func {
+			me.instance = {parents:[DisplaySystem.PageFLIR]};
+			me.instance.group = nil;
+			return me.instance;
+		},
+		setup: func {
+			printDebug(me.name," on ",me.device.name," is being setup");
+			me.flirPicHD = radar_system.FlirSensor.setup(me.group, me.device.name=="LeftMFD"?0:1);
+            # Ideally there should be HUD imposed, but since hud can move with
+            # head movement, I have not done that, would look stupid.
+            # And not making a new entire hud just for this page.
+            me.flirPicHD.setScale(displayWidth/radar_system.flirImageReso, displayHeight/radar_system.flirImageReso);
+		},
+		enter: func {
+			printDebug("Enter ",me.name~" on ",me.device.name);
+			if (me.isNew) {
+				me.setup();
+				me.isNew = 0;
+			}
+			me.device.resetControls();
+			me.device.controls["OSB5"].setControlText("FLIR",0);
+			me.device.controls["OSB16"].setControlText("SWAP");
+		},
+		controlAction: func (controlName) {
+			printDebug(me.name,": ",controlName," activated on ",me.device.name);
+			if (controlName == "OSB16") {
+                me.device.swap();
+            }
+		},
+		update: func (noti = nil) {
+			radar_system.FlirSensor.scan(noti);
+			me.flirPicHD.dirtyPixels();
+            me.flirPicHD.show();
+		},
+		exit: func {
+			printDebug("Exit ",me.name~" on ",me.device.name);
+			me.flirPicHD.hide();
+		},
+		links: {
+			"OSB5": "PageMenu",
+		},
+		layers: ["BULLSEYE"],
+	},
+
 #  ███████ ████████  █████  ██████  ████████ ██    ██ ██████  
 #  ██         ██    ██   ██ ██   ██    ██    ██    ██ ██   ██ 
 #  ███████    ██    ███████ ██████     ██    ██    ██ ██████  
@@ -4917,6 +4979,7 @@ var DisplaySystem = {
 		links: {
 			"OSB1":  "PageFCR",
 			"OSB3":  "PageSMSWPN",
+			"OSB5":  "PageFLIR",
 			"OSB6":  "PageSMSINV",
 			"OSB7":  "PageHSD",
 			"OSB8":  "PageDTE",
@@ -5360,8 +5423,7 @@ main(nil);# disable this line if running as module
 #TODO: rockerbuttons as controls
 #      resolutions
 #      crash exit GM
-#      make nav reference (ground target)
-#      stop loading as module, that might be source of mapping crash
+#      make nav reference for ground target?
 #      HSDCNTL/FCRCNTL should be an overlay
 #      HSD: Ghost cursor, cursor
 #      HSD: MSG page with max 9 lines of 15 chars
