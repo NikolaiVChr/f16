@@ -326,7 +326,7 @@ var DisplayDevice = {
 		me.swapWith.system.selectPage(myPageName);
 		me.setSOI(otherSoi);
 		me.swapWith.setSOI(mySoi);
-		swapAircraftSOI(otherSoi?me.aircraftSOI:mySoi?(me.swapWith.aircraftSOI):nil);
+		swapAircraftSOI(otherSoi == 1?me.aircraftSOI:mySoi==1?(me.swapWith.aircraftSOI):nil);
 	},
 };
 
@@ -364,7 +364,7 @@ var DisplaySystem = {
 		}
 		me.device.addSOILines();
 		me.device.addSOIText("NOT SOI");
-		me.device.setSOI(1);
+		me.device.setSOI(-1);
 	},
 
 	getSOIPrio: func {
@@ -472,7 +472,7 @@ var DisplaySystem = {
 
 	selectPage: func (pageName) {
 		if (me.pages[pageName] == nil) {print(me.device.name," page not found: ",pageName);return;}
-		me.wasSOI = me.device.soi;
+		me.wasSOI = me.device.soi == 1;
 		if (me["currPage"] != nil) {
 			if(me.currPage.needGroup) me.currPage.group.hide();
 			me.currPage.exit();
