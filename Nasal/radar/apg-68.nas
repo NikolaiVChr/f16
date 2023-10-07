@@ -2824,7 +2824,7 @@ var FlirSensor = {
         me.scanY = 0;
         me.scans = flirImageReso/(4*(getprop("f16/avionics/hud-flir-optimum")?4:2));
         me.pics[index] = me.flirPicHD;
-        me.color = displays.colorText1;
+        me.color = displays.colorDot2;
         return me.flirPicHD;
     },
     extrapolate: func (x, x1, x2, y1, y2) {
