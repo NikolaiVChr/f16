@@ -165,7 +165,7 @@ var font = {
 };
 
 var symbolSize = {
-    contacts: 112,
+    contacts: 130,
     bullseye: 50,
     gpsSpot: 25,
     ownship: 30,
@@ -197,6 +197,8 @@ var layer_z = {
         grid: 3,
         gridText: 4,
         airbase: 2,
+        bullseye: 2,
+        gpsSpot: 12,
     },
     mapOverlay: {
         ownship: 10,
@@ -635,6 +637,7 @@ var CDU = {
             .arcSmallCW(symbolSize.bullseye/5,symbolSize.bullseye/5, 0,  symbolSize.bullseye/5*2, 0)
             .arcSmallCW(symbolSize.bullseye/5,symbolSize.bullseye/5, 0, -symbolSize.bullseye/5*2, 0)
             .setStrokeLineWidth(lineWidth.bullseye)
+            .set("z-index",layer_z.map.bullseye)
             .setColor(COLOR_BLUE_LIGHT);
 
         me.gpsSpot = me.mapCenter.createChild("path")
@@ -645,6 +648,7 @@ var CDU = {
             .arcSmallCW(symbolSize.gpsSpot*3/5,symbolSize.gpsSpot*3/5, 0,  symbolSize.gpsSpot*3/5*2, 0)
             .arcSmallCW(symbolSize.gpsSpot*3/5,symbolSize.gpsSpot*3/5, 0, -symbolSize.gpsSpot*3/5*2, 0)
             .setStrokeLineWidth(lineWidth.gpsSpot)
+            .set("z-index",layer_z.map.gpsSpot)
             .setColor(COLOR_BLACK);
 
         me.hdgUpText = me.root.createChild("text")

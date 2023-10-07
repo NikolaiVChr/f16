@@ -5368,5 +5368,3 @@ main(nil);# disable this line if running as module
 #      HSD: OSB8 FRZ freeze
 #      FCR: OVRD
 #      FCRCNTL: Additional GM options. Page 164/176 of MLU t1
-# CDU symbols too small
-# no soi page should call auto
