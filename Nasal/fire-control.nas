@@ -790,7 +790,7 @@ var FireControl = {
 
 	jettisonSJContent: func {
 		# jettison S-J pylon
-		if (getprop("controls/armament/master-arm-switch") != pylons.ARM_ARM or getprop("fdm/jsbsim/elec/bus/emergency-dc-1") < 20 or !(getprop("f16/avionics/gnd-jett") or !getprop("gear/gear[0]/wow"))) {
+		if (getprop(masterArmSwitch) != pylons.ARM_ARM or getprop("fdm/jsbsim/elec/bus/emergency-dc-1") < 20 or !(getprop("f16/avionics/gnd-jett") or !getprop("gear/gear[0]/wow"))) {
 			me.clearStationForSJ();
 			return nil;
 		}
@@ -1195,7 +1195,7 @@ var FireControl = {
 	},
 
 	masterArmSwitch: func () {
-		if (getprop("controls/armament/master-arm-switch") == pylons.ARM_ARM) {
+		if (getprop(masterArmSwitch) == pylons.ARM_ARM) {
 			setprop("controls/armament/master-arm", 1);
 		} else {
 			setprop("controls/armament/master-arm", 0);
@@ -1215,7 +1215,7 @@ var FireControl = {
 	updateCurrent: func {
 		# will start/stop current weapons depending on masterarm
 		# will also update mass (for cannon mainly)
-		if (getprop("controls/armament/master-arm-switch")!=pylons.ARM_OFF and me.selected != nil) {
+		if (getprop(masterArmSwitch)!=pylons.ARM_OFF and me.selected != nil) {
 			me.sweaps = me.getSelectedWeapons();
 			if (me.sweaps != nil) {
 				foreach(me.sweap ; me.sweaps) {
@@ -1223,7 +1223,7 @@ var FireControl = {
 #					print("starting a weapon");
 				}
 			}
-		} elsif (getprop("controls/armament/master-arm-switch")==pylons.ARM_OFF and me.selected != nil) {
+		} elsif (getprop(masterArmSwitch)==pylons.ARM_OFF and me.selected != nil) {
 			me.sweaps = me.getSelectedWeapons();
 			if (me.sweaps != nil) {
 				foreach(me.sweap ; me.sweaps) {
@@ -1234,7 +1234,7 @@ var FireControl = {
 		if (me.selected == nil) {
 			return;
 		}
-		printDebug("FC: Masterarm "~getprop("controls/armament/master-arm-switch"));
+		printDebug("FC: Masterarm "~getprop(masterArmSwitch));
 		
 		me.pylons[me.selected[0]].calculateMass();#kind of a hack to get cannon ammo changed.
 	},
