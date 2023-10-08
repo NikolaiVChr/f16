@@ -22,6 +22,8 @@ var index_of_lines_2          = 200;
 var index_of_lines_3          = 600;
 var index_of_lines_4          = 700;
 
+var index_of_lines = [index_of_lines_1,index_of_lines_2,index_of_lines_3,index_of_lines_4];
+
 var stpt300 = setsize([],number_of_threat_circles);#Threat circles
 var stpt350 = setsize([],10);#Generic
 var stpt400 = setsize([],5);#Markpoints Own
@@ -206,7 +208,7 @@ var getCurrentDeviation = func {
 	# Get dev to current steerpoint or nil for none.
 	if (getCurrentNumber() != 0) {
 		var cc = getCurrentCoord();
-		return geo.normdeg180(getprop("orientation/heading-deg") - geo.aircraft_position().course_to(cc));
+		return geo.normdeg180(geo.aircraft_position().course_to(cc) - getprop("orientation/heading-deg"));
 	} else {
 		return nil;
 	}

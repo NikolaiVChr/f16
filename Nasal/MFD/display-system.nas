@@ -72,6 +72,7 @@ if (getprop("sim/variant-id") == 2) {
 var PUSHBUTTON   = 0;
 var ROCKERSWITCH = 1;
 
+var CursorHSD = 0;
 
 var DisplayDevice = {
 	new: func (name, resolution, uvMap, node, texture) {
@@ -861,7 +862,7 @@ var DisplaySystem = {
 	    	#
             # Bulls-eye info
             #
-            me.bullPt = steerpoints.getNumber(555);
+            me.bullPt = steerpoints.getNumber(steerpoints.index_of_bullseye);
             me.bullOn = me.bullPt != nil;
             me.refOn = steerpoints.getCurrentNumber() > 0;
             if (pylons.fcs != nil) {
@@ -1405,6 +1406,7 @@ var DisplaySystem = {
 		name: "PageFCRMenu",
 		isNew: 1,
 		supportSOI: 1,
+		soiPrio: 10,
 		needGroup: 0,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageFCRMenu]};
@@ -1543,6 +1545,7 @@ var DisplaySystem = {
 		name: "PageFCRCNTL",
 		isNew: 1,
 		supportSOI: 1,
+		soiPrio: 10,
 		needGroup: 0,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageFCRCNTL]};
@@ -1683,7 +1686,8 @@ var DisplaySystem = {
 	PageHSD: {
 		name: "PageHSD",
 		isNew: 1,
-		supportSOI: 0,
+		supportSOI: CursorHSD,
+		soiPrio: 8,
 		needGroup: 1,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageHSD]};
@@ -1696,6 +1700,9 @@ var DisplaySystem = {
 			me.rangeText = "";
 			me.showRangeDown = 0;
 			me.showRangeUp = 0;
+			me.slew_c_last = 0;
+			me.index = me.device.name == "RightMFD";
+			me.concentricCenter = [0,0];
 			me.setupHSD();
 		},
 		setupHSD: func {
@@ -1704,6 +1711,7 @@ var DisplaySystem = {
 	                .setTranslation(displayWidth*0.5,displayHeight);
 	        me.concentricGrp = me.group.createChild("group")
 	                .setTranslation(displayWidth*0.5,displayHeight*0.75);#552,displayHeight , 0.795 is for UV map
+
 	        me.cone = me.concentricGrp.createChild("group")
 	            .set("z-index",5);#radar cone
 
@@ -1739,7 +1747,17 @@ var DisplaySystem = {
 	            .setColor(colorLine5);
 
 
-
+	        me.cursorHSD = me.buttonView.createChild("path")
+	                    .moveTo(0, 6)
+	                    .vert(16)
+	                    .moveTo(0, -6)
+	                    .vert(-16)
+	                    .moveTo(6,0)
+	                    .horiz(16)
+	                    .moveTo(-6,0)
+	                    .horiz(-16)
+	                    .setStrokeLineWidth(2)
+	                    .setColor(colorLine3);
 	        me.cursorGhost = me.concentricGrp.createChild("group").set("z-index",1000);
 	        me.cursorAirGhost = me.cursorGhost.createChild("path")
 	                    .moveTo(-8,-9)
@@ -1847,7 +1865,7 @@ var DisplaySystem = {
 	                .setAlignment("center-center")
 	                .setColor(colorCircle1)
 	                .set("z-index",2)
-	                .setFontSize(15, 1.0));
+	                .setFontSize(17, 1.0));
 	        }
 
 	        me.mark = setsize([],10);
@@ -1872,6 +1890,13 @@ var DisplaySystem = {
 	            .arcSmallCW(5,5, 0, -5*2, 0)
 	            .setStrokeLineWidth(3)
 	            .setColor(colorBullseye);
+	        me.cursorLoc = me.buttonView.createChild("text")
+	                .setAlignment("left-bottom")
+	                .setColor(colorBetxt)
+	                .setTranslation(-205, -75)
+	                .setText("12")
+	                .set("z-index",1)
+	                .setFontSize(18, 1.0);
 	    },
 
 	    # Static members
@@ -1980,11 +2005,54 @@ var DisplaySystem = {
                 switchTGP();
             }
 		},
+		updateCursor: func (noti) {
+            if (me.IMSOI) {
+                # Get controls from pilots cursor hat:
+	            me.slew_x = getprop("controls/displays/target-management-switch-x[" ~ me.index ~ "]");
+	            me.slew_y = -getprop("controls/displays/target-management-switch-y[" ~ me.index ~ "]");
+
+            	if (noti.getproper("viewName") != "TGP") {
+	                f16.resetSlew();
+	            }
+            	# Move cursor and record clicks
+                if ((me.slew_x != 0 or me.slew_y != 0 or slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.index) and noti.getproper("viewName") != "TGP") {
+                    cursor_pos_hsd[0] += me.slew_x*175;
+                    cursor_pos_hsd[1] -= me.slew_y*175;
+                    cursor_pos_hsd[0] = math.clamp(cursor_pos_hsd[0], -displayWidthHalf, displayWidthHalf);
+                    cursor_pos_hsd[1] = math.clamp(cursor_pos_hsd[1], -displayHeight, 0);
+                    cursor_click = (slew_c and !me.slew_c_last)?me.index:-1;
+                    cursor_lock = me.index;
+                } elsif (cursor_lock == me.index or (me.slew_x == 0 or me.slew_y == 0 or slew_c == 0)) {
+                    cursor_lock = -1;
+                }
+
+                me.slew_c_last = slew_c;
+                slew_c = 0;
+                me.cursorHSD.setTranslation(cursor_pos_hsd);
+                me.hsdCursorFromOwnship = [cursor_pos_hsd[0], cursor_pos_hsd[1]+(displayHeight-me.concentricCenter[1])];
+                me.pixelsFromOwnshipToTop = me.concentricCenter[1];
+                me.pixelsCursor = math.sqrt(me.hsdCursorFromOwnship[0]*me.hsdCursorFromOwnship[0]+me.hsdCursorFromOwnship[1]*me.hsdCursorFromOwnship[1]);
+                if (me.get_HSD_centered()) {
+	                me.range = me.get_HSD_range_cen();
+	            } else {
+	                me.range = me.get_HSD_range_dep();
+	            }
+
+                me.cursorDev   = -math.atan2(-me.hsdCursorFromOwnship[0], -me.hsdCursorFromOwnship[1])*R2D;
+                me.cursorDist  = NM2M*(me.range*me.pixelsCursor/me.pixelsFromOwnshipToTop);
+                #printf("HSD Cursor  dist %.2f nm  dev %.1f deg",me.cursorDist*M2NM,me.cursorDev);
+            }
+           	me.hsdCursorclick = me.IMSOI and cursor_click == me.index;
+            me.cursorHSD.setVisible(me.IMSOI);
+		},
 		update: func (noti = nil) {
 			me.conc.setRotation(-radar_system.self.getHeading()*D2R);
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
 
+            me.IMSOI = me.device.soi == 1;
+            if (!me.IMSOI and (me.device.swapper.soi != 1 or me.device.swapper.system.currPage.name != me.name)) cursor_pos_hsd = [0, me.concentricCenter[1]-displayHeight];# what a hack :(
+            me.updateCursor(noti);
             me.rdrrng = radar_system.apg68Radar.getRange();
             me.rdrprio = radar_system.apg68Radar.getPriorityTarget();
             me.selfCoord = geo.aircraft_position();
@@ -2034,12 +2102,14 @@ var DisplaySystem = {
             if (me.get_HSD_centered()) {
                 me.concentricGrp.setTranslation(displayWidthHalf,0.5*displayHeight);
                 me.rangeText = ""~me.get_HSD_range_cen();
+                me.concentricCenter = [displayWidthHalf,0.5*displayHeight];
             } else {
                 me.concentricGrp.setTranslation(displayWidthHalf,0.75*displayHeight);
                 me.rangeText = ""~me.get_HSD_range_dep();
+                me.concentricCenter = [displayWidthHalf,0.75*displayHeight];
             }
 
-            me.bullPt = steerpoints.getNumber(555);
+            me.bullPt = steerpoints.getNumber(steerpoints.index_of_bullseye);
             me.bullOn = me.bullPt != nil;
             if (me.bullOn) {
                 me.bullLat = me.bullPt.lat;
@@ -2056,7 +2126,24 @@ var DisplaySystem = {
                 me.legX = me.bullRangePixels*math.sin(me.meToBull);
                 me.legY = -me.bullRangePixels*math.cos(me.meToBull);
                 me.bullseye.setTranslation(me.legX,me.legY);
+
+                if (me.IMSOI) {
+                	me.cursorCoord = geo.aircraft_position();
+	                me.cursorCoord.apply_course_distance(noti.getproper("heading")+me.cursorDev, me.cursorDist);
+	                me.cursorBullDist = me.cursorCoord.distance_to(me.bullCoord);
+	                me.cursorBullCrs  = me.bullCoord.course_to(me.cursorCoord);
+	                me.cursorLoc.setText(sprintf("%03d %03d",me.cursorBullCrs, me.cursorBullDist*M2NM));
+
+	                if (me.hsdCursorclick) {
+                    	me.distFromCursor = math.sqrt(math.pow(me.hsdCursorFromOwnship[0]-me.legX,2)+math.pow(me.hsdCursorFromOwnship[1]-me.legY,2));
+                    	if (me.distFromCursor < 7) {
+                    		me.hsdCursorclick = 0;
+                    		steerpoints.setCurrentNumber(steerpoints.index_of_bullseye);
+                    	}
+                    }
+	            }
             }
+            me.cursorLoc.setVisible(me.IMSOI and me.bullOn);
             me.bullseye.setVisible(me.bullOn);
 
             if (me.get_HSD_centered()) {
@@ -2132,6 +2219,14 @@ var DisplaySystem = {
                         }
                         me.prevX = me.legX;
                         me.prevY = me.legY;
+
+                        if (me.hsdCursorclick) {
+                        	me.distFromCursor = math.sqrt(math.pow(me.hsdCursorFromOwnship[0]-me.legX,2)+math.pow(me.hsdCursorFromOwnship[1]-me.legY,2));
+                        	if (me.distFromCursor < 7) {
+                        		me.hsdCursorclick = 0;
+                        		steerpoints.setCurrentNumber(me.j+1);
+                        	}
+                        }
                     }
                 }
 
@@ -2152,6 +2247,7 @@ var DisplaySystem = {
                             } else {
                                 me.wp = me.plan.getWP(me.j);
                             }
+
                             me.wpC = geo.Coord.new();
                             me.wpC.set_latlon(me.wp.lat,me.wp.lon);
                             me.legBearing = me.selfCoord.course_to(me.wpC)-me.selfHeading;#relative
@@ -2184,6 +2280,15 @@ var DisplaySystem = {
                             }
                             me.prevX = me.legX;
                             me.prevY = me.legY;
+
+                            if (me.hsdCursorclick) {
+	                        	me.distFromCursor = math.sqrt(math.pow(me.hsdCursorFromOwnship[0]-me.legX,2)+math.pow(me.hsdCursorFromOwnship[1]-me.legY,2));
+	                        	if (me.distFromCursor < 7) {
+	                        		me.hsdCursorclick = 0;
+	                        		me.mkNumber = me.j + steerpoints.index_of_lines[u];
+	                        		steerpoints.setCurrentNumber(me.mkNumber);
+	                        	}
+	                        }
                         }
                     }
                 }
@@ -2193,10 +2298,12 @@ var DisplaySystem = {
                 for (var mi = 0; mi < 10; mi+=1) {
                     var mkpt = nil;
                     if (mi<5) {
-                        mkpt = steerpoints.getNumber(400+mi);
+                    	me.mkNumber = 400+mi
+                        
                     } else {
-                        mkpt = steerpoints.getNumber(450+mi-5);
+                        me.mkNumber = 450+mi-5;
                     }
+                    mkpt = steerpoints.getNumber(me.mkNumber);
                     if (mkpt == nil) {
                         me.mark[mi].hide();
                     } else {
@@ -2215,6 +2322,13 @@ var DisplaySystem = {
                         me.legY = -me.legRangePixels*math.cos(me.legBearing*D2R);
                         me.mark[mi].setTranslation(me.legX,me.legY);
                         me.mark[mi].show();
+                        if (me.hsdCursorclick) {
+                        	me.distFromCursor = math.sqrt(math.pow(me.hsdCursorFromOwnship[0]-me.legX,2)+math.pow(me.hsdCursorFromOwnship[1]-me.legY,2));
+                        	if (me.distFromCursor < 7) {
+                        		me.hsdCursorclick = 0;
+                        		steerpoints.setCurrentNumber(me.mkNumber);
+                        	}
+                        }
                     }
                 }
                 #printDebug("");printDebug("");printDebug("");
@@ -2222,8 +2336,8 @@ var DisplaySystem = {
                     # threat circles
                     me.ci = me.threat_c[l];
                     me.cit = me.threat_t[l];
-
-                    me.cnu = steerpoints.getNumber(300+l);
+					me.mkNumber = 300+l;
+                    me.cnu = steerpoints.getNumber(me.mkNumber);
                     if (me.cnu == nil) {
                         me.ci.hide();
                         me.cit.hide();
@@ -2263,13 +2377,21 @@ var DisplaySystem = {
                         me.cit.setTranslation(me.legX,me.legY);
                         me.cit.setColor(me.co);
                         me.cit.show();
+
+                        if (me.hsdCursorclick) {
+                        	me.distFromCursor = math.sqrt(math.pow(me.hsdCursorFromOwnship[0]-me.legX,2)+math.pow(me.hsdCursorFromOwnship[1]-me.legY,2));
+                        	if (me.distFromCursor < 15) {
+                        		me.hsdCursorclick = 0;
+                        		steerpoints.setCurrentNumber(me.mkNumber);
+                        	}
+                        }
                     } else {
                         me.ci.hide();
                         me.cit.hide();
                     }
                 }
             }
-            if (cursorFCRgps != nil) {
+            if (cursorFCRgps != nil and me.device.soi != 1) {
             	me.bearing = cursorFCRgps[0];
                 if (me.get_HSD_centered()) {
                     me.rangePixels = me.mediumRadius*(cursorFCRgps[1]/me.get_HSD_range_cen());
@@ -2332,6 +2454,10 @@ var DisplaySystem = {
                 me.selection.setVisible(me.selected);
             }
             if (noti.FrameCount == 3) me.up = !me.up;
+
+            if (cursor_click == me.index) {
+            	cursor_click = -1;
+            }
         },
         paintBlep: func (contact) {
             if (!contact.isVisible() and me.blue != 2) {
@@ -3601,7 +3727,7 @@ var DisplaySystem = {
             me.p_RDR_image.setVisible(radar_system.apg68Radar.enabled);
             me.DGFT = noti.getproper("dgft");
             me.device.DGFT = me.DGFT;
-            me.IMSOI = me.device.soi;
+            me.IMSOI = me.device.soi == 1;
 			
             me.modeSw = noti.getproper("rdrMode");
 
@@ -3631,7 +3757,7 @@ var DisplaySystem = {
             #
             # Bulls-eye info on FCR
             #
-            me.bullPt = steerpoints.getNumber(555);
+            me.bullPt = steerpoints.getNumber(steerpoints.index_of_bullseye);
             me.bullOn = me.bullPt != nil;
             if (me.bullOn) {
                 me.bullLat = me.bullPt.lat;
@@ -3728,6 +3854,7 @@ var DisplaySystem = {
 
             me.exp_modi = exp?(radar_system.apg68Radar.currentMode.EXPfixedAim?0.20:0.25):1.00;# slow down cursor movement when in zoom mode
 
+            # Get controls from pilots cursor hat:
             me.slew_x = getprop("controls/displays/target-management-switch-x[" ~ me.model_index ~ "]")*me.exp_modi;
             me.slew_y = -getprop("controls/displays/target-management-switch-y[" ~ me.model_index ~ "]")*me.exp_modi;
 
@@ -3739,6 +3866,7 @@ var DisplaySystem = {
             me.dt = noti.getproper("elapsed") - me.elapsed;
 
             if (me.IMSOI) {
+            	# Move cursor and record clicks
                 if ((me.slew_x != 0 or me.slew_y != 0 or slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.index) and noti.getproper("viewName") != "TGP") {
                     cursor_pos[0] += me.slew_x*175;
                     cursor_pos[1] -= me.slew_y*175;
@@ -3756,6 +3884,7 @@ var DisplaySystem = {
 
             me.elapsed = noti.getproper("elapsed");
 
+            # Send cursor pos to radar system
             if (radar_system.apg68Radar.currentMode.detectAIR) {
                 radar_system.apg68Radar.setCursorDeviation(cursor_pos[0]*60/(me.wdt*0.5));
 
@@ -3778,6 +3907,7 @@ var DisplaySystem = {
             me.fixedEXPwidth = nil;
             var pixelPerNM = nil;
 
+            # Paint cursor
             if (!exp or !radar_system.apg68Radar.currentMode.EXPfixedAim) {
                 me.cursor.setTranslation(cursor_pos);
             } else {
@@ -3808,10 +3938,12 @@ var DisplaySystem = {
             me.cursorGmTicks.setVisible(!radar_system.apg68Radar.currentMode.detectAIR and !exp);
 
             if (radar_system.apg68Radar.currentMode.detectAIR) {
+            	# Find cursor position for bullseye location from cursor
                 me.cursorDev   = cursor_pos[0]*60/(me.wdt*0.5);
                 me.cursorDist  = -cursor_pos[1]/(displayHeight/radar_system.apg68Radar.getRange());
                 cursorFCRair = 1;
             } else {
+            	# Find cursor position for bullseye location from GM cursor
                 # TODO: verify this is correct:
                 me.cursorDev   = -math.atan2(-cursor_pos[0]/(displayHeight), -cursor_pos[1]/displayHeight)*R2D;
                 me.cursorDist  = (math.sqrt(cursor_pos[0]*cursor_pos[0]+cursor_pos[1]*cursor_pos[1])/(displayHeight/radar_system.apg68Radar.getRange()));
@@ -4950,7 +5082,7 @@ var DisplaySystem = {
 
             #CURSOR
 
-            me.IMSOI = me.device.soi;
+            me.IMSOI = me.device.soi == 1;
 
             me.slew_x = getprop("controls/displays/target-management-switch-x[" ~ me.model_index ~ "]");
             me.slew_y = -getprop("controls/displays/target-management-switch-y[" ~ me.model_index ~ "]");
@@ -5514,12 +5646,14 @@ updateFlyup = func(notification=nil) {
 # Cursor stuff
 var cursor_pos = [100,-100];
 var cursor_posHAS = [0,-241];
+var cursor_pos_hsd = [0, -50];
 var cursor_click = -1;
 var cursor_lock = -1;
 var exp = 0;
 var slew_c = 0;
 var cursorFCRgps = nil;
 var cursorFCRair = 1;
+
 
 setlistener("controls/displays/cursor-click", func {if (getprop("controls/displays/cursor-click")) {slew_c = 1;}});
 
