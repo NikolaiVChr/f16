@@ -430,6 +430,7 @@ var DisplaySystem = {
 		me.initPage("PageBlank");
 		me.initPage("PageRCCE");
 		me.initPage("PageFLIR");
+		me.initPage("PageSJ");
 		me.initPage("PageSMSINV");
 		#me.initPage("PageOSB");
 
@@ -1583,6 +1584,7 @@ var DisplaySystem = {
             }
 		},
 		update: func (noti = nil) {
+			# GM(T) options from page 164/176 of MLU t1
             me.device.controls["OSB1"].setControlText("MTR\n"~me.mtr);
             me.device.controls["OSB2"].setControlText("ALT BLK\nOFF");
 			me.device.controls["OSB3"].setControlText("TGT HIS\n"~radar_system.apg68Radar.targetHistory);
@@ -2691,11 +2693,6 @@ var DisplaySystem = {
                 me.selectPylon(1);
             } elsif (controlName == "OSB5") {
                 me.selectPylon(0);
-            } elsif (controlName == "OSB6") {
-                if (getprop("sim/variant-id") == 0) {
-                    return;
-                }
-                pylons.fcs.jettisonSelectedPylonContent();
             } elsif (controlName == "OSB7") {
                 me.selectPylon(5);
             } elsif (controlName == "OSB8") {
@@ -2791,10 +2788,266 @@ var DisplaySystem = {
 			printDebug("Exit ",me.name~" on ",me.device.name);
 		},
 		links: {
+			"OSB6":  "PageSJ",
 			"OSB11": "PageFCR",
 			"OSB17": "PageHSD",
 			"OSB18": "PageMenu",
 			"OSB19": "PageSMSWPN",
+		},
+		layers: ["BULLSEYE"],
+	},
+
+	PageSJ: {
+		name: "PageSJ",
+		isNew: 1,
+		supportSOI: 0,
+		needGroup: 1,
+		new: func {
+			me.instance = {parents:[DisplaySystem.PageSJ]};
+			me.instance.group = nil;
+			return me.instance;
+		},
+		setup: func {
+			printDebug(me.name," on ",me.device.name," is being setup");
+			me.setupSJ();
+		},
+		setupSJ: func {
+
+	        me.group.setTranslation(0.5*displayWidth, displayHeight);
+
+	        me.p6 = me.group.createChild("text")
+	                .setTranslation(displayWidthHalf*0.08, -displayHeightHalf-90)
+	                .setText("--------")
+	                .setAlignment("left-center")
+	                .setColor(colorText1)
+	                .setFontSize(me.device.fontSize, 1.0);
+	        me.p6l1 = me.group.createChild("text")
+	                .setTranslation(displayWidthHalf*0.08, -displayHeightHalf-65)
+	                .setText("--------")
+	                .setAlignment("left-center")
+	                .setColor(colorText1)
+	                .setFontSize(me.device.fontSize, 1.0);
+	        me.p6l2 = me.group.createChild("text")
+	                .setTranslation(displayWidthHalf*0.08, -displayHeightHalf-40)
+	                .setText("--------")
+	                .setAlignment("left-center")
+	                .setColor(colorText1)
+	                .setFontSize(me.device.fontSize, 1.0);
+
+	        me.p7 = me.group.createChild("text")
+	                .setTranslation(displayWidthHalf*0.37, -displayHeightHalf-15)
+	                .setText("--------")
+	                .setAlignment("left-center")
+	                .setColor(colorText1)
+	                .setFontSize(me.device.fontSize, 1.0);
+	        me.p7l1 = me.group.createChild("text")
+	                .setTranslation(displayWidthHalf*0.37, -displayHeightHalf+10)
+	                .setText("--------")
+	                .setAlignment("left-center")
+	                .setColor(colorText1)
+	                .setFontSize(me.device.fontSize, 1.0);
+	        me.p7l2 = me.group.createChild("text")
+	                .setTranslation(displayWidthHalf*0.37, -displayHeightHalf+35)
+	                .setText("--------")
+	                .setAlignment("left-center")
+	                .setColor(colorText1)
+	                .setFontSize(me.device.fontSize, 1.0);
+
+	        me.p5 = me.group.createChild("text")
+	                .setTranslation(-displayWidthHalf*0.20, -displayHeightHalf-190)
+	                .setText("--------")
+	                .setAlignment("left-center")
+	                .setColor(colorText1)
+	                .setFontSize(me.device.fontSize, 1.0);
+	        me.p5l1 = me.group.createChild("text")
+	                .setTranslation(-displayWidthHalf*0.20, -displayHeightHalf-165)
+	                .setText("--------")
+	                .setAlignment("left-center")
+	                .setColor(colorText1)
+	                .setFontSize(me.device.fontSize, 1.0);
+	        me.p5l2 = me.group.createChild("text")
+	                .setTranslation(-displayWidthHalf*0.20, -displayHeightHalf-140)
+	                .setText("--------")
+	                .setAlignment("left-center")
+	                .setColor(colorText1)
+	                .setFontSize(me.device.fontSize, 1.0);
+
+	        me.p4 = me.group.createChild("text")
+	                .setTranslation(-displayWidthHalf*0.51, -displayHeightHalf-90)
+	                .setText("--------")
+	                .setAlignment("left-center")
+	                .setColor(colorText1)
+	                .setFontSize(me.device.fontSize, 1.0);
+	        me.p4l1 = me.group.createChild("text")
+	                .setTranslation(-displayWidthHalf*0.51, -displayHeightHalf-65)
+	                .setText("--------")
+	                .setAlignment("left-center")
+	                .setColor(colorText1)
+	                .setFontSize(me.device.fontSize, 1.0);
+	        me.p4l2 = me.group.createChild("text")
+	                .setTranslation(-displayWidthHalf*0.51, -displayHeightHalf-40)
+	                .setText("--------")
+	                .setAlignment("left-center")
+	                .setColor(colorText1)
+	                .setFontSize(me.device.fontSize, 1.0);
+
+	        me.p3 = me.group.createChild("text")
+	                .setTranslation(-displayWidthHalf*0.8, -displayHeightHalf-15)
+	                .setText("--------")
+	                .setAlignment("left-center")
+	                .setColor(colorText1)
+	                .setFontSize(me.device.fontSize, 1.0);
+	        me.p3l1 = me.group.createChild("text")
+	                .setTranslation(-displayWidthHalf*0.8, -displayHeightHalf+10)
+	                .setText("--------")
+	                .setAlignment("left-center")
+	                .setColor(colorText1)
+	                .setFontSize(me.device.fontSize, 1.0);
+	        me.p3l2 = me.group.createChild("text")
+	                .setTranslation(-displayWidthHalf*0.8, -displayHeightHalf+35)
+	                .setText("--------")
+	                .setAlignment("left-center")
+	                .setColor(colorText1)
+	                .setFontSize(me.device.fontSize, 1.0);
+
+
+	        me.p3f = me.group.createChild("path")
+	           .moveTo(-displayWidthHalf*0.81, -displayHeightHalf-25)
+	           .vert(70)
+	           .horiz(100)
+	           .vert(-70)
+	           .horiz(-100)
+	           .setColor(colorText1)
+	           .setStrokeLineWidth(2)
+	           .hide();
+	        me.p4f = me.group.createChild("path")
+	           .moveTo(-displayWidthHalf*0.52, -displayHeightHalf-100)
+	           .vert(70)
+	           .horiz(100)
+	           .vert(-70)
+	           .horiz(-100)
+	           .setColor(colorText1)
+	           .setStrokeLineWidth(2)
+	           .hide();
+	        me.p5f = me.group.createChild("path")
+	           .moveTo(-displayWidthHalf*0.21, -displayHeightHalf-200)
+	           .vert(70)
+	           .horiz(100)
+	           .vert(-70)
+	           .horiz(-100)
+	           .setColor(colorText1)
+	           .setStrokeLineWidth(2)
+	           .hide();
+	        me.p6f = me.group.createChild("path")
+	           .moveTo(displayWidthHalf*0.09, -displayHeightHalf-100)
+	           .vert(70)
+	           .horiz(100)
+	           .vert(-70)
+	           .horiz(-100)
+	           .setColor(colorText1)
+	           .setStrokeLineWidth(2)
+	           .hide();
+	        me.p7f = me.group.createChild("path")
+	           .moveTo(displayWidthHalf*0.36, -displayHeightHalf-25)
+	           .vert(70)
+	           .horiz(100)
+	           .vert(-70)
+	           .horiz(-100)
+	           .setColor(colorText1)
+	           .setStrokeLineWidth(2)
+	           .hide();
+	    },
+		enter: func {
+			printDebug("Enter ",me.name~" on ",me.device.name);
+			if (me.isNew) {
+				me.setup();
+				me.isNew = 0;
+			}
+			me.device.resetControls();
+			me.device.controls["OSB6"].setControlText("S-J", 0);
+			me.device.controls["OSB16"].setControlText("SWAP");
+			screen.log.write("Click trigger to jettison selected stores",1,1,0.75);
+		},
+		selectPylon: func (sta) {
+			if (getprop("sim/variant-id") == 0) {
+                return;
+            }
+            pylons.fcs.toggleStationForSJ(sta);
+		},
+		controlAction: func (controlName) {
+			printDebug(me.name,": ",controlName," activated on ",me.device.name);
+			if (controlName == "OSB2") {
+                me.selectPylon(3);
+            } elsif (controlName == "OSB3") {
+                me.selectPylon(2);
+            } elsif (controlName == "OSB6") {
+                pylons.fcs.clearStationForSJ();
+            } elsif (controlName == "OSB7") {
+                me.selectPylon(5);
+            } elsif (controlName == "OSB8") {
+                me.selectPylon(6);
+            } elsif (controlName == "OSB13") {
+                me.selectPylon(4);
+            } elsif (controlName == "OSB16") {
+                me.device.swap();
+            } elsif (controlName == "OSB20") {
+                switchTGP();
+            }
+		},
+		update: func (noti = nil) {
+			if (noti.FrameCount != 3)
+                return;
+            if (getprop("sim/variant-id") == 0) {
+                return;
+            }
+
+            me.p3f.setVisible(pylons.fcs.isSelectStationForSJ(2));
+            me.p4f.setVisible(pylons.fcs.isSelectStationForSJ(3));
+            me.p5f.setVisible(pylons.fcs.isSelectStationForSJ(4));
+            me.p6f.setVisible(pylons.fcs.isSelectStationForSJ(5));
+            me.p7f.setVisible(pylons.fcs.isSelectStationForSJ(6));
+
+            me.setTextOnStation([me.p3, me.p3l1, me.p3l2], pylons.pylon3);
+            me.setTextOnStation([me.p4, me.p4l1, me.p4l2], pylons.pylon4);
+            me.setTextOnStation([me.p5, me.p5l1, me.p5l2], pylons.pylon5);
+            me.setTextOnStation([me.p6, me.p6l1, me.p6l2], pylons.pylon6);
+            me.setTextOnStation([me.p7, me.p7l1, me.p7l2], pylons.pylon7);
+        },
+		setTextOnStation: func (lines, pylon) {
+            # no check for pylon 1 and 9 if you enter both rack and pylon for them, this method will fail. So take care.
+            if (pylon == nil) {
+                lines[0].setText("--------");
+                lines[1].setText("--------");
+                if (size(lines) == 3) {
+                    lines[2].setText("--------");
+                }
+                return;
+            }
+            me.curr = 0;
+            me.pylName = pylon.getCurrentPylon();
+            if (me.pylName != nil) {
+                lines[me.curr].setText(me.pylName);
+                me.curr += 1;
+            }
+            me.rackName = pylon.getCurrentRack();
+            if (me.rackName != nil) {
+                lines[me.curr].setText(me.rackName);
+                me.curr += 1;
+            }
+            me.weapName = pylon.getCurrentSMSName();
+            if (me.weapName != nil) {
+                lines[me.curr].setText(me.weapName);
+                me.curr += 1;
+            }
+            for (var i = me.curr ; i < size(lines); i += 1) {
+                lines[i].setText("--------");
+            }
+        },
+		exit: func {
+			printDebug("Exit ",me.name~" on ",me.device.name);
+		},
+		links: {
+			"OSB6": "PageSMSINV",
 		},
 		layers: ["BULLSEYE"],
 	},
@@ -5487,5 +5740,5 @@ main(nil);# disable this line if running as module
 #      HSD: MSG page with max 9 lines of 15 chars. MLU1 page 35.
 #      HSD: OSB8 FRZ freeze
 #      FCR: OVRD
-#      FCRCNTL: Additional GM options. Page 164/176 of MLU t1
 #      TGP and HUD-FLIR not work on mac
+#      S-J page where pickle jettisons selected stores.

@@ -765,6 +765,63 @@ var FireControl = {
 		if (me.changeListener != nil) me.changeListener();
 	},
 
+	toggleStationForSJ: func (number) {
+		me.activateSJ();
+		me.sjSelect[number] = !me.sjSelect[number];
+	},
+
+	activateSJ: func {
+		if (me["sjSelect"] == nil) {
+			me.sjSelect = setsize([], size(me.pylons));
+			for(var i=0;i<size(me.pylons);i+=1) {
+				me.sjSelect[i] = 0;
+			}
+		}
+	},
+
+	isSelectStationForSJ: func (number) {
+		me.activateSJ();
+		return me.sjSelect[number];
+	},
+
+	clearStationForSJ: func {
+		me.sjSelect = nil;
+	},
+
+	jettisonSJContent: func {
+		# jettison S-J pylon
+		if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1") < 20 or !(getprop("f16/avionics/gnd-jett") or !getprop("gear/gear[0]/wow"))) {
+			me.clearStationForSJ();
+			return nil;
+		}
+		if (me["sjSelect"] == nil) {
+			printDebug("Nothing to jettison");
+			return nil;
+		}
+		for(var i=0;i<size(me.pylons);i+=1) {
+			if(me.sjSelect[i]) {
+
+				if (!me.pylons[i].isOperable()) {
+					printDebug("Jettison not working for station "~(i+1));
+					continue;
+				}
+				if (me.selected != nil and me.selected[0] == i) {
+					me.stopCurrent();
+				}
+				me.pylons[i].jettisonAll();
+				if (me.selected != nil and me.selected[0] == i) {
+					me.selected = nil;
+					me.selectedAdd = nil;
+					if (me.selectedType != nil) {
+						me.nextWeapon(me.selectedType);
+					}
+				}
+			}
+		}
+		me.clearStationForSJ();
+		if (me.changeListener != nil) me.changeListener();
+	},
+
 	jettisonAll: func {
 		# jettison all stations
 		foreach (pyl;me.pylons) {
@@ -906,6 +963,10 @@ var FireControl = {
 	trigger: func {
 		# trigger pressed down should go here, this will fire weapon
 		# cannon is fired in another way, but this method will print the brevity.
+		if (me["sjSelect"] != nil) {
+			me.jettisonSJContent();
+			return;
+		}
         setprop("payload/armament/releasedCCRP", 0);
 		printfDebug("trigger called %d %d %d",getprop("controls/armament/master-arm"),getprop("controls/armament/trigger"),me.selected != nil);
 		if (me.getSelectedPylon() == nil or !me.getSelectedPylon().isActive()) return;
