@@ -1550,8 +1550,9 @@ var DisplaySystem = {
 		},
 		setup: func {
 			printDebug(me.name," on ",me.device.name," is being setup");
-			me.band = 0;
-        	me.chan = 2;
+			fcrBand = 0;
+        	fcrChan = 2;
+        	me.mtr = 112;
 		},
 		enter: func {
 			printDebug("Enter ",me.name~" on ",me.device.name);
@@ -1570,23 +1571,32 @@ var DisplaySystem = {
                 if (radar_system.apg68Radar.targetHistory > 4) {
                     radar_system.apg68Radar.targetHistory = 1;
                 }
+            } elsif (controlName == "OSB5") {
+                radar_system.GMT_hi_lo = !radar_system.GMT_hi_lo;
             } elsif (controlName == "OSB6") {
-                me.chan += 1;
-                if (me.chan > 4) me.chan = 1;
+                fcrChan += 1;
+                if (fcrChan > 4) fcrChan = 1;
             } elsif (controlName == "OSB8") {
-                me.band = !me.band;
+                fcrBand = !fcrBand;
             } elsif (controlName == "OSB16") {
                 me.device.swap();
             }
 		},
 		update: func (noti = nil) {
+            me.device.controls["OSB1"].setControlText("MTR\n"~me.mtr);
+            me.device.controls["OSB2"].setControlText("ALT BLK\nOFF");
 			me.device.controls["OSB3"].setControlText("TGT HIS\n"~radar_system.apg68Radar.targetHistory);
-            if (me.band == 0) {
+            me.device.controls["OSB4"].setControlText("LVL\n1");
+            me.device.controls["OSB5"].setControlText("GMT SPD CUTOFF\n"~(radar_system.GMT_hi_lo?"Hi":"Lo"));
+            me.device.controls["OSB6"].setControlText("CHAN\n"~fcrChan);
+			me.device.controls["OSB7"].setControlText("MK INT\n2");
+			if (fcrBand == 0) {
                 me.device.controls["OSB8"].setControlText("BAND\nNARO");
             } else {
                 me.device.controls["OSB8"].setControlText("BAND\nWIDE");
             }
-            me.device.controls["OSB6"].setControlText("CHAN\n"~me.chan);
+			me.device.controls["OSB9"].setControlText("BCN DLY\n1.2");
+			me.device.controls["OSB10"].setControlText("DCPL");
 		},
 		exit: func {
 			printDebug("Exit ",me.name~" on ",me.device.name);
@@ -5229,6 +5239,8 @@ cursorZero();
 var hsdShowNAV1 = 1;
 var hsdShowDLINK = 1;
 var fcrFrz = 0;
+var fcrBand = 0;
+var fcrChan = 2;
 
 var leftMFD = nil;
 var rightMFD = nil;

@@ -1517,7 +1517,10 @@ var F16GMTMode = {
 	getSearchInfo: func (contact) {
 		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
 		me.devGMT = contact.getDeviationStored();
-		if (me.devGMT.speed_kt < 10) return nil;# A gain knob decide this. (should it be radial speed instead?)
+		me.min = GMT_hi_lo?16:8;
+		me.max = GMT_hi_lo?75:55;
+		if (me.devGMT.speed_kt < me.min) return nil;# A gain knob decide this.
+		if (me.devGMT.speed_kt > me.max) return nil;# should be radial speed instead
 		return [1,0,1,1,0,1];
 	},
 };
@@ -3510,7 +3513,7 @@ var datalink_power = props.globals.getNode("instrumentation/datalink/power",0);
 enable_tacobject = 1;
 var antennae_knob_prop = props.globals.getNode("controls/radar/antennae-knob",0);
 var wndprop = props.globals.getNode("environment/wind-speed-kt",0);
-
+var GMT_hi_lo = 0;#0=low (8-55) 1=high (16-75)
 
 # start generic radar system
 var baser = AIToNasal.new();
