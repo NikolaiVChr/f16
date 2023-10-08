@@ -1740,7 +1740,25 @@ var DisplaySystem = {
 
 
 
-
+	        me.cursorGhost = me.concentricGrp.createChild("group").set("z-index",1000);
+	        me.cursorAirGhost = me.cursorGhost.createChild("path")
+	                    .moveTo(-8,-9)
+	                    .vert(18)
+	                    .moveTo(8,-9)
+	                    .vert(18)
+	                    .setStrokeLineWidth(1.5)
+	                    .setColor(colorLine3);
+	        me.cursorGmGhost = me.cursorGhost.createChild("path")
+	                    .moveTo(0, 6)
+	                    .vert(12)
+	                    .moveTo(0, -6)
+	                    .vert(-12)
+	                    .moveTo(6,0)
+	                    .horiz(12)
+	                    .moveTo(-6,0)
+	                    .horiz(-12)
+	                    .setStrokeLineWidth(1.5)
+	                    .setColor(colorLine3);
 
 	        me.maxB = 16;
 	        me.blepTriangle = setsize([],me.maxB);
@@ -2250,6 +2268,23 @@ var DisplaySystem = {
                         me.cit.hide();
                     }
                 }
+            }
+            if (cursorFCRgps != nil) {
+            	me.bearing = cursorFCRgps[0];
+                if (me.get_HSD_centered()) {
+                    me.rangePixels = me.mediumRadius*(cursorFCRgps[1]/me.get_HSD_range_cen());
+                } else {
+                    me.rangePixels = me.outerRadius*(cursorFCRgps[1]/me.get_HSD_range_dep());
+                }
+
+                me.legX = me.rangePixels*math.sin(me.bearing*D2R);
+                me.legY = -me.rangePixels*math.cos(me.bearing*D2R);
+            	me.cursorGhost.setTranslation(me.legX, me.legY);
+            	me.cursorAirGhost.setVisible(cursorFCRair);
+            	me.cursorGmGhost.setVisible(!cursorFCRair);
+            	me.cursorGhost.show();
+            } else {
+            	me.cursorGhost.hide();
             }
 
 
@@ -3772,15 +3807,18 @@ var DisplaySystem = {
             me.cursorGm.setVisible(!radar_system.apg68Radar.currentMode.detectAIR);
             me.cursorGmTicks.setVisible(!radar_system.apg68Radar.currentMode.detectAIR and !exp);
 
+            if (radar_system.apg68Radar.currentMode.detectAIR) {
+                me.cursorDev   = cursor_pos[0]*60/(me.wdt*0.5);
+                me.cursorDist  = -cursor_pos[1]/(displayHeight/radar_system.apg68Radar.getRange());
+                cursorFCRair = 1;
+            } else {
+                # TODO: verify this is correct:
+                me.cursorDev   = -math.atan2(-cursor_pos[0]/(displayHeight), -cursor_pos[1]/displayHeight)*R2D;
+                me.cursorDist  = (math.sqrt(cursor_pos[0]*cursor_pos[0]+cursor_pos[1]*cursor_pos[1])/(displayHeight/radar_system.apg68Radar.getRange()));
+                cursorFCRair = 0;
+            }
+            cursorFCRgps = [me.cursorDev, me.cursorDist];# Used by HSD also
             if (me.bullOn) {
-                if (radar_system.apg68Radar.currentMode.detectAIR) {
-                    me.cursorDev   = cursor_pos[0]*60/(me.wdt*0.5);
-                    me.cursorDist  = -NM2M*cursor_pos[1]/(displayHeight/radar_system.apg68Radar.getRange());
-                } else {
-                    # TODO: verify this is correct:
-                    me.cursorDev   = -math.atan2(-cursor_pos[0]/(displayHeight), -cursor_pos[1]/displayHeight)*R2D;
-                    me.cursorDist  = NM2M*(math.sqrt(cursor_pos[0]*cursor_pos[0]+cursor_pos[1]*cursor_pos[1])/(displayHeight/radar_system.apg68Radar.getRange()));
-                }
                 me.ownCoord.apply_course_distance(noti.getproper("heading")+me.cursorDev, me.cursorDist);
                 me.cursorBullDist = me.ownCoord.distance_to(me.bullCoord);
                 me.cursorBullCrs  = me.bullCoord.course_to(me.ownCoord);
@@ -4375,6 +4413,7 @@ var DisplaySystem = {
 		exit: func {
 			printDebug("Exit ",me.name~" on ",me.device.name);
 			if (me["p_RDR_image"] != nil) me.p_RDR_image.hide();
+			cursorFCRgps = nil;
 		},
 		links: {
 			"OSB11": "PageFCRMenu",
@@ -5479,6 +5518,8 @@ var cursor_click = -1;
 var cursor_lock = -1;
 var exp = 0;
 var slew_c = 0;
+var cursorFCRgps = nil;
+var cursorFCRair = 1;
 
 setlistener("controls/displays/cursor-click", func {if (getprop("controls/displays/cursor-click")) {slew_c = 1;}});
 
@@ -5734,7 +5775,7 @@ main(nil);# disable this line if running as module
 #      crash exit GM
 #      make nav reference for ground target?
 #      HSDCNTL/FCRCNTL should be an overlay
-#      HSD: Ghost cursor, cursor. MLU1 page 32.
+#      HSD: cursor. MLU1 page 32.
 #      HSD: MSG page with max 9 lines of 15 chars. MLU1 page 35.
 #      HSD: OSB8 FRZ freeze
 #      FCR: OVRD
