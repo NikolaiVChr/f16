@@ -5483,8 +5483,8 @@ main(nil);# disable this line if running as module
 #      crash exit GM
 #      make nav reference for ground target?
 #      HSDCNTL/FCRCNTL should be an overlay
-#      HSD: Ghost cursor, cursor
-#      HSD: MSG page with max 9 lines of 15 chars
+#      HSD: Ghost cursor, cursor. MLU1 page 32.
+#      HSD: MSG page with max 9 lines of 15 chars. MLU1 page 35.
 #      HSD: OSB8 FRZ freeze
 #      FCR: OVRD
 #      FCRCNTL: Additional GM options. Page 164/176 of MLU t1

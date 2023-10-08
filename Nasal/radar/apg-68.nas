@@ -1519,8 +1519,9 @@ var F16GMTMode = {
 		me.devGMT = contact.getDeviationStored();
 		me.min = GMT_hi_lo?16:8;
 		me.max = GMT_hi_lo?75:55;
-		if (me.devGMT.speed_kt < me.min) return nil;# A gain knob decide this.
-		if (me.devGMT.speed_kt > me.max) return nil;# should be radial speed instead
+		if (contact["closureInclutter"] == nil) return nil;
+		if (math.abs(contact.closureInclutter) < me.min) return nil;# A gain knob decide this.
+		if (math.abs(contact.closureInclutter) > me.max) return nil;# should be radial speed instead
 		return [1,0,1,1,0,1];
 	},
 };

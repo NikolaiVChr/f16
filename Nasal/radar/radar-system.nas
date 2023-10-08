@@ -2174,8 +2174,11 @@ var TerrainChecker = {
 	    if(!me.inClutter) {
 	    	# Either no clutter behind or is not an air target so ground/sea radar needs to be able to see it.
 	        me.dopplerCanDetect = 1;
-	    } elsif (me.getTargetSpeedRelativeToClutter(contact) > me.doppler_speed_kt) {
-	        me.dopplerCanDetect = 1;
+	    } else {
+	    	contact.closureInclutter = me.getTargetSpeedRelativeToClutter(contact);
+	    	if (contact.closureInclutter > me.doppler_speed_kt) {
+	        	me.dopplerCanDetect = 1;
+	        }
 	    }
 	    contact.setHiddenFromDoppler(!me.dopplerCanDetect);
 	},
