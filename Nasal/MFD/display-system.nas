@@ -5739,4 +5739,3 @@ main(nil);# disable this line if running as module
 #      HSD: OSB8 FRZ freeze
 #      FCR: OVRD
 #      TGP and HUD-FLIR not work on mac
-#      S-J page where pickle jettisons selected stores.

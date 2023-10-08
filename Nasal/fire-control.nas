@@ -790,7 +790,7 @@ var FireControl = {
 
 	jettisonSJContent: func {
 		# jettison S-J pylon
-		if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1") < 20 or !(getprop("f16/avionics/gnd-jett") or !getprop("gear/gear[0]/wow"))) {
+		if (getprop("controls/armament/master-arm-switch") != pylons.ARM_ARM or getprop("fdm/jsbsim/elec/bus/emergency-dc-1") < 20 or !(getprop("f16/avionics/gnd-jett") or !getprop("gear/gear[0]/wow"))) {
 			me.clearStationForSJ();
 			return nil;
 		}
