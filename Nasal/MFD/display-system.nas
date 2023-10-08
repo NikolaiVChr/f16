@@ -2990,8 +2990,6 @@ var DisplaySystem = {
                 me.selectPylon(4);
             } elsif (controlName == "OSB16") {
                 me.device.swap();
-            } elsif (controlName == "OSB20") {
-                switchTGP();
             }
 		},
 		update: func (noti = nil) {
