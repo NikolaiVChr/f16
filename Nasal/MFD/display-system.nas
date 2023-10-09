@@ -4668,10 +4668,12 @@ var DisplaySystem = {
             # head movement, I have not done that, would look stupid.
             # And not making a new entire hud just for this page.
             me.flirPicHD.setScale(displayWidth/radar_system.flirImageReso, displayHeight/radar_system.flirImageReso);
-            if (getprop("f16/stores/nav-mounted")!=1 or getprop("f16/avionics/power-left-hdpt")!=1) {
-				me.mainMode = -1;
-			} else {
-				me.mainMode = 0;
+            if (flirMode == -2) {
+            	if (getprop("f16/stores/nav-mounted")!=1 or getprop("f16/avionics/power-left-hdpt")!=1) {
+					flirMode = -1;
+				} else {
+					flirMode = 0;
+				}
 			}
             me.bhot = 1;
 		},
@@ -4694,21 +4696,21 @@ var DisplaySystem = {
 			if (controlName == "OSB6") {
                 me.bhot = !me.bhot;
             } elsif (controlName == "OSB1") {
-                me.mainMode = 1;
+                flirMode = 1;
             } elsif (controlName == "OSB3") {
-                me.mainMode = 0;
+                flirMode = 0;
             } elsif (controlName == "OSB15") {
-                me.mainMode = -1;
+                flirMode = -1;
             } elsif (controlName == "OSB16") {
                 me.device.swap();
             }
 		},
 		update: func (noti = nil) {
 			if (getprop("f16/stores/nav-mounted")!=1 or getprop("f16/avionics/power-left-hdpt")!=1) {
-				me.mainMode = -1;
+				flirMode = -1;
 			}
 			me.device.controls["OSB6"].setControlText(me.bhot?"BHOT":"WHOT",1,0);
-			if (me.mainMode == 1) {
+			if (flirMode == 1) {
 				me.caraOn = getprop("f16/avionics/cara-on");
 				if (me.caraOn) {
 					me.cara   = getprop("position/altitude-agl-ft");
@@ -4731,7 +4733,7 @@ var DisplaySystem = {
 				radar_system.FlirSensor.scan(noti, me.bhot);
 				me.flirPicHD.dirtyPixels();
 	            me.flirPicHD.show();
-            } elsif (me.mainMode == 0) {
+            } elsif (flirMode == 0) {
             	me.device.controls["OSB13"].setControlText("",1,1);
 				me.device.controls["OSB4"].setControlText("",1,1);
             	me.device.controls["OSB1"].setControlText("OPER",1,0);
@@ -5902,6 +5904,8 @@ var hsdShowFCR = 1;
 var fcrFrz = 0;
 var fcrBand = 0;
 var fcrChan = 2;
+
+var flirMode = -2;
 
 var leftMFD = nil;
 var rightMFD = nil;
