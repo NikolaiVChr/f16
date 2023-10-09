@@ -73,6 +73,7 @@ var PUSHBUTTON   = 0;
 var ROCKERSWITCH = 1;
 
 var CursorHSD = 0;
+var FACH3 = 0;
 
 var DisplayDevice = {
 	new: func (name, resolution, uvMap, node, texture) {
@@ -1652,6 +1653,8 @@ var DisplaySystem = {
                 if (steerpoints.lines[2] != nil) steerpoints.linesShow[2] = !steerpoints.linesShow[2];
             } elsif (controlName == "OSB9") {
                 if (steerpoints.lines[3] != nil) steerpoints.linesShow[3] = !steerpoints.linesShow[3];
+            } elsif (controlName == "OSB10") {
+            	hsdShowRINGS = !hsdShowRINGS;
             } elsif (controlName == "OSB4") {
                 hsdShowDLINK = !hsdShowDLINK;
             } elsif (controlName == "OSB1") {
@@ -1665,6 +1668,7 @@ var DisplaySystem = {
             me.device.controls["OSB7"].setControlText((steerpoints.lines[1] != nil)?"LINES2":"",1,steerpoints.linesShow[1]);
             me.device.controls["OSB8"].setControlText((steerpoints.lines[2] != nil)?"LINES3":"",1,steerpoints.linesShow[2]);
             me.device.controls["OSB9"].setControlText((steerpoints.lines[3] != nil)?"LINES4":"",1,steerpoints.linesShow[3]);
+            me.device.controls["OSB10"].setControlText("RINGS",1,hsdShowRINGS);
 		},
 		exit: func {
 			printDebug("Exit ",me.name~" on ",me.device.name);
@@ -1995,6 +1999,8 @@ var DisplaySystem = {
                     else
                         me.set_HSD_range_dep(8);
                 }
+            } elsif (controlName == "OSB10") {
+                cursor_pos_hsd = [0, me.concentricCenter[1]-displayHeight];
             } elsif (controlName == "OSB12") {
                 me.set_HSD_centered(!me.get_HSD_centered());
             } elsif (controlName == "OSB13") {
@@ -2041,6 +2047,9 @@ var DisplaySystem = {
                 me.cursorDev   = -math.atan2(-me.hsdCursorFromOwnship[0], -me.hsdCursorFromOwnship[1])*R2D;
                 me.cursorDist  = NM2M*(me.range*me.pixelsCursor/me.pixelsFromOwnshipToTop);
                 #printf("HSD Cursor  dist %.2f nm  dev %.1f deg",me.cursorDist*M2NM,me.cursorDev);
+                me.device.controls["OSB10"].setControlText("C\nZ");
+            } else {
+            	me.device.controls["OSB10"].setControlText("");
             }
            	me.hsdCursorclick = me.IMSOI and cursor_click == me.index;
             me.cursorHSD.setVisible(me.IMSOI);
@@ -2338,7 +2347,7 @@ var DisplaySystem = {
                     me.cit = me.threat_t[l];
 					me.mkNumber = 300+l;
                     me.cnu = steerpoints.getNumber(me.mkNumber);
-                    if (me.cnu == nil) {
+                    if (me.cnu == nil or !hsdShowRINGS) {
                         me.ci.hide();
                         me.cit.hide();
                         #printDebug("Ignoring ", 300+l);
@@ -3809,6 +3818,7 @@ var DisplaySystem = {
             me.exp.setVisible(exp and !radar_system.apg68Radar.currentMode.EXPfixedAim);
 #            me.acm.setVisible(1);
             me.horiz.setRotation(-radar_system.self.getRoll()*D2R);
+            if (FACH3) me.horiz.setTranslation(0, -displayHeightHalf*math.clamp(radar_system.self.getPitch()/60,-1,1));
 
             if (radar_system.apg68Radar.currentMode.longName == radar_system.vsMode.longName) {
                 me.distl.setScale(-1,1);
@@ -5664,6 +5674,8 @@ cursorZero();
 
 var hsdShowNAV1 = 1;
 var hsdShowDLINK = 1;
+var hsdShowRINGS = 1;
+
 var fcrFrz = 0;
 var fcrBand = 0;
 var fcrChan = 2;
@@ -5914,3 +5926,6 @@ main(nil);# disable this line if running as module
 #      HSD: OSB8 FRZ freeze
 #      FCR: OVRD
 #      TGP and HUD-FLIR not work on mac
+#      More FLIR info at 1-249 (265) of dash-34
+#      More TFR 1-333 (349) + 1-242 (258)
+#      Aircrfat Ref symbol and steering bars: dash-34 (new) 1-77
