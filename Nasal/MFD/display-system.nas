@@ -1645,9 +1645,11 @@ var DisplaySystem = {
 		},
 		controlAction: func (controlName) {
 			printDebug(me.name,": ",controlName," activated on ",me.device.name);
-			if (controlName == "OSB11") {
-				hsdShowPRE = !hsdShowPRE;
-			} elsif (controlName == "OSB6") {
+			if (controlName == "OSB1") {
+                hsdShowNAV1 = !hsdShowNAV1;
+            } elsif (controlName == "OSB4") {
+                hsdShowDLINK = !hsdShowDLINK;
+            } elsif (controlName == "OSB6") {
                 if (steerpoints.lines[0] != nil) steerpoints.linesShow[0] = !steerpoints.linesShow[0];
             } elsif (controlName == "OSB7") {
                 if (steerpoints.lines[1] != nil) steerpoints.linesShow[1] = !steerpoints.linesShow[1];
@@ -1657,14 +1659,15 @@ var DisplaySystem = {
                 if (steerpoints.lines[3] != nil) steerpoints.linesShow[3] = !steerpoints.linesShow[3];
             } elsif (controlName == "OSB10") {
             	hsdShowRINGS = !hsdShowRINGS;
-            } elsif (controlName == "OSB4") {
-                hsdShowDLINK = !hsdShowDLINK;
-            } elsif (controlName == "OSB1") {
-                hsdShowNAV1 = !hsdShowNAV1;
-            }
+            } elsif (controlName == "OSB11") {
+            	hsdShowFCR = !hsdShowFCR;
+            } elsif (controlName == "OSB12") {
+				hsdShowPRE = !hsdShowPRE;
+			}
 		},
 		update: func (noti = nil) {
-			me.device.controls["OSB11"].setControlText("PRE",1,hsdShowPRE);
+			me.device.controls["OSB11"].setControlText("FCR",1,hsdShowFCR);
+			me.device.controls["OSB12"].setControlText("PRE",1,hsdShowPRE);
 			me.device.controls["OSB1"].setControlText("NAV1",1,hsdShowNAV1);
 			me.device.controls["OSB4"].setControlText("DLNK",1,hsdShowDLINK);
 			me.device.controls["OSB6"].setControlText((steerpoints.lines[0] != nil)?"LINES1":"",1,steerpoints.linesShow[0]);
@@ -2168,7 +2171,7 @@ var DisplaySystem = {
             me.az = radar_system.apg68Radar.currentMode.az;
             if (noti.FrameCount == 1) {
                 me.cone.removeAllChildren();
-                if (radar_system.apg68Radar.enabled) {
+                if (radar_system.apg68Radar.enabled and hsdShowFCR) {
                     if (radar_system.apg68Radar.showAZinHSD()) {
                         me.radarX1 =  me.rdrRangePixels*math.cos((90-me.az-radar_system.apg68Radar.getDeviation())*D2R);
                         me.radarY1 = -me.rdrRangePixels*math.sin((90-me.az-radar_system.apg68Radar.getDeviation())*D2R);
@@ -2405,7 +2408,7 @@ var DisplaySystem = {
                     }
                 }
             }
-            if (cursorFCRgps != nil and me.device.soi != 1) {
+            if (cursorFCRgps != nil and me.device.soi != 1 and hsdShowFCR) {
             	me.bearing = cursorFCRgps[0];
                 if (me.get_HSD_centered()) {
                     me.rangePixels = me.mediumRadius*(cursorFCRgps[1]/me.get_HSD_range_cen());
@@ -2446,7 +2449,7 @@ var DisplaySystem = {
                         contact.rando = me.rando;
                     }
                 }
-                if (radar_system.apg68Radar.enabled) {
+                if (radar_system.apg68Radar.enabled and hsdShowFCR) {
                     foreach(contact; radar_system.apg68Radar.getActiveBleps()) {
                         if (contact["rando"] == me.rando) continue;
 
@@ -5681,6 +5684,7 @@ var hsdShowNAV1 = 1;
 var hsdShowDLINK = 1;
 var hsdShowRINGS = 1;
 var hsdShowPRE = 1;
+var hsdShowFCR = 1;
 
 var fcrFrz = 0;
 var fcrBand = 0;
