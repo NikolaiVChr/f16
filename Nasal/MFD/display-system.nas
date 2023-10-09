@@ -1670,10 +1670,10 @@ var DisplaySystem = {
 			me.device.controls["OSB12"].setControlText("PRE",1,hsdShowPRE);
 			me.device.controls["OSB1"].setControlText("NAV1",1,hsdShowNAV1);
 			me.device.controls["OSB4"].setControlText("DLNK",1,hsdShowDLINK);
-			me.device.controls["OSB6"].setControlText((steerpoints.lines[0] != nil)?"LINES1":"",1,steerpoints.linesShow[0]);
-            me.device.controls["OSB7"].setControlText((steerpoints.lines[1] != nil)?"LINES2":"",1,steerpoints.linesShow[1]);
-            me.device.controls["OSB8"].setControlText((steerpoints.lines[2] != nil)?"LINES3":"",1,steerpoints.linesShow[2]);
-            me.device.controls["OSB9"].setControlText((steerpoints.lines[3] != nil)?"LINES4":"",1,steerpoints.linesShow[3]);
+			me.device.controls["OSB6"].setControlText((steerpoints.lines[0] != nil)?"LINE1":"",1,steerpoints.linesShow[0]);
+            me.device.controls["OSB7"].setControlText((steerpoints.lines[1] != nil)?"LINE2":"",1,steerpoints.linesShow[1]);
+            me.device.controls["OSB8"].setControlText((steerpoints.lines[2] != nil)?"LINE3":"",1,steerpoints.linesShow[2]);
+            me.device.controls["OSB9"].setControlText((steerpoints.lines[3] != nil)?"LINE4":"",1,steerpoints.linesShow[3]);
             me.device.controls["OSB10"].setControlText("RINGS",1,hsdShowRINGS);
 		},
 		exit: func {
