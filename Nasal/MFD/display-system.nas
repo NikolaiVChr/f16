@@ -2065,6 +2065,39 @@ var DisplaySystem = {
                     cursor_pos_hsd[0] += me.slew_x*175;
                     cursor_pos_hsd[1] -= me.slew_y*175;
                     cursor_pos_hsd[0] = math.clamp(cursor_pos_hsd[0], -displayWidthHalf, displayWidthHalf);
+
+                    if (cursor_pos_hsd[1] <= -displayHeight) {
+                    	me.resetC = 0;
+                    	if (me.get_HSD_centered()) {
+                    		me.rng = me.get_HSD_range_cen()*2;
+                    		if (me.rng > 160) me.rng = 160;
+                    		else me.resetC = 1;
+                    		me.set_HSD_range_cen(me.rng);
+                    	} else {
+                    		me.rng = me.get_HSD_range_dep()*2;
+                    		if (me.rng > 256) me.rng = 256;
+                    		else me.resetC = 1;
+                    		me.set_HSD_range_dep(me.rng);
+                    	}
+                    	me.set_HSD_coupled(0);
+                    	if (me.resetC) cursor_pos_hsd[1] = me.concentricCenter[1]-displayHeight;
+                    }
+                    if (cursor_pos_hsd[1] >= 0) {
+                    	me.resetC = 0;
+                    	if (me.get_HSD_centered()) {
+                    		me.rng = me.get_HSD_range_cen()*0.5;
+                    		if (me.rng < 5) me.rng = 5;
+                    		else me.resetC = 1;
+                    		me.set_HSD_range_cen(me.rng);
+                    	} else {
+                    		me.rng = me.get_HSD_range_dep()*0.5;
+                    		if (me.rng < 8) me.rng = 8;
+                    		else me.resetC = 1;
+                    		me.set_HSD_range_dep(me.rng);
+                    	}
+                    	me.set_HSD_coupled(0);
+                    	if (me.resetC) cursor_pos_hsd[1] = me.concentricCenter[1]-displayHeight;
+                    }
                     cursor_pos_hsd[1] = math.clamp(cursor_pos_hsd[1], -displayHeight, 0);
                     cursor_click = (slew_c and !me.slew_c_last)?me.index:-1;
                     cursor_lock = me.index;
@@ -6054,7 +6087,7 @@ main(nil);# disable this line if running as module
 #      resolutions
 #      crash exit GM
 #      make nav reference for ground target?
-#      HSDCNTL/FCRCNTL should be an overlay
+#      HSDCNTL/FCRCNTL/MENU/FCRMENU should be an overlay
 #      HSD: cursor. MLU1 page 32.
 #      HSD: MSG page with max 9 lines of 15 chars. MLU1 page 35.
 #      HSD: OSB8 FRZ freeze
@@ -6063,6 +6096,5 @@ main(nil);# disable this line if running as module
 #      More FLIR info at 1-249 (265) of dash-34
 #      More TFR 1-333 (349) + 1-242 (258)
 #      Aircraft Ref. Symbol and steering bars: dash-34 (new) 1-77
-#      HSD Cursor can bump ranges (and make DCPL)
 #      To provide feedback that an OSB has actually been depressed,
 #        the display surface near a specific OSB flashes momentarily when the OSB is depressed.
