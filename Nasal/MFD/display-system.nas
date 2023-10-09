@@ -4668,7 +4668,11 @@ var DisplaySystem = {
             # head movement, I have not done that, would look stupid.
             # And not making a new entire hud just for this page.
             me.flirPicHD.setScale(displayWidth/radar_system.flirImageReso, displayHeight/radar_system.flirImageReso);
-            me.mainMode = -1;
+            if (getprop("f16/stores/nav-mounted")!=1 or getprop("f16/avionics/power-left-hdpt")!=1) {
+				me.mainmode = -1;
+			} else {
+				me.mainmode = 0;
+			}
             me.bhot = 1;
 		},
 		enter: func {
@@ -4700,6 +4704,9 @@ var DisplaySystem = {
             }
 		},
 		update: func (noti = nil) {
+			if (getprop("f16/stores/nav-mounted")!=1 or getprop("f16/avionics/power-left-hdpt")!=1) {
+				me.mainmode = -1;
+			}
 			me.device.controls["OSB6"].setControlText(me.bhot?"BHOT":"WHOT",1,0);
 			if (me.mainMode == 1) {
 				me.caraOn = getprop("f16/avionics/cara-on");
