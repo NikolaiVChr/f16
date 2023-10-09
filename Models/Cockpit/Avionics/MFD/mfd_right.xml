@@ -151,467 +151,447 @@
 
     
     <animation>
-        <type>knob</type>
+        <type>pick</type>
         <object-name>MFDButtonL1</object-name>
 
         <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
             <binding>
                 <command>property-assign</command>
                 <property>controls/MFD[1]/button-pressed</property>
                 <value>1</value>
             </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/MFD[1]/button-pressed</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
-
-        <release>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/MFD[1]/button-pressed</property>
-                <step>0</step>
-                <min>0</min>
-                <max>0</max>
-            </binding>
-        </release>
     </animation>
 
     <animation>
-        <type>knob</type>
+        <type>pick</type>
         <object-name>MFDButtonT1</object-name>
 
         <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
             <binding>
                 <command>property-assign</command>
                 <property>controls/MFD[1]/button-pressed</property>
                 <value>11</value>
             </binding>
+        <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/MFD[1]/button-pressed</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
-
-        <release>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/MFD[1]/button-pressed</property>
-                <step>0</step>
-                <min>0</min>
-                <max>0</max>
-            </binding>
-        </release>
     </animation>
 
     <animation>
-        <type>knob</type>
+        <type>pick</type>
         <object-name>MFDButtonT2</object-name>
 
         <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
             <binding>
                 <command>property-assign</command>
                 <property>controls/MFD[1]/button-pressed</property>
                 <value>12</value>
             </binding>
+        <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/MFD[1]/button-pressed</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
-
-        <release>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/MFD[1]/button-pressed</property>
-                <step>0</step>
-                <min>0</min>
-                <max>0</max>
-            </binding>
-        </release>
     </animation>
 
     <animation>
-        <type>knob</type>
+        <type>pick</type>
         <object-name>MFDButtonT3</object-name>
 
         <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
             <binding>
                 <command>property-assign</command>
                 <property>controls/MFD[1]/button-pressed</property>
                 <value>13</value>
             </binding>
+        <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/MFD[1]/button-pressed</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
-
-        <release>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/MFD[1]/button-pressed</property>
-                <step>0</step>
-                <min>0</min>
-                <max>0</max>
-            </binding>
-        </release>
     </animation>
 
     <animation>
-        <type>knob</type>
+        <type>pick</type>
         <object-name>MFDButtonT4</object-name>
 
         <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
             <binding>
                 <command>property-assign</command>
                 <property>controls/MFD[1]/button-pressed</property>
                 <value>14</value>
             </binding>
+        <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/MFD[1]/button-pressed</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
-
-        <release>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/MFD[1]/button-pressed</property>
-                <step>0</step>
-                <min>0</min>
-                <max>0</max>
-            </binding>
-        </release>
     </animation>
 
     <animation>
-        <type>knob</type>
+        <type>pick</type>
         <object-name>MFDButtonT5</object-name>
 
         <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
             <binding>
                 <command>property-assign</command>
                 <property>controls/MFD[1]/button-pressed</property>
                 <value>15</value>
             </binding>
+        <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/MFD[1]/button-pressed</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
-
-        <release>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/MFD[1]/button-pressed</property>
-                <step>0</step>
-                <min>0</min>
-                <max>0</max>
-            </binding>
-        </release>
     </animation>
 
     <animation>
-        <type>knob</type>
+        <type>pick</type>
         <object-name>MFDButtonB1</object-name>
 
         <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
             <binding>
                 <command>property-assign</command>
                 <property>controls/MFD[1]/button-pressed</property>
                 <value>16</value>
             </binding>
+        <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/MFD[1]/button-pressed</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
-
-        <release>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/MFD[1]/button-pressed</property>
-                <step>0</step>
-                <min>0</min>
-                <max>0</max>
-            </binding>
-        </release>
     </animation>
 
     <animation>
-        <type>knob</type>
+        <type>pick</type>
         <object-name>MFDButtonB2</object-name>
 
         <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
             <binding>
                 <command>property-assign</command>
                 <property>controls/MFD[1]/button-pressed</property>
                 <value>17</value>
             </binding>
+        <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/MFD[1]/button-pressed</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
-
-        <release>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/MFD[1]/button-pressed</property>
-                <step>0</step>
-                <min>0</min>
-                <max>0</max>
-            </binding>
-        </release>
     </animation>
 
     <animation>
-        <type>knob</type>
+        <type>pick</type>
         <object-name>MFDButtonB3</object-name>
 
         <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
             <binding>
                 <command>property-assign</command>
                 <property>controls/MFD[1]/button-pressed</property>
                 <value>18</value>
             </binding>
+        <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/MFD[1]/button-pressed</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
-
-        <release>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/MFD[1]/button-pressed</property>
-                <step>0</step>
-                <min>0</min>
-                <max>0</max>
-            </binding>
-        </release>
     </animation>
 
         <animation>
-        <type>knob</type>
+        <type>pick</type>
         <object-name>MFDButtonB4</object-name>
 
         <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
             <binding>
                 <command>property-assign</command>
                 <property>controls/MFD[1]/button-pressed</property>
                 <value>19</value>
             </binding>
+        <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/MFD[1]/button-pressed</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
-
-        <release>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/MFD[1]/button-pressed</property>
-                <step>0</step>
-                <min>0</min>
-                <max>0</max>
-            </binding>
-        </release>
     </animation>
 
     <animation>
-        <type>knob</type>
+        <type>pick</type>
         <object-name>MFDButtonB5</object-name>
 
         <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
             <binding>
                 <command>property-assign</command>
                 <property>controls/MFD[1]/button-pressed</property>
                 <value>20</value>
             </binding>
+        <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/MFD[1]/button-pressed</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
-
-        <release>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/MFD[1]/button-pressed</property>
-                <step>0</step>
-                <min>0</min>
-                <max>0</max>
-            </binding>
-        </release>
     </animation>
 
     
 
     <animation>
-        <type>knob</type>
+        <type>pick</type>
         <object-name>MFDButtonL2</object-name>
         <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
             <binding>
                 <command>property-assign</command>
                 <property>controls/MFD[1]/button-pressed</property>
                 <value>2</value>
             </binding>
+        <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/MFD[1]/button-pressed</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
-
-        <release>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/MFD[1]/button-pressed</property>
-                <step>0</step>
-                <min>0</min>
-                <max>0</max>
-            </binding>
-        </release>
     </animation>
 
 
     <animation>
-        <type>knob</type>
+        <type>pick</type>
         <object-name>MFDButtonL3</object-name>
 
         <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
             <binding>
                 <command>property-assign</command>
                 <property>controls/MFD[1]/button-pressed</property>
                 <value>3</value>
             </binding>
+        <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/MFD[1]/button-pressed</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
-
-        <release>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/MFD[1]/button-pressed</property>
-                <step>0</step>
-                <min>0</min>
-                <max>0</max>
-            </binding>
-        </release>
     </animation>
 
     <animation>
-        <type>knob</type>
+        <type>pick</type>
         <object-name>MFDButtonL4</object-name>
 
         <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
             <binding>
                 <command>property-assign</command>
                 <property>controls/MFD[1]/button-pressed</property>
                 <value>4</value>
             </binding>
+        <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/MFD[1]/button-pressed</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
-
-        <release>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/MFD[1]/button-pressed</property>
-                <step>0</step>
-                <min>0</min>
-                <max>0</max>
-            </binding>
-        </release>
     </animation>
 
     <animation>
-        <type>knob</type>
+        <type>pick</type>
         <object-name>MFDButtonL5</object-name>
 
         <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
             <binding>
                 <command>property-assign</command>
                 <property>controls/MFD[1]/button-pressed</property>
                 <value>5</value>
             </binding>
+        <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/MFD[1]/button-pressed</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
-
-        <release>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/MFD[1]/button-pressed</property>
-                <step>0</step>
-                <min>0</min>
-                <max>0</max>
-            </binding>
-        </release>
     </animation>
     <!-- right buttons -->
     
     <animation>
-        <type>knob</type>
+        <type>pick</type>
         <object-name>MFDButtonR1</object-name>
 
         <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
             <binding>
                 <command>property-assign</command>
                 <property>controls/MFD[1]/button-pressed</property>
                 <value>6</value>
             </binding>
+        <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/MFD[1]/button-pressed</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
-
-        <release>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/MFD[1]/button-pressed</property>
-                <step>0</step>
-                <min>0</min>
-                <max>0</max>
-            </binding>
-        </release>
     </animation>
 
     
 
     <animation>
-        <type>knob</type>
+        <type>pick</type>
         <object-name>MFDButtonR2</object-name>
         <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
             <binding>
                 <command>property-assign</command>
                 <property>controls/MFD[1]/button-pressed</property>
                 <value>7</value>
             </binding>
+        <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/MFD[1]/button-pressed</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
-
-        <release>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/MFD[1]/button-pressed</property>
-                <step>0</step>
-                <min>0</min>
-                <max>0</max>
-            </binding>
-        </release>
     </animation>
 
     <animation>
-        <type>knob</type>
+        <type>pick</type>
         <object-name>MFDButtonR3</object-name>
 
         <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
             <binding>
                 <command>property-assign</command>
                 <property>controls/MFD[1]/button-pressed</property>
                 <value>8</value>
             </binding>
+        <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/MFD[1]/button-pressed</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
-
-        <release>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/MFD[1]/button-pressed</property>
-                <step>0</step>
-                <min>0</min>
-                <max>0</max>
-            </binding>
-        </release>
     </animation>
     
     <animation>
-        <type>knob</type>
+        <type>pick</type>
         <object-name>MFDButtonR4</object-name>
 
         <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
             <binding>
                 <command>property-assign</command>
                 <property>controls/MFD[1]/button-pressed</property>
                 <value>9</value>
             </binding>
+        <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/MFD[1]/button-pressed</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
-
-        <release>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/MFD[1]/button-pressed</property>
-                <step>0</step>
-                <min>0</min>
-                <max>0</max>
-            </binding>
-        </release>
     </animation>
 
     <animation>
-        <type>knob</type>
+        <type>pick</type>
         <object-name>MFDButtonR5</object-name>
 
         <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
             <binding>
                 <command>property-assign</command>
                 <property>controls/MFD[1]/button-pressed</property>
                 <value>10</value>
             </binding>
+        <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/MFD[1]/button-pressed</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
-
-        <release>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/MFD[1]/button-pressed</property>
-                <step>0</step>
-                <min>0</min>
-                <max>0</max>
-            </binding>
-        </release>
     </animation>
 
 

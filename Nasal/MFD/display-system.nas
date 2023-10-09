@@ -130,7 +130,15 @@ var DisplayDevice = {
 			
 			if (me.tempActionValue > 0) {
 				#printDebug(me.name,": ",prefix, " action :", me.tempActionValue);
+				me.cntlFeedback.setTranslation(me.controlPositions[prefix][me.tempActionValue-1]);
+				me.cntlFeedback.setVisible(FACH3);
+				me.cntlFeedback.update();
+				#print("fb ON  ",me.controlPositions[prefix][me.tempActionValue-1][0],",",me.controlPositions[prefix][me.tempActionValue-1][1]);
 				me.controlAction(type, prefix~(me.tempActionValue), me.tempActionValue);
+			} else {
+				me.cntlFeedback.hide();
+				me.cntlFeedback.update();
+				#print("fb OFF  ");
 			}
 		};
 		me.controlPositions[prefix] = positions;
@@ -177,7 +185,7 @@ var DisplayDevice = {
 			me.fill.setScale(me.lettersCount/4,me.linebreak);
 			me.outline.setScale(1.05*me.lettersCount/4,me.linebreak);
 		};
-		append(me.listeners, setlistener(property, me[prefix]));
+		append(me.listeners, setlistener(property, me[prefix],0,0));
 	},
 
 	resetControls: func {
@@ -258,6 +266,20 @@ var DisplayDevice = {
 
     pullUpCue: func (vis) {
     	me.pullup_cue.setVisible(vis and getprop("f16/avionics/power-mfd-bit")==3);
+    },
+
+    addControlFeedback: func {
+    	me.feedbackRadius = 35;
+    	me.cntlFeedback = me.controlGrp.createChild("path")
+	            .moveTo(-me.feedbackRadius,0)
+	            .arcSmallCW(me.feedbackRadius,me.feedbackRadius, 0,  me.feedbackRadius*2, 0)
+	            .arcSmallCW(me.feedbackRadius,me.feedbackRadius, 0, -me.feedbackRadius*2, 0)
+	            .close()
+	            .setStrokeLineWidth(1)
+	            .set("z-index",7)
+	            .setColor(colorDot2[0],colorDot2[1],colorDot2[2],0.15)
+	            .setColorFill(colorDot2[0],colorDot2[1],colorDot2[2],0.3)
+	            .hide();
     },
 
 	addSOILines: func () {
@@ -5770,7 +5792,7 @@ var cursorFCRgps = nil;
 var cursorFCRair = 1;
 
 
-setlistener("controls/displays/cursor-click", func {if (getprop("controls/displays/cursor-click")) {slew_c = 1;}});
+setlistener("controls/displays/cursor-click", func {if (getprop("controls/displays/cursor-click")) {slew_c = 1;}},0,0);
 
 var cursorZero = func {
     cursor_pos = [0,-241];
@@ -5972,6 +5994,8 @@ var main = func (module) {
 		[5.65*width/7, height],
 	];
 
+
+
 	leftMFD.setSwapDevice(rightMFD);
 	rightMFD.setSwapDevice(leftMFD);
 
@@ -5983,6 +6007,9 @@ var main = func (module) {
 
 	mfdSystem1.initDevice(0, osbPositions, 20);
 	mfdSystem2.initDevice(1, osbPositions, 20);
+
+	leftMFD.addControlFeedback();
+	rightMFD.addControlFeedback();
 
 	mfdSystem1.initPages();
 	mfdSystem2.initPages();
