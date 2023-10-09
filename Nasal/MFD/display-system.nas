@@ -1430,7 +1430,7 @@ var DisplaySystem = {
 		name: "PageFCRMenu",
 		isNew: 1,
 		supportSOI: 1,
-		soiPrio: 10,
+		soiPrio: 9,
 		needGroup: 0,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageFCRMenu]};
@@ -1580,7 +1580,7 @@ var DisplaySystem = {
 		name: "PageFCRCNTL",
 		isNew: 1,
 		supportSOI: 1,
-		soiPrio: 10,
+		soiPrio: 9,
 		needGroup: 0,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageFCRCNTL]};
@@ -1658,7 +1658,8 @@ var DisplaySystem = {
 	PageHSDCNTL: {
 		name: "PageHSDCNTL",
 		isNew: 1,
-		supportSOI: 0,
+		supportSOI: CursorHSD,
+		soiPrio: 7,
 		needGroup: 0,
 		new: func {
 			me.instance = {parents:[DisplaySystem.PageHSDCNTL]};
