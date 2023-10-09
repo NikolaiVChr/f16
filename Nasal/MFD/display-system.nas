@@ -1645,7 +1645,9 @@ var DisplaySystem = {
 		},
 		controlAction: func (controlName) {
 			printDebug(me.name,": ",controlName," activated on ",me.device.name);
-			if (controlName == "OSB6") {
+			if (controlName == "OSB11") {
+				hsdShowPRE = !hsdShowPRE;
+			} elsif (controlName == "OSB6") {
                 if (steerpoints.lines[0] != nil) steerpoints.linesShow[0] = !steerpoints.linesShow[0];
             } elsif (controlName == "OSB7") {
                 if (steerpoints.lines[1] != nil) steerpoints.linesShow[1] = !steerpoints.linesShow[1];
@@ -1662,6 +1664,7 @@ var DisplaySystem = {
             }
 		},
 		update: func (noti = nil) {
+			me.device.controls["OSB11"].setControlText("PRE",1,hsdShowPRE);
 			me.device.controls["OSB1"].setControlText("NAV1",1,hsdShowNAV1);
 			me.device.controls["OSB4"].setControlText("DLNK",1,hsdShowDLINK);
 			me.device.controls["OSB6"].setControlText((steerpoints.lines[0] != nil)?"LINES1":"",1,steerpoints.linesShow[0]);
@@ -2118,6 +2121,8 @@ var DisplaySystem = {
                 me.concentricCenter = [displayWidthHalf,0.75*displayHeight];
             }
 
+            me.conc.setVisible(hsdShowRINGS);
+
             me.bullPt = steerpoints.getNumber(steerpoints.index_of_bullseye);
             me.bullOn = me.bullPt != nil;
             if (me.bullOn) {
@@ -2347,7 +2352,7 @@ var DisplaySystem = {
                     me.cit = me.threat_t[l];
 					me.mkNumber = 300+l;
                     me.cnu = steerpoints.getNumber(me.mkNumber);
-                    if (me.cnu == nil or !hsdShowRINGS) {
+                    if (me.cnu == nil or !hsdShowPRE) {
                         me.ci.hide();
                         me.cit.hide();
                         #printDebug("Ignoring ", 300+l);
@@ -5675,6 +5680,7 @@ cursorZero();
 var hsdShowNAV1 = 1;
 var hsdShowDLINK = 1;
 var hsdShowRINGS = 1;
+var hsdShowPRE = 1;
 
 var fcrFrz = 0;
 var fcrBand = 0;
