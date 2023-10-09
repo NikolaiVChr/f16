@@ -4452,7 +4452,7 @@ var DisplaySystem = {
             me.sizeBleps = size(me.bleps);
             if (contact["blue"] != 1 and me.ii < me.maxT and ((me.sizeBleps and contact.hadTrackInfo()) or contact["blue"] == 2) and me.iffState == 0 and radar_system.apg68Radar.currentMode.longName != radar_system.vsMode.longName) {
                 # Paint bleps with tracks
-                if (contact["blue"] != 2) me.bleppy = me.bleps[me.sizeBleps-1];
+                if (contact["blue"] != 2) me.bleppy = me.bleps[-1];
                 if (contact["blue"] == 2 or (me.bleppy.hasTrackInfo() and me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.timeToKeepBleps)) {
                     me.color = contact["blue"] == 2?colorCircle1:colorCircle2;
                     if (contact["blue"] == 2) {
@@ -4519,7 +4519,7 @@ var DisplaySystem = {
                 }
             } elsif (me.iffState != 0 and contact["blue"] != 1 and contact.isVisible() and me.iiii < me.maxT and me.sizeBleps and radar_system.apg68Radar.currentMode.longName != radar_system.vsMode.longName) {
                 # Paint IFF symbols
-                me.bleppy = me.bleps[me.sizeBleps-1];
+                me.bleppy = me.bleps[-1];
                 if (me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.timeToKeepBleps) {
                     me.echoPos = me.calcPos(me.wdt, geo.normdeg180(me.bleppy.getAZDeviation()), me.distPixels);
                     me.echoPos = me.calcEXPPos(me.echoPos);
