@@ -4668,6 +4668,8 @@ var DisplaySystem = {
             # head movement, I have not done that, would look stupid.
             # And not making a new entire hud just for this page.
             me.flirPicHD.setScale(displayWidth/radar_system.flirImageReso, displayHeight/radar_system.flirImageReso);
+            me.mainMode = -1;
+            me.bhot = 1;
 		},
 		enter: func {
 			printDebug("Enter ",me.name~" on ",me.device.name);
@@ -4677,18 +4679,68 @@ var DisplaySystem = {
 			}
 			me.device.resetControls();
 			me.device.controls["OSB5"].setControlText("FLIR",0);
+			me.device.controls["OSB10"].setControlText("BGST");
+			me.device.controls["OSB11"].setControlText("FCR");
+			me.vari = getprop("sim/variant-id");
+			me.device.controls["OSB17"].setControlText(me.vari==1 or me.vari==3?"GREEN":"GRAY");
 			me.device.controls["OSB16"].setControlText("SWAP");
 		},
 		controlAction: func (controlName) {
 			printDebug(me.name,": ",controlName," activated on ",me.device.name);
-			if (controlName == "OSB16") {
+			if (controlName == "OSB6") {
+                me.bhot = !me.bhot;
+            } elsif (controlName == "OSB1") {
+                me.mainMode = 1;
+            } elsif (controlName == "OSB3") {
+                me.mainMode = 0;
+            } elsif (controlName == "OSB15") {
+                me.mainMode = -1;
+            } elsif (controlName == "OSB16") {
                 me.device.swap();
             }
 		},
 		update: func (noti = nil) {
-			radar_system.FlirSensor.scan(noti);
-			me.flirPicHD.dirtyPixels();
-            me.flirPicHD.show();
+			me.device.controls["OSB6"].setControlText(me.bhot?"BHOT":"WHOT",1,0);
+			if (me.mainMode == 1) {
+				me.caraOn = getprop("f16/avionics/cara-on");
+				if (me.caraOn) {
+					me.cara   = getprop("position/altitude-agl-ft");
+					me.device.controls["OSB9"].setControlText(int(me.cara)~"",1,1);
+				} else {
+					me.device.controls["OSB9"].setControlText("",1,0);
+				}
+				if (noti.getproper("headingMag") != nil)
+					me.device.controls["OSB13"].setControlText(""~int(noti.getproper("headingMag")),1,1);
+				else
+					me.device.controls["OSB13"].setControlText("",1,1);
+				if (noti.getproper("calibrated") != nil)
+					me.device.controls["OSB4"].setControlText(""~int(noti.getproper("calibrated")),1,1);
+				else
+					me.device.controls["OSB4"].setControlText("",1,1);
+				me.device.controls["OSB1"].setControlText("OPER",1,1);
+				me.device.controls["OSB15"].setControlText("OFF",1,0);
+				me.device.controls["OSB3"].setControlText("STBY",1,0);
+
+				radar_system.FlirSensor.scan(noti, me.bhot);
+				me.flirPicHD.dirtyPixels();
+	            me.flirPicHD.show();
+            } elsif (me.mainMode == 0) {
+            	me.device.controls["OSB13"].setControlText("",1,1);
+				me.device.controls["OSB4"].setControlText("",1,1);
+            	me.device.controls["OSB1"].setControlText("OPER",1,0);
+            	me.device.controls["OSB15"].setControlText("OFF",1,0);
+            	me.device.controls["OSB3"].setControlText("STBY",1,1);
+            	me.device.controls["OSB9"].setControlText("",1,0);
+            	me.flirPicHD.hide();
+        	} else {
+        		me.device.controls["OSB13"].setControlText("",1,1);
+				me.device.controls["OSB4"].setControlText("",1,1);
+        		me.device.controls["OSB1"].setControlText("OPER",1,0);
+        		me.device.controls["OSB15"].setControlText("OFF",1,1);
+        		me.device.controls["OSB3"].setControlText("STBY",1,0);
+        		me.device.controls["OSB9"].setControlText("",1,0);
+        		me.flirPicHD.hide();
+        	}
 		},
 		exit: func {
 			printDebug("Exit ",me.name~" on ",me.device.name);
@@ -4696,6 +4748,7 @@ var DisplaySystem = {
 		},
 		links: {
 			"OSB5": "PageMenu",
+			"OSB11": "PageFCR",
 		},
 		layers: ["BULLSEYE"],
 	},
@@ -6099,3 +6152,4 @@ main(nil);# disable this line if running as module
 #      Aircraft Ref. Symbol and steering bars: dash-34 (new) 1-77
 #      To provide feedback that an OSB has actually been depressed,
 #        the display surface near a specific OSB flashes momentarily when the OSB is depressed.
+#      FLIR: 21x28 7.5 deg down from bore.

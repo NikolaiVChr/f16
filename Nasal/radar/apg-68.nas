@@ -2834,7 +2834,7 @@ var FlirSensor = {
     extrapolate: func (x, x1, x2, y1, y2) {
     	return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
 	},
-    scan: func (hdp) {
+    scan: func (hdp, bhot) {
 		# FLIR
         me.xBore = flirImageReso*0.5;
         me.yBore = flirImageReso*0.5;
@@ -2847,7 +2847,7 @@ var FlirSensor = {
                 me.xDevi = (me.x-me.xBore);
                 #me.xDevi /= me.texelPerDegreeX;
                 for(me.y = me.scanY; me.y < me.scanY+me.scans; me.y += 1) {
-                    me.yDevi = (me.y-me.yBore);
+                    me.yDevi = (me.y-me.yBore)-7.5;
                     #me.yDevi /= me.texelPerDegreeY;
                     me.value = 0;
                     me.start = geo.viewer_position();
@@ -2864,6 +2864,7 @@ var FlirSensor = {
                         #me.value = math.min(1,((math.max(me.distMin-me.distMax, me.distMin-me.start.direct_distance_to(me.terrain))+(me.distMax-me.distMin))/me.distMax));
                         me.value = 1-math.clamp((me.dist_m-me.distMin)/(me.distMax-me.distMin),0,1);
                     }
+                    if (!bhot) me.value = 1 - me.value;
                     me.gain = math.min(1,1+2*me.cont*(1-2*me.value));
                     me.gain = 2.2;
                     if (me.pics[0] != nil) me.pics[0].setPixel(me.x, me.y, [me.color[0],me.color[1],me.color[2],me.brt*math.pow(me.value, me.gain)]);
