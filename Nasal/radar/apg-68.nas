@@ -133,7 +133,7 @@ var AirborneRadar = {
 	designateRandom: func {
 		# Use this method mostly for testing
 		if (size(me.vector_aicontacts_bleps) > 0) {
-			me.designate(me.vector_aicontacts_bleps[size(me.vector_aicontacts_bleps)-1]);
+			me.designate(me.vector_aicontacts_bleps[-1]);
 		}
 	},
 	undesignate: func {

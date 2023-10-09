@@ -1728,7 +1728,7 @@ var MFD_Device =
                     me.root.blep[me.i].setColor(colorDot2[0]*me.color+colorBackground[0]*(1-me.color), colorDot2[1]*me.color+colorBackground[1]*(1-me.color), colorDot2[2]*me.color+colorBackground[2]*(1-me.color));
                     me.root.blep[me.i].show();
                     me.root.blep[me.i].update();
-                    if (contact.equalsFast(radar_system.apg68Radar.getPriorityTarget()) and me.bleppy == me.bleps[size(me.bleps)-1]) {
+                    if (contact.equalsFast(radar_system.apg68Radar.getPriorityTarget()) and me.bleppy == me.bleps[-1]) {
                         me.selectShowTemp = radar_system.apg68Radar.currentMode.longName != radar_system.twsMode.longName or (me.elapsed - contact.getLastBlepTime() < radar_system.F16TWSMode.timeToBlinkTracks) or (math.mod(me.elapsed,0.50)<0.25);
                         me.selectShow = me.selectShowTemp and contact.getType() == radar_system.AIR;
                         me.selectShowGM = me.selectShowTemp and contact.getType() != radar_system.AIR;

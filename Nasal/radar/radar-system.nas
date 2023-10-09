@@ -207,7 +207,8 @@ var AIToNasal = {
         me.model = me.prop_ai.getNode("sim/model/path");
         if (me.model != nil) {
           	me.path = me.model.getValue();
-          	me.model = split(".", split("/", me.path)[-1])[0];
+          	me.model = io.basename(me.path);
+          	me.model = string.truncateAt(me.model, ".xml");
           	me.model = me.remove_suffix(me.model, "-model");
           	me.model = me.remove_suffix(me.model, "-anim");
         } else {
@@ -1211,7 +1212,7 @@ var AIContact = {
 		# get the frozen info needed for displays
 		#
 		if (!size(me.bleps)) return nil;
-		return me.bleps[size(me.bleps)-1];
+		return me.bleps[-1];
 	},
 
 	getLastGroundTrackBlep: func {
@@ -1226,7 +1227,7 @@ var AIContact = {
 	hasTrackInfo: func {
 		# convinience method
 		if (size(me.bleps)) {
-			if (me.bleps[size(me.bleps)-1].hasTrackInfo()) {
+			if (me.bleps[-1].hasTrackInfo()) {
 				return 1;
 			}
 		}
@@ -1236,7 +1237,7 @@ var AIContact = {
 	hasSTT: func {
 		# convinience method
 		if (size(me.bleps)) {
-			return me.bleps[size(me.bleps)-1].hasSTT();
+			return me.bleps[-1].hasSTT();
 		}
 		return 0;
 	},
@@ -1279,14 +1280,14 @@ var AIContact = {
 
 	getLastHeading: func {
 		if (size(me.bleps)) {
-			return me.bleps[size(me.bleps)-1].getHeading();
+			return me.bleps[-1].getHeading();
 		}
 		return nil;
 	},	
 
 	getLastSpeed: func {
 		if (size(me.bleps)) {
-			return me.bleps[size(me.bleps)-1].getSpeed();
+			return me.bleps[-1].getSpeed();
 		}
 		return nil;
 	},	
@@ -1294,63 +1295,63 @@ var AIContact = {
 	getLastDirection: func {
 		# Deprecated
 		if (size(me.bleps)) {
-			return me.bleps[size(me.bleps)-1].getDirection();
+			return me.bleps[-1].getDirection();
 		}
 		return nil;
 	},
 
 	getLastAZDeviation: func {
 		if (size(me.bleps)) {
-			return me.bleps[size(me.bleps)-1].getAZDeviation();
+			return me.bleps[-1].getAZDeviation();
 		}
 		return nil;
 	},
 
 	getLastElevDeviation: func {
 		if (size(me.bleps)) {
-			return me.bleps[size(me.bleps)-1].getElevDeviation();
+			return me.bleps[-1].getElevDeviation();
 		}
 		return nil;
 	},
 
 	getLastElev: func {
 		if (size(me.bleps)) {
-			return me.bleps[size(me.bleps)-1].getElev();
+			return me.bleps[-1].getElev();
 		}
 		return nil;
 	},
 
 	getLastRangeDirect: func {
 		if (size(me.bleps)) {
-				return me.bleps[size(me.bleps)-1].getRangeDirect();
+				return me.bleps[-1].getRangeDirect();
 		}
 		return nil;
 	},
 
 	getLastAltitude: func {
 		if (size(me.bleps)) {
-				return me.bleps[size(me.bleps)-1].getAltitude();
+				return me.bleps[-1].getAltitude();
 		}
 		return nil;
 	},
 
 	getLastCoord: func {
 		if (size(me.bleps)) {
-			return me.bleps[size(me.bleps)-1].getCoord();
+			return me.bleps[-1].getCoord();
 		}
 		return nil;
 	},
 
 	getLastBlepTime: func {
 		if (size(me.bleps)) {
-				return me.bleps[size(me.bleps)-1].getBlepTime();
+				return me.bleps[-1].getBlepTime();
 		}
 		return -1000;
 	},
 
 	getLastClosureRate: func {
 		if (size(me.bleps)) {
-				me.clr = me.bleps[size(me.bleps)-1].getClosureRate();
+				me.clr = me.bleps[-1].getClosureRate();
 				return me.clr==nil?0:me.clr;
 		}
 		return 0;

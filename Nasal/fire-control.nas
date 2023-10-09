@@ -1323,7 +1323,7 @@ var FireControl = {
 		# will NOT stop previous weapon
 		# will NOT set selectedType
 		if (me.selected == nil) {
-			me.pylon = me.pylonOrder[size(me.pylonOrder)-1];
+			me.pylon = me.pylonOrder[-1];
 		} else {
 			me.pylon = me.selected[0];
 		}
@@ -1368,7 +1368,7 @@ var FireControl = {
 		if (pylon.currentSet != nil and pylon.currentSet["fireOrder"] != nil and size(pylon.currentSet.fireOrder) > 0) {
 			printDebug("  getting next weapon");
 			if (current == nil) {
-				current = pylon.currentSet.fireOrder[size(pylon.currentSet.fireOrder)-1];
+				current = pylon.currentSet.fireOrder[-1];
 			}
 			me.fireIndex = me.vectorIndex(pylon.currentSet.fireOrder, current);
 			for(me.j=0;me.j<size(pylon.currentSet.fireOrder);me.j+=1) {

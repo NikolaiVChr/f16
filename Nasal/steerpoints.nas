@@ -1046,6 +1046,8 @@ var unserialize = func(m) {
   }
 }
 
+var dtcLast = nil;
+
 var saveSTPTs = func (path) {
     var text = serialize();
     var opn = nil;
@@ -1065,6 +1067,7 @@ var saveSTPTs = func (path) {
     } else {
       io.close(opn);
       setprop("f16/preplanning-status", "DTC data saved");
+      dtcLast = string.truncateAt(io.basename(path),".f16dtc");
       return 1;
     }
 }
@@ -1079,6 +1082,7 @@ var loadSTPTs = func (path) {
     } elsif (text != nil) {
       unserialize(text);
       setprop("f16/preplanning-status", "DTC data loaded");
+      dtcLast = string.truncateAt(io.basename(path),".f16dtc");
     }
 }
 
