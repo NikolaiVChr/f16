@@ -430,6 +430,7 @@ var DisplaySystem = {
 		me.initPage("PageHAS");
 		me.initPage("PageReset");
 		me.initPage("PageBlank");
+		me.initPage("PageTest");
 		me.initPage("PageRCCE");
 		me.initPage("PageFLIR");
 		me.initPage("PageSJ");
@@ -2066,7 +2067,7 @@ var DisplaySystem = {
                 return;
 
             me.IMSOI = me.device.soi == 1;
-            if (!me.IMSOI and (me.device.swapper.soi != 1 or me.device.swapper.system.currPage.name != me.name)) cursor_pos_hsd = [0, me.concentricCenter[1]-displayHeight];# what a hack :(
+            if (!me.IMSOI and (me.device.swapWith.soi != 1 or me.device.swapWith.system.currPage.name != me.name)) cursor_pos_hsd = [0, me.concentricCenter[1]-displayHeight];# what a hack :(
             me.updateCursor(noti);
             me.rdrrng = radar_system.apg68Radar.getRange();
             me.rdrprio = radar_system.apg68Radar.getPriorityTarget();
@@ -5471,6 +5472,7 @@ var DisplaySystem = {
 			"OSB6":  "PageSMSINV",
 			"OSB7":  "PageHSD",
 			"OSB8":  "PageDTE",
+			"OSB9":  "PageTest",
 			"OSB11": "PageBlank",
 			"OSB12": "PageHAS",
 			"OSB14": "PageRCCE",
@@ -5478,6 +5480,14 @@ var DisplaySystem = {
 		},
 		layers: ["BULLSEYE"],
 	},
+
+#  ██████   ██████  ██████ ███████ 
+#  ██   ██ ██      ██      ██      
+#  ██████  ██      ██      █████   
+#  ██   ██ ██      ██      ██      
+#  ██   ██  ██████  ██████ ███████ 
+#                                  
+#                                  
 
 	PageRCCE: {
 		name: "PageRCCE",
@@ -5588,6 +5598,82 @@ var DisplaySystem = {
 		},
 		layers: [],
 	},
+
+#  ████████ ███████ ███████ ████████ 
+#     ██    ██      ██         ██    
+#     ██    █████   ███████    ██    
+#     ██    ██           ██    ██    
+#     ██    ███████ ███████    ██    
+#                                    
+#                                    
+
+	PageTest: {
+		name: "PageTest",
+		isNew: 1,
+		supportSOI: 0,
+		needGroup: 1,
+		new: func {
+			me.instance = {parents:[DisplaySystem.PageTest]};
+			me.instance.group = nil;
+			return me.instance;
+		},
+		setup: func {
+			printDebug(me.name," on ",me.device.name," is being setup");
+			me.pageText = me.group.createChild("text")
+				.set("z-index", 10)
+				.setColor(colorText1)
+				.setAlignment("left-center")
+				.setTranslation(displayWidth*0.6, displayHeight*0.8)
+				.setFontSize(me.device.fontSize)
+				.setText("BBRAM OFPID\nSUROM OFPID");
+			me.mfdsGreyTest = me.group.createChild("path")
+				.set("z-index", 5)
+				.setColor(colorDot2[0]*0.5,colorDot2[1]*0.5,colorDot2[2]*0.5)
+				.moveTo(- displayWidth, - displayHeight)
+				.lineTo(displayWidth*2, displayHeight*2)
+				.setStrokeLineWidth(displayHeight*2)
+				.hide();
+			me.testMFDS = 0;
+		},
+		enter: func {
+			printDebug("Enter ",me.name~" on ",me.device.name);
+			if (me.isNew) {
+				me.setup();
+				me.isNew = 0;
+			}
+			me.device.resetControls();
+			me.device.controls["OSB16"].setControlText("SWAP");
+			me.device.controls["OSB9"].setControlText("TEST",0);
+		},
+		controlAction: func (controlName) {
+			printDebug(me.name,": ",controlName," activated on ",me.device.name);
+			if (controlName == "OSB6") {
+				me.testMFDS = !me.testMFDS;
+            } elsif (controlName == "OSB16") {
+                me.device.swap();
+            }
+		},
+		update: func (noti = nil) {
+			me.device.controls["OSB6"].setControlText("MFDS",1,me.testMFDS);
+			me.mfdsGreyTest.setVisible(me.testMFDS);
+			me.pageText.setVisible(me.testMFDS);
+		},
+		exit: func {
+			printDebug("Exit ",me.name~" on ",me.device.name);
+		},
+		links: {
+			"OSB9": "PageMenu",
+		},
+		layers: [],
+	},
+
+#  ██████  ███████ ███████ ███████ ████████ 
+#  ██   ██ ██      ██      ██         ██    
+#  ██████  █████   ███████ █████      ██    
+#  ██   ██ ██           ██ ██         ██    
+#  ██   ██ ███████ ███████ ███████    ██    
+#                                           
+#                                           
 
 	PageReset: {
 		name: "PageReset",
@@ -5938,4 +6024,5 @@ main(nil);# disable this line if running as module
 #      TGP and HUD-FLIR not work on mac
 #      More FLIR info at 1-249 (265) of dash-34
 #      More TFR 1-333 (349) + 1-242 (258)
-#      Aircrfat Ref symbol and steering bars: dash-34 (new) 1-77
+#      Aircraft Ref. Symbol and steering bars: dash-34 (new) 1-77
+#      HSD Cursor can bump ranges (and make DCPL)
