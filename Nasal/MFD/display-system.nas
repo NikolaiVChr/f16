@@ -211,7 +211,7 @@ var DisplayDevice = {
 
 		me.alignment  = alignmentH==0?"center-":(alignmentH==-1?"left-":"right-");
 		me.alignment ~= alignmentV==0?"center":(alignmentV==-1?"top":"bottom");
-		me.letterWidth  = 0.55 * me.fontSize;
+		me.letterWidth  = 0.6 * me.fontSize;
 		me.letterHeight = 0.8 * me.fontSize;
 		me.myCenter = [me.tempX, me.tempY];
 		me.controls[controlName].letters = me.controlGrp.createChild("text")
@@ -6026,3 +6026,5 @@ main(nil);# disable this line if running as module
 #      More TFR 1-333 (349) + 1-242 (258)
 #      Aircraft Ref. Symbol and steering bars: dash-34 (new) 1-77
 #      HSD Cursor can bump ranges (and make DCPL)
+#      To provide feedback that an OSB has actually been depressed,
+#        the display surface near a specific OSB flashes momentarily when the OSB is depressed.
