@@ -4853,6 +4853,21 @@ var DisplaySystem = {
 					.moveTo(20,displayHeight*0.5+0.5*displayHeight*(me.myAlt-tfr_current_terr)/1500)
 					.vert(20)
 					.moveTo(displayWidth-20,displayHeight*0.5+0.5*displayHeight*(me.myAlt-tfr_target_altitude_m)/1500)
+					.vert(20)
+					.moveTo(20,displayHeight-35)
+					.horiz(displayWidth-40)
+					.moveTo(displayWidth-20,displayHeight-35)
+					.vert(-15)
+					.moveTo(20,displayHeight-35)
+					.vert(-15)
+					.moveTo(20+(displayWidth-40)*0.2,displayHeight-35)
+					.vert(-15)
+					.moveTo(20+(displayWidth-40)*0.4,displayHeight-35)
+					.vert(-15)
+					.moveTo(20+(displayWidth-40)*0.6,displayHeight-35)
+					.vert(-15)
+					.moveTo(20+(displayWidth-40)*0.8,displayHeight-35)
+					.vert(-15)
 					.setStrokeLineWidth(1)
 					.setColor(colorDot2);
 				for (var i = 1;i<50; i+=1) {
@@ -5694,7 +5709,7 @@ var DisplaySystem = {
 			me.device.controls["OSB1"].setControlText("FCR");
 			me.device.controls["OSB2"].setControlText("TGP");
 			me.device.controls["OSB3"].setControlText("WPN");
-			me.device.controls["OSB4"].setControlText("TFR");# missing
+			me.device.controls["OSB4"].setControlText("TFR");
 			me.device.controls["OSB5"].setControlText("FLIR");
 			me.device.controls["OSB6"].setControlText("SMS");
 			me.device.controls["OSB7"].setControlText("HSD");
