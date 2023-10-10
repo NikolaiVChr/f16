@@ -3912,7 +3912,7 @@ var DisplaySystem = {
             me.exp.setVisible(exp and !radar_system.apg68Radar.currentMode.EXPfixedAim);
 #            me.acm.setVisible(1);
             me.horiz.setRotation(-radar_system.self.getRoll()*D2R);
-            if (FACH3) me.horiz.setTranslation(0, -displayHeightHalf*math.clamp(radar_system.self.getPitch()/60,-1,1));
+            me.horiz.setTranslation(0, -displayHeightHalf*math.clamp(radar_system.self.getPitch()/60,-1,1));# As per manual
 
             if (radar_system.apg68Radar.currentMode.longName == radar_system.vsMode.longName) {
                 me.distl.setScale(-1,1);
