@@ -55,13 +55,14 @@ var colorCubeGreen = [0,255,0];
 var colorCubeCyan = [0,255,255];
 
 var colorBackground = [0,0,0];
-if (getprop("sim/variant-id") == 2) {
+var variantID = getprop("sim/variant-id");
+if (variantID == 2) {
     colorBackground = [0.01,0.01,0.07, 1];
-} else if (getprop("sim/variant-id") == 4) {
+} else if (variantID == 4) {
     colorBackground = [0.01,0.01,0.07, 1];
-} else if (getprop("sim/variant-id") == 5) {
+} else if (variantID == 5) {
     colorBackground = [0.01,0.01,0.07, 1];
-} else if (getprop("sim/variant-id") >= 6) {
+} else if (variantID >= 6) {
     colorBackground = [0.01,0.01,0.07, 1];
 } else {
     colorBackground = [0.005,0.1,0.005, 1];
@@ -73,7 +74,7 @@ var PUSHBUTTON   = 0;
 var ROCKERSWITCH = 1;
 
 var CursorHSD = 1;
-var FACH3 = getprop("sim/variant-id") == 4 or getprop("sim/variant-id") >= 6;#MLU Tape M4.3
+var FACH3 = variantID == 4 or variantID >= 6;#MLU Tape M4.3
 
 #  ██████  ███████ ██    ██ ██  ██████ ███████ 
 #  ██   ██ ██      ██    ██ ██ ██      ██      
@@ -1075,21 +1076,21 @@ var DisplaySystem = {
 		controlAction: func (controlName) {
 			printDebug(me.name,": ",controlName," activated on ",me.device.name);
 			if (controlName == "OSB1") {
-                if (getprop("sim/variant-id") == 0) {
+                if (variantID == 0) {
                     return;
                 }
                 if (me.wpnType == "fall") {
                     me.at = 1;
                 }
             } elsif (controlName == "OSB2") {
-                if (getprop("sim/variant-id") == 0) {
+                if (variantID == 0) {
                     return;
                 }
                 if (me.wpnType == "fall") {
                     me.at = -1;
                 }
             } elsif (controlName == "OSB3") {
-                if (getprop("sim/variant-id") == 0) {
+                if (variantID == 0) {
                     return;
                 }
                 if (me.wpnType == "heat") {
@@ -1107,26 +1108,26 @@ var DisplaySystem = {
                     }
                 }
             } elsif (controlName == "OSB4") {
-                if (getprop("sim/variant-id") == 0) {
+                if (variantID == 0) {
                     return;
                 }
                 if (me.wpnType == "fall") {
                     me.ar = 25;
                 }                    
             } elsif (controlName == "OSB5") {
-                if (getprop("sim/variant-id") == 0) {
+                if (variantID == 0) {
                     return;
                 }
                 if (me.wpnType == "fall") {
                     me.ar = -25;
                 }
             } elsif (controlName == "OSB6") {
-                if (getprop("sim/variant-id") == 0) {
+                if (variantID == 0) {
                     return;
                 }
                 pylons.fcs.cycleLoadedWeapon();
             } elsif (controlName == "OSB7") {
-                if (getprop("sim/variant-id") == 0) {
+                if (variantID == 0) {
                     return;
                 }
                 me.wpn_ = pylons.fcs.getSelectedWeapon();
@@ -1134,7 +1135,7 @@ var DisplaySystem = {
                     pylons.fcs.togglePowerOn();
                 }
             } elsif (controlName == "OSB8") {
-                if (getprop("sim/variant-id") == 0) {
+                if (variantID == 0) {
                     return;
                 }
                 if (me.wpnType == "fall") {
@@ -1155,7 +1156,7 @@ var DisplaySystem = {
                     pylons.fcs.setRRippleMode(rp);
                 }
             } elsif (controlName == "OSB9") {
-                if (getprop("sim/variant-id") == 0) {
+                if (variantID == 0) {
                     return;
                 }
                 if (me.wpnType == "fall") {
@@ -1177,11 +1178,11 @@ var DisplaySystem = {
                     }
                 }
             } elsif (controlName == "OSB10") {
-                if (getprop("sim/variant-id") == 0) {
+                if (variantID == 0) {
                     return;
                 }
             } elsif (controlName == "OSB12") {
-                if (getprop("sim/variant-id") == 0) {
+                if (variantID == 0) {
                     return;
                 }
                 if (me.wpnType == "fall") {
@@ -1190,14 +1191,14 @@ var DisplaySystem = {
                     me.device.system.selectPage("PageHAS");
                 }
             } elsif (controlName == "OSB13") {
-                if (getprop("sim/variant-id") == 0) {
+                if (variantID == 0) {
                     return;
                 }
                 if (me.wpnType == "heat") {
                     pylons.fcs.toggleXfov();
                 }
             } elsif (controlName == "OSB14") {
-                if (getprop("sim/variant-id") == 0) {
+                if (variantID == 0) {
                     return;
                 }
                 if (me.wpnType == "gun") {
@@ -1225,7 +1226,7 @@ var DisplaySystem = {
 		update: func (noti) {
             if (noti.FrameCount != 3)
                 return;
-            if (getprop("sim/variant-id") == 0) {
+            if (variantID == 0) {
                 return;
             }
 
@@ -2958,7 +2959,7 @@ var DisplaySystem = {
 			me.device.controls["OSB20"].setControlText("TGP");
 		},
 		selectPylon: func (sta) {
-			if (getprop("sim/variant-id") == 0) {
+			if (variantID == 0) {
                 return;
             }
             pylons.fcs.selectPylon(sta);
@@ -2992,7 +2993,7 @@ var DisplaySystem = {
 		update: func (noti = nil) {
 			if (noti.FrameCount != 3)
                 return;
-            if (getprop("sim/variant-id") == 0) {
+            if (variantID == 0) {
                 return;
             }
 
@@ -3018,7 +3019,7 @@ var DisplaySystem = {
                 else gunAmmo = ""~int(gunAmmo*0.1);
             }
             me.gun.setText(gunAmmo~"GUN");
-            if (noti.getproper("variantID") == 0 or noti.getproper("variantID") == 1 or noti.getproper("variantID") == 3) {
+            if (variantID == 0 or variantID == 1 or variantID == 3) {
                 me.gun2.setText("M56");
             } else {
                 me.gun2.setText("PGU28");
@@ -3257,7 +3258,7 @@ var DisplaySystem = {
 			screen.log.write("Click trigger to jettison selected stores",1,1,0.75);
 		},
 		selectPylon: func (sta) {
-			if (getprop("sim/variant-id") == 0) {
+			if (variantID == 0) {
                 return;
             }
             pylons.fcs.toggleStationForSJ(sta);
@@ -3283,7 +3284,7 @@ var DisplaySystem = {
 		update: func (noti = nil) {
 			if (noti.FrameCount != 3)
                 return;
-            if (getprop("sim/variant-id") == 0) {
+            if (variantID == 0) {
                 return;
             }
 
@@ -3516,8 +3517,7 @@ var DisplaySystem = {
 	                    .setStrokeLineWidth(5)
 	                    .set("z-index",1)
 	                    .setColor(colorLine1);
-	        var vari = getprop("sim/variant-id");
-	        if (vari < 2 or vari == 3) {
+	        if (variantID < 2 or variantID == 3) {
 	            me.distl = me.p_RDR.createChild("path")
 	                        .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.25)
 	                        .horiz(15)
@@ -4342,8 +4342,8 @@ var DisplaySystem = {
                         #.setTranslation(-512*0.5,-512)
                         #.setScale(8,8)
                         .set("z-index",0);#TODO: lower than GM text background
-                    var vari = noti.getproper("variantID");
-                    me.mono = (vari<2 or vari ==3)?0.4:1;
+
+                    me.mono = (variantID<2 or variantID ==3)?0.4:1;
                     me.gainNode = me.model_index?props.globals.getNode("f16/avionics/mfd-l-gain",0):props.globals.getNode("f16/avionics/mfd-l-gain",0);
                     radar_system.mapper.setImage(me.gmImage, sized*0.5, 0, sized, me.mono, me.gainNode);
                 }
@@ -4729,8 +4729,7 @@ var DisplaySystem = {
 			me.device.controls["OSB5"].setControlText("FLIR",0);
 			me.device.controls["OSB10"].setControlText("BGST");
 			me.device.controls["OSB11"].setControlText("FCR");
-			me.vari = getprop("sim/variant-id");
-			me.device.controls["OSB17"].setControlText(me.vari==1 or me.vari==3?"GREEN":"GRAY");
+			me.device.controls["OSB17"].setControlText(variantID==1 or variantID==3?"GREEN":"GRAY");
 			me.device.controls["OSB16"].setControlText("SWAP");
 		},
 		controlAction: func (controlName) {
