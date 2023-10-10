@@ -4812,8 +4812,13 @@ var DisplaySystem = {
                 setprop("autopilot/settings/tf-minimums", 100);
             } elsif (controlName == "OSB12") {
                 var tfrSmooth = getprop("f16/fcs/adv-mode-smooth");
-                tfrSmooth += 2;
-                if (tfrSmooth >= 6) {
+                if (tfrSmooth == 1) {
+                	tfrSmooth = 5;
+                }
+                if (tfrSmooth == 5) {
+                	tfrSmooth = 10;
+                }
+                if (tfrSmooth == 10) {
                 	tfrSmooth = 1;
                 }
                 setprop("f16/fcs/adv-mode-smooth", tfrSmooth);
@@ -4858,8 +4863,8 @@ var DisplaySystem = {
 				}
 			}
 			if (me.smooth == 1) me.device.controls["OSB12"].setControlText("HARD");
-			if (me.smooth == 3) me.device.controls["OSB12"].setControlText("SOFT");
-			if (me.smooth == 5) me.device.controls["OSB12"].setControlText("SMTH");
+			if (me.smooth == 5) me.device.controls["OSB12"].setControlText("SOFT");
+			if (me.smooth == 10) me.device.controls["OSB12"].setControlText("SMTH");
 			me.device.controls["OSB1"].setControlText("NORM",1,me.enable and (!me.mal or math.mod(int(8*(systime()-int(systime()))),2)>0));
 			me.device.controls["OSB2"].setControlText("LPI",1,tfrMode == 2);
 			me.device.controls["OSB3"].setControlText("STBY",1,tfrMode == 3);
