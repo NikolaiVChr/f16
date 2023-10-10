@@ -465,6 +465,7 @@ var DisplaySystem = {
 		me.initPage("PageFLIR");
 		me.initPage("PageTFR");
 		me.initPage("PageSJ");
+		me.initPage("PageTCN");
 		me.initPage("PageSMSINV");
 		#me.initPage("PageOSB");
 
@@ -1574,7 +1575,7 @@ var DisplaySystem = {
 		links: {
 			"OSB8":  "PageMenu",
 		},
-		layers: [],
+		layers: ["BULLSEYE"],
 	},
 
 #  ███████  ██████ ██████       ██████ ███    ██ ████████ ██      
@@ -1653,7 +1654,7 @@ var DisplaySystem = {
 		links: {
 			"OSB15":  "PageFCR",
 		},
-		layers: [],
+		layers: ["BULLSEYE"],
 	},
 
 #  ██   ██ ███████ ██████       ██████ ███    ██ ████████ ██      
@@ -5746,7 +5747,7 @@ var DisplaySystem = {
 			me.device.controls["OSB15"].setControlText("RESET\n MENU");
 			me.device.controls["OSB16"].setControlText("SWAP");
 			me.device.controls["OSB19"].setControlText("DCLT");#in mlu 1 this is on osb 20
-			me.device.controls["OSB20"].setControlText("TCN");# missing
+			me.device.controls["OSB20"].setControlText("TCN");
 		},
 		controlAction: func (controlName) {
 			printDebug(me.name,": ",controlName," activated on ",me.device.name);
@@ -5775,6 +5776,7 @@ var DisplaySystem = {
 			"OSB12": "PageHAS",
 			"OSB14": "PageRCCE",
 			"OSB15": "PageReset",
+			"OSB20": "PageTCN",
 		},
 		layers: ["BULLSEYE"],
 	},
@@ -5895,6 +5897,72 @@ var DisplaySystem = {
 			"OSB18": "PageSMSINV",
 		},
 		layers: [],
+	},
+
+#  ████████  ██████ ███    ██ 
+#     ██    ██      ████   ██ 
+#     ██    ██      ██ ██  ██ 
+#     ██    ██      ██  ██ ██ 
+#     ██     ██████ ██   ████ 
+#                             
+#                             
+
+	PageTCN: {
+		name: "PageTCN",
+		isNew: 1,
+		supportSOI: 0,
+		needGroup: 1,
+		new: func {
+			me.instance = {parents:[DisplaySystem.PageTCN]};
+			me.instance.group = nil;
+			return me.instance;
+		},
+		setup: func {
+			printDebug(me.name," on ",me.device.name," is being setup");
+			me.pageText = me.group.createChild("text")
+				.set("z-index", 10)
+				.setColor(colorText1)
+				.setAlignment("center-center")
+				.setTranslation(displayWidthHalf, displayHeightHalf)
+				.setFontSize(me.device.fontSize)
+				.setText("BLANK");
+		},
+		enter: func {
+			printDebug("Enter ",me.name~" on ",me.device.name);
+			if (me.isNew) {
+				me.setup();
+				me.isNew = 0;
+			}
+			me.device.resetControls();
+			me.device.controls["OSB11"].setControlText("FCR");
+			me.device.controls["OSB16"].setControlText("SWAP");
+			me.device.controls["OSB20"].setControlText("TCN",0);
+		},
+		controlAction: func (controlName) {
+			printDebug(me.name,": ",controlName," activated on ",me.device.name);
+            if (controlName == "OSB16") {
+                me.device.swap();
+            }
+		},
+		update: func (noti = nil) {
+			me.pageText.setText("MODE\n"~ehsi.modeText);
+			me.mode       = getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob");
+			me.device.controls["OSB1"].setControlText("CH\n"~getprop("instrumentation/tacan/frequencies/selected-channel")~getprop("instrumentation/tacan/frequencies/selected-channel[4]"));
+			me.device.controls["OSB3"].setControlText(ded.dataEntryDisplay.tacanMode);
+			if (me.mode != 0 and me.mode != 1) {
+				me.range = "OFF";
+			} else {
+				me.range = getprop("instrumentation/tacan/in-range")?"IN RNG":"OUT OF RNG";
+			}
+			me.device.controls["OSB5"].setControlText("STATUS\n"~me.range);
+		},
+		exit: func {
+			printDebug("Exit ",me.name~" on ",me.device.name);
+		},
+		links: {
+			"OSB11": "PageFCR",
+		},
+		layers: ["BULLSEYE"],
 	},
 
 #  ████████ ███████ ███████ ████████ 

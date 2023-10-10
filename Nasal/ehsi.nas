@@ -1,3 +1,5 @@
+var modeText = "";
+
 EHSI = {
     new: func (ident, root, center, diameter) {
         var ehsi = {parents: [EHSI]};
@@ -609,10 +611,11 @@ EHSI = {
         if (!me.elec) {
             settimer(func me.update(),0.2);
             root.hide();
+            modeText = "NO PWR";
             return;
         }
         root.show();
-        if (me.mode != me.modeOld) {
+        if (me.mode != me.modeOld or modeText == "NO PWR") {
             me.modeTime = systime();
         }
         
@@ -641,6 +644,7 @@ EHSI = {
             elsif (me.mode==4) me.textModeNote = "VOR";
             #elsif (me.mode==5) me.textModeNote = "PLS/VOR";
             me.txtNote.setText(me.textModeNote);
+            modeText = me.textModeNote;
             me.txtNote.show();
         }
         
@@ -812,11 +816,19 @@ HSI = {
         me.ils        = me.mode == 0 or me.mode == 3 or me.mode == 5;
         me.tacan      = me.mode == 0 or me.mode == 1;
         me.nav        = me.mode == 2 or me.mode == 3;
-        me.vor        = me.mode == 4 or me.mode == 5;# not used in the HSI
+        me.vor        = me.mode == 4 or me.mode == 5;# not used in the HSI 
         
         if (!me.elec) {
             settimer(func me.update(),0.2);
+            modeText = "NO PWR";
             return;
+        } else {
+            if (me.mode==0) me.textModeNote = "ILS/TACAN";
+            elsif (me.mode==1) me.textModeNote = "TACAN";
+            elsif (me.mode==2) me.textModeNote = "NAV";
+            elsif (me.mode==3) me.textModeNote = "ILS/NAV";
+            else me.textModeNote = "ERROR";
+            modeText = me.textModeNote;
         }
 
         if (me.crsILS != me.crsILSold) {
