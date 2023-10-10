@@ -790,7 +790,7 @@ var FireControl = {
 
 	jettisonSJContent: func {
 		# jettison S-J pylon
-		if (getprop(masterArmSwitch) != pylons.ARM_ARM or getprop("fdm/jsbsim/elec/bus/emergency-dc-1") < 20 or !(getprop("f16/avionics/gnd-jett") or !getprop("gear/gear[0]/wow"))) {
+		if (getprop(masterArmSwitch) != pylons.ARM_ARM or getprop("fdm/jsbsim/elec/bus/emergency-dc-1") < 20 or !isArmsReleasePermitted()) {
 			me.clearStationForSJ();
 			return nil;
 		}
@@ -971,7 +971,7 @@ var FireControl = {
 		printfDebug("trigger called %d %d %d",getprop("controls/armament/master-arm"),getprop("controls/armament/trigger"),me.selected != nil);
 		if (me.getSelectedPylon() == nil or !me.getSelectedPylon().isActive()) return;
 		if (me.isRippling) return;
-		if (getprop("controls/armament/master-arm") == 1 and getprop("controls/armament/trigger") > 0 and me.selected != nil) {
+		if (isArmsReleasePermitted() and getprop("controls/armament/master-arm") == 1 and getprop("controls/armament/trigger") > 0 and me.selected != nil) {
 			printDebug("trigger propagating");
 			me.aim = me.getSelectedWeapon();
 			#printfDebug(" to %d",me.aim != nil);
@@ -1592,5 +1592,8 @@ var defaultRocket = "LAU-68";
 var getCompleteRadarTargetsList = func {
 	# A list of all MP/AI aircraft/ships/surface-targets around the aircraft, including those that is outside radar line of sight etc..
 	return radar_system.getCompleteList();
+}
+var isArmsReleasePermitted = func {
+	return getprop("f16/avionics/gnd-jett") or !getprop("gear/gear[0]/wow");
 }
 var masterArmSwitch = "controls/armament/master-arm-switch";
