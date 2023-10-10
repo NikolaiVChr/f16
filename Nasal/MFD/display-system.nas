@@ -75,6 +75,14 @@ var ROCKERSWITCH = 1;
 var CursorHSD = 0;
 var FACH3 = 0;
 
+#  ██████  ███████ ██    ██ ██  ██████ ███████ 
+#  ██   ██ ██      ██    ██ ██ ██      ██      
+#  ██   ██ █████   ██    ██ ██ ██      █████   
+#  ██   ██ ██       ██  ██  ██ ██      ██      
+#  ██████  ███████   ████   ██  ██████ ███████ 
+#                                              
+#                                              
+
 var DisplayDevice = {
 	new: func (name, resolution, uvMap, node, texture) {
 		var device = {parents : [DisplayDevice] };
