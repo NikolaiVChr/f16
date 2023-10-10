@@ -116,7 +116,10 @@ var tfs_radar_calculation = func(delay_sec) {
       return TF_malfunction();
     }
     #print("target_pos alt :"~ target_altitude_m);
-
+    displays.tfr_current_terr = current_terr;
+    displays.tfr_range_m = range_m;
+    displays.tfr_target_altitude_m = target_altitude_m;
+    
     # Avoid an issue when altitude-m is not set
     var altitude_m = getprop ("position/altitude-ft") * FT2M;
     if(altitude_m == nil)

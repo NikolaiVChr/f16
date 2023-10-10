@@ -106,7 +106,7 @@ var apLoopHalf = maketimer(0.5, func {
         } else {
         	setprop("f16/fcs/adv-mode", 1);
         	setprop("f16/fcs/stby-mode", 0);
-        	full = 1;# the higher the smoother. Max 10. Min 1.
+        	full = getprop("f16/fcs/adv-mode-smooth");;# the higher the smoother. Max 10. Min 1.
         	half = full * 0.0;
         	vsg  = -11.5-4*getprop("velocities/groundspeed-kt")/600-(getprop("instrumentation/radar/time-till-crash") < 15)*10;
         	vs   = vs + math.min(12500, 4000*getprop("velocities/groundspeed-kt")/400+(4000*getprop("velocities/groundspeed-kt")/400) * (getprop("instrumentation/radar/time-till-crash") < 15));

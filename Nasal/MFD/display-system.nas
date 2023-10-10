@@ -455,6 +455,7 @@ var DisplaySystem = {
 		me.initPage("PageTest");
 		me.initPage("PageRCCE");
 		me.initPage("PageFLIR");
+		me.initPage("PageTFR");
 		me.initPage("PageSJ");
 		me.initPage("PageSMSINV");
 		#me.initPage("PageOSB");
@@ -4762,6 +4763,129 @@ var DisplaySystem = {
 		layers: ["BULLSEYE"],
 	},
 
+	PageTFR: {
+		name: "PageTFR",
+		isNew: 1,
+		supportSOI: 0,
+		needGroup: 1,
+		new: func {
+			me.instance = {parents:[DisplaySystem.PageTFR]};
+			me.instance.group = nil;
+			return me.instance;
+		},
+		setup: func {
+			printDebug(me.name," on ",me.device.name," is being setup");
+			
+		},
+		enter: func {
+			printDebug("Enter ",me.name~" on ",me.device.name);
+			if (me.isNew) {
+				me.setup();
+				me.isNew = 0;
+			}
+			me.device.resetControls();
+			me.device.controls["OSB4"].setControlText("TFR",0);
+			me.device.controls["OSB11"].setControlText("FCR");
+			me.device.controls["OSB11"].setControlText("FCR");
+			me.device.controls["OSB16"].setControlText("SWAP");
+		},
+		controlAction: func (controlName) {
+			printDebug(me.name,": ",controlName," activated on ",me.device.name);
+			if (controlName == "OSB1") {
+                tfrMode = 1;
+                setprop("f16/fcs/adv-mode-sel", 1);
+            } elsif (controlName == "OSB2") {
+                #tfrMode = 2;
+            } elsif (controlName == "OSB3") {
+                #tfrMode = 3;
+            } elsif (controlName == "OSB5") {
+                #tfrMode = 4;
+            } elsif (controlName == "OSB6") {
+                setprop("autopilot/settings/tf-minimums", 1000);
+            } elsif (controlName == "OSB7") {
+                setprop("autopilot/settings/tf-minimums", 500);
+            } elsif (controlName == "OSB8") {
+                setprop("autopilot/settings/tf-minimums", 300);
+            } elsif (controlName == "OSB9") {
+                setprop("autopilot/settings/tf-minimums", 200);
+            } elsif (controlName == "OSB10") {
+                setprop("autopilot/settings/tf-minimums", 100);
+            } elsif (controlName == "OSB12") {
+                var tfrSmooth = getprop("f16/fcs/adv-mode-smooth");
+                tfrSmooth += 2;
+                if (tfrSmooth >= 6) {
+                	tfrSmooth = 1;
+                }
+                setprop("f16/fcs/adv-mode-smooth", tfrSmooth);
+            } elsif (controlName == "OSB14") {
+                var tfrRequest = getprop("f16/fcs/adv-mode-sel");
+                tfrRequest = !tfrRequest;
+                setprop("f16/fcs/adv-mode-sel", 0);
+            } elsif (controlName == "OSB15") {
+                tfrFreq += 1;
+                if (tfrFreq > 8) {
+                	tfrFreq = 1;
+                }
+            } elsif (controlName == "OSB16") {
+                me.device.swap();
+            }
+		},
+		update: func (noti = nil) {
+			me.clearance = getprop("autopilot/settings/tf-minimums");
+			me.enable = getprop("f16/fcs/adv-mode");
+			me.mal = getprop("instrumentation/tfs/malfunction");
+			me.smooth = getprop("f16/fcs/adv-mode-smooth");# 1 to 10
+
+			if (getprop("f16/stores/nav-mounted")!=1 or getprop("f16/avionics/power-left-hdpt")!=1) {
+				me.enable = 0;
+			}
+			if (me.enable and !me.mal) {
+				me.myAlt = noti.getproper("altitude_ft")*FT2M;
+				me.group.removeAllChildren();
+				me.linu = me.group.createChild("path")
+					.moveTo(0,displayHeight*0.5)
+					.horiz(displayWidth)
+					.moveTo(20,displayHeight*0.5+0.5*displayHeight*(me.myAlt-tfr_current_terr)/1500)
+					.vert(20)
+					.moveTo(displayWidth-20,displayHeight*0.5+0.5*displayHeight*(me.myAlt-tfr_target_altitude_m)/1500)
+					.setStrokeLineWidth(1)
+					.setColor(colorDot2);
+				for (var i = 1;i<50; i+=1) {
+					me.m = me.extrapolate(i, 0, 50, me.myAlt-tfr_current_terr, me.myAlt-tfr_target_altitude_m)*(0.9+0.2*rand());
+					me.d = me.extrapolate(i, 0, 50, 20, displayWidth-20);
+					me.linu.moveTo(me.d,displayHeight*0.5+0.5*displayHeight*(me.m/1500))
+						.vert(20);
+				}
+			}
+			if (me.smooth == 1) me.device.controls["OSB12"].setControlText("HARD");
+			if (me.smooth == 3) me.device.controls["OSB12"].setControlText("SOFT");
+			if (me.smooth == 5) me.device.controls["OSB12"].setControlText("SMTH");
+			me.device.controls["OSB1"].setControlText("NORM",1,me.enable and (!me.mal or math.mod(int(8*(systime()-int(systime()))),2)>0));
+			me.device.controls["OSB2"].setControlText("LPI",1,tfrMode == 2);
+			me.device.controls["OSB3"].setControlText("STBY",1,tfrMode == 3);
+			me.device.controls["OSB5"].setControlText("WX",1,tfrMode == 4);
+			me.device.controls["OSB14"].setControlText("OFF",1,!me.enable);
+			me.device.controls["OSB15"].setControlText("CHN "~tfrFreq);
+			me.device.controls["OSB6"].setControlText("1000",1,me.clearance >= 1000);
+			me.device.controls["OSB7"].setControlText("500",1,me.clearance >= 500 and me.clearance < 1000);
+			me.device.controls["OSB8"].setControlText("300",1,me.clearance >= 300 and me.clearance < 500);
+			me.device.controls["OSB9"].setControlText("200",1,me.clearance >= 200 and me.clearance < 300);
+			me.device.controls["OSB10"].setControlText("VLC",1,me.clearance < 200);
+		},
+		extrapolate: func (x, x1, x2, y1, y2) {
+            return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
+        },
+		exit: func {
+			printDebug("Exit ",me.name~" on ",me.device.name);
+			me.group.removeAllChildren();
+		},
+		links: {
+			"OSB4": "PageMenu",
+			"OSB11": "PageFCR",
+		},
+		layers: ["BULLSEYE"],
+	},
+
 #  ███████ ████████  █████  ██████  ████████ ██    ██ ██████  
 #  ██         ██    ██   ██ ██   ██    ██    ██    ██ ██   ██ 
 #  ███████    ██    ███████ ██████     ██    ██    ██ ██████  
@@ -5565,7 +5689,7 @@ var DisplaySystem = {
 			me.device.controls["OSB1"].setControlText("FCR");
 			me.device.controls["OSB2"].setControlText("TGP");
 			me.device.controls["OSB3"].setControlText("WPN");
-			me.device.controls["OSB4"].setControlText("TFR");
+			me.device.controls["OSB4"].setControlText("TFR");# missing
 			me.device.controls["OSB5"].setControlText("FLIR");
 			me.device.controls["OSB6"].setControlText("SMS");
 			me.device.controls["OSB7"].setControlText("HSD");
@@ -5578,7 +5702,7 @@ var DisplaySystem = {
 			me.device.controls["OSB15"].setControlText("RESET\n MENU");
 			me.device.controls["OSB16"].setControlText("SWAP");
 			me.device.controls["OSB19"].setControlText("DCLT");#in mlu 1 this is on osb 20
-			me.device.controls["OSB20"].setControlText("TCN");
+			me.device.controls["OSB20"].setControlText("TCN");# missing
 		},
 		controlAction: func (controlName) {
 			printDebug(me.name,": ",controlName," activated on ",me.device.name);
@@ -5597,6 +5721,7 @@ var DisplaySystem = {
 		links: {
 			"OSB1":  "PageFCR",
 			"OSB3":  "PageSMSWPN",
+			"OSB4":  "PageTFR",
 			"OSB5":  "PageFLIR",
 			"OSB6":  "PageSMSINV",
 			"OSB7":  "PageHSD",
@@ -5906,6 +6031,11 @@ var fcrBand = 0;
 var fcrChan = 2;
 
 var flirMode = -2;
+var tfrMode  =  1;
+var tfrFreq  =  1;
+var tfr_current_terr = 1000;
+var tfr_range_m = 1000;
+var tfr_target_altitude_m = 0;
 
 var leftMFD = nil;
 var rightMFD = nil;
@@ -6163,4 +6293,4 @@ main(nil);# disable this line if running as module
 #      Aircraft Ref. Symbol and steering bars: dash-34 (new) 1-77
 #      To provide feedback that an OSB has actually been depressed,
 #        the display surface near a specific OSB flashes momentarily when the OSB is depressed.
-#      FLIR: 21x28 7.5 deg down from bore.
+#      FLIR: 21x28 degs
