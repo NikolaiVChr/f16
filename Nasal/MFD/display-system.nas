@@ -3044,6 +3044,14 @@ var DisplaySystem = {
 		layers: ["BULLSEYE"],
 	},
 
+#  ███████            ██ 
+#  ██                 ██ 
+#  ███████ █████      ██ 
+#       ██       ██   ██ 
+#  ███████        █████  
+#                        
+#                        
+
 	PageSJ: {
 		name: "PageSJ",
 		isNew: 1,
@@ -4762,6 +4770,14 @@ var DisplaySystem = {
 		},
 		layers: ["BULLSEYE"],
 	},
+
+#  ████████ ███████ ██████  
+#     ██    ██      ██   ██ 
+#     ██    █████   ██████  
+#     ██    ██      ██   ██ 
+#     ██    ██      ██   ██ 
+#                           
+#                           
 
 	PageTFR: {
 		name: "PageTFR",
