@@ -2137,6 +2137,14 @@ var DisplaySystem = {
             }
            	me.hsdCursorclick = me.IMSOI and cursor_click == me.index;
             me.cursorHSD.setVisible(me.IMSOI);
+
+            # Cursor clicking will select points in this priority order:
+            #
+            # Bullseye
+            # Steerpoints
+            # Linepoints
+            # Markpoints
+            # Pre-planned threats
 		},
 		update: func (noti = nil) {
 			me.conc.setRotation(-radar_system.self.getHeading()*D2R);
@@ -2231,7 +2239,7 @@ var DisplaySystem = {
 
 	                if (me.hsdCursorclick) {
                     	me.distFromCursor = math.sqrt(math.pow(me.hsdCursorFromOwnship[0]-me.legX,2)+math.pow(me.hsdCursorFromOwnship[1]-me.legY,2));
-                    	if (me.distFromCursor < 7) {
+                    	if (me.distFromCursor < 12) {# bullseye
                     		me.hsdCursorclick = 0;
                     		steerpoints.setCurrentNumber(steerpoints.index_of_bullseye);
                     	}
@@ -2272,6 +2280,8 @@ var DisplaySystem = {
                     me.planSize = me.plan.getPlanSize();
                     me.prevX = nil;
                     me.prevY = nil;
+                    me.closestDistFromCursor = 10000;
+                    me.closestSteerpointToCursor = -1;
                     for (me.j = 0; me.j < me.planSize;me.j+=1) {
                         me.wp = me.plan.getWP(me.j);
                         if (me.wp.lat == 0 and me.wp.lon == 0) continue;# Ignore SIDs that have no GPS position
@@ -2317,11 +2327,17 @@ var DisplaySystem = {
 
                         if (me.hsdCursorclick) {
                         	me.distFromCursor = math.sqrt(math.pow(me.hsdCursorFromOwnship[0]-me.legX,2)+math.pow(me.hsdCursorFromOwnship[1]-me.legY,2));
-                        	if (me.distFromCursor < 7) {
-                        		me.hsdCursorclick = 0;
-                        		steerpoints.setCurrentNumber(me.j+1);
+                        	if (me.distFromCursor < 11) {# steerpoints
+                        		if (me.distFromCursor < me.closestDistFromCursor) {
+                        			me.closestDistFromCursor = me.distFromCursor;
+                        			me.closestSteerpointToCursor = me.j+1;
+                        		}
                         	}
                         }
+                    }
+                    if (me.closestDistFromCursor < 1000) {
+                        me.hsdCursorclick = 0;
+                        steerpoints.setCurrentNumber(me.closestSteerpointToCursor);
                     }
                 }
 
@@ -2378,7 +2394,7 @@ var DisplaySystem = {
 
                             if (me.hsdCursorclick) {
 	                        	me.distFromCursor = math.sqrt(math.pow(me.hsdCursorFromOwnship[0]-me.legX,2)+math.pow(me.hsdCursorFromOwnship[1]-me.legY,2));
-	                        	if (me.distFromCursor < 7) {
+	                        	if (me.distFromCursor < 11) {#lines
 	                        		me.hsdCursorclick = 0;
 	                        		me.mkNumber = me.j + steerpoints.index_of_lines[u];
 	                        		steerpoints.setCurrentNumber(me.mkNumber);
@@ -2419,7 +2435,7 @@ var DisplaySystem = {
                         me.mark[mi].show();
                         if (me.hsdCursorclick) {
                         	me.distFromCursor = math.sqrt(math.pow(me.hsdCursorFromOwnship[0]-me.legX,2)+math.pow(me.hsdCursorFromOwnship[1]-me.legY,2));
-                        	if (me.distFromCursor < 7) {
+                        	if (me.distFromCursor < 11) {# markpoints
                         		me.hsdCursorclick = 0;
                         		steerpoints.setCurrentNumber(me.mkNumber);
                         	}
@@ -2475,7 +2491,7 @@ var DisplaySystem = {
 
                         if (me.hsdCursorclick) {
                         	me.distFromCursor = math.sqrt(math.pow(me.hsdCursorFromOwnship[0]-me.legX,2)+math.pow(me.hsdCursorFromOwnship[1]-me.legY,2));
-                        	if (me.distFromCursor < 15) {
+                        	if (me.distFromCursor < 14) {# pre-planned threats
                         		me.hsdCursorclick = 0;
                         		steerpoints.setCurrentNumber(me.mkNumber);
                         	}
@@ -6390,8 +6406,9 @@ var printfDebug = func {if (debugDisplays) {var str = call(sprintf,arg,nil,nil,v
 
 main(nil);# disable this line if running as module
 
-#TODO: rockerbuttons as controls
-#      resolutions
+#TODO:
+#      rockerbuttons as controls
+#      resolutions power of two
 #      crash exit GM
 #      make nav reference for ground target?
 #      HSDCNTL/FCRCNTL/MENU/FCRMENU should be an overlay
@@ -6403,6 +6420,6 @@ main(nil);# disable this line if running as module
 #      More FLIR info at 1-249 (265) of dash-34
 #      More TFR 1-333 (349) + 1-242 (258)
 #      Aircraft Ref. Symbol and steering bars: dash-34 (new) 1-77
-#      To provide feedback that an OSB has actually been depressed,
+#      MLU 4.3:To provide feedback that an OSB has actually been depressed,
 #        the display surface near a specific OSB flashes momentarily when the OSB is depressed.
 #      FLIR: 21x28 degs
