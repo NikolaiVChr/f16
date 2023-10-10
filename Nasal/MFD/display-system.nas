@@ -72,7 +72,7 @@ if (getprop("sim/variant-id") == 2) {
 var PUSHBUTTON   = 0;
 var ROCKERSWITCH = 1;
 
-var CursorHSD = 0;
+var CursorHSD = 1;
 var FACH3 = 0;
 
 #  ██████  ███████ ██    ██ ██  ██████ ███████ 
