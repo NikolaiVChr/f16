@@ -6157,7 +6157,7 @@ var cursorFCRgps = nil;
 var cursorFCRair = 1;
 
 
-setlistener("controls/displays/cursor-click", func {if (getprop("controls/displays/cursor-click")) {slew_c = 1;}},0,0);
+setlistener("controls/displays/cursor-click", func (node) {if (node.getValue()) {slew_c = 1;}},0,0);
 
 var cursorZero = func {
     cursor_pos = [0,-241];
