@@ -446,7 +446,7 @@ var DisplaySystem = {
 		me.pages = {};
 		me.layers = {};
 
-		me.initPage("PageFCRMenu");
+		me.initPage("PageFCRMode");
 		me.initPage("PageMenu");
 		me.initPage("PageSMSWPN");
 		me.initPage("PageVoid");
@@ -613,7 +613,7 @@ var DisplaySystem = {
                 me.device.system.osbSelect[1].links[me.device.system.osbSelect[0]] = "PageHAS";
                 me.device.system.selectPage(me.device.system.osbSelect[1].name);
             } elsif (controlName == "OSB16") {
-                me.device.system.osbSelect[1].links[me.device.system.osbSelect[0]] = "PageFCRMenu";
+                me.device.system.osbSelect[1].links[me.device.system.osbSelect[0]] = "PageFCRMode";
                 me.device.system.selectPage(me.device.system.osbSelect[1].name);
             } elsif (controlName == "OSB17") {
                 me.device.system.osbSelect[1].links[me.device.system.osbSelect[0]] = "PageMenu";
@@ -1444,14 +1444,14 @@ var DisplaySystem = {
 #                                                                  
 #                                                                  
 
-	PageFCRMenu: {
-		name: "PageFCRMenu",
+	PageFCRMode: {
+		name: "PageFCRMode",
 		isNew: 1,
 		supportSOI: 1,
 		soiPrio: 9,
 		needGroup: 0,
 		new: func {
-			me.instance = {parents:[DisplaySystem.PageFCRMenu]};
+			me.instance = {parents:[DisplaySystem.PageFCRMode]};
 			me.instance.group = nil;
 			return me.instance;
 		},
@@ -4676,7 +4676,7 @@ var DisplaySystem = {
 			cursorFCRgps = nil;
 		},
 		links: {
-			"OSB11": "PageFCRMenu",
+			"OSB11": "PageFCRMode",
 			"OSB15": "PageFCRCNTL",
 			"OSB17": "PageHSD",
 			"OSB18": "PageSMSINV",
