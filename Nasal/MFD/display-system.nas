@@ -73,7 +73,7 @@ var PUSHBUTTON   = 0;
 var ROCKERSWITCH = 1;
 
 var CursorHSD = 1;
-var FACH3 = 0;
+var FACH3 = getprop("sim/variant-id") == 4 or getprop("sim/variant-id") >= 6;#MLU Tape M4.3
 
 #  ██████  ███████ ██    ██ ██  ██████ ███████ 
 #  ██   ██ ██      ██    ██ ██ ██      ██      
