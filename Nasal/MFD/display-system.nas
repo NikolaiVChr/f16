@@ -1,3 +1,142 @@
+var symbolSize = {
+	hsd: {
+	    contact: 1,
+	    bullseye: 1,
+	    ownship: 1,
+	    compasFlag: 16,
+	    cursor: 16,
+	    cursorGhostAir: 18,
+	    cursorGhostGnd: 12,
+	    steerpoint: 5,
+	    contactVelocity: 0.0045,
+	    markpoint: 18,
+	},
+	bullseye: {
+		eye: 1,
+		ref: 1,
+	},
+	tfr: {
+		terrain: 20,
+		tick: 15,
+	},
+	has: {
+		cursor: 1,
+		tick: 10,
+		crossInner: 20,
+	},
+	fcr: {
+		blep: 8,
+		track: 1.0,
+		iff: 8,
+		dl: 10,
+		gainGaugeVert: 65,
+		gainGaugeHoriz: 20,
+		caret: 14,
+		tick: 1.0,
+		designation: 16,
+		interceptCross: 10,
+		designationGM: 10,
+		dlzWidth: 20,
+		dlzArrow: 1.0,
+		horizLine: 10,
+		cursorAir: 9,
+		cursorGMGap: 11,
+		cursorGMtick: 5,
+		cursorGMtickDist: 50,
+		bullseye: 1.0,
+		steerpoint: 1.0,
+		contactVelocity: 0.0045,
+	},
+};
+
+var margin = {
+	device: {
+		buttonText: 10,
+		fillHeight: 1,
+		outline: 1,
+	},
+	fcr: {
+		trackText: 20,
+		caretSide: 50,
+		caretBottom: 50,
+	},
+	bullseye: {
+		y: 50,
+		x: 210,
+		text: 20,
+	},
+	tfr: {
+		sides: 20,
+		bottom: 35,
+	},
+	has: {
+		statusBox: 40,
+		searchText: 45,
+	},
+};
+
+var lineWidth = {
+	device: {
+		outline: 2,
+		x: 3,
+		soi: 2,
+	},
+	fcr: {
+		dlz: 2,
+		rangeRings: 2,
+		track:2,
+		iff: 3,
+		dl: 3,
+		gainGauge: 2,
+		caret: 5,
+		tick: 3,
+		designation: 2,
+		designationGM: 2,
+		interceptCross: 2,
+		azimuthLine: 2,
+		horizLine: 3,
+		exp: 2,
+		cursorAir: 2,
+		cursorGnd: 2,
+		bullseye: 3,
+		steerpoint: 1,
+	},
+	has: {
+		cursor: 2,
+		statusBox: 2,
+		enclosure: 2,
+		aim: 2,
+	},
+	tfr: {
+		terrain: 1,
+	},
+	stations: {
+		outline: 1.5,
+	},
+	bullseyeLayer: {
+		eye: 2.5,
+		ref: 2,
+	},
+	arrows: {
+		triangle: 3,
+	},
+	hsd: {
+	    bullseye: 3,
+	    rangeRing: 2,
+	    ownship: 2,
+	    radarCone: 3,
+	    threatRing: 3,
+	    line: 2,
+	    route: 2,
+	    targetTrack: 2,
+	    targetDL: 3,
+	    designation: 2,
+	    cursor: 2,
+	    cursorGhost: 1.5,
+	},
+};
+
+
 # OSB text
 var colorText1 = [getprop("/sim/model/MFD-color/text1/red"), getprop("/sim/model/MFD-color/text1/green"), getprop("/sim/model/MFD-color/text1/blue")];
 
@@ -240,25 +379,29 @@ var DisplayDevice = {
 				.setColor(me.colorFront);
 		me.controls[controlName].outline = me.controlGrp.createChild("path")
 				.set("z-index", 11)
-				.moveTo(me.tempX-me.letterWidth*2*alignmentH-me.letterWidth*2-me.myCenter[0]-1, me.tempY-me.letterHeight*alignmentV*0.5-me.letterHeight*0.5-1-me.myCenter[1])
-				.horiz(me.letterWidth*4+2)
-				.vert(me.letterHeight*1.0+2)
-				.horiz(-me.letterWidth*4-2)
-				.vert(-me.letterHeight*1.0-2)
+				.setStrokeLineJoin("round") # "miter", "round" or "bevel"
+				.moveTo(me.tempX-me.letterWidth*2*alignmentH-me.letterWidth*2-me.myCenter[0]-margin.device.outline, me.tempY-me.letterHeight*alignmentV*0.5-me.letterHeight*0.5-margin.device.outline-me.myCenter[1])
+				.horiz(me.letterWidth*4+margin.device.outline*2)
+				.vert(me.letterHeight*1.0+margin.device.outline*2)
+				.horiz(-me.letterWidth*4-margin.device.outline*2)
+				.vert(-me.letterHeight*1.0-margin.device.outline*2)
+				.close()
 				.setColor(me.colorFront)
 				.hide()
-				.setStrokeLineWidth(2)
+				.setStrokeLineWidth(lineWidth.device.outline)
 				.setTranslation(me.myCenter);
 		me.controls[controlName].fill = me.controlGrp.createChild("path")
 				.set("z-index", 9)
-				.moveTo(me.tempX-me.letterWidth*2*alignmentH-me.letterWidth*2-me.myCenter[0], me.tempY-me.letterHeight*alignmentV*0.5-me.letterHeight*0.5-1-me.myCenter[1])
+				.setStrokeLineJoin("round") # "miter", "round" or "bevel"
+				.moveTo(me.tempX-me.letterWidth*2*alignmentH-me.letterWidth*2-me.myCenter[0], me.tempY-me.letterHeight*alignmentV*0.5-me.letterHeight*0.5-margin.device.fillHeight-me.myCenter[1])
 				.horiz(me.letterWidth*4)
-				.vert(me.letterHeight*1.0+1)
+				.vert(me.letterHeight*1.0+margin.device.fillHeight)
 				.horiz(-me.letterWidth*4)
-				.vert(-me.letterHeight*1.0-1)
+				.vert(-me.letterHeight*1.0-margin.device.fillHeight)
+				.close()
 				.setColorFill(me.colorBack)
 				.setColor(me.colorBack)
-				.setStrokeLineWidth(2)
+				.setStrokeLineWidth(lineWidth.device.outline)
 				.setTranslation(me.myCenter);
 	},
 
@@ -269,7 +412,7 @@ var DisplayDevice = {
            .lineTo(me.uvMap[0]*me.resolution[0], me.uvMap[1]*me.resolution[1])
            .moveTo(0, me.uvMap[1]*me.resolution[1])
            .lineTo(me.uvMap[0]*me.resolution[0], 0)
-           .setStrokeLineWidth(3)
+           .setStrokeLineWidth(lineWidth.device.x)
            .setColor(colorCircle1);
     },
 
@@ -284,7 +427,7 @@ var DisplayDevice = {
 	            .arcSmallCW(me.feedbackRadius,me.feedbackRadius, 0,  me.feedbackRadius*2, 0)
 	            .arcSmallCW(me.feedbackRadius,me.feedbackRadius, 0, -me.feedbackRadius*2, 0)
 	            .close()
-	            .setStrokeLineWidth(1)
+	            .setStrokeLineWidth(2)
 	            .set("z-index",7)
 	            .setColor(colorDot2[0],colorDot2[1],colorDot2[2],0.15)
 	            .setColorFill(colorDot2[0],colorDot2[1],colorDot2[2],0.3)
@@ -303,7 +446,7 @@ var DisplayDevice = {
 				.lineTo(me.tempMarginX,me.tempMarginY)
 				.setColor(me.colorFront)
 				.hide()
-				.setStrokeLineWidth(2);
+				.setStrokeLineWidth(lineWidth.device.soi);
 		return me.soiLine;
 	},
 
@@ -410,16 +553,16 @@ var DisplaySystem = {
 		me.device.fontSize = fontSize;
 
 		for (var i = 1; i <= 5; i+= 1) {
-			me.device.addControlText("OSB", "OSB"~i, [10, 0], i-1,-1);
+			me.device.addControlText("OSB", "OSB"~i, [margin.device.buttonText, 0], i-1,-1);
 		}
 		for (var i = 6; i <= 10; i+= 1) {
-			me.device.addControlText("OSB", "OSB"~i, [-10, 0], i-1,1);
+			me.device.addControlText("OSB", "OSB"~i, [-margin.device.buttonText, 0], i-1,1);
 		}
 		for (var i = 11; i <= 15; i+= 1) {
-			me.device.addControlText("OSB", "OSB"~i, [0, 10], i-1,0,-1);
+			me.device.addControlText("OSB", "OSB"~i, [0, margin.device.buttonText], i-1,0,-1);
 		}
 		for (var i = 16; i <= 20; i+= 1) {
-			me.device.addControlText("OSB", "OSB"~i, [0, -10], i-1,0,1);
+			me.device.addControlText("OSB", "OSB"~i, [0, -margin.device.buttonText], i-1,0,1);
 		}
 		me.device.addSOILines();
 		me.device.addSOIText("NOT SOI");
@@ -651,7 +794,7 @@ var DisplaySystem = {
 	        me.staFrame = setsize([], 9);
 	        var staPosY = -displayHeight*0.20;
 	        var staFont = 17;
-	        var staStroke = 1.5;
+	        var staStroke = lineWidth.stations.outline;
 	        var staX = 7;
 	        var staY = 9;
 	        var staW = 15;
@@ -824,9 +967,12 @@ var DisplaySystem = {
 			        return;
 				}
 				me.indices = pylons.fcs.getStationIndecesForSelectedType(me.info[0]);
+				me.offsetY  = me.info[1];
 	    	} else {
 	    		me.indices = pylons.fcs.getStationIndecesForSelectedType();
+	    		me.offsetY = 0;
 	    	} 	
+	    	me.group.setTranslation(displayWidthHalf, displayHeight+me.offsetY);
             for (me.indi = 0; me.indi < 9; me.indi += 1) {
                 me.sta[me.indi].setVisible(me.indices[me.indi] > -1);
                 me.staFrame[me.indi].setVisible(me.indices[me.indi] == 1);
@@ -852,52 +998,52 @@ var DisplaySystem = {
 		setup: func {
 			me.group.setTranslation(displayWidthHalf,displayHeight);
 			me.bullOwnRing = me.group.createChild("path")
-	            .moveTo(-15,0)
-	            .arcSmallCW(15,15, 0,  15*2, 0)
-	            .arcSmallCW(15,15, 0, -15*2, 0)
+	            .moveTo(-15*symbolSize.bullseye.eye,0)
+	            .arcSmallCW(15*symbolSize.bullseye.eye,15*symbolSize.bullseye.eye, 0,  15*2*symbolSize.bullseye.eye, 0)
+	            .arcSmallCW(15*symbolSize.bullseye.eye,15*symbolSize.bullseye.eye, 0, -15*2*symbolSize.bullseye.eye, 0)
 	            .close()
-	            .moveTo(0,-18)
-	            .lineTo(8,-12.5)
-	            .moveTo(0,-18)
-	            .lineTo(-8,-12.5)
+	            .moveTo(0,-18*symbolSize.bullseye.eye)
+	            .lineTo(8*symbolSize.bullseye.eye,-12.5*symbolSize.bullseye.eye)
+	            .moveTo(0,-18*symbolSize.bullseye.eye)
+	            .lineTo(-8*symbolSize.bullseye.eye,-12.5*symbolSize.bullseye.eye)
 	            .close()
-	            .setStrokeLineWidth(2.5)
+	            .setStrokeLineWidth(lineWidth.bullseyeLayer.eye)
 	            .setStrokeLineCap("round")
-	            .setTranslation(-185, -50)
+	            .setTranslation(-margin.bullseye.x, -margin.bullseye.y)
 	            .set("z-index",1)
 	            .setColor(colorBullseye);
 	        me.bullOwnDist = me.group.createChild("text")
 	                .setAlignment("center-center")
 	                .setColor(colorBullseye)
-	                .setTranslation(-185, -50)
+	                .setTranslation(-margin.bullseye.x, -margin.bullseye.y)
 	                .setText("12")
 	                .set("z-index",1)
 	                .setFontSize(18, 1.0);
 	        me.bullOwnDir = me.group.createChild("text")
 	                .setAlignment("center-top")
 	                .setColor(colorBullseye)
-	                .setTranslation(-185, -30)
+	                .setTranslation(-margin.bullseye.x, -margin.bullseye.y+margin.bullseye.text)
 	                .setText("270")
 	                .set("z-index",1)
 	                .setFontSize(18, 1.0);
 	        me.refW = me.group.createChild("path")
-	            .moveTo(-30, -5)
-	            .lineTo(-20, -5)
-	            .lineTo(-10, 15)
-	            .lineTo(  0, -5)
-	            .lineTo( 10, 15)
-	            .lineTo( 20, -5)
-	            .lineTo( 30, -5)
-	            .setStrokeLineWidth(2)
+	            .moveTo(-30*symbolSize.bullseye.ref, -5*symbolSize.bullseye.ref)
+	            .lineTo(-20*symbolSize.bullseye.ref, -5*symbolSize.bullseye.ref)
+	            .lineTo(-10*symbolSize.bullseye.ref, 15*symbolSize.bullseye.ref)
+	            .lineTo(  0*symbolSize.bullseye.ref, -5*symbolSize.bullseye.ref)
+	            .lineTo( 10*symbolSize.bullseye.ref, 15*symbolSize.bullseye.ref)
+	            .lineTo( 20*symbolSize.bullseye.ref, -5*symbolSize.bullseye.ref)
+	            .lineTo( 30*symbolSize.bullseye.ref, -5*symbolSize.bullseye.ref)
+	            .setStrokeLineWidth(lineWidth.bullseyeLayer.ref)
 	            .setScale(0.9, 1)
-	            .setTranslation(-180, -50)
+	            .setTranslation(-margin.bullseye.x+5, -margin.bullseye.y)
 	            .set("z-index",1)
 	            .setColor(colorBullseye);
 	        me.refLine = me.group.createChild("path")
-	        	.moveTo(  0, -20)
-	            .lineTo(  0,  30)
-	            .setStrokeLineWidth(2)
-	            .setTranslation(-180, -50)
+	        	.moveTo(  0, -20*symbolSize.bullseye.ref)
+	            .lineTo(  0,  30*symbolSize.bullseye.ref)
+	            .setStrokeLineWidth(lineWidth.bullseyeLayer.ref)
+	            .setTranslation(-margin.bullseye.x+5, -margin.bullseye.y)
 	            .set("z-index",1)
 	            .setColor(colorBullseye);
 	    },
@@ -931,7 +1077,7 @@ var DisplaySystem = {
                 me.bullOwnDist.setText(me.bullDistToMe);
             } elsif (me.refOn) {
             	me.dev = steerpoints.getCurrentDeviation();
-            	me.refLine.setTranslation(-180+math.clamp(me.dev*0.5,-25,25), -50);
+            	me.refLine.setTranslation(-margin.bullseye.x+5+math.clamp(me.dev*0.5,-25*symbolSize.bullseye.ref,25*symbolSize.bullseye.ref), -margin.bullseye.y);
             }
             me.refLine.setVisible(!me.bullOn and me.refOn);
             me.refW.setVisible(!me.bullOn and me.refOn);
@@ -961,11 +1107,13 @@ var DisplaySystem = {
 			me.leftMargin = 5;
 			me.up = me.group.createChild("path")
 						.set("z-index", 20)
+						.setStrokeLineJoin("round") # "miter", "round" or "bevel"
 	                    .moveTo(me.leftMargin,displayHeightHalf-105-27.5)
 	                    .horiz(30)
 	                    .lineTo(15+me.leftMargin,displayHeightHalf-105-27.5-15)
 	                    .lineTo(me.leftMargin,displayHeightHalf-105-27.5)
-	                    .setStrokeLineWidth(3)
+	                    .close()
+	                    .setStrokeLineWidth(lineWidth.arrows.triangle)
 	                    .hide()
 	                    .setColor(me.device.colorFront);
 	        me.txt = me.group.createChild("text")
@@ -976,11 +1124,13 @@ var DisplaySystem = {
 		                .setFontSize(me.device.fontSize, 1.0);
 	        me.down = me.group.createChild("path")
 	        			.set("z-index", 20)
+	        			.setStrokeLineJoin("round")
 	                    .moveTo(me.leftMargin,displayHeightHalf-105+27.5)
 	                    .horiz(30)
 	                    .lineTo(me.leftMargin+15,displayHeightHalf-105+27.5+15)
 	                    .lineTo(me.leftMargin,displayHeightHalf-105+27.5)
-	                    .setStrokeLineWidth(3)
+	                    .close()
+	                    .setStrokeLineWidth(lineWidth.arrows.triangle)
 	                    .hide()
 	                    .setColor(me.device.colorFront);
 	        me.plate = me.group.createChild("path")
@@ -990,6 +1140,7 @@ var DisplaySystem = {
 	                    .vert(-85)
 	                    .horiz(-30)
 	                    .vert(85)
+	                    .close()
 	                    .setStrokeLineWidth(1)
 	                    .setColorFill(me.device.colorBack)
 	                    .setColor(me.device.colorBack);
@@ -1766,7 +1917,7 @@ var DisplaySystem = {
 			me.showRangeUp = 0;
 			me.slew_c_last = 0;
 			me.index = me.device.name == "RightMFD";
-			me.concentricCenter = [0,0];
+			me.concentricCenter = [displayWidthHalf,0.5*displayHeight];
 			me.setupHSD();
 		},
 		setupHSD: func {
@@ -1779,9 +1930,9 @@ var DisplaySystem = {
 	        me.cone = me.concentricGrp.createChild("group")
 	            .set("z-index",5);#radar cone
 
-	        me.outerRadius  = displayHeight*0.75;
-	        me.mediumRadius = me.outerRadius*0.6666;
-	        me.innerRadius  = me.outerRadius*0.3333;
+	        me.outerRadius  = displayHeight *3/4;
+	        me.mediumRadius = me.outerRadius*2/3;
+	        me.innerRadius  = me.outerRadius*1/3;
 	        #var innerTick    = 0.85*innerRadius*math.cos(45*D2R);
 	        #var outerTick    = 1.15*innerRadius*math.cos(45*D2R);
 
@@ -1797,49 +1948,49 @@ var DisplaySystem = {
 	            .arcSmallCW(me.outerRadius,me.outerRadius, 0, -me.outerRadius*2, 0)
 	            .arcSmallCW(me.outerRadius,me.outerRadius, 0,  me.outerRadius*2, 0)
 	            .moveTo(0,-me.innerRadius)#north
-	            .vert(-15)
-	            .lineTo(3,-me.innerRadius-15+2)
-	            .lineTo(0,-me.innerRadius-15+4)
-	            .moveTo(0,me.innerRadius-15)#south
-	            .vert(30)
+	            .vert(-symbolSize.hsd.compasFlag)
+	            .lineTo(symbolSize.hsd.compasFlag/3,-me.innerRadius-symbolSize.hsd.compasFlag+symbolSize.hsd.compasFlag/6)
+	            .lineTo(0,-me.innerRadius-symbolSize.hsd.compasFlag+symbolSize.hsd.compasFlag/3)
+	            .moveTo(0,me.innerRadius-symbolSize.hsd.compasFlag)#south
+	            .vert(symbolSize.hsd.compasFlag*2)
 	            .moveTo(-me.innerRadius,0)#west
-	            .horiz(-15)
+	            .horiz(-symbolSize.hsd.compasFlag)
 	            .moveTo(me.innerRadius,0)#east
-	            .horiz(15)
-	            .setStrokeLineWidth(2)
+	            .horiz(symbolSize.hsd.compasFlag)
+	            .setStrokeLineWidth(lineWidth.hsd.rangeRing)
 	            .set("z-index",2)
 	            .setColor(colorLine5);
 
 
 	        me.cursorHSD = me.buttonView.createChild("path")
 	                    .moveTo(0, 6)
-	                    .vert(16)
-	                    .moveTo(0, -6)
-	                    .vert(-16)
-	                    .moveTo(6,0)
-	                    .horiz(16)
-	                    .moveTo(-6,0)
-	                    .horiz(-16)
-	                    .setStrokeLineWidth(2)
+	                    .vert(symbolSize.hsd.cursor)
+	                    .moveTo(0, -symbolSize.hsd.cursor*0.4)
+	                    .vert(-symbolSize.hsd.cursor)
+	                    .moveTo(symbolSize.hsd.cursor*0.4,0)
+	                    .horiz(symbolSize.hsd.cursor)
+	                    .moveTo(-symbolSize.hsd.cursor*0.4,0)
+	                    .horiz(-symbolSize.hsd.cursor)
+	                    .setStrokeLineWidth(lineWidth.hsd.cursor)
 	                    .setColor(colorLine3);
 	        me.cursorGhost = me.concentricGrp.createChild("group").set("z-index",1000);
 	        me.cursorAirGhost = me.cursorGhost.createChild("path")
-	                    .moveTo(-8,-9)
-	                    .vert(18)
-	                    .moveTo(8,-9)
-	                    .vert(18)
-	                    .setStrokeLineWidth(1.5)
+	                    .moveTo(-symbolSize.hsd.cursorGhostAir*0.45,-symbolSize.hsd.cursorGhostAir/2)
+	                    .vert(symbolSize.hsd.cursorGhostAir)
+	                    .moveTo(symbolSize.hsd.cursorGhostAir*0.45,-symbolSize.hsd.cursorGhostAir/2)
+	                    .vert(symbolSize.hsd.cursorGhostAir)
+	                    .setStrokeLineWidth(lineWidth.hsd.cursorGhost)
 	                    .setColor(colorLine3);
 	        me.cursorGmGhost = me.cursorGhost.createChild("path")
-	                    .moveTo(0, 6)
-	                    .vert(12)
-	                    .moveTo(0, -6)
-	                    .vert(-12)
-	                    .moveTo(6,0)
-	                    .horiz(12)
-	                    .moveTo(-6,0)
-	                    .horiz(-12)
-	                    .setStrokeLineWidth(1.5)
+	                    .moveTo(0, symbolSize.hsd.cursorGhostGnd*0.5)
+	                    .vert(symbolSize.hsd.cursorGhostGnd)
+	                    .moveTo(0, -symbolSize.hsd.cursorGhostGnd*0.5)
+	                    .vert(-symbolSize.hsd.cursorGhostGnd)
+	                    .moveTo(symbolSize.hsd.cursorGhostGnd*0.5,0)
+	                    .horiz(symbolSize.hsd.cursorGhostGnd)
+	                    .moveTo(-symbolSize.hsd.cursorGhostGnd*0.5,0)
+	                    .horiz(-symbolSize.hsd.cursorGhostGnd)
+	                    .setStrokeLineWidth(lineWidth.hsd.cursorGhost)
 	                    .setColor(colorLine3);
 
 	        me.maxB = 16;
@@ -1858,33 +2009,33 @@ var DisplaySystem = {
 	                me.blepTriangleText[i] = me.blepTriangle[i].createChild("text")
 	                                .setAlignment("center-top")
 	                                .setFontSize(me.device.fontSize, 1.0)
-	                                .setTranslation(0,20)
+	                                .setTranslation(0,symbolSize.hsd.contact*20)
 	                                .setColor(1, 1, 1);
 	                me.blepTriangleVelLine[i] = me.blepTriangleVel[i].createChild("path")
-	                                .lineTo(0,-10)
-	                                .setTranslation(0,-16)
-	                                .setStrokeLineWidth(2)
+	                                .lineTo(0,symbolSize.hsd.contact*-10)
+	                                .setTranslation(0,symbolSize.hsd.contact*-16)
+	                                .setStrokeLineWidth(lineWidth.hsd.targetTrack)
 	                                .setColor(colorCircle2);
 	                me.blepTrianglePaths[i] = me.blepTriangle[i].createChild("path")
-	                                .moveTo(-14,8)
-	                                .horiz(28)
-	                                .lineTo(0,-16)
-	                                .lineTo(-14,8)
+	                                .moveTo(symbolSize.hsd.contact*-14,symbolSize.hsd.contact*8)
+	                                .horiz(symbolSize.hsd.contact*28)
+	                                .lineTo(0,symbolSize.hsd.contact*-16)
+	                                .lineTo(symbolSize.hsd.contact*-14,symbolSize.hsd.contact*8)
 	                                .setColor(colorCircle2)
 	                                .set("z-index",10)
-	                                .setStrokeLineWidth(2);
+	                                .setStrokeLineWidth(lineWidth.hsd.targetTrack);
 	                me.lnk[i] = me.concentricGrp.createChild("path")
-	                                .moveTo(-10,-10)
-	                                .vert(20)
-	                                .horiz(20)
-	                                .vert(-20)
-	                                .horiz(-20)
-	                                .moveTo(0,-10)
-	                                .vert(-10)
+	                                .moveTo(symbolSize.hsd.contact*-10,symbolSize.hsd.contact*-10)
+	                                .vert(symbolSize.hsd.contact*20)
+	                                .horiz(symbolSize.hsd.contact*20)
+	                                .vert(symbolSize.hsd.contact*-20)
+	                                .horiz(symbolSize.hsd.contact*-20)
+	                                .moveTo(0,symbolSize.hsd.contact*-10)
+	                                .vert(symbolSize.hsd.contact*-10)
 	                                .setColor(colorDot1)
 	                                .hide()
 	                                .set("z-index",11)
-	                                .setStrokeLineWidth(3);
+	                                .setStrokeLineWidth(lineWidth.hsd.targetDL);
 	                me.lnkT[i] = me.concentricGrp.createChild("text")
 	                                .setAlignment("center-bottom")
 	                                .setColor(colorDot1)
@@ -1897,22 +2048,22 @@ var DisplaySystem = {
 	                                .setFontSize(me.device.fontSize, 1.0);
 	        }
 	        me.selection = me.concentricGrp.createChild("path")
-	                .moveTo(-16, 0)
-	                .arcSmallCW(16, 16, 0, 16*2, 0)
-	                .arcSmallCW(16, 16, 0, -16*2, 0)
+	                .moveTo(symbolSize.hsd.contact*-16, 0)
+	                .arcSmallCW(symbolSize.hsd.contact*16, symbolSize.hsd.contact*16, 0, symbolSize.hsd.contact*16*2, 0)
+	                .arcSmallCW(symbolSize.hsd.contact*16, symbolSize.hsd.contact*16, 0, symbolSize.hsd.contact*-16*2, 0)
 	                .setColor(colorDot1)
 	                .set("z-index",12)
-	                .setStrokeLineWidth(2);
+	                .setStrokeLineWidth(lineWidth.hsd.designation);
 
 	        me.myself = me.concentricGrp.createChild("path")#own ship
 	           .moveTo(0, 0)
-	           .vert(30)
-	           .moveTo(-10, 10)
-	           .horiz(20)
-	           .moveTo(-5, 20)
-	           .horiz(10)
+	           .vert(symbolSize.hsd.ownship*30)
+	           .moveTo(symbolSize.hsd.ownship*-10, symbolSize.hsd.ownship*10)
+	           .horiz(symbolSize.hsd.ownship*20)
+	           .moveTo(symbolSize.hsd.ownship*-5, symbolSize.hsd.ownship*20)
+	           .horiz(symbolSize.hsd.ownship*10)
 	           .setColor(colorLine1)
-	           .setStrokeLineWidth(2);
+	           .setStrokeLineWidth(lineWidth.hsd.ownship);
 
 	        me.threat_c = [];
 	        me.threat_t = [];
@@ -1921,7 +2072,7 @@ var DisplaySystem = {
 	                .moveTo(-50,0)
 	                .arcSmallCW(50,50, 0,  50*2, 0)
 	                .arcSmallCW(50,50, 0, -50*2, 0)
-	                .setStrokeLineWidth(3)
+	                .setStrokeLineWidth(lineWidth.hsd.threatRing)
 	                .set("z-index",2)
 	                .hide()
 	                .setColor(colorCircle1));
@@ -1939,25 +2090,25 @@ var DisplaySystem = {
 	                    .setColor(no<5?colorText2:colorCircle2)
 	                    .setText("X")
 	                    .set("z-index",2)
-	                    .setFontSize(18, 1.0);
+	                    .setFontSize(symbolSize.hsd.markpoint, 1.0);
 	        }
 
 	        me.bullseye = me.concentricGrp.createChild("path")
-	            .moveTo(-25,0)
-	            .arcSmallCW(25,25, 0,  25*2, 0)
-	            .arcSmallCW(25,25, 0, -25*2, 0)
-	            .moveTo(-15,0)
-	            .arcSmallCW(15,15, 0,  15*2, 0)
-	            .arcSmallCW(15,15, 0, -15*2, 0)
-	            .moveTo(-5,0)
-	            .arcSmallCW(5,5, 0,  5*2, 0)
-	            .arcSmallCW(5,5, 0, -5*2, 0)
-	            .setStrokeLineWidth(3)
+	            .moveTo(symbolSize.hsd.bullseye*-25,0)
+	            .arcSmallCW(symbolSize.hsd.bullseye*25,symbolSize.hsd.bullseye*25, 0,  symbolSize.hsd.bullseye*25*2, 0)
+	            .arcSmallCW(symbolSize.hsd.bullseye*25,symbolSize.hsd.bullseye*25, 0, symbolSize.hsd.bullseye*-25*2, 0)
+	            .moveTo(symbolSize.hsd.bullseye*-15,0)
+	            .arcSmallCW(symbolSize.hsd.bullseye*15,symbolSize.hsd.bullseye*15, 0,  symbolSize.hsd.bullseye*15*2, 0)
+	            .arcSmallCW(symbolSize.hsd.bullseye*15,symbolSize.hsd.bullseye*15, 0, symbolSize.hsd.bullseye*-15*2, 0)
+	            .moveTo(symbolSize.hsd.bullseye*-5,0)
+	            .arcSmallCW(symbolSize.hsd.bullseye*5,symbolSize.hsd.bullseye*5, 0,  symbolSize.hsd.bullseye*5*2, 0)
+	            .arcSmallCW(symbolSize.hsd.bullseye*5,symbolSize.hsd.bullseye*5, 0, symbolSize.hsd.bullseye*-5*2, 0)
+	            .setStrokeLineWidth(lineWidth.hsd.bullseye)
 	            .setColor(colorBullseye);
 	        me.cursorLoc = me.buttonView.createChild("text")
 	                .setAlignment("left-bottom")
 	                .setColor(colorBetxt)
-	                .setTranslation(-205, -75)
+	                .setTranslation(-displayWidthHalf*0.95, -displayHeight*0.15)
 	                .setText("12")
 	                .set("z-index",1)
 	                .setFontSize(18, 1.0);
@@ -2100,7 +2251,7 @@ var DisplaySystem = {
                     		me.set_HSD_range_dep(me.rng);
                     	}
                     	me.set_HSD_coupled(0);
-                    	if (me.resetC) cursor_pos_hsd[1] = me.concentricCenter[1]-displayHeight;
+                    	if (me.resetC) cursor_pos_hsd[1] = me.concentricCenter[1]*0.5-displayHeight;
                     }
                     if (cursor_pos_hsd[1] >= 0) {
                     	me.resetC = 0;
@@ -2116,7 +2267,7 @@ var DisplaySystem = {
                     		me.set_HSD_range_dep(me.rng);
                     	}
                     	me.set_HSD_coupled(0);
-                    	if (me.resetC) cursor_pos_hsd[1] = me.concentricCenter[1]-displayHeight;
+                    	if (me.resetC) cursor_pos_hsd[1] = me.concentricCenter[1]+0.5*(displayHeight-me.concentricCenter[1])-displayHeight;
                     }
                     cursor_pos_hsd[1] = math.clamp(cursor_pos_hsd[1], -displayHeight, 0);
                     cursor_click = (slew_c and !me.slew_c_last)?me.index:-1;
@@ -2140,6 +2291,7 @@ var DisplaySystem = {
                 me.cursorDev   = -math.atan2(-me.hsdCursorFromOwnship[0], -me.hsdCursorFromOwnship[1])*R2D;
                 me.cursorDist  = NM2M*(me.range*me.pixelsCursor/me.pixelsFromOwnshipToTop);
                 #printf("HSD Cursor  dist %.2f nm  dev %.1f deg",me.cursorDist*M2NM,me.cursorDev);
+                #printf("  %d %.3f    %d   %d,%d",me.range,me.pixelsCursor,me.pixelsFromOwnshipToTop,me.hsdCursorFromOwnship[0],me.hsdCursorFromOwnship[1]);
                 me.device.controls["OSB10"].setControlText("C\nZ");
             } else {
             	me.device.controls["OSB10"].setControlText("");
@@ -2241,7 +2393,9 @@ var DisplaySystem = {
 
                 if (me.IMSOI) {
                 	me.cursorCoord = geo.aircraft_position();
-	                me.cursorCoord.apply_course_distance(noti.getproper("heading")+me.cursorDev, me.cursorDist);
+	                if (me.cursorDist > 0) {
+	                	me.cursorCoord.apply_course_distance(noti.getproper("heading")+me.cursorDev, me.cursorDist);	                
+	                }
 	                me.cursorBullDist = me.cursorCoord.distance_to(me.bullCoord);
 	                me.cursorBullCrs  = me.bullCoord.course_to(me.cursorCoord);
 	                me.cursorLoc.setText(sprintf("%03d %03d",me.cursorBullCrs, me.cursorBullDist*M2NM));
@@ -2278,7 +2432,7 @@ var DisplaySystem = {
                                     .moveTo(0,0)
                                     .lineTo(me.radarX2,me.radarY2)#left
                                     .arcSmallCW(me.rdrRangePixels,me.rdrRangePixels, 0, me.radarX1-me.radarX2, me.radarY1-me.radarY2)
-                                    .setStrokeLineWidth(2)
+                                    .setStrokeLineWidth(lineWidth.hsd.radarCone)
                                     .set("z-index",5)
                                     .setColor(colorLine1)
                                     .update();
@@ -2312,10 +2466,10 @@ var DisplaySystem = {
                             #printf("%.3f, %.3f",me.wp.wp_lat,me.wp.wp_lon);
                         #}
                         me.wp = me.cone.createChild("path")
-                            .moveTo(me.legX-5,me.legY)
-                            .arcSmallCW(5,5, 0, 5*2, 0)
-                            .arcSmallCW(5,5, 0,-5*2, 0)
-                            .setStrokeLineWidth(2)
+                            .moveTo(me.legX-symbolSize.hsd.steerpoint,me.legY)
+                            .arcSmallCW(symbolSize.hsd.steerpoint,symbolSize.hsd.steerpoint, 0, symbolSize.hsd.steerpoint*2, 0)
+                            .arcSmallCW(symbolSize.hsd.steerpoint,symbolSize.hsd.steerpoint, 0,-symbolSize.hsd.steerpoint*2, 0)
+                            .setStrokeLineWidth(lineWidth.hsd.route)
                             .set("z-index",4)
                             .setColor(colorLine3)
                             .update();
@@ -2326,7 +2480,7 @@ var DisplaySystem = {
                             me.cone.createChild("path")
                                 .moveTo(me.legX,me.legY)
                                 .lineTo(me.prevX,me.prevY)
-                                .setStrokeLineWidth(2)
+                                .setStrokeLineWidth(lineWidth.hsd.route)
                                 .set("z-index",4)
                                 .setColor(colorLine3)
                                 .update();
@@ -2383,7 +2537,7 @@ var DisplaySystem = {
                                 me.cone.createChild("path")
                                     .moveTo(me.legX,me.legY)
                                     .lineTo(me.prevX,me.prevY)
-                                    .setStrokeLineWidth(2)
+                                    .setStrokeLineWidth(lineWidth.hsd.line)
                                     .setStrokeDashArray([10, 10])
                                     .set("z-index",4)
                                     .setColor(colorLines[0]*0.70,colorLines[1]*0.70,colorLines[2]*0.70)
@@ -2392,7 +2546,7 @@ var DisplaySystem = {
                                 me.cone.createChild("path")
                                     .moveTo(me.legX,me.legY)
                                     .lineTo(me.prevX,me.prevY)
-                                    .setStrokeLineWidth(2)
+                                    .setStrokeLineWidth(lineWidth.hsd.line)
                                     .setStrokeDashArray([10, 10])
                                     .set("z-index",4)
                                     .setColor(colorLines[0]*0.70,colorLines[1]*0.70,colorLines[2]*0.70)
@@ -2488,7 +2642,7 @@ var DisplaySystem = {
                         me.legY = -me.legRangePixels*math.cos(me.legBearing*D2R);
                         me.ci.setTranslation(me.legX,me.legY);
                         me.ci.setScale(me.legScale);
-                        me.ci.setStrokeLineWidth(1/me.legScale);
+                        me.ci.setStrokeLineWidth(lineWidth.hsd.threatRing/me.legScale);
                         me.co = me.ra > me.legDistance?colorCircle1:colorCircle2;
                         #printDebug("Painting ", 300+l," in ", me.ra > me.legDistance?"red":"yellow");
                         me.ci.setColor(me.co);
@@ -2619,14 +2773,14 @@ var DisplaySystem = {
                 me.blepTriangle[me.i].show();
                 me.blepTrianglePaths[me.i].setRotation(me.rot);
                 me.blepTriangleVel[me.i].setRotation(me.rot);
-                me.blepTriangleVelLine[me.i].setScale(1,me.c_spd*0.0045);
+                me.blepTriangleVelLine[me.i].setScale(1,me.c_spd*symbolSize.hsd.contactVelocity);
                 me.blepTriangleVelLine[me.i].setColor(me.color);
                 me.lockAlt = sprintf("%02d", math.round(me.c_alt*0.001));
                 me.blepTriangleText[me.i].setText(me.lockAlt);
                 me.i += 1;
                 if (me.blue == 2 and me.ii < me.maxB) {
                     me.lnkT[me.ii].setColor(me.color);
-                    me.lnkT[me.ii].setTranslation(me.trans[0],me.trans[1]-25);
+                    me.lnkT[me.ii].setTranslation(me.trans[0],me.trans[1]-symbolSize.hsd.contact*25);
                     me.lnkT[me.ii].setText(""~me.blueIndex);
                     me.lnk[me.ii].hide();
                     me.lnkT[me.ii].show();
@@ -2639,8 +2793,8 @@ var DisplaySystem = {
                 me.lnk[me.ii].setRotation(me.rot);
                 me.lnkT[me.ii].setColor(me.color);
                 me.lnkTA[me.ii].setColor(me.color);
-                me.lnkT[me.ii].setTranslation(me.trans[0],me.trans[1]-25);
-                me.lnkTA[me.ii].setTranslation(me.trans[0],me.trans[1]+20);
+                me.lnkT[me.ii].setTranslation(me.trans[0],me.trans[1]-symbolSize.hsd.contact*25);
+                me.lnkTA[me.ii].setTranslation(me.trans[0],me.trans[1]+symbolSize.hsd.contact*20);
                 me.lnkT[me.ii].setText(""~me.blueIndex);
                 me.lnkTA[me.ii].setText(sprintf("%02d", math.round(me.c_alt*0.001)));
                 me.lnk[me.ii].show();
@@ -2691,177 +2845,178 @@ var DisplaySystem = {
 			me.setupSMS();
 		},
 		setupSMS: func {
+			me.groupInv = me.group;
+	        me.groupInv.setTranslation(0.515*displayWidth, displayHeight);
+	        
 
-	        me.group.setTranslation(0.5*displayWidth, displayHeight);
-
-	        me.cat = me.group.createChild("text")
+	        me.cat = me.groupInv.createChild("text")
 	                .setTranslation(0, -displayHeightHalf+100)
 	                .setText("CAT I")
 	                .setAlignment("center-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
 
-	        me.gun = me.group.createChild("text")
+	        me.gun = me.groupInv.createChild("text")
 	                .setTranslation(-displayWidthHalf*0.95, -displayHeightHalf-155)
 	                .setText("-----")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
-	        me.gun2 = me.group.createChild("text")
+	        me.gun2 = me.groupInv.createChild("text")
 	                .setTranslation(-displayWidthHalf*0.95, -displayHeightHalf-130)
 	                .setText("-----")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
 
-	        me.p6 = me.group.createChild("text")
-	                .setTranslation(displayWidthHalf*0.08, -displayHeightHalf-90)
+	        me.p6 = me.groupInv.createChild("text")
+	                .setTranslation(displayWidthHalf*0.10, -displayHeightHalf-90)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
-	        me.p6l1 = me.group.createChild("text")
-	                .setTranslation(displayWidthHalf*0.08, -displayHeightHalf-65)
+	        me.p6l1 = me.groupInv.createChild("text")
+	                .setTranslation(displayWidthHalf*0.10, -displayHeightHalf-65)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
-	        me.p6l2 = me.group.createChild("text")
-	                .setTranslation(displayWidthHalf*0.08, -displayHeightHalf-40)
+	        me.p6l2 = me.groupInv.createChild("text")
+	                .setTranslation(displayWidthHalf*0.10, -displayHeightHalf-40)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
 
-	        me.p7 = me.group.createChild("text")
+	        me.p7 = me.groupInv.createChild("text")
 	                .setTranslation(displayWidthHalf*0.37, -displayHeightHalf-15)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
-	        me.p7l1 = me.group.createChild("text")
+	        me.p7l1 = me.groupInv.createChild("text")
 	                .setTranslation(displayWidthHalf*0.37, -displayHeightHalf+10)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
-	        me.p7l2 = me.group.createChild("text")
+	        me.p7l2 = me.groupInv.createChild("text")
 	                .setTranslation(displayWidthHalf*0.37, -displayHeightHalf+35)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
 
-	        me.p8 = me.group.createChild("text")
+	        me.p8 = me.groupInv.createChild("text")
 	                .setTranslation(displayWidthHalf*0.52, -displayHeightHalf+60)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
-	        me.p8l1 = me.group.createChild("text")
+	        me.p8l1 = me.groupInv.createChild("text")
 	                .setTranslation(displayWidthHalf*0.52, -displayHeightHalf+85)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
 
-	        me.p9 = me.group.createChild("text")
+	        me.p9 = me.groupInv.createChild("text")
 	                .setTranslation(displayWidthHalf*0.52, -displayHeightHalf+125)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
-	        me.p9l1 = me.group.createChild("text")
+	        me.p9l1 = me.groupInv.createChild("text")
 	                .setTranslation(displayWidthHalf*0.52, -displayHeightHalf+150)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
 
-	        me.p5 = me.group.createChild("text")
+	        me.p5 = me.groupInv.createChild("text")
 	                .setTranslation(-displayWidthHalf*0.20, -displayHeightHalf-190)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
-	        me.p5l1 = me.group.createChild("text")
+	        me.p5l1 = me.groupInv.createChild("text")
 	                .setTranslation(-displayWidthHalf*0.20, -displayHeightHalf-165)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
-	        me.p5l2 = me.group.createChild("text")
+	        me.p5l2 = me.groupInv.createChild("text")
 	                .setTranslation(-displayWidthHalf*0.20, -displayHeightHalf-140)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
 
-	        me.p4 = me.group.createChild("text")
+	        me.p4 = me.groupInv.createChild("text")
 	                .setTranslation(-displayWidthHalf*0.51, -displayHeightHalf-90)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
-	        me.p4l1 = me.group.createChild("text")
+	        me.p4l1 = me.groupInv.createChild("text")
 	                .setTranslation(-displayWidthHalf*0.51, -displayHeightHalf-65)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
-	        me.p4l2 = me.group.createChild("text")
+	        me.p4l2 = me.groupInv.createChild("text")
 	                .setTranslation(-displayWidthHalf*0.51, -displayHeightHalf-40)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
 
-	        me.p3 = me.group.createChild("text")
+	        me.p3 = me.groupInv.createChild("text")
 	                .setTranslation(-displayWidthHalf*0.8, -displayHeightHalf-15)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
-	        me.p3l1 = me.group.createChild("text")
+	        me.p3l1 = me.groupInv.createChild("text")
 	                .setTranslation(-displayWidthHalf*0.8, -displayHeightHalf+10)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
-	        me.p3l2 = me.group.createChild("text")
+	        me.p3l2 = me.groupInv.createChild("text")
 	                .setTranslation(-displayWidthHalf*0.8, -displayHeightHalf+35)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
 
-	        me.p2 = me.group.createChild("text")
+	        me.p2 = me.groupInv.createChild("text")
 	                .setTranslation(-displayWidthHalf*0.95, -displayHeightHalf+60)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
-	        me.p2l1 = me.group.createChild("text")
+	        me.p2l1 = me.groupInv.createChild("text")
 	                .setTranslation(-displayWidthHalf*0.95, -displayHeightHalf+85)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
 
-	        me.p1 = me.group.createChild("text")
+	        me.p1 = me.groupInv.createChild("text")
 	                .setTranslation(-displayWidthHalf*0.95, -displayHeightHalf+125)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
-	        me.p1l1 = me.group.createChild("text")
+	        me.p1l1 = me.groupInv.createChild("text")
 	                .setTranslation(-displayWidthHalf*0.95, -displayHeightHalf+150)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
 
-	        me.p1f = me.group.createChild("path")
+	        me.p1f = me.groupInv.createChild("path")
 	           .moveTo(-displayWidthHalf*0.97, -displayHeightHalf+115)
 	           .vert(50)
 	           .horiz(100)
@@ -2870,7 +3025,7 @@ var DisplaySystem = {
 	           .setColor(colorText1)
 	           .setStrokeLineWidth(2)
 	           .hide();
-	        me.p2f = me.group.createChild("path")
+	        me.p2f = me.groupInv.createChild("path")
 	           .moveTo(-displayWidthHalf*0.96, -displayHeightHalf+50)
 	           .vert(50)
 	           .horiz(100)
@@ -2879,7 +3034,7 @@ var DisplaySystem = {
 	           .setColor(colorText1)
 	           .setStrokeLineWidth(2)
 	           .hide();
-	        me.p3f = me.group.createChild("path")
+	        me.p3f = me.groupInv.createChild("path")
 	           .moveTo(-displayWidthHalf*0.81, -displayHeightHalf-25)
 	           .vert(70)
 	           .horiz(100)
@@ -2888,7 +3043,7 @@ var DisplaySystem = {
 	           .setColor(colorText1)
 	           .setStrokeLineWidth(2)
 	           .hide();
-	        me.p4f = me.group.createChild("path")
+	        me.p4f = me.groupInv.createChild("path")
 	           .moveTo(-displayWidthHalf*0.52, -displayHeightHalf-100)
 	           .vert(70)
 	           .horiz(100)
@@ -2897,7 +3052,7 @@ var DisplaySystem = {
 	           .setColor(colorText1)
 	           .setStrokeLineWidth(2)
 	           .hide();
-	        me.p5f = me.group.createChild("path")
+	        me.p5f = me.groupInv.createChild("path")
 	           .moveTo(-displayWidthHalf*0.21, -displayHeightHalf-200)
 	           .vert(70)
 	           .horiz(100)
@@ -2906,7 +3061,7 @@ var DisplaySystem = {
 	           .setColor(colorText1)
 	           .setStrokeLineWidth(2)
 	           .hide();
-	        me.p6f = me.group.createChild("path")
+	        me.p6f = me.groupInv.createChild("path")
 	           .moveTo(displayWidthHalf*0.09, -displayHeightHalf-100)
 	           .vert(70)
 	           .horiz(100)
@@ -2915,7 +3070,7 @@ var DisplaySystem = {
 	           .setColor(colorText1)
 	           .setStrokeLineWidth(2)
 	           .hide();
-	        me.p7f = me.group.createChild("path")
+	        me.p7f = me.groupInv.createChild("path")
 	           .moveTo(displayWidthHalf*0.36, -displayHeightHalf-25)
 	           .vert(70)
 	           .horiz(100)
@@ -2924,7 +3079,7 @@ var DisplaySystem = {
 	           .setColor(colorText1)
 	           .setStrokeLineWidth(2)
 	           .hide();
-	        me.p8f = me.group.createChild("path")
+	        me.p8f = me.groupInv.createChild("path")
 	           .moveTo(displayWidthHalf*0.5, -displayHeightHalf+50)
 	           .vert(50)
 	           .horiz(100)
@@ -2933,12 +3088,21 @@ var DisplaySystem = {
 	           .setColor(colorText1)
 	           .setStrokeLineWidth(2)
 	           .hide();
-	        me.p9f = me.group.createChild("path")
+	        me.p9f = me.groupInv.createChild("path")
 	           .moveTo(displayWidthHalf*0.5, -displayHeightHalf+115)
 	           .vert(50)
 	           .horiz(100)
 	           .vert(-50)
 	           .horiz(-100)
+	           .setColor(colorText1)
+	           .setStrokeLineWidth(2)
+	           .hide();
+	        me.pGunf = me.groupInv.createChild("path")
+	           .moveTo(-displayWidthHalf*0.97, -displayHeight+88)
+	           .vert(50)
+	           .horiz(75)
+	           .vert(-50)
+	           .horiz(-75)
 	           .setColor(colorText1)
 	           .setStrokeLineWidth(2)
 	           .hide();
@@ -2966,7 +3130,9 @@ var DisplaySystem = {
 		},
 		controlAction: func (controlName) {
 			printDebug(me.name,": ",controlName," activated on ",me.device.name);
-			if (controlName == "OSB2") {
+			if (controlName == "OSB1") {
+                me.selectPylon(9);
+            } elsif (controlName == "OSB2") {
                 me.selectPylon(3);
             } elsif (controlName == "OSB3") {
                 me.selectPylon(2);
@@ -3010,6 +3176,7 @@ var DisplaySystem = {
             me.p7f.setVisible(sel==6);
             me.p8f.setVisible(sel==7);
             me.p9f.setVisible(sel==8);
+            me.pGunf.setVisible(sel==9);
 
             var gunAmmo = "-----";
             if (getprop("sim/model/f16/wingmounts") != 0) {
@@ -3102,22 +3269,22 @@ var DisplaySystem = {
 		},
 		setupSJ: func {
 
-	        me.group.setTranslation(0.5*displayWidth, displayHeight);
+	        me.group.setTranslation(0.515*displayWidth, displayHeight);
 
 	        me.p6 = me.group.createChild("text")
-	                .setTranslation(displayWidthHalf*0.08, -displayHeightHalf-90)
+	                .setTranslation(displayWidthHalf*0.10, -displayHeightHalf-90)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
 	        me.p6l1 = me.group.createChild("text")
-	                .setTranslation(displayWidthHalf*0.08, -displayHeightHalf-65)
+	                .setTranslation(displayWidthHalf*0.10, -displayHeightHalf-65)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
 	        me.p6l2 = me.group.createChild("text")
-	                .setTranslation(displayWidthHalf*0.08, -displayHeightHalf-40)
+	                .setTranslation(displayWidthHalf*0.10, -displayHeightHalf-40)
 	                .setText("--------")
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
@@ -3413,9 +3580,9 @@ var DisplaySystem = {
 	        me.iffU = setsize([],me.maxT);# unknown IFF response
 	        for (var i = 0;i<me.maxB;i+=1) {
 	                me.blep[i] = me.p_RDR.createChild("path")
-	                        .moveTo(0,-3)
-	                        .vert(7)
-	                        .setStrokeLineWidth(7)
+	                        .moveTo(0,-symbolSize.fcr.blep*0.5)
+	                        .vert(symbolSize.fcr.blep)
+	                        .setStrokeLineWidth(symbolSize.fcr.blep)
 	                        .setStrokeLineCap("butt")
 	                        .set("z-index",10)
 	                        .hide();
@@ -3427,51 +3594,51 @@ var DisplaySystem = {
 	                me.blepTriangleText[i] = me.blepTriangle[i].createChild("text")
 	                                .setAlignment("center-top")
 	                                .setFontSize(me.device.fontSize, 1.0)
-	                                .setTranslation(0,20)
+	                                .setTranslation(0,margin.fcr.trackText)
 	                                .setColor(1, 1, 1);
 	                me.blepTriangleVelLine[i] = me.blepTriangleVel[i].createChild("path")
-	                                .lineTo(0,-10)
-	                                .setTranslation(0,-16)
-	                                .setStrokeLineWidth(2)
+	                                .lineTo(0,-10)# don't change
+	                                .setTranslation(0,-16*symbolSize.fcr.track)
+	                                .setStrokeLineWidth(lineWidth.fcr.track)
 	                                .setColor(colorCircle2);
 	                me.blepTrianglePaths[i] = me.blepTriangle[i].createChild("path")
-	                                .moveTo(-14,8)
-	                                .horiz(28)
-	                                .lineTo(0,-16)
-	                                .lineTo(-14,8)
+	                                .moveTo(-14*symbolSize.fcr.track,8*symbolSize.fcr.track)
+	                                .horiz(28*symbolSize.fcr.track)
+	                                .lineTo(0,-16*symbolSize.fcr.track)
+	                                .lineTo(-14*symbolSize.fcr.track,8*symbolSize.fcr.track)
 	                                .setColor(colorCircle2)
 	                                .set("z-index",10)
-	                                .setStrokeLineWidth(2);
+	                                .setStrokeLineWidth(lineWidth.fcr.track);
 	                me.iff[i] = me.p_RDR.createChild("path")
-	                                .moveTo(-8,0)
-	                                .arcSmallCW(8,8, 0,  8*2, 0)
-	                                .arcSmallCW(8,8, 0, -8*2, 0)
+	                                .moveTo(-symbolSize.fcr.iff,0)
+	                                .arcSmallCW(symbolSize.fcr.iff,symbolSize.fcr.iff, 0,  symbolSize.fcr.iff*2, 0)
+	                                .arcSmallCW(symbolSize.fcr.iff,symbolSize.fcr.iff, 0, -symbolSize.fcr.iff*2, 0)
 	                                .setColor(colorCircle3)
 	                                .hide()
 	                                .set("z-index",12)
-	                                .setStrokeLineWidth(3);
+	                                .setStrokeLineWidth(lineWidth.fcr.iff);
 	                me.iffU[i] = me.p_RDR.createChild("path")
-	                                .moveTo(-8,-8)
-	                                .vert(16)
-	                                .horiz(16)
-	                                .vert(-16)
-	                                .horiz(-16)
+	                                .moveTo(-symbolSize.fcr.iff,-symbolSize.fcr.iff)
+	                                .vert(symbolSize.fcr.iff*2)
+	                                .horiz(symbolSize.fcr.iff*2)
+	                                .vert(-symbolSize.fcr.iff*2)
+	                                .horiz(-symbolSize.fcr.iff*2)
 	                                .setColor(colorCircle2)
 	                                .hide()
 	                                .set("z-index",12)
-	                                .setStrokeLineWidth(3);
+	                                .setStrokeLineWidth(lineWidth.fcr.iff);
 	                me.lnk[i] = me.p_RDR.createChild("path")
-	                                .moveTo(-10,-10)
-	                                .vert(20)
-	                                .horiz(20)
-	                                .vert(-20)
-	                                .horiz(-20)
-	                                .moveTo(0,-10)
-	                                .vert(-10)
+	                                .moveTo(-symbolSize.fcr.dl,-symbolSize.fcr.dl)
+	                                .vert(2*symbolSize.fcr.dl)
+	                                .horiz(2*symbolSize.fcr.dl)
+	                                .vert(-2*symbolSize.fcr.dl)
+	                                .horiz(-2*symbolSize.fcr.dl)
+	                                .moveTo(0,-symbolSize.fcr.dl)
+	                                .vert(-symbolSize.fcr.dl)
 	                                .setColor(colorDot1)
 	                                .hide()
 	                                .set("z-index",11)
-	                                .setStrokeLineWidth(3);
+	                                .setStrokeLineWidth(lineWidth.fcr.dl);
 
 	            me.lnkT[i] = me.p_RDR.createChild("text")
 	                .setAlignment("center-bottom")
@@ -3483,88 +3650,88 @@ var DisplaySystem = {
 	                                .setFontSize(me.device.fontSize, 1.0);
 	        }
 	        me.gainGauge = me.p_RDR.createChild("path")
-	                    .moveTo(-552*0.5*0.65,-displayHeight*0.95)
-	                    .horiz(-20)
-	                    .vert(65)
-	                    .horiz(20)
-	                    .setStrokeLineWidth(3)
+	                    .moveTo(-displayWidth*0.5*0.85,-displayHeight*0.95)
+	                    .horiz(-symbolSize.fcr.gainGaugeHoriz)
+	                    .vert(symbolSize.fcr.gainGaugeVert)
+	                    .horiz(symbolSize.fcr.gainGaugeHoriz)
+	                    .setStrokeLineWidth(lineWidth.fcr.gainGauge)
 	                    .set("z-index",1)
 	                    .setColor(colorText1);
 	        me.gainGaugePointer = me.p_RDR.createChild("path")
-	                    .setTranslation(-552*0.5*0.65-20,-displayHeight*0.95+10)
-	                    .lineTo(10,-10)
+	                    .lineTo(symbolSize.fcr.gainGaugeHoriz*0.5,-symbolSize.fcr.gainGaugeHoriz*0.5)
 	                    .moveTo(0,0)
-	                    .lineTo(10, 10)
-	                    .setStrokeLineWidth(3)
+	                    .lineTo(symbolSize.fcr.gainGaugeHoriz*0.5, symbolSize.fcr.gainGaugeHoriz*0.5)
+	                    .setStrokeLineWidth(lineWidth.fcr.gainGauge)
 	                    .set("z-index",1)
 	                    .setColor(colorText1);
 
-	        var antSideBuffer = 50;# TODO: adjust
-	        var antBottomBuffer = 50;# TODO: adjust
+	        var antSideBuffer = margin.fcr.caretSide;
+	        var antBottomBuffer = margin.fcr.caretBottom;
 	        me.ant_bottom = me.p_RDR.createChild("path")
-	                    .moveTo(-displayWidthHalf,-antBottomBuffer+15)
-	                    .vert(-13)
-	                    .moveTo(-displayWidthHalf-8,-antBottomBuffer+2)
-	                    .horiz(15)
-	                    .setStrokeLineWidth(5)
+	                    .moveTo(0,-antBottomBuffer+symbolSize.fcr.caret)
+	                    .vert(-symbolSize.fcr.caret)
+	                    .moveTo(-symbolSize.fcr.caret*0.5,-antBottomBuffer)
+	                    .horiz(symbolSize.fcr.caret)
+	                    .setStrokeLineWidth(lineWidth.fcr.caret)
 	                    .set("z-index",1)
 	                    .setColor(colorLine1);
 	        me.ant_side = me.p_RDR.createChild("path")
 	                    .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.5)
-	                    .horiz(-13)
-	                    .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.5-7)
-	                    .vert(14)
-	                    .setStrokeLineWidth(5)
+	                    .horiz(-symbolSize.fcr.caret)
+	                    .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.5-symbolSize.fcr.caret*0.5)
+	                    .vert(symbolSize.fcr.caret)
+	                    .setStrokeLineWidth(lineWidth.fcr.caret)
 	                    .set("z-index",1)
 	                    .setColor(colorLine1);
 	        if (variantID < 2 or variantID == 3) {
+	        	# distance ticks
 	            me.distl = me.p_RDR.createChild("path")
 	                        .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.25)
-	                        .horiz(15)
+	                        .horiz(15*symbolSize.fcr.tick)
 	                        .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.5)
-	                        .horiz(25)
+	                        .horiz(25*symbolSize.fcr.tick)
 	                        .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.75)
-	                        .horiz(15)
+	                        .horiz(15*symbolSize.fcr.tick)
 	                        .moveTo(-displayWidthHalf*0.5,-antBottomBuffer)
-	                        .vert(-15)
-	                        .moveTo(0,-40)
-	                        .vert(-25)
+	                        .vert(-15*symbolSize.fcr.tick)
+	                        .moveTo(0,-antBottomBuffer)
+	                        .vert(-25*symbolSize.fcr.tick)
 	                        .moveTo(displayWidthHalf*0.5,-antBottomBuffer)
-	                        .vert(-15)
-	                        .setStrokeLineWidth(3)
+	                        .vert(-15*symbolSize.fcr.tick)
+	                        .setStrokeLineWidth(lineWidth.fcr.tick)
 	                        .set("z-index",1)
 	                        .setColor(colorLine1);
 	        } else {
 	            me.distl = me.p_RDR.createChild("path")
 	                    .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.25)
-	                    .horiz(12.5)
+	                    .horiz(12.5*symbolSize.fcr.tick)
 	                    .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.3333)
-	                    .horiz(12.5)
+	                    .horiz(12.5*symbolSize.fcr.tick)
 	                    .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.4166)
-	                    .horiz(12.5)
+	                    .horiz(12.5*symbolSize.fcr.tick)
 	                    .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.5)
-	                    .horiz(20.0)
+	                    .horiz(20.0*symbolSize.fcr.tick)
 	                    .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.5833)
-	                    .horiz(12.5)
+	                    .horiz(12.5*symbolSize.fcr.tick)
 	                    .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.6666)
-	                    .horiz(12.5)
+	                    .horiz(12.5*symbolSize.fcr.tick)
 	                    .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.75)
-	                    .horiz(12.5)
+	                    .horiz(12.5*symbolSize.fcr.tick)
 	                    .moveTo(-displayWidthHalf*0.5,-antBottomBuffer)
-	                    .vert(-12.5)
+	                    .vert(-12.5*symbolSize.fcr.tick)
 	                    .moveTo(-displayWidthHalf*0.3333,-antBottomBuffer)
-	                    .vert(-12.5)
+	                    .vert(-12.5*symbolSize.fcr.tick)
 	                    .moveTo(-displayWidthHalf*0.1666,-antBottomBuffer)
-	                    .vert(-12.5)
+	                    .vert(-12.5*symbolSize.fcr.tick)
 	                    .moveTo(0,-antBottomBuffer)
-	                    .vert(-20.0)
+	                    .vert(-20.0*symbolSize.fcr.tick)
 	                    .moveTo(displayWidthHalf*0.3333,-antBottomBuffer)
-	                    .vert(-12.5)
+	                    .vert(-12.5*symbolSize.fcr.tick)
 	                    .moveTo(displayWidthHalf*0.1666,-antBottomBuffer)
-	                    .vert(-12.5)
+	                    .vert(-12.5*symbolSize.fcr.tick)
 	                    .moveTo(displayWidthHalf*0.5,-antBottomBuffer)
-	                    .vert(-12.5)
-	                    .setStrokeLineWidth(3)
+	                    .vert(-12.5*symbolSize.fcr.tick)
+	                    .setStrokeLineWidth(lineWidth.fcr.tick)
 	                    .set("z-index",1)
 	                    .setColor(colorLine1);
 	        }
@@ -3572,53 +3739,53 @@ var DisplaySystem = {
 	        me.selection = me.p_RDR.createChild("group")
 	                .set("z-index",12);
 	        me.selectionPath = me.selection.createChild("path")
-	                .moveTo(-16, 0)
-	                .arcSmallCW(16, 16, 0, 16*2, 0)
-	                .arcSmallCW(16, 16, 0, -16*2, 0)
+	                .moveTo(-symbolSize.fcr.designation, 0)
+	                .arcSmallCW(symbolSize.fcr.designation, symbolSize.fcr.designation, 0, symbolSize.fcr.designation*2, 0)
+	                .arcSmallCW(symbolSize.fcr.designation, symbolSize.fcr.designation, 0, -symbolSize.fcr.designation*2, 0)
 	                .setColor(colorDot1)
-	                .setStrokeLineWidth(2);
+	                .setStrokeLineWidth(lineWidth.fcr.designation);
 
 	        me.lockInfoCanvas = me.p_RDR.createChild("text")
-	                .setTranslation(displayWidthHalf*0.85, -displayHeight*0.9)
-	                .setAlignment("right-center")
+	                .setTranslation(0, -displayHeight*0.9)
+	                .setAlignment("center-center")
 	                .setColor(colorLine3)
 	                .set("z-index",1)
 	                .setFontSize(me.device.fontSize, 1.0);
 
 	        me.interceptCross = me.p_RDR.createChild("path")
-	                            .moveTo(10,0)
-	                            .lineTo(-10,0)
-	                            .moveTo(0,-10)
-	                            .vert(20)
+	                            .moveTo(symbolSize.fcr.interceptCross,0)
+	                            .lineTo(-symbolSize.fcr.interceptCross,0)
+	                            .moveTo(0,-symbolSize.fcr.interceptCross)
+	                            .vert(2*symbolSize.fcr.interceptCross)
 	                            .setColor(colorCircle2)
 	                            .set("z-index",14)
-	                            .setStrokeLineWidth(2);
+	                            .setStrokeLineWidth(lineWidth.fcr.interceptCross);
 
 	        me.lockGM = me.p_RDR.createChild("path")
-	                            .moveTo(10,0)
-	                            .lineTo(0,10)
-	                            .lineTo(-10,0)
-	                            .lineTo(0,-10)
-	                            .lineTo(10,0)
+	                            .moveTo(symbolSize.fcr.designationGM,0)
+	                            .lineTo(0,symbolSize.fcr.designationGM)
+	                            .lineTo(-symbolSize.fcr.designationGM,0)
+	                            .lineTo(0,-symbolSize.fcr.designationGM)
+	                            .lineTo(symbolSize.fcr.designationGM,0)
 	                            .setColorFill(colorCircle2)
 	                            .setColor(colorCircle2)
 	                            .set("z-index",20)
-	                            .setStrokeLineWidth(2);
+	                            .setStrokeLineWidth(lineWidth.fcr.designationGM);
 
 	        me.dlzX      = displayWidthHalf*0.75;
 	        me.dlzY      =-displayHeight*0.25;
-	        me.dlzWidth  =  20;
+	        me.dlzWidth  =  symbolSize.fcr.dlzWidth;
 	        me.dlzHeight = displayHeight*0.5;
-	        me.dlzLW     =   2;
+	        me.dlzLW     =   lineWidth.fcr.dlz;
 	        me.dlz      = me.p_RDR.createChild("group")
 	                        .set("z-index",11)
 	                        .setTranslation(me.dlzX, me.dlzY);
 	        me.dlz2     = me.dlz.createChild("group");
 	        me.dlzArrow = me.dlz.createChild("path")
 	           .moveTo(0, 0)
-	           .lineTo( -10, 8)
+	           .lineTo( -10*symbolSize.fcr.dlzArrow, 8*symbolSize.fcr.dlzArrow)
 	           .moveTo(0, 0)
-	           .lineTo( -10, -8)
+	           .lineTo( -10*symbolSize.fcr.dlzArrow, -8*symbolSize.fcr.dlzArrow)
 	           .setColor(colorLine3)
 	           .set("z-index",1)
 	           .setStrokeLineWidth(me.dlzLW);
@@ -3627,26 +3794,26 @@ var DisplaySystem = {
 	           .lineTo(0, -displayHeight)
 	           .setColor(colorLine1)
 	           .set("z-index",13)
-	           .setStrokeLineWidth(2);
+	           .setStrokeLineWidth(lineWidth.fcr.azimuthLine);
 	        me.az2 = me.p_RDR.createChild("path")
 	           .moveTo(0, 0)
 	           .lineTo(0, -displayHeight)
 	           .setColor(colorLine1)
 	           .set("z-index",13)
-	           .setStrokeLineWidth(2);
+	           .setStrokeLineWidth(lineWidth.fcr.azimuthLine);
 	        me.horiz = me.p_RDR.createChild("path")
 	           .moveTo(-displayWidthHalf*0.5, -displayHeight*0.5)
-	           .vert(10)
+	           .vert(symbolSize.fcr.horizLine)
 	           .moveTo(-displayWidthHalf*0.5, -displayHeight*0.5)
 	           .horiz(displayWidthHalf*0.4)
 	           .moveTo(displayWidthHalf*0.5, -displayHeight*0.5)
-	           .vert(10)
+	           .vert(symbolSize.fcr.horizLine)
 	           .moveTo(displayWidthHalf*0.5, -displayHeight*0.5)
 	           .horiz(-displayWidthHalf*0.4)
 	           .setCenter(0, -displayHeight*0.5)
 	           .setColor(colorLine2)
 	           .set("z-index",15)
-	           .setStrokeLineWidth(3);
+	           .setStrokeLineWidth(lineWidth.fcr.horizLine);
 	        me.silent = me.p_RDR.createChild("text")
 	           .setTranslation(0, -displayHeight*0.25)
 	           .setAlignment("center-center")
@@ -3662,62 +3829,46 @@ var DisplaySystem = {
 	           .setFontSize(18, 1.0)
 	           .setColor(colorText2);
 
-			me.notSOI = me.p_RDR.createChild("text")
-	           .setTranslation(0, -displayHeight*0.55)
-	           .setAlignment("center-center")
-	           .setText("NOT SOI")
-	           .set("z-index",16)
-			   .hide()
-	           .setFontSize(18, 1.0)
-	           .setColor(colorText2);
 	        me.exp = me.p_RDR.createChild("path")
 	            .moveTo(-100,-100)
 	            .vert(200)
 	            .horiz(200)
 	            .vert(-200)
 	            .horiz(-200)
-	            .setStrokeLineWidth(2.0)
+	            .setStrokeLineWidth(lineWidth.fcr.exp)
 	            .setColor(colorLine4)
 	            .set("z-index",1)
 	            .hide();
 
-	        # OSB 8
-	        me.sp = me.p_RDR.createChild("text")
-	                .setTranslation(276*0.775, -displayHeight*0.5+10)
-	                .setText("S\nP")
-	                .setAlignment("right-center")
-	                .setColor(colorText1)
-	                .set("z-index",1)
-	                .setFontSize(me.device.fontSize, 1.0);
 	        me.cursor = me.p_RDR.createChild("group").set("z-index",1000);
 	        me.cursorAir = me.cursor.createChild("path")
-	                    .moveTo(-8,-9)
-	                    .vert(18)
-	                    .moveTo(8,-9)
-	                    .vert(18)
-	                    .setStrokeLineWidth(2.0)
+	                    .moveTo(-symbolSize.fcr.cursorAir,-symbolSize.fcr.cursorAir)
+	                    .vert(2*symbolSize.fcr.cursorAir)
+	                    .moveTo(symbolSize.fcr.cursorAir,-symbolSize.fcr.cursorAir)
+	                    .vert(2*symbolSize.fcr.cursorAir)
+	                    .setStrokeLineWidth(lineWidth.fcr.cursorAir)
 	                    .setColor(colorLine3);
 	        me.cursorGm = me.cursor.createChild("path")
-	                    .moveTo(0, 11)
+	                    .moveTo(0, symbolSize.fcr.cursorGMGap)
 	                    .vert(500)
-	                    .moveTo(0, -11)
+	                    .moveTo(0, -symbolSize.fcr.cursorGMGap)
 	                    .vert(-500)
-	                    .moveTo(11,0)
+	                    .moveTo(symbolSize.fcr.cursorGMGap,0)
 	                    .horiz(500)
-	                    .moveTo(-11,0)
+	                    .moveTo(-symbolSize.fcr.cursorGMGap,0)
 	                    .horiz(-500)
-	                    .setStrokeLineWidth(2.0)
+	                    .setStrokeLineWidth(lineWidth.fcr.cursorGnd)
 	                    .setColor(colorLine3);
 	        me.cursorGmTicks = me.cursor.createChild("path")
-	                    .moveTo(50, 5)
-	                    .vert(-10)
-	                    .moveTo(-50, 5)
-	                    .vert(-10)
-	                    .moveTo(5,50)
-	                    .horiz(-10)
-	                    .moveTo(5,-50)
-	                    .horiz(-10)
-	                    .setStrokeLineWidth(2.0)
+	                    .moveTo(symbolSize.fcr.cursorGMtickDist, symbolSize.fcr.cursorGMtick)
+	                    .vert(-symbolSize.fcr.cursorGMtick*2)
+	                    .moveTo(-symbolSize.fcr.cursorGMtickDist, symbolSize.fcr.cursorGMtick)
+	                    .vert(-symbolSize.fcr.cursorGMtick*2)
+	                    .moveTo(symbolSize.fcr.cursorGMtick,symbolSize.fcr.cursorGMtickDist)
+	                    .horiz(-symbolSize.fcr.cursorGMtick*2)
+	                    .moveTo(symbolSize.fcr.cursorGMtick,-symbolSize.fcr.cursorGMtickDist)
+	                    .horiz(-symbolSize.fcr.cursorGMtick*2)
+	                    .setStrokeLineWidth(lineWidth.fcr.cursorGnd)
 	                    .setColor(colorLine3);
 	        me.cursor_1 = me.cursor.createChild("text")
 	                .setTranslation(10,-5)
@@ -3733,61 +3884,60 @@ var DisplaySystem = {
 	                .setFontSize(18, 1.0);
 
 	        me.bullseye = me.p_RDR.createChild("path")
-	            .moveTo(-25,0)
-	            .arcSmallCW(25,25, 0,  25*2, 0)
-	            .arcSmallCW(25,25, 0, -25*2, 0)
-	            .moveTo(-15,0)
-	            .arcSmallCW(15,15, 0,  15*2, 0)
-	            .arcSmallCW(15,15, 0, -15*2, 0)
-	            .moveTo(-5,0)
-	            .arcSmallCW(5,5, 0,  5*2, 0)
-	            .arcSmallCW(5,5, 0, -5*2, 0)
-	            .setStrokeLineWidth(3)
+	            .moveTo(-25*symbolSize.fcr.bullseye,0)
+	            .arcSmallCW(25*symbolSize.fcr.bullseye,25*symbolSize.fcr.bullseye, 0,  25*2*symbolSize.fcr.bullseye, 0)
+	            .arcSmallCW(25*symbolSize.fcr.bullseye,25*symbolSize.fcr.bullseye, 0, -25*2*symbolSize.fcr.bullseye, 0)
+	            .moveTo(-15*symbolSize.fcr.bullseye,0)
+	            .arcSmallCW(15*symbolSize.fcr.bullseye,15*symbolSize.fcr.bullseye, 0,  15*2*symbolSize.fcr.bullseye, 0)
+	            .arcSmallCW(15*symbolSize.fcr.bullseye,15*symbolSize.fcr.bullseye, 0, -15*2*symbolSize.fcr.bullseye, 0)
+	            .moveTo(-5*symbolSize.fcr.bullseye,0)
+	            .arcSmallCW(5*symbolSize.fcr.bullseye,5*symbolSize.fcr.bullseye, 0,  5*2*symbolSize.fcr.bullseye, 0)
+	            .arcSmallCW(5*symbolSize.fcr.bullseye,5*symbolSize.fcr.bullseye, 0, -5*2*symbolSize.fcr.bullseye, 0)
+	            .setStrokeLineWidth(lineWidth.fcr.bullseye)
 	            .set("z-index",1)
 	            .setColor(colorBullseye);
 	        me.steerpoint = me.p_RDR.createChild("path")
-	            .moveTo(12,8)
-	            .horiz(-24)
-	            .vert(-8)
-	            .horiz(8)
-	            .vert(-8)
-	            .horiz(8)
-	            .vert(8)
-	            .horiz(8)
-	            .vert(8)
+	            .moveTo(12*symbolSize.fcr.steerpoint,8*symbolSize.fcr.steerpoint)
+	            .horiz(-24*symbolSize.fcr.steerpoint)
+	            .vert(-8*symbolSize.fcr.steerpoint)
+	            .horiz(8*symbolSize.fcr.steerpoint)
+	            .vert(-8*symbolSize.fcr.steerpoint)
+	            .horiz(8*symbolSize.fcr.steerpoint)
+	            .vert(8*symbolSize.fcr.steerpoint)
+	            .horiz(8*symbolSize.fcr.steerpoint)
+	            .vert(8*symbolSize.fcr.steerpoint)
 	            .setColorFill(colorBullseye)
-	            .setStrokeLineWidth(1)
+	            .setStrokeLineWidth(lineWidth.fcr.steerpoint)
 	            .set("z-index",1)
 	            .setColor(colorBullseye);
 	        
 	        me.cursorLoc = me.p_RDR.createChild("text")
 	                .setAlignment("left-bottom")
 	                .setColor(colorBetxt)
-	                .setTranslation(-205, -75)
+	                .setTranslation(-displayWidthHalf*0.95, -displayHeight*0.15)
 	                .setText("12")
 	                .set("z-index",1)
 	                .setFontSize(18, 1.0);
 
 	        # canvas: displayWidth,displayHeight
+	        me.cosi = math.cos(30*D2R);
+	        me.sinu = math.sin(30*D2R);
 	        me.rangeRingLow = me.p_RDR.createChild("path")
-	            .moveTo(-displayWidth*0.25,0)
-	            .arcSmallCW(displayWidth*0.25,displayHeight*0.25, 0,  displayWidth*0.5, 0)
-	            .arcSmallCW(displayWidth*0.25,displayHeight*0.25, 0, -displayWidth*0.5, 0)
-	            .setStrokeLineWidth(2)
+	            .moveTo(-displayWidth*0.25*me.cosi,-displayHeight*0.25*me.sinu)
+	            .arcSmallCW(displayWidth*0.25,displayHeight*0.25, 0, displayWidth*0.25*me.cosi*2, 0)
+	            .setStrokeLineWidth(lineWidth.fcr.rangeRings)
 	            .set("z-index",1)
 	            .setColor(colorLines);
 	        me.rangeRingMid = me.p_RDR.createChild("path")
-	            .moveTo(-displayWidth*0.5,0)
-	            .arcSmallCW(displayWidth*0.5,displayHeight*0.5, 0,  displayWidth, 0)
-	            .arcSmallCW(displayWidth*0.5,displayHeight*0.5, 0, -displayWidth, 0)
-	            .setStrokeLineWidth(2)
+	            .moveTo(-displayWidth*0.5*me.cosi,-displayHeight*0.5*me.sinu)
+	            .arcSmallCW(displayWidth*0.5,displayHeight*0.5, 0, displayWidth*0.5*me.cosi*2, 0)
+	            .setStrokeLineWidth(lineWidth.fcr.rangeRings)
 	            .set("z-index",1)
 	            .setColor(colorLines);
 	        me.rangeRingHigh = me.p_RDR.createChild("path")
-	            .moveTo(-displayWidth*0.75,0)
-	            .arcSmallCW(displayWidth*0.75,displayHeight*0.75, 0,  displayWidth*1.5, 0)
-	            .arcSmallCW(displayWidth*0.75,displayHeight*0.75, 0, -displayWidth*1.5, 0)
-	            .setStrokeLineWidth(2)
+	            .moveTo(-displayWidth*0.75*me.cosi,-displayHeight*0.75*me.sinu)
+	            .arcSmallCW(displayWidth*0.75,displayHeight*0.75, 0, displayWidth*0.75*me.cosi*2, 0)
+	            .setStrokeLineWidth(lineWidth.fcr.rangeRings)
 	            .set("z-index",1)
 	            .setColor(colorLines);
 	    },
@@ -3851,7 +4001,7 @@ var DisplaySystem = {
             }
 		},
 		update: func (noti) {
-            me.p_RDR_image.setVisible(radar_system.apg68Radar.enabled);
+            me.p_RDR_image.setVisible(radar_system.apg68Radar.enabled and radar_system.apg68Radar.currentMode.mapper);
             me.DGFT = noti.getproper("dgft");
             me.device.DGFT = me.DGFT;
             me.IMSOI = me.device.soi == 1;
@@ -3870,12 +4020,10 @@ var DisplaySystem = {
             # GM range rings
             #
             if (!radar_system.apg68Radar.currentMode.detectAIR and !exp) {
-                me.sp.hide();
                 me.rangeRingHigh.setVisible(radar_system.apg68Radar.getRange()>10);
                 me.rangeRingMid.setVisible(radar_system.apg68Radar.getRange()>5);
                 me.rangeRingLow.setVisible(radar_system.apg68Radar.getRange()>10);
             } else {
-                me.sp.hide();
                 me.rangeRingHigh.hide();
                 me.rangeRingMid.hide();
                 me.rangeRingLow.hide();
@@ -3950,7 +4098,7 @@ var DisplaySystem = {
                     # radar carets
 
                     me.caretPosition = radar_system.apg68Radar.getCaretPosition();
-                    me.ant_bottom.setTranslation(me.wdt*0.5+me.caretPosition[0]*me.wdt*0.5,0);
+                    me.ant_bottom.setTranslation(me.caretPosition[0]*me.wdt*0.5,0);
                     me.ant_side.setTranslation(0,-me.caretPosition[1]*displayHeight*0.5);
 
                     me.ant_bottom.show();
@@ -4039,7 +4187,7 @@ var DisplaySystem = {
             if (!exp or !radar_system.apg68Radar.currentMode.EXPfixedAim) {
                 me.cursor.setTranslation(cursor_pos);
             } else {
-                me.cursor.setTranslation([0,-241]);
+                me.cursor.setTranslation([0,-displayHeight*0.5]);
                 me.fixedEXPwidth = radar_system.apg68Radar.currentMode.getEXPsize();
                 pixelPerNM = displayHeight/radar_system.apg68Radar.getRange();
             }
@@ -4135,7 +4283,7 @@ var DisplaySystem = {
             if (me.fixedEXPwidth != nil) {
                 me.closeDef = pixelPerNM*me.fixedEXPwidth*0.5;
             } else {
-                me.closeDef = 25; # pixels
+                me.closeDef = 25; # pixels radius
             }
 
             #
@@ -4332,15 +4480,13 @@ var DisplaySystem = {
             if (radar_system.apg68Radar.currentMode.mapper) {
                 if (me["gmImage"] == nil) {
                     #setprop("a",0.8732);
-                    var sized = 64;
-                    var scaled = 512/sized;
+                    var sized = 64;# size of image
+                    var scaled = displayWidth/sized;
                     me.gmImage = me.p_RDR_image.createChild("image")
                         .set("src", "Aircraft/f16/Nasal/MFD/gmSD0.png")# index is due to else the two MFD will share the underlying image and both write to it.
-                        .setTranslation(-552*0.5*0.8732,-displayHeight)# canvas: 552,displayHeight
-                        .setCenter(sized*0.5, -sized)# the 0.8732 factor is due to angles not drawn correct due to uneven coordinate system. TODO: fix.
-                        .setScale(scaled*1.078125*0.8732,scaled*0.9414)
-                        #.setTranslation(-512*0.5,-512)
-                        #.setScale(8,8)
+                        .setTranslation(-displayWidth*0.5,-displayHeight)
+                        #.setCenter(sized*0.5, -sized)
+                        .setScale(scaled,scaled)
                         .set("z-index",0);#TODO: lower than GM text background
 
                     me.mono = (variantID<2 or variantID ==3)?0.4:1;
@@ -4349,7 +4495,7 @@ var DisplaySystem = {
                 }
                 #me.gmImage.setScale(8*1.078125*getprop("a"),8*0.9414).setTranslation(-552*0.5*getprop("a"),-displayHeight);
 
-                me.gainGaugePointer.setTranslation(-552*0.5*0.65-20,me.interpolate(me.gainNode.getValue(), 1.0, 2.5,-displayHeight*0.95+10,-displayHeight*0.95-10+65));
+                me.gainGaugePointer.setTranslation(-displayWidth*0.5*0.85-symbolSize.fcr.gainGaugeHoriz,me.interpolate(me.gainNode.getValue(), 1.0, 2.5,-displayHeight*0.95+symbolSize.fcr.gainGaugeHoriz*0.5,-displayHeight*0.95-symbolSize.fcr.gainGaugeHoriz*0.5+symbolSize.fcr.gainGaugeVert));
                 me.gainGaugePointer.show();
                 me.gainGauge.show();
                 me.gmImage.show();
@@ -4449,7 +4595,7 @@ var DisplaySystem = {
         calcEXPPos: func (itemPos) {
             # Calculate the position taking EXP zoom into account
             var returnPos = itemPos;
-            var cursorCentre = [0,-241];
+            var cursorCentre = [0,-displayHeight*0.5];
             me.close = math.abs(cursor_pos[0] - itemPos[0]) < me.closeDef and math.abs(cursor_pos[1] - itemPos[1]) < me.closeDef;
             if (me.close and me.exp_zoom) {
                 if (me.fixedEXPwidth != nil) {
@@ -4462,13 +4608,14 @@ var DisplaySystem = {
                     returnPos[1] = cursor_pos[1]+(itemPos[1] - cursor_pos[1])*4;
                 }
             } elsif (me.exp_zoom and (me.fixedEXPwidth != nil or math.abs(cursor_pos[0] - itemPos[0]) < 100 and math.abs(cursor_pos[1] - itemPos[1]) < 100)) {
+            	# The 100 pixels here is the radius of the EXP square
                 returnPos = nil;
             }
             return returnPos;
         },
         calcClick: func (contact, echoPos) {
             if (cursor_click == me.index) {
-                var cursor_posi = !me.exp_zoom or me.fixedEXPwidth == nil?cursor_pos:[0,-241];
+                var cursor_posi = !me.exp_zoom or me.fixedEXPwidth == nil?cursor_pos:[0,-displayHeight*0.5];
                 if (math.abs(cursor_posi[0] - echoPos[0]) < 10 and math.abs(cursor_posi[1] - echoPos[1]) < 11) {
                     me.desig_new = contact;
                 }
@@ -4495,7 +4642,7 @@ var DisplaySystem = {
                 me.clos = "      ";
             }
 
-            me.lockInfoText = sprintf("%s     %s        %4d   %s", me.azimuth, me.heady, contact.get_Speed(), me.clos);
+            me.lockInfoText = sprintf("%s    %s          %4d   %s", me.azimuth, me.heady, contact.get_Speed(), me.clos);
 
             me.lockInfoCanvas.setText(me.lockInfoText);
             me.lockInfo = 1;
@@ -4583,7 +4730,7 @@ var DisplaySystem = {
                     }
                     me.blepTriangle[me.ii].setTranslation(me.echoPos);
                     if (me.c_speed != nil and me.c_speed > 0) {
-                        me.blepTriangleVelLine[me.ii].setScale(1,me.c_speed*0.0045);
+                        me.blepTriangleVelLine[me.ii].setScale(1,me.c_speed*symbolSize.fcr.contactVelocity);
                         me.blepTriangleVelLine[me.ii].setColor(me.color);
                         me.blepTriangleVel[me.ii].setRotation(me.rot*D2R);
                         me.blepTriangleVel[me.ii].update();
@@ -4706,9 +4853,6 @@ var DisplaySystem = {
 		setup: func {
 			printDebug(me.name," on ",me.device.name," is being setup");
 			me.flirPicHD = radar_system.FlirSensor.setup(me.group, me.device.name=="LeftMFD"?0:1);
-            # Ideally there should be HUD imposed, but since hud can move with
-            # head movement, I have not done that, would look stupid.
-            # And not making a new entire hud just for this page.
             me.flirPicHD.setScale(displayWidth/radar_system.flirImageReso, displayHeight/radar_system.flirImageReso);
             if (flirMode == -2) {
             	if (getprop("f16/stores/nav-mounted")!=1 or getprop("f16/avionics/power-left-hdpt")!=1) {
@@ -4898,31 +5042,31 @@ var DisplaySystem = {
 				me.linu = me.group.createChild("path")
 					.moveTo(0,displayHeight*0.5)
 					.horiz(displayWidth)
-					.moveTo(20,displayHeight*0.5+0.5*displayHeight*(me.myAlt-tfr_current_terr)/1500)
-					.vert(20)
-					.moveTo(displayWidth-20,displayHeight*0.5+0.5*displayHeight*(me.myAlt-tfr_target_altitude_m)/1500)
-					.vert(20)
-					.moveTo(20,displayHeight-35)
-					.horiz(displayWidth-40)
-					.moveTo(displayWidth-20,displayHeight-35)
-					.vert(-15)
-					.moveTo(20,displayHeight-35)
-					.vert(-15)
-					.moveTo(20+(displayWidth-40)*0.2,displayHeight-35)
-					.vert(-15)
-					.moveTo(20+(displayWidth-40)*0.4,displayHeight-35)
-					.vert(-15)
-					.moveTo(20+(displayWidth-40)*0.6,displayHeight-35)
-					.vert(-15)
-					.moveTo(20+(displayWidth-40)*0.8,displayHeight-35)
-					.vert(-15)
-					.setStrokeLineWidth(1)
+					.moveTo(margin.tfr.sides,displayHeight*0.5+0.5*displayHeight*(me.myAlt-tfr_current_terr)/1500)
+					.vert(symbolSize.tfr.terrain)
+					.moveTo(displayWidth-margin.tfr.sides,displayHeight*0.5+0.5*displayHeight*(me.myAlt-tfr_target_altitude_m)/1500)
+					.vert(symbolSize.tfr.terrain)
+					.moveTo(margin.tfr.sides,displayHeight-margin.tfr.bottom)
+					.horiz(displayWidth-margin.tfr.sides*2)
+					.moveTo(displayWidth-margin.tfr.sides,displayHeight-margin.tfr.bottom)
+					.vert(-symbolSize.tfr.tick)
+					.moveTo(margin.tfr.sides,displayHeight-margin.tfr.bottom)
+					.vert(-symbolSize.tfr.tick)
+					.moveTo(margin.tfr.sides+(displayWidth-margin.tfr.sides*2)*0.2,displayHeight-margin.tfr.bottom)
+					.vert(-symbolSize.tfr.tick)
+					.moveTo(margin.tfr.sides+(displayWidth-margin.tfr.sides*2)*0.4,displayHeight-margin.tfr.bottom)
+					.vert(-symbolSize.tfr.tick)
+					.moveTo(margin.tfr.sides+(displayWidth-margin.tfr.sides*2)*0.6,displayHeight-margin.tfr.bottom)
+					.vert(-symbolSize.tfr.tick)
+					.moveTo(margin.tfr.sides+(displayWidth-margin.tfr.sides*2)*0.8,displayHeight-margin.tfr.bottom)
+					.vert(-symbolSize.tfr.tick)
+					.setStrokeLineWidth(lineWidth.tfr.terrain)
 					.setColor(colorDot2);
 				for (var i = 1;i<50; i+=1) {
 					me.m = me.extrapolate(i, 0, 50, me.myAlt-tfr_current_terr, me.myAlt-tfr_target_altitude_m)*(0.9+0.2*rand());
-					me.d = me.extrapolate(i, 0, 50, 20, displayWidth-20);
+					me.d = me.extrapolate(i, 0, 50, margin.tfr.sides, displayWidth-margin.tfr.sides);
 					me.linu.moveTo(me.d,displayHeight*0.5+0.5*displayHeight*(me.m/1500))
-						.vert(20);
+						.vert(symbolSize.tfr.terrain);
 				}
 			}
 			if (me.smooth == 1) me.device.controls["OSB12"].setControlText("HARD");
@@ -5013,6 +5157,7 @@ var DisplaySystem = {
 			me.setupGrid();
 		},
 		setupGrid: func () {
+			me.group.setScale(1.16, 1.06);
 	        me.cross = me.group.createChild("path")
 	           .moveTo(1*0.795, 1)
 	           .lineTo(550*0.795, 480)
@@ -5084,6 +5229,7 @@ var DisplaySystem = {
 			me.setupCube();
 		},
 		setupCube: func () {
+			me.group.setScale(1.16, 1.06);
 	        me.lbl = me.group.createChild("path")
 	            .rect(0,0,175,20)
 	            .setTranslation((552/2-110)*0.795, 10-3)
@@ -5194,15 +5340,15 @@ var DisplaySystem = {
 	        }
 	        
 	        me.cursor = me.groupCursor.createChild("path")
-	                    .moveTo(-8,-9)
-	                    .vert(18)
-	                    .moveTo(8,-9)
-	                    .vert(18)
-	                    .setStrokeLineWidth(2.0)
+	                    .moveTo(-8*symbolSize.has.cursor,-9*symbolSize.has.cursor)
+	                    .vert(18*symbolSize.has.cursor)
+	                    .moveTo(8*symbolSize.has.cursor,-9*symbolSize.has.cursor)
+	                    .vert(18*symbolSize.has.cursor)
+	                    .setStrokeLineWidth(lineWidth.has.cursor)
 	                    .setColor(colorLine3);
 
 	        var fieldH = me.height * 0.60;
-	        var fieldW = me.width * 0.666;
+	        var fieldW = me.width  * 0.70;
 
 	        me.fieldH = fieldH;
 	        me.fieldW = fieldW;
@@ -5210,17 +5356,17 @@ var DisplaySystem = {
 	        me.fieldY = me.height * 0.25;
 	        me.fieldDiag = math.sqrt(me.fieldX*me.fieldX+me.fieldX*me.fieldX);
 	        me.detectedThreatStatusBox = me.groupRdr.createChild("path")
-	                .moveTo(-fieldW*0.5, 40)
+	                .moveTo(-fieldW*0.5, margin.has.statusBox)
 	                .horiz(fieldW)
 	                .vert(me.height * 0.10)
 	                .horiz(-fieldW)
 	                .vert(-me.height * 0.10)
 	                .setColor(colorLine1)
 	                .set("z-index",12)
-	                .setStrokeLineWidth(2);
+	                .setStrokeLineWidth(lineWidth.has.statusBox);
 	        me.detectedThreatStatusBoxText = me.groupRdr.createChild("text")
 	                        .setAlignment("left-center")
-	                        .setTranslation(-fieldW*0.5, 40+me.height * 0.10*0.5)
+	                        .setTranslation(-fieldW*0.5, margin.has.statusBox+me.height * 0.10*0.5)
 	                        .setFontSize(me.device.fontSize, 1.0)
 	                        .setColor(colorText1);
 	        me.dashBox = me.groupRdr.createChild("path")
@@ -5232,7 +5378,7 @@ var DisplaySystem = {
 	                .setColor(colorCircle1)
 	                .setStrokeDashArray([20,20])
 	                .set("z-index",12)
-	                .setStrokeLineWidth(2);
+	                .setStrokeLineWidth(lineWidth.has.enclosure);
 
 	        me.handoffGrp = me.groupRdr.createChild("group");
 	        me.handoffRot = me.handoffGrp.createTransform().setTranslation(0, me.fieldY + me.fieldH*0.5);;
@@ -5243,7 +5389,7 @@ var DisplaySystem = {
 
 	        me.searchText = me.groupRdr.createChild("text")
 	                        .setAlignment("center-top")
-	                        .setTranslation(0, 40+me.height * 0.10+5)
+	                        .setTranslation(0, margin.has.searchText+me.height * 0.10)
 	                        .setFontSize(me.device.fontSize, 1.0)
 	                        .setColor(colorText2);
 
@@ -5252,79 +5398,79 @@ var DisplaySystem = {
 	                .vert(fieldH)
 	                .setColor(colorLine3)
 	                .set("z-index",20)
-	                .setStrokeLineWidth(2);
+	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.crossX = me.groupRdr.createChild("path")
 	                .moveTo(-fieldW * 0.5, me.fieldY + fieldH * 0.25)
 	                .horiz(fieldW)
 	                .setColor(colorLine3)
 	                .set("z-index",20)
-	                .setStrokeLineWidth(2);
+	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.crossX1 = me.groupRdr.createChild("path")
-	                .moveTo(0, 5)
-	                .vert(-10)
+	                .moveTo(0, symbolSize.has.tick*0.5)
+	                .vert(-symbolSize.has.tick)
 	                .setColor(colorLine3)
 	                .set("z-index",20)
-	                .setStrokeLineWidth(2);
+	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.crossX2 = me.groupRdr.createChild("path")
-	                .moveTo(0, 5)
-	                .vert(-10)
+	                .moveTo(0, symbolSize.has.tick*0.5)
+	                .vert(-symbolSize.has.tick)
 	                .setColor(colorLine3)
 	                .set("z-index",20)
-	                .setStrokeLineWidth(2);
+	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.crossX3 = me.groupRdr.createChild("path")
-	                .moveTo(0, 5)
-	                .vert(-10)
+	                .moveTo(0, symbolSize.has.tick*0.5)
+	                .vert(-symbolSize.has.tick)
 	                .setColor(colorLine3)
 	                .set("z-index",20)
-	                .setStrokeLineWidth(2);
+	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.crossX4 = me.groupRdr.createChild("path")
-	                .moveTo(0, 5)
-	                .vert(-10)
+	                .moveTo(0, symbolSize.has.tick*0.5)
+	                .vert(-symbolSize.has.tick)
 	                .setColor(colorLine3)
 	                .set("z-index",20)
-	                .setStrokeLineWidth(2);
+	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.crossX5 = me.groupRdr.createChild("path")
-	                .moveTo(0, 5)
-	                .vert(-10)
+	                .moveTo(0, symbolSize.has.tick*0.5)
+	                .vert(-symbolSize.has.tick)
 	                .setColor(colorLine3)
 	                .set("z-index",20)
-	                .setStrokeLineWidth(2);
+	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.crossX6 = me.groupRdr.createChild("path")
-	                .moveTo(0, 5)
-	                .vert(-10)
+	                .moveTo(0, symbolSize.has.tick*0.5)
+	                .vert(-symbolSize.has.tick)
 	                .setColor(colorLine3)
 	                .set("z-index",20)
-	                .setStrokeLineWidth(2);
+	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.crossY1 = me.groupRdr.createChild("path")
-	                .moveTo(-5, 0)
-	                .horiz(10)
+	                .moveTo(-symbolSize.has.tick*0.5, 0)
+	                .horiz(symbolSize.has.tick)
 	                .setColor(colorLine3)
 	                .set("z-index",20)
-	                .setStrokeLineWidth(2);
+	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.crossY2 = me.groupRdr.createChild("path")
-	                .moveTo(-5, 0)
-	                .horiz(10)
+	                .moveTo(-symbolSize.has.tick*0.5, 0)
+	                .horiz(symbolSize.has.tick)
 	                .setColor(colorLine3)
 	                .set("z-index",20)
-	                .setStrokeLineWidth(2);
+	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.crossY3 = me.groupRdr.createChild("path")
-	                .moveTo(-5, 0)
-	                .horiz(10)
+	                .moveTo(-symbolSize.has.tick*0.5, 0)
+	                .horiz(symbolSize.has.tick)
 	                .setColor(colorLine3)
 	                .set("z-index",20)
-	                .setStrokeLineWidth(2);
+	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.cross = me.groupRdr.createChild("path")
-	                .moveTo(20, 0)
-	                .horiz(fieldW * 0.5-20)
-	                .moveTo(-20, 0)
-	                .horiz(-fieldW * 0.5+20)
-	                .moveTo(0, 20)
-	                .vert(fieldH * 0.5-20)
-	                .moveTo(0, -20)
-	                .vert(-fieldH * 0.5+20)
+	                .moveTo(symbolSize.has.crossInner, 0)
+	                .horiz(fieldW * 0.5-symbolSize.has.crossInner)
+	                .moveTo(-symbolSize.has.crossInner, 0)
+	                .horiz(-fieldW * 0.5+symbolSize.has.crossInner)
+	                .moveTo(0, symbolSize.has.crossInner)
+	                .vert(fieldH * 0.5-symbolSize.has.crossInner)
+	                .moveTo(0, -symbolSize.has.crossInner)
+	                .vert(-fieldH * 0.5+symbolSize.has.crossInner)
 	                .setColor(colorLine3)
 	                .set("z-index",20)
-	                .setStrokeLineWidth(2);
+	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.osbShow = [0,0,0,0,0];
         },
 		enter: func {
@@ -5345,7 +5491,7 @@ var DisplaySystem = {
 			me.device.system.fetchLayer("SharedStations").init(me, me.getType);
 		},
 		getType: func {
-			return ["AGM-88"];
+			return ["AGM-88", 50];
 		},
 		controlAction: func (controlName) {
 			printDebug(me.name,": ",controlName," activated on ",me.device.name);
@@ -5984,6 +6130,7 @@ var DisplaySystem = {
 		},
 		links: {
 			"OSB11": "PageFCR",
+			"OSB20": "PageMenu",
 		},
 		layers: ["BULLSEYE"],
 	},
@@ -6147,7 +6294,7 @@ updateFlyup = func(notification=nil) {
 
 # Cursor stuff
 var cursor_pos = [100,-100];
-var cursor_posHAS = [0,-241];
+var cursor_posHAS = [0,-256];
 var cursor_pos_hsd = [0, -50];
 var cursor_click = -1;
 var cursor_lock = -1;
@@ -6160,7 +6307,7 @@ var cursorFCRair = 1;
 setlistener("controls/displays/cursor-click", func (node) {if (node.getValue()) {slew_c = 1;}},0,0);
 
 var cursorZero = func {
-    cursor_pos = [0,-241];
+    cursor_pos = [0,-256];
 }
 cursorZero();
 
@@ -6303,8 +6450,8 @@ var get_intercept = func(bearingToRunner, dist_m, runnerHeading, runnerSpeed, ch
     return [timeToIntercept, interceptHeading, interceptCoord, interceptDist, interceptRelativeBearing];
 }
 
-var displayWidth     = 552 * 0.795;
-var displayHeight    = 482 * 1;
+var displayWidth     = 512;#552 * 0.795;
+var displayHeight    = 512;#482 * 1;
 var displayWidthHalf = displayWidth  *  0.5;
 var displayHeightHalf= displayHeight  *  0.5;
 
@@ -6326,19 +6473,19 @@ var forcePages = func (v, system) {
 
 var main = func (module) {
 	# TEST CODE:
-	var height = 482;
-	var width  = 552;
+	var height = 512;#482;
+	var width  = 512;#552;
 
-	leftMFD = DisplayDevice.new("LeftMFD", [width,height], [0.795, 1], "MFDimage1", "tranbg.png");
+	leftMFD = DisplayDevice.new("LeftMFD", [width,height], [1, 1], "MFDimage1", "tranbg.png");
 	leftMFD.setColorBackground(colorBackground);#todo fix
 
-	rightMFD = DisplayDevice.new("RightMFD", [width,height], [0.795, 1], "MFDimage2", "tranbg.png");
+	rightMFD = DisplayDevice.new("RightMFD", [width,height], [1, 1], "MFDimage2", "tranbg.png");
 	rightMFD.setColorBackground(colorBackground);
 
 	leftMFD.setControlTextColors(colorText1, colorBackground);
 	rightMFD.setControlTextColors(colorText1, colorBackground);
 
-	width *= 0.795;
+	width *= 1;#0.795;
 
 	var osbPositions = [
 		[0, 1.5*height/7],
@@ -6424,11 +6571,8 @@ main(nil);# disable this line if running as module
 
 #TODO:
 #      rockerbuttons as controls
-#      resolutions power of two
-#      crash exit GM
-#      make nav reference for ground target?
+#      crash from GM when ran as module
 #      HSDCNTL/FCRCNTL/MENU/FCRMENU should be an overlay
-#      HSD: cursor. MLU1 page 32.
 #      HSD: MSG page with max 9 lines of 15 chars. MLU1 page 35.
 #      HSD: OSB8 FRZ freeze
 #      FCR: OVRD
@@ -6439,3 +6583,8 @@ main(nil);# disable this line if running as module
 #      MLU 4.3:To provide feedback that an OSB has actually been depressed,
 #        the display surface near a specific OSB flashes momentarily when the OSB is depressed.
 #      FLIR: 21x28 degs
+#      Lookup tables for z-index, symbol sizes, font sizes, line thickness
+#          Done: Device, HSD, bullseye, arrows, (sms-inv, sms-sj,) tfr, grid, cube, flir, has, fcr
+#          Todo: z-index, font sizes
+#          Issues: SMS INV/S-J still pixel based
+#                  6% x 16% larger resolution might make some symbols appear smaller.

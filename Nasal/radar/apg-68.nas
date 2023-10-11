@@ -2846,11 +2846,10 @@ var FlirSensor = {
             for(me.x = 0; me.x < flirImageReso; me.x += 1) {
                 me.xDevi = (me.x-me.xBore);
                 #me.xDevi /= me.texelPerDegreeX;
-                for(me.y = me.scanY; me.y < me.scanY+me.scans; me.y += 1) {
-                    me.yDevi = (me.y-me.yBore)-7.5;
+                for(me.y = me.scanY; me.y < me.scanY+me.scans and me.y < flirImageReso; me.y += 1) {
+                    me.yDevi = (me.y-me.yBore)-7.5;# remember image y axis is opposite canvas axis y
                     #me.yDevi /= me.texelPerDegreeY;
-                    me.value = 0;
-                    me.start = geo.viewer_position();
+                    me.start = geo.aircraft_position();
                     me.vecto = [math.cos(me.xDevi*D2R)*math.cos(me.yDevi*D2R),math.sin(-me.xDevi*D2R)*math.cos(me.yDevi*D2R),math.sin(me.yDevi*D2R)];
 
                     me.direction = vector.Math.vectorToGeoVector(vector.Math.rollPitchYawVector(getprop("orientation/roll-deg"),getprop("orientation/pitch-deg"),-getprop("orientation/heading-deg"), me.vecto),me.start);
@@ -2864,6 +2863,7 @@ var FlirSensor = {
                         #me.value = math.min(1,((math.max(me.distMin-me.distMax, me.distMin-me.start.direct_distance_to(me.terrain))+(me.distMax-me.distMin))/me.distMax));
                         me.value = 1-math.clamp((me.dist_m-me.distMin)/(me.distMax-me.distMin),0,1);
                     }
+                    #if (me.y == 31) print(me.y," px value=",me.value," pitch=",me.yDevi);
                     if (!bhot) me.value = 1 - me.value;
                     me.gain = math.min(1,1+2*me.cont*(1-2*me.value));
                     me.gain = 2.2;
