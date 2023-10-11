@@ -5026,7 +5026,7 @@ var DisplaySystem = {
 			printDebug(me.name,": ",controlName," activated on ",me.device.name);
 			if (controlName == "OSB1") {
                 tfrMode = 1;
-                setprop("f16/fcs/adv-mode-sel", 1);
+                #setprop("f16/fcs/adv-mode-sel", 1);
             } elsif (controlName == "OSB2") {
                 #tfrMode = 2;
             } elsif (controlName == "OSB3") {
@@ -5056,9 +5056,9 @@ var DisplaySystem = {
                 }
                 setprop("f16/fcs/adv-mode-smooth", tfrSmooth);
             } elsif (controlName == "OSB14") {
-                var tfrRequest = getprop("f16/fcs/adv-mode-sel");
-                tfrRequest = !tfrRequest;
-                setprop("f16/fcs/adv-mode-sel", 0);
+                #var tfrRequest = getprop("f16/fcs/adv-mode-sel");
+                #tfrRequest = !tfrRequest;
+                #setprop("f16/fcs/adv-mode-sel", 0);
             } elsif (controlName == "OSB15") {
                 tfrFreq += 1;
                 if (tfrFreq > 8) {
@@ -6629,4 +6629,3 @@ main(nil);# disable this line if running as module
 #          Todo: z-index, font sizes
 #          Issues: SMS INV/S-J still pixel based
 #                  6% x 16% larger resolution might make some symbols appear smaller.
-#      TFR page, should probably not be able to start the system.
