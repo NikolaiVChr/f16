@@ -25,7 +25,7 @@ var symbolSize = {
 		crossInner: 20,
 	},
 	fcr: {
-		blep: 8,
+		blep: 10,
 		track: 1.0,
 		iff: 8,
 		dl: 10,
@@ -3564,10 +3564,12 @@ var DisplaySystem = {
 	                .hide()
 	                .set("font","LiberationFonts/LiberationMono-Regular.ttf");#552,displayHeight , 0.795 is for UV map
 
-	        me.maxB = 150;
+	        me.maxB = 180;
 	        me.maxT =  15;
+	        me.maxHL =  60;
 	        me.index = index;
 	        me.blep = setsize([],me.maxB);
+	        me.hotLine = setsize([],me.maxHL);
 	        me.blepTriangle = setsize([],me.maxT);
 	        me.blepTriangleVel = setsize([],me.maxT);
 	        me.blepTriangleVelLine = setsize([],me.maxT);
@@ -3584,6 +3586,14 @@ var DisplaySystem = {
 	                        .vert(symbolSize.fcr.blep)
 	                        .setStrokeLineWidth(symbolSize.fcr.blep)
 	                        .setStrokeLineCap("butt")
+	                        .set("z-index",10)
+	                        .hide();
+	        }
+	        for (var i = 0;i<me.maxHL;i+=1) {
+	                me.hotLine[i] = me.p_RDR.createChild("path")
+	                        .moveTo(0, 0)
+	                        .vert(100)
+	                        .setStrokeLineWidth(1)
 	                        .set("z-index",10)
 	                        .hide();
 	        }
@@ -4348,6 +4358,7 @@ var DisplaySystem = {
             me.ii = 0;
             me.iii = 0;
             me.iiii = 0;
+            me.iiiii = 0;
 
             me.randoo = rand();
 
@@ -4399,6 +4410,9 @@ var DisplaySystem = {
             for (;me.iiii < me.maxT;me.iiii+=1) {
                 me.iff[me.iiii].hide();
                 me.iffU[me.iiii].hide();
+            }
+            for (;me.iiiii < me.maxHL;me.iiiii+=1) {
+                me.hotLine[me.iiiii].hide();
             }
             #
             # Intercept steering point for designated target
@@ -4660,7 +4674,9 @@ var DisplaySystem = {
                 me.iffState = 0;
             }
             me.bleps = contact.getBleps();
+            me.count = -1;
             foreach(me.bleppy ; me.bleps) {
+            	me.count += 1;
                 if (me.i < me.maxB and me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.currentMode.timeToFadeBleps and me.bleppy.getDirection() != nil and (radar_system.apg68Radar.currentMode.longName != radar_system.vsMode.longName or (me.bleppy.getClosureRate() != nil and me.bleppy.getClosureRate()>0))) {
                     if (me.bleppy.getClosureRate() != nil and radar_system.apg68Radar.currentMode.longName == radar_system.vsMode.longName) {
                         me.distPixels = math.min(950, me.bleppy.getClosureRate())*(displayHeight/(1000));
@@ -4677,6 +4693,18 @@ var DisplaySystem = {
                     me.blep[me.i].setColor(colorDot2[0]*me.color+colorBackground[0]*(1-me.color), colorDot2[1]*me.color+colorBackground[1]*(1-me.color), colorDot2[2]*me.color+colorBackground[2]*(1-me.color));
                     me.blep[me.i].show();
                     me.blep[me.i].update();
+                    if (me.iiiii < me.maxHL and me.bleppy.getClosureRate() != nil and me.count == size(me.bleps)-1) {# The last in the vector is the most fresh (hack)
+                    	me.spd = me.bleppy.getClosureRate()-radar_system.self.getSpeed();
+                    	me.hot = me.spd > 0?1:-1;                    	
+                    	me.hotlinePos = [me.echoPos[0], me.echoPos[1]+symbolSize.fcr.blep*0.5*me.hot];
+                    	#print("Painting ",(math.abs(me.spd)/50)," pixel hotline hot=",me.hot);
+                    	me.hotLine[me.iiiii].setScale(1,(math.abs(me.spd)/50)/100);# Manual: 50 kt per pixel
+                    	me.hotLine[me.iiiii].setRotation(me.hot==1?0:180*D2R);
+                    	me.hotLine[me.iiiii].setTranslation(me.hotlinePos);
+                    	me.hotLine[me.iiiii].setColor(colorDot2[0]*me.color+colorBackground[0]*(1-me.color), colorDot2[1]*me.color+colorBackground[1]*(1-me.color), colorDot2[2]*me.color+colorBackground[2]*(1-me.color));
+                    	me.hotLine[me.iiiii].show();
+                    	me.iiiii += 1;
+                    }
                     if (contact.equalsFast(radar_system.apg68Radar.getPriorityTarget()) and me.bleppy == me.bleps[-1]) {
                         me.selectShowTemp = radar_system.apg68Radar.currentMode.longName != radar_system.twsMode.longName or (me.elapsed - contact.getLastBlepTime() < radar_system.F16TWSMode.timeToBlinkTracks) or (math.mod(me.elapsed,0.50)<0.25);
                         me.selectShow = me.selectShowTemp and contact.getType() == radar_system.AIR;

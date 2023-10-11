@@ -1263,7 +1263,7 @@ var F16RWSMode = {
 	},
 	getSearchInfo: func (contact) {
 		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
-		return [1,0,1,0,0,1];
+		return [1,0,1,0,1,1];
 	},
 };
 
@@ -1788,7 +1788,7 @@ var F16TWSMode = {
 			me.currentTracked = me.tmp;
 		}
 		#print("  ONCE    ",me.currentTracked);
-		return [1,0,1,0,0,1];
+		return [1,0,1,0,1,1];
 	},
 	prunedContact: func (c) {
 		if (c.equals(me.priorityTarget)) {
@@ -1960,7 +1960,7 @@ var F16RWSSAMMode = {
 		if (me.priorityTarget != nil and contact.equals(me.priorityTarget)) {
 			return [1,1,1,1,1,1];
 		}
-		return [1,0,1,0,0,1];
+		return [1,0,1,0,1,1];
 	},
 	showRangeOptions: func {
 		return 0;
