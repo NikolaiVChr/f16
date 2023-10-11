@@ -2118,7 +2118,7 @@ var DisplaySystem = {
 	    HSD_centered: 0,
 	    HSD_coupled: 0,
 	    HSD_range_cen: 40,
-	    HSD_range_dep: 32,
+	    HSD_range_dep: 30,
 
 	    set_HSD_centered: func(centered) DisplaySystem.PageHSD.HSD_centered = centered,
 	    set_HSD_coupled: func(coupled) DisplaySystem.PageHSD.HSD_coupled = coupled,
@@ -2168,18 +2168,18 @@ var DisplaySystem = {
                     else
                         me.set_HSD_range_cen(160);
                 } elsif (!me.get_HSD_centered()) {
-                    if (me.get_HSD_range_dep() == 8)
-                        me.set_HSD_range_dep(16)
-                    elsif (me.get_HSD_range_dep() == 16)
-                        me.set_HSD_range_dep(32)
-                    elsif (me.get_HSD_range_dep() == 32)
-                        me.set_HSD_range_dep(64)
-                    elsif (me.get_HSD_range_dep() == 64)
-                        me.set_HSD_range_dep(128)
-                    elsif (me.get_HSD_range_dep() == 128)
-                        me.set_HSD_range_dep(256)
+                    if (me.get_HSD_range_dep() == 7.5)
+                        me.set_HSD_range_dep(15)
+                    elsif (me.get_HSD_range_dep() == 15)
+                        me.set_HSD_range_dep(30)
+                    elsif (me.get_HSD_range_dep() == 30)
+                        me.set_HSD_range_dep(60)
+                    elsif (me.get_HSD_range_dep() == 60)
+                        me.set_HSD_range_dep(120)
+                    elsif (me.get_HSD_range_dep() == 120)
+                        me.set_HSD_range_dep(240)
                     else
-                        me.set_HSD_range_dep(256);
+                        me.set_HSD_range_dep(240);
                 }
             } elsif (controlName == "OSB2") {
                 if (me.get_HSD_coupled()) return;
@@ -2197,18 +2197,18 @@ var DisplaySystem = {
                     else
                         me.set_HSD_range_cen(5);
                 } elsif (!me.get_HSD_centered()) {
-                    if (me.get_HSD_range_dep() == 256)
-                        me.set_HSD_range_dep(128)
-                    elsif (me.get_HSD_range_dep() == 128)
-                        me.set_HSD_range_dep(64)
-                    elsif (me.get_HSD_range_dep() == 64)
-                        me.set_HSD_range_dep(32)
-                    elsif (me.get_HSD_range_dep() == 32)
-                        me.set_HSD_range_dep(16)
-                    elsif (me.get_HSD_range_dep() == 16)
-                        me.set_HSD_range_dep(8)
+                    if (me.get_HSD_range_dep() == 240)
+                        me.set_HSD_range_dep(120)
+                    elsif (me.get_HSD_range_dep() == 120)
+                        me.set_HSD_range_dep(60)
+                    elsif (me.get_HSD_range_dep() == 60)
+                        me.set_HSD_range_dep(30)
+                    elsif (me.get_HSD_range_dep() == 30)
+                        me.set_HSD_range_dep(15)
+                    elsif (me.get_HSD_range_dep() == 15)
+                        me.set_HSD_range_dep(7.5)
                     else
-                        me.set_HSD_range_dep(8);
+                        me.set_HSD_range_dep(7.5);
                 }
             } elsif (controlName == "OSB10") {
                 cursor_pos_hsd = [0, me.concentricCenter[1]-displayHeight];
@@ -2246,7 +2246,7 @@ var DisplaySystem = {
                     		me.set_HSD_range_cen(me.rng);
                     	} else {
                     		me.rng = me.get_HSD_range_dep()*2;
-                    		if (me.rng > 256) me.rng = 256;
+                    		if (me.rng > 240) me.rng = 240;
                     		else me.resetC = 1;
                     		me.set_HSD_range_dep(me.rng);
                     	}
@@ -2262,7 +2262,7 @@ var DisplaySystem = {
                     		me.set_HSD_range_cen(me.rng);
                     	} else {
                     		me.rng = me.get_HSD_range_dep()*0.5;
-                    		if (me.rng < 8) me.rng = 8;
+                    		if (me.rng < 7.5) me.rng = 7.5;
                     		else me.resetC = 1;
                     		me.set_HSD_range_dep(me.rng);
                     	}
@@ -2325,22 +2325,22 @@ var DisplaySystem = {
 
                 if (me.rdrrng == 5) {
                     me.set_HSD_range_cen(5);
-                    me.set_HSD_range_dep(8);
+                    me.set_HSD_range_dep(7.5);
                 } elsif (me.rdrrng == 10) {
                     me.set_HSD_range_cen(10);
-                    me.set_HSD_range_dep(16);
+                    me.set_HSD_range_dep(15);
                 } elsif (me.rdrrng == 20) {
                     me.set_HSD_range_cen(20);
-                    me.set_HSD_range_dep(32);
+                    me.set_HSD_range_dep(30);
                 } elsif (me.rdrrng == 40) {
                     me.set_HSD_range_cen(40);
-                    me.set_HSD_range_dep(64);
+                    me.set_HSD_range_dep(60);
                 } elsif (me.rdrrng == 80) {
                     me.set_HSD_range_cen(80);
-                    me.set_HSD_range_dep(128);
+                    me.set_HSD_range_dep(120);
                 } elsif (me.rdrrng == 160) {
                     me.set_HSD_range_cen(160);
-                    me.set_HSD_range_dep(256);
+                    me.set_HSD_range_dep(240);
                 }
                 me.showRangeUp = 0;
                 me.showRangeDown = 0;
