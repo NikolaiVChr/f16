@@ -1161,7 +1161,7 @@ var checkValueLaserCode = func(text) {
 	return 0;
 }
 
-var modeSelBull = func() { dataEntryDisplay.bullMode = !dataEntryDisplay.bullMode; };
+var modeSelBull = func() { steerpoints.bullseyeMode = !steerpoints.bullseyeMode; };
 
 var stptNext = func() {
 	var active = getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc");

@@ -702,7 +702,7 @@ var CDU = {
 
     updateSymbols: func {
         me.bullPt = steerpoints.getNumber(steerpoints.index_of_bullseye);
-        me.bullOn = me.bullPt != nil;
+        me.bullOn = me.bullPt != nil and steerpoints.bullseyeMode;
         if (me.bullOn) {
             me.bullLat = me.bullPt.lat;
             me.bullLon = me.bullPt.lon;

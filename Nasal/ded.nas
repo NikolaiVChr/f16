@@ -440,7 +440,7 @@ var dataEntryDisplay = {
 				#wp_num_lastC = "RED";
 				wp_num_lastT = "   ";
 			}
-		} elsif (wp_num != nil and ((wp_num < 359 and wp_num >= 350) or (wp_num < 405 and wp_num >= 400) or (wp_num < 455 and wp_num >= 450) or (wp_num == 500) or (wp_num == 555))) {
+		} elsif (wp_num != nil and ((wp_num < 359 and wp_num >= 350) or (wp_num < 405 and wp_num >= 400) or (wp_num < 455 and wp_num >= 450) or (wp_num == 500) or (wp_num == steerpoints.index_of_bullseye))) {
 			# Own markpoints, DLNK markpoints, WPN GPS and Bulls-eye
 			var stpt = steerpoints.getNumber(wp_num);
 
@@ -495,7 +495,7 @@ var dataEntryDisplay = {
 
 			me.text[1] = sprintf("     LAT  %s", pSTPT.vector[1].getText());
 			me.text[2] = sprintf("     LNG  %s", pSTPT.vector[2].getText());
-			if (wp_num == 555) {
+			if (wp_num == steerpoints.index_of_bullseye) {
 				me.text[3] = sprintf("    ELEV  -1FT");
 			} else {
 				me.text[3] = sprintf("    ELEV  %sFT", pSTPT.vector[4].getText());
@@ -1130,9 +1130,8 @@ var dataEntryDisplay = {
 		}
 	},
 
-	bullMode: 1,
 	updateBull: func() {
-		if (me.bullMode) {
+		if (steerpoints.bullseyeMode) {
 			me.text[0] = sprintf("      *BULLSEYE*        ");
 		} else {
 			me.text[0] = sprintf("       BULLSEYE         ");
@@ -1141,7 +1140,7 @@ var dataEntryDisplay = {
 		me.text[2] = sprintf("                        ");
 		me.text[3] = sprintf("                        ");
 		me.text[4] = sprintf("                        ");
-		wp_num_curr = 555;
+		wp_num_curr = steerpoints.index_of_bullseye;
 	},
 
 	updateWPT: func() {

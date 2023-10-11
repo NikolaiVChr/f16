@@ -32,6 +32,8 @@ var stpt500 = setsize([],1);#Weapon
 var stpt555 = setsize([],1);#Bullseye
 var current = nil;#Current STPT number, nil for route/nothing.
 
+var bullseyeMode = 1;
+
 var colorRed = 0;
 var colorYellow = 1;
 var colorGreen = 2;

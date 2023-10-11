@@ -1037,7 +1037,7 @@ var MFD_Device =
             #
             # Bulls-eye info on FCR
             #
-            me.bullPt = steerpoints.getNumber(555);
+            me.bullPt = steerpoints.getNumber(steerpoints.index_of_bullseye);
             me.bullOn = me.bullPt != nil;
             if (me.bullOn) {
                 me.bullLat = me.bullPt.lat;
@@ -3895,7 +3895,7 @@ var MFD_Device =
                 me.root.rang.setText(""~MFD_Device.get_HSD_range_dep());
             }
 
-            me.bullPt = steerpoints.getNumber(555);
+            me.bullPt = steerpoints.getNumber(steerpoints.index_of_bullseye);
             me.bullOn = me.bullPt != nil;
             if (me.bullOn) {
                 me.bullLat = me.bullPt.lat;

@@ -1052,7 +1052,7 @@ var DisplaySystem = {
             # Bulls-eye info
             #
             me.bullPt = steerpoints.getNumber(steerpoints.index_of_bullseye);
-            me.bullOn = me.bullPt != nil;
+            me.bullOn = me.bullPt != nil and steerpoints.bullseyeMode;
             me.refOn = steerpoints.getCurrentNumber() > 0;
             if (pylons.fcs != nil) {
             	me.bullOn = me.bullOn and pylons.fcs.isAAMode();
@@ -2374,7 +2374,7 @@ var DisplaySystem = {
             me.conc.setVisible(hsdShowRINGS);
 
             me.bullPt = steerpoints.getNumber(steerpoints.index_of_bullseye);
-            me.bullOn = me.bullPt != nil;
+            me.bullOn = me.bullPt != nil and steerpoints.bullseyeMode;
             if (me.bullOn) {
                 me.bullLat = me.bullPt.lat;
                 me.bullLon = me.bullPt.lon;
@@ -4043,7 +4043,7 @@ var DisplaySystem = {
             # Bulls-eye info on FCR
             #
             me.bullPt = steerpoints.getNumber(steerpoints.index_of_bullseye);
-            me.bullOn = me.bullPt != nil;
+            me.bullOn = me.bullPt != nil and steerpoints.bullseyeMode;
             if (me.bullOn) {
                 me.bullLat = me.bullPt.lat;
                 me.bullLon = me.bullPt.lon;

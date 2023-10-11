@@ -2312,8 +2312,8 @@ append(obj.total, obj.speed_curr);
                 me.eegsLoop.stop();
             }
 
-            me.bullPt = steerpoints.getNumber(555);
-            me.bullOn = me.bullPt != nil;
+            me.bullPt = steerpoints.getNumber(steerpoints.index_of_bullseye);
+            me.bullOn = me.bullPt != nil and steerpoints.bullseyeMode;
             if (hdp.getproper("bingo") and math.mod(int(4*(hdp.getproper("elapsed")-int(hdp.getproper("elapsed")))),2)>0) {
               me.window11_txt = "FUEL";
             } elsif (hdp.getproper("bingo")) {
