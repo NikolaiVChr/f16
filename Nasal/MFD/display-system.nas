@@ -2373,6 +2373,9 @@ var DisplaySystem = {
 
             me.conc.setVisible(hsdShowRINGS);
 
+            me.closestDistFromCursor = 10000;
+            me.closestSteerpointToCursor = -1;
+
             me.bullPt = steerpoints.getNumber(steerpoints.index_of_bullseye);
             me.bullOn = me.bullPt != nil and steerpoints.bullseyeMode;
             if (me.bullOn) {
@@ -2402,9 +2405,11 @@ var DisplaySystem = {
 
 	                if (me.hsdCursorclick) {
                     	me.distFromCursor = math.sqrt(math.pow(me.hsdCursorFromOwnship[0]-me.legX,2)+math.pow(me.hsdCursorFromOwnship[1]-me.legY,2));
-                    	if (me.distFromCursor < 12) {# bullseye
-                    		me.hsdCursorclick = 0;
-                    		steerpoints.setCurrentNumber(steerpoints.index_of_bullseye);
+                    	if (me.distFromCursor < 14) {# bullseye
+                    		if (me.distFromCursor < me.closestDistFromCursor) {
+                    			me.closestDistFromCursor = me.distFromCursor;
+                    			me.closestSteerpointToCursor = steerpoints.index_of_bullseye;
+                    		}
                     	}
                     }
 	            }
@@ -2418,6 +2423,7 @@ var DisplaySystem = {
                 me.rdrRangePixels = me.outerRadius*(me.rdrrng/me.get_HSD_range_dep());
             }
             me.az = radar_system.apg68Radar.currentMode.az;
+            
             if (noti.FrameCount == 1) {
                 me.cone.removeAllChildren();
                 if (radar_system.apg68Radar.enabled and hsdShowFCR) {
@@ -2443,8 +2449,7 @@ var DisplaySystem = {
                     me.planSize = me.plan.getPlanSize();
                     me.prevX = nil;
                     me.prevY = nil;
-                    me.closestDistFromCursor = 10000;
-                    me.closestSteerpointToCursor = -1;
+                    
                     for (me.j = 0; me.j < me.planSize;me.j+=1) {
                         me.wp = me.plan.getWP(me.j);
                         if (me.wp.lat == 0 and me.wp.lon == 0) continue;# Ignore SIDs that have no GPS position
@@ -2490,7 +2495,7 @@ var DisplaySystem = {
 
                         if (me.hsdCursorclick) {
                         	me.distFromCursor = math.sqrt(math.pow(me.hsdCursorFromOwnship[0]-me.legX,2)+math.pow(me.hsdCursorFromOwnship[1]-me.legY,2));
-                        	if (me.distFromCursor < 11) {# steerpoints
+                        	if (me.distFromCursor < 14) {# steerpoints
                         		if (me.distFromCursor < me.closestDistFromCursor) {
                         			me.closestDistFromCursor = me.distFromCursor;
                         			me.closestSteerpointToCursor = me.j+1;
@@ -2498,10 +2503,7 @@ var DisplaySystem = {
                         	}
                         }
                     }
-                    if (me.closestDistFromCursor < 1000) {
-                        me.hsdCursorclick = 0;
-                        steerpoints.setCurrentNumber(me.closestSteerpointToCursor);
-                    }
+                    
                 }
 
                 for (var u = 0;u<4;u+=1) {
@@ -2557,10 +2559,12 @@ var DisplaySystem = {
 
                             if (me.hsdCursorclick) {
 	                        	me.distFromCursor = math.sqrt(math.pow(me.hsdCursorFromOwnship[0]-me.legX,2)+math.pow(me.hsdCursorFromOwnship[1]-me.legY,2));
-	                        	if (me.distFromCursor < 11) {#lines
-	                        		me.hsdCursorclick = 0;
+	                        	if (me.distFromCursor < 14) {#lines
 	                        		me.mkNumber = me.j + steerpoints.index_of_lines[u];
-	                        		steerpoints.setCurrentNumber(me.mkNumber);
+	                        		if (me.distFromCursor < me.closestDistFromCursor) {
+		                    			me.closestDistFromCursor = me.distFromCursor;
+		                    			me.closestSteerpointToCursor = me.mkNumber;
+		                    		}
 	                        	}
 	                        }
                         }
@@ -2598,9 +2602,11 @@ var DisplaySystem = {
                         me.mark[mi].show();
                         if (me.hsdCursorclick) {
                         	me.distFromCursor = math.sqrt(math.pow(me.hsdCursorFromOwnship[0]-me.legX,2)+math.pow(me.hsdCursorFromOwnship[1]-me.legY,2));
-                        	if (me.distFromCursor < 11) {# markpoints
-                        		me.hsdCursorclick = 0;
-                        		steerpoints.setCurrentNumber(me.mkNumber);
+                        	if (me.distFromCursor < 14) {# markpoints
+                        		if (me.distFromCursor < me.closestDistFromCursor) {
+	                    			me.closestDistFromCursor = me.distFromCursor;
+	                    			me.closestSteerpointToCursor = me.mkNumber;
+	                    		}
                         	}
                         }
                     }
@@ -2655,8 +2661,10 @@ var DisplaySystem = {
                         if (me.hsdCursorclick) {
                         	me.distFromCursor = math.sqrt(math.pow(me.hsdCursorFromOwnship[0]-me.legX,2)+math.pow(me.hsdCursorFromOwnship[1]-me.legY,2));
                         	if (me.distFromCursor < 14) {# pre-planned threats
-                        		me.hsdCursorclick = 0;
-                        		steerpoints.setCurrentNumber(me.mkNumber);
+                        		if (me.distFromCursor < me.closestDistFromCursor) {
+	                    			me.closestDistFromCursor = me.distFromCursor;
+	                    			me.closestSteerpointToCursor = me.mkNumber;
+	                    		}
                         	}
                         }
                     } else {
@@ -2728,6 +2736,11 @@ var DisplaySystem = {
                 me.selection.setVisible(me.selected);
             }
             if (noti.FrameCount == 3) me.up = !me.up;
+
+            if (me.closestDistFromCursor < 1000) {
+                me.hsdCursorclick = 0;
+                steerpoints.setCurrentNumber(me.closestSteerpointToCursor);
+            }
 
             if (cursor_click == me.index) {
             	cursor_click = -1;
@@ -6610,9 +6623,10 @@ main(nil);# disable this line if running as module
 #      Aircraft Ref. Symbol and steering bars: dash-34 (new) 1-77
 #      MLU 4.3:To provide feedback that an OSB has actually been depressed,
 #        the display surface near a specific OSB flashes momentarily when the OSB is depressed.
-#      FLIR: 21x28 degs
+#      FLIR: 21x28 degs instead of 32x32
 #      Lookup tables for z-index, symbol sizes, font sizes, line thickness
 #          Done: Device, HSD, bullseye, arrows, (sms-inv, sms-sj,) tfr, grid, cube, flir, has, fcr
 #          Todo: z-index, font sizes
 #          Issues: SMS INV/S-J still pixel based
 #                  6% x 16% larger resolution might make some symbols appear smaller.
+#      TFR page, should probably not be able to start the system.
