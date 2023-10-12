@@ -2347,7 +2347,7 @@ var DisplaySystem = {
             } else {
                 if (me.get_HSD_centered() and me.get_HSD_range_cen() == 160) {
                     me.showRangeUp = 0;
-                } elsif (!me.get_HSD_centered() and me.get_HSD_range_dep() == 256) {
+                } elsif (!me.get_HSD_centered() and me.get_HSD_range_dep() == 240) {
                     me.showRangeUp = 0;
                 } else {
                     me.showRangeUp = 1;
@@ -2355,7 +2355,7 @@ var DisplaySystem = {
 
                 if (me.get_HSD_centered() and me.get_HSD_range_cen() == 5) {
                     me.showRangeDown = 0;
-                } elsif (!me.get_HSD_centered() and me.get_HSD_range_dep() == 8) {
+                } elsif (!me.get_HSD_centered() and me.get_HSD_range_dep() == 7.5) {
                     me.showRangeDown = 0;
                 } else {
                     me.showRangeDown = 1;
