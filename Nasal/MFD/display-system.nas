@@ -6600,6 +6600,8 @@ var unload = func {
 	DisplayDevice = nil;
 	DisplaySystem = nil;
 	f16_mfd.del();
+	radar_system.mapper.removeImage();
+	radar_system.FlirSensor.removeImage();
 }
 
 var debugDisplays = 0;

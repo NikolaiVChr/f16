@@ -2831,6 +2831,10 @@ var FlirSensor = {
         me.color = displays.colorDot2;
         return me.flirPicHD;
     },
+    removeImage: func {
+    	me.flirPicHD = nil;
+    	me.pics = [nil,nil];
+    },
     extrapolate: func (x, x1, x2, y1, y2) {
     	return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
 	},
@@ -3063,6 +3067,9 @@ var TerrainMapper = {
 		} else {
 			return 0;
 		}
+	},
+	removeImage: func {
+		me.gmPic = nil;
 	},
 	paintImage: func (azData, bottomBar, topBar) {
 
