@@ -4801,7 +4801,7 @@ var DisplaySystem = {
                     me.blep[me.i].setColor(colorDot2[0]*me.color+colorBackground[0]*(1-me.color), colorDot2[1]*me.color+colorBackground[1]*(1-me.color), colorDot2[2]*me.color+colorBackground[2]*(1-me.color));
                     me.blep[me.i].show();
                     me.blep[me.i].update();
-                    if (me.iiiii < me.maxHL and me.bleppy.getClosureRate() != nil and me.count == size(me.bleps)-1) {# The last in the vector is the most fresh (hack)
+                    if (me.iiiii < me.maxHL and me.bleppy.getClosureRate() != nil and me.count == size(me.bleps)-1 and radar_system.apg68Radar.currentMode.detectAIR) {# The last in the vector is the most fresh (hack)
                     	me.spd = me.bleppy.getClosureRate()-radar_system.self.getSpeed();
                     	if (me.bleppy.getSpeed() != nil and me.bleppy.getSpeed() < 60) {
                     		me.spd = 0.1;
@@ -6729,5 +6729,6 @@ main(nil);# disable this line if running as module
 #          Todo: z-index, font sizes
 #          Issues: SMS INV/S-J still pixel based
 #                  6% x 16% larger resolution might make some symbols appear smaller.
-#      GM EXP should scan
-#      GM show hot lines on statics
+#      GM EXP should imagescan
+#      GM show hot lines on statics, a symptom of a deeper issue that too lazy to fix
+#      GM FTT does not imagescan around it.
