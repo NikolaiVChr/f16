@@ -1092,7 +1092,7 @@ var APG68 = {
 	rcsRefValue: 3.2,
 	targetHistory: 3,# Not used in TWS
 	isEnabled: func {
-		return getprop("/f16/avionics/power-fcr-bit") == 2 and getprop("instrumentation/radar/radar-enable") and !getprop("/fdm/jsbsim/gear/unit[0]/WOW") and getprop("instrumentation/radar/serviceable");
+		return getprop("/f16/avionics/power-fcr-bit") == 2 and getprop("instrumentation/radar/radar-enable") and getprop("instrumentation/radar/serviceable") and getprop("/fdm/jsbsim/gear/unit[0]/WOW");#
 	},
 	setAGMode: func {
 		if (me.rootMode != 3) {
@@ -1378,7 +1378,9 @@ var F16SeaMode = {
 	},
 	getEXPsize: func {
 		# return nm of zoom width
-		if (me.getRange() == 10) {
+		if (me.getRange() == 5) {
+			return 1.75;# not in manual
+		} elsif (me.getRange() == 10) {
 			return 3.5;
 		} elsif (me.getRange() == 20) {
 			return 7;
@@ -1387,6 +1389,7 @@ var F16SeaMode = {
 		} elsif (me.getRange() == 80) {
 			return 21;
 		}
+		return 21;
 	},
 	showAZ: func {
 		return 1;
@@ -1456,6 +1459,9 @@ var F16GMMode = {
 	},
 	isEXP: func {
 		return me.exp;
+	},
+	showAZ: func {
+		return !me.isEXP();
 	},
 	setExpPosition: func (azimuth, distance_nm) {
 		me.expAz = azimuth;
@@ -3155,7 +3161,8 @@ var TerrainMapper = {
 		if (me["gmPic"] == nil) return;
 		me.gmPic.fillRect([0,0,me.gmPicSize,me.gmPicSize], [0,0,0,0]);# why does it allow 64??
 		#me.gmPic.setPixel(me.gm_x_origin, me.gm_y_origin, [0,0,1,1]);#blue pixel at ownship
-		me.dirty = 1;
+		me.gmPic.dirtyPixels();
+		me.dirty = 0;
 	},
 	loop: func {
 		if (displays.fcrFrz) return;

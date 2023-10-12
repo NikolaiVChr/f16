@@ -1647,6 +1647,7 @@ var DisplaySystem = {
 		},
 		exit: func {
 			printDebug("Exit ",me.name~" on ",me.device.name);
+			fcrModeChange = 1;
 		},
 		links: {
 			"OSB1":  "PageFCR",
@@ -3852,7 +3853,7 @@ var DisplaySystem = {
 	           .setFontSize(18, 1.0)
 	           .setColor(colorText2);
 
-	        me.exp = me.p_RDR.createChild("path")
+	        me.expBox = me.p_RDR.createChild("path")
 	            .moveTo(-100,-100)
 	            .vert(200)
 	            .horiz(200)
@@ -3999,6 +4000,7 @@ var DisplaySystem = {
                 me.pressEXP = 1;
             } elsif (controlName == "OSB12") {
             	if (fcrFrz) return;
+            	fcrModeChange = 1;
                 if (!radar_system.apg68Radar.currentMode.detectAIR) {
                     radar_system.apg68Radar.currentMode.toggleAuto();
                 } else {
@@ -4028,16 +4030,70 @@ var DisplaySystem = {
             me.DGFT = noti.getproper("dgft");
             me.device.DGFT = me.DGFT;
             me.IMSOI = me.device.soi == 1;
-			
-            me.modeSw = noti.getproper("rdrMode");
 
             setprop("instrumentation/radar/mode-switch", 0);
-
-            me.modeSwHD = noti.getproper("rdrHD");
 
             me.device.controls["OSB6"].setControlText("CONT", 1, size(datalink.get_connected_indices()));
             me.device.controls["OSB12"].setControlText(radar_system.apg68Radar.currentMode.shortName);
             me.device.controls["OSB11"].setControlText(radar_system.apg68Radar.currentMode.rootName, 0);
+
+            me.prevExp = exp;
+            if (fcrModeChange) {
+            	# Not super solid coding..
+            	exp = 0;
+            	me.pressEXP = 0;
+            	fcrModeChange = 0;
+            }
+            if (me.DGFT or !radar_system.apg68Radar.currentMode.EXPsupport) {# or (radar_system.apg68Radar.getPriorityTarget() != nil and radar_system.apg68Radar.currentMode.EXPfixedAim)
+            	# EXP not supported
+                exp = 0;
+                me.showExpOSB = 0;
+            } elsif (me.pressEXP) {
+                exp = !exp;
+                me.showExpOSB = 1;
+            } else {
+                me.showExpOSB = 1;
+            }
+
+            if (cursorFCRgps != nil and me.prevExp != exp and !exp and me.isFixedEXPCursor) {
+            	me.tempPos = me.calcEXPPos(cursorFCRgps[0],cursorFCRgps[1]*displayHeight/radar_system.apg68Radar.getRange(),displayHeight, nil);
+            	if (me.tempPos != nil) {
+            		cursor_pos = me.tempPos;
+            	}
+            }
+            
+            me.isFixedEXPCursor = exp and radar_system.apg68Radar.currentMode.EXPfixedAim;# fixedAim only for sea/gm/gmt mode
+            if (exp and me.pressEXP and radar_system.apg68Radar.currentMode.longName == radar_system.gmMode.longName) {
+                me.cursorDev   = -math.atan2(-cursor_pos[0]/(displayHeight), -cursor_pos[1]/displayHeight)*R2D;
+                me.cursorDist  = (math.sqrt(cursor_pos[0]*cursor_pos[0]+cursor_pos[1]*cursor_pos[1])/(displayHeight/radar_system.apg68Radar.getRange()));
+                radar_system.apg68Radar.currentMode.setExpPosition(me.cursorDev, me.cursorDist);
+                cursorFCRgps = [me.cursorDev, me.cursorDist];
+                printfDebug("enter GM EXP: %.1f degs %.1f nm",me.cursorDev, me.cursorDist);
+            }
+            if (radar_system.apg68Radar.currentMode.longName == radar_system.gmMode.longName) {
+                radar_system.apg68Radar.currentMode.setExp(exp);
+            }
+            if (me.isFixedEXPCursor) {
+            	me.c = geo.Coord.new();
+                me.c.apply_course_distance(cursorFCRgps[0]+radar_system.self.getHeading(), cursorFCRgps[0]*NM2M);
+                me.cursorFCRcoord = me.c;
+            }
+            me.pixelPerNM = displayHeight/radar_system.apg68Radar.getRange();
+            me.pressEXP = 0;
+            if (exp) {
+                me.device.controls["OSB13"].setControlText(me.showExpOSB?"EXP":"");
+            } else {
+                me.device.controls["OSB13"].setControlText(me.showExpOSB?"NORM":"");
+            }            
+            me.expBox.setVisible(exp and !me.isFixedEXPCursor);
+
+            if (me.isFixedEXPCursor) {
+            	me.fixedCursorExpWidthNM = radar_system.apg68Radar.currentMode.getEXPsize();#diam
+        	} else {
+        		me.fixedCursorExpWidthNM = nil;
+        	}
+
+
 
             #
             # GM range rings
@@ -4052,22 +4108,7 @@ var DisplaySystem = {
                 me.rangeRingLow.hide();
             }
 
-            #
-            # Bulls-eye info on FCR
-            #
-            me.bullPt = steerpoints.getNumber(steerpoints.index_of_bullseye);
-            me.bullOn = me.bullPt != nil and steerpoints.bullseyeMode;
-            if (me.bullOn) {
-                me.bullLat = me.bullPt.lat;
-                me.bullLon = me.bullPt.lon;
-                me.bullCoord = geo.Coord.new().set_latlon(me.bullLat,me.bullLon);
-                me.ownCoord = geo.aircraft_position();
-                me.bullDirToMe = me.bullCoord.course_to(me.ownCoord);
-                me.meToBull = ((me.bullDirToMe+180)-noti.getproper("heading"))*D2R;
-                me.bullDistToMe = me.bullCoord.distance_to(me.ownCoord)*M2NM;
-                me.distPixels = me.bullDistToMe*(displayHeight/radar_system.apg68Radar.getRange());
-                me.bullPos = me.calcPos(me.wdt, geo.normdeg180(me.meToBull*R2D), me.distPixels);
-            }
+
 
             #me.device.controls["OSB7"].setControlText("FRZ", 1, fcrFrz);
 
@@ -4079,32 +4120,7 @@ var DisplaySystem = {
             } else {
                 me.device.controls["OSB5"].setControlText("M",1,0);
             }
-            me.showExp = 0;
-            if (me.DGFT or !radar_system.apg68Radar.currentMode.EXPsupport or (radar_system.apg68Radar.getPriorityTarget() != nil and radar_system.apg68Radar.currentMode.EXPfixedAim)) {
-                exp = 0;
-            } elsif (me.pressEXP) {
-                me.pressEXP = 0;
-                exp = !exp;
-                me.showExp = 1;
-            } else {
-                me.showExp = 1;
-            }            
-            if (exp and radar_system.apg68Radar.currentMode.longName == radar_system.gmMode.longName) {
-                me.cursorDev   = -math.atan2(-cursor_pos[0]/(displayHeight), -cursor_pos[1]/displayHeight)*R2D;
-                me.cursorDist  = (math.sqrt(cursor_pos[0]*cursor_pos[0]+cursor_pos[1]*cursor_pos[1])/(displayHeight/radar_system.apg68Radar.getRange()));
-                radar_system.apg68Radar.currentMode.setExp(1);
-                radar_system.apg68Radar.currentMode.setExpPosition(me.cursorDev, me.cursorDist);
-            } elsif (radar_system.apg68Radar.currentMode.longName == radar_system.gmMode.longName) {
-                radar_system.apg68Radar.currentMode.setExp(0);
-            }
-            if (exp) {
-                me.device.controls["OSB13"].setControlText(me.showExp?"EXP":"");
-                me.exp.setTranslation(cursor_pos);
-            } else {
-                me.device.controls["OSB13"].setControlText(me.showExp?"NORM":"");
-            }
-            me.exp_zoom = exp;# should really be the only variable for this
-            me.exp.setVisible(exp and !radar_system.apg68Radar.currentMode.EXPfixedAim);
+            
 #            me.acm.setVisible(1);
             me.horiz.setRotation(-radar_system.self.getRoll()*D2R);
             me.horiz.setTranslation(0, -displayHeightHalf*math.clamp(radar_system.self.getPitch()/60,-1,1));# As per manual
@@ -4151,7 +4167,7 @@ var DisplaySystem = {
                 me.bitText.hide();
             }
 
-            me.exp_modi = exp?(radar_system.apg68Radar.currentMode.EXPfixedAim?0.20:0.25):1.00;# slow down cursor movement when in zoom mode
+            me.exp_modi = exp?(me.isFixedEXPCursor?0.50:0.25):1.00;# slow down cursor movement when in zoom mode
 
             # Get controls from pilots cursor hat:
             me.slew_x = getprop("controls/displays/target-management-switch-x[" ~ me.model_index ~ "]")*me.exp_modi;
@@ -4164,11 +4180,13 @@ var DisplaySystem = {
             #me.dt = math.min(noti.getproper("elapsed") - me.elapsed, 0.05);
             me.dt = noti.getproper("elapsed") - me.elapsed;
 
+            me.cursor_fixed_map_movement = [0,0];
             if (me.IMSOI) {
             	# Move cursor and record clicks
                 if ((me.slew_x != 0 or me.slew_y != 0 or slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.index) and noti.getproper("viewName") != "TGP") {
                     cursor_pos[0] += me.slew_x*175;
                     cursor_pos[1] -= me.slew_y*175;
+                    me.cursor_fixed_map_movement = [me.slew_x*175, -me.slew_y*175];
                     cursor_pos[0] = math.clamp(cursor_pos[0], -displayWidthHalf, displayWidthHalf);
                     cursor_pos[1] = math.clamp(cursor_pos[1], -displayHeight, 0);
                     cursor_click = (slew_c and !me.slew_c_last)?me.index:-1;
@@ -4180,6 +4198,8 @@ var DisplaySystem = {
                 me.slew_c_last = slew_c;
                 slew_c = 0;
             }
+
+
 
             me.elapsed = noti.getproper("elapsed");
 
@@ -4203,16 +4223,13 @@ var DisplaySystem = {
                     radar_system.apg68Radar.setCursorDistance(-cursor_pos[1]/(displayHeight/radar_system.apg68Radar.getRange()))
                 }
             }
-            me.fixedEXPwidth = nil;
-            var pixelPerNM = nil;
 
             # Paint cursor
-            if (!exp or !radar_system.apg68Radar.currentMode.EXPfixedAim) {
+            if (!exp or !me.isFixedEXPCursor) {
                 me.cursor.setTranslation(cursor_pos);
+                me.expBox.setTranslation(cursor_pos);
             } else {
                 me.cursor.setTranslation([0,-displayHeight*0.5]);
-                me.fixedEXPwidth = radar_system.apg68Radar.currentMode.getEXPsize();
-                pixelPerNM = displayHeight/radar_system.apg68Radar.getRange();
             }
             me.alimits = radar_system.apg68Radar.getCursorAltitudeLimits();
             if (me.alimits != nil and radar_system.apg68Radar.currentMode.detectAIR) {
@@ -4236,26 +4253,73 @@ var DisplaySystem = {
             me.cursorGm.setVisible(!radar_system.apg68Radar.currentMode.detectAIR);
             me.cursorGmTicks.setVisible(!radar_system.apg68Radar.currentMode.detectAIR and !exp);
 
-            if (radar_system.apg68Radar.currentMode.detectAIR) {
-            	# Find cursor position for bullseye location from cursor
+            if (me.isFixedEXPCursor) {
+            	#printf("px/nm=nil: %d  width=nil: %d",me.pixelPerNM==nil,me.fixedCursorExpWidthNM==nil);
+                me.expZoomRadiusPixels = me.pixelPerNM*me.fixedCursorExpWidthNM*0.5;
+            } else {
+                me.expZoomRadiusPixels = 100 / 4;
+            }
+
+			if (radar_system.apg68Radar.currentMode.detectAIR) {
+            	# Find cursor position for B-Scope
                 me.cursorDev   = cursor_pos[0]*60/(me.wdt*0.5);
                 me.cursorDist  = -cursor_pos[1]/(displayHeight/radar_system.apg68Radar.getRange());
                 cursorFCRair = 1;
+                cursorFCRgps = [me.cursorDev, me.cursorDist];# Used by HSD also, for painting bullseye to cursor. deg,nm
             } else {
-            	# Find cursor position for bullseye location from GM cursor
-                # TODO: verify this is correct:
-                me.cursorDev   = -math.atan2(-cursor_pos[0]/(displayHeight), -cursor_pos[1]/displayHeight)*R2D;
-                me.cursorDist  = (math.sqrt(cursor_pos[0]*cursor_pos[0]+cursor_pos[1]*cursor_pos[1])/(displayHeight/radar_system.apg68Radar.getRange()));
-                cursorFCRair = 0;
-            }
-            cursorFCRgps = [me.cursorDev, me.cursorDist];# Used by HSD also
-            if (me.bullOn) {
-                me.ownCoord.apply_course_distance(noti.getproper("heading")+me.cursorDev, me.cursorDist);
-                me.cursorBullDist = me.ownCoord.distance_to(me.bullCoord);
-                me.cursorBullCrs  = me.bullCoord.course_to(me.ownCoord);
-                me.cursorLoc.setText(sprintf("%03d %03d",me.cursorBullCrs, me.cursorBullDist*M2NM));
-            }
-            me.cursorLoc.setVisible(me.bullOn);
+            	if (me.isFixedEXPCursor) {
+            		# Find cursor position for PPI-Scope in EXP mode
+            		# 
+            		if (me.cursor_fixed_map_movement[1] != 0 or me.cursor_fixed_map_movement[0] != 0) {
+	            		me.pixelsX = me.pixelPerNM*cursorFCRgps[1]*math.sin(cursorFCRgps[0]*D2R);
+	            		me.pixelsY = -me.pixelPerNM*cursorFCRgps[1]*math.cos(cursorFCRgps[0]*D2R);
+	           			me.pixelsX += me.cursor_fixed_map_movement[0];
+	            		me.pixelsY += me.cursor_fixed_map_movement[1];
+	            		me.pixelsX = math.clamp(me.pixelsX,-displayWidthHalf+me.expZoomRadiusPixels, displayWidthHalf-me.expZoomRadiusPixels);
+	            		me.pixelsY = math.clamp(me.pixelsY,-displayHeight, -me.expZoomRadiusPixels);
+	            		printf("me.pixelPerNM=%.1f cursorMoved:%.1f,%.1f  x,y: %d,%d  cursorGPS:%d degs, %.1f nm",me.pixelPerNM, me.cursor_fixed_map_movement[0],me.cursor_fixed_map_movement[1],me.pixelsX,me.pixelsY,cursorFCRgps[0],cursorFCRgps[1]);
+	            		me.newPlaceNM = math.sqrt(me.pixelsX*me.pixelsX+me.pixelsY*me.pixelsY)/me.pixelPerNM;
+	            		if (me["d"] != nil and me["c"] != nil) {
+            				me.newPlaceNM -= me.c.direct_distance_to(me.d)*M2NM;
+            				if (me.newPlaceNM < 0.1) {
+            					me.pressEXP = 1;
+            				}
+            			}
+	            		if (me.newPlaceNM != 0) {
+		            		me.newPlaceDeg= -math.atan2(-me.pixelsX, -me.pixelsY)*R2D;
+		            		if (radar_system.apg68Radar.currentMode.longName == radar_system.gmMode.longName) {
+				                radar_system.apg68Radar.currentMode.setExp(1);# no need to set it here, but just for good order
+				                radar_system.apg68Radar.currentMode.setExpPosition(me.newPlaceDeg, me.newPlaceNM);# Point radar at new place
+				            }
+		            		cursorFCRgps = [me.newPlaceDeg, me.newPlaceNM];
+	            		} else {
+	            			cursorFCRgps = [0.001, me.newPlaceNM];
+	            		}
+            		} else {
+            			# keep last place (remember, its relative)
+            			if (me["d"] != nil and me["c"] != nil) {
+            				cursorFCRgps[1] -= me.c.direct_distance_to(me.d)*M2NM;
+            				if (cursorFCRgps[1] < 0.1) {
+            					me.pressEXP = 1;
+            				}
+            			}
+            		}
+            	} else {
+            		# Find cursor position for PPI-Scope
+	                # TODO: verify this is correct:
+	                me.cursorDev   = -math.atan2(-cursor_pos[0]/(displayHeight), -cursor_pos[1]/displayHeight)*R2D;
+	                me.cursorDist  = (math.sqrt(cursor_pos[0]*cursor_pos[0]+cursor_pos[1]*cursor_pos[1])/(displayHeight/radar_system.apg68Radar.getRange()));
+	                cursorFCRair = 0;
+	                cursorFCRgps = [me.cursorDev, me.cursorDist];# Used by HSD also, for painting bullseye to cursor. deg,nm
+	                #printf("cursorGM no-EXP: %.1f degs %.1f nm",me.cursorDev, me.cursorDist);
+	            }
+	        }
+	        me.d = me["c"];
+	        # The distance in pixels from cursor that stuff should be zoomed
+            # All calcEXPPos() calls must be after this
+            
+            
+            
 
 
 
@@ -4302,22 +4366,38 @@ var DisplaySystem = {
             #me.lockGM.hide();
 
 
-            # The distance in pixels from cursor that stuff should be zoomed
-            if (me.fixedEXPwidth != nil) {
-                me.closeDef = pixelPerNM*me.fixedEXPwidth*0.5;
-            } else {
-                me.closeDef = 25; # pixels radius
-            }
+            
+
 
             #
-            # Bulls-eye position on FCR
+            # Bulls-eye info on FCR
             #
+            me.bullPt = steerpoints.getNumber(steerpoints.index_of_bullseye);
+            me.bullOn = me.bullPt != nil and steerpoints.bullseyeMode;
             if (me.bullOn) {
-                me.bullPos = me.calcEXPPos(me.bullPos);
+                me.bullLat = me.bullPt.lat;
+                me.bullLon = me.bullPt.lon;
+                me.bullCoord = geo.Coord.new().set_latlon(me.bullLat,me.bullLon);
+                me.ownCoord = geo.aircraft_position();
+                me.bullDirToMe = me.bullCoord.course_to(me.ownCoord);
+                me.meToBull = ((me.bullDirToMe+180)-noti.getproper("heading"))*D2R;
+                me.bullDistToMe = me.bullCoord.distance_to(me.ownCoord)*M2NM;
+                me.distPixels = me.bullDistToMe*(displayHeight/radar_system.apg68Radar.getRange());
+                me.bullPos = me.calcEXPPos(geo.normdeg180(me.meToBull*R2D), me.distPixels, displayHeight, me.bullDistToMe);
                 if (me.bullPos == nil) {
                     me.bullOn = 0;
                 }
             }
+            if (me.bullOn) {
+                me.ownCoord.apply_course_distance(noti.getproper("heading")+me.cursorDev, me.cursorDist);
+                me.cursorBullDist = me.ownCoord.distance_to(me.bullCoord);
+                me.cursorBullCrs  = me.bullCoord.course_to(me.ownCoord);
+                me.cursorLoc.setText(sprintf("%03d %03d",me.cursorBullCrs, me.cursorBullDist*M2NM));
+            }
+            me.cursorLoc.setVisible(me.bullOn);
+            #
+            # Bulls-eye position on FCR
+            #
             me.bullseye.setVisible(me.bullOn);
             if (me.bullOn) {
                 me.bullseye.setTranslation(me.bullPos);
@@ -4334,9 +4414,9 @@ var DisplaySystem = {
                 me.legBearing = geo.normdeg180(geo.aircraft_position().course_to(me.wpC)-noti.getproper("heading"));#relative
                 me.legDistance = geo.aircraft_position().distance_to(me.wpC)*M2NM;
                 me.distPixels = me.legDistance*(displayHeight/radar_system.apg68Radar.getRange());
-                me.steerPos = me.calcPos(me.wdt, me.legBearing, me.distPixels);
+                me.steerPos = me.calcEXPPos(me.legBearing, me.distPixels, displayHeight, me.legDistance);
+                
                 var vis = 1;
-                me.steerPos = me.calcEXPPos(me.steerPos);
                 if (me.steerPos == nil) {
                     vis = 0;
                 } else {
@@ -4452,8 +4532,10 @@ var DisplaySystem = {
             }
             if (cursor_click == me.index) {
                 if (me.desig_new == nil) {
+                	print("Nothing found");
                     radar_system.apg68Radar.undesignate();
                 } else {
+                	print("Found designation");
                     radar_system.apg68Radar.designate(me.desig_new);
                 }
                 cursor_click = -1;
@@ -4564,8 +4646,7 @@ var DisplaySystem = {
             me.blueBearing = geo.normdeg180(contact.getDeviationHeading());
             if (me.iffState == 0 and contact.isVisible() and contact.getRange()*M2NM < 80 and me.iii < me.maxT and math.abs(me.blueBearing) < 60) {
                 me.distPixels = contact.get_range()*(displayHeight/(radar_system.apg68Radar.getRange()));
-                me.echoPos = me.calcPos(me.wdt, geo.normdeg180(me.blueBearing), me.distPixels);
-                me.echoPos = me.calcEXPPos(me.echoPos);
+                me.echoPos = me.calcEXPPos(geo.normdeg180(me.blueBearing), me.distPixels, displayHeight, contact.get_range());
                 if (me.echoPos == nil) {
                     return;
                 }
@@ -4595,8 +4676,7 @@ var DisplaySystem = {
                 me.iii += 1;
             } elsif (me.iffState != 0 and contact.isVisible() and me.iiii < me.maxT and math.abs(me.blueBearing) < 60) {
                 me.distPixels = contact.get_range()*(displayHeight/(radar_system.apg68Radar.getRange()));
-                me.echoPos = me.calcPos(me.wdt, geo.normdeg180(me.blueBearing), me.distPixels);
-                me.echoPos = me.calcEXPPos(me.echoPos);
+                me.echoPos = me.calcEXPPos(geo.normdeg180(me.blueBearing), me.distPixels, displayHeight, contact.get_range());
                 if (me.echoPos == nil) {
                     return;
                 }
@@ -4609,41 +4689,57 @@ var DisplaySystem = {
                 me.iiii += 1;
             }
         },
-        calcPos: func (width, dev, distPixels) {
-            if (radar_system.apg68Radar.currentMode.detectAIR) {
+        calcEXPPos: func (dev_deg, distPixels, distPixelsMax, dist_nm) {
+        	me.distPixels = distPixels;
+        	var itemPos = nil;
+        	if (radar_system.apg68Radar.currentMode.detectAIR) {
                 # B-Scope
-                me.echoPosition = [width*0.5*dev/60,-distPixels];
+                itemPos = [displayWidthHalf*dev_deg/60,-me.distPixels];
             } else {
                 # PPI-Scope
-                me.echoPosition = [(displayWidth)*(distPixels/displayHeight)*math.sin(D2R*dev), -distPixels*math.cos(D2R*dev)];
+                itemPos = [(displayWidth)*(me.distPixels/displayHeight)*math.sin(D2R*dev_deg), -me.distPixels*math.cos(D2R*dev_deg)];
             }
-            return me.echoPosition;
-        },
-        calcEXPPos: func (itemPos) {
-            # Calculate the position taking EXP zoom into account
+            # Calculate the position taking EXP zoom into account:
             var returnPos = itemPos;
-            var cursorCentre = [0,-displayHeight*0.5];
-            me.close = math.abs(cursor_pos[0] - itemPos[0]) < me.closeDef and math.abs(cursor_pos[1] - itemPos[1]) < me.closeDef;
-            if (me.close and me.exp_zoom) {
-                if (me.fixedEXPwidth != nil) {
-                    # EXP with fixed cursor
-                    returnPos[0] = cursorCentre[0]+math.abs(cursorCentre[1])*(itemPos[0] - cursor_pos[0])/me.closeDef;
-                    returnPos[1] = cursorCentre[1]+math.abs(cursorCentre[1])*(itemPos[1] - cursor_pos[1])/me.closeDef;
-                } else {
+            
+            if (me.isFixedEXPCursor) {
+                # EXP with fixed cursor
+                if (dist_nm == nil) return returnPos;
+                var cursorCentre = [0,-displayHeight*0.5];
+# PLan: translate both to cartesian. Subtract them as vectors. Use vector to plot position and if should be shown.
+				me.expCenter   = [cursorFCRgps[1]*math.sin(D2R*cursorFCRgps[0]), -cursorFCRgps[1]*math.cos(D2R*cursorFCRgps[0])];
+				me.contactCart = [dist_nm*math.sin(D2R*dev_deg), -dist_nm*math.cos(D2R*dev_deg)];
+
+				me.vectorToContactNM = [me.contactCart[0]-me.expCenter[0],me.contactCart[1]-me.expCenter[1]];#subtract
+
+				if (math.abs(me.vectorToContactNM[0]) > me.fixedCursorExpWidthNM*0.5) {
+					return nil;
+				} elsif (math.abs(me.vectorToContactNM[1]) > me.fixedCursorExpWidthNM*0.5) {
+					return nil;
+				}
+                me.pixelPerNMexp = displayHeight/me.fixedCursorExpWidthNM;
+                returnPos[0] = me.pixelPerNMexp * me.vectorToContactNM[0]+cursorCentre[0];
+                returnPos[1] = me.pixelPerNMexp * me.vectorToContactNM[1]+cursorCentre[1];
+                #returnPos[0] = cursorCentre[0]+math.abs(cursorCentre[1])*(itemPos[0] - cursor_pos[0])/me.expZoomRadiusPixels;
+                #returnPos[1] = cursorCentre[1]+math.abs(cursorCentre[1])*(itemPos[1] - cursor_pos[1])/me.expZoomRadiusPixels;
+            } else {
+	            me.close = math.abs(cursor_pos[0] - itemPos[0]) < me.expZoomRadiusPixels and math.abs(cursor_pos[1] - itemPos[1]) < me.expZoomRadiusPixels;
+	            if (me.close and exp) {
                     # EXP with moving cursor
                     returnPos[0] = cursor_pos[0]+(itemPos[0] - cursor_pos[0])*4;
                     returnPos[1] = cursor_pos[1]+(itemPos[1] - cursor_pos[1])*4;
+                } elsif (exp and (me.isFixedEXPCursor or math.abs(cursor_pos[0] - itemPos[0]) < 100 and math.abs(cursor_pos[1] - itemPos[1]) < 100)) {
+            		# The 100 pixels here is the radius of the EXP square
+                	returnPos = nil;
                 }
-            } elsif (me.exp_zoom and (me.fixedEXPwidth != nil or math.abs(cursor_pos[0] - itemPos[0]) < 100 and math.abs(cursor_pos[1] - itemPos[1]) < 100)) {
-            	# The 100 pixels here is the radius of the EXP square
-                returnPos = nil;
             }
             return returnPos;
         },
         calcClick: func (contact, echoPos) {
             if (cursor_click == me.index) {
-                var cursor_posi = !me.exp_zoom or me.fixedEXPwidth == nil?cursor_pos:[0,-displayHeight*0.5];
-                if (math.abs(cursor_posi[0] - echoPos[0]) < 10 and math.abs(cursor_posi[1] - echoPos[1]) < 11) {
+                var cursor_posi = me.isFixedEXPCursor?[0,-displayHeight*0.5]:cursor_pos;
+                printfDebug("calcClick: fixed=%d %d,%d exp=%d",me.isFixedEXPCursor,cursor_posi[0],cursor_posi[1], exp);
+                if (math.abs(cursor_posi[0] - echoPos[0]) < 11 and math.abs(cursor_posi[1] - echoPos[1]) < 11) {
                     me.desig_new = contact;
                 }
             }
@@ -4696,8 +4792,7 @@ var DisplaySystem = {
                     } else {
                         me.distPixels = me.bleppy.getRangeNow()*(displayHeight/(radar_system.apg68Radar.getRange()*NM2M));
                     }
-                    me.echoPos = me.calcPos(me.wdt, geo.normdeg180(me.bleppy.getAZDeviation()), me.distPixels);
-                    me.echoPos = me.calcEXPPos(me.echoPos);
+                    me.echoPos = me.calcEXPPos(geo.normdeg180(me.bleppy.getAZDeviation()), me.distPixels, displayHeight, me.bleppy.getRangeNow()*M2NM);
                     if (me.echoPos == nil) {
                         continue;
                     }
@@ -4708,6 +4803,9 @@ var DisplaySystem = {
                     me.blep[me.i].update();
                     if (me.iiiii < me.maxHL and me.bleppy.getClosureRate() != nil and me.count == size(me.bleps)-1) {# The last in the vector is the most fresh (hack)
                     	me.spd = me.bleppy.getClosureRate()-radar_system.self.getSpeed();
+                    	if (me.bleppy.getSpeed() != nil and me.bleppy.getSpeed() < 60) {
+                    		me.spd = 0.1;
+                    	}
                     	me.hot = me.spd > 0?1:-1;                    	
                     	me.hotlinePos = [me.echoPos[0], me.echoPos[1]+symbolSize.fcr.blep*0.5*me.hot];
                     	#print("Painting ",(math.abs(me.spd)/50)," pixel hotline hot=",me.hot);
@@ -4747,18 +4845,19 @@ var DisplaySystem = {
                         me.c_speed      = contact.getSpeed();
                         me.c_alt        = contact.getAltitude();
                         me.distPixels   = contact.getRange()*(displayHeight/(radar_system.apg68Radar.getRange()*NM2M));
+                        me.rng = contact.getRange();
                     } else {
                         me.c_heading    = me.bleppy.getHeading();
                         me.c_devheading = me.bleppy.getAZDeviation();
                         me.c_speed      = me.bleppy.getSpeed();
                         me.c_alt        = me.bleppy.getAltitude();
                         me.distPixels   = me.bleppy.getRangeNow()*(displayHeight/(radar_system.apg68Radar.getRange()*NM2M));
+                        me.rng = me.bleppy.getRangeNow()*M2NM;
                     }
                     me.rot = 22.5*math.round((me.c_heading-radar_system.self.getHeading()-me.c_devheading)/22.5);
                     me.blepTrianglePaths[me.ii].setRotation(me.rot*D2R);
                     me.blepTrianglePaths[me.ii].setColor(me.color);
-                    me.echoPos = me.calcPos(me.wdt, geo.normdeg180(me.c_devheading), me.distPixels);
-                    me.echoPos = me.calcEXPPos(me.echoPos);
+                    me.echoPos = me.calcEXPPos(geo.normdeg180(me.c_devheading), me.distPixels, displayHeight, me.rng);
                     if (me.echoPos == nil) {
                         return;
                     }
@@ -4807,8 +4906,7 @@ var DisplaySystem = {
                 # Paint IFF symbols
                 me.bleppy = me.bleps[-1];
                 if (me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.timeToKeepBleps) {
-                    me.echoPos = me.calcPos(me.wdt, geo.normdeg180(me.bleppy.getAZDeviation()), me.distPixels);
-                    me.echoPos = me.calcEXPPos(me.echoPos);
+                    me.echoPos = me.calcEXPPos(geo.normdeg180(me.bleppy.getAZDeviation()), me.distPixels, displayHeight, me.bleppy.getRangeNow()*M2NM);
                     if (me.echoPos == nil) {
                         return;
                     }
@@ -4826,8 +4924,7 @@ var DisplaySystem = {
             if (me.i < me.maxB and radar_system.apg68Radar.currentMode.longName != radar_system.vsMode.longName) {
                 me.distPixels = chaff.meters*(displayHeight/(radar_system.apg68Radar.getRange()*NM2M));
 
-                me.echoPos = me.calcPos(me.wdt, geo.normdeg180(chaff.bearing - radar_system.self.getHeading()), me.distPixels);
-                me.echoPos = me.calcEXPPos(me.echoPos);
+                me.echoPos = me.calcEXPPos(geo.normdeg180(chaff.bearing - radar_system.self.getHeading()), me.distPixels, displayHeight,chaff.meters*M2NM);
                 if (me.echoPos == nil) {
                     return;
                 }
@@ -6339,8 +6436,9 @@ var cursor_posHAS = [0,-256];
 var cursor_pos_hsd = [0, -50];
 var cursor_click = -1;
 var cursor_lock = -1;
-var exp = 0;
 var slew_c = 0;
+var exp = 0;
+var fcrModeChange = 0;
 var cursorFCRgps = nil;
 var cursorFCRair = 1;
 
@@ -6631,3 +6729,5 @@ main(nil);# disable this line if running as module
 #          Todo: z-index, font sizes
 #          Issues: SMS INV/S-J still pixel based
 #                  6% x 16% larger resolution might make some symbols appear smaller.
+#      GM EXP should scan
+#      GM show hot lines on statics
