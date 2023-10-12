@@ -100,6 +100,7 @@ var lineWidth = {
 		cursorGnd: 2,
 		bullseye: 3,
 		steerpoint: 1,
+		hotline: 1.5,
 	},
 	has: {
 		cursor: 2,
@@ -3607,7 +3608,7 @@ var DisplaySystem = {
 	                me.hotLine[i] = me.p_RDR.createChild("path")
 	                        .moveTo(0, 0)
 	                        .vert(100)
-	                        .setStrokeLineWidth(1)
+	                        .setStrokeLineWidth(lineWidth.fcr.hotline)
 	                        .set("z-index",10)
 	                        .hide();
 	        }
