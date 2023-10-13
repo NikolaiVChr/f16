@@ -137,6 +137,32 @@ var lineWidth = {
 	},
 };
 
+var font = {
+	device: {
+		main: 20,
+	},
+	hsd: {
+		threat: 17,
+		beyeCursor: 18,
+	},
+	fcr: {
+		silent: 18,
+		bit: 18,
+		cursorAlt: 18,
+		beyeCursor: 18,
+	},
+	bullseye: {
+		center: 18,
+		below: 18,
+	},
+	stations: {
+		station: 17,
+	},
+	cube: {
+		bit: 22,
+	},
+};
+
 
 # OSB text
 var colorText1 = [getprop("/sim/model/MFD-color/text1/red"), getprop("/sim/model/MFD-color/text1/green"), getprop("/sim/model/MFD-color/text1/blue")];
@@ -794,7 +820,7 @@ var DisplaySystem = {
 			me.sta      = setsize([], 9);# 9 stations
 	        me.staFrame = setsize([], 9);
 	        var staPosY = -displayHeight*0.20;
-	        var staFont = 17;
+	        var staFont = font.stations.station;
 	        var staStroke = lineWidth.stations.outline;
 	        var staX = 7;
 	        var staY = 9;
@@ -1019,14 +1045,14 @@ var DisplaySystem = {
 	                .setTranslation(-margin.bullseye.x, -margin.bullseye.y)
 	                .setText("12")
 	                .set("z-index",1)
-	                .setFontSize(18, 1.0);
+	                .setFontSize(font.bullseye.center, 1.0);
 	        me.bullOwnDir = me.group.createChild("text")
 	                .setAlignment("center-top")
 	                .setColor(colorBullseye)
 	                .setTranslation(-margin.bullseye.x, -margin.bullseye.y+margin.bullseye.text)
 	                .setText("270")
 	                .set("z-index",1)
-	                .setFontSize(18, 1.0);
+	                .setFontSize(font.bullseye.below, 1.0);
 	        me.refW = me.group.createChild("path")
 	            .moveTo(-30*symbolSize.bullseye.ref, -5*symbolSize.bullseye.ref)
 	            .lineTo(-20*symbolSize.bullseye.ref, -5*symbolSize.bullseye.ref)
@@ -2082,7 +2108,7 @@ var DisplaySystem = {
 	                .setAlignment("center-center")
 	                .setColor(colorCircle1)
 	                .set("z-index",2)
-	                .setFontSize(17, 1.0));
+	                .setFontSize(font.hsd.threat, 1.0));
 	        }
 
 	        me.mark = setsize([],10);
@@ -2113,7 +2139,7 @@ var DisplaySystem = {
 	                .setTranslation(-displayWidthHalf*0.95, -displayHeight*0.15)
 	                .setText("12")
 	                .set("z-index",1)
-	                .setFontSize(18, 1.0);
+	                .setFontSize(font.hsd.beyeCursor, 1.0);
 	    },
 
 	    # Static members
@@ -3844,14 +3870,14 @@ var DisplaySystem = {
 	           .setAlignment("center-center")
 	           .setText("SILENT")
 	           .set("z-index",16)
-	           .setFontSize(18, 1.0)
+	           .setFontSize(font.fcr.silent, 1.0)
 	           .setColor(colorText2);
 	        me.bitText = me.p_RDR.createChild("text")
 	           .setTranslation(0, -displayHeight*0.75)
 	           .setAlignment("center-center")
 	           .setText("    VERSION C021-IPOO-MRO3258674  ")
 	           .set("z-index",16)
-	           .setFontSize(18, 1.0)
+	           .setFontSize(font.fcr.bit, 1.0)
 	           .setColor(colorText2);
 
 	        me.expBox = me.p_RDR.createChild("path")
@@ -3900,13 +3926,13 @@ var DisplaySystem = {
 	                .setText("37")
 	                .setAlignment("left-bottom")
 	                .setColor(colorLine3)
-	                .setFontSize(18, 1.0);
+	                .setFontSize(font.fcr.cursorAlt, 1.0);
 	        me.cursor_2 = me.cursor.createChild("text")
 	                .setTranslation(10, 5)
 	                .setText("12")
 	                .setAlignment("left-top")
 	                .setColor(colorLine3)
-	                .setFontSize(18, 1.0);
+	                .setFontSize(font.fcr.cursorAlt, 1.0);
 
 	        me.bullseye = me.p_RDR.createChild("path")
 	            .moveTo(-25*symbolSize.fcr.bullseye,0)
@@ -3942,7 +3968,7 @@ var DisplaySystem = {
 	                .setTranslation(-displayWidthHalf*0.95, -displayHeight*0.15)
 	                .setText("12")
 	                .set("z-index",1)
-	                .setFontSize(18, 1.0);
+	                .setFontSize(font.fcr.beyeCursor, 1.0);
 
 	        # canvas: displayWidth,displayHeight
 	        me.cosi = math.cos(30*D2R);
@@ -5378,7 +5404,7 @@ var DisplaySystem = {
 	            .setTranslation((552/2)*0.795, 10)
 	            .setText("BUILT-IN TEST")
 	            .setAlignment("center-top")
-	            .setFontSize(22, 1.0)
+	            .setFontSize(font.cube.bit, 1.0)
 	            .setColor(colorBackground);
 
 	        me.rf = me.group.createChild("path")
@@ -6664,8 +6690,8 @@ var main = func (module) {
 	leftMFD.setDisplaySystem(mfdSystem1);
 	rightMFD.setDisplaySystem(mfdSystem2);
 
-	mfdSystem1.initDevice(0, osbPositions, 20);
-	mfdSystem2.initDevice(1, osbPositions, 20);
+	mfdSystem1.initDevice(0, osbPositions, font.device.main);
+	mfdSystem2.initDevice(1, osbPositions, font.device.main);
 
 	leftMFD.addControlFeedback();
 	rightMFD.addControlFeedback();
