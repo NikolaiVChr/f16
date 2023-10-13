@@ -163,6 +163,43 @@ var font = {
 	},
 };
 
+var zIndex = {
+	device: {
+		osb: 100,
+		page: 5,
+		pullUp: 20000,
+		layer: 200,
+	},
+	deviceObs: {
+		text: 10,
+		outline: 11,
+		fill: 9,
+		feedback: 7,
+		soi: 8,
+		soiText: 10,
+	},
+	hsd: {
+		rdrCone: 5,
+		rings: 2,
+		ghostCursor: 2000,
+		cursor: 2000,
+		track: 11,
+		dl: 11,
+		designation: 12,
+		ownship: 1,
+		threat: 2,
+		markpoint: 2,
+		beyeCursor: 2,
+		bullseye: 5,
+	},
+	fcr: {
+
+	},
+	has: {
+
+	},
+};
+
 
 # OSB text
 var colorText1 = [getprop("/sim/model/MFD-color/text1/red"), getprop("/sim/model/MFD-color/text1/green"), getprop("/sim/model/MFD-color/text1/blue")];
@@ -325,7 +362,7 @@ var DisplayDevice = {
 		}
 		if (me["controlGrp"] == nil) {
 			me.controlGrp = me.canvas.createGroup()
-								.set("z-index", 100)
+								.set("z-index", zIndex.device.osb)
 								.set("font","LiberationFonts/LiberationMono-Regular.ttf");
 		}
 		me.controls.master.setControlText = func (text, positive = 1, outline = 0, rear = 0, blink = 0) {
@@ -398,14 +435,14 @@ var DisplayDevice = {
 		me.letterHeight = 0.8 * me.fontSize;
 		me.myCenter = [me.tempX, me.tempY];
 		me.controls[controlName].letters = me.controlGrp.createChild("text")
-				.set("z-index", 10)
+				.set("z-index", zIndex.deviceObs.text)
 				.setAlignment(me.alignment)
 				.setTranslation(me.tempX, me.tempY)
 				.setFontSize(me.fontSize, 1)
 				.setText(right(controlName,4))
 				.setColor(me.colorFront);
 		me.controls[controlName].outline = me.controlGrp.createChild("path")
-				.set("z-index", 11)
+				.set("z-index", zIndex.deviceObs.outline)
 				.setStrokeLineJoin("round") # "miter", "round" or "bevel"
 				.moveTo(me.tempX-me.letterWidth*2*alignmentH-me.letterWidth*2-me.myCenter[0]-margin.device.outline, me.tempY-me.letterHeight*alignmentV*0.5-me.letterHeight*0.5-margin.device.outline-me.myCenter[1])
 				.horiz(me.letterWidth*4+margin.device.outline*2)
@@ -418,7 +455,7 @@ var DisplayDevice = {
 				.setStrokeLineWidth(lineWidth.device.outline)
 				.setTranslation(me.myCenter);
 		me.controls[controlName].fill = me.controlGrp.createChild("path")
-				.set("z-index", 9)
+				.set("z-index", zIndex.deviceObs.fill)
 				.setStrokeLineJoin("round") # "miter", "round" or "bevel"
 				.moveTo(me.tempX-me.letterWidth*2*alignmentH-me.letterWidth*2-me.myCenter[0], me.tempY-me.letterHeight*alignmentV*0.5-me.letterHeight*0.5-margin.device.fillHeight-me.myCenter[1])
 				.horiz(me.letterWidth*4)
@@ -433,7 +470,7 @@ var DisplayDevice = {
 	},
 
 	addPullUpCue: func {
-        me.pullup_cue = me.canvas.createGroup().set("z-index", 20000);
+        me.pullup_cue = me.canvas.createGroup().set("z-index", zIndex.device.pullup);
         me.pullup_cue.createChild("path")
            .moveTo(0, 0)
            .lineTo(me.uvMap[0]*me.resolution[0], me.uvMap[1]*me.resolution[1])
@@ -455,7 +492,7 @@ var DisplayDevice = {
 	            .arcSmallCW(me.feedbackRadius,me.feedbackRadius, 0, -me.feedbackRadius*2, 0)
 	            .close()
 	            .setStrokeLineWidth(2)
-	            .set("z-index",7)
+	            .set("z-index",zIndex.deviceObs.feedback)
 	            .setColor(colorDot2[0],colorDot2[1],colorDot2[2],0.15)
 	            .setColorFill(colorDot2[0],colorDot2[1],colorDot2[2],0.3)
 	            .hide();
@@ -465,7 +502,7 @@ var DisplayDevice = {
 		me.tempMarginX = 11;
 		me.tempMarginY = 10;
 		me.soiLine = me.controlGrp.createChild("path")
-				.set("z-index", 8)
+				.set("z-index", zIndex.deviceObs.soi)
 				.moveTo(me.tempMarginX,me.tempMarginY)
 				.horiz(me.uvMap[0]*me.resolution[0]-me.tempMarginX*2)
 				.vert(me.resolution[1]-me.tempMarginY*2)
@@ -479,7 +516,7 @@ var DisplayDevice = {
 
 	addSOIText: func (info) {
 		me.soiText = me.controlGrp.createChild("text")
-				.set("z-index", 10)
+				.set("z-index", zIndex.deviceObs.soiText)
 				.setColor(me.colorFront)
 				.setAlignment("center-center")
 				.setTranslation(me.uvMap[0]*me.resolution[0]*0.5, me.uvMap[1]*me.resolution[1]*0.30)
@@ -513,7 +550,7 @@ var DisplayDevice = {
 		printDebug(me.name," init page ",page.name);
 		if (page.needGroup) {
 			me.tempGrp = me.canvas.createGroup()
-							.set("z-index", 5)
+							.set("z-index", zIndex.device.page)
 							.set("font","LiberationFonts/LiberationMono-Regular.ttf")
 							.hide();
 			page.group = me.tempGrp;
@@ -524,7 +561,7 @@ var DisplayDevice = {
 	initLayer: func (layer) {
 		printDebug(me.name," init layer ",layer.name);
 		me.tempGrp = me.canvas.createGroup()
-						.set("z-index", 200)
+						.set("z-index", zIndex.device.layer)
 						.set("font","LiberationFonts/LiberationMono-Regular.ttf")
 						.hide();
 		layer.group = me.tempGrp;
@@ -1956,7 +1993,7 @@ var DisplaySystem = {
 	                .setTranslation(displayWidth*0.5,displayHeight*0.75);#552,displayHeight , 0.795 is for UV map
 
 	        me.cone = me.concentricGrp.createChild("group")
-	            .set("z-index",5);#radar cone
+	            .set("z-index",zIndex.hsd.rdrCone);#radar cone
 
 	        me.outerRadius  = displayHeight *3/4;
 	        me.mediumRadius = me.outerRadius*2/3;
@@ -1986,11 +2023,12 @@ var DisplaySystem = {
 	            .moveTo(me.innerRadius,0)#east
 	            .horiz(symbolSize.hsd.compasFlag)
 	            .setStrokeLineWidth(lineWidth.hsd.rangeRing)
-	            .set("z-index",2)
+	            .set("z-index",zIndex.hsd.rings)
 	            .setColor(colorLine5);
 
 
 	        me.cursorHSD = me.buttonView.createChild("path")
+	        			.set("z-index", zIndex.hsd.cursor)
 	                    .moveTo(0, 6)
 	                    .vert(symbolSize.hsd.cursor)
 	                    .moveTo(0, -symbolSize.hsd.cursor*0.4)
@@ -2001,7 +2039,7 @@ var DisplaySystem = {
 	                    .horiz(-symbolSize.hsd.cursor)
 	                    .setStrokeLineWidth(lineWidth.hsd.cursor)
 	                    .setColor(colorLine3);
-	        me.cursorGhost = me.concentricGrp.createChild("group").set("z-index",1000);
+	        me.cursorGhost = me.concentricGrp.createChild("group").set("z-index",zIndex.hsd.ghostCursor);
 	        me.cursorAirGhost = me.cursorGhost.createChild("path")
 	                    .moveTo(-symbolSize.hsd.cursorGhostAir*0.45,-symbolSize.hsd.cursorGhostAir/2)
 	                    .vert(symbolSize.hsd.cursorGhostAir)
@@ -2032,7 +2070,7 @@ var DisplaySystem = {
 	        me.lnk  = setsize([],me.maxB);
 	        for (var i = 0;i<me.maxB;i+=1) {
 	                me.blepTriangle[i] = me.concentricGrp.createChild("group")
-	                                .set("z-index",11);
+	                                .set("z-index",zIndex.hsd.track);
 	                me.blepTriangleVel[i] = me.blepTriangle[i].createChild("group");
 	                me.blepTriangleText[i] = me.blepTriangle[i].createChild("text")
 	                                .setAlignment("center-top")
@@ -2062,17 +2100,17 @@ var DisplaySystem = {
 	                                .vert(symbolSize.hsd.contact*-10)
 	                                .setColor(colorDot1)
 	                                .hide()
-	                                .set("z-index",11)
+	                                .set("z-index",zIndex.hsd.dl)
 	                                .setStrokeLineWidth(lineWidth.hsd.targetDL);
 	                me.lnkT[i] = me.concentricGrp.createChild("text")
 	                                .setAlignment("center-bottom")
 	                                .setColor(colorDot1)
-	                                .set("z-index",1)
+	                                .set("z-index",zIndex.hsd.dl)
 	                                .setFontSize(me.device.fontSize, 1.0);
 	                me.lnkTA[i] = me.concentricGrp.createChild("text")
 	                                .setAlignment("center-top")
 	                                .setColor(colorDot1)
-	                                .set("z-index",1)
+	                                .set("z-index",zIndex.hsd.dl)
 	                                .setFontSize(me.device.fontSize, 1.0);
 	        }
 	        me.selection = me.concentricGrp.createChild("path")
@@ -2080,10 +2118,11 @@ var DisplaySystem = {
 	                .arcSmallCW(symbolSize.hsd.contact*16, symbolSize.hsd.contact*16, 0, symbolSize.hsd.contact*16*2, 0)
 	                .arcSmallCW(symbolSize.hsd.contact*16, symbolSize.hsd.contact*16, 0, symbolSize.hsd.contact*-16*2, 0)
 	                .setColor(colorDot1)
-	                .set("z-index",12)
+	                .set("z-index",zIndex.hsd.designation)
 	                .setStrokeLineWidth(lineWidth.hsd.designation);
 
 	        me.myself = me.concentricGrp.createChild("path")#own ship
+	        .set("z-index", zIndex.hsd.ownship)
 	           .moveTo(0, 0)
 	           .vert(symbolSize.hsd.ownship*30)
 	           .moveTo(symbolSize.hsd.ownship*-10, symbolSize.hsd.ownship*10)
@@ -2101,13 +2140,13 @@ var DisplaySystem = {
 	                .arcSmallCW(50,50, 0,  50*2, 0)
 	                .arcSmallCW(50,50, 0, -50*2, 0)
 	                .setStrokeLineWidth(lineWidth.hsd.threatRing)
-	                .set("z-index",2)
+	                .set("z-index",zIndex.hsd.threat)
 	                .hide()
 	                .setColor(colorCircle1));
 	            append(me.threat_t, me.concentricGrp.createChild("text")
 	                .setAlignment("center-center")
 	                .setColor(colorCircle1)
-	                .set("z-index",2)
+	                .set("z-index",zIndex.hsd.threat)
 	                .setFontSize(font.hsd.threat, 1.0));
 	        }
 
@@ -2117,11 +2156,12 @@ var DisplaySystem = {
 	                    .setAlignment("center-center")
 	                    .setColor(no<5?colorText2:colorCircle2)
 	                    .setText("X")
-	                    .set("z-index",2)
+	                    .set("z-index",zIndex.hsd.markpoint)
 	                    .setFontSize(symbolSize.hsd.markpoint, 1.0);
 	        }
 
 	        me.bullseye = me.concentricGrp.createChild("path")
+	        	.set("z-index", zIndex.hsd.bullseye)
 	            .moveTo(symbolSize.hsd.bullseye*-25,0)
 	            .arcSmallCW(symbolSize.hsd.bullseye*25,symbolSize.hsd.bullseye*25, 0,  symbolSize.hsd.bullseye*25*2, 0)
 	            .arcSmallCW(symbolSize.hsd.bullseye*25,symbolSize.hsd.bullseye*25, 0, symbolSize.hsd.bullseye*-25*2, 0)
@@ -2138,7 +2178,7 @@ var DisplaySystem = {
 	                .setColor(colorBetxt)
 	                .setTranslation(-displayWidthHalf*0.95, -displayHeight*0.15)
 	                .setText("12")
-	                .set("z-index",1)
+	                .set("z-index",zIndex.hsd.beyeCursor)
 	                .setFontSize(font.hsd.beyeCursor, 1.0);
 	    },
 
@@ -6753,7 +6793,7 @@ main(nil);# disable this line if running as module
 #      FLIR: 21x28 degs instead of 32x32
 #      Lookup tables for z-index, symbol sizes, font sizes, line thickness
 #          Done: Device, HSD, bullseye, arrows, (sms-inv, sms-sj,) tfr, grid, cube, flir, has, fcr
-#          Todo: z-index, font sizes
+#          Todo: z-index
 #          Issues: SMS INV/S-J still pixel based
 #                  6% x 16% larger resolution might make some symbols appear smaller.
 #      GM EXP should imagescan
