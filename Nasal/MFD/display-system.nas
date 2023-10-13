@@ -470,7 +470,7 @@ var DisplayDevice = {
 	},
 
 	addPullUpCue: func {
-        me.pullup_cue = me.canvas.createGroup().set("z-index", zIndex.device.pullup);
+        me.pullup_cue = me.canvas.createGroup().set("z-index", zIndex.device.pullUp);
         me.pullup_cue.createChild("path")
            .moveTo(0, 0)
            .lineTo(me.uvMap[0]*me.resolution[0], me.uvMap[1]*me.resolution[1])
@@ -2546,7 +2546,7 @@ var DisplaySystem = {
                             .set("z-index",4)
                             .setColor(colorLine3)
                             .update();
-                        if (me.plan.current == me.j) {
+                        if (steerpoints.getCurrentNumber() == me.j+1) {
                             me.wp.setColorFill(colorLine3);
                         }
                         if (me.prevX != nil) {
