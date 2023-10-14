@@ -179,7 +179,7 @@ var zIndex = {
 		soiText: 10,
 	},
 	hsd: {
-		rdrCone: 5,
+		rdrCone: 5,# and route
 		rings: 2,
 		ghostCursor: 2000,
 		cursor: 2000,
@@ -193,7 +193,28 @@ var zIndex = {
 		bullseye: 5,
 	},
 	fcr: {
-
+		blep: 10,
+		track: 11,
+		iff: 12,
+		dl: 11,
+		gainGauge: 2,
+		caret: 1,
+		tick: 1,
+		designation: 12,
+		infoText: 1,
+		interceptCross: 14,
+		designationGM: 20,
+		dlz: 11,
+		azimuthLine: 13,
+		horizLine: 15,
+		silent: 16,
+		bit: 16,
+		expBox: 1,
+		cursor: 1000,
+		bullseye: 1,
+		steerpoint: 1,
+		beyeCursor: 1,
+		ring: 1,
 	},
 	has: {
 
@@ -3632,6 +3653,7 @@ var DisplaySystem = {
 	        me.terrain = geo.Coord.new();
 	        me.gmColor = 0;
 	        me.slew_c_last = slew_c;
+	        me.pressEXP = 0;
 		},
 		setupRadar: func (index) {
 
@@ -3667,7 +3689,7 @@ var DisplaySystem = {
 	                        .vert(symbolSize.fcr.blep)
 	                        .setStrokeLineWidth(symbolSize.fcr.blep)
 	                        .setStrokeLineCap("butt")
-	                        .set("z-index",10)
+	                        .set("z-index",zIndex.fcr.blep)
 	                        .hide();
 	        }
 	        for (var i = 0;i<me.maxHL;i+=1) {
@@ -3675,12 +3697,12 @@ var DisplaySystem = {
 	                        .moveTo(0, 0)
 	                        .vert(100)
 	                        .setStrokeLineWidth(lineWidth.fcr.hotline)
-	                        .set("z-index",10)
+	                        .set("z-index",zIndex.fcr.blep)
 	                        .hide();
 	        }
 	        for (var i = 0;i<me.maxT;i+=1) {
 	                me.blepTriangle[i] = me.p_RDR.createChild("group")
-	                                .set("z-index",11);
+	                                .set("z-index",zIndex.fcr.track);
 	                me.blepTriangleVel[i] = me.blepTriangle[i].createChild("group");
 	                me.blepTriangleText[i] = me.blepTriangle[i].createChild("text")
 	                                .setAlignment("center-top")
@@ -3706,7 +3728,7 @@ var DisplaySystem = {
 	                                .arcSmallCW(symbolSize.fcr.iff,symbolSize.fcr.iff, 0, -symbolSize.fcr.iff*2, 0)
 	                                .setColor(colorCircle3)
 	                                .hide()
-	                                .set("z-index",12)
+	                                .set("z-index",zIndex.fcr.iff)
 	                                .setStrokeLineWidth(lineWidth.fcr.iff);
 	                me.iffU[i] = me.p_RDR.createChild("path")
 	                                .moveTo(-symbolSize.fcr.iff,-symbolSize.fcr.iff)
@@ -3716,7 +3738,7 @@ var DisplaySystem = {
 	                                .horiz(-symbolSize.fcr.iff*2)
 	                                .setColor(colorCircle2)
 	                                .hide()
-	                                .set("z-index",12)
+	                                .set("z-index",zIndex.fcr.iff)
 	                                .setStrokeLineWidth(lineWidth.fcr.iff);
 	                me.lnk[i] = me.p_RDR.createChild("path")
 	                                .moveTo(-symbolSize.fcr.dl,-symbolSize.fcr.dl)
@@ -3728,15 +3750,16 @@ var DisplaySystem = {
 	                                .vert(-symbolSize.fcr.dl)
 	                                .setColor(colorDot1)
 	                                .hide()
-	                                .set("z-index",11)
+	                                .set("z-index",zIndex.fcr.dl)
 	                                .setStrokeLineWidth(lineWidth.fcr.dl);
 
 	            me.lnkT[i] = me.p_RDR.createChild("text")
 	                .setAlignment("center-bottom")
 	                .setColor(colorDot1)
-	                .set("z-index",1)
+	                .set("z-index",zIndex.fcr.dl)
 	                .setFontSize(me.device.fontSize, 1.0);
 	            me.lnkTA[i] = me.p_RDR.createChild("text")
+	            					.set("z-index", zIndex.fcr.dl)
 	                                .setAlignment("center-top")
 	                                .setFontSize(me.device.fontSize, 1.0);
 	        }
@@ -3746,14 +3769,14 @@ var DisplaySystem = {
 	                    .vert(symbolSize.fcr.gainGaugeVert)
 	                    .horiz(symbolSize.fcr.gainGaugeHoriz)
 	                    .setStrokeLineWidth(lineWidth.fcr.gainGauge)
-	                    .set("z-index",1)
+	                    .set("z-index",zIndex.fcr.gainGauge)
 	                    .setColor(colorText1);
 	        me.gainGaugePointer = me.p_RDR.createChild("path")
 	                    .lineTo(symbolSize.fcr.gainGaugeHoriz*0.5,-symbolSize.fcr.gainGaugeHoriz*0.5)
 	                    .moveTo(0,0)
 	                    .lineTo(symbolSize.fcr.gainGaugeHoriz*0.5, symbolSize.fcr.gainGaugeHoriz*0.5)
 	                    .setStrokeLineWidth(lineWidth.fcr.gainGauge)
-	                    .set("z-index",1)
+	                    .set("z-index",zIndex.fcr.gainGauge)
 	                    .setColor(colorText1);
 
 	        var antSideBuffer = margin.fcr.caretSide;
@@ -3764,7 +3787,7 @@ var DisplaySystem = {
 	                    .moveTo(-symbolSize.fcr.caret*0.5,-antBottomBuffer)
 	                    .horiz(symbolSize.fcr.caret)
 	                    .setStrokeLineWidth(lineWidth.fcr.caret)
-	                    .set("z-index",1)
+	                    .set("z-index",zIndex.fcr.caret)
 	                    .setColor(colorLine1);
 	        me.ant_side = me.p_RDR.createChild("path")
 	                    .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.5)
@@ -3772,7 +3795,7 @@ var DisplaySystem = {
 	                    .moveTo(-displayWidthHalf+antSideBuffer,-displayHeight*0.5-symbolSize.fcr.caret*0.5)
 	                    .vert(symbolSize.fcr.caret)
 	                    .setStrokeLineWidth(lineWidth.fcr.caret)
-	                    .set("z-index",1)
+	                    .set("z-index",zIndex.fcr.caret)
 	                    .setColor(colorLine1);
 	        if (variantID < 2 or variantID == 3) {
 	        	# distance ticks
@@ -3790,7 +3813,7 @@ var DisplaySystem = {
 	                        .moveTo(displayWidthHalf*0.5,-antBottomBuffer)
 	                        .vert(-15*symbolSize.fcr.tick)
 	                        .setStrokeLineWidth(lineWidth.fcr.tick)
-	                        .set("z-index",1)
+	                        .set("z-index",zIndex.fcr.tick)
 	                        .setColor(colorLine1);
 	        } else {
 	            me.distl = me.p_RDR.createChild("path")
@@ -3823,12 +3846,12 @@ var DisplaySystem = {
 	                    .moveTo(displayWidthHalf*0.5,-antBottomBuffer)
 	                    .vert(-12.5*symbolSize.fcr.tick)
 	                    .setStrokeLineWidth(lineWidth.fcr.tick)
-	                    .set("z-index",1)
+	                    .set("z-index",zIndex.fcr.tick)
 	                    .setColor(colorLine1);
 	        }
 
 	        me.selection = me.p_RDR.createChild("group")
-	                .set("z-index",12);
+	                .set("z-index",zIndex.fcr.designation);
 	        me.selectionPath = me.selection.createChild("path")
 	                .moveTo(-symbolSize.fcr.designation, 0)
 	                .arcSmallCW(symbolSize.fcr.designation, symbolSize.fcr.designation, 0, symbolSize.fcr.designation*2, 0)
@@ -3840,7 +3863,7 @@ var DisplaySystem = {
 	                .setTranslation(0, -displayHeight*0.9)
 	                .setAlignment("center-center")
 	                .setColor(colorLine3)
-	                .set("z-index",1)
+	                .set("z-index",zIndex.fcr.infoText)
 	                .setFontSize(me.device.fontSize, 1.0);
 
 	        me.interceptCross = me.p_RDR.createChild("path")
@@ -3849,7 +3872,7 @@ var DisplaySystem = {
 	                            .moveTo(0,-symbolSize.fcr.interceptCross)
 	                            .vert(2*symbolSize.fcr.interceptCross)
 	                            .setColor(colorCircle2)
-	                            .set("z-index",14)
+	                            .set("z-index",zIndex.fcr.interceptCross)
 	                            .setStrokeLineWidth(lineWidth.fcr.interceptCross);
 
 	        me.lockGM = me.p_RDR.createChild("path")
@@ -3860,7 +3883,7 @@ var DisplaySystem = {
 	                            .lineTo(symbolSize.fcr.designationGM,0)
 	                            .setColorFill(colorCircle2)
 	                            .setColor(colorCircle2)
-	                            .set("z-index",20)
+	                            .set("z-index",zIndex.fcr.designationGM)
 	                            .setStrokeLineWidth(lineWidth.fcr.designationGM);
 
 	        me.dlzX      = displayWidthHalf*0.75;
@@ -3869,7 +3892,7 @@ var DisplaySystem = {
 	        me.dlzHeight = displayHeight*0.5;
 	        me.dlzLW     =   lineWidth.fcr.dlz;
 	        me.dlz      = me.p_RDR.createChild("group")
-	                        .set("z-index",11)
+	                        .set("z-index",zIndex.fcr.dlz)
 	                        .setTranslation(me.dlzX, me.dlzY);
 	        me.dlz2     = me.dlz.createChild("group");
 	        me.dlzArrow = me.dlz.createChild("path")
@@ -3884,13 +3907,13 @@ var DisplaySystem = {
 	           .moveTo(0, 0)
 	           .lineTo(0, -displayHeight)
 	           .setColor(colorLine1)
-	           .set("z-index",13)
+	           .set("z-index",zIndex.fcr.azimuthLine)
 	           .setStrokeLineWidth(lineWidth.fcr.azimuthLine);
 	        me.az2 = me.p_RDR.createChild("path")
 	           .moveTo(0, 0)
 	           .lineTo(0, -displayHeight)
 	           .setColor(colorLine1)
-	           .set("z-index",13)
+	           .set("z-index",zIndex.fcr.azimuthLine)
 	           .setStrokeLineWidth(lineWidth.fcr.azimuthLine);
 	        me.horiz = me.p_RDR.createChild("path")
 	           .moveTo(-displayWidthHalf*0.5, -displayHeight*0.5)
@@ -3903,20 +3926,20 @@ var DisplaySystem = {
 	           .horiz(-displayWidthHalf*0.4)
 	           .setCenter(0, -displayHeight*0.5)
 	           .setColor(colorLine2)
-	           .set("z-index",15)
+	           .set("z-index",zIndex.fcr.horizLine)
 	           .setStrokeLineWidth(lineWidth.fcr.horizLine);
 	        me.silent = me.p_RDR.createChild("text")
 	           .setTranslation(0, -displayHeight*0.25)
 	           .setAlignment("center-center")
 	           .setText("SILENT")
-	           .set("z-index",16)
+	           .set("z-index",zIndex.fcr.silent)
 	           .setFontSize(font.fcr.silent, 1.0)
 	           .setColor(colorText2);
 	        me.bitText = me.p_RDR.createChild("text")
 	           .setTranslation(0, -displayHeight*0.75)
 	           .setAlignment("center-center")
 	           .setText("    VERSION C021-IPOO-MRO3258674  ")
-	           .set("z-index",16)
+	           .set("z-index",zIndex.fcr.bit)
 	           .setFontSize(font.fcr.bit, 1.0)
 	           .setColor(colorText2);
 
@@ -3928,10 +3951,10 @@ var DisplaySystem = {
 	            .horiz(-200)
 	            .setStrokeLineWidth(lineWidth.fcr.exp)
 	            .setColor(colorLine4)
-	            .set("z-index",1)
+	            .set("z-index",zIndex.fcr.expBox)
 	            .hide();
 
-	        me.cursor = me.p_RDR.createChild("group").set("z-index",1000);
+	        me.cursor = me.p_RDR.createChild("group").set("z-index",zIndex.fcr.cursor);
 	        me.cursorAir = me.cursor.createChild("path")
 	                    .moveTo(-symbolSize.fcr.cursorAir,-symbolSize.fcr.cursorAir)
 	                    .vert(2*symbolSize.fcr.cursorAir)
@@ -3985,7 +4008,7 @@ var DisplaySystem = {
 	            .arcSmallCW(5*symbolSize.fcr.bullseye,5*symbolSize.fcr.bullseye, 0,  5*2*symbolSize.fcr.bullseye, 0)
 	            .arcSmallCW(5*symbolSize.fcr.bullseye,5*symbolSize.fcr.bullseye, 0, -5*2*symbolSize.fcr.bullseye, 0)
 	            .setStrokeLineWidth(lineWidth.fcr.bullseye)
-	            .set("z-index",1)
+	            .set("z-index",zIndex.fcr.bullseye)
 	            .setColor(colorBullseye);
 	        me.steerpoint = me.p_RDR.createChild("path")
 	            .moveTo(12*symbolSize.fcr.steerpoint,8*symbolSize.fcr.steerpoint)
@@ -3999,7 +4022,7 @@ var DisplaySystem = {
 	            .vert(8*symbolSize.fcr.steerpoint)
 	            .setColorFill(colorBullseye)
 	            .setStrokeLineWidth(lineWidth.fcr.steerpoint)
-	            .set("z-index",1)
+	            .set("z-index",zIndex.fcr.steerpoint)
 	            .setColor(colorBullseye);
 	        
 	        me.cursorLoc = me.p_RDR.createChild("text")
@@ -4007,7 +4030,7 @@ var DisplaySystem = {
 	                .setColor(colorBetxt)
 	                .setTranslation(-displayWidthHalf*0.95, -displayHeight*0.15)
 	                .setText("12")
-	                .set("z-index",1)
+	                .set("z-index",zIndex.fcr.beyeCursor)
 	                .setFontSize(font.fcr.beyeCursor, 1.0);
 
 	        # canvas: displayWidth,displayHeight
@@ -4017,19 +4040,19 @@ var DisplaySystem = {
 	            .moveTo(-displayWidth*0.25*me.cosi,-displayHeight*0.25*me.sinu)
 	            .arcSmallCW(displayWidth*0.25,displayHeight*0.25, 0, displayWidth*0.25*me.cosi*2, 0)
 	            .setStrokeLineWidth(lineWidth.fcr.rangeRings)
-	            .set("z-index",1)
+	            .set("z-index",zIndex.fcr.ring)
 	            .setColor(colorLines);
 	        me.rangeRingMid = me.p_RDR.createChild("path")
 	            .moveTo(-displayWidth*0.5*me.cosi,-displayHeight*0.5*me.sinu)
 	            .arcSmallCW(displayWidth*0.5,displayHeight*0.5, 0, displayWidth*0.5*me.cosi*2, 0)
 	            .setStrokeLineWidth(lineWidth.fcr.rangeRings)
-	            .set("z-index",1)
+	            .set("z-index",zIndex.fcr.ring)
 	            .setColor(colorLines);
 	        me.rangeRingHigh = me.p_RDR.createChild("path")
 	            .moveTo(-displayWidth*0.75*me.cosi,-displayHeight*0.75*me.sinu)
 	            .arcSmallCW(displayWidth*0.75,displayHeight*0.75, 0, displayWidth*0.75*me.cosi*2, 0)
 	            .setStrokeLineWidth(lineWidth.fcr.rangeRings)
-	            .set("z-index",1)
+	            .set("z-index",zIndex.fcr.ring)
 	            .setColor(colorLines);
 	    },
 		enter: func {
