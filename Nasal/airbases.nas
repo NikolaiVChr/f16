@@ -1635,7 +1635,8 @@ var db = {
 
 
 # Countries checked: Netherlands (PHJake), Denmark (Leto), UK (Sammy), Cyprus (Leto), part of USA (pinto),
-#                    Australia (sryu1), Sweden (Johan), Norway (Leto), Belgium (Bat), Italy (J-mav16).
+#                    Australia (sryu1), Sweden (Johan), Norway (Leto), Belgium (Bat), Italy (J-mav16),
+#                    Germany partial (Richard).
 #
 # The above list is auto-generated, put custom changes here:
 
@@ -1704,6 +1705,15 @@ db.LIRG = "ITA Italy";                                    # Guidonia
 db.LICZ = "ITA Italy";                                    # Sigonella NAS
 db.LIED = "ITA Italy";                                    # Decimomannu
 db.LIRM = "ITA Italy";                                    # Grazzanise
+#db.EDRB = "DEU Germany"; # bitburg
+db.EDUR = "DEU Germany (UK)" # Bruggen 
+db.ETUO = "DEU Germany (UK)" # Gutersloh
+db.ETUL = "DEU Germany (UK)" # Laarbruch
+db.ETAR = "DEU Germany (USA)" # Ramstein 
+db.ETSE = "DEU Germany" # Erding
+db.ETAD = "DEU Germany (USA)" # Spangdahlem Air Base  ETAD, former code EDAD)
+db.EDAD = "DEU Germany (USA)";
+db.ETOU = "DEU Germany (USA)" # Lucius D. Clay Kaserne
 
 # REMOVE
 #
