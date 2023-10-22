@@ -1636,7 +1636,7 @@ var db = {
 
 # Countries checked: Netherlands (PHJake), Denmark (Leto), UK (Sammy), Cyprus (Leto), part of USA (pinto),
 #                    Australia (sryu1), Sweden (Johan), Norway (Leto), Belgium (Bat), Italy (J-mav16),
-#                    Germany partial (Richard).
+#                    Germany partial (Richard), Ireland (Megaf).
 #
 # The above list is auto-generated, put custom changes here:
 
@@ -1787,6 +1787,11 @@ delete(db,"LICA");# ITA
 delete(db,"LIBP");# ITA
 delete(db,"LIPH");# ITA
 delete(db,"LIAP");# ITA
+delete(db,"EICK");#Ireland
+delete(db,"EIKH");#Ireland
+
+
+
 
 # MODIFY
 #
