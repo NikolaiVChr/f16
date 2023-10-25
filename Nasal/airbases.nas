@@ -1708,14 +1708,14 @@ db.LICZ = "ITA Italy";                                    # Sigonella NAS
 db.LIED = "ITA Italy";                                    # Decimomannu
 db.LIRM = "ITA Italy";                                    # Grazzanise
 #db.EDRB = "DEU Germany"; # bitburg
-db.EDUR = "DEU Germany (UK)" # Bruggen 
-db.ETUO = "DEU Germany (UK)" # Gutersloh
-db.ETUL = "DEU Germany (UK)" # Laarbruch
-db.ETAR = "DEU Germany (USA)" # Ramstein 
-db.ETSE = "DEU Germany" # Erding
-db.ETAD = "DEU Germany (USA)" # Spangdahlem Air Base  ETAD, former code EDAD)
+db.EDUR = "DEU Germany (UK)"; # Bruggen 
+db.ETUO = "DEU Germany (UK)"; # Gutersloh
+db.ETUL = "DEU Germany (UK)"; # Laarbruch
+db.ETAR = "DEU Germany (USA)"; # Ramstein 
+db.ETSE = "DEU Germany"; # Erding
+db.ETAD = "DEU Germany (USA)"; # Spangdahlem Air Base  ETAD, former code EDAD)
 db.EDAD = "DEU Germany (USA)";
-db.ETOU = "DEU Germany (USA)" # Lucius D. Clay Kaserne
+db.ETOU = "DEU Germany (USA)"; # Lucius D. Clay Kaserne
 
 # REMOVE
 #
