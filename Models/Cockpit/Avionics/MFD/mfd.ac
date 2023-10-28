@@ -3,7 +3,7 @@ MATERIAL "mount1"       rgb 1.000 1.000 1.000  amb 0.800 0.800 0.800  emis 0.000
 MATERIAL "buttons.001"  rgb 1.000 1.000 1.000  amb 0.800 0.800 0.800  emis 0.000 0.000 0.000  spec 0.400 0.400 0.400  shi 048 trans 0.000
 MATERIAL "mount2"       rgb 1.000 1.000 1.000  amb 0.800 0.800 0.800  emis 0.000 0.000 0.000  spec 0.400 0.400 0.400  shi 064 trans 0.000
 MATERIAL "buttons"      rgb 1.000 1.000 1.000  amb 0.800 0.800 0.800  emis 0.000 0.000 0.000  spec 0.400 0.400 0.400  shi 048 trans 0.000
-MATERIAL "canvas"       rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.250 0.250 0.250  shi 128 trans 0.000
+MATERIAL "canvas"       rgb 1 1 1  amb 1 1 1  emis 1 1 1  spec 0.250 0.250 0.250  shi 128 trans 0.000
 OBJECT world
 name "Blender_exporter_v2.27__mfd.ac"
 kids 26

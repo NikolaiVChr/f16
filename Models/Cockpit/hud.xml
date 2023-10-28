@@ -10,8 +10,17 @@
    <z-m> 0.010</z-m>
   </offsets>
 
- <effect>
+<!--  model-c-transparent and glass shows something
+
+<inherits-from>Effects/model-pbr-transparent</inherits-from>
+  <inherits-from>Effects/model-combined-transparent</inherits-from>
   <inherits-from>Aircraft/f16/Models/Effects/adjustable-hud</inherits-from>
+<inherits-from>Effects/model-transparent</inherits-from>
+<inherits-from>Effects/model-combined-transparent</inherits-from-->
+ <effect>
+  
+  <inherits-from>Aircraft/f16/Models/Effects/adjustable-hud</inherits-from>
+  
   <object-name>HUDImage2</object-name>
   <parameters>
     <rnorm type="float">0.0</rnorm>
@@ -27,16 +36,38 @@
     <use-mask type="int">0</use-mask>
     <use-overlay type="int">1</use-overlay>
     <hud-brightness><use>f16/avionics/hud-sym</use></hud-brightness>
-    <rendering-hint>transparent</rendering-hint>
-    <transparent>true</transparent>
     <sample-res>0.0006</sample-res>
     <sample-far>1.25</sample-far>
+    <!--rendering-hint>transparent</rendering-hint>
+    <transparent>true</transparent>
     <render-bin>
       <bin-number>111</bin-number>
       <bin-name>DepthSortedBin</bin-name>
-    </render-bin>
+    </render-bin-->
+
+    <lightmap-multi type="int">1</lightmap-multi>
+    <lightmap-enabled type="int">1</lightmap-enabled>
+    <texture n="3">
+      <type>white</type>
+    </texture>
+    
+
+    <metallic-factor type="float">1.0</metallic-factor>
+    <roughness-factor type="float">1.0</roughness-factor>
+    <alpha-cutoff>-1.0</alpha-cutoff>
+    <blend>1</blend>
   </parameters>
  </effect>
+
+ <!--animation>
+  <object-name>HUDImage10</object-name>
+  <type>material</type>
+  <emission>
+   <red>100</red>
+   <green>100</green>
+   <blue>100</blue>
+  </emission>
+ </animation-->
 
  <!--<animation>
   <object-name>HUDImage2</object-name>
@@ -68,22 +99,17 @@
   </emission>
  </animation>-->
 
-  <animation>
+  <!--animation>
     <object-name>HUDImage2</object-name>
     <type>material</type>
-    <!-- Workaround: for AMD and Intel windows drivers the HUD with ALS shaders is way too dim.
-      After some testing, it seems that the material alpha value is way too low.
-      I don't know how this happens, but setting transparency here works around the issue.
-      This is the same value as in the .ac file.
-    -->
     <transparency>
       <alpha>0.9</alpha>
     </transparency>
-  </animation>
+  </animation-->
  
- <effect>
+ <!--effect>
   <inherits-from>Effects/model-transparent</inherits-from>
   <object-name>HUDedge</object-name>
- </effect>
+ </effect-->
 
 </PropertyList>

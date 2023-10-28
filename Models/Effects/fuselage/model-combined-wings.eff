@@ -8,7 +8,14 @@
 		<wingflex-z><use>/sim/systems/wingflexer/z-m</use></wingflex-z>
 		<body-width>2.84</body-width>
 		<wing-span>9.2</wing-span>
-
+		<texture n="9">
+			<image>Aircraft/f16/Models/Effects/fuselage/orm.png</image>
+			<type>2d</type>
+			<filter>linear</filter>
+			<wrap-s>clamp</wrap-s>
+			<wrap-t>clamp</wrap-t>
+			<internal-format>normalized</internal-format>
+		</texture>
 		<metallic type="float">0.80</metallic>
 		<!--ambient-factor type="float">0.35</ambient-factor-->
 		<ambient-factor><use>f16/scene/ambient-occlusion</use></ambient-factor>

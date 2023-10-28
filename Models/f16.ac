@@ -104402,6 +104402,7 @@ OBJECT poly
 name "CanopyBackOutside"
 data 8
 Mesh.001
+texture "glass-albedo.png"
 crease 80.0
 numvert 26
 -3.46354 0.6397 -0.31041
@@ -106289,6 +106290,7 @@ OBJECT poly
 name "CanopyForwardOutside"
 data 8
 Mesh.005
+texture "glass-albedo.png"
 crease 80.0
 numvert 215
 -4.9969 0.72804 0.04323

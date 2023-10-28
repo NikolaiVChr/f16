@@ -5,17 +5,11 @@
  <path>nozzle-GE.ac</path>
 
  <effect>
-      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
-      <parameters>
-          <metallic type="float">0.90</metallic>
-          <ambient-factor type="float">0.00</ambient-factor>
-          <rain-enabled type="int">0</rain-enabled>
-          <snow-enabled type="int">0</snow-enabled>
-          <ambient-correction type="float">0.00</ambient-correction>
-          <reflection-enabled type="int">1</reflection-enabled>
-          <reflection-correction type="float">-0.46</reflection-correction>
-          <specular-material-ignore type="int">0</specular-material-ignore>
-      </parameters>
+    <inherits-from>Effects/model-pbr</inherits-from>
+    <parameters>
+      <metallic-factor type="float">1.0</metallic-factor>
+      <roughness-factor type="float">0.5</roughness-factor>
+    </parameters>
       <!-- outer plates -->
       <object-name>Petals-R</object-name>
       <object-name>NozzlePetal.024</object-name>
@@ -32,21 +26,18 @@
       <object-name>NozzlePetal.035</object-name>
   </effect>
   
-  <effect>
-      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
-      <parameters>
-          <metallic type="float">0.90</metallic>
-          <ambient-factor type="float">0.00</ambient-factor>
-          <rain-enabled type="int">0</rain-enabled>
-          <snow-enabled type="int">0</snow-enabled>
-          <ambient-correction type="float">0.00</ambient-correction>
-          <reflection-enabled type="int">0</reflection-enabled>
-          <specular-material-ignore type="int">0</specular-material-ignore>
-      </parameters>
+ <effect>
+    <inherits-from>Effects/model-pbr</inherits-from>
+    <parameters>
+      <metallic-factor type="float">0.5</metallic-factor>
+      <roughness-factor type="float">0.65</roughness-factor>
+    </parameters>
       <!-- inner plates -->
       <object-name>InNozzleROpen</object-name>
         <object-name>InNozzleR</object-name>
   </effect>
+
+ 
 
  <!--animation>
   <type>range</type>
