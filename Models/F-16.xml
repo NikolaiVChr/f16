@@ -833,7 +833,7 @@
   <!--inherits-from>Aircraft/f16/Models/Effects/glass/glass-ext</inherits-from-->
   <inherits-from>Effects/model-pbr-transparent</inherits-from>
   <parameters>
-    <metallic-factor type="float">0.5</metallic-factor>
+    <metallic-factor type="float">0.0</metallic-factor>
     <roughness-factor type="float">0.01</roughness-factor>
   </parameters>
   <object-name>CanopyForwardOutside</object-name>
@@ -2306,23 +2306,6 @@
  </animation>
 
  <animation>
-  <type>translate</type>
-  <object-name>RightOuterUpperStrut</object-name>
-  <property>gear/gear[1]/compression-norm</property>
-  <factor>0.2</factor>
-  <center>
-   <x-m>0.59</x-m>
-   <y-m>0.28</y-m>
-   <z-m>-0.75</z-m>
-  </center>
-  <axis>
-   <x>0.0</x>
-   <y>-0.457</y>
-   <z>1.0</z>
-  </axis>
- </animation>
-
- <animation>
   <type>rotate</type>
   <object-name>RightMainTire</object-name>
   <object-name>RightMainStrut</object-name>
@@ -2424,6 +2407,21 @@
   </axis>
  </animation>
 
+ <animation>
+  <type>translate</type>
+  <object-name>RightOuterUpperStrut</object-name>
+  <property>gear/gear[1]/compression-norm</property>
+  <factor>0.2</factor>
+  <axis>
+     <x1-m> 0.573735  </x1-m>
+     <y1-m> 0.995678  </y1-m>
+     <z1-m> -1.13778 </z1-m>
+     <x2-m> 0.608042    </x2-m>
+     <y2-m> 0.589913    </y2-m>
+     <z2-m> -0.436789   </z2-m>
+  </axis>
+ </animation>
+
    <!-- spinning wheel calc
 
      radius = 1.80323 - 1.51444 = 0.28879
@@ -2486,23 +2484,6 @@
    <x>0.995037</x>
    <y>-0.099504</y>
    <z>0.0</z>
-  </axis>
- </animation>
-
- <animation>
-  <type>translate</type>
-  <object-name>LeftOuterUpperStrut</object-name>
-  <property>gear/gear[2]/compression-norm</property>
-  <factor>0.2</factor>
-  <center>
-   <x-m>0.59</x-m>
-   <y-m>-0.28</y-m>
-   <z-m>-0.75</z-m>
-  </center>
-  <axis>
-   <x>0.0</x>
-   <y>0.457</y>
-   <z>1.0</z>
   </axis>
  </animation>
 
@@ -2585,6 +2566,21 @@
    <x>0.943612</x>
    <y>-0.262974</y>
    <z>0.201098</z>
+  </axis>
+ </animation>
+
+  <animation>
+  <type>translate</type>
+  <object-name>LeftOuterUpperStrut</object-name>
+  <property>gear/gear[2]/compression-norm</property>
+  <factor>0.2</factor>
+  <axis>
+     <x1-m> 0.573735  </x1-m>
+     <y1-m> -0.995678  </y1-m>
+     <z1-m> -1.13778 </z1-m>
+     <x2-m> 0.608042    </x2-m>
+     <y2-m> -0.589913    </y2-m>
+     <z2-m> -0.436789   </z2-m>
   </axis>
  </animation>
 
