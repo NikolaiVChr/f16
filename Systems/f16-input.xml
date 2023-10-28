@@ -899,6 +899,7 @@
     setprop("/sim/rendering/hdr/atmos/aerosol-scattering-cross-section[1]", (rand()*0.5+0.75)*1.7711e-22);
     setprop("/sim/rendering/hdr/atmos/aerosol-scattering-cross-section[2]", (rand()*0.5+0.75)*2.0942e-22);
     setprop("/sim/rendering/hdr/atmos/aerosol-scattering-cross-section[3]", (rand()*0.5+0.75)*2.4033e-22);
+    setprop("/sim/rendering/hdr/envmap/force-update",1);
                     </script>
                 </binding>
             </mod-ctrl>
