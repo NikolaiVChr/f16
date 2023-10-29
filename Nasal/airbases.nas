@@ -1636,7 +1636,7 @@ var db = {
 
 # Countries checked: Netherlands (PHJake), Denmark (Leto), UK (Sammy), Cyprus (Leto), part of USA (pinto),
 #                    Australia (sryu1), Sweden (Johan), Norway (Leto), Belgium (Bat), Italy (J-mav16),
-#                    Germany partial (Richard), Ireland (Megaf).
+#                    Germany partial (Richard), Ireland (Megaf), France (Darkstar).
 #
 # The above list is auto-generated, put custom changes here:
 
@@ -1716,6 +1716,16 @@ db.ETSE = "DEU Germany"; # Erding
 db.ETAD = "DEU Germany (USA)"; # Spangdahlem Air Base  ETAD, former code EDAD)
 db.EDAD = "DEU Germany (USA)";
 db.ETOU = "DEU Germany (USA)"; # Lucius D. Clay Kaserne
+db.LFPJ = "FRA France";# Taverny Air Base (ICAO: LFPJ)
+db.LFPC = "FRA France";# Creil afb (ICAO:LFPC )
+db.LFXB = "FRA France";# Sainte (LFXB)
+db.LFYR = "FRA France";# Romorantin (LFYR)
+db.OMAM = "FRA France";# Al Dhafra(OMAM)
+db.SOCA = "FRA France";# Capitaine François massé(SOCA)
+db.NTAA = "FRA France";# Tahiti-Faa'a (NTAA)
+db.DIBK = "FRA France";# Bouaké (DIBK)
+db.FOOL = "FRA France";# libreville (FOOL)
+db.FMEE = "FRA France";# Saint-Denis-la réunion (FMEE)
 
 # REMOVE
 #
@@ -1789,7 +1799,41 @@ delete(db,"LIPH");# ITA
 delete(db,"LIAP");# ITA
 delete(db,"EICK");#Ireland
 delete(db,"EIKH");#Ireland
-
+delete(db,"LFBD");#: "FRA France",                                   # Bordeaux Merignac
+delete(db,"LFXB");#: "FRA France",                                   # Saintes Thenac
+delete(db,"LFTZ");#: "FRA France",                                   # La MÃ´le
+delete(db,"LFQQ");#: "FRA France",                                   # Lille Lesquin
+delete(db,"LFQN");#: "FRA France",                                   # Wizernes
+delete(db,"LFPN");#: "FRA France",                                   # Toussus-le-Noble
+delete(db,"LFPB");#: "FRA France",                                   # Paris Le Bourget
+delete(db,"LFOH");#: "FRA France",                                   # Le Havre Octeville
+delete(db,"LFNO");#: "FRA France",                                   # Florac Sainte Enimie
+delete(db,"LFMW");#: "FRA France",                                   # Castelnaudary Villeneuve
+delete(db,"LFMV");#: "FRA France",                                   # Avignon Caumont
+delete(db,"LFMN");#: "FRA France",                                   # Nice/Cote d'Azur
+delete(db,"LFMG");#: "FRA France",                                   # La Montagne Noire
+delete(db,"LFMD");#: "FRA France",                                   # Mandelieu
+delete(db,"LFLY");#: "FRA France",                                   # Lyon Bron
+delete(db,"LFLU");#: "FRA France",                                   # Valence Chabeuil
+delete(db,"LFLH");#: "FRA France",                                   # Chalon Champforgueil
+delete(db,"LFKJ");#: "FRA France",                                   # Napoleon Bonaparte
+delete(db,"LFKB");#: "FRA France",                                   # Bastia Poretta
+delete(db,"LFIT");#: "FRA France",                                   # Toulouse Bourg Saint Bernard
+delete(db,"LFGH");#: "FRA France",                                   # Cosne sur Loire
+delete(db,"LFGE");#: "FRA France",                                   # Avallon
+delete(db,"LFFX");#: "FRA France",                                   # Tournus Cuisery
+delete(db,"LFEF");#: "FRA France",                                   # Amboise Dierre
+delete(db,"LFDT");#: "FRA France",                                   # Tarbes Laloubere
+delete(db,"LFDO");#: "FRA France",                                   # [X] Souge
+delete(db,"LFDJ");#: "FRA France",                                   # Pamiers Les Pujols
+delete(db,"LFDB");#: "FRA France",                                   # Montauban
+delete(db,"LFCV");#: "FRA France",                                   # Villefranche de Rouergue
+delete(db,"LFCP");#: "FRA France",                                   # Pons Avy
+delete(db,"LFCK");#: "FRA France",                                   # Castres Mazamet
+delete(db,"LFBR");#: "FRA France",                                   # Muret Lherm
+delete(db,"LFCB");#: "FRA France",                                   # Bagneres de Luchon
+delete(db,"LFRB");#: "FRA",                                          # Brest Bretagne
+delete(db,"LFPO");#: "FRA",         
 
 
 
