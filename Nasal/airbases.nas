@@ -1799,7 +1799,6 @@ delete(db,"LIPH");# ITA
 delete(db,"LIAP");# ITA
 delete(db,"EICK");#Ireland
 delete(db,"EIKH");#Ireland
-delete(db,"LFBD");#: "FRA France",                                   # Bordeaux Merignac
 delete(db,"LFXB");#: "FRA France",                                   # Saintes Thenac
 delete(db,"LFTZ");#: "FRA France",                                   # La MÃ´le
 delete(db,"LFQQ");#: "FRA France",                                   # Lille Lesquin
