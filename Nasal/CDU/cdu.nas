@@ -71,14 +71,22 @@ var providers = {
     arcgis_terrain: {
                 templateLoad: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
                 templateStore: "/arcgis/{z}/{y}/{x}.jpg",
-                attribution: ""},            
+                attribution: ""},
+    tracestrack_topo_en: {
+                templateLoad: "https://tile.tracestrack.com/topo_en/{z}/{x}/{y}.png?key=51b799ad47b80d29aa30d781403844b6",
+                templateStore: "/topo-en2/{z}/{x}/{y}.png",
+                attribution: "Maps © Tracestrack"},
+    arcgis_topo: {
+                templateLoad: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
+                templateStore: "/arcgis-topo/{z}/{y}/{x}.jpg",
+                attribution: ""},
 };
 
 var providerOption = 1;
 var providerOptionLast = providerOption;
 var providerOptions = [
 # This one works on Linux and Windows only
-["stamen_terrain_bg","stamen_terrain_bg","stamen_terrain_bg","stamen_terrain_bg","stamen_terrain_bg","stamen_terrain_bg","arcgis_terrain"],
+["arcgis_topo","arcgis_topo","arcgis_topo","arcgis_topo","arcgis_topo","arcgis_topo","arcgis_topo"],
 # This one works on MacOS also, so is default
 ["arcgis_terrain","arcgis_terrain","arcgis_terrain","arcgis_terrain","arcgis_terrain","arcgis_terrain","arcgis_terrain"]
 ];
