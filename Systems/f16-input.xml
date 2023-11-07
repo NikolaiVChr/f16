@@ -450,13 +450,13 @@
                 <property>/ai/submodels/submodel[0]/flare-release-cmd</property>
                 <value type="bool">true</value>
             </binding>
-            <mod-up>
+            <!--mod-up>
                 <binding>
                     <command>property-assign</command>
                     <property>/ai/submodels/submodel[0]/flare-release-cmd</property>
                     <value type="bool">false</value>
                 </binding>
-            </mod-up>
+            </mod-up-->
         </key>
         <key n="8">
             <name>Ctrl-H</name>
