@@ -1579,8 +1579,8 @@ if (debugFC) screen.property_display.add("payload/armament/distCCRP");
 if (debugFC) screen.property_display.add("payload/armament/gravity-dropping");
 
 var ccrp_loopTimer = maketimer(0.1, ccrp_loop);
-ccrp_loopTimer.simulatedTime = 1;
-ccrp_loopTimer.start();
+ccrp_loopTimer.simulatedTime = 1;#started from f16.nas
+
 
 
 # This is non-generic methods, please edit it to fit your radar/weapon setup:
