@@ -1430,6 +1430,7 @@ var code_ct = func () {
   #ANTIC
   if (getprop("payload/armament/msg")) {
       setprop("sim/rendering/redout/enabled", 1);
+      setprop("sim/rendering/redout/parameters/locked-by-airframe", 1);
       #call(func{fgcommand('dialog-close', multiplayer.dialog.dialog.prop())},nil,var err= []);# props.Node.new({"dialog-name": "location-in-air"}));
       if (!m28_auto) call(func{multiplayer.dialog.del();},nil,var err= []);
       if (!getprop("gear/gear[0]/wow")) {
@@ -1446,6 +1447,8 @@ var code_ct = func () {
       #setprop("/sim/rendering/als-filters/use-filtering", 1);
       call(func{var interfaceController = fg1000.GenericInterfaceController.getOrCreateInstance();
       interfaceController.stop();},nil,var err2=[]);
+  } else {
+    setprop("sim/rendering/redout/parameters/locked-by-airframe", 0);
   }
 }
 code_ctTimer = maketimer(1, code_ct);
