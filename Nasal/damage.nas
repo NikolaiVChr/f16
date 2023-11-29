@@ -167,6 +167,7 @@ var warheads = {
     "5V28V":             [97,  478.00,0,0],# Missile used with S-200D/SA-5
     "AIM-9X":            [98,   20.80,0,0],
     "R-23R":             [99,   55.00,0,0],# mig23 fox 1
+    "5V27":              [100, 150.00,0,0],# Missile used with SA-3/S-125
     # Max id is 180
 };
 
@@ -195,7 +196,7 @@ var radar_signatures = {
                 "E-8R":                     AIR_RADAR,
                 "EC-137D":                  AIR_RADAR,
                 "Mig-28":                   AIR_RADAR,
-                "SA-6":                     "gnd-06",#Air radar tone chosen so that there is at least some lock tone until asset-specific is created
+                "SA-6":                     "gnd-06",
                 "s-200":                    "gnd-05",
                 "ZSU-23-4M":                "gnd-23",
                 "S-75":                     "gnd-02",
@@ -204,13 +205,14 @@ var radar_signatures = {
                 "MIM104D":                  "gnd-p2",
                 "missile_frigate":          "gnd-nk",
                 "fleet":                    "gnd-nk",
+                "SA-3":                     "gnd-p2",
 };
 
 
 var id2warhead = [];
 var launched = {};# callsign: elapsed-sec
 var approached = {};# callsign: uniqueID
-var heavy_smoke = [61,62,63,65,92,96,97];
+var heavy_smoke = [61,62,63,65,92,96,97,100];
 
 var k = keys(warheads);
 
@@ -417,8 +419,8 @@ var DamageRecipient =
                       #printf("Missile Approach Warning from %03d degrees.", bearing);
                       damageLog.push(sprintf("Missile Approach Warning from %03d degrees from %s.", bearing, notification.Callsign));
                       if (rwr_to_screen) screen.log.write(sprintf("Missile Approach Warning from %03d degrees.", bearing), 1,0.5,0);# temporary till someone models a RWR in RIO seat
-                  } else {
-                      #printf("Missile Approach Warning");
+                  } elsif (CWIOn) {
+                      #printf("Missile Approach Warning (semi-active).");
                       damageLog.push(sprintf("Missile Approach Warning from %s.", notification.Callsign));
                       if (rwr_to_screen) screen.log.write(sprintf("Missile Approach Warning (semi-active)."), 1,0.5,0);# temporary till someone models a RWR in RIO seat
                   }

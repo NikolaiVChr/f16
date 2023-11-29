@@ -78,6 +78,7 @@ var Database = {
 # OPRF assets (emesary enabled)
     "depot":                  {isSurfaceAsset: 1, canFly: 0},
     "ZSU-23-4M":              {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, rwrCode:"AA", killZone: 7.5, radarHorzRadius: 180, baseThreat:defaultSurfaceThreat},
+    "SA-3":                   {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, rwrCode:"3", killZone: 18, radarHorzRadius: 180, baseThreat:defaultSurfaceThreat},
     "SA-6":                   {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, rwrCode:"6", killZone: 15, radarHorzRadius: 180, baseThreat:defaultSurfaceThreat},
     "buk-m2":                 {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, rwrCode:"17", killZone: 35, radarHorzRadius: 180, baseThreat:defaultSurfaceThreat},
     "buk-m1-2":               {isSurfaceAsset: 1, canFly: 0, hasAirRadar:1, rwrCode:"17", killZone: 35, radarHorzRadius: 180, baseThreat:defaultSurfaceThreat},

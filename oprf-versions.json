@@ -12,11 +12,11 @@
     "path": "Nasal/radar/radar-system.nas"
   },
   "radar-system-database": {
-    "version": "1.0.9",
+    "version": "1.1.9",
     "path": "Nasal/radar/radar-system-database.nas"
   },
   "damage": {
-    "version": "1.3.2",
+    "version": "1.4.3",
     "path": "Nasal/damage.nas"
   },
   "iff": {
@@ -32,7 +32,7 @@
     "path": "Nasal/station-manager.nas"
   },
   "rcs-mand": {
-    "version": "1.0.3",
+    "version": "1.1.3",
     "path": "Nasal/radar/rcs_mand.nas"
   },
   "hud-math": {

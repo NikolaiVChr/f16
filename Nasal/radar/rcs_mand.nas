@@ -64,6 +64,7 @@ var rcs_oprf_database = {
 # Notice that the non-SEA of these have been very reduced to simulate hard to find in ground clutter
     "depot":                    1,
     "ZSU-23-4M":                0.04,
+    "SA-3":                     0.12,
     "SA-6":                     0.10,
     "buk-m2":                   0.08,
     "S-75":                     0.12,
@@ -94,7 +95,7 @@ var rcs_oprf_database = {
 };
 
 
-var ground_assets = ["depot", "ZSU-23-4M", "buk-m2", "SA-6", "S-75", "s-300", "s-200", "MIM104D", "truck", "tower", "gci", "struct", "point", "hunter"];
+var ground_assets = ["depot", "ZSU-23-4M", "buk-m2", "SA-3", "SA-6", "S-75", "s-300", "s-200", "MIM104D", "truck", "tower", "gci", "struct", "point", "hunter"];
 
 ### Amend table rcs_oprf_database to use real instead of reduced ground assets RCS values.
 #
