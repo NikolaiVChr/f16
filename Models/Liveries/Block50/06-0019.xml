@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery> 
+    <name type="string">116PM 335 Mira, "Tiger Meet 2021"</name>
+    <texture>Liveries/Block50/06-0019.png</texture>
+    <owner type="string">HAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Three-tone camo, Special Color</scheme>
+    <block type="int">52</block>
+    <serial type="string">06-0019</serial>
+    <squad type="string">335 Mira</squad>
+    <year type="string">2021</year>
+   </livery>
+
+   <livery-logo>
+    <texture>Liveries/Block50/greek.logo.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block30/patch.Hellas.png</texture>
+   </livery-patch>
+
+  <livery-pod>
+        <texture>Liveries/Block10/pod.white.png</texture>
+    </livery-pod>
+
+  <f16>
+    <dragchute type="bool">true</dragchute>
+    <cft type="bool">true</cft>
+  </f16>
+  <livery-specular type="double">0.5</livery-specular>
+  </model>
+ </sim>
+</PropertyList>
