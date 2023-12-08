@@ -295,6 +295,7 @@
             <property>f16/avionics/pilot-aid/c1-typ</property>
             <value type="string">   </value>
             <value type="string"> 2 </value>
+            <value type="string"> 3 </value>
 			<value type="string"> 5 </value>
             <value type="string"> 6 </value>
             <value type="string"> 17</value>
