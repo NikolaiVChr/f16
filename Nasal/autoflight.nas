@@ -10,6 +10,7 @@ var apLoop = maketimer(1, func {
 			var gnds_kt = getprop("/velocities/groundspeed-kt");
 			var max_wp   = getprop("/autopilot/route-manager/route/num");
 			var current_course = getprop("/autopilot/route-manager/wp/true-bearing-deg");
+			if (current_course == nil) current_course = getprop("orientation/true-heading-deg");
 			var wp_fly_to = getprop("/autopilot/route-manager/current-wp") + 1;
 			if (wp_fly_to < 0) {
 				wp_fly_to = 0;
