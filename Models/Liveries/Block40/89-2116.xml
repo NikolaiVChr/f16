@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim> 
+  <model>
+   <livery>
+    <name type="string">USAFWS, 16WPS WA "J Maverick 16"</name>
+    <texture>Liveries/Block40/89-2116.png</texture>
+    <owner type="string">USAF</owner>
+    <pilot type="string">Gen J Maverick 16</pilot>
+    <scheme type="string">Have Glass V, Flagship</scheme>
+    <block type="int">40</block>
+    <serial type="string">89-2116</serial>
+    <squad type="string">16th WPS "Tomahawks"</squad>
+    <year type="string">2023</year>
+   </livery>
+   
+   <livery-logo>
+    <texture>Liveries/standard.white.logos.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block40/patch.Mav.png</texture>
+  </livery-patch>
+
+  <livery-pod>
+        <texture>Liveries/External-stores/MXU-648.png</texture>
+  </livery-pod>
+
+  <f16>
+    <dragchute type="bool">false</dragchute>
+    <link16 type="bool">false</link16>
+    <cft type="bool">false</cft>
+  </f16>
+  <livery-specular type="double">0.6</livery-specular>
+  </model>
+ </sim>
+</PropertyList>
