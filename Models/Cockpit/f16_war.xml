@@ -91,6 +91,19 @@
    <blue>1</blue>
   </emission>
  </animation>-->
+
+ <animation>
+    <object-name>HUDImage2</object-name>
+    <type>material</type>
+    <!-- Workaround: for AMD and Intel windows drivers the HUD with ALS shaders is way too dim.
+      After some testing, it seems that the material alpha value is way too low.
+      I don't know how this happens, but setting transparency here works around the issue.
+      This is the same value as in the .ac file.
+    -->
+    <transparency>
+      <alpha>0.9</alpha>
+    </transparency>
+  </animation>
  
  <!--<effect>
   <inherits-from>Effects/model-transparent</inherits-from>

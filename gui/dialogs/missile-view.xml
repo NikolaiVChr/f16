@@ -27,7 +27,7 @@
     </color>
     <binding>
       <command>nasal</command>
-      <script>view.missile_view_handler.next(-1)</script>
+      <script>viewMissile.missile_view_handler.next(-1)</script>
     </binding>
   </button>
 
@@ -43,7 +43,7 @@
     </color>
     <binding>
       <command>nasal</command>
-      <script>view.missile_view_handler.next(1)</script>
+      <script>viewMissile.missile_view_handler.next(1)</script>
     </binding>
   </button>
 
@@ -79,7 +79,7 @@
     <binding>
       <command>nasal</command>
       <script>
-if (size(view.missile_view_handler.list) &lt;= 1)
+if (size(viewMissile.missile_view_handler.list) &lt;= 1)
     return;
 var isopen = !!getprop("sim/gui/dialogs/missile-view-select/open");
 var toggle = isopen ? "dialog-close" : "dialog-show";

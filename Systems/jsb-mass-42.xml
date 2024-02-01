@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
- <mass_balance>
+ <mass_balance negated_crossproduct_inertia="false">
   <ixx unit="SLUG*FT2"> 9496 </ixx>
   <iyy unit="SLUG*FT2"> 55814 </iyy>
   <izz unit="SLUG*FT2"> 63100 </izz>

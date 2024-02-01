@@ -204,6 +204,38 @@
                 </binding>
             </mod-up>
         </key>
+        <key n="362">
+            <name>Home</name>
+            <desc>Push to talk COMM #1</desc>
+            <binding>
+                <command>property-assign</command>
+                <property>instrumentation/comm[0]/ptt</property>
+                <value type="int">1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>instrumentation/comm[0]/ptt</property>
+                    <value type="int">0</value>
+                </binding>
+            </mod-up>
+        </key>
+        <key n="363">
+            <name>End</name>
+            <desc>Push to talk COMM #2</desc>
+            <binding>
+                <command>property-assign</command>
+                <property>instrumentation/comm[1]/ptt</property>
+                <value type="int">1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>instrumentation/comm[1]/ptt</property>
+                    <value type="int">0</value>
+                </binding>
+            </mod-up>
+        </key>
 		<key n="24">
 			<name>Ctrl-x</name>
 			<desc>Reset zoom to default</desc>
@@ -418,13 +450,13 @@
                 <property>/ai/submodels/submodel[0]/flare-release-cmd</property>
                 <value type="bool">true</value>
             </binding>
-            <mod-up>
+            <!--mod-up>
                 <binding>
                     <command>property-assign</command>
                     <property>/ai/submodels/submodel[0]/flare-release-cmd</property>
                     <value type="bool">false</value>
                 </binding>
-            </mod-up>
+            </mod-up-->
         </key>
         <key n="8">
             <name>Ctrl-H</name>
@@ -834,6 +866,16 @@
                     <command>property-assign</command>
                     <property>instrumentation/radar/iff</property>
                     <value>1</value>
+                </binding>
+            </mod-ctrl>
+        </key>
+        <key n="53">
+            <name>CTRL-5</name>
+            <mod-ctrl>
+                <desc>Reload MFD display system</desc>
+                <binding>
+                    <command>nasal-module-reload</command>
+                    <module>f16_MFD</module>
                 </binding>
             </mod-ctrl>
         </key>

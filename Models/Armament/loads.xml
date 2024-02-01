@@ -282,10 +282,16 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
   <type>select</type>
   <object-name>Station11_SniperATP</object-name>
   <condition>
-    <equals>
-      <property>payload/armament/station/id-11-type</property>
-      <value>AN/AAQ-33 Sniper ATP</value>
-    </equals>
+    <or>
+      <equals>
+        <property>payload/armament/station/id-11-type</property>
+        <value>AN/AAQ-33 Sniper ATP</value>
+      </equals>
+      <equals>
+        <property>payload/armament/station/id-11-type</property>
+        <value>AN/AAQ-32 Internal FLIR Targeting System</value>
+      </equals>
+    </or>
     <greater-than>
       <property>payload/armament/station/id-11-count</property>
       <value>0</value>
@@ -322,9 +328,14 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
   <type>select</type>
   <object-name>Podpylon_left</object-name>
   <condition>
+   <or>
     <equals>
       <property>payload/armament/station/id-11-set</property>
       <value>AN/AAQ-33 Sniper ATP</value>
+    </equals>
+    <equals>
+        <property>payload/armament/station/id-11-set</property>
+        <value>AN/AAQ-32 Internal FLIR Targeting System</value>
     </equals>
     <!--equals>
       <value>1</value>
@@ -338,8 +349,8 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
     <equals>
       <property>payload/armament/station/id-11-set</property>
       <value>AN/ASQ-213 HARM TS Pod</value>
-    </equals>
-   </or>-->
+    </equals>-->
+   </or>
   </condition>
  </animation>
 

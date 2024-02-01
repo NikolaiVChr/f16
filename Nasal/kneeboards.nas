@@ -153,7 +153,7 @@ var knee_paper = {
                 continue;
             } elsif (left(datum,1) == "!") {
                 var p = split("/",path);
-                p[size(p)-1] = "";
+                p[-1] = "";
                 var img = "";
                 foreach(var pp;p) {
                     img = img ~ pp ~"/";

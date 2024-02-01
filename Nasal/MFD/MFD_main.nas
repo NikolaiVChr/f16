@@ -56,7 +56,7 @@ if (getprop("sim/variant-id") == 2) {
     colorBackground = [0.01,0.01,0.07, 1];
 } else if (getprop("sim/variant-id") == 5) {
     colorBackground = [0.01,0.01,0.07, 1];
-} else if (getprop("sim/variant-id") == 6) {
+} else if (getprop("sim/variant-id") >= 6) {
     colorBackground = [0.01,0.01,0.07, 1];
 } else {
     colorBackground = [0.005,0.1,0.005, 1];
@@ -176,12 +176,12 @@ var MFD_Device =
     },
 
 
-#  ██    ██  ██████  ██ ██████ 
-#  ██    ██ ██    ██ ██ ██   ██ 
-#  ██    ██ ██    ██ ██ ██   ██ 
-#   ██  ██  ██    ██ ██ ██   ██ 
-#    ████    ██████  ██ ██████  
-#                              
+#  ██    ██  ██████  ██ ██████ 
+#  ██    ██ ██    ██ ██ ██   ██ 
+#  ██    ██ ██    ██ ██ ██   ██ 
+#   ██  ██  ██    ██ ██ ██   ██ 
+#    ████    ██████  ██ ██████  
+#                              
 #
     setupVoid: func (svg) {
         svg.p_VOID = me.canvas.createGroup()
@@ -208,12 +208,12 @@ var MFD_Device =
     },
 
 
-#   ██████  ██████  ██ ██████ 
-#  ██       ██   ██ ██ ██   ██ 
-#  ██   ███ ██████  ██ ██   ██ 
-#  ██    ██ ██   ██ ██ ██   ██ 
-#   ██████  ██   ██ ██ ██████  
-#                             
+#   ██████  ██████  ██ ██████ 
+#  ██       ██   ██ ██ ██   ██ 
+#  ██   ███ ██████  ██ ██   ██ 
+#  ██    ██ ██   ██ ██ ██   ██ 
+#   ██████  ██   ██ ██ ██████  
+#                             
 #
     setupGrid: func (svg) {
         svg.p_GRID = me.canvas.createGroup()
@@ -271,12 +271,12 @@ var MFD_Device =
     },
 
 
-#   ██████ ██    ██ ██████  ███████ 
-#  ██      ██    ██ ██   ██ ██      
-#  ██      ██    ██ ██████  █████ 
-#  ██      ██    ██ ██   ██ ██    
-#   ██████  ██████  ██████  ███████ 
-#                                   
+#   ██████ ██    ██ ██████  ███████ 
+#  ██      ██    ██ ██   ██ ██      
+#  ██      ██    ██ ██████  █████ 
+#  ██      ██    ██ ██   ██ ██    
+#   ██████  ██████  ██████  ███████ 
+#                                   
 #
     setupCube: func (svg) {
         svg.p_CUBE = me.canvas.createGroup()
@@ -338,12 +338,12 @@ var MFD_Device =
     },
 
 
-#  ██████   █████  ██████   █████  ██████      ███████ ███████ ████████ ██    ██ ██████ 
-#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██      ██         ██    ██    ██ ██   ██ 
-#  ██████  ███████ ██   ██ ███████ ██████      ███████ █████      ██    ██    ██ ██████  
-#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██          ██ ██         ██    ██    ██ ██     
-#  ██   ██ ██   ██ ██████  ██   ██ ██   ██     ███████ ███████    ██     ██████  ██ 
-#                                                                                   
+#  ██████   █████  ██████   █████  ██████      ███████ ███████ ████████ ██    ██ ██████ 
+#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██      ██         ██    ██    ██ ██   ██ 
+#  ██████  ███████ ██   ██ ███████ ██████      ███████ █████      ██    ██    ██ ██████  
+#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██          ██ ██         ██    ██    ██ ██     
+#  ██   ██ ██   ██ ██████  ██   ██ ██   ██     ███████ ███████    ██     ██████  ██ 
+#                                                                                   
 #
     setupRadar: func (svg, index) {
         svg.p_RDR = me.canvas.createGroup()
@@ -661,6 +661,23 @@ var MFD_Device =
             .set("z-index",1)
             .hide();
 
+        # OBS 11
+        svg.mod = svg.p_RDR.createChild("text")
+                .setTranslation(276*0.795*-0.71, -482*0.5-225)
+                .setText("CRM")
+                .setAlignment("left-top")
+                .setColor(colorText1)
+                .set("z-index",20000)
+                .setFontSize(20, 1.0);
+
+        # OBS 12
+        svg.acm = svg.p_RDR.createChild("text")
+                .setTranslation(276*0.795*-0.30, -482*0.5-225)
+                .setText("ACM")
+                .setAlignment("center-top")
+                .setColor(colorText1)
+                .hide()
+                .setFontSize(18, 1.0);
 
         # OBS 13
         svg.norm = svg.p_RDR.createChild("text")
@@ -670,14 +687,7 @@ var MFD_Device =
                 .setColor(colorText1)
                 .set("z-index",1)
                 .setFontSize(18, 1.0);
-        # OBS 12
-        svg.acm = svg.p_RDR.createChild("text")
-                .setTranslation(276*0.795*-0.30, -482*0.5-225)
-                .setText("ACM")
-                .setAlignment("center-top")
-                .setColor(colorText1)
-                .hide()
-                .setFontSize(18, 1.0);
+        
         # OBS 9
         svg.cz = svg.p_RDR.createChild("text")
                 .setTranslation(276*0.775, -482*0.5+55+10)
@@ -718,14 +728,7 @@ var MFD_Device =
                 .setColor(colorText1)
                 .set("z-index",1)
                 .setFontSize(20, 1.0);
-        # OBS 11
-        svg.mod = svg.p_RDR.createChild("text")
-                .setTranslation(276*0.795*-0.71, -482*0.5-215)
-                .setText("CRM")
-                .setAlignment("top-center")
-                .setColor(colorText1)
-                .set("z-index",20000)
-                .setFontSize(20, 1.0);
+        
         # OBS 5
         svg.M  = svg.p_RDR.createChild("text")
                 .setTranslation(-276*0.795+10, -482*0.5+125+10)
@@ -979,21 +982,24 @@ var MFD_Device =
         };
 
 
-#  ██████   █████  ██████   █████  ██████      ██    ██ ██████  ██████   █████  ████████ ███████ 
-#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██    ██ ██   ██ ██   ██ ██   ██    ██    ██      
-#  ██████  ███████ ██   ██ ███████ ██████      ██    ██ ██████  ██   ██ ███████    ██    █████ 
-#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██    ██ ██      ██   ██ ██   ██    ██    ██    
-#  ██   ██ ██   ██ ██████  ██   ██ ██   ██      ██████  ██      ██████  ██   ██    ██    ███████ 
-#                                                                                                
+#  ██████   █████  ██████   █████  ██████      ██    ██ ██████  ██████   █████  ████████ ███████ 
+#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██    ██ ██   ██ ██   ██ ██   ██    ██    ██      
+#  ██████  ███████ ██   ██ ███████ ██████      ██    ██ ██████  ██   ██ ███████    ██    █████ 
+#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██    ██ ██      ██   ██ ██   ██    ██    ██    
+#  ██   ██ ██   ██ ██████  ██   ██ ██   ██      ██████  ██      ██████  ██   ██    ██    ███████ 
+#                                                                                                
 #
         me.p_RDR.update = func (noti) {
 
             me.root.p_RDR_image.setVisible(radar_system.apg68Radar.enabled);
             me.DGFT = noti.getproper("dgft");
+            me.IMSOI = 0;
 			if (f16.SOI == 3 and me.model_index == 1) {
 				me.root.notSOI.hide();
+                me.IMSOI = 1;
 			} elsif (f16.SOI == 2 and me.model_index == 0) {
 				me.root.notSOI.hide();
+                me.IMSOI = 1;
 			} else {
 				me.root.notSOI.show();
 			}
@@ -1031,7 +1037,7 @@ var MFD_Device =
             #
             # Bulls-eye info on FCR
             #
-            me.bullPt = steerpoints.getNumber(555);
+            me.bullPt = steerpoints.getNumber(steerpoints.index_of_bullseye);
             me.bullOn = me.bullPt != nil;
             if (me.bullOn) {
                 me.bullLat = me.bullPt.lat;
@@ -1094,10 +1100,10 @@ var MFD_Device =
             me.root.acm.setVisible(1);
             me.root.horiz.setRotation(-radar_system.self.getRoll()*D2R);
 
-            if (radar_system.apg68Radar.currentMode.longName == radar_system.vsrMode.longName) {
+            if (radar_system.apg68Radar.currentMode.longName == radar_system.vsMode.longName) {
                 me.root.distl.setScale(-1,1);
             } else {
-                me.root.distl.setScale(1,1);
+                me.root.distl.setScale( 1,1);
             }
             me.root.distl.show();
 
@@ -1136,67 +1142,74 @@ var MFD_Device =
                 me.root.bitText.hide();
             }
 
-            if (uv != nil and me.root.index == uv[2]) {
-                if (systime()-uv[3] < 0.5) {
-                    # the time check is to prevent click on other pages to carry over to CRM when that is selected.
-                    cursor_destination = uv;
-                }
-                uv = nil;
-            }
+            # This is old cursor system for clicking in 3D
+            #if (uv != nil and me.root.index == uv[2]) {
+            #    if (systime()-uv[3] < 0.5) {
+            #        # the time check is to prevent click on other pages to carry over to CRM when that is selected.
+            #        cursor_destination = uv;
+            #    }
+            #    uv = nil;
+            #}
+
             me.exp_modi = exp?(radar_system.apg68Radar.currentMode.EXPfixedAim?0.20:0.25):1.00;# slow down cursor movement when in zoom mode
 
             me.slew_x = getprop("controls/displays/target-management-switch-x[" ~ me.model_index ~ "]")*me.exp_modi;
             me.slew_y = -getprop("controls/displays/target-management-switch-y[" ~ me.model_index ~ "]")*me.exp_modi;
 
-            if (noti.getproper("viewName") != "TGP") {
+            if (noti.getproper("viewName") != "TGP" and me.IMSOI) {
                 f16.resetSlew();
             }
 
             #me.dt = math.min(noti.getproper("elapsed") - me.elapsed, 0.05);
             me.dt = noti.getproper("elapsed") - me.elapsed;
 
-            if ((me.slew_x != 0 or me.slew_y != 0 or slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.root.index) and noti.getproper("viewName") != "TGP") {
-                cursor_destination = nil;
-                cursor_pos[0] += me.slew_x*175;
-                cursor_pos[1] -= me.slew_y*175;
-                cursor_pos[0] = math.clamp(cursor_pos[0], -552*0.5*0.795, 552*0.5*0.795);
-                cursor_pos[1] = math.clamp(cursor_pos[1], -482, 0);
-                cursor_click = (slew_c and !me.slew_c_last)?me.root.index:-1;
-                cursor_lock = me.root.index;
-            } elsif (cursor_lock == me.root.index or (me.slew_x == 0 or me.slew_y == 0 or slew_c == 0)) {
-                cursor_lock = -1;
+            if (me.IMSOI) {
+                if ((me.slew_x != 0 or me.slew_y != 0 or slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.root.index) and noti.getproper("viewName") != "TGP") {
+                    cursor_destination = nil;
+                    cursor_pos[0] += me.slew_x*175;
+                    cursor_pos[1] -= me.slew_y*175;
+                    cursor_pos[0] = math.clamp(cursor_pos[0], -552*0.5*0.795, 552*0.5*0.795);
+                    cursor_pos[1] = math.clamp(cursor_pos[1], -482, 0);
+                    cursor_click = (slew_c and !me.slew_c_last)?me.root.index:-1;
+                    cursor_lock = me.root.index;
+                } elsif (cursor_lock == me.root.index or (me.slew_x == 0 or me.slew_y == 0 or slew_c == 0)) {
+                    cursor_lock = -1;
+                }
+
+                me.slew_c_last = slew_c;
+                slew_c = 0;
             }
-            me.slew_c_last = slew_c;
-            slew_c = 0;
-            if (cursor_destination != nil and cursor_destination[2] == me.root.index) {
-                me.slew = 100*me.dt;
-                if (cursor_destination[0] > cursor_pos[0]) {
-                    cursor_pos[0] += me.slew;
-                    if (cursor_destination[0] < cursor_pos[0]) {
-                        cursor_pos[0] = cursor_destination[0]
-                    }
-                } elsif (cursor_destination[0] < cursor_pos[0]) {
-                    cursor_pos[0] -= me.slew;
-                    if (cursor_destination[0] > cursor_pos[0]) {
-                        cursor_pos[0] = cursor_destination[0]
-                    }
-                }
-                if (cursor_destination[1] > cursor_pos[1]) {
-                    cursor_pos[1] += me.slew;
-                    if (cursor_destination[1] < cursor_pos[1]) {
-                        cursor_pos[1] = cursor_destination[1]
-                    }
-                } elsif (cursor_destination[1] < cursor_pos[1]) {
-                    cursor_pos[1] -= me.slew;
-                    if (cursor_destination[1] > cursor_pos[1]) {
-                        cursor_pos[1] = cursor_destination[1]
-                    }
-                }
-                cursor_lock = me.root.index;
-                if (cursor_destination[0] == cursor_pos[0] and cursor_destination[1] == cursor_pos[1]) {
-                    cursor_click = me.root.index;
-                }
-            }
+
+            # This is old cursor system for clicking in 3D, part 2
+            #if (cursor_destination != nil and cursor_destination[2] == me.root.index) {
+            #    me.slew = 100*me.dt;
+            #    if (cursor_destination[0] > cursor_pos[0]) {
+            #        cursor_pos[0] += me.slew;
+            #        if (cursor_destination[0] < cursor_pos[0]) {
+            #            cursor_pos[0] = cursor_destination[0]
+            #        }
+            #    } elsif (cursor_destination[0] < cursor_pos[0]) {
+            #        cursor_pos[0] -= me.slew;
+            #        if (cursor_destination[0] > cursor_pos[0]) {
+            #            cursor_pos[0] = cursor_destination[0]
+            #        }
+            #    }
+            #    if (cursor_destination[1] > cursor_pos[1]) {
+            #        cursor_pos[1] += me.slew;
+            #        if (cursor_destination[1] < cursor_pos[1]) {
+            #            cursor_pos[1] = cursor_destination[1]
+            #        }
+            #    } elsif (cursor_destination[1] < cursor_pos[1]) {
+            #        cursor_pos[1] -= me.slew;
+            #        if (cursor_destination[1] > cursor_pos[1]) {
+            #            cursor_pos[1] = cursor_destination[1]
+            #        }
+            #    }
+            #    cursor_lock = me.root.index;
+            #    if (cursor_destination[0] == cursor_pos[0] and cursor_destination[1] == cursor_pos[1]) {
+            #        cursor_click = me.root.index;
+            #    }
+            #}
             me.elapsed = noti.getproper("elapsed");
 
             if (radar_system.apg68Radar.currentMode.detectAIR) {
@@ -1275,7 +1288,7 @@ var MFD_Device =
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
             me.root.rang.setText(sprintf("%d",radar_system.apg68Radar.getRange()));
-
+            me.root.rang.setVisible(radar_system.apg68Radar.currentMode.longName != radar_system.vsMode.longName);
             me.i=0;
 
             var a = 0;
@@ -1362,12 +1375,12 @@ var MFD_Device =
 
 
 
-#  ██████   █████  ██████   █████  ██████      ██████  ██      ███████ ██████  ███████ 
-#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██   ██ ██      ██      ██   ██ ██      
-#  ██████  ███████ ██   ██ ███████ ██████      ██████  ██      █████   ██████  ███████ 
-#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██   ██ ██      ██      ██           ██ 
-#  ██   ██ ██   ██ ██████  ██   ██ ██   ██     ██████  ███████ ███████ ██      ███████ 
-#                                                                                      
+#  ██████   █████  ██████   █████  ██████      ██████  ██      ███████ ██████  ███████ 
+#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██   ██ ██      ██      ██   ██ ██      
+#  ██████  ███████ ██   ██ ███████ ██████      ██████  ██      █████   ██████  ███████ 
+#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██   ██ ██      ██      ██           ██ 
+#  ██   ██ ██   ██ ██████  ██   ██ ██   ██     ██████  ███████ ███████ ██      ███████ 
+#                                                                                      
 #
             me.desig_new = nil;
             #me.gm_echoPos = {};
@@ -1387,7 +1400,7 @@ var MFD_Device =
 
             me.randoo = rand();
 
-            if (radar_system.datalink_power.getBoolValue() and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName and radar_system.apg68Radar.currentMode["painter"] != 1) {
+            if (radar_system.datalink_power.getBoolValue() and radar_system.apg68Radar.currentMode.longName != radar_system.vsMode.longName and radar_system.apg68Radar.currentMode["painter"] != 1) {
                 foreach(contact; vector_aicontacts_links) {
                     if (contact["blue"] != 1) continue;
                     me.paintDL(contact, noti);
@@ -1409,7 +1422,7 @@ var MFD_Device =
                     contact.randoo = me.randoo;
                 }
             }
-            if (radar_system.datalink_power.getBoolValue() and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName and !radar_system.apg68Radar.currentMode.painter) {
+            if (radar_system.datalink_power.getBoolValue() and radar_system.apg68Radar.currentMode.longName != radar_system.vsMode.longName and !radar_system.apg68Radar.currentMode.painter) {
                 foreach(contact; vector_aicontacts_links) {
                     me.paintRdr(contact);
                     contact.randoo = me.randoo;
@@ -1552,12 +1565,12 @@ var MFD_Device =
         };
 
 
-#  ██████   █████  ██ ███    ██ ████████     ██████  ██████  ██████      ██████  ██      ███████ ██████  ███████ 
-#  ██   ██ ██   ██ ██ ████   ██    ██        ██   ██ ██   ██ ██   ██     ██   ██ ██      ██      ██   ██ ██      
-#  ██████  ███████ ██ ██ ██  ██    ██        ██████  ██   ██ ██████      ██████  ██      █████   ██████  ███████ 
-#  ██      ██   ██ ██ ██  ██ ██    ██        ██   ██ ██   ██ ██   ██     ██   ██ ██      ██      ██           ██ 
-#  ██      ██   ██ ██ ██   ████    ██        ██   ██ ██████  ██   ██     ██████  ███████ ███████ ██      ███████ 
-#                                                                                                                
+#  ██████   █████  ██ ███    ██ ████████     ██████  ██████  ██████      ██████  ██      ███████ ██████  ███████ 
+#  ██   ██ ██   ██ ██ ████   ██    ██        ██   ██ ██   ██ ██   ██     ██   ██ ██      ██      ██   ██ ██      
+#  ██████  ███████ ██ ██ ██  ██    ██        ██████  ██   ██ ██████      ██████  ██      █████   ██████  ███████ 
+#  ██      ██   ██ ██ ██  ██ ██    ██        ██   ██ ██   ██ ██   ██     ██   ██ ██      ██      ██           ██ 
+#  ██      ██   ██ ██ ██   ████    ██        ██   ██ ██████  ██   ██     ██████  ███████ ███████ ██      ███████ 
+#                                                                                                                
 #
         me.p_RDR.paintDL = func (contact, noti) {
             if (contact.blue != 1) return;
@@ -1699,8 +1712,8 @@ var MFD_Device =
             }
             me.bleps = contact.getBleps();
             foreach(me.bleppy ; me.bleps) {
-                if (me.i < me.root.maxB and me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.currentMode.timeToFadeBleps and me.bleppy.getDirection() != nil and (radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName or (me.bleppy.getClosureRate() != nil and me.bleppy.getClosureRate()>0))) {
-                    if (me.bleppy.getClosureRate() != nil and radar_system.apg68Radar.currentMode.longName == radar_system.vsrMode.longName) {
+                if (me.i < me.root.maxB and me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.currentMode.timeToFadeBleps and me.bleppy.getDirection() != nil and (radar_system.apg68Radar.currentMode.longName != radar_system.vsMode.longName or (me.bleppy.getClosureRate() != nil and me.bleppy.getClosureRate()>0))) {
+                    if (me.bleppy.getClosureRate() != nil and radar_system.apg68Radar.currentMode.longName == radar_system.vsMode.longName) {
                         me.distPixels = math.min(950, me.bleppy.getClosureRate())*(482/(1000));
                     } else {
                         me.distPixels = me.bleppy.getRangeNow()*(482/(radar_system.apg68Radar.getRange()*NM2M));
@@ -1715,7 +1728,7 @@ var MFD_Device =
                     me.root.blep[me.i].setColor(colorDot2[0]*me.color+colorBackground[0]*(1-me.color), colorDot2[1]*me.color+colorBackground[1]*(1-me.color), colorDot2[2]*me.color+colorBackground[2]*(1-me.color));
                     me.root.blep[me.i].show();
                     me.root.blep[me.i].update();
-                    if (contact.equalsFast(radar_system.apg68Radar.getPriorityTarget()) and me.bleppy == me.bleps[size(me.bleps)-1]) {
+                    if (contact.equalsFast(radar_system.apg68Radar.getPriorityTarget()) and me.bleppy == me.bleps[-1]) {
                         me.selectShowTemp = radar_system.apg68Radar.currentMode.longName != radar_system.twsMode.longName or (me.elapsed - contact.getLastBlepTime() < radar_system.F16TWSMode.timeToBlinkTracks) or (math.mod(me.elapsed,0.50)<0.25);
                         me.selectShow = me.selectShowTemp and contact.getType() == radar_system.AIR;
                         me.selectShowGM = me.selectShowTemp and contact.getType() != radar_system.AIR;
@@ -1733,7 +1746,7 @@ var MFD_Device =
                 }
             }
             me.sizeBleps = size(me.bleps);
-            if (contact["blue"] != 1 and me.ii < me.root.maxT and ((me.sizeBleps and contact.hadTrackInfo()) or contact["blue"] == 2) and me.iff == 0 and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName) {
+            if (contact["blue"] != 1 and me.ii < me.root.maxT and ((me.sizeBleps and contact.hadTrackInfo()) or contact["blue"] == 2) and me.iff == 0 and radar_system.apg68Radar.currentMode.longName != radar_system.vsMode.longName) {
                 # Paint bleps with tracks
                 if (contact["blue"] != 2) me.bleppy = me.bleps[me.sizeBleps-1];
                 if (contact["blue"] == 2 or (me.bleppy.hasTrackInfo() and me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.timeToKeepBleps)) {
@@ -1800,7 +1813,7 @@ var MFD_Device =
 
                     me.ii += 1;
                 }
-            } elsif (me.iff != 0 and contact["blue"] != 1 and contact.isVisible() and me.iiii < me.root.maxT and me.sizeBleps and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName) {
+            } elsif (me.iff != 0 and contact["blue"] != 1 and contact.isVisible() and me.iiii < me.root.maxT and me.sizeBleps and radar_system.apg68Radar.currentMode.longName != radar_system.vsMode.longName) {
                 # Paint IFF symbols
                 me.bleppy = me.bleps[me.sizeBleps-1];
                 if (me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.timeToKeepBleps) {
@@ -1820,7 +1833,7 @@ var MFD_Device =
         };
         me.p_RDR.paintChaff = func (chaff) {
             #if (me.chaffLifetime == 0) return;
-            if (me.i < me.root.maxB and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName) {
+            if (me.i < me.root.maxB and radar_system.apg68Radar.currentMode.longName != radar_system.vsMode.longName) {
                 me.distPixels = chaff.meters*(482/(radar_system.apg68Radar.getRange()*NM2M));
 
                 me.echoPos = me.calcPos(me.wdt, geo.normdeg180(chaff.bearing - radar_system.self.getHeading()), me.distPixels);
@@ -1930,6 +1943,10 @@ var MFD_Device =
                     me.ppp.selectPage(me.my.p_DTE);
                     me.selectionBox.show();
                     me.setSelection(nil, me.ppp.buttons[7], 7);
+                } elsif (eventi == 11) {
+                    me.ppp.selectPage(me.my.p_HARM);
+                    me.selectionBox.show();
+                    me.setSelection(nil, me.ppp.buttons[10], 10);
                 } elsif (eventi == 15) {
                     swap();
                 }
@@ -2023,12 +2040,12 @@ var MFD_Device =
         };
     },
 
-#  ██████   █████  ██████   █████  ██████      ███    ███  ██████  ██████  ███████     ██      ██ ███████ ████████ 
-#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ████  ████ ██    ██ ██   ██ ██          ██      ██ ██         ██    
-#  ██████  ███████ ██   ██ ███████ ██████      ██ ████ ██ ██    ██ ██   ██ █████       ██      ██ ███████    ██ 
-#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██  ██  ██ ██    ██ ██   ██ ██          ██      ██      ██    ██ 
-#  ██   ██ ██   ██ ██████  ██   ██ ██   ██     ██      ██  ██████  ██████  ███████     ███████ ██ ███████    ██ 
-#                                                                                                               
+#  ██████   █████  ██████   █████  ██████      ███    ███  ██████  ██████  ███████     ██      ██ ███████ ████████ 
+#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ████  ████ ██    ██ ██   ██ ██          ██      ██ ██         ██    
+#  ██████  ███████ ██   ██ ███████ ██████      ██ ████ ██ ██    ██ ██   ██ █████       ██      ██ ███████    ██ 
+#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██  ██  ██ ██    ██ ██   ██ ██          ██      ██      ██    ██ 
+#  ██   ██ ██   ██ ██████  ██   ██ ██   ██     ██      ██  ██████  ██████  ███████     ███████ ██ ███████    ██ 
+#                                                                                                               
 #
     setupRList: func(svg) {
         svg.r_LIST = me.canvas.createGroup()
@@ -2110,12 +2127,12 @@ var MFD_Device =
 
 
 
-#   ██████ ███    ██ ████████ ██          ██████   █████   ██████  ███████ 
-#  ██      ████   ██    ██    ██          ██   ██ ██   ██ ██       ██      
-#  ██      ██ ██  ██    ██    ██          ██████  ███████ ██   ███ █████ 
-#  ██      ██  ██ ██    ██    ██          ██      ██   ██ ██    ██ ██    
-#   ██████ ██   ████    ██    ███████     ██      ██   ██  ██████  ███████ 
-#                                                                          
+#   ██████ ███    ██ ████████ ██          ██████   █████   ██████  ███████ 
+#  ██      ████   ██    ██    ██          ██   ██ ██   ██ ██       ██      
+#  ██      ██ ██  ██    ██    ██          ██████  ███████ ██   ███ █████ 
+#  ██      ██  ██ ██    ██    ██          ██      ██   ██ ██    ██ ██    
+#   ██████ ██   ████    ██    ███████     ██      ██   ██  ██████  ███████ 
+#                                                                          
 #
     setupRMList: func(svg) {
         svg.rm_LIST = me.canvas.createGroup()
@@ -2224,12 +2241,12 @@ var MFD_Device =
     },
 
 
-#  ███████ ███    ███ ███████     ███████ ███████ ████████ ██    ██ ██████ 
-#  ██      ████  ████ ██          ██      ██         ██    ██    ██ ██   ██ 
-#  ███████ ██ ████ ██ ███████     ███████ █████      ██    ██    ██ ██████  
-#       ██ ██  ██  ██      ██          ██ ██         ██    ██    ██ ██     
-#  ███████ ██      ██ ███████     ███████ ███████    ██     ██████  ██ 
-#                                                                      
+#  ███████ ███    ███ ███████     ███████ ███████ ████████ ██    ██ ██████ 
+#  ██      ████  ████ ██          ██      ██         ██    ██    ██ ██   ██ 
+#  ███████ ██ ████ ██ ███████     ███████ █████      ██    ██    ██ ██████  
+#       ██ ██  ██  ██      ██          ██ ██         ██    ██    ██ ██     
+#  ███████ ██      ██ ███████     ███████ ███████    ██     ██████  ██ 
+#                                                                      
 #
     setupSMS: func (svg) {
         svg.p_SMS = me.canvas.createGroup()
@@ -2403,13 +2420,6 @@ var MFD_Device =
                 .setAlignment("left-center")
                 .setColor(colorText1)
                 .setFontSize(20, 1.0);
-
-        #svg.drop = svg.p_SMS.createChild("text")
-        #        .setTranslation(276*0.795*0.65, -482*0.5-225)
-        #        .setText("CCRP")
-        #        .setAlignment("center-top")
-        #        .setColor(colorText1)
-        #        .setFontSize(16, 1.0);
 
         svg.p1f = svg.p_SMS.createChild("path")
            .moveTo(-276*0.795*0.97, -482*0.5+115)
@@ -2591,8 +2601,6 @@ var MFD_Device =
                 } elsif (eventi == 18) {
                     me.ppp.selectPage(me.my.p_WPN);
                     me.setSelection(me.ppp.buttons[17], me.ppp.buttons[18], 18);
-                #} elsif (eventi == 18) {
-                #    me.ppp.selectPage(me.my.pjitds_1);
                 } elsif (eventi == 14) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
@@ -2649,13 +2657,6 @@ var MFD_Device =
             me.root.p7f.setVisible(sel==6);
             me.root.p8f.setVisible(sel==7);
             me.root.p9f.setVisible(sel==8);
-
-            #var pT = "CCRP";
-            #if (pylons.fcs != nil) {
-            #    var nm = pylons.fcs.getDropMode();
-            #    if (nm == 1) pT = "CCIP";
-            #}
-            #me.root.drop.setText(pT);
 
             var gunAmmo = "-----";
             if (getprop("sim/model/f16/wingmounts") != 0) {
@@ -2714,12 +2715,12 @@ var MFD_Device =
     },
 
 
-#  ██     ██ ██████  ███    ██     ███████ ███████ ████████ ██    ██ ██████ 
-#  ██     ██ ██   ██ ████   ██     ██      ██         ██    ██    ██ ██   ██ 
-#  ██  █  ██ ██████  ██ ██  ██     ███████ █████      ██    ██    ██ ██████  
-#  ██ ███ ██ ██      ██  ██ ██          ██ ██         ██    ██    ██ ██     
-#   ███ ███  ██      ██   ████     ███████ ███████    ██     ██████  ██ 
-#                                                                       
+#  ██     ██ ██████  ███    ██     ███████ ███████ ████████ ██    ██ ██████ 
+#  ██     ██ ██   ██ ████   ██     ██      ██         ██    ██    ██ ██   ██ 
+#  ██  █  ██ ██████  ██ ██  ██     ███████ █████      ██    ██    ██ ██████  
+#  ██ ███ ██ ██      ██  ██ ██          ██ ██         ██    ██    ██ ██     
+#   ███ ███  ██      ██   ████     ███████ ███████    ██     ██████  ██ 
+#                                                                       
 #
     setupWPN: func (svg) {
         svg.p_WPN = me.canvas.createGroup()
@@ -2729,35 +2730,60 @@ var MFD_Device =
 
 
 
-        svg.drop = svg.p_WPN.createChild("text")
+        svg.obs12 = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795*-0.30, -482*0.5-225)
                 .setText("")
                 .setAlignment("center-top")
                 .setColor(colorText1)
                 .setFontSize(18, 1.0);
 
-        svg.pre = svg.p_WPN.createChild("text")
+        svg.obs13 = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795*0.0, -482*0.5-225)
                 .setText("")
                 .setAlignment("center-top")
                 .setColor(colorText1)
                 .setFontSize(18, 1.0);
 
-        svg.eegs = svg.p_WPN.createChild("text")
+        svg.obs14 = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795*0.325, -482*0.5-225)
                 .setText("")
                 .setAlignment("center-top")
                 .setColor(colorText1)
                 .setFontSize(18, 1.0);
+
+        # OBS 3
+        svg.obs3 = svg.p_WPN.createChild("text")
+                .setTranslation(-276*0.795, -482*0.5+0)
+                .setText("")
+                .setAlignment("left-center")
+                .setColor(colorText1)
+                .setFontSize(20, 1.0);
+
+        svg.obs5 = svg.p_WPN.createChild("text")
+                .setTranslation(-276*0.795, -482*0.5+140)
+                .setText("")
+                .setAlignment("left-center")
+                .setColor(colorText1)
+                .setFontSize(20, 1.0);
+
         # OBS 6
-        svg.weap = svg.p_WPN.createChild("text")
+        svg.obs6 = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795, -482*0.5-135)
                 .setText("")
                 .setAlignment("right-center")
                 .setColor(colorText1)
                 .setFontSize(20, 1.0);
 
-        svg.ready = svg.p_WPN.createChild("text")
+        # OBS 7
+        svg.obs7 = svg.p_WPN.createChild("text")
+                .setTranslation(276*0.795, -482*0.5-67.5)
+                .setText("")
+                .setAlignment("right-center")
+                .setColor(colorText1)
+                .setFontSize(20, 1.0);
+
+        # OBS 8
+        svg.obs8 = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795, -482*0.5+0)
                 .setText("")
                 .setAlignment("right-center")
@@ -2771,14 +2797,14 @@ var MFD_Device =
         #        .setColor(colorText1)
         #        .setFontSize(20, 1.0);
 
-        svg.ripple = svg.p_WPN.createChild("text")
+        svg.obs9 = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795, -482*0.5+70)
                 .setText("")
                 .setAlignment("right-center")
                 .setColor(colorText1)
                 .setFontSize(20, 1.0);
 
-        svg.cool = svg.p_WPN.createChild("text")
+        svg.obs10 = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795, -482*0.5+140)
                 .setText("")
                 .setAlignment("right-center")
@@ -2815,10 +2841,10 @@ var MFD_Device =
                     .lineTo(-276*0.795,-482*0.5-105-27.5)
                     .setStrokeLineWidth(3)
                     .hide()
-                    .setTranslation(0,140)
+                    .setTranslation(0,140+70)
                     .setColor(colorText1);
         svg.distA = svg.p_WPN.createChild("text")
-                .setTranslation(-276*0.795, -482*0.5+35)
+                .setTranslation(-276*0.795, -482*0.5+35+70)
                 .setAlignment("left-center")
                 .setColor(colorText1)
                 .hide()
@@ -2830,7 +2856,7 @@ var MFD_Device =
                     .lineTo(-276*0.795,-482*0.5-105+27.5)
                     .setStrokeLineWidth(3)
                     .hide()
-                    .setTranslation(0,140)
+                    .setTranslation(0,140+70)
                     .setColor(colorText1);
 		svg.notSOI = svg.p_WPN.createChild("text")
            .setTranslation(0, -482*0.55)
@@ -2841,9 +2867,171 @@ var MFD_Device =
            .setFontSize(18, 1.0)
            .setColor(colorText2);
 
+        svg.sta      = setsize([], 9);# 9 stations
+        svg.staFrame = setsize([], 9);
+        var staPosY = -482*0.20;
+        var staFont = 17;
+        var staStroke = 1.5;
+        var staX = 7;
+        var staY = 9;
+        var staW = 15;
+        var staH = 19;
+        svg.sta[0] = svg.p_WPN.createChild("text")
+           .setTranslation(276*0.795 * -0.9, staPosY)
+           .setAlignment("center-center")
+           .setText("1")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[1] = svg.p_WPN.createChild("text")
+           .setTranslation(276*0.795 * -0.8, staPosY)
+           .setAlignment("center-center")
+           .setText("2")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[2] = svg.p_WPN.createChild("text")
+           .setTranslation(276*0.795 * -0.7, staPosY)
+           .setAlignment("center-center")
+           .setText("3")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[3] = svg.p_WPN.createChild("text")
+           .setTranslation(276*0.795 * -0.6, staPosY)
+           .setAlignment("center-center")
+           .setText("4")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[4] = svg.p_WPN.createChild("text")
+           .setTranslation(276*0.795 * 0.0, staPosY)
+           .setAlignment("center-center")
+           .setText("5")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[5] = svg.p_WPN.createChild("text")
+           .setTranslation(276*0.795 * 0.6, staPosY)
+           .setAlignment("center-center")
+           .setText("6")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[6] = svg.p_WPN.createChild("text")
+           .setTranslation(276*0.795 * 0.7, staPosY)
+           .setAlignment("center-center")
+           .setText("7")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[7] = svg.p_WPN.createChild("text")
+           .setTranslation(276*0.795 * 0.8, staPosY)
+           .setAlignment("center-center")
+           .setText("8")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[8] = svg.p_WPN.createChild("text")
+           .setTranslation(276*0.795 * 0.9, staPosY)
+           .setAlignment("center-center")
+           .setText("9")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.staFrame[0] = svg.p_WPN.createChild("path")
+           .moveTo(276*0.795 * -0.9 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[1] = svg.p_WPN.createChild("path")
+           .moveTo(276*0.795 * -0.8 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[2] = svg.p_WPN.createChild("path")
+           .moveTo(276*0.795 * -0.7 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[3] = svg.p_WPN.createChild("path")
+           .moveTo(276*0.795 * -0.6 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[4] = svg.p_WPN.createChild("path")
+           .moveTo(276*0.795 * 0.0 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[5] = svg.p_WPN.createChild("path")
+           .moveTo(276*0.795 * 0.6 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[6] = svg.p_WPN.createChild("path")
+           .moveTo(276*0.795 * 0.7 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[7] = svg.p_WPN.createChild("path")
+           .moveTo(276*0.795 * 0.8 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[8] = svg.p_WPN.createChild("path")
+           .moveTo(276*0.795 * 0.9 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
 
-        svg.coolFrame = svg.p_WPN.createChild("path")
-           .moveTo(276*0.795, -482*0.5+140+12)
+        svg.obs9Frame = svg.p_WPN.createChild("path")
+           .moveTo(276*0.795, -482*0.5+70+12)
            .vert(-24)
            .horiz(-60)
            .vert(24)
@@ -2877,15 +3065,7 @@ var MFD_Device =
         me.p_WPN.setSelection = me.setSelection;
         me.p_WPN.notifyButton = func (eventi) {
             if (eventi != nil) {
-                if (eventi == 10) {
-                    me.ppp.selectPage(me.my.p_RDR);
-                    me.setSelection(me.ppp.buttons[18], me.ppp.buttons[10], 10);
-                } elsif (eventi == 5) {
-                    if (getprop("sim/variant-id") == 0) {
-                        return;
-                    }
-                    pylons.fcs.cycleLoadedWeapon();
-                } elsif (eventi == 0) {
+                if (eventi == 0) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
@@ -2903,17 +3083,48 @@ var MFD_Device =
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
-                    if (me.wpnType == "fall") {
-                        me.ar = 25;
+                    if (me.wpnType == "heat") {
+                        var auto = pylons.fcs.isAutocage();
+                        auto = !auto;
+                        pylons.fcs.setAutocage(auto);
+                    }
+                    me.wpn_ = pylons.fcs.getSelectedWeapon();
+                    if (me.wpn_ != nil and me.wpn_.type == "GBU-54") {
+                        me.guide54 = me.wpn_.guidance;
+                        if (me.guide54 == "gps") {
+                            me.wpn_.guidance = "gps-laser";
+                        } else {
+                            me.wpn_.guidance = "gps";
+                        }
                     }
                 } elsif (eventi == 3) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
                     if (me.wpnType == "fall") {
+                        me.ar = 25;
+                    }                    
+                } elsif (eventi == 4) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
+                    if (me.wpnType == "fall") {
                         me.ar = -25;
                     }
-                } elsif (eventi == 8) {
+                } elsif (eventi == 5) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
+                    pylons.fcs.cycleLoadedWeapon();
+                } elsif (eventi == 6) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
+                    me.wpn_ = pylons.fcs.getSelectedWeapon();
+                    if (me.wpn_ != nil and me.wpn_["powerOnRequired"] == 1) {
+                        pylons.fcs.togglePowerOn();
+                    }
+                } elsif (eventi == 7) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
@@ -2925,16 +3136,26 @@ var MFD_Device =
                             rp = 1;
                         }
                         pylons.fcs.setRippleMode(rp);
-                    } elsif (me.wpnType == "heat") {
-                        var auto = pylons.fcs.isAutocage();
-                        auto = !auto;
-                        pylons.fcs.setAutocage(auto);
+                    } elsif (me.wpnType == "rocket") {
+                        var rp = pylons.fcs.getRRippleMode();
+                        if (rp < 28) {
+                            rp += 1;
+                        } elsif (rp == 28) {
+                            rp = 1;
+                        }
+                        pylons.fcs.setRRippleMode(rp);
                     }
-                } elsif (eventi == 9) {
+                } elsif (eventi == 8) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
-                    if (me.wpnType=="heat") {
+                    if (me.wpnType == "fall") {
+                        if (getprop("controls/armament/dual")==1) {
+                            setprop("controls/armament/dual",2);
+                        } else {
+                            setprop("controls/armament/dual",1);
+                        }
+                    } elsif (me.wpnType=="heat") {
                         me.cooling = !pylons.fcs.getSelectedWeapon().isCooling();
                         foreach(var snake;pylons.fcs.getAllOfType("AIM-9L")) {
                             snake.setCooling(me.cooling);
@@ -2942,29 +3163,27 @@ var MFD_Device =
                         foreach(var snake;pylons.fcs.getAllOfType("AIM-9M")) {
                             snake.setCooling(me.cooling);
                         }
-                    } elsif (me.wpnType == "fall") {
-                        if (getprop("controls/armament/dual")==1) {
-                            setprop("controls/armament/dual",2);
-                        } else {
-                            setprop("controls/armament/dual",1);
+                        foreach(var snake;pylons.fcs.getAllOfType("AIM-9X")) {
+                            snake.setCooling(me.cooling);
                         }
                     }
-                } elsif (eventi == 17) {
-                    me.ppp.selectPage(me.my.p_SMS);
-                    me.setSelection(me.ppp.buttons[18], me.ppp.buttons[17], 17);
-                #} elsif (eventi == 18) {
-                #    me.ppp.selectPage(me.my.pjitds_1);
-
-                } elsif (eventi == 18) {
-                    me.ppp.selectPage(me.my.p_LIST);
-                    me.resetColor(me.ppp.buttons[18]);
-                    me.selectionBox.hide();
+                } elsif (eventi == 9) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
+                } elsif (eventi == 10) {
+                    me.ppp.selectPage(me.my.p_RDR);
+                    me.setSelection(me.ppp.buttons[18], me.ppp.buttons[10], 10);
                 } elsif (eventi == 11) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
                     if (me.wpnType == "fall") {
                         pylons.fcs.setDropMode(!pylons.fcs.getDropMode());
+                    } elsif (me.wpnType=="anti-rad") {
+                        me.ppp.selectPage(me.my.p_HARM);
+                        me.selectionBox.show();
+                        me.setSelection(me.ppp.buttons[18], me.ppp.buttons[10], 10);
                     }
                 } elsif (eventi == 12) {
                     if (getprop("sim/variant-id") == 0) {
@@ -2985,6 +3204,13 @@ var MFD_Device =
                     me.setSelection(me.ppp.buttons[18], me.ppp.buttons[16], 16);
                 } elsif (eventi == 15) {
                     swap();
+                } elsif (eventi == 17) {
+                    me.ppp.selectPage(me.my.p_SMS);
+                    me.setSelection(me.ppp.buttons[18], me.ppp.buttons[17], 17);
+                } elsif (eventi == 18) {
+                    me.ppp.selectPage(me.my.p_LIST);
+                    me.resetColor(me.ppp.buttons[18]);
+                    me.selectionBox.hide();
                 } elsif (eventi == 19) {
                     if(getprop("f16/stores/tgp-mounted") and !getprop("/fdm/jsbsim/gear/unit[0]/WOW")) {
                         screen.log.write("Click BACK to get back to cockpit view",1,1,1);
@@ -3029,30 +3255,36 @@ var MFD_Device =
             me.pylon = pylons.fcs.getSelectedPylon();
 
             me.wpnType = "";
-            me.cool = "";
-            me.eegs = "";
-            me.ready = "";
-            me.ripple = "";
+            me.status = "";
+            me.obs3 = "";
+            me.obs5 = "";
+            me.obs6 = "";
+            me.obs8 = "";
+            me.obs7 = "";
+            me.obs9 = "";
+            me.obs10 = "";
+            me.obs12 = "";
+            me.obs13 = "";
+            me.obs14 = "";
             me.rippleDist = "";
             me.downAd = 0;
             me.upAd = 0;
-            me.coolFrame = 0;
+            me.obs9Frame = 0;
             me.downA = 0;
             me.upA = 0;
-            me.armtimer = "";
-            me.drop = "";
+            me.armtimer = "";            
             me.showDist = 0;
-            me.pre = "";
-            #me.td_bp = "TD";
+
             if (me.wpn != nil and me.pylon != nil and me.wpn["typeShort"] != nil) {
-                if (me.wpn.type == "MK-82" or me.wpn.type == "MK-82AIR" or me.wpn.type == "MK-83" or me.wpn.type == "MK-84" or me.wpn.type == "GBU-12" or me.wpn.type == "GBU-24" or me.wpn.type == "GBU-54" or me.wpn.type == "CBU-87" or me.wpn.type == "CBU-105" or me.wpn.type == "GBU-31" or me.wpn.type == "AGM-154A" or me.wpn.type == "B61-7" or me.wpn.type == "B61-12") {
+                if (me.wpn.type == "MK-82" or me.wpn.type == "MK-82AIR" or me.wpn.type == "MK-83" or me.wpn.type == "MK-84" or me.wpn.type == "GBU-12" or me.wpn.type == "GBU-24"
+                    or me.wpn.type == "GBU-54" or me.wpn.type == "CBU-87" or me.wpn.type == "CBU-105" or me.wpn.type == "GBU-31" or me.wpn.type == "B61-7" or me.wpn.type == "B61-12") {
                     me.wpnType ="fall";
                     var nm = pylons.fcs.getDropMode();
-                    if (nm == 1) {me.drop = "CCIP";me.pre=armament.contact != nil and armament.contact.get_type() != armament.AIR?"PRE":"VIS";}
-                    if (nm == 0) {me.drop = "CCRP";me.pre="PRE"}
+                    if (nm == fc.DROP_CCIP) {me.obs12 = "CCIP";me.obs13=armament.contact != nil and armament.contact.get_type() != armament.AIR?"PRE":"VIS";}
+                    if (nm == fc.DROP_CCRP) {me.obs12 = "CCRP";me.obs13="PRE"}
                     var rp = pylons.fcs.getRippleMode();
                     var rpd = pylons.fcs.getRippleDist()*M2FT;
-                    me.ripple = "RP "~rp;
+                    me.obs8 = "RP "~rp;
                     if (rp > 1) {
                         me.showDist = 1;
                     }
@@ -3065,10 +3297,20 @@ var MFD_Device =
                     pylons.fcs.setRippleDist(FT2M * rpd);
                     me.downAd = rpd>25 and me.showDist;
                     me.upAd = rpd<400 and me.showDist;
-
+                    if (me.wpn.type == "GBU-54") {
+                        if (me.wpn.guidance == "gps-laser") {
+                            me.obs3 = "GPS-LASR";
+                        } else {
+                            me.obs3 = "GPS";
+                        }
+                    }
                     me.rippleDist = sprintf("RP %3d FT",math.round(rpd));
 
-                    me.eegs = "A-G";
+                    if (me.wpn.powerOnRequired) {
+                        me.obs7 = me.wpn.isPowerOn()?"PWR\nON":"PWR\nOFF";
+                    }
+
+                    me.obs14 = "A-G";
                     me.wpn.arming_time += me.at;
                     if (me.wpn.arming_time < 0) {
                         me.wpn.arming_time = 0;
@@ -3084,89 +3326,56 @@ var MFD_Device =
                     me.downA = me.armtime>0;
                     me.upA = me.armtime<20;
                     me.armtimer = sprintf("AD %.2fSEC",me.armtime);#arming delay
-                    me.cool = getprop("controls/armament/dual")==1?"SGL":"PAIR";
-                    if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "MAL";
-                    } elsif (me.wpn.status < armament.MISSILE_STARTING) {
-                        me.ready = "OFF";
-                    } elsif (me.wpn.status == armament.MISSILE_STARTING) {
-                        me.ready = "INIT";
-                    } else {
-                        me.ready = "RDY";
-                    }
-                } elsif (me.wpn.type == "AGM-65B" or me.wpn.type == "AGM-65D" or me.wpn.type == "AGM-84" or me.wpn.type == "AGM-119" or me.wpn.type == "AGM-158") {
+                    me.obs9 = getprop("controls/armament/dual")==1?"SGL":"PAIR";
+                    me.setWeaponStatus();
+                } elsif (me.wpn.type == "AGM-65B" or me.wpn.type == "AGM-65D" or me.wpn.type == "AGM-84" or me.wpn.type == "AGM-119" or me.wpn.type == "AGM-158" or me.wpn.type == "AGM-154A") {
+                    # Smart weapons that needs power on.
                     me.wpnType ="ground";
-                    me.eegs = "A-G";
-                    if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "MAL";
-                    } elsif (me.wpn.status < armament.MISSILE_STARTING) {
-                        me.ready = "OFF";
-                    } elsif (me.wpn.status == armament.MISSILE_STARTING) {
-                        me.ready = "INIT";
-                    } else {
-                        me.ready = "RDY";
-                    }
+                    me.obs14 = "A-G";
+                    me.obs7 = me.wpn.isPowerOn()?"PWR\nON":"PWR\nOFF";
+                    me.setWeaponStatus();
                 } elsif (me.wpn.type == "AGM-88") {
                     me.wpnType ="anti-rad";
-                    me.eegs = "A-G";
-                    me.drop = getprop("f16/stores/harm-mounted")?"HAD":"HAS";
-                    if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "MAL";
-                    } elsif (me.wpn.status < armament.MISSILE_STARTING) {
-                        me.ready = "OFF";
-                    } elsif (me.wpn.status == armament.MISSILE_STARTING) {
-                        me.ready = "INIT";
-                    } else {
-                        me.ready = "RDY";
-                    }
-                } elsif (me.wpn.type == "AIM-9L" or me.wpn.type == "AIM-9M") {
+                    me.obs14 = "A-G";
+                    me.obs12 = "HAS";
+                    me.obs7 = me.wpn.isPowerOn()?"PWR\nON":"PWR\nOFF";
+                    me.setWeaponStatus();
+                } elsif (me.wpn.type == "AIM-9L" or me.wpn.type == "AIM-9M" or me.wpn.type == "AIM-9X") {
                     me.wpnType ="heat";
-                    me.cool = me.wpn.getWarm()==0?"COOL":"WARM";
-                    me.eegs = "A-A";
-                    me.pre = pylons.fcs.isXfov()?"SCAN":"SPOT";
-                    me.coolFrame = me.wpn.isCooling()==1?1:0;
-                    me.drop = pylons.bore>0?"BORE":"SLAV";
-                    me.ripple = pylons.fcs.isAutocage()?"TD":"BP";
-                    if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "MAL";
-                    } elsif (me.wpn.status < armament.MISSILE_STARTING) {
-                        me.ready = "OFF";
-                    } elsif (me.wpn.status == armament.MISSILE_STARTING) {
-                        me.ready = "INIT";
-                    } else {
-                        me.ready = "RDY";
-                    }
+                    me.obs9 = me.wpn.getWarm()==0?"COOL":"WARM";
+                    me.obs14 = "A-A";
+                    me.obs13 = pylons.fcs.isXfov()?"SCAN":"SPOT";
+                    me.obs9Frame = me.wpn.isCooling()==1?1:0;
+                    me.obs12 = pylons.bore>0?"BORE":"SLAV";
+                    me.obs3 = pylons.fcs.isAutocage()?"TD":"BP";
+                    me.setWeaponStatus();
                 } elsif (me.wpn.type == "AIM-120" or me.wpn.type == "AIM-7") {
                     me.wpnType ="air";
-                    me.drop = "SLAV";
-                    me.eegs = "A-A";
-                    if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "MAL";
-                    } elsif (me.wpn.status < armament.MISSILE_STARTING) {
-                        me.ready = "OFF";
-                    } elsif (me.wpn.status == armament.MISSILE_STARTING) {
-                        me.ready = "INIT";
-                    } else {
-                        me.ready = "RDY";
-                    }
+                    me.obs12 = "SLAV";
+                    me.obs14 = "A-A";
+                    me.setWeaponStatus();
                 } elsif (me.wpn.type == "20mm Cannon") {
                     me.wpnType ="gun";
-                    me.eegs = getprop("f16/avionics/strf")?"STRF":"EEGS";
+                    me.obs14 = getprop("f16/avionics/strf")?"STRF":"EEGS";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "MAL";
+                        me.status = "MAL";
                     } else {
-                        me.ready = "RDY";
+                        if (getprop("controls/armament/master-arm-switch") == pylons.ARM_SIM) me.status = "SIM";
+                        else me.status = "RDY";
                     }
                 } elsif (me.wpn.type == "LAU-68") {
                     me.wpnType ="rocket";
-                    me.eegs = "A-G";
+                    me.obs14 = "A-G";
+                    var rp = pylons.fcs.getRRippleMode();
+                    me.obs8 = "RP "~rp;
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "MAL";
+                        me.status = "MAL";
                     } else {
-                        me.ready = "RDY";
+                        if (getprop("controls/armament/master-arm-switch") == pylons.ARM_SIM) me.status = "SIM";
+                        else me.status = "RDY";
                     }
                 } else {
-                    print(me.wpn.type~" not supported in WPN page.");
+                    #print(me.wpn.type~" not supported in WPN page.");
                     me.wpnType ="void";
                 }
                 me.myammo = pylons.fcs.getAmmo();
@@ -3179,26 +3388,30 @@ var MFD_Device =
                 } else {
                     me.myammo = ""~me.myammo;
                 }
-                me.root.weap.setText(me.myammo~me.wpn.typeShort);
-                if (getprop("controls/armament/master-arm") != 1) {
-                    me.ready = "";#TODO: ?
+                
+                me.obs6 = sprintf("%4s   %7s",me.status,me.myammo~me.wpn.typeShort);
+                if (0 and getprop("controls/armament/master-arm") != 1) {
+                    me.obs8 = "";# What was this for??
                 }
             } else {
-                me.root.weap.setText("");
+                me.obs6 = "";
             }
-            me.root.pre.setText(me.pre);
-            me.root.drop.setText(me.drop);
-            me.root.cool.setText(me.cool);
-            me.root.eegs.setText(me.eegs);
-            me.root.ready.setText(me.ready);
-            me.root.ripple.setText(me.ripple);
-            me.root.coolFrame.setVisible(me.coolFrame);
+            
+            me.root.obs3.setText(me.obs3);
+            me.root.obs5.setText(me.obs5);
+            me.root.obs6.setText(me.obs6);
+            me.root.obs7.setText(me.obs7);
+            me.root.obs8.setText(me.obs8);
+            me.root.obs9.setText(me.obs9);
+            me.root.obs10.setText(me.obs10);
+            me.root.obs12.setText(me.obs12);
+            me.root.obs13.setText(me.obs13);
+            me.root.obs14.setText(me.obs14);
+            me.root.obs9Frame.setVisible(me.obs9Frame);
             me.root.rangDownA.setVisible(me.downA);
             me.root.rangUpA.setVisible(me.upA);
             me.root.rangA.setText(me.armtimer);
             me.root.rangA.setVisible(me.upA or me.downA);
-            #me.root.td_bp.setText(me.td_bp);
-            #me.root.td_bp.setVisible(me.wpnType=="heat");
 
             me.root.distDownA.setVisible(me.downAd);
             me.root.distUpA.setVisible(me.upAd);
@@ -3206,16 +3419,39 @@ var MFD_Device =
             me.root.distA.setVisible(me.showDist);
             me.at = 0;
             me.ar = 0;
+
+            me.indices = pylons.fcs.getStationIndecesForSelectedType();
+            for (me.indi = 0; me.indi < 9; me.indi += 1) {
+                me.root.sta[me.indi].setVisible(me.indices[me.indi] > -1);
+                me.root.staFrame[me.indi].setVisible(me.indices[me.indi] == 1);
+            }
+        };
+        me.p_WPN.setWeaponStatus = func {
+            # The order of these IF is delicate
+            if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
+                me.status = "MAL";
+            } elsif (me.wpn.powerOnRequired and me.wpn.isPowerOn() and !me.wpn.hasPowerEnough()) {
+                me.status = "MAL";
+            } elsif (me.wpn.status < armament.MISSILE_STARTING or (me.wpn.powerOnRequired and !me.wpn.isPowerOn())) {
+                me.status = "OFF";
+            } elsif (me.wpn.powerOnRequired and me.wpn.status == armament.MISSILE_STARTING and me.wpn.hasPowerEnough()) {
+                me.status = "NOT TIMED OUT";
+            } elsif (me.wpn.status == armament.MISSILE_STARTING) {
+                me.status = "INIT";
+            } else {
+                if (getprop("controls/armament/master-arm-switch") == pylons.ARM_SIM) me.status = "SIM";
+                else me.status = "RDY";
+            }
         };
     },
 
 
-#  ██   ██ ███████ ██████      ███████ ███████ ████████ ██    ██ ██████ 
-#  ██   ██ ██      ██   ██     ██      ██         ██    ██    ██ ██   ██ 
-#  ███████ ███████ ██   ██     ███████ █████      ██    ██    ██ ██████  
-#  ██   ██      ██ ██   ██          ██ ██         ██    ██    ██ ██     
-#  ██   ██ ███████ ██████      ███████ ███████    ██     ██████  ██ 
-#                                                                   
+#  ██   ██ ███████ ██████      ███████ ███████ ████████ ██    ██ ██████ 
+#  ██   ██ ██      ██   ██     ██      ██         ██    ██    ██ ██   ██ 
+#  ███████ ███████ ██   ██     ███████ █████      ██    ██    ██ ██████  
+#  ██   ██      ██ ██   ██          ██ ██         ██    ██    ██ ██     
+#  ██   ██ ███████ ██████      ███████ ███████    ██     ██████  ██ 
+#                                                                   
 #
     setupHSD: func (svg) {
         svg.p_HSD = me.canvas.createGroup()
@@ -3587,12 +3823,12 @@ var MFD_Device =
 #  VSD HSD SMS SIT
         };
 
-#  ██   ██ ███████ ██████      ██    ██ ██████  ██████   █████  ████████ ███████ 
-#  ██   ██ ██      ██   ██     ██    ██ ██   ██ ██   ██ ██   ██    ██    ██      
-#  ███████ ███████ ██   ██     ██    ██ ██████  ██   ██ ███████    ██    █████ 
-#  ██   ██      ██ ██   ██     ██    ██ ██      ██   ██ ██   ██    ██    ██    
-#  ██   ██ ███████ ██████       ██████  ██      ██████  ██   ██    ██    ███████ 
-#                                                                                
+#  ██   ██ ███████ ██████      ██    ██ ██████  ██████   █████  ████████ ███████ 
+#  ██   ██ ██      ██   ██     ██    ██ ██   ██ ██   ██ ██   ██    ██    ██      
+#  ███████ ███████ ██   ██     ██    ██ ██████  ██   ██ ███████    ██    █████ 
+#  ██   ██      ██ ██   ██     ██    ██ ██      ██   ██ ██   ██    ██    ██    
+#  ██   ██ ███████ ██████       ██████  ██      ██████  ██   ██    ██    ███████ 
+#                                                                                
 #
         me.p_HSD.update = func (noti) {
             if (bottomImages[me.model_index] != nil) bottomImages[me.model_index].hide();
@@ -3659,7 +3895,7 @@ var MFD_Device =
                 me.root.rang.setText(""~MFD_Device.get_HSD_range_dep());
             }
 
-            me.bullPt = steerpoints.getNumber(555);
+            me.bullPt = steerpoints.getNumber(steerpoints.index_of_bullseye);
             me.bullOn = me.bullPt != nil;
             if (me.bullOn) {
                 me.bullLat = me.bullPt.lat;
@@ -3724,6 +3960,7 @@ var MFD_Device =
                     me.prevY = nil;
                     for (me.j = 0; me.j < me.planSize;me.j+=1) {
                         me.wp = me.plan.getWP(me.j);
+                        if (me.wp.lat == 0 and me.wp.lon == 0) continue;# Ignore SIDs that have no GPS position
                         me.wpC = geo.Coord.new();
                         me.wpC.set_latlon(me.wp.lat,me.wp.lon);
                         me.legBearing = me.selfCoord.course_to(me.wpC)-me.selfHeading;#relative
@@ -3735,6 +3972,12 @@ var MFD_Device =
                         }
                         me.legX = me.legRangePixels*math.sin(me.legBearing*D2R);
                         me.legY = -me.legRangePixels*math.cos(me.legBearing*D2R);
+                        #if (me.j == 1) {
+                            #print();
+                            #printf("Dist=%d bear=%d rangePix=%d   %d,%d",me.legDistance*M2NM,me.legBearing,me.legRangePixels,me.legX,me.legY);
+                            #printf("%.3f, %.3f",me.wp.lat,me.wp.lon);
+                            #printf("%.3f, %.3f",me.wp.wp_lat,me.wp.wp_lon);
+                        #}
                         me.wp = me.root.cone.createChild("path")
                             .moveTo(me.legX-5,me.legY)
                             .arcSmallCW(5,5, 0, 5*2, 0)
@@ -3760,7 +4003,7 @@ var MFD_Device =
                     }
                 }
 
-                for (var u = 0;u<2;u+=1) {
+                for (var u = 0;u<4;u+=1) {
                     if (steerpoints.lines[u] != nil) {
                         # lines
                         me.plan = steerpoints.lines[u];
@@ -3793,17 +4036,18 @@ var MFD_Device =
                                     .moveTo(me.legX,me.legY)
                                     .lineTo(me.prevX,me.prevY)
                                     .setStrokeLineWidth(2)
+                                    .setStrokeDashArray([10, 10])
                                     .set("z-index",4)
-                                    .setColor(colorLines)
+                                    .setColor(colorLines[0]*0.70,colorLines[1]*0.70,colorLines[2]*0.70)
                                     .update();
-                            } else if (me.prevX != nil and u == 1) {
+                            } else if (me.prevX != nil and u > 0) {
                                 me.root.cone.createChild("path")
                                     .moveTo(me.legX,me.legY)
                                     .lineTo(me.prevX,me.prevY)
                                     .setStrokeLineWidth(2)
                                     .setStrokeDashArray([10, 10])
                                     .set("z-index",4)
-                                    .setColor(colorLines)
+                                    .setColor(colorLines[0]*0.70,colorLines[1]*0.70,colorLines[2]*0.70)
                                     .update();
                             }
                             me.prevX = me.legX;
@@ -3895,12 +4139,12 @@ var MFD_Device =
             }
 
 
-#  ██   ██ ███████ ██████      ██████   █████  ██████   █████  ██████ 
-#  ██   ██ ██      ██   ██     ██   ██ ██   ██ ██   ██ ██   ██ ██   ██ 
-#  ███████ ███████ ██   ██     ██████  ███████ ██   ██ ███████ ██████  
-#  ██   ██      ██ ██   ██     ██   ██ ██   ██ ██   ██ ██   ██ ██   ██ 
-#  ██   ██ ███████ ██████      ██   ██ ██   ██ ██████  ██   ██ ██   ██ 
-#                                                                      
+#  ██   ██ ███████ ██████      ██████   █████  ██████   █████  ██████ 
+#  ██   ██ ██      ██   ██     ██   ██ ██   ██ ██   ██ ██   ██ ██   ██ 
+#  ███████ ███████ ██   ██     ██████  ███████ ██   ██ ███████ ██████  
+#  ██   ██      ██ ██   ██     ██   ██ ██   ██ ██   ██ ██   ██ ██   ██ 
+#  ██   ██ ███████ ██████      ██   ██ ██   ██ ██████  ██   ██ ██   ██ 
+#                                                                      
 #
             if (noti.FrameCount == 3 and me.up == 1) {
                 me.i = 0;#triangles
@@ -4018,14 +4262,778 @@ var MFD_Device =
         };
     },
 
+#  ██   ██  █████  ███████     ███████ ███████ ████████ ██    ██ ██████  
+#  ██   ██ ██   ██ ██          ██      ██         ██    ██    ██ ██   ██ 
+#  ███████ ███████ ███████     ███████ █████      ██    ██    ██ ██████  
+#  ██   ██ ██   ██      ██          ██ ██         ██    ██    ██ ██      
+#  ██   ██ ██   ██ ███████     ███████ ███████    ██     ██████  ██      
+#                                                                        
+#                                                          
+    setupHARM: func (svg, index) {
+        svg.p_HARM = me.canvas.createGroup()
+                    .set("z-index",2)
+                    .set("font","LiberationFonts/LiberationMono-Regular.ttf");
+        svg.buttonView = svg.p_HARM.createChild("group")
+                .setTranslation(276*0.795,482);
+        svg.groupRdr = svg.p_HARM.createChild("group")
+                .setTranslation(276*0.795, 0);#552,482 , 0.795 is for UV map
+        svg.groupCursor = svg.p_HARM.createChild("group")
+                .setTranslation(276*0.795, 482);#552,482 , 0.795 is for UV map
+
+        svg.width  = 276*0.795*2;
+        svg.height = 482;
+        svg.index = index;
+        svg.maxB = 5;
+        svg.rdrTxt = setsize([],svg.maxB);
+        for (var i = 0;i<svg.maxB;i+=1) {
+                svg.rdrTxt[i] = svg.groupRdr.createChild("text")
+                        .setAlignment("center-center")
+                        .setFontSize(20, 1.0)
+                        .setColor(colorText1);
+        }
+        
+        svg.cursor = svg.groupCursor.createChild("path")
+                    .moveTo(-8,-9)
+                    .vert(18)
+                    .moveTo(8,-9)
+                    .vert(18)
+                    .setStrokeLineWidth(2.0)
+                    .setColor(colorLine3);
+
+        var fieldH = svg.height * 0.60;
+        var fieldW = svg.width * 0.666;
+
+        svg.fieldH = fieldH;
+        svg.fieldW = fieldW;
+        svg.fieldX = -fieldW * 0.5;
+        svg.fieldY = svg.height * 0.25;
+        svg.fieldDiag = math.sqrt(svg.fieldX*svg.fieldX+svg.fieldX*svg.fieldX);
+        svg.detectedThreatStatusBox = svg.groupRdr.createChild("path")
+                .moveTo(-fieldW*0.5, 40)
+                .horiz(fieldW)
+                .vert(svg.height * 0.10)
+                .horiz(-fieldW)
+                .vert(-svg.height * 0.10)
+                .setColor(colorLine1)
+                .set("z-index",12)
+                .setStrokeLineWidth(2);
+        svg.detectedThreatStatusBoxText = svg.groupRdr.createChild("text")
+                        .setAlignment("left-center")
+                        .setTranslation(-fieldW*0.5, 40+svg.height * 0.10*0.5)
+                        .setFontSize(20, 1.0)
+                        .setColor(colorText1);
+        svg.dashBox = svg.groupRdr.createChild("path")
+                .moveTo(-fieldW * 0.5, svg.height * 0.25)
+                .horiz(fieldW)
+                .vert(fieldH)
+                .horiz(-fieldW)
+                .vert(-fieldH)
+                .setColor(colorCircle1)
+                .setStrokeDashArray([20,20])
+                .set("z-index",12)
+                .setStrokeLineWidth(2);
+
+        svg.handoffGrp = svg.groupRdr.createChild("group");
+        svg.handoffRot = svg.handoffGrp.createTransform().setTranslation(0, svg.fieldY + svg.fieldH*0.5);;
+        svg.handoffTxt = svg.handoffGrp.createChild("text")
+                        .setAlignment("center-center")
+                        .setFontSize(20, 1.0)
+                        .setColor(colorText1);
+
+        svg.searchText = svg.groupRdr.createChild("text")
+                        .setAlignment("center-top")
+                        .setTranslation(0, 40+svg.height * 0.10+5)
+                        .setFontSize(20, 1.0)
+                        .setColor(colorText2);
+
+        svg.crossY = svg.groupRdr.createChild("path")
+                .moveTo(0, svg.fieldY)
+                .vert(fieldH)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
+        svg.crossX = svg.groupRdr.createChild("path")
+                .moveTo(-fieldW * 0.5, svg.fieldY + fieldH * 0.25)
+                .horiz(fieldW)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
+        svg.crossX1 = svg.groupRdr.createChild("path")
+                .moveTo(0, 5)
+                .vert(-10)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
+        svg.crossX2 = svg.groupRdr.createChild("path")
+                .moveTo(0, 5)
+                .vert(-10)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
+        svg.crossX3 = svg.groupRdr.createChild("path")
+                .moveTo(0, 5)
+                .vert(-10)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
+        svg.crossX4 = svg.groupRdr.createChild("path")
+                .moveTo(0, 5)
+                .vert(-10)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
+        svg.crossX5 = svg.groupRdr.createChild("path")
+                .moveTo(0, 5)
+                .vert(-10)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
+        svg.crossX6 = svg.groupRdr.createChild("path")
+                .moveTo(0, 5)
+                .vert(-10)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
+        svg.crossY1 = svg.groupRdr.createChild("path")
+                .moveTo(-5, 0)
+                .horiz(10)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
+        svg.crossY2 = svg.groupRdr.createChild("path")
+                .moveTo(-5, 0)
+                .horiz(10)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
+        svg.crossY3 = svg.groupRdr.createChild("path")
+                .moveTo(-5, 0)
+                .horiz(10)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
+        svg.cross = svg.groupRdr.createChild("path")
+                .moveTo(20, 0)
+                .horiz(fieldW * 0.5-20)
+                .moveTo(-20, 0)
+                .horiz(-fieldW * 0.5+20)
+                .moveTo(0, 20)
+                .vert(fieldH * 0.5-20)
+                .moveTo(0, -20)
+                .vert(-fieldH * 0.5+20)
+                .setColor(colorLine3)
+                .set("z-index",20)
+                .setStrokeLineWidth(2);
 
 
-#   █████  ██████  ██████      ██████   █████   ██████  ███████ ███████ 
-#  ██   ██ ██   ██ ██   ██     ██   ██ ██   ██ ██       ██      ██      
-#  ███████ ██   ██ ██   ██     ██████  ███████ ██   ███ █████   ███████ 
-#  ██   ██ ██   ██ ██   ██     ██      ██   ██ ██    ██ ██           ██ 
-#  ██   ██ ██████  ██████      ██      ██   ██  ██████  ███████ ███████ 
-#                                                                       
+        # BUTTONS
+        var leftButtonsMax = 5;
+        svg.obsL = [];
+        svg.obsLb = [];
+        var initY = -136;
+        for (var i = 0;i<leftButtonsMax;i+=1) {
+            append(svg.obsL, svg.buttonView.createChild("text")
+                .setTranslation(-276*0.795+3, -482*0.5+initY)
+                .setText(" P")
+                .setAlignment("left-center")
+                .setColor(colorText1)
+                .setFontSize(20, 1.0));
+            append(svg.obsLb, svg.buttonView.createChild("text")
+                .setTranslation(-276*0.795+3, -482*0.5+initY)
+                .setText(" P")
+                .setAlignment("left-center")
+                .setColor(colorBackground)
+                .setColorFill(colorText1)
+                .setDrawMode(canvas.Text.TEXT + canvas.Text.FILLEDBOUNDINGBOX)#This does only work before first text element update so cannot be properly changed in loops
+                .setFontSize(20, 1.0));
+            initY += 68;
+        }
+        svg.obs7 = svg.buttonView.createChild("text")
+                .setTranslation(276*0.775, -482*0.5-65)
+                .setText("RS")
+                .setAlignment("right-center")
+                .setColor(colorText1)
+                .setFontSize(20, 1.0);
+        svg.obs10 = svg.buttonView.createChild("text")
+                .setTranslation(276*0.775, -482*0.5+125+10)
+                .setText("")
+                .setAlignment("right-center")
+                .setColor(colorText1)
+                .set("z-index",1)
+                .setFontSize(20, 1.0);
+        #svg.obs11 = svg.buttonView.createChild("text")
+        #        .setTranslation(276*0.795*-0.71, -482*0.5-215)
+        #        .setText("HAS")
+        #        .setAlignment("center-top")
+        #        .setColor(colorText1)
+        #        .set("z-index",20000)
+        #        .setFontSize(20, 1.0);
+        svg.obs12 = svg.buttonView.createChild("text")
+                .setTranslation(276*0.795*-0.30, -482*0.5-225)
+                .setText("TBL1")
+                .setAlignment("center-top")
+                .setColor(colorText1)
+                .setFontSize(18, 1.0);
+        svg.obs13 = svg.buttonView.createChild("text")
+                .setTranslation(276*0.795*0.0, -482*0.5-225)
+                .setText("WIDE")
+                .setAlignment("center-top")
+                .setColor(colorText1)
+                .set("z-index",1)
+                .setFontSize(18, 1.0);
+        svg.obs15 = svg.buttonView.createChild("text")
+                .setTranslation(276*0.795*0.60, -482*0.5-225)
+                .setText("UFC")
+                .setAlignment("center-top")
+                .setColor(colorText1)
+                .set("z-index",1)
+                .setFontSize(18, 1.0);
+        
+        # copied from p_WPN page:
+        svg.sta      = setsize([], 9);# 9 stations
+        svg.staFrame = setsize([], 9);
+        var staPosY = -482*0.10;
+        var staFont = 17;
+        var staStroke = 1.5;
+        var staX = 7;
+        var staY = 9;
+        var staW = 15;
+        var staH = 19;
+        svg.sta[2] = svg.buttonView.createChild("text")
+           .setTranslation(276*0.795 * -0.4, staPosY)
+           .setAlignment("center-center")
+           .setText("3")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[3] = svg.buttonView.createChild("text")
+           .setTranslation(276*0.795 * -0.3, staPosY)
+           .setAlignment("center-center")
+           .setText("4")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[5] = svg.buttonView.createChild("text")
+           .setTranslation(276*0.795 * 0.3, staPosY)
+           .setAlignment("center-center")
+           .setText("6")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.sta[6] = svg.buttonView.createChild("text")
+           .setTranslation(276*0.795 * 0.4, staPosY)
+           .setAlignment("center-center")
+           .setText("7")
+           .set("z-index",12)
+           .setFontSize(staFont, 1.0)
+           .hide()
+           .setColor(colorText1);
+        svg.staFrame[2] = svg.buttonView.createChild("path")
+           .moveTo(276*0.795 * -0.4 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[3] = svg.buttonView.createChild("path")
+           .moveTo(276*0.795 * -0.3 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[5] = svg.buttonView.createChild("path")
+           .moveTo(276*0.795 * 0.3 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        svg.staFrame[6] = svg.buttonView.createChild("path")
+           .moveTo(276*0.795 * 0.4 + staX, staPosY+staY)
+           .vert(-staH)
+           .horiz(-staW)
+           .vert(staH)
+           .horiz(staW)
+           .setColor(colorText1)
+           .hide()
+           .setStrokeLineWidth(staStroke);
+        
+        svg.notSOI = svg.buttonView.createChild("text")
+           .setTranslation(0, -482*0.55)
+           .setAlignment("center-center")
+           .setText("NOT SOI")
+           .set("z-index",12)
+           .setFontSize(18, 1.0)
+           .setColor(colorText2);
+    },
+
+    addHARM: func {
+        var svg = {getElementById: func (id) {return me[id]},};
+        me.setupHARM(svg, me.model_index);
+        me.PFD.addHARMPage = func(svg, title, layer_id) {
+            var np = PFD_Page.new(svg, title, layer_id, me);
+            append(me.pages, np);
+            me.page_index[layer_id] = np;
+            np.setVisible(0);
+            return np;
+        };
+        me.p_HARM = me.PFD.addHARMPage(svg, "HAS", "p_HARM");
+        me.p_HARM.model_index = me.model_index;
+        me.p_HARM.root = svg;
+        me.p_HARM.elapsed = 0;
+        me.p_HARM.slew_c_last = slew_c;
+        me.p_HARM.wdt = 552*0.795;
+        me.p_HARM.ppp = me.PFD;
+        me.p_HARM.my = me;
+        me.p_HARM.items = [];
+        me.p_HARM.iter = -1;
+        me.p_HARM.sensor = radar_system.f16_radSensor;
+        me.p_HARM.selectionBox = me.selectionBox;
+        me.p_HARM.setSelectionColor = me.setSelectionColor;
+        me.p_HARM.resetColor = me.resetColor;
+        me.p_HARM.setSelection = me.setSelection;
+        me.p_HARM.notifyButton = func (eventi) {
+            if (eventi != nil) {
+                if (eventi >= 0 and eventi < 5) {
+                    if (me.sensor.handoffTarget != nil and me.sensor.handoffTarget["tblIdx"] == eventi) {
+                        me.sensor.handoffTarget = nil;
+                    }
+                } elsif (eventi == 6) {                    
+                    me.sensor.reset();
+                    me.sensor.searchCounter += 1;
+                } elsif (eventi == 10) {
+                    me.ppp.selectPage(me.my.p_LIST);
+                    me.resetColor(me.ppp.buttons[10]);
+                    me.selectionBox.hide();
+                } elsif (eventi == 11) {
+                    me.sensor.currtable += 1;
+                    if (me.sensor.currtable > 2) me.sensor.currtable = 0;
+                    me.sensor.handoffTarget = nil;
+                } elsif (eventi == 12) {
+                    me.sensor.fov_desired += 1;
+                    if (me.sensor.fov_desired > 3) me.sensor.fov_desired = 0;
+                } elsif (eventi == 14) {
+                    ded.dataEntryDisplay.harmTablePage = me.sensor.currtable;
+                    ded.dataEntryDisplay.page = ded.pHARM;
+                } elsif (eventi == 15) {
+                    swap();
+                } elsif (eventi == 16) {
+                    me.ppp.selectPage(me.my.p_HSD);
+                    me.setSelection(me.ppp.buttons[10], me.ppp.buttons[16], 16);
+                } elsif (eventi == 17) {
+                    me.ppp.selectPage(me.my.p_SMS);
+                    me.setSelection(me.ppp.buttons[10], me.ppp.buttons[17], 17);
+                } elsif (eventi == 18) {                    
+                    me.ppp.selectPage(me.my.p_WPN);
+                    me.setSelection(me.ppp.buttons[10], me.ppp.buttons[18], 18);
+                } elsif (eventi == 19) {
+                    if(getprop("f16/stores/tgp-mounted") and !getprop("/fdm/jsbsim/gear/unit[0]/WOW")) {
+                        screen.log.write("Click BACK to get back to cockpit view",1,1,1);
+                        switchTGP();
+                    }
+                }
+            }
+
+# Menu Id's
+#  CRM
+#   10  11  12  13  14
+# 0                    5
+# 1                    6
+# 2                    7
+# 3                    8
+# 4                    9
+#   15  16  17  18  19
+#  VSD HSD SMS SIT
+        };
+
+
+#  ██   ██  █████  ███████     ██    ██ ██████  ██████   █████  ████████ ███████ 
+#  ██   ██ ██   ██ ██          ██    ██ ██   ██ ██   ██ ██   ██    ██    ██      
+#  ███████ ███████ ███████     ██    ██ ██████  ██   ██ ███████    ██    █████   
+#  ██   ██ ██   ██      ██     ██    ██ ██      ██   ██ ██   ██    ██    ██      
+#  ██   ██ ██   ██ ███████      ██████  ██      ██████  ██   ██    ██    ███████ 
+#                                                                                
+#                                                                                
+        me.p_HARM.update = func (noti) {
+            if (bottomImages[me.model_index] != nil) bottomImages[me.model_index].hide();
+            if (noti.FrameCount != 1 and noti.FrameCount != 3)
+                return;
+            #print("\nHAD update:\n=======");
+
+            me.harmSelected = 0;
+            if (pylons.fcs != nil) {
+                me.radWeap = pylons.fcs.getSelectedWeapon();
+                if (me.radWeap != nil) {
+                    if (me.radWeap["guidance"] == "radiation" and me.radWeap.getStatus() >= armament.MISSILE_SEARCH) {
+                        me.sensor.maxArea = me.root.fieldW * me.root.fieldH;
+                        if (me.sensor.fov_desired == 1) {
+                            me.sensor.area = me.sensor.maxArea*0.25;
+                            me.sensor.x    = [-15, 15];
+                            me.sensor.y    = [-10, 10];#todo: something of here, decide proper
+                        } elsif (me.sensor.fov_desired == 2) {
+                            me.sensor.area = me.sensor.maxArea*0.5;
+                            me.sensor.x    = [-30, 0];
+                            me.sensor.y    = [-30, 10];
+                        } elsif (me.sensor.fov_desired == 3) {
+                            me.sensor.area = me.sensor.maxArea*0.5;
+                            me.sensor.x    = [0, 30];
+                            me.sensor.y    = [-30, 10];
+                        } else {
+                            me.sensor.area = me.sensor.maxArea;
+                            me.sensor.x    = [-30, 30];
+                            me.sensor.y    = [-30, 10];
+                        }
+                        me.sensor.table = me.sensor.tables[me.sensor.currtable];
+                        me.sensor.range = me.radWeap.max_fire_range_nm;
+                        if (me.sensor.fov != me.sensor.fov_desired) {
+                            me.sensor.fov = me.sensor.fov_desired;
+                            me.sensor.reset();
+                            me.sensor.searchCounter = 0;
+                        }
+                        me.sensor.setEnabled(me.sensor.handoffTarget == nil);
+                        me.harmSelected = 1;
+                    } else {
+                        me.sensor.setEnabled(0);
+                    }
+                } else {
+                    me.sensor.setEnabled(0);
+                }
+            } else {
+                me.sensor.setEnabled(0);
+                return;
+            }
+
+            #CURSOR
+
+            me.IMSOI = 0;
+            if (f16.SOI == 3 and me.model_index == 1) {
+                me.root.notSOI.hide();
+                me.IMSOI = 1;
+            } elsif (f16.SOI == 2 and me.model_index == 0) {
+                me.root.notSOI.hide();
+                me.IMSOI = 1;
+            } else {
+                me.root.notSOI.show();
+            }
+
+            me.slew_x = getprop("controls/displays/target-management-switch-x[" ~ me.model_index ~ "]");
+            me.slew_y = -getprop("controls/displays/target-management-switch-y[" ~ me.model_index ~ "]");
+
+            if (noti.getproper("viewName") != "TGP" and me.IMSOI) {
+                f16.resetSlew();
+            }
+
+            if (me.IMSOI) {
+                if ((me.slew_x != 0 or me.slew_y != 0 or slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.root.index) and noti.getproper("viewName") != "TGP" and me.sensor.handoffTarget == nil) {
+                    cursor_destination = nil;
+                    cursor_posHAS[0] += me.slew_x*175;
+                    cursor_posHAS[1] -= me.slew_y*175;
+                    cursor_posHAS[0] = math.clamp(cursor_posHAS[0], -552*0.5*0.795, 552*0.5*0.795);
+                    cursor_posHAS[1] = math.clamp(cursor_posHAS[1], -482, 0);
+                    cursor_click = (slew_c and !me.slew_c_last)?me.root.index:-1;
+                    cursor_lock = me.root.index;
+                } elsif (cursor_lock == me.root.index or (me.slew_x == 0 or me.slew_y == 0 or slew_c == 0)) {
+                    cursor_lock = -1;
+                }
+            
+                me.slew_c_last = slew_c;
+                slew_c = 0;
+            }
+            me.elapsed = noti.getproper("elapsed");
+            me.root.cursor.setTranslation(cursor_posHAS);
+            me.root.cursor.setVisible(me.sensor.handoffTarget == nil);
+            if (0 and cursor_click==0) print(cursor_posHAS[0],", ",cursor_posHAS[1]+482, "  click: ", cursor_click);
+
+            
+            
+            me.root.obs12.setText("TBL"~(me.sensor.currtable + 1));
+            
+            if (me.sensor.fov_desired == 1) {
+                me.fovTxt = "CTR";
+                me.root.crossX.setTranslation(0,me.root.fieldH*0.25); 
+                me.root.crossY.setTranslation(0,0);
+                me.root.crossX1.setTranslation(me.root.fieldX+20*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.5); 
+                me.root.crossX2.setTranslation(me.root.fieldX+20*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.5); 
+                me.root.crossX3.setTranslation(me.root.fieldX+1*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.5); 
+                me.root.crossX4.setTranslation(me.root.fieldX+5*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.5); 
+                me.root.crossX5.setTranslation(me.root.fieldX+20*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.5); 
+                me.root.crossX6.setTranslation(me.root.fieldX+20*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.5); 
+                me.root.crossY1.setTranslation(0, me.root.fieldY+me.root.fieldH*0.5+2*me.root.fieldH*0.75/3);
+                me.root.crossY2.setTranslation(0, me.root.fieldY+me.root.fieldH*0.5+4*me.root.fieldH*0.75/3);
+                me.root.crossY3.setTranslation(0, me.root.fieldY+me.root.fieldH*0.5+6*me.root.fieldH*0.75/3);
+            } elsif (me.sensor.fov_desired == 2) {
+                me.fovTxt = "LEFT";
+                me.root.crossX.setTranslation(0,0); 
+                me.root.crossY.setTranslation(-me.root.fieldX,0);
+                me.root.crossX1.setTranslation(me.root.fieldX,                    me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX2.setTranslation(me.root.fieldX+2*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX3.setTranslation(me.root.fieldX+4*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX4.setTranslation(me.root.fieldX+6*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX5.setTranslation(me.root.fieldX+8*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX6.setTranslation(me.root.fieldX+10*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossY1.setTranslation(-me.root.fieldX, me.root.fieldY+me.root.fieldH*0.25+1*me.root.fieldH*0.75/3);
+                me.root.crossY2.setTranslation(-me.root.fieldX, me.root.fieldY+me.root.fieldH*0.25+2*me.root.fieldH*0.75/3);
+                me.root.crossY3.setTranslation(-me.root.fieldX, me.root.fieldY+me.root.fieldH*0.25+3*me.root.fieldH*0.75/3);
+            } elsif (me.sensor.fov_desired == 3) {
+                me.fovTxt = "RGHT";
+                me.root.crossX.setTranslation(0,0); 
+                me.root.crossY.setTranslation(me.root.fieldX,0);
+                me.root.crossX1.setTranslation(me.root.fieldX,                    me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX2.setTranslation(me.root.fieldX+2*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX3.setTranslation(me.root.fieldX+4*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX4.setTranslation(me.root.fieldX+6*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX5.setTranslation(me.root.fieldX+8*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX6.setTranslation(me.root.fieldX+10*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossY1.setTranslation(me.root.fieldX, me.root.fieldY+me.root.fieldH*0.25+1*me.root.fieldH*0.75/3);
+                me.root.crossY2.setTranslation(me.root.fieldX, me.root.fieldY+me.root.fieldH*0.25+2*me.root.fieldH*0.75/3);
+                me.root.crossY3.setTranslation(me.root.fieldX, me.root.fieldY+me.root.fieldH*0.25+3*me.root.fieldH*0.75/3);
+            } else {
+                me.fovTxt = "WIDE";
+                me.root.crossX.setTranslation(0,0); 
+                me.root.crossY.setTranslation(0,0);
+                me.root.crossX1.setTranslation(me.root.fieldX, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX2.setTranslation(me.root.fieldX+1*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX3.setTranslation(me.root.fieldX+2*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX4.setTranslation(me.root.fieldX+3*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX5.setTranslation(me.root.fieldX+4*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossX6.setTranslation(me.root.fieldX+5*me.root.fieldW/6, me.root.fieldY+me.root.fieldH*0.25); 
+                me.root.crossY1.setTranslation(0, me.root.fieldY+me.root.fieldH*0.25+1*me.root.fieldH*0.75/3);
+                me.root.crossY2.setTranslation(0, me.root.fieldY+me.root.fieldH*0.25+2*me.root.fieldH*0.75/3);
+                me.root.crossY3.setTranslation(0, me.root.fieldY+me.root.fieldH*0.25+3*me.root.fieldH*0.75/3);
+            }
+            me.root.obs13.setText(me.fovTxt);
+
+            for (me.jj = 0; me.jj < 5;me.jj += 1) {
+                if (size(me.sensor.tables[me.sensor.currtable])>me.jj) {
+                    me.root.obsL[me.jj].setText(me.sensor.tables[me.sensor.currtable][me.jj]);
+                    me.root.obsLb[me.jj].setText(me.sensor.tables[me.sensor.currtable][me.jj]);
+                } else {
+                    me.root.obsL[me.jj].setText("");
+                }
+            }
+            if (me.sensor.enabled) {
+                me.cycleTimeLeft = math.max(0,me.sensor.dura-(me.elapsed-me.sensor.searchStart));
+                me.root.searchText.setText(sprintf("%d:%02d   SCT-%d",(me.cycleTimeLeft)/60, math.mod(me.cycleTimeLeft,60),me.sensor.searchCounter));
+                me.root.searchText.show();
+            } else {
+                me.root.searchText.hide();
+            }
+
+            me.items = me.sensor.vector_aicontacts_seen;
+            me.iter = size(me.items)-1;
+
+            if (me.harmSelected and me.sensor.handoffTarget != nil and me.radWeap.status < armament.MISSILE_LOCK) {
+                # This makes sure we go from handover back to search when missile loses lock
+                if (me.elapsed-me.sensor.handoffTime > 1) {
+                    # It had time to get lock, but failed or masterarm was off
+                    me.radWeap.setContacts([]);
+                    me.sensor.handoffTarget = nil;
+                }
+            } elsif (!me.harmSelected) {
+                me.sensor.handoffTarget = nil;
+            }
+
+            if (noti.FrameCount == 1 and me.sensor.handoffTarget == nil) {
+                for (me.jj = 0; me.jj < 5;me.jj += 1) {
+                    me.root.obsL[me.jj].show();
+                    me.root.obsLb[me.jj].hide();
+                }
+            }
+
+            if (me.sensor.handoffTarget != nil) {
+                # Handoff
+                me.dataPos = [me.extrapolate(me.sensor.handoffTarget.get_bearing()-radar_system.self.getHeading(), -30, 30, -me.root.fieldW*0.5, me.root.fieldW*0.5), me.extrapolate(me.sensor.handoffTarget.getElevation()-radar_system.self.getPitch(), -30, 30, me.root.fieldW*0.5, -me.root.fieldW*0.5)];
+                if (math.sqrt(me.dataPos[0]*me.dataPos[0]+me.dataPos[1]*me.dataPos[1]) < me.root.fieldDiag) {
+                    me.rot = radar_system.self.getRoll()*D2R;
+                    me.root.handoffRot.setRotation(-me.rot);
+                    me.root.handoffTxt.setTranslation(me.dataPos);
+                    me.root.handoffTxt.setRotation(me.rot);
+                    me.root.handoffTxt.setText(me.sensor.handoffTarget.mdl~me.sensor.handoffTarget.radiSpike);
+                    me.root.handoffTxt.show();
+                } else {
+                    me.root.handoffTxt.hide();
+                }
+                me.root.cross.setTranslation(0, me.root.fieldY + me.root.fieldH*0.5);
+                me.root.rdrTxt[0].hide();
+                me.root.rdrTxt[1].hide();
+                me.root.rdrTxt[2].hide();
+                me.root.rdrTxt[3].hide();
+                me.root.rdrTxt[4].hide();
+                me.root.crossX.hide();
+                me.root.crossY.hide();
+                me.root.crossX1.hide();
+                me.root.crossX2.hide(); 
+                me.root.crossX3.hide();
+                me.root.crossX4.hide();
+                me.root.crossX5.hide();
+                me.root.crossX6.hide();
+                me.root.crossY1.hide();
+                me.root.crossY2.hide();
+                me.root.crossY2.hide();
+                #me.root.dashBox.hide();
+                me.root.cross.show();
+
+                for (me.jj = 0; me.jj < 5;me.jj += 1) {
+                    if (me.sensor.handoffTarget["tblIdx"] == me.jj) {
+                        me.root.obsL[me.jj].hide();
+                        me.root.obsLb[me.jj].show();
+                    } else {
+                        me.root.obsL[me.jj].show();
+                        me.root.obsLb[me.jj].hide();
+                    }
+                }
+
+                if (cursor_click == me.root.index) {
+                    me.sensor.handoffTarget = nil;
+                    cursor_click = -1;
+                    # not needed anymore due to last lines in method:
+                    #if (me.radWeap != nil and me.radWeap["guidance"] == "radiation") {
+                    #    me.radWeap.setContacts([]);
+                    #    me.radWeap.clearTgt();
+                    #}
+                } elsif (me.harmSelected) {
+                    me.radWeap.setContacts([me.sensor.handoffTarget]);
+                }
+            } elsif (me.sensor.enabled) {
+                # Search
+                me.root.crossX.show();
+                me.root.crossY.show();
+                me.root.crossX1.show();
+                me.root.crossX2.show(); 
+                me.root.crossX3.show();
+                me.root.crossX4.show();
+                me.root.crossX5.show();
+                me.root.crossX6.show();
+                me.root.crossY1.show();
+                me.root.crossY2.show();
+                me.root.crossY2.show();
+                #me.root.dashBox.show();
+                me.root.cross.hide();
+                me.root.handoffTxt.hide();
+                me.topLine = "   ";
+                me.topCheck = [0,0,0,0,0];
+                me.clickableItems = [];
+                for (me.txt_count = 0; me.txt_count < 5; me.txt_count += 1) {
+                    me.check = !(me.txt_count > me.iter);
+                    me.checkFresh = me.check and me.items[me.txt_count].discover < me.elapsed-me.sensor.searchStart and me.items[me.txt_count].discoverSCT==me.sensor.searchCounter;
+                    me.checkFading = me.check and me.items[me.txt_count]["discoverSCTShown"] == me.sensor.searchCounter-1;
+                    #if (me.check) print(" fresh ",me.checkFresh,", fading ",me.checkFading, ", timetoshow ", me.items[me.txt_count].discover);
+                    #if (me.check) print("  time ",me.items[me.txt_count].discover > systime()-me.sensor.searchStart,",  shown ",me.items[me.txt_count].discoverSCT," now",me.sensor.searchCounter);
+                    if (!me.check or (!me.checkFresh and !me.checkFading) ) {
+                        me.root.rdrTxt[me.txt_count].hide();
+                        continue;
+                    }
+                    me.data = me.items[me.txt_count];
+                    append(me.clickableItems, me.data);
+                    if (me.checkFresh) {
+                        me.data.discoverShown = me.data.discover;
+                        me.data.discoverSCTShown = me.data.discoverSCT;
+                    }
+                    me.dataPos = [me.extrapolate(me.data.pos[0], me.sensor.x[0], me.sensor.x[1], me.root.fieldX, me.root.fieldX + me.root.fieldW), me.extrapolate(me.data.pos[1], me.sensor.y[0], me.sensor.y[1], me.root.fieldY + me.root.fieldH, me.root.fieldY)];
+                    me.data.xyPos = me.dataPos;
+                    me.root.rdrTxt[me.txt_count].setText(me.data.mdl~me.data.radiSpike);
+                    me.root.rdrTxt[me.txt_count].setTranslation(me.dataPos);
+                    me.root.rdrTxt[me.txt_count].show();
+                    if (!me.topCheck[me.data.tblIdx]) {
+                        me.topLine ~= me.data.mdl~"   ";
+                        me.topCheck[me.data.tblIdx] = 1;
+                    }
+                }
+                me.root.detectedThreatStatusBoxText.setText(me.topLine);
+                if (cursor_click == me.root.index) {
+                    me.handoffTarget = me.click(me.clickableItems);
+                    if (me.handoffTarget != nil) {
+                        me.sensor.handoffTime = me.elapsed;
+                        me.sensor.handoffTarget = me.handoffTarget;
+                        #print("MFD: Clicked handoff on ",!cursor_click?"LEFT":"RIGHT");#TODO: need right display
+                    }
+                    cursor_click = -1;
+                } elsif(cursor_click != -1) {
+                    #print("MFD: Failed click. It was ",!cursor_click?"LEFT":"RIGHT");#TODO: need right display
+                }
+            } else {
+                # Not searching
+                me.root.crossX.show();
+                me.root.crossY.show();
+                me.root.crossX1.show();
+                me.root.crossX2.show(); 
+                me.root.crossX3.show();
+                me.root.crossX4.show();
+                me.root.crossX5.show();
+                me.root.crossX6.show();
+                me.root.crossY1.show();
+                me.root.crossY2.show();
+                me.root.crossY2.show();
+                #me.root.dashBox.show();
+                me.root.cross.hide();
+                me.root.handoffTxt.hide();
+                me.topLine = "   ";
+                me.topCheck = [0,0,0,0,0];
+                me.root.detectedThreatStatusBoxText.setText(me.topLine);
+
+                for (me.txt_count = 0; me.txt_count < 5; me.txt_count += 1) {
+                    me.root.rdrTxt[me.txt_count].hide();
+                }
+
+                if (cursor_click == me.root.index) {
+                    cursor_click = -1;
+                }
+            }
+
+            if (me.sensor.handoffTarget == nil and me.harmSelected) {
+                me.radWeap.clearTgt();
+                me.radWeap.setContacts([]);
+            }
+            me.indices = pylons.fcs.getStationIndecesForSelectedType("AGM-88");
+            for (me.indi = 0; me.indi < 9; me.indi += 1) {
+                if (me.indi != 2 and me.indi != 3 and me.indi != 5 and me.indi != 6) continue;
+                me.root.sta[me.indi].setVisible(me.indices[me.indi] > -1);
+                me.root.staFrame[me.indi].setVisible(me.indices[me.indi] == 1);
+            }
+        };
+        me.p_HARM.click = func (items) {
+            me.clostestItem = nil;
+            me.clostestDist = 10000;
+
+            foreach(me.citem; items) {
+                if (me.citem["xyPos"] == nil) continue;
+                me.xx = math.abs(me.citem.xyPos[0]-cursor_posHAS[0]);
+                me.yy = math.abs(me.citem.xyPos[1]-(cursor_posHAS[1] + 482));
+                me.cdist = math.sqrt(me.xx*me.xx+me.yy*me.yy);
+                if (me.cdist < me.clostestDist) {
+                    me.clostestDist = me.cdist;
+                    me.clostestItem = me.citem;
+                }
+            }
+            if (me.clostestDist < 20) {
+                return me.clostestItem;
+            }
+        };
+        me.p_HARM.interpolate = func (x, x1, x2, y1, y2) {
+            return math.clamp(y1 + ((x - x1) / (x2 - x1)) * (y2 - y1),y1,y2);
+        };
+        me.p_HARM.extrapolate = func (x, x1, x2, y1, y2) {
+            return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
+        };        
+    },
+
+
+#   █████  ██████  ██████      ██████   █████   ██████  ███████ ███████ 
+#  ██   ██ ██   ██ ██   ██     ██   ██ ██   ██ ██       ██      ██      
+#  ███████ ██   ██ ██   ██     ██████  ███████ ██   ███ █████   ███████ 
+#  ██   ██ ██   ██ ██   ██     ██      ██   ██ ██    ██ ██           ██ 
+#  ██   ██ ██████  ██████      ██      ██   ██  ██████  ███████ ███████ 
+#                                                                       
 #
     addPages : func
     {
@@ -4040,6 +5048,7 @@ var MFD_Device =
         me.addRList();
         me.addRMList();
         me.addDTE();
+        me.addHARM();
 
         me.mfd_button_pushed = 0;
         # Connect the buttons - using the provided model index to get the right ones from the model binding
@@ -4120,7 +5129,7 @@ var MFD_Device =
     #Update this when adding new buttons or changing button order/positions.
     setSelection: func(curPage, nextPage, nextPageIndex) {
         if (nextPageIndex == 10) {
-            me.selectionBox.setTranslation(65,7);
+            me.selectionBox.setTranslation(65,12);
             me.selectionBox.setScale(1,1);
         } else if (nextPageIndex == 13) {
             me.selectionBox.setTranslation(272,7);
@@ -4146,12 +5155,12 @@ var MFD_Device =
     },
 
 
-#  ███    ███ ███████ ███    ██ ██    ██ ███████ 
-#  ████  ████ ██      ████   ██ ██    ██ ██      
-#  ██ ████ ██ █████   ██ ██  ██ ██    ██ ███████ 
-#  ██  ██  ██ ██      ██  ██ ██ ██    ██      ██ 
-#  ██      ██ ███████ ██   ████  ██████  ███████ 
-#                                                
+#  ███    ███ ███████ ███    ██ ██    ██ ███████ 
+#  ████  ████ ██      ████   ██ ██    ██ ██      
+#  ██ ████ ██ █████   ██ ██  ██ ██    ██ ███████ 
+#  ██  ██  ██ ██      ██  ██ ██ ██    ██      ██ 
+#  ██      ██ ███████ ██   ████  ██████  ███████ 
+#                                                
 #
     # Add the menus to each page.
     setupMenus : func
@@ -4187,6 +5196,13 @@ var MFD_Device =
         me.p_HSD.addMenuItem(18, "WPN", me.p_WPN);
         me.p_HSD.addMenuItem(19, "TGP", nil);
 
+        me.p_HARM.addMenuItem(10, "HAS", me.p_LIST); #selectionColored
+        me.p_HARM.addMenuItem(15, "SWAP", nil);
+        me.p_HARM.addMenuItem(16, "HSD", me.p_HSD);
+        me.p_HARM.addMenuItem(17, "SMS", me.p_SMS);
+        me.p_HARM.addMenuItem(18, "WPN", me.p_WPN);
+        me.p_HARM.addMenuItem(19, "TGP", nil);
+
         me.p_WPN.addMenuItem(10, "FCR", me.p_RDR);
         me.p_WPN.addMenuItem(15, "SWAP", nil);
         me.p_WPN.addMenuItem(16, "HSD", me.p_HSD);
@@ -4213,7 +5229,7 @@ var MFD_Device =
 #  VSD HSD SMS SIT
 
         me.p_LIST.addMenuItem(10, "BLANK", nil);
-        me.p_LIST.addMenuItem(11, "HAD", nil);
+        me.p_LIST.addMenuItem(11, "HAS", me.p_HARM);
         me.p_LIST.addMenuItem(13, "RCCE", nil);
         me.p_LIST.addMenuItem(14, "RESET\n MENU", nil);
         me.p_LIST.addMenuItem(15, "SWAP", nil);
@@ -4307,7 +5323,7 @@ var F16MfdRecipient =
     new: func(_ident)
     {
         var new_class = emesary.Recipient.new(_ident~".MFD");
-        new_class.MFDl =  MFD_Device.new("F16-MFD", "MFDimage1",0);
+        #new_class.MFDl =  MFD_Device.new("F16-MFD", "MFDimage1",0);
         new_class.MFDr =  MFD_Device.new("F16-MFD", "MFDimage2",1);
 
         new_class.Receive = func(notification)
@@ -4318,9 +5334,9 @@ var F16MfdRecipient =
                 return emesary.Transmitter.ReceiptStatus_NotProcessed;
             }
 
-            if (notification.NotificationType == "FrameNotification")
+            if (notification.NotificationType == "FrameNotification16")
             {
-                me.MFDl.update(notification);
+                #me.MFDl.update(notification);
                 me.MFDr.update(notification);
                 return emesary.Transmitter.ReceiptStatus_OK;
             }
@@ -4344,27 +5360,26 @@ PFD_Device.update = func(notification=nil)
             } else {
                 flyupVis = 0;
             }
-            pullup_cue_0.setVisible(flyupVis);
+#            pullup_cue_0.setVisible(flyupVis);
             pullup_cue_1.setVisible(flyupVis);
         }
     };
 
-#F16MfdRecipient.new("BAe-F16b-MFD");
+
 var f16_mfd = nil;
 var startupMFD = func {
     f16_mfd = F16MfdRecipient.new("F16-MFD");
 }
-#UpperMFD = f16_mfd.UpperMFD;
-#LowerMFD = f16_mfd.LowerMFD;
-
-#emesary.GlobalTransmitter.Register(f16_mfd);
 
 
-
+# This is old cursor system for clicking in 3D, part 3
 var uv = nil;
-var cursor_pos = [100,-100];
-var cursor_click = -1;
 var cursor_destination = nil;
+
+# Cursor stuff
+var cursor_pos = [100,-100];
+var cursor_posHAS = [0,-241];
+var cursor_click = -1;
 var cursor_lock = -1;
 var exp = 0;
 
@@ -4403,6 +5418,8 @@ var getMenuButton = func (pageName) {
         return nil;
     } elsif (pageName == "DTE") {
         return 7;
+    } elsif (pageName == "HAS") {
+        return nil;#HARM
     } else {
         print("Make sure button assignment is set correctly in getMenuButton() in MFD_main.nas");
         return nil;
@@ -4475,14 +5492,16 @@ var get_intercept = func(bearingToRunner, dist_m, runnerHeading, runnerSpeed, ch
     var a = chaserSpeed * chaserSpeed - runnerSpeed * runnerSpeed;
     var b = 2 * vector.Math.dotProduct(VectorFromRunner, RunnerVelocity);
     var c = -dist_m * dist_m;
-
-    if ((b*b-4*a*c)<0) {
+    
+    if (a == 0) a = 1000;# Otherwise same speeds will produce no intercept even though possible.
+    var dd = b*b-4*a*c;
+    if (dd<0) {
       # intercept not possible
       return nil;
     }
 
-    var t1 = (-b+math.sqrt(b*b-4*a*c))/(2*a);
-    var t2 = (-b-math.sqrt(b*b-4*a*c))/(2*a);
+    var t1 = (-b+math.sqrt(dd))/(2*a);
+    var t2 = (-b-math.sqrt(dd))/(2*a);
 
     if (t1 < 0 and t2 < 0) {
       # intercept not possible

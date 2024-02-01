@@ -7,6 +7,9 @@
  <animation>
   <object-name>rect</object-name>
   <object-name>brt-knob</object-name>
+  <object-name>button_pri</object-name>
+  <object-name>button_sep</object-name>
+  <object-name>button_unk</object-name>
   <type>material</type>
   <emission>
    <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
@@ -23,13 +26,17 @@
     <or>
       <property>controls/test/test-panel/mal-ind-lts</property>
       	<and>
-      		<property>f16/avionics/cockpit_blinker/state</property>
-    	    <not>
-    	      <equals>
-    	          <property>sound/rwr-launch</property>
-    	          <value type="string"></value>
-    	      </equals>
-    	    </not>
+      		<property>f16/avionics/cockpit_blinker3hz/state</property>
+          <or>
+        	    <not>
+        	      <equals>
+        	          <property>sound/rwr-launch</property>
+        	          <value type="string"></value>
+        	      </equals>
+        	    </not>
+              <property>payload/armament/MAW-active</property>
+              <property>payload/armament/MAW-semiactive</property>
+          </or>
           <greater-than-equals>
                     <property>f16/avionics/power-ufc-warm</property>
                     <value>0.90</value>
@@ -53,7 +60,7 @@
       <property>controls/test/test-panel/mal-ind-lts</property>
       <and>
 	      <equals>
-	          <property>sound/rwr-pri</property>
+	          <property>f16/ews/rwr-pri</property>
 	          <value>1</value>
 	      </equals>
         <greater-than-equals>
@@ -78,7 +85,7 @@
       <property>controls/test/test-panel/mal-ind-lts</property>
       <and>
 	      <equals>
-	          <property>sound/rwr-unk</property>
+	          <property>f16/ews/rwr-unk</property>
 	          <value>1</value>
 	      </equals>
         <greater-than-equals>
@@ -95,6 +102,69 @@
   </emission>
  </animation>
  
- 
+ <animation>
+        <type>pick</type>
+        <object-name>button_sep</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>property-assign</command>
+                <property>f16/ews/rwr-separate</property>
+                <value>1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/ews/rwr-separate</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-sep-tt</tooltip-id>
+                <label>Hold down to separate RWR contacts</label>
+            </binding>
+        </hovered>
+    </animation>
+
+     <animation>
+        <type>pick</type>
+        <object-name>button_pri</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>property-toggle</command>
+                <property>f16/ews/rwr-show-priority-only</property>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-pri-tt</tooltip-id>
+                <label>Show only highest priorities</label>
+            </binding>
+        </hovered>
+    </animation>
+
+    <animation>
+        <type>pick</type>
+        <object-name>button_unk</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>property-toggle</command>
+                <property>f16/ews/rwr-show-unknowns</property>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-unk-tt</tooltip-id>
+                <label>Show unknown emitters</label>
+            </binding>
+        </hovered>
+    </animation>
 
 </PropertyList>

@@ -53,6 +53,7 @@ var knownShips = {
 var knownSurface = {
     "S-75":       nil,
     "buk-m2":       nil,
+    "SA-3":       nil,
     "SA-6":       nil,
     "s-300":       nil,
     "depot":       nil,
@@ -1262,6 +1263,8 @@ var ac_map = {"C-137R" : "707",
               "C-137R-PAX" : "707",
               "E-8R" : "707",
               "EC-137R" : "707",
+              "E-3R" : "707",
+              "E-3" : "707",
               "KC-137R" : "707",
               "KC-137R-RT" : "707",
               "KC135" : "707",
@@ -2035,7 +2038,7 @@ var Target = {
     },
     isRadiating: func (coord) {
         me.rn = me.get_range();
-        if (me.get_model() != "gci" and me.get_model() != "S-75" and me.get_model() != "SA-6" and me.get_model() != "buk-m2" and me.get_model() != "MIM104D" and me.get_model() != "missile_frigate" and me.get_model() != "s-300" and me.get_model() != "ZSU-23-4M" and me.get_type()!=MARINE) {
+        if (me.get_model() != "gci" and me.get_model() != "S-75" and me.get_model() != "SA-3" and me.get_model() != "SA-6" and me.get_model() != "buk-m2" and me.get_model() != "MIM104D" and me.get_model() != "missile_frigate" and me.get_model() != "s-300" and me.get_model() != "ZSU-23-4M" and me.get_type()!=MARINE) {
             me.bearingR = coord.course_to(me.get_Coord());
             me.headingR = me.get_heading();
             me.inv_bearingR =  me.bearingR+180;

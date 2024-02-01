@@ -6,10 +6,16 @@
             <target-tf-altitude-ft type="double">20000.0</target-tf-altitude-ft>
             <tf-minimums type="int">500</tf-minimums>
         </settings>
+        <route-manager>
+            <disable-route-manager type="bool">true</disable-route-manager><!-- we use our own delagate -->
+            <disable-fms type="bool">true</disable-fms><!-- we use our own delagate -->
+        </route-manager>
+        <serviceable type="bool">true</serviceable>
     </autopilot>
     <sim>
-        <aircraft-version>3.72</aircraft-version>
+        <aircraft-version>3.80</aircraft-version>
         <minimum-fg-version>2020.3</minimum-fg-version>
+        <expected-aircraft-dir-name>f16</expected-aircraft-dir-name>
         <!-- enable "parkpos=AVAILABLE" option for the F-16 -->
         <dimensions>
             <radius-m type="double">10.0</radius-m>
@@ -30,9 +36,9 @@
             <path>/instrumentation/tacan/frequencies/selected-channel[2]</path>
             <path>/instrumentation/tacan/frequencies/selected-channel[3]</path>
             <path>/instrumentation/tacan/frequencies/selected-channel[4]</path>
-            <path>/f16/avionics/msl-vol-knob</path>
+            <path>/f16/ews/msl-vol-knob</path>
             <path>/f16/avionics/ils-volume</path>
-            <path>/f16/avionics/rwr-volume</path>
+            <path>/f16/ews/rwr-volume</path>
             <path>/f16/avionics/intercom-volume</path>
             <path>/f16/effects/dirt</path>
             <path>/f16/effects/rust</path>
@@ -299,7 +305,7 @@
             </config>
         </view>
         <view n="101">
-            <!-- also used for ejection view -->
+            <!-- also used for ejection view, if change this number, also change it in MissileView.nas -->
             <name>Missile View</name>
             <type>lookat</type>
             <enabled>true</enabled>
@@ -389,7 +395,6 @@
                 <enabled type="bool" userarchive="y">true</enabled>
                 <new type="bool">false</new>
                 <parameters>
-                    <locked-by-airframe type="bool">true</locked-by-airframe>
                     <blackout-onset-g type="double">5</blackout-onset-g>
                     <blackout-complete-g type="double">9</blackout-complete-g>
                     <onset-blackout-sec type="double">300</onset-blackout-sec>
@@ -466,6 +471,17 @@
                         <binding>
                             <command>dialog-show</command>
                             <dialog-name>flightlog</dialog-name>
+                        </binding>
+                    </item>
+                </menu>
+                <menu n="116">
+                    <label>Reset</label>
+                    <enabled type="bool">true</enabled>
+                    <item>
+                        <label>Reset to Airbase (military only)</label>
+                        <binding>
+                            <command>dialog-show</command>
+                            <dialog-name>airbases</dialog-name>
                         </binding>
                     </item>
                 </menu>
@@ -850,6 +866,7 @@
             </inertia>
             <systems>
                 <hook>
+                    <serviceable type="bool">1</serviceable>
                     <tailhook-cmd-norm type="bool">false</tailhook-cmd-norm>
                     <tailhook-length-ft type="double">4.2979</tailhook-length-ft><!-- 1.31m -->
                     <tailhook-pos-min-deg type="double">-3.806</tailhook-pos-min-deg>
@@ -1201,8 +1218,6 @@
         <rwr-new type="int">-1</rwr-new>
         <rwr-launch type="string"></rwr-launch>
         <rwr-launch-sam type="bool">false</rwr-launch-sam>
-        <rwr-pri type="bool">false</rwr-pri>
-        <rwr-unk type="bool">false</rwr-unk>
     </sound>
     <f16>
         <stores-cat type="int">1</stores-cat>
@@ -1255,7 +1270,24 @@
             <lat type="double">0.0</lat>
             <lon type="double">0.0</lon>
             <alt type="int">0.0</alt>
+            <stpt-auto type="string">AUTO</stpt-auto><!-- if change this then also change steerpoint.autoMode -->
         </ded>
+        <ews>
+            <ew-disp-switch type="bool">false</ew-disp-switch>
+            <ew-rwr-switch type="bool">false</ew-rwr-switch>
+            <ew-mws-switch type="bool">false</ew-mws-switch>
+            <ew-jett-switch type="bool">false</ew-jett-switch>
+            <ew-jmr-switch type="bool">false</ew-jmr-switch>
+            <ew-mode-knob type="int">0</ew-mode-knob>
+            <msl-vol-knob type="double">0.5</msl-vol-knob>
+            <rwr-volume type="double">0.7</rwr-volume>
+            <rwr-int type="double">1.0</rwr-int>
+            <rwr-separate type="bool">false</rwr-separate>
+            <rwr-show-priority-only type="bool">false</rwr-show-priority-only>
+            <rwr-show-unknowns type="bool">false</rwr-show-unknowns>
+            <rwr-pri type="bool">false</rwr-pri>
+            <rwr-unk type="bool">false</rwr-unk>
+        </ews>
         <avionics>
 			<probe-heat-switch type="int">0</probe-heat-switch>
 			<probe-heat-light type="bool">false</probe-heat-light>
@@ -1265,11 +1297,12 @@
             <hud-flir-distance-min type="double">1.0</hud-flir-distance-min><!-- must be larger than zero -->
             <hud-flir-distance-max type="double">20.0</hud-flir-distance-max><!-- must be larger than min -->
             <hud-flir-optimum type="bool">false</hud-flir-optimum>
+            <mfd-flir-cont type="double">1.0</mfd-flir-cont>
+            <mfd-flir-brt type="double">1.0</mfd-flir-brt>
             <hud-brt type="double">0.0</hud-brt>
             <hud-sym type="double">0.0</hud-sym>
             <hud-cont type="double">0.0</hud-cont>
             <hud-depr-ret type="double">0.0</hud-depr-ret>
-            <rwr-int type="double">1.0</rwr-int>
             <mfd-l-brt type="double">1.0</mfd-l-brt>
             <mfd-l-con type="double">1.0</mfd-l-con>
             <mfd-r-brt type="double">1.0</mfd-r-brt>
@@ -1333,18 +1366,10 @@
             <power-right-hdpt-warm type="double">0</power-right-hdpt-warm>
             <power-right-hdpt-warming type="bool">true</power-right-hdpt-warming>
             <ins-knob type="int">0</ins-knob>
-            <ew-disp-switch type="bool">false</ew-disp-switch>
-            <ew-rwr-switch type="bool">false</ew-rwr-switch>
-            <ew-mws-switch type="bool">false</ew-mws-switch>
-            <ew-jett-switch type="bool">false</ew-jett-switch>
-            <ew-jmr-switch type="bool">false</ew-jmr-switch>
-            <ew-mode-knob type="int">0</ew-mode-knob>
             <cmds-01-switch type="bool">false</cmds-01-switch>
             <cmds-02-switch type="bool">false</cmds-02-switch>
             <cmds-ch-switch type="bool">false</cmds-ch-switch>
             <cmds-fl-switch type="bool">false</cmds-fl-switch>
-            <msl-vol-knob type="double">0.5</msl-vol-knob>
-            <rwr-volume type="double">0.7</rwr-volume>
             <oxy-psi type="double">0.0</oxy-psi>
             <pbg-switch type="int">-1</pbg-switch>
             <plain-cipher type="int">0</plain-cipher>
@@ -1373,6 +1398,8 @@
                 <avionics type="bool">false</avionics>
                 <elec-reset-btn type="bool">false</elec-reset-btn>
                 <probe-heat type="bool">false</probe-heat>
+                <engine-fault type="bool">false</engine-fault>
+                <flcs type="bool">false</flcs>
             </caution>
             <bingo type="int">0</bingo><!-- 0: No warn 1: warn 2: warn reset -->
             <fault-warning type="int">0</fault-warning><!-- 0: No warn 1: warn 2: warn reset -->
@@ -1383,6 +1410,7 @@
         <fcs>
             <stby-mode type="bool">false</stby-mode>
             <adv-mode type="bool">false</adv-mode>
+            <adv-mode-smooth type="int">1</adv-mode-smooth>
             <autopilot-on type="int">0</autopilot-on> <!-- Ignored on Block 20+ -->
             <switch-pitch-block15 type="int">0</switch-pitch-block15>
             <switch-pitch-block20 type="int">0</switch-pitch-block20>
@@ -1398,14 +1426,16 @@
             <bit-fail type="bool">false</bit-fail>
         </fcs>
         <engine>
-			<ctl-sec type="bool">false</ctl-sec>
+            <ctl-sec type="bool">false</ctl-sec>
             <feed type="int">0</feed><!-- OFF/NORM prevents starter, cutoff -->
             <jet-fuel type="int">0</jet-fuel><!-- starter -1=1 1=2 0=off  goes to off at 55% rpm -->
             <running-state type="bool">false</running-state>
             <ab-reset type="int">0</ab-reset>
             <max-power type="bool">false</max-power>
+            <eec-cover type="int">0</eec-cover>
+            <eec-switch type="int">1</eec-switch>
             <jfs-rpm-normalized type="double">0</jfs-rpm-normalized>
-			<sec-self-test type="bool">false</sec-self-test>
+            <sec-self-test type="bool">false</sec-self-test>
             <cutoff-release-lever type="bool">true</cutoff-release-lever>
             <jfs-spool-up-start1-s type="double">12</jfs-spool-up-start1-s>
             <jfs-spool-up-start2-s type="double">8</jfs-spool-up-start2-s>
@@ -1443,6 +1473,7 @@
             <rust-mag type="double">0.3</rust-mag>
             <dirt type="bool">false</dirt>
             <dirt-fac type="double">0.25</dirt-fac>
+            <apple type="int">0</apple>
         </effects>
         <vne-exceed type="double">0</vne-exceed>
         <crs-ils type="double">0.0</crs-ils>
@@ -1545,11 +1576,13 @@
             <file>Aircraft/f16/Nasal/damage.nas</file>
         </damage>
         <vector>
-            <file>Aircraft/f16/Nasal/vector.nas</file><!-- must be before RCS, armament and radar -->
+            <!-- must be before RCS, armament and radar -->
+            <file>Aircraft/f16/Nasal/vector.nas</file>
         </vector>
         <rcs>
-            <file>Aircraft/f16/Nasal/rcs_mand.nas</file><!-- must be before radar -->
-            <file>Aircraft/f16/Nasal/rcs.nas</file><!-- must be before radar -->
+            <!-- must be before radar -->
+            <file>Aircraft/f16/Nasal/radar/rcs_mand.nas</file>
+            <file>Aircraft/f16/Nasal/radar/rcs.nas</file>
         </rcs>
         <controls>
             <file>Aircraft/f16/Nasal/f16_controls.nas</file>
@@ -1568,9 +1601,12 @@
             <file>Aircraft/f16/Nasal/mfd.nas</file>
             <file>Aircraft/f16/Nasal/HUD/hud_math.nas</file>
             <file>Aircraft/f16/Nasal/HUD/HUD_main.nas</file>
-            <file>Aircraft/f16/Nasal/MFD/MFD_main.nas</file>
+            <!--file>Aircraft/f16/Nasal/MFD/MFD_main.nas</file-->
             <!--<file>Aircraft/f16/Nasal/blackout.nas</file>-->
         </f16>
+        <displays> 
+            <file>Aircraft/f16/Nasal/MFD/display-system.nas</file>
+        </displays>
         <liveries>
             <file>Aircraft/f16/Nasal/liveries.nas</file>
         </liveries>
@@ -1592,9 +1628,9 @@
         <ai>
           <file>Aircraft/f16/Nasal/AI_list.nas</file>
         </ai>
-        <view>
+        <viewMissile>
           <file>Aircraft/f16/Nasal/MissileView.nas</file>
-        </view>
+        </viewMissile>
         <armament>
             <file>Aircraft/f16/Nasal/missile-code.nas</file><!-- must be before station-manager -->
         </armament>
@@ -1612,6 +1648,7 @@
         </pylons>
         <crash>
             <file>Aircraft/f16/Nasal/crash-and-stress.nas</file>
+            <file>Aircraft/f16/Nasal/crash-and-stress-custom.nas</file>
         </crash>
         <mig28>
             <file>Aircraft/f16/Nasal/mig28.nas</file>
@@ -1663,12 +1700,22 @@
             <file>Aircraft/f16/Nasal/help.nas</file>
         </help>
         <radar_system>
+            <file>Aircraft/f16/Nasal/radar/radar-system-database.nas</file>
             <file>Aircraft/f16/Nasal/radar/radar-system.nas</file>
             <file>Aircraft/f16/Nasal/radar/apg-68.nas</file>
         </radar_system>
         <terr_foll>
             <file>Aircraft/f16/Nasal/terrain_follow.nas</file>
         </terr_foll>
+        <delegate>
+            <file>Aircraft/f16/Nasal/flightPlanDelegate.nas</file>
+        </delegate>
+        <airbases>
+            <file>Aircraft/f16/Nasal/airbases.nas</file>
+        </airbases>
+        <!--spaces>
+            <file>Aircraft/f16/Nasal/utils/namespaces.nas</file>
+        </spaces-->
     </nasal>
 
 

@@ -24,6 +24,9 @@ var center_to_edge_distance_m = 0.025;#meters
 var screen_w=getprop("sim/startup/xsize");
 var screen_h=getprop("sim/startup/ysize");
 
+var VISUAL = 47;
+var SLAVE  = 76;
+
 var F16_HMD = {
     map: func (value, leftMin, leftMax, rightMin, rightMax) {
         # Figure out how 'wide' each range is
@@ -107,8 +110,7 @@ var F16_HMD = {
                 .lineTo(0,1024)
                 .setStrokeLineWidth(stroke1)
                 .setColor(0,0,1)
-                .hide()
-                ;
+                .hide();
         obj.mainCircle = obj.svg.createChild("path")
             .moveTo(12,512)
             .arcSmallCW(500,500, 0, 500*2, 0)
@@ -457,6 +459,19 @@ var F16_HMD = {
             append(obj.tgt_symbols, obj.tgt);
             append(obj.total, obj.tgt);
         }
+        obj.mark_symbols = [];
+        for(var u = 0; u<steerpoints.number_of_markpoints_own + steerpoints.number_of_markpoints_dlnk;u+=1) {
+            obj.tgt = obj.centerOrigin.createChild("path")
+                .moveTo(-boxRadius*0.4,-boxRadius*0.4)
+                .lineTo( boxRadius*0.4, boxRadius*0.4)
+                .moveTo( boxRadius*0.4,-boxRadius*0.4)
+                .lineTo(-boxRadius*0.4, boxRadius*0.4)
+                .setStrokeLineWidth(stroke1)
+                .hide()
+                .setColor(0,1,0);
+            append(obj.mark_symbols, obj.tgt);
+            append(obj.total, obj.tgt);
+        }
         obj.steerPT = obj.centerOrigin.createChild("path")
                 .moveTo(-boxRadius*0.3, 0)
                 .lineTo(0, boxRadiusHalf*0.85)
@@ -587,7 +602,7 @@ var F16_HMD = {
         # set the update list - using the update manager to improve the performance
         # of the HUD update - without this there was a drop of 20fps (when running at 60fps)
         obj.update_items = [
-            props.UpdateManager.FromHashList(["hmcs_sym", "hud_power", "hud_daytime", "red"], 0.1, func(hdp)#changed to 0.1, this function is VERY heavy to run.
+            props.UpdateManager.FromHashList(["hmcs_sym", "hud_power", "hud_daytime", "red"], 0.05, func(hdp)#changed to 0.1, this function is VERY heavy to run.
                                       {
 # print("HUD hud_serviceable=", hdp.hud_serviceable," display=", hdp.hud_display, " brt=", hdp.hud_brightness, " power=", hdp.hud_power);
 
@@ -603,7 +618,8 @@ var F16_HMD = {
                                             # Ref: 16PR16226 page 60, adjusted up slightly
                                             var night_ratio = 0.6;
                                             if (hdp.hud_daytime == 0) { # Auto
-                                                brt *= (night_ratio + (hdp.red * (1 - night_ratio)));
+                                                obj.daylight_red = math.min(1, obj.extrapolate(hdp.red, 0, 0.85, 0, 1));# treat 0.85 as full day light, so it dont have to june and noon at equator to get full brightness
+                                                brt *= (night_ratio + (obj.daylight_red * (1 - night_ratio)));
                                             } elsif (hdp.hud_daytime == -1) { # Night
                                                 brt *= night_ratio;
                                             }
@@ -717,6 +733,12 @@ var F16_HMD = {
                                                  } else {
                                                      obj.steerPT.hide();
                                                  }
+                                                 for (var t = 400; t < steerpoints.number_of_markpoints_own+400; t+=1) {
+                                                    obj.paintMark(steerpoints.getNumber(t),t-400, hdp);
+                                                 }
+                                                 for (var t = 450; t < steerpoints.number_of_markpoints_own+450; t+=1) {
+                                                    obj.paintMark(steerpoints.getNumber(t),t-450+5, hdp);
+                                                 }
                                              }
                                             ,
             #props.UpdateManager.FromHashList(["hmdH","hmdP"], 0.1,
@@ -800,6 +822,26 @@ var F16_HMD = {
         obj.NzMax = 1.0;
 
         return obj;
+    },
+
+    paintMark: func (stpt, number, hdp) {
+        if (stpt != nil) {
+            me.stptPos = f16.HudMath.getDevFromCoord(steerpoints.stpt2coord(stpt), hdp.getproper("hmdH"), hdp.getproper("hmdP"), hdp, geo.viewer_position());
+            me.stptPos[0] = geo.normdeg180(me.stptPos[0]);
+            me.stptPos[0] = (512/center_to_edge_distance_m)*(math.tan(math.clamp(me.stptPos[0],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
+            me.stptPos[1] = -(512/center_to_edge_distance_m)*(math.tan(math.clamp(me.stptPos[1],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
+
+            me.clamped = math.sqrt(me.stptPos[0]*me.stptPos[0]+me.stptPos[1]*me.stptPos[1]) > 500;
+
+            if (!me.clamped) {
+                me.mark_symbols[number].setTranslation(me.stptPos);
+                me.mark_symbols[number].show();
+            } else {
+                me.mark_symbols[number].hide();
+            }
+         } else {
+             me.mark_symbols[number].hide();
+         }
     },
 
     #######################################################################################################
@@ -953,16 +995,23 @@ var F16_HMD = {
         me.irT = 0;#IR triangle aspect indicator
         me.rdT = 0;
         me.irB = 0;#IR search bore
+        me.aimMode = SLAVE;
         #printf("%d %d %d %s",hdp.master_arm,pylons.fcs != nil,pylons.fcs.getAmmo(),hdp.weapon_selected);
         if(hdp.getproper("master_arm") != 0 and pylons.fcs != nil and pylons.fcs.getAmmo() > 0) {
             hdp.weapon_selected = pylons.fcs.selectedType;
             var aim = pylons.fcs.getSelectedWeapon();
+
             if (0 and hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
                 if (!pylons.fcs.isLock()) {
                     me.radarLock.setTranslation(0, -me.sy*0.25+262*0.3*0.5);
                     me.rdL = 1;
                 }
-            } elsif (hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "AIM-9M" or hdp.weapon_selected == "IRIS-T") {
+            } elsif (hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "AIM-9M" or hdp.weapon_selected == "AIM-9X" or hdp.weapon_selected == "IRIS-T") {
+                if (aim != nil) {
+                    if (!aim.isRadarSlaved()) {
+                        me.aimMode = VISUAL;
+                    }
+                }
                 if (aim != nil and aim.isCaged()) {
                     var coords = aim.getSeekerInfo();
                     if (coords != nil) {
@@ -970,6 +1019,17 @@ var F16_HMD = {
                         me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
                         me.echoPos[0] = (512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512 (should be 0.1385 from eye instead to be like real f16)
                         me.echoPos[1] = -(512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
+
+                        me.clamped = math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]) > 500;
+
+                        if (me.clamped) {
+                            me.clampAmount = 500/math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]);
+                            me.echoPos[0] *= me.clampAmount;
+                            me.echoPos[1] *= me.clampAmount;
+                            me.irBore.setStrokeDashArray([7,7]);
+                        } else {
+                            me.irBore.setStrokeDashArray([100]);
+                        }
                         me.irBore.setTranslation(me.echoPos);
                         me.irB = 1;
                     }#atan((0.025*500)/(0.2*512)) = radius_fg = atan(12.5/102.4) = 6.96 degs => 13.92 deg diam
@@ -981,6 +1041,18 @@ var F16_HMD = {
                         me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
                         me.echoPos[0] = (512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
                         me.echoPos[1] = -(512/center_to_edge_distance_m)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*eye_to_hmcs_distance_m;#0.2m from eye, 0.025 = 512
+
+                        me.clamped = math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]) > 500;
+
+                        if (me.clamped) {
+                            me.clampAmount = 500/math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]);
+                            me.echoPos[0] *= me.clampAmount;
+                            me.echoPos[1] *= me.clampAmount;
+                            me.irLock.setStrokeDashArray([7,7]);
+                        } else {
+                            me.irLock.setStrokeDashArray([100]);
+                        }
+
                         me.irLock.setTranslation(me.echoPos);
                         me.irL = 1;
                     }
@@ -1023,7 +1095,7 @@ var F16_HMD = {
                         me.echoPos[1] *= me.clampAmount;
                         me.tgt.setStrokeDashArray([7,7]);
                     } else {
-                        me.tgt.setStrokeDashArray([1]);
+                        me.tgt.setStrokeDashArray([100]);
                     }
 
                     if (radar_system.apg68Radar.getPriorityTarget() != nil and radar_system.apg68Radar.getPriorityTarget().getLastBlep() != nil and radar_system.apg68Radar.getPriorityTarget().getLastRangeDirect() != nil and radar_system.apg68Radar.getPriorityTarget().get_Callsign() != nil and me.u.get_Callsign() == radar_system.apg68Radar.getPriorityTarget().get_Callsign()) {
@@ -1037,7 +1109,7 @@ var F16_HMD = {
                         if (me.clamped) {
                             me.target_locked.setStrokeDashArray([7,7]);
                         } else {
-                            me.target_locked.setStrokeDashArray([1]);
+                            me.target_locked.setStrokeDashArray([100]);
                         }
                         me.target_locked.update();
                         if (0 and currASEC != nil) {
@@ -1055,12 +1127,24 @@ var F16_HMD = {
                         }
                         if (0 and pylons.fcs != nil and pylons.fcs.isLock()) {
                             #me.target_locked.setRotation(45*D2R);
-                            if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7" or hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "AIM-9M" or hdp.weapon_selected == "IRIS-T") {
+                            if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7" or hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "AIM-9M" or hdp.weapon_selected == "AIM-9X" or hdp.weapon_selected == "IRIS-T") {
                                 var aim = pylons.fcs.getSelectedWeapon();
                                 if (aim != nil) {
                                     var coords = aim.getSeekerInfo();
                                     if (coords != nil) {
                                         me.seekPos = hmd.HudMath.getCenterPosFromDegs(coords[0],coords[1]);
+
+                                        me.clamped = math.sqrt(me.seekPos[0]*me.seekPos[0]+me.seekPos[1]*me.seekPos[1]) > 500;
+
+                                        if (me.clamped) {
+                                            me.clampAmount = 500/math.sqrt(me.seekPos[0]*me.seekPos[0]+me.seekPos[1]*me.seekPos[1]);
+                                            me.seekPos[0] *= me.clampAmount;
+                                            me.seekPos[1] *= me.clampAmount;
+                                            me.irLock.setStrokeDashArray([7,7]);
+                                        } else {
+                                            me.irLock.setStrokeDashArray([100]);
+                                        }
+
                                         me.irLock.setTranslation(me.seekPos);
                                         me.radarLock.setTranslation(me.seekPos);
                                     }
@@ -1071,7 +1155,7 @@ var F16_HMD = {
                                 me.ASEC120Aspect.setRotation(D2R*(radar_system.apg68Radar.getPriorityTarget().get_heading()-hdp.getproper("heading")+180));
                                 me.rdL = 1;
                                 me.rdT = 1;
-                            } elsif (hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "AIM-9M" or hdp.weapon_selected == "IRIS-T") {
+                            } elsif (hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "AIM-9M" or hdp.weapon_selected == "AIM-9X" or hdp.weapon_selected == "IRIS-T") {
                                 #me.irLock.setTranslation(me.xcS, me.ycS);
                                 me.ASEC65Aspect.setRotation(D2R*(radar_system.apg68Radar.getPriorityTarget().get_heading()-hdp.getproper("heading")+180));
                                 me.irL = 1;
@@ -1267,7 +1351,7 @@ var F16_HMD = {
 
         hdp.window5_txt = f16.transfer_stpt;
         hdp.window3_txt = f16.transfer_dist;
-        hdp.window9_txt = f16.transfer_arms~(f16.transfer_arms==""?"":"-V");
+        hdp.window9_txt = f16.transfer_arms~(f16.transfer_arms==""?"":me.aimMode==VISUAL?"-V":"-S");
         hdp.window2_txt = f16.transfer_mode;
         hdp.window11_txt = f16.transfer_fuel_bullseye;
         hdp.window12_txt = f16.transfer_g;
@@ -1480,7 +1564,7 @@ var F16HMDRecipient =
 
             notification.range_rate = "RNGRATE";
 
-            if (notification.NotificationType == "FrameNotification")
+            if (notification.NotificationType == "FrameNotification16")
             {
 
                 me.HUDobj.update(notification);
@@ -1544,4 +1628,80 @@ var dropping = func {
     }
 }
 
+var isMarking = 0;
+var markStart = func {
+    if (getprop("controls/displays/cursor-click") and f16.SOI == 1 and HUDobj["off"] == 0 and isMarking == 0) {
+        isMarking = 1;
+        var t = maketimer(0.55, func markStart());
+        t.singleShot = 1;
+        #print("markStart 1");
+        t.start();        
+    } elsif (getprop("controls/displays/cursor-click") and f16.SOI == 1 and HUDobj["off"] == 0 and isMarking == 1) {
+        isMarking = 2;
+        #print("markStart 2");
+        mark();
+    } elsif (!getprop("controls/displays/cursor-click") and isMarking > 0) {
+        isMarking = 0;
+        #print("markStart 0");
+    } else {
+        #print("markStart click ",getprop("controls/displays/cursor-click")," soi ",f16.SOI == 1," HMD ",HUDobj["off"] == 0," marking ",isMarking);
+    }
+};
+
+var mark = func {
+    if (getprop("controls/displays/cursor-click") and f16.SOI == 1 and HUDobj["off"] == 0) {
+        # Mark
+        var coordA = geo.viewer_position();
+        coordA.alt();# TODO: once fixed in FG this line is no longer needed.
+        
+        # get quaternion for view rotation:
+        var q = [getprop("sim/current-view/debug/orientation-w"),getprop("sim/current-view/debug/orientation-x"),getprop("sim/current-view/debug/orientation-y"),getprop("sim/current-view/debug/orientation-z")];
+
+        var V = [2 * (q[1] * q[3] - q[0] * q[2]), 2 * (q[2] * q[3] + q[0] * q[1]),1 - 2 * (q[1] * q[1] + q[2] * q[2])];
+        var w= q[0];
+        var x= q[1];
+        var y= q[2];
+        var z= q[3];
+
+        #rotate from x axis using the quaternion:
+        V = [1 - 2 * (y*y + z*z),2 * (x*y + w*z),2 * (x*z - w*y)];
+
+        var xyz          = {"x":coordA.x(),                "y":coordA.y(),               "z":coordA.z()};
+        #var directionLOS = {"x":dirCoord.x()-coordA.x(),   "y":dirCoord.y()-coordA.y(),  "z":dirCoord.z()-coordA.z()};
+        var directionLOS = {"x":V[0],   "y":V[1],  "z":V[2]};
+
+        # Check for terrain between own weapon and target:
+        var terrainGeod = get_cart_ground_intersection(xyz, directionLOS);
+        if (terrainGeod == nil) {
+            #print("0 terrain");
+            return;
+        } else {
+            var terrain = geo.Coord.new();
+            terrain.set_latlon(terrainGeod.lat, terrainGeod.lon, terrainGeod.elevation);
+            var ut = nil;
+            #foreach (u ; radar_system.getCompleteList()) {
+            #    if (terrain.direct_distance_to(u.get_Coord())<45) {
+            #        ut = u;
+            #        break;
+            #    }
+            #}
+            if (ut!=nil) {
+                var contact = ut.getNearbyVirtualTGPContact();
+                armament.contactPoint = contact;
+                #var tc = contact.getCoord();
+                #print("contactPoint "~tc.lat()~", "~tc.lon()~" at "~(tc.alt()*M2FT)~" ft");
+            } else {
+                steerpoints.markHUD(terrain);
+                ded.dataEntryDisplay.pageLast = ded.pMARK;# So it does not do a OFLY mark.
+                ded.dataEntryDisplay.page     = ded.pMARK;
+                #var crater_model = getprop("payload/armament/models") ~ "the-flare.xml";#
+                #var static = geo.put_model(crater_model, terrain.lat(),terrain.lon(),terrain.alt(), 0);#
+                #print("mark voila");
+                #armament.contactPoint = radar_system.ContactTGP.new("TGP-Spot",terrain,1);
+            }
+        }
+    }
+};
+
 setlistener("payload/armament/gravity-dropping",func{dropping()},nil,0);
+setlistener("controls/displays/cursor-click", markStart);

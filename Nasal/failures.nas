@@ -96,7 +96,8 @@ var init = func {
         },
 
         update: func {
-            if(getprop(me.params["property"]) != 0) {
+            me.prp = getprop(me.params["property"]);
+            if(me.prp != nil and me.prp) {
                 var speed = getprop(me._speed_prop);
                 var min = me.params["min-speed-kt"];
                 var max = me.params["max-speed-kt"];
@@ -112,6 +113,74 @@ var init = func {
             }
             return me.fired = 0;
         }
+    };
+
+    var StationTrigger = {
+
+        parents: [FailureMgr.Trigger],
+        requires_polling: 1,# its 0.1 Hz
+        type: "Station",
+
+        # Props: weight on station
+        # Params: name, arm_meters
+        #
+        # v1: at fails, the stores will not be releasable, not be jettisonable. Reason: stress, flutter.
+        #
+        # TODO: Tears, rollrate acc., rollrate
+        new: func(name, arm, propGW) {
+            if(arm == nil)
+                die("StationTrigger.new: arm must be specified");
+
+            if(propGW == nil or propGW == "")
+                die("StationTrigger.new: propGW must be specified");
+
+            var m = FailureMgr.Trigger.new();
+            m.parents = [StationTrigger];
+            m.params["propertyGW"] = propGW;
+            m.params["arm"] = 6.5 - arm;
+            m.params["name"] = name;
+            m._normal_prop = "/accelerations/pilot-gdamped";
+            m._alpha_prop = "/orientation/alpha-deg";
+            m._roll_prop = "/orientation/roll-rate-degps";
+            return m;
+        },
+
+        to_str: func {
+            sprintf("%s: Increasing probability of fails at higher AoA and G and when greater weight is hung.",me.params.name);
+        },
+
+        update: func {
+            me.weight = getprop(me.params["propertyGW"]);
+            me.normal = getprop(me._normal_prop);
+            if(me.weight > 300 and me.normal > me.params.arm) {# TODO: a bit crude destinction
+                me.alpha = math.max(0, getprop(me._alpha_prop));               
+
+                me.maxVio = me.extrapolate(me.weight, 300, 2500, 20, 0);
+                me.maxAlpha = math.max(16, me.extrapolate(me.weight, 0, 1500, 26, 16));
+
+                me.violation = math.max(0, me.normal-me.params.arm)*math.max(0, me.alpha-me.maxAlpha);# TODO: Too crude, and wrong.
+
+                if(me.violation > me.maxVio) {
+                    # In violation regime
+
+                    me.factor = math.min(0.95, (me.violation-me.maxVio)/15);#max 95% chance
+
+                    if(rand() < me.factor) {
+                        #printf("%s failed    at %d AoA, %.1f G, %d lbm. (vio %d > %d) %d%%", me.params.name, me.alpha, me.normal, me.weight, me.violation, me.maxVio, me.factor*100);
+                        return me.fired = 1;
+                    }
+                    #printf("%s stress     at %d AoA, %.1f G, %d lbm. (vio %d > %d) %d%%", me.params.name, me.alpha, me.normal, me.weight, me.violation, me.maxVio, me.factor*100);
+                }
+                #printf("%s stressless at %d AoA, %.1f G, %d lbm. (vio %d > %d)", me.params.name, me.alpha, me.normal, me.weight, me.violation, me.maxVio);
+            } else {
+                #printf("%s weight %d  %.1f G > %.1f G", me.params.name, me.weight, me.normal, me.params.arm);
+            }
+            return me.fired = 0;
+        },
+
+        extrapolate: func (x, x1, x2, y1, y2) {
+            return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
+        },
     };
 
     var set_value = func(path, value) {
@@ -164,7 +233,41 @@ var init = func {
     
     var hud = compat_failure_modes.set_unserviceable("instrumentation/hud");
     FailureMgr.add_failure_mode("instrumentation/hud", "HUD", hud);
+
+    var ap = compat_failure_modes.set_unserviceable("autopilot");
+    FailureMgr.add_failure_mode("autopilot", "Autopilot", ap);
     
+    # stations
+
+    prop = "fdm/jsbsim/inertia/pointmass-weight-lbs[4]";
+    var trigger_sta4 = StationTrigger.new("Station 4", 1.62889, prop);
+    var sta4_fc = compat_failure_modes.set_unserviceable("payload/sta[3]");
+    FailureMgr.add_failure_mode("payload/sta4", "Station 4", sta4_fc);
+    FailureMgr.set_trigger("payload/sta4", trigger_sta4);
+    trigger_sta4.arm();
+
+    prop = "fdm/jsbsim/inertia/pointmass-weight-lbs[6]";
+    var trigger_sta6 = StationTrigger.new("Station 6", 1.62889, prop);
+    var sta6_fc = compat_failure_modes.set_unserviceable("payload/sta[5]");
+    FailureMgr.add_failure_mode("payload/sta6", "Station 6", sta6_fc);
+    FailureMgr.set_trigger("payload/sta6", trigger_sta6);
+    trigger_sta6.arm();
+
+    prop = "fdm/jsbsim/inertia/pointmass-weight-lbs[3]";
+    var trigger_sta3 = StationTrigger.new("Station 3", 2.88034, prop);
+    var sta3_fc = compat_failure_modes.set_unserviceable("payload/sta[2]");
+    FailureMgr.add_failure_mode("payload/sta3", "Station 3", sta3_fc);
+    FailureMgr.set_trigger("payload/sta3", trigger_sta3);
+    trigger_sta3.arm();
+
+    prop = "fdm/jsbsim/inertia/pointmass-weight-lbs[7]";
+    var trigger_sta7 = StationTrigger.new("Station 7", 2.88034, prop);
+    var sta7_fc = compat_failure_modes.set_unserviceable("payload/sta[6]");
+    FailureMgr.add_failure_mode("payload/sta7", "Station 7", sta7_fc);
+    FailureMgr.set_trigger("payload/sta7", trigger_sta7);
+    trigger_sta7.arm();
+
+
     #gears
 
     prop = "gear/gear[0]/position-norm";
@@ -188,6 +291,15 @@ var init = func {
     FailureMgr.set_trigger("controls/gear2", trigger_gear2);
     trigger_gear2.arm();
 
+    #hook
+
+    prop = "fdm/jsbsim/systems/hook/arrestor-wire-engaged-hook";
+    var trigger_hook = RandSpeedTrigger.new(175, 215, prop);
+    var hook_fc = compat_failure_modes.set_unserviceable("fdm/jsbsim/systems/hook");
+    FailureMgr.add_failure_mode("fdm/jsbsim/systems/hook", "Arrestor hook", hook_fc);
+    FailureMgr.set_trigger("fdm/jsbsim/systems/hook", trigger_hook);
+    trigger_hook.arm();
+
     #var ch = compat_failure_modes.set_unserviceable("canopy");
     #FailureMgr.add_failure_mode("canopy", "Canopy hinges", ch);
     
@@ -201,6 +313,9 @@ var init = func {
     # Add failure for HUD to the compatible failures. This will setup the property tree in the normal way; 
     # but it will not add it to the gui dialog.
     #append(compat_failure_modes.compat_modes,{ id: "instrumentation/hud", type: compat_failure_modes.MTBF, failure: compat_failure_modes.SERV, desc: "HUD" });
+
+    # Start fault list loop
+    loop_timer.start();
 }
 
 
@@ -239,7 +354,6 @@ var loop = func {
     }
     fail_master = fail_master_tmp;
     loop_caution();
-    settimer(loop,1);
 }
 
 var fail_master = [0,0,0,0];
@@ -280,8 +394,12 @@ var fail_list = [
        [1," FLCS AOA  FAIL ", "systems/static/serviceable", 1, 0],
        [3," CADC BUS  FAIL ", "systems/vacuum/serviceable", 1, 0],
        [0,">FLCS LEF  LOCK<", "f16/fcs/le-flaps-switch", 1, 0],
-       [0,">FLCS BIT  FAIL<", "!f16/fcs/bit-fail", 1, 0]
-#      [1," FLCS A/P  FAIL ", "???", 1, 0]  if created, contributes to A/P inhibit
+       [0,">FLCS BIT  FAIL<", "!f16/fcs/bit-fail", 1, 0],
+       [1," FLCS A/P  FAIL ", "autopilot/serviceable", 1, 0], # contributes to A/P inhibit
+       [3," SMS  STA3 FAIL ", "payload/sta[2]/serviceable", 1, 0],
+       [3," SMS  STA4 FAIL ", "payload/sta[3]/serviceable", 1, 0],
+       [3," SMS  STA6 FAIL ", "payload/sta[5]/serviceable", 1, 0],
+       [3," SMS  STA7 FAIL ", "payload/sta[6]/serviceable", 1, 0]
 ]; 
 # Systems:
 # 0: FLCS (Warning)
@@ -409,6 +527,13 @@ var loop_caution = func {# TODO: unlit the caution lights except elec-sys when m
     var enableCatIII = getprop("fdm/jsbsim/fcs/fly-by-wire/enable-cat-III");
     var standbyGains = getprop("fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains");
     var fuelTest = getprop("controls/fuel/qty-selector") == 0;
+    var airSource = getprop("controls/ventilation/airconditioning-source");
+    # NORM, DUMP or RAM,
+    # while assuming ram air below 30 deg C at speeds higher
+    # than 70 kts is enough ventilation to cool the avionics
+    var cooling = airSource == 1 or airSource == 2 or
+                  (airSource == 3 and getprop("/environment/aircraft-effects/temperature-outside-ram-degC") < 30.0 and getprop("fdm/jsbsim/velocities/vtrue-kts") > 70.0);
+
     # GR1F-16CJ-1 page 121 : DBU - STORES CONFIG switch inoperative
     setprop("f16/avionics/caution/stores-config",  (batt2 and ((storesCat>1 and enableCatIII<1) or (storesCat==1 and enableCatIII==1)) and !getprop("fdm/jsbsim/fcs/fly-by-wire/digital-backup")));
     setprop("f16/avionics/caution/seat-not-armed", (batt2 and !getprop("controls/seat/ejection-safety-lever")));
@@ -420,10 +545,12 @@ var loop_caution = func {# TODO: unlit the caution lights except elec-sys when m
     setprop("f16/avionics/caution/elec-sys",       (batt2 and getprop("fdm/jsbsim/elec/bus/light/elec-sys")));
     setprop("f16/avionics/caution/cabin-press",    (batt2 and getprop("f16/cockpit/pressure-ft")>27000));
     setprop("f16/avionics/caution/adc",            (batt2 and standbyGains));
-    setprop("f16/avionics/caution/equip-hot",      (batt2 and (!getprop("controls/ventilation/airconditioning-source") and getprop("f16/avionics/power-ufc-warm"))));
+    setprop("f16/avionics/caution/equip-hot",      (batt2 and !cooling and getprop("f16/avionics/power-ufc-warm")));
     setprop("f16/avionics/caution/overheat",       (batt2 and (!getprop("damage/fire/serviceable") or getprop("controls/test/test-panel/fire-ovht-test"))));
     setprop("f16/avionics/caution/sec",            (batt2 and (getprop("f16/engine/sec-self-test") or getprop("f16/engine/ctl-sec"))));
-    setprop("f16/avionics/caution/avionics",       (batt2 and (!getprop("instrumentation/hud/serviceable") or !getprop("instrumentation/radar/serviceable") or !getprop("instrumentation/rwr/serviceable") or !getprop("instrumentation/tacan/serviceable"))));
+    setprop("f16/avionics/caution/avionics",       (batt2 and fail_master[3]));
+    setprop("f16/avionics/caution/engine-fault",   (batt2 and FailureMgr.get_failure_level("engines/engine")));
+    setprop("f16/avionics/caution/flcs",           (batt2 and fail_master[0] or fail_master[1]));
 };
 
 # Call caution method when a caution condition changes.
@@ -442,8 +569,10 @@ setlistener("f16/avionics/caution/overheat",caution,0,0);
 setlistener("f16/avionics/caution/sec",caution,0,0);
 setlistener("f16/avionics/caution/avionics",caution,0,0);
 setlistener("f16/avionics/caution/probe-heat",caution,0,0);
+setlistener("f16/avionics/caution/engine-fault",caution,0,0);
+setlistener("f16/avionics/caution/flcs",caution,0,0);
 
-loop();
+var loop_timer = maketimer(1, loop);
  
 # NOTES:
 #

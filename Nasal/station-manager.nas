@@ -67,6 +67,14 @@ var Station = {
 		# Get name of this station.
 		return me.currentName;
 	},
+
+	isOperable: func {
+		# Returns if is operable.
+		if (me.operableFunction != nil) {
+			return me.operableFunction();
+		}
+		return 1;
+	},
 	
 	isActive: func {
 		# Returns if is active. This is for example used in F-14, where stations be individually enabled or disabled.
@@ -103,24 +111,32 @@ var Station = {
 					} elsif (me.weaponName == "AGM-158") {
 						mf = func (struct) {
 							if (struct.dist_m != -1 and struct.speed_fps != 0) {
-								if (M2NM*struct.dist_m < 1.75 and struct.guidanceLaw == "direct-alt") {
+								if (struct.dist_m*M2NM > 10) {
+									# 22000 ft above sealevel, authentic value
+									return {"altitude": 22000};
+								}
+								if (struct.dist_horz_m != nil and M2NM*struct.dist_horz_m > 1.75 and struct.hasTarget) {
+									# Lower altitude to 5000 ft above target
+									return {"altitude_at": 5000};
+								}
+								if (struct.dist_horz_m != nil and M2NM*struct.dist_horz_m < 1.75 and struct.guidanceLaw == "direct-alt") {
 									# start terminal diving
 									return {"altitude":0,"guidanceLaw":"direct"};
 								}
 								if (M2FT*struct.dist_m/struct.speed_fps < 8 and struct.guidance == "gps") {
 									# 8s before impact switch to IR, authentic value
-									return {"guidance":"heat","guidanceLaw":"APN","altitude":0,"class":"GM","target":"closest","abort_midflight_function":1};
-								}
-								if (struct.dist_m*M2NM > 10) {
-									# 22000 ft above sealevel, authentic value
-									return {"altitude": 22000};
-								}
-								if (M2NM*struct.dist_m > 1.75 and struct.hasTarget) {
-									# Lower altitude to 5000 ft above target
-									return {"altitude_at": 5000};
+									return {"guidance":"heat","guidanceLaw":"PN","altitude":0,"class":"GM","target":"closest","abort_midflight_function":1};
 								}
 							}
 							return {};
+						};
+					} elsif (me.weaponName == "AGM-88") {
+						mf = func (struct) {
+							if (!struct.hasTarget) {
+								# Is in maddog mode
+								return {"class": "GM","abort_midflight_function":1};
+							}
+							return {"abort_midflight_function":1};
 						};
 					} elsif (me.weaponName == "AIM-54") {
 						mf = func (struct) {
@@ -165,8 +181,85 @@ var Station = {
 							}
 							return {};
 						};
-					}
-					
+					} elsif (me.weaponName == "AIM-9X") {
+						mf = func (struct) {
+						    var settings = {};
+						    settings.seeker_fov = 90;
+							if (struct.deviation_deg != nil) {
+								if (struct.deviation_deg > 70) {
+								    settings.guidanceLaw = "direct";
+								    #settings.guidance = "inertial";
+								} else {
+								    settings.guidanceLaw = "OPN";
+								    #settings.guidance = "heat";
+								    if (struct.deviation_deg < 55) {
+									    settings.abort_midflight_function = 1;
+									}
+								}
+							}
+							# Remove redundant values to keep logs clean
+							if (settings.seeker_fov == struct.seeker_fov) {
+							    settings.seeker_fov = nil;
+							}
+							if (settings["guidanceLaw"] == struct.guidanceLaw) {
+							    settings.guidanceLaw = nil;
+							}
+							#if (settings["guidance"] == struct.guidance) {
+							#    settings.guidance = nil;
+							#}
+							return settings;
+						};
+					} elsif (me.weaponName == "AIM-120AUT") {#varient used for automat that does not need new radar-system
+						mf = func (struct) {
+							if (struct.dist_m != -1 and struct.dist_m*M2NM < 10 and struct.guidance == "inertial") {
+								return {"guidance":"radar"};
+							}
+							return {};
+						};
+					} elsif (me.weaponName == "RB-99AUT") {
+						mf = func (struct) {
+							if (struct.dist_m != -1 and struct.dist_m*M2NM < 10 and struct.guidance == "inertial") {
+								return {"guidance":"radar"};
+							}
+							return {};
+						};
+					} elsif (me.weaponName == "R-77") {
+						mf = func (struct) {
+							if (struct.dist_m != -1 and struct.dist_m*M2NM < 12 and struct.guidance == "inertial") {
+								return {"guidance":"radar"};
+							}
+							return {};
+						};
+					} elsif (me.weaponName == "R-73") {
+						mf = func (struct) {
+						    var settings = {};
+						    settings.seeker_fov = 90;
+							if (struct.deviation_deg != nil) {
+								if (struct.deviation_deg > 70) {
+								    settings.guidanceLaw = "direct";
+								    #settings.guidance = "inertial";
+								} else {
+								    settings.guidanceLaw = "OPN";
+								    #settings.guidance = "heat";
+								    if (struct.deviation_deg < 55) {
+									    settings.abort_midflight_function = 1;
+									}
+								}
+							}
+							# Remove redundant values to keep logs clean
+							if (settings.seeker_fov == struct.seeker_fov) {
+							    settings.seeker_fov = nil;
+							}
+							if (settings["guidanceLaw"] == struct.guidanceLaw) {
+							    settings.guidanceLaw = nil;
+							}
+							#if (settings["guidance"] == struct.guidance) {
+							#    settings.guidance = nil;
+							#}
+							return settings;
+						};
+			        }
+
 					me.aim = armament.AIM.new(me.id*100+me.i, me.weaponName, "", mf, me.position);
 					if (me.aim == -1) {
 						print("Pylon could not create "~me.weaponName);

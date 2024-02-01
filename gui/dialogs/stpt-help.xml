@@ -70,6 +70,16 @@
 	    <label>#555 is Bulls-eye.</label>
 	    <height>25</height>
 	</text>
+	<text>
+		<halign>left</halign>
+	    <label>#600 to #699 are HSD lines 3 (read-only).</label>
+	    <height>25</height>
+	</text>
+	<text>
+		<halign>left</halign>
+	    <label>#700 to #799 are HSD lines 4 (read-only).</label>
+	    <height>25</height>
+	</text>
 
 	<empty><stretch>1</stretch></empty>
 

@@ -30,7 +30,7 @@ var repair2 = func {
   setprop("f16/ejected",0);
   setprop("f16/chute/done",0);
   setprop("sim/view[0]/enabled",1);
-  setprop("sim/current-view/view-number",0);
+  view.setViewByIndex(0);
   setprop("f16/cockpit/hydrazine-minutes", 10);
   setprop("f16/cockpit/oxygen-liters", 5);
   setprop("f16/cockpit/alt-gear-pneu",1);
@@ -219,11 +219,11 @@ var autostartengine = func {
   setprop("f16/avionics/hud-sym", 1);
   setprop("f16/avionics/hud-brt", 0);
 
-  setprop("f16/avionics/ew-mws-switch",1);
-  setprop("f16/avionics/ew-jmr-switch",1);
-  setprop("f16/avionics/ew-rwr-switch",1);
-  setprop("f16/avionics/ew-disp-switch",1);
-  setprop("f16/avionics/ew-mode-knob",1);
+  setprop("f16/ews/ew-mws-switch",1);
+  setprop("f16/ews/ew-jmr-switch",1);
+  setprop("f16/ews/ew-rwr-switch",1);
+  setprop("f16/ews/ew-disp-switch",1);
+  setprop("f16/ews/ew-mode-knob",1);
   setprop("f16/avionics/cmds-01-switch",1);
   setprop("f16/avionics/cmds-02-switch",1);
   setprop("f16/avionics/cmds-ch-switch",1);
@@ -299,11 +299,11 @@ var coldndark = func {
   setprop("f16/avionics/ins-knob", 0);#OFF
   setprop("f16/avionics/hud-sym", 0);
   setprop("f16/avionics/hud-brt", 0);
-  setprop("f16/avionics/ew-rwr-switch",0);
-  setprop("f16/avionics/ew-disp-switch",0);
-  setprop("f16/avionics/ew-mws-switch",0);
-  setprop("f16/avionics/ew-jmr-switch",0);
-  setprop("f16/avionics/ew-mode-knob",0);
+  setprop("f16/ews/ew-rwr-switch",0);
+  setprop("f16/ews/ew-disp-switch",0);
+  setprop("f16/ews/ew-mws-switch",0);
+  setprop("f16/ews/ew-jmr-switch",0);
+  setprop("f16/ews/ew-mode-knob",0);
   setprop("f16/avionics/cmds-01-switch",0);
   setprop("f16/avionics/cmds-02-switch",0);
   setprop("f16/avionics/cmds-ch-switch",0);
@@ -349,6 +349,11 @@ var re_init_listener = setlistener("/sim/signals/reinit", func {
         aim.setCooling(0);
       }
       var aim9s = pylons.fcs.getAllOfType("AIM-9M");
+      foreach(aim;aim9s) {
+        aim.cool_total_time = 0;#consider making a method in AIM for this!
+        aim.setCooling(0);
+      }
+      var aim9s = pylons.fcs.getAllOfType("AIM-9X");
       foreach(aim;aim9s) {
         aim.cool_total_time = 0;#consider making a method in AIM for this!
         aim.setCooling(0);

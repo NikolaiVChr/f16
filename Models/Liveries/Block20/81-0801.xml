@@ -4,9 +4,15 @@
  <sim>
   <model>
    <livery>
-    <name type="string">AMI 23 Gruppo, "Veltro: 90 years"</name>
+    <name type="string">5° Stormo, 23° Gruppo "90 anni"</name>
     <texture>Liveries/Block20/81-0801.png</texture>
     <owner type="string">AMI</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Special Color</scheme>
+    <block type="int">20</block>
+    <serial type="string">81-0801</serial>
+    <squad type="string">23° Gruppo "Veltri"</squad>
+    <year type="string">2008</year>
    </livery>
    <livery-logo>
     <texture>Liveries/standard.logos.png</texture>

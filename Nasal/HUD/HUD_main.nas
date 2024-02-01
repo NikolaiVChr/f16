@@ -137,8 +137,8 @@ var F16_HUD = {
         obj.alt_line.hide();
         obj.vel_line = obj.get_element("ias_tick_vert_line");
         obj.vel_line.hide();
-        obj.vel_ind = obj.get_element("path3111");
-        obj.vel_ind.hide();
+        obj.ias_desired = obj.get_element("path3111");
+        obj.ias_desired.hide();
         obj.alt_ind = obj.get_element("path3111-1");
         obj.alt_ind.hide();
         obj.radalt_box = obj.get_element("radalt-box");
@@ -222,7 +222,7 @@ var F16_HUD = {
         append(obj.total, obj.alt_range);
         append(obj.total, obj.ias_range);
         append(obj.total, obj.alt_line);
-        append(obj.total, obj.vel_ind);
+        append(obj.total, obj.ias_desired);
         append(obj.total, obj.vel_line);
         append(obj.total, obj.alt_ind);
         append(obj.total, obj.window1);
@@ -674,6 +674,21 @@ append(obj.total, obj.speed_curr);
         append(obj.total, obj.roll_pointer);
         append(obj.total, obj.roll_lines);
         append(obj.total, obj.bank_angle_indicator);
+
+        var fov_y =  0;
+        var fov_x = 55;
+        var fov_h = 20;
+        obj.fov_box = obj.centerOrigin.createChild("path")
+                            .moveTo(-fov_x, fov_y)
+                            .horiz(fov_x * 2)
+                            .vert(fov_h)
+                            .horiz(-fov_x * 2)
+                            .vert(-fov_h)
+                            .setStrokeLineWidth(1)
+                            .hide()
+                            .setColor(0,1,0);
+        append(obj.total, obj.fov_box);
+
         var vTick = 4;
         var tickSpace = 6;
         obj.vertical_pointer = obj.centerOrigin.createChild("path")
@@ -1049,41 +1064,38 @@ append(obj.total, obj.speed_curr);
         var pixelPerDegreeY = HudMath.getPixelPerDegreeAvg(5.0);
         var pixelPerDegreeX = 16.70527172464148;
         var distance = pixelPerDegreeY * 5;
-        var minuss = 0.125*sx*uv_used;
+        var minuss = 0.140*sx*uv_used;#Made a little longer since they bend
+        var pluss = 0.125*sx*uv_used;
         var minuso = 20*mr;
         for(var i = 1; i <= 17; i += 1) # full drawn lines
           append(obj.total, obj.ladder_group.createChild("path")
              .moveTo(minuso, -i * distance)
-             .horiz(minuss)
+             .horiz(pluss)
              .vert(minuso*0.5)
 
              .moveTo(-minuso, -i * distance)
-             .horiz(-minuss)
+             .horiz(-pluss)
              .vert(minuso*0.5)
 
              .setStrokeLineWidth(1)
              .setColor(0,0,0));
 
+        var v = getprop("sim/variant-id");
+        var rads = [];
         for(var i = -17; i <= -1; i += 1) { # stipled lines
-          #var rad = me.extrapolate(-i*5,10,90,8,45)*D2R;#as per US manual pitch lines bend down from 8 to 45 degrees
+          var rad = (v==0 or v==1 or v==3)?0:me.extrapolate(-i*5,5,85,8,45)*D2R;#as per US manual pitch lines bend down from 8 to 45 degrees
+          append(rads, minuss*math.sin(rad));
           append(obj.total, obj.ladder_group.createChild("path")
-                         .moveTo(minuso, -i * distance)
-                         .horiz(minuss*0.2)
-                         .moveTo(minuso+minuss*0.4, -i * distance)
-                         .horiz(minuss*0.2)
-                         .moveTo(minuso+minuss*0.8, -i * distance)
-                         .horiz(minuss*0.2)
-                         .vert(-minuso*0.5)
-
-                         .moveTo(-minuso, -i * distance)
-                         .horiz(-minuss*0.2)
-                         .moveTo(-minuso-minuss*0.4, -i * distance)
-                         .horiz(-minuss*0.2)
-                         .moveTo(-minuso-minuss*0.8, -i * distance)
-                         .horiz(-minuss*0.2)
-                         .vert(-minuso*0.5)
-
+                         .moveTo(minuso, -i * distance - minuso*0.5)
+                         .vert(minuso*0.5)
+                         .lineTo(minuso+minuss*math.cos(rad), -i * distance + minuss*math.sin(rad))
+                         
+                         .moveTo(-minuso, -i * distance - minuso*0.5)
+                         .vert(minuso*0.5)
+                         .lineTo(-minuso-minuss*math.cos(rad), -i * distance + minuss*math.sin(rad))
+                         
                          .setStrokeLineWidth(1)
+                         .setStrokeDashArray([minuso*0.5+minuss*0.1, minuss*0.1, minuss*0.2, minuss*0.1, minuss*0.2, minuss*0.1, minuss*0.2, 0])
                          .setColor(0,0,0));
         }
 
@@ -1142,14 +1154,14 @@ append(obj.total, obj.speed_curr);
              .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL)
              .setFont(HUD_FONT)
              .setAlignment("right-center")
-             .setTranslation(-minuso-minuss-minuss*0.2, -i * distance)
+             .setTranslation(-minuso-pluss-pluss*0.2, -i * distance + rads[i])
              .setColor(0,0,0));
           append(obj.total, obj.ladder_group.createChild("text")
              .setText(i*-5)
              .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL)
              .setFont(HUD_FONT)
              .setAlignment("left-center")
-             .setTranslation(minuso+minuss+minuss*0.2, -i * distance)
+             .setTranslation(minuso+pluss+pluss*0.2, -i * distance + rads[i])
              .setColor(0,0,0));
         }
         for(var i = 1; i <= 17; i += 1) {
@@ -1159,33 +1171,34 @@ append(obj.total, obj.speed_curr);
              .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL)
              .setFont(HUD_FONT)
              .setAlignment("right-center")
-             .setTranslation(-minuso-minuss-minuss*0.2, -i * distance)
+             .setTranslation(-minuso-pluss-pluss*0.2, -i * distance)
              .setColor(0,0,0));
           append(obj.total, obj.ladder_group.createChild("text")
              .setText(i*5)
              .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL)
              .setFont(HUD_FONT)
              .setAlignment("left-center")
-             .setTranslation(minuso+minuss+minuss*0.2, -i * distance)
+             .setTranslation(minuso+pluss+pluss*0.2, -i * distance)
              .setColor(0,0,0));
         }
 
         # approach line
         var i = -0.5;
+        pluss *= 0.8;# Approach line is shorter
         obj.appLine = obj.ladder_group.createChild("path")
                          .moveTo(minuso, -i * distance)
-                         .horiz(minuss*0.2)
-                         .moveTo(minuso+minuss*0.4, -i * distance)
-                         .horiz(minuss*0.2)
-                         .moveTo(minuso+minuss*0.8, -i * distance)
-                         .horiz(minuss*0.2)
+                         .horiz(pluss*0.2)
+                         .moveTo(minuso+pluss*0.4, -i * distance)
+                         .horiz(pluss*0.2)
+                         .moveTo(minuso+pluss*0.8, -i * distance)
+                         .horiz(pluss*0.2)
 
                          .moveTo(-minuso, -i * distance)
-                         .horiz(-minuss*0.2)
-                         .moveTo(-minuso-minuss*0.4, -i * distance)
-                         .horiz(-minuss*0.2)
-                         .moveTo(-minuso-minuss*0.8, -i * distance)
-                         .horiz(-minuss*0.2)
+                         .horiz(-pluss*0.2)
+                         .moveTo(-minuso-pluss*0.4, -i * distance)
+                         .horiz(-pluss*0.2)
+                         .moveTo(-minuso-pluss*0.8, -i * distance)
+                         .horiz(-pluss*0.2)
 
                          .setStrokeLineWidth(1)
                          .setColor(0,0,0);
@@ -1308,7 +1321,7 @@ append(obj.total, obj.speed_curr);
         # set the update list - using the update manager to improve the performance
         # of the HUD update - without this there was a drop of 20fps (when running at 60fps)
         obj.update_items = [
-            props.UpdateManager.FromHashList(["hud_serviceable", "hud_display", "hud_sym", "hud_power", "hud_daytime", "red"], 0.1, func(hdp)#changed to 0.1, this function is VERY heavy to run.
+            props.UpdateManager.FromHashList(["hud_serviceable", "hud_display", "hud_sym", "hud_power", "hud_daytime", "red"], 0.05, func(hdp)#changed to 0.1, this function is VERY heavy to run.
                                       {
 # print("HUD hud_serviceable=", hdp.getproper("hud_serviceable," display=", hdp.getproper("hud_display, " brt=", hdp.getproper("hud_sym, " power=", hdp.getproper("hud_power);
 
@@ -1326,7 +1339,8 @@ append(obj.total, obj.speed_curr);
                                             # Ref: GR1F-16CJ-34-1-1 page 1-158, adjusted up slightly
                                             var night_ratio = 0.75;
                                             if (hdp.hud_daytime == 0) { # Auto
-                                                brt *= (night_ratio + (hdp.red * (1 - night_ratio)));
+                                                obj.daylight_red = math.min(1, obj.extrapolate(hdp.red, 0, 0.85, 0, 1));# treat 0.85 as full day light, so it dont have to june and noon at equator to get full brightness
+                                                brt *= (night_ratio + (obj.daylight_red * (1 - night_ratio)));
                                             } elsif (hdp.hud_daytime == -1) { # Night
                                                 brt *= night_ratio;
                                             }
@@ -1338,6 +1352,26 @@ append(obj.total, obj.speed_curr);
                                             obj.ASEC65Aspect.setColorFill(obj.color);
                                           }
                                       }),
+             func(hdp)
+                                      {
+                                        if (!hdp.getproper("dgft") and !hdp.getproper("gear_down")) {
+                                          # IAS range clip is set to 79.739967, so let's stay within that
+                                          var minmax_range = 79.739967/2;
+                                          if (getprop("f16/ded/cur-crus-mode") == "TOS") {
+                                            var desired_kt = getprop("/f16/ded/crus-req-gs");
+                                            if (desired_kt != nil) {
+                                              obj.ias_desired.show();
+                                              obj.ias_desired.setTranslation(0, math.max(math.min((hdp.getproper("groundspeed_kt")-desired_kt) * ias_range_factor,minmax_range),-minmax_range));
+                                            } else {
+                                              obj.ias_desired.hide();
+                                            }
+                                          } else {
+                                            obj.ias_desired.hide();
+                                          }
+                                        } else {
+                                          obj.ias_desired.hide();
+                                        }
+                                      },
             #props.UpdateManager.FromHashList([], 0.01,
              func(hdp)
                                       {
@@ -1346,7 +1380,7 @@ append(obj.total, obj.speed_curr);
              func(hdp)
                                       {
                                           if (hdp.fcs_available) {
-                                            if (pylons.fcs.getDropMode() == 1) {
+                                            if (pylons.fcs.getDropMode() == fc.DROP_CCIP) {
                                                 hdp.CCIP_active = 1;
                                             } else {
                                                 hdp.CCIP_active = 0;
@@ -1428,13 +1462,22 @@ append(obj.total, obj.speed_curr);
              func(hdp)
                                       {
                                         obj.r_show = 1;
-                                        if (hdp.getproper("fpm") > 0 and !hdp.getproper("dgft") and (!obj.showmeCCIP or !isDropping or math.mod(int(8*(systime()-int(systime()))),2)>0)) {
+                                        
+                                        if (hdp.getproper("fpm") > 0 and !hdp.getproper("dgft")) {
                                             obj.VV.setTranslation (hdp.VV_x, hdp.VV_y);
                                             if (hdp.getproper("HUD_SCA") == 2) {
                                                 obj.bank_angle_indicator.setTranslation (hdp.VV_x, hdp.VV_y);
                                                 obj.r_show = 0;
                                             }
-                                            obj.VV.show();
+
+                                            obj.ccrpReleased = getprop("payload/armament/releasedCCRP");
+                                            obj.controlTrigger = getprop("controls/armament/trigger");
+
+                                            obj.blinkRockets = hdp.getproper("rocketsBusy");
+                                            obj.blinkCCRP = obj.controlTrigger > 0 and obj.ccrpReleased > 0;
+                                            obj.blinkCCIP = obj.showmeCCIP and isDropping;
+
+                                            obj.VV.setVisible((!obj.blinkCCIP and !obj.blinkCCRP and !obj.blinkRockets) or math.mod(int(8*(systime()-int(systime()))),2)>0);
                                             obj.VV.update();
                                         } else {
                                             obj.VV.hide();
@@ -1795,7 +1838,7 @@ append(obj.total, obj.speed_curr);
                                                      if (hdp.getproper("gear_down"))
                                                        obj.gd = " G";
                                                      obj.window2_txt = sprintf("  F %d%s",hdp.getproper("flap_pos_deg"),obj.gd);
-                                                 } elsif (hdp.getproper("master_arm") != 0) {
+                                                 } elsif (hdp.getproper("master_arm") != pylons.ARM_OFF) {
                                                      var submodeVar = "";
                                                      if (hdp.CCRP_active > 0) {
                                                         submodeVar = "CCRP";
@@ -1807,7 +1850,7 @@ append(obj.total, obj.speed_curr);
                                                         submodeVar = "BORE";
                                                      }
                                                      var dgft = hdp.getproper("dgft")?"DGFT ":"";
-                                                     var armmode = hdp.getproper("master_arm")==1?"  ARM ":"  SIM ";
+                                                     var armmode = hdp.getproper("master_arm")==pylons.ARM_ARM?"  ARM ":"  SIM ";
                                                      obj.window2_txt = armmode~dgft~submodeVar;
                                                  } elsif (hdp.getproper("rotary") == 0 or hdp.getproper("rotary") == 3) {
                                                      obj.window2_txt = "  ILS";
@@ -2010,8 +2053,9 @@ append(obj.total, obj.speed_curr);
             me.asec65  = 0;
             var eegsShow = 0;
             var currASEC = nil;
+            me.showFov = 0;
 
-            if(hdp.getproper("master_arm") != 0 and pylons.fcs != nil)
+            if(hdp.getproper("master_arm") != pylons.ARM_OFF and pylons.fcs != nil)
             {
                 hdp.weapon_selected = pylons.fcs.selectedType;
                 hdp.weapn = pylons.fcs.getSelectedWeapon();
@@ -2023,7 +2067,7 @@ append(obj.total, obj.speed_curr);
                         me.window9_txt = sprintf("%3d", pylons.fcs.getAmmo());
                         eegsShow = 1;
                         me.ALOW_top = 1;
-                    } elsif (hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "AIM-9M") {
+                    } elsif (hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "AIM-9M" or hdp.weapon_selected == "AIM-9X") {
                         me.window9_txt = sprintf("%d SRM", pylons.fcs.getAmmo());#short range missile
                         if (hdp.weapn != nil) {
                             if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.getproper("standby")) {
@@ -2090,6 +2134,10 @@ append(obj.total, obj.speed_curr);
                     } elsif (hdp.weapon_selected == "MK-84") {
                         me.window9_txt = sprintf("%d B84", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "AGM-88") {
+                        me.showFov = 1;
+                        if (pylons.fcs.isLock()) {
+                            me.showFov = math.mod(hdp.getproper("elapsed"), 0.5) < 0.25;
+                        }
                         me.window9_txt = sprintf("%d AG88", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "GBU-31") {
                         me.window9_txt = sprintf("%d GB31", pylons.fcs.getAmmo());
@@ -2256,6 +2304,7 @@ append(obj.total, obj.speed_curr);
             me.ASEC100.setVisible(me.asec100);
             me.ASEC120.setVisible(me.asec120);
             me.ASEC65.setVisible(me.asec65);
+            me.fov_box.setVisible(me.showFov);
             me.eegsGroup.setVisible(eegsShow);
             if (eegsShow and !me.eegsLoop.isRunning) {
                 me.eegsLoop.start();
@@ -2263,8 +2312,8 @@ append(obj.total, obj.speed_curr);
                 me.eegsLoop.stop();
             }
 
-            me.bullPt = steerpoints.getNumber(555);
-            me.bullOn = me.bullPt != nil;
+            me.bullPt = steerpoints.getNumber(steerpoints.index_of_bullseye);
+            me.bullOn = me.bullPt != nil and steerpoints.bullseyeMode;
             if (hdp.getproper("bingo") and math.mod(int(4*(hdp.getproper("elapsed")-int(hdp.getproper("elapsed")))),2)>0) {
               me.window11_txt = "FUEL";
             } elsif (hdp.getproper("bingo")) {
@@ -2307,6 +2356,7 @@ append(obj.total, obj.speed_curr);
 
 
 
+
         me.locatorLineShow = 0;
 #        if (hdp.getproper("FrameCount == 1 or hdp.getproper("FrameCount == 3 or me.initUpdate == 1) {
         me.target_idx = 0;
@@ -2321,7 +2371,7 @@ append(obj.total, obj.speed_curr);
         me.rdT = 0;
         me.irB = 0;
         #printf("%d %d %d %s",hdp.getproper("master_arm"),pylons.fcs != nil,pylons.fcs.getAmmo(),hdp.weapon_selected);
-        if(hdp.getproper("master_arm") != 0 and pylons.fcs != nil and pylons.fcs.getAmmo() > 0) {
+        if(hdp.getproper("master_arm") != pylons.ARM_OFF and pylons.fcs != nil and pylons.fcs.getAmmo() > 0) {
             hdp.weapon_selected = pylons.fcs.selectedType;
             var aim = pylons.fcs.getSelectedWeapon();
             if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
@@ -2329,7 +2379,7 @@ append(obj.total, obj.speed_curr);
                     me.radarLock.setTranslation(0, -me.sy*0.25+262*0.3*0.5);
                     me.rdL = 1;
                 }
-            } elsif (hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "AIM-9M" or hdp.weapon_selected == "IRIS-T") {
+            } elsif (hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "AIM-9M" or hdp.weapon_selected == "AIM-9X" or hdp.weapon_selected == "IRIS-T") {
                 if (aim != nil and aim.isCaged()) {
                     var coords = aim.getSeekerInfo();
                     if (coords != nil) {
@@ -2439,7 +2489,7 @@ append(obj.total, obj.speed_curr);
                             #print("currASEC is nil");
                         }
                         if (pylons.fcs != nil and pylons.fcs.isLock()) {
-                            if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7" or hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "AIM-9M" or hdp.weapon_selected == "IRIS-T") {
+                            if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7" or hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "AIM-9M" or hdp.weapon_selected == "AIM-9X" or hdp.weapon_selected == "IRIS-T") {
                                 var aim = pylons.fcs.getSelectedWeapon();
                                 if (aim != nil) {
                                     var coords = aim.getSeekerInfo();
@@ -2460,7 +2510,7 @@ append(obj.total, obj.speed_curr);
                                 me.ASEC120Aspect.setRotation(D2R*(me.lastH-hdp.getproper("heading")+180));
                                 me.rdL = 1;
                                 me.rdT = 1;
-                            } elsif (me.lastH != nil and (hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "AIM-9M" or hdp.weapon_selected == "IRIS-T")) {
+                            } elsif (me.lastH != nil and (hdp.weapon_selected == "AIM-9L" or hdp.weapon_selected == "AIM-9M" or hdp.weapon_selected == "AIM-9X" or hdp.weapon_selected == "IRIS-T")) {
                                 me.ASEC65Aspect.setRotation(D2R*(me.lastH-hdp.getproper("heading")+180));
                                 me.irT = 1;
                             }
@@ -2980,32 +3030,32 @@ append(obj.total, obj.speed_curr);
     },
 
     CCRP: func(hdp) {
-        if (hdp.fcs_available and hdp.getproper("master_arm") != 0) {
-            var trgt = armament.contactPoint;
-            if(trgt == nil and radar_system.apg68Radar.getPriorityTarget() != nil) {
-                trgt = radar_system.apg68Radar.getPriorityTarget();
-            } elsif (trgt == nil) {
+        if (hdp.fcs_available and hdp.getproper("master_arm") != pylons.ARM_OFF and pylons.fcs.getDropMode() == fc.DROP_CCRP) {
+            var selW = pylons.fcs.getSelectedWeapon();
+            if (selW == nil) {
+                me.solutionCue.hide();
+                me.ccrpMarker.hide();
+                me.bombFallLine.hide();
                 return 0;
             }
-            var selW = pylons.fcs.getSelectedWeapon();
-            if (selW != nil and !hdp.CCIP_active and
-                (selW.type=="MK-82" or selW.type=="MK-82AIR" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selW.type=="GBU-54" or selW.type=="GBU-24" or selW.type=="CBU-87" or selW.type=="CBU-105" or selW.type=="AGM-154A" or selW.type=="B61-7" or selW.type=="B61-12") and selW.status == armament.MISSILE_LOCK ) {
-
-                if (selW.guidance == "unguided") {
-                    me.dt = 0.1;
-                    me.maxFallTime = 20;
-                } else {
-                    me.agl = (hdp.getproper("altitude_ft")-trgt.get_altitude())*FT2M;
-                    me.dt = me.agl*0.000025;#4000 ft = ~0.1
-                    if (me.dt < 0.1) me.dt = 0.1;
-                    me.maxFallTime = 45;
-                }
-                me.distCCRP = pylons.fcs.getSelectedWeapon().getCCRP(me.maxFallTime,me.dt);
-                if (me.distCCRP == nil or (me.distCCRP*M2NM > 13.2 and selW.guidance == "laser")) {#1F-F16CJ-34-1: max laser dist is 13.2nm
+            var trgt = fc.getCCRPTarget();
+            
+            if (trgt == nil) {
+                # We must return 1 if its a bomb and were in CCRP drop mode
+                me.solutionCue.hide();
+                me.ccrpMarker.hide();
+                me.bombFallLine.hide();
+                return fc.containsVector(fc.CCIP_CCRP, selW.type);
+            }
+            
+            if (!hdp.CCIP_active and
+                    fc.containsVector(fc.CCIP_CCRP, selW.type) and selW.status == armament.MISSILE_LOCK ) {
+                me.distCCRP = getprop("payload/armament/distCCRP");
+                if (me.distCCRP == -1 or (me.distCCRP*M2NM > 13.2 and selW.guidance == "laser")) {#1F-F16CJ-34-1: max laser dist is 13.2nm
                     me.solutionCue.hide();
                     me.ccrpMarker.hide();
                     me.bombFallLine.hide();
-                    return 0;
+                    return 1;
                 }
                 if (hdp.getproper("groundspeed_kt") > 0) {
                     me.timeToRelease = me.distCCRP/hdp.getproper("groundspeed_kt");
@@ -3024,7 +3074,7 @@ append(obj.total, obj.speed_curr);
                         me.solutionCue.hide();
                         me.ccrpMarker.hide();
                         me.bombFallLine.hide();
-                        return 0;
+                        return 1;
                     }
                 }
                 me.bombFallLine.setTranslation(me.ldr*me.texelPerDegreeX,0);
@@ -3038,7 +3088,7 @@ append(obj.total, obj.speed_curr);
                 me.solutionCue.hide();
                 me.ccrpMarker.hide();
                 me.bombFallLine.hide();
-                return 0;
+                return 1;
             }
         } else {
             me.solutionCue.hide();
@@ -3053,9 +3103,9 @@ append(obj.total, obj.speed_curr);
         me.showPipperCross = 0;
         me.showmeCCIP = 0;
         if(hdp.CCIP_active) {
-            if (hdp.fcs_available and hdp.getproper("master_arm") != 0) {
+            if (hdp.fcs_available and hdp.getproper("master_arm") != pylons.ARM_OFF) {
                 var selW = pylons.fcs.getSelectedWeapon();
-                if (selW != nil and (selW.type=="MK-82" or selW.type=="MK-82AIR" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selW.type=="GBU-54" or selW.type=="GBU-24" or selW.type=="CBU-87" or selW.type=="CBU-105" or selW.type=="B61-12")) {
+                if (selW != nil and fc.containsVector(fc.CCIP_CCRP, selW.type)) {
                     me.showmeCCIP = 1;
                     me.ccipPos = pylons.fcs.getSelectedWeapon().getCCIPadv(18,0.20);
                     if (me.ccipPos == nil) {
@@ -3063,7 +3113,7 @@ append(obj.total, obj.speed_curr);
                         me.pipperLine.setVisible(me.showPipper);
                         return 0;
                     }
-                    me.showme = TRUE;
+                    me.showme = 1;
 
                     #me.myOwnPos = geo.aircraft_position();
                     #me.xyz = {"x":me.myOwnPos.x(),                  "y":me.myOwnPos.y(),                 "z":me.myOwnPos.z()};
@@ -3075,10 +3125,10 @@ append(obj.total, obj.speed_curr);
                     #    me.maxDist = me.myOwnPos.direct_distance_to(me.ccipPos[0])-1;
                     #    me.terrainDist = me.myOwnPos.direct_distance_to(me.terrain);
                     #    if (me.terrainDist < me.maxDist) {
-                    #        me.showme = FALSE;
+                    #        me.showme = 0;
                     #    }
                     #} else {
-                    #    me.showme = FALSE;
+                    #    me.showme = 0;
                     #}
                     me.hud_pos = HudMath.getPosFromCoord(me.ccipPos[0]);
                     if(me.hud_pos != nil) {
@@ -3089,16 +3139,16 @@ append(obj.total, obj.speed_curr);
                         #printf("dist=%0.1f (%3d , %3d)", dist, pos_x, pos_y);
 
                         #if(me.pos_x > (512/1024)*canvasWidth) {
-                        #  me.showme = FALSE;
+                        #  me.showme = 0;
                         #} elsif(me.pos_x < -(512/1024)*canvasWidth) {
-                        #  me.showme = FALSE;
+                        #  me.showme = 0;
                         #} elsif(me.pos_y > (512/1024)*canvasWidth) {
-                        #  me.showme = FALSE;
+                        #  me.showme = 0;
                         #} elsif(me.pos_y < -(512/1024)*canvasWidth) {
-                        #  me.showme = FALSE;
+                        #  me.showme = 0;
                         #}
 
-                        if(me.showme == TRUE) {
+                        if(me.showme == 1) {
                             me.pipperLine.removeAllChildren();
                             me.bPos = [hdp.VV_x,hdp.VV_y];
                             me.llx  = me.pos_x-me.bPos[0];
@@ -3421,7 +3471,7 @@ var F16HudRecipient =
 
             notification.range_rate = "RNGRATE";
 
-            if (notification.NotificationType == "FrameNotification")
+            if (notification.NotificationType == "FrameNotification16")
             {
 
                 me.HUDobj.update(notification);

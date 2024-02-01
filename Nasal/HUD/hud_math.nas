@@ -154,24 +154,26 @@ var HudMath = {
         }
         me.ptch = vector.Math.getPitch(me.crft, gpsCoord);
         me.brng = me.crft.course_to(gpsCoord);
+        #me.cd = courseAndDistance(me.crft, gpsCoord);#same precision at close range (couple of meters)
+        #me.brng = me.cd[0];
 
         var ym = vector.Math.yawMatrix(-viewh);
         var pm = vector.Math.pitchMatrix(-viewp);
-        var vm = vector.Math.multiplyMatrices(pm, ym);
+        var vm = vector.Math.multiplyMatrices(pm, ym);# local view rot matrix
         me.rollM  = vector.Math.rollMatrix(-hdp.getproper("roll"));
         me.pitchM = vector.Math.pitchMatrix(-hdp.getproper("pitch"));
         me.yawM   = vector.Math.yawMatrix(hdp.getproper("heading"));
         me.rotation = vector.Math.multiplyMatrices(me.rollM, vector.Math.multiplyMatrices(me.pitchM, me.yawM));
-        me.rotation = vector.Math.multiplyMatrices(vm, me.rotation);
+        me.rotation = vector.Math.multiplyMatrices(vm, me.rotation);# global view rot matrix
 
         me.coord_x = math.cos(me.brng*D2R)*math.cos(me.ptch*D2R);
         me.coord_y = -math.sin(me.brng*D2R)*math.cos(me.ptch*D2R);
         me.coord_z = math.sin(me.ptch*D2R);
         
-        var tv = [me.coord_x,me.coord_y,me.coord_z];
-        var dv = vector.Math.multiplyMatrixWithVector(me.rotation, tv);
+        var tv = [me.coord_x,me.coord_y,me.coord_z];# global direction from hmcs to target
+        var dv = vector.Math.multiplyMatrixWithVector(me.rotation, tv);# local in HMCS view vector to target
         var angles = vector.Math.cartesianToEuler(dv);
-
+        
         return [angles[0]==nil?0:angles[0],angles[1]];
     },
 
@@ -432,7 +434,7 @@ var HudMath = {
 	        viewZ:            "sim/current-view/y-offset-m",
 	        viewX:            "sim/current-view/z-offset-m",
       	};
-   
+
       	foreach(var name; keys(me.input)) {
         	me.input[name] = props.globals.getNode(me.input[name], 1);
       	}

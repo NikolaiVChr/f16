@@ -6,7 +6,13 @@
 
     <!--lighting -->
 
-    
+    <animation>
+        <type>noshadow</type>
+        <object-name>BoltA</object-name>
+        <object-name>BoltB</object-name>
+        <object-name>BoltC</object-name>
+        <object-name>BoltD</object-name>
+    </animation>
 
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/model-interior/f16panel-icp</inherits-from>
@@ -71,10 +77,10 @@
         </parameters>
         <object-name>driftRing</object-name>
         <object-name>gainRing</object-name>
-        <object-name>Bolt1</object-name>
-        <object-name>Bolt2</object-name>
-        <object-name>Bolt3</object-name>
-        <object-name>Bolt4</object-name>
+        <object-name>BoltA</object-name>
+        <object-name>BoltB</object-name>
+        <object-name>BoltC</object-name>
+        <object-name>BoltD</object-name>
     </effect>
 
     <effect>
@@ -550,7 +556,10 @@
             <button>0</button>
             <binding>
                 <command>nasal</command>
-                <script>sound.doubleClick();if (pylons.fcs!=nil) pylons.fcs.cycleAA();radar_system.apg68Radar.setAAMode(); setprop("f16/avionics/strf",0);</script>
+                <script>sound.doubleClick();if (pylons.fcs!=nil) pylons.fcs.cycleAA();radar_system.apg68Radar.setAAMode(); setprop("f16/avionics/strf",0);
+                displays.leftMFD.system.selectPage("PageFCR");
+                displays.rightMFD.system.selectPage("PageSMSWPN");
+                f16.autoPrioritySOI();</script>
             </binding>
             <binding>
                 <command>property-assign</command>
@@ -580,7 +589,10 @@
             <button>0</button>
             <binding>
                 <command>nasal</command>
-                <script>sound.doubleClick();if (pylons.fcs!=nil) pylons.fcs.cycleAG();radar_system.apg68Radar.setAGMode(); setprop("f16/avionics/strf",1);</script>
+                <script>sound.doubleClick();if (pylons.fcs!=nil) pylons.fcs.cycleAG();radar_system.apg68Radar.setAGMode(); setprop("f16/avionics/strf",1);
+                    displays.leftMFD.system.selectPage("PageFCR");
+                    displays.rightMFD.system.selectPage("PageSMSWPN");
+                    f16.autoPrioritySOI();</script>
             </binding>
             <binding>
                 <command>property-assign</command>
@@ -1411,8 +1423,31 @@
             </binding>
         </hovered>
 	</animation>
+
+    <animation>
+        <type>material</type>
+        <object-name>brt</object-name>
+        <object-name>depr_ret</object-name>
+        <object-name>sym</object-name>
+        <object-name>cont</object-name>
+        <property-base>f16/texture</property-base>
+        <texture-prop>icp_wheels</texture-prop>
+        <texture>icp_wheels.png</texture>
+    </animation>
     
     <animation>
+        <type>material</type>
+        <condition>
+            <not>
+                <property>/sim/rendering/shaders/skydome</property>
+            </not>
+        </condition>
+        <emission>
+            <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+            <red>0.45</red>
+            <green>0.34</green>
+            <blue>0.18</blue>
+        </emission>
         <object-name>ICP_panel</object-name>
         <object-name>com1</object-name>
         <object-name>0</object-name>
@@ -1440,29 +1475,6 @@
         <object-name>drift</object-name>
         <object-name>gain_auto</object-name>
         <object-name>rtn_seq</object-name>
-        <condition>
-            <not>
-            <property>/sim/rendering/shaders/skydome</property>
-          </not>
-          </condition>
-        <type>material</type>
-        <emission>
-            <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
-            <red>0.45</red>
-            <green>0.34</green>
-            <blue>0.18</blue>
-        </emission>
-    </animation>
-
-    <animation>
-        <type>material</type>
-        <object-name>brt</object-name>
-        <object-name>depr_ret</object-name>
-        <object-name>sym</object-name>
-        <object-name>cont</object-name>
-        <property-base>f16/texture</property-base>
-        <texture-prop>icp_wheels</texture-prop>
-        <texture>icp_wheels.png</texture>
     </animation>
 
 </PropertyList>

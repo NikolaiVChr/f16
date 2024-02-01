@@ -21,13 +21,17 @@
   <condition>
     <or>
 	    <and>
-      		<property>f16/avionics/cockpit_blinker/state</property>
-    	    <not>
-    	      <equals>
-    	          <property>sound/rwr-launch</property>
-    	          <value type="string"></value>
-    	      </equals>
-    	    </not>
+      		<property>f16/avionics/cockpit_blinker3hz/state</property>
+          <or>
+        	    <not>
+        	      <equals>
+        	          <property>sound/rwr-launch</property>
+        	          <value type="string"></value>
+        	      </equals>
+        	    </not>
+              <property>payload/armament/MAW-active</property>
+              <property>payload/armament/MAW-semiactive</property>
+          </or>
           <greater-than-equals>
                     <property>f16/avionics/power-ufc-warm</property>
                     <value>0.90</value>
@@ -51,7 +55,7 @@
       <property>controls/test/test-panel/mal-ind-lts</property>
       <and>
 	      <equals>
-	          <property>sound/rwr-pri</property>
+	          <property>f16/ews/rwr-pri</property>
 	          <value>1</value>
 	      </equals>
         <greater-than-equals>
@@ -69,6 +73,126 @@
  </animation>
 
  <animation>
+        <type>pick</type>
+        <object-name>pri</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>property-toggle</command>
+                <property>f16/ews/rwr-show-priority-only</property>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-pri</tooltip-id>
+                <label>Show only highest priorities</label>
+            </binding>
+        </hovered>
+    </animation>
+
+ <animation>
+        <type>pick</type>
+        <object-name>sep</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>property-assign</command>
+                <property>f16/ews/rwr-separate</property>
+                <value>1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/ews/rwr-separate</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-sep</tooltip-id>
+                <label>Hold down to separate RWR contacts</label>
+            </binding>
+        </hovered>
+    </animation>
+
+    <animation>
+        <type>pick</type>
+        <object-name>unk</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>property-toggle</command>
+                <property>f16/ews/rwr-show-unknowns</property>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-unk-tt</tooltip-id>
+                <label>Show unknown emitters</label>
+            </binding>
+        </hovered>
+    </animation>
+
+ <animation>
+  <object-name>sep</object-name>
+  <type>material</type>
+  <condition>
+    <or>
+      <property>controls/test/test-panel/mal-ind-lts</property>
+      <and>
+        <equals>
+            <property>f16/ews/rwr-separate</property>
+            <value>1</value>
+        </equals>
+        <greater-than-equals>
+                <property>f16/avionics/power-ufc-warm</property>
+                <value>0.90</value>
+        </greater-than-equals>
+      </and>
+    </or>
+  </condition>
+  <emission>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <object-name>test</object-name>
+  <type>material</type>
+  <condition>
+    <or>
+      <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+  </condition>
+  <emission>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <object-name>handoff</object-name>
+  <type>material</type>
+  <condition>
+    <or>
+      <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+  </condition>
+  <emission>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+  </emission>
+ </animation>
+
+ <animation>
   <object-name>unk</object-name>
   <type>material</type>
   <condition>
@@ -76,7 +200,7 @@
       <property>controls/test/test-panel/mal-ind-lts</property>
       <and>
 	      <equals>
-	          <property>sound/rwr-unk</property>
+	          <property>f16/ews/rwr-unk</property>
 	          <value>1</value>
 	      </equals>
         <greater-than-equals>

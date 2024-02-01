@@ -39,6 +39,13 @@
             var load_line2 = func(path) {
                 steerpoints.loadLine(1,path.getValue());
             }
+            var load_line3 = func(path) {
+                steerpoints.loadLine(2,path.getValue());
+            }
+            
+            var load_line4 = func(path) {
+                steerpoints.loadLine(3,path.getValue());
+            }
 
             #var dlg = props.globals.getNode("/sim/gui/dialogs/route-manager", 1);
             
@@ -57,6 +64,12 @@
             var file_selector_2 = gui.FileSelector.new(
               callback: load_line2, title: "Load Lines 2", button: "Load",
               dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.gpx","*.fgfp"]);
+            var file_selector_3 = gui.FileSelector.new(
+              callback: load_line3, title: "Load Lines 3", button: "Load",
+              dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.gpx","*.fgfp"]);
+            var file_selector_4 = gui.FileSelector.new(
+              callback: load_line4, title: "Load Lines 4", button: "Load",
+              dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.gpx","*.fgfp"]);
 
              var file_selector_dtc = gui.FileSelector.new(
               callback: load_stpts, title: "Load data", button: "Load",
@@ -70,6 +83,8 @@
         <close><![CDATA[
             file_selector_1.del();            
             file_selector_2.del();            
+            file_selector_3.del();            
+            file_selector_4.del();            
             file_selector_dtc.del();            
             save_selector_dtc.del();
         ]]></close>
@@ -280,9 +295,10 @@
             <property>f16/avionics/pilot-aid/c1-typ</property>
             <value type="string">   </value>
             <value type="string"> 2 </value>
+            <value type="string"> 3 </value>
 			<value type="string"> 5 </value>
             <value type="string"> 6 </value>
-            <value type="string"> 11</value>
+            <value type="string"> 17</value>
             <value type="string"> 20</value>
             <value type="string">AAA</value>
             <value type="string"> P </value>
@@ -480,9 +496,25 @@
 	            <script>file_selector_2.open()</script>
 	        </binding>
 	    </button>
+	    <button>
+	        <legend>Load Lines 3</legend>
+	        <equal>true</equal>
+	        <binding>
+	            <command>nasal</command>
+	            <script>file_selector_3.open()</script>
+	        </binding>
+	    </button>
+	    <button>
+	        <legend>Load Lines 4</legend>
+	        <equal>true</equal>
+	        <binding>
+	            <command>nasal</command>
+	            <script>file_selector_4.open()</script>
+	        </binding>
+	    </button>
     </group>
     <empty><stretch>1</stretch></empty>
-    <text><label>Load .fgfp or .gpx route file to enable lines on HSD page. (Lines 1 solid, Lines 2 dashed).</label></text>
+    <text><label>Load .fgfp or .gpx route file to enable dashed lines on HSD page.</label></text>
     <empty><stretch>1</stretch></empty>
     
     <hrule/>

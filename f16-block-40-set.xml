@@ -5,10 +5,10 @@
  <sim>
   <description>General Dynamics F-16CM Block 40</description>
   <long-description>
-   The General Dynamics F-16CM Fighting Falcon (or Night Falcon) is a single-engine supersonic multirole fighter aircraft originally developed by General Dynamics (now Lockheed Martin) for the United States Air Force (USAF). Powered by F110-GE-100. Designed as an air superiority day fighter, it evolved into a successful all-weather multirole aircraft.
-   Block 40/42 introduced LANTIRN pods, GPS, upgraded APG-68 radar, ATF and more. The Common Configuration Implementation Program (CCIP) is a modernization effort that seeks to standardize all USAF Block 40/42/50/52 F-16s to a common Block 50/52-based avionics software and hardware configuration. This includes features like new MMC, Colored MFDs, advanced IFF and Sniper ATP. Modified F-16CGs have been designated as CM.
+   The General Dynamics F-16CM Fighting Falcon (or Night Falcon) is a single-engine supersonic multirole fighter aircraft originally developed by General Dynamics (now Lockheed Martin) for the United States Air Force (USAF). Powered by F110-GE-100.
+   Block 40/42 introduced features like digital flight controls, LANTIRN pods, GPS, larger HUD, upgraded APG-68 radar and ATF to enhance night and all-weather capabilities. With the Common Configuration Implementation Program (CCIP) all USAF Blocks 40/42/50/52 F-16s were modernized to a Block 50/52-based avionics software and hardware standard. This includes new MMC, colored MFDs, HMCS, advanced IFF, Sniper ATP and AIM-9X. Modified F-16CGs have been designated as CM.
   </long-description>
-  <author>Erik Hofman, Martin "Pegasus" Schmitt, Pensacola, Nikolai V. Chr., J Maverick 16, Richard Harrison, Josh Davidson, Martien Van Der P., Jonathan Redpath, Gary Brown, Justin Nicholson, Enrico Castaldi, Timi, Barszczisbad, PH-JAKE, Bat Campion</author>
+  <author>Erik Hofman, Martin "Pegasus" Schmitt, Pensacola, Nikolai V. Chr., J Maverick 16, Richard Harrison, Josh Davidson, Martien Van Der P., Jonathan Redpath, Gary Brown, Justin Nicholson, Enrico Castaldi, Timi, Barszczisbad, PH-JAKE, Bat Campion, LJQCN101</author>
   <status>production</status>
   <rating>
     <FDM type="int">5</FDM>
@@ -72,6 +72,7 @@
     <f16>
     <dragchute type="bool">false</dragchute>
     <link16 type="bool">false</link16>
+    <cft type="bool">false</cft>
   </f16>
    <path archive="y">Aircraft/f16/Models/F-16.xml</path>
    <livery>

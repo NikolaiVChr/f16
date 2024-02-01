@@ -3196,7 +3196,7 @@
                 <factor>0.6</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
@@ -3225,7 +3225,7 @@
                 <factor>0.6</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <!--<rwr>
@@ -3262,7 +3262,7 @@
                 <factor>1</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
@@ -3299,7 +3299,7 @@
                 <factor>1</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>-->
         <rwr>
@@ -3328,7 +3328,7 @@
                 <factor>0.70</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
@@ -3357,7 +3357,7 @@
                 <factor>0.70</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
@@ -3386,7 +3386,7 @@
                 <factor>0.70</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
@@ -3415,11 +3415,11 @@
                 <factor>0.70</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
-            <name>rwr-spike-11</name>
+            <name>rwr-spike-17</name>
             <path>Aircraft/f16/Sounds/rwr/rwr-rf-demma.wav</path>
             <mode>looped</mode>
             <type>avionics</type>
@@ -3435,7 +3435,7 @@
                     </greater-than>
                 </or>
                 <equals>
-                    <property>payload/armament/spike-gnd-11</property>
+                    <property>payload/armament/spike-gnd-17</property>
                     <value>1</value>
                 </equals>
             </condition>
@@ -3444,7 +3444,7 @@
                 <factor>0.70</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
@@ -3473,7 +3473,7 @@
                 <factor>0.70</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
@@ -3502,7 +3502,7 @@
                 <factor>0.70</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
@@ -3531,7 +3531,7 @@
                 <factor>0.70</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
@@ -3560,7 +3560,7 @@
                 <factor>0.70</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
 
@@ -3582,7 +3582,7 @@
                 <factor>1</factor>
             </volume>
             <volume>
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
@@ -3611,7 +3611,7 @@
                 <factor>1</factor>
             </volume>
             <volume><!-- Is both a betty sound and a RWR sound -->
-                <property>f16/avionics/rwr-volume</property>
+                <property>f16/ews/rwr-volume</property>
                 <factor>1</factor>
             </volume>
         </rwr>
@@ -4100,7 +4100,7 @@
             <delay-sec>1.5</delay-sec>
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>1</factor>
+                <factor>0.6</factor>
             </volume>
             <volume>
                 <property>f16/avionics/intercom-volume</property>
@@ -4143,19 +4143,21 @@
                             <value>120</value>
                         </less-than>
                     </and-->
-                    <and>
+                    <equals>
                         <!-- source: Dash-1 1-95 and AD-A145-469 -->
                         <property>f16/avionics/low-speed-warning-tone-a</property>
-                    </and>
-                    <and>
+                        <value>1</value>
+                    </equals>
+                    <equals>
                         <!-- source: AD-A145-469 -->
                         <property>f16/avionics/low-speed-warning-tone-b</property>
-                    </and>
+                        <value>1</value>
+                    </equals>
                 </or>
             </condition>
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>0.25</factor>
+                <factor>0.14</factor>
             </volume>
         </aural>
         <aural>
@@ -4193,7 +4195,7 @@
             </condition>
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>0.25</factor>
+                <factor>0.14</factor>
             </volume>
         </aural>
         <aural>
@@ -4227,7 +4229,7 @@
             </condition>
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>0.25</factor>
+                <factor>0.14</factor>
             </volume>
         </aural>
 
@@ -4274,7 +4276,7 @@
                 <property>sim/current-view/internal</property>
             </volume>
             <volume>
-                <property>f16/avionics/msl-vol-knob</property>
+                <property>f16/ews/msl-vol-knob</property>
             </volume>
         </lock-tone>
         <lock-tone>
@@ -4310,7 +4312,43 @@
                 <property>sim/current-view/internal</property>
             </volume>
             <volume>
-                <property>f16/avionics/msl-vol-knob</property>
+                <property>f16/ews/msl-vol-knob</property>
+            </volume>
+        </lock-tone>
+        <lock-tone>
+            <name>aim-9x-growl</name>
+            <mode>looped</mode>
+            <type>avionics</type>
+            <path>Aircraft/f16/Sounds/aim-9-growl.wav</path>
+            <condition>
+                <or>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                        <value>20</value>
+                    </greater-than>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                        <value>20</value>
+                    </greater-than>
+                </or>
+                <!--property>payload/armament/growl-type</property-->
+                <property>payload/armament/aim-9x/sound-on-off</property>
+            </condition>
+            <pitch>
+                <property>payload/armament/aim-9x/sound-volume</property>
+                <factor>1.00</factor>
+                <offset>1.60</offset>
+                <min>0</min>
+                <max>2</max>
+            </pitch>
+            <volume>
+                <property>payload/armament/aim-9x/sound-volume</property>
+            </volume>
+            <volume>
+                <property>sim/current-view/internal</property>
+            </volume>
+            <volume>
+                <property>f16/ews/msl-vol-knob</property>
             </volume>
         </lock-tone>
         <!--lock-tone>
@@ -4743,16 +4781,10 @@
             <name>missile0</name>
             <path>Aircraft/f16/Sounds/aim-launch.wav</path>
             <mode>once</mode>
+            <type>avionics</type>
             <condition>
                 <property>payload/armament/aim-7/sound-fire-on-off</property>
             </condition>
-            <reference-dist>25</reference-dist>
-            <max-dist>10000</max-dist>
-            <position>
-                <x>3.15986</x>
-                <y>-2.70311</y>
-                <z>-0.67645</z>
-            </position>
             <volume>
                 <factor>0.65</factor>
                 <max>1</max>
@@ -4762,16 +4794,10 @@
             <name>missile1</name>
             <path>Aircraft/f16/Sounds/aim-launch.wav</path>
             <mode>once</mode>
+            <type>avionics</type>
             <condition>
                 <property>payload/armament/aim-120/sound-fire-on-off</property>
             </condition>
-            <reference-dist>25</reference-dist>
-            <max-dist>10000</max-dist>
-            <position>
-                <x>3.15986</x>
-                <y>-2.70311</y>
-                <z>-0.67645</z>
-            </position>
             <volume>
                 <factor>0.65</factor>
                 <max>1</max>
@@ -4781,16 +4807,10 @@
             <name>missile2</name>
             <path>Aircraft/f16/Sounds/aim-launch.wav</path>
             <mode>once</mode>
+            <type>avionics</type>
             <condition>
                 <property>payload/armament/aim-9l/sound-fire-on-off</property>
             </condition>
-            <reference-dist>25</reference-dist>
-            <max-dist>10000</max-dist>
-            <position>
-                <x>3.15986</x>
-                <y>-2.70311</y>
-                <z>-0.67645</z>
-            </position>
             <volume>
                 <factor>0.65</factor>
                 <max>1</max>
@@ -4800,16 +4820,23 @@
             <name>missile2m</name>
             <path>Aircraft/f16/Sounds/aim-launch.wav</path>
             <mode>once</mode>
+            <type>avionics</type>
             <condition>
                 <property>payload/armament/aim-9m/sound-fire-on-off</property>
             </condition>
-            <reference-dist>25</reference-dist>
-            <max-dist>10000</max-dist>
-            <position>
-                <x>3.15986</x>
-                <y>-2.70311</y>
-                <z>-0.67645</z>
-            </position>
+            <volume>
+                <factor>0.65</factor>
+                <max>1</max>
+            </volume>
+        </missile1>
+        <missile1>
+            <name>missile2x</name>
+            <path>Aircraft/f16/Sounds/aim-launch.wav</path>
+            <mode>once</mode>
+            <type>avionics</type>
+            <condition>
+                <property>payload/armament/aim-9x/sound-fire-on-off</property>
+            </condition>
             <volume>
                 <factor>0.65</factor>
                 <max>1</max>
@@ -4819,16 +4846,10 @@
             <name>missile3</name>
             <path>Aircraft/f16/Sounds/aim-launch.wav</path>
             <mode>once</mode>
+            <type>avionics</type>
             <condition>
                 <property>payload/armament/agm-65b/sound-fire-on-off</property>
             </condition>
-            <reference-dist>25</reference-dist>
-            <max-dist>10000</max-dist>
-            <position>
-                <x>3.15986</x>
-                <y>-2.70311</y>
-                <z>-0.67645</z>
-            </position>
             <volume>
                 <factor>0.65</factor>
                 <max>1</max>
@@ -4838,16 +4859,10 @@
             <name>missile4</name>
             <path>Aircraft/f16/Sounds/aim-launch.wav</path>
             <mode>once</mode>
+            <type>avionics</type>
             <condition>
                 <property>payload/armament/agm-88/sound-fire-on-off</property>
             </condition>
-            <reference-dist>25</reference-dist>
-            <max-dist>10000</max-dist>
-            <position>
-                <x>3.15986</x>
-                <y>-2.70311</y>
-                <z>-0.67645</z>
-            </position>
             <volume>
                 <factor>0.65</factor>
                 <max>1</max>
@@ -4857,16 +4872,10 @@
             <name>missile5</name>
             <path>Aircraft/f16/Sounds/cruise-missile-launch.wav</path>
             <mode>once</mode>
+            <type>avionics</type>
             <condition>
                 <property>payload/armament/agm-84/sound-fire-on-off</property>
             </condition>
-            <reference-dist>25</reference-dist>
-            <max-dist>10000</max-dist>
-            <position>
-                <x>3.15986</x>
-                <y>-2.70311</y>
-                <z>-0.67645</z>
-            </position>
             <volume>
                 <factor>0.65</factor>
                 <max>1</max>
@@ -4876,16 +4885,10 @@
             <name>missile6</name>
             <path>Aircraft/f16/Sounds/cruise-missile-launch.wav</path>
             <mode>once</mode>
+            <type>avionics</type>
             <condition>
                 <property>payload/armament/agm-119/sound-fire-on-off</property>
             </condition>
-            <reference-dist>25</reference-dist>
-            <max-dist>10000</max-dist>
-            <position>
-                <x>3.15986</x>
-                <y>-2.70311</y>
-                <z>-0.67645</z>
-            </position>
             <volume>
                 <factor>0.65</factor>
                 <max>1</max>
@@ -4895,16 +4898,10 @@
             <name>missile7</name>
             <path>Aircraft/f16/Sounds/aim-launch.wav</path>
             <mode>once</mode>
+            <type>avionics</type>
             <condition>
                 <property>payload/armament/agm-65d/sound-fire-on-off</property>
             </condition>
-            <reference-dist>25</reference-dist>
-            <max-dist>10000</max-dist>
-            <position>
-                <x>3.15986</x>
-                <y>-2.70311</y>
-                <z>-0.67645</z>
-            </position>
             <volume>
                 <factor>0.65</factor>
                 <max>1</max>
@@ -5078,6 +5075,34 @@
                 <max>1</max>
             </volume>
         </bomb-release>
+        <!--bomb-release>
+            <name>bomb-release7</name>
+            <mode>once</mode>
+            <type>avionics</type>
+            <path>Aircraft/f16/Sounds/gbu_release.wav</path>
+            <condition>
+                <property>payload/armament/b61-7/sound-fire-on-off</property>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+                <max>1</max>
+            </volume>
+        </bomb-release>
+        <bomb-release>
+            <name>bomb-release8</name>
+            <mode>once</mode>
+            <type>avionics</type>
+            <path>Aircraft/f16/Sounds/gbu_release.wav</path>
+            <condition>
+                <property>payload/armament/b61-12/sound-fire-on-off</property>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+                <max>1</max>
+            </volume>
+        </bomb-release-->
         <missile-hit>
             <!-- multiple of these so the sound can be played over each other -->
             <name>missile-hit1</name>

@@ -1,6 +1,4 @@
 srand();# to avoid picking the same suspect numbers
-var TRUE = 1;
-var FALSE = 0;
 
 # Use: f16.tree("/",0);
 var tree = func(n = "", graph = 1) {
@@ -59,6 +57,9 @@ var msgB = "Please land before changing payload.";
 var msgC = "Please land before refueling.";
 var cockpit_blink = props.globals.getNode("f16/avionics/cockpit_blink", 1);
 aircraft.light.new("f16/avionics/cockpit_blinker", [0.25, 0.25], cockpit_blink);
+var cockpit_blink3 = props.globals.getNode("f16/avionics/cockpit_blink_3z", 1);
+aircraft.light.new("f16/avionics/cockpit_blinker3hz", [0.166, 0.166], cockpit_blink);
+
 setprop("f16/avionics/cockpit_blink", 1);
 
 var extrapolate = func (x, x1, x2, y1, y2) {
@@ -242,42 +243,42 @@ var medium_fast = {
     loop: func {
         # Flare/chaff release
         if (getprop("ai/submodels/submodel[0]/flare-release-snd") == nil) {
-            setprop("ai/submodels/submodel[0]/flare-release-snd", FALSE);
-            setprop("ai/submodels/submodel[0]/flare-release-out-snd", FALSE);
+            setprop("ai/submodels/submodel[0]/flare-release-snd", 0);
+            setprop("ai/submodels/submodel[0]/flare-release-out-snd", 0);
         }
-        var flareOn = getprop("ai/submodels/submodel[0]/flare-release-cmd") and getprop("f16/avionics/ew-mode-knob") == 1;
-        var flareOnA = getprop("ai/submodels/submodel[0]/flare-auto-release-cmd") > rand() and getprop("f16/avionics/ew-mode-knob") == 2 and getprop("ai/submodels/submodel[0]/flare-release-cmd") == 0;
+        var flareOn = getprop("ai/submodels/submodel[0]/flare-release-cmd") and getprop("f16/ews/ew-mode-knob") == 1;
+        var flareOnA = getprop("ai/submodels/submodel[0]/flare-auto-release-cmd") > rand() and getprop("f16/ews/ew-mode-knob") == 2 and getprop("ai/submodels/submodel[0]/flare-release-cmd") == 0;
         flareOn = flareOn or flareOnA;
 
-        if (flareOn == TRUE and getprop("ai/submodels/submodel[0]/flare-release") == FALSE
-                and getprop("ai/submodels/submodel[0]/flare-release-out-snd") == FALSE
-                and getprop("ai/submodels/submodel[0]/flare-release-snd") == FALSE) {
+        if (flareOn == 1 and getprop("ai/submodels/submodel[0]/flare-release") == 0
+                and getprop("ai/submodels/submodel[0]/flare-release-out-snd") == 0
+                and getprop("ai/submodels/submodel[0]/flare-release-snd") == 0) {
             me.flareCount = getprop("ai/submodels/submodel[0]/count");
             me.flareStart = getprop("sim/time/elapsed-sec");
-            setprop("ai/submodels/submodel[0]/flare-release-cmd", FALSE);
+            setprop("ai/submodels/submodel[0]/flare-release-cmd", 0);
             if (me.flareCount > 0 and getprop("fdm/jsbsim/elec/bus/emergency-dc-2")>20) {
                 # release a flare
-                setprop("ai/submodels/submodel[0]/flare-release-snd", TRUE);
-                setprop("ai/submodels/submodel[0]/flare-release", TRUE);
+                setprop("ai/submodels/submodel[0]/flare-release-snd", 1);
+                setprop("ai/submodels/submodel[0]/flare-release", 1);
                 setprop("rotors/main/blade[3]/flap-deg", me.flareStart);
                 setprop("rotors/main/blade[3]/position-deg", me.flareStart);
                 damage.flare_released();
             } else {
                 # play the sound for out of flares
-                setprop("ai/submodels/submodel[0]/flare-release-out-snd", TRUE);
+                setprop("ai/submodels/submodel[0]/flare-release-out-snd", 1);
             }
         }
-        if (getprop("ai/submodels/submodel[0]/flare-release-snd") == TRUE and (me.flareStart + 1) < getprop("sim/time/elapsed-sec")) {
-            setprop("ai/submodels/submodel[0]/flare-release-snd", FALSE);
+        if (getprop("ai/submodels/submodel[0]/flare-release-snd") == 1 and (me.flareStart + 1) < getprop("sim/time/elapsed-sec")) {
+            setprop("ai/submodels/submodel[0]/flare-release-snd", 0);
             setprop("rotors/main/blade[3]/flap-deg", 0);
             setprop("rotors/main/blade[3]/position-deg", 0);#MP interpolates between numbers, so nil is better than 0.
         }
-        if (getprop("ai/submodels/submodel[0]/flare-release-out-snd") == TRUE and (me.flareStart + 1.5) < getprop("sim/time/elapsed-sec")) {
-            setprop("ai/submodels/submodel[0]/flare-release-out-snd", FALSE);
+        if (getprop("ai/submodels/submodel[0]/flare-release-out-snd") == 1 and (me.flareStart + 1.5) < getprop("sim/time/elapsed-sec")) {
+            setprop("ai/submodels/submodel[0]/flare-release-out-snd", 0);
         }
         if (me.flareCount > getprop("ai/submodels/submodel[0]/count")) {
             # A flare was released in last loop, we stop releasing flares, so user have to press button again to release new.
-            setprop("ai/submodels/submodel[0]/flare-release", FALSE);
+            setprop("ai/submodels/submodel[0]/flare-release", 0);
             me.flareCount = -1;
         }
 
@@ -289,8 +290,8 @@ var medium_fast = {
         #setprop("instrumentation/mfd-sit/inputs/lh-vor-adf", 0);
         #setprop("instrumentation/mfd-sit/inputs/rh-vor-adf", 0);
         setprop("instrumentation/mfd-sit-2/inputs/wpt", 0);
-        if (getprop("payload/armament/msg") == TRUE) {
-            setprop("sim/rendering/redout/enabled", TRUE);
+        if (getprop("payload/armament/msg") == 1) {
+            setprop("sim/rendering/redout/enabled", 1);
             if (getprop("sim/rendering/redout/new")) {
                 newsuit();
             } else {
@@ -739,60 +740,7 @@ setlistener("/fdm/jsbsim/fcs/fly-by-wire/digital-backup", func(node) {
 });
 
 
-var autopilot_inhibit = {
-    # Ref (up to block 40): 1F-16A-1 page 1-133
-    # Ref (block 40 and up): GR1F-16CJ-1 page 1-135
-    init: func {
-        setlistener("/systems/refuel/serviceable", me.evaluate, 0, 0);
-        setlistener("/controls/flight/flaps", me.evaluate, 0, 0);
-        setlistener("/controls/gear/gear-down", me.evaluate, 0, 0);
-        setlistener("/fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains", me.evaluate, 0, 0);
-        setlistener("/f16/fcs/trim-ap-disc-switch", me.evaluate, 0, 0);
-        if (getprop("/sim/variant-id") >= 4) {
-            # TODO: A/P FAIL PFL occurs
-            setlistener("/f16/fcs/autopilot-aoa-limit-exceed", me.evaluate, 0, 0);
-            setlistener("/fdm/jsbsim/fcs/fly-by-wire/digital-backup", me.evaluate, 0, 0);
-            setlistener("/f16/avionics/low-speed-warning-tone-a", me.evaluate, 0, 0);
-            setlistener("/f16/avionics/low-speed-warning-tone-b", me.evaluate, 0, 0);
-            setlistener("/fdm/jsbsim/fcs/fbw-override", me.evaluate, 0, 0);
-        }
-        me.evaluate();
-    },
 
-    evaluate: func {
-        if (
-            (getprop("/systems/refuel/serviceable")) or
-            (getprop("/controls/flight/flaps")) or
-            (getprop("/controls/gear/gear-down")) or
-            (getprop("/fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains")) or
-            (getprop("/f16/fcs/trim-ap-disc-switch")) or
-            (
-            (getprop("/sim/variant-id") >= 4) and
-            (
-            # TODO: A/P FAIL PFL occurs
-            (getprop("/f16/fcs/autopilot-aoa-limit-exceed")) or
-            (getprop("/fdm/jsbsim/fcs/fly-by-wire/digital-backup")) or
-            (getprop("/f16/avionics/low-speed-warning-tone-a")) or
-            (getprop("/f16/avionics/low-speed-warning-tone-b")) or
-            (getprop("/fdm/jsbsim/fcs/fbw-override"))
-            )
-            )
-            ) {
-            setprop("/f16/fcs/autopilot-inhibit", 1);
-            setprop("/f16/fcs/autopilot-on", 0);
-            setprop("/f16/fcs/switch-pitch-block20", 0);
-        } else {
-            setprop("/f16/fcs/autopilot-inhibit", 0);
-        }
-    },
-
-    inhibit_check: func {
-        if (getprop("/f16/fcs/autopilot-inhibit") == 1) {
-            setprop("/f16/fcs/autopilot-on", 0);
-            setprop("/f16/fcs/switch-pitch-block20", 0);
-        }
-    },
-};
 
 
 var cockpit_temperature_control = {
@@ -842,7 +790,7 @@ var cockpit_temperature_control = {
         me.tempOutsideDew = getprop("environment/dewpoint-degc");
         me.tempInsideDew = getprop("/environment/aircraft-effects/dewpoint-inside-degC");
         me.tempACDew = 5;# aircondition dew point target. 5 = dry
-        me.ACRunning = getprop("fdm/jsbsim/elec/bus/emergency-dc-1") > 20 and getprop("controls/ventilation/airconditioning-enabled") == TRUE;
+        me.ACRunning = getprop("fdm/jsbsim/elec/bus/emergency-dc-1") > 20 and getprop("controls/ventilation/airconditioning-enabled") == 1;
 
         # calc inside temp
         me.hotAir_deg_min = 2.0;# how fast does the sources heat up cockpit.
@@ -877,7 +825,7 @@ var cockpit_temperature_control = {
             me.tempInsideDew = me.tempOutsideDew;
         } else {
             me.tempInsideDewTarget = 0;
-            if (me.ACRunning == TRUE) {
+            if (me.ACRunning == 1) {
                 # calculate dew point for inside air. When full airconditioning is achieved at tempAC dewpoint will be tempACdew.
                 # slope = (outsideDew - desiredInsideDew)/(outside-desiredInside)
                 # insideDew = slope*(inside-desiredInside)+desiredInsideDew
@@ -924,9 +872,9 @@ var cockpit_temperature_control = {
         me.fogNorm = me.fogNormOutside>me.fogNormInside?me.fogNormOutside:me.fogNormInside;
 
         # If the hot air on windshield is enabled and its setting is high enough, then apply the mask which will defog the windshield.
-        #me.mask = FALSE;
+        #me.mask = 0;
         #if (me.frostNorm <= me.hotAirOnWindshield and me.hotAirOnWindshield != 0) {
-            me.mask = TRUE;
+            me.mask = 1;
         #}
 
         # internal environment
@@ -1205,7 +1153,7 @@ var impact_listener = func {
 var hitmessage = func(typeOrd) {
     #print("inside hitmessage");
     var phrase = typeOrd ~ " hit: " ~ hit_callsign ~ ": " ~ hits_count ~ " hits";
-    if (getprop("payload/armament/msg") == TRUE) {
+    if (getprop("payload/armament/msg") == 1) {
         #armament.defeatSpamFilter(phrase);
         var msg = notifications.ArmamentNotification.new("mhit", 4, -1*(damage.shells[typeOrd][0]+1));
         msg.RelativeAltitude = 0;
@@ -1260,6 +1208,7 @@ var SubSystem_Main = {
             weapon_mode               : "sim/model/f16/controls/armament/weapon-selector",
             yaw                       : "fdm/jsbsim/aero/beta-deg",
             # Properties used in HUD:
+            rocketsBusy               : "payload/armament/rockets-rippling",
             calibrated                : "fdm/jsbsim/velocities/vc-kts",
             TAS                       : "fdm/jsbsim/velocities/vtrue-kts",
             HUD_VEL                   : "f16/avionics/hud-velocity",
@@ -1373,7 +1322,7 @@ var SubSystem_Main = {
 
         obj.recipient.Receive = func(notification)
         {
-            if (notification.NotificationType == "FrameNotification")
+            if (notification.NotificationType == "FrameNotification16")
             {
                 me.Main.update(notification);
                 ownship_pos.set_latlon(getprop("position/latitude-deg"), getprop("position/longitude-deg"), getprop("position/altitude-ft")*FT2M);
@@ -1422,7 +1371,7 @@ var eject2 = func{
     var es = armament.AIM.new(10, "es","gamma", nil ,[-3.65,0,0.7]);
     #setprop("fdm/jsbsim/fcs/canopy/hinges/serviceable",0);
     es.releaseAtNothing();
-    view.view_firing_missile(es);
+    viewMissile.view_firing_missile(es);
     #setprop("sim/view[0]/enabled",0); #disabled since it might get saved so user gets no pilotview in next aircraft he flies in.
     settimer(func {crash.eject();},3.5);
 }
@@ -1722,7 +1671,7 @@ settimer( func { ignoreLoop(); }, 5);
 
 setlistener("controls/armament/alt-rel-button", func (node) {setprop("controls/armament/trigger", node.getValue());});
 
-var SOI = int(rand() * 3)+1; # 1 to 3
+var SOI = 1;#int(rand() * 3)+1; # 1 to 3
 
 var MFDControlsNodes = {
     dmsX: props.globals.getNode("controls/displays/display-management-switch-x"),
@@ -1753,7 +1702,7 @@ setlistener("controls/displays/display-management-switch-y", func() {
         SOI = 1;
     } else {
         if (SOI == 1) {
-            SOI = 2;
+            autoPrioritySOI();#As per manual
         } elsif (SOI == 2) {
             SOI = 3;
         } else {
@@ -1761,6 +1710,20 @@ setlistener("controls/displays/display-management-switch-y", func() {
         }
     }
 }, 0, 0);
+
+var autoPrioritySOI = func {
+    var hud_prio = 0;
+    var mfd_left = displays.leftMFD.getSOIPrio();
+    var mfd_right = displays.rightMFD.getSOIPrio();
+    var soi = 1;
+    if (mfd_left > hud_prio) {
+        soi = 2;
+    }
+    if (mfd_right > mfd_left) {
+        soi = 3;
+    }
+    SOI = soi;
+}
 
 setlistener("controls/displays/cursor-slew-y-delta", func() {
     if (SOI == 1) { return; }
@@ -1824,7 +1787,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
         }
 
         hack.init();
-        startupMFD();
+        #startupMFD();
         medium_fast.init();
         slow.init();
         #fx = flex.WingFlexer.new(1, 250, 25, 500, 0.375, "f16/wings/fuel-and-stores-kg","f16/wings/fuel-and-stores-kg","sim/systems/wingflexer/","f16/wings/lift-lbf");
@@ -1847,7 +1810,6 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
         fail.init();
         #awg_9.loopDGFT();
         eng.JFS.init();
-        autopilot_inhibit.init();
         setup_custom_stick_bindings();
         setprop("consumables/fuel/tank[6]/capacity-gal_us",0);
         setprop("consumables/fuel/tank[7]/capacity-gal_us",0);
@@ -1857,7 +1819,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
         setprop("/consumables/fuel/total-fuel-lbs-100", 700);
         setprop("/consumables/fuel/total-fuel-lbs-1000", 1000);
         if (getprop("f16/disable-custom-view") != 1) view.manager.register("Cockpit View", pilot_view_limiter);
-                                     emesary.GlobalTransmitter.Register(f16_mfd);
+        #emesary.GlobalTransmitter.Register(f16_mfd);
         emesary.GlobalTransmitter.Register(f16_hud);
         #emesary.GlobalTransmitter.Register(awg_9.aircraft_radar);
         #execTimer.start();
@@ -1883,6 +1845,10 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
             setprop("f16/texture/icp_wheels", "icp_wheels_white.png");
         }
 
+        if (pylons.fcs != nil) {#on the YF-16 it will be nil
+            fc.ccrp_loopTimer.start();
+        }
+
         #-- load HMD as reloadable module
         var hmd = modules.Module.new("f16_HMD"); # Module name
         hmd.setDebug(0); # 0=(mostly) silent; 1=print setlistener and maketimer calls to console; 2=print also each listener hit, be very careful with this!
@@ -1890,7 +1856,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
         hmd.setMainFile("hmd.nas");
         hmd.load();
         #-- load CDU as reloadable module
-        if (getprop("sim/variant-id") == 6) {
+        if (getprop("sim/variant-id") >= 6) {
             var cdu = modules.Module.new("f16_CDU"); # Module name
             cdu.setDebug(0); # 0=(mostly) silent; 1=print setlistener and maketimer calls to console; 2=print also each listener hit, be very careful with this!
             cdu.setFilePath(getprop("/sim/aircraft-dir")~"/Nasal/CDU");
@@ -1903,12 +1869,19 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
         #rp.setFilePath(getprop("/sim/aircraft-dir")~"/Nasal/radar");#
         #rp.setMainFile("radar-prototype.nas");#
         #rp.load();#
+        #-- load MFD as reloadable module
+        #var mfd = modules.Module.new("f16_MFD"); # Module name
+        #mfd.setDebug(0); # 0=(mostly) silent; 1=print setlistener and maketimer calls to console; 2=print also each listener hit, be very careful with this!
+        #mfd.setFilePath(getprop("/sim/aircraft-dir")~"/Nasal/MFD");
+        #mfd.setMainFile("display-system.nas");
+        #mfd.setNamespace("displays");
+        #mfd.load();
         setprop("sim/rendering/headshake/enabled",0);# This does not work very well in F-16. So this makes people have to enable it explicit to have it. Don't know why its forced on us by default.
         # debug:
         #
         #screen.property_display.add("fdm/jsbsim/fcs/fly-by-wire/pitch/pitch-rate-lower-lag");
         #screen.property_display.add("fdm/jsbsim/fcs/fly-by-wire/pitch/bias-final");
-        startDLListener();
+        displays.startDLListener();
         file_selector_dtc = gui.FileSelector.new(
             callback: load_stpts, title: "Load data", button: "Load",
             dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.f16dtc"]);

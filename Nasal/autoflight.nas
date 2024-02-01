@@ -10,6 +10,7 @@ var apLoop = maketimer(1, func {
 			var gnds_kt = getprop("/velocities/groundspeed-kt");
 			var max_wp   = getprop("/autopilot/route-manager/route/num");
 			var current_course = getprop("/autopilot/route-manager/wp/true-bearing-deg");
+			if (current_course == nil) current_course = getprop("orientation/true-heading-deg");
 			var wp_fly_to = getprop("/autopilot/route-manager/current-wp") + 1;
 			if (wp_fly_to < 0) {
 				wp_fly_to = 0;
@@ -32,7 +33,7 @@ var apLoop = maketimer(1, func {
 
 			setprop("/autopilot/route-manager/advance", turn_dist_nm);
 
-			if (getprop("/autopilot/route-manager/wp/dist") <= turn_dist_nm) {
+			if (getprop("/autopilot/route-manager/wp/dist") <= turn_dist_nm and steerpoints.autoMode) {
 				setprop("/autopilot/route-manager/current-wp", getprop("/autopilot/route-manager/current-wp") + 1);
 			}
 		}
@@ -106,7 +107,7 @@ var apLoopHalf = maketimer(0.5, func {
         } else {
         	setprop("f16/fcs/adv-mode", 1);
         	setprop("f16/fcs/stby-mode", 0);
-        	full = 1;# the higher the smoother. Max 10. Min 1.
+        	full = getprop("f16/fcs/adv-mode-smooth");;# the higher the smoother. Max 10. Min 1.
         	half = full * 0.0;
         	vsg  = -11.5-4*getprop("velocities/groundspeed-kt")/600-(getprop("instrumentation/radar/time-till-crash") < 15)*10;
         	vs   = vs + math.min(12500, 4000*getprop("velocities/groundspeed-kt")/400+(4000*getprop("velocities/groundspeed-kt")/400) * (getprop("instrumentation/radar/time-till-crash") < 15));
@@ -146,6 +147,7 @@ var start = setlistener("/sim/signals/fdm-initialized", func {
 	apLoopHalf.start();
 	apLoopFast.start();
 	apLoopDelay.start();
+	autopilot_inhibit.init();
 	removelistener(start);
 });
 
@@ -172,6 +174,62 @@ var aTF_execute = func {
     #setprop ("/autopilot/settings/target-altitude-ft", target);
     setprop ("/autopilot/settings/target-tf-altitude-ft", getprop("instrumentation/tfs/ground-altitude-ft")+getprop ("/autopilot/settings/tf-minimums")+getprop("instrumentation/tfs/padding"));
     #print("TF sending info to A/P: "~(getprop("instrumentation/tfs/ground-altitude-ft")+getprop ("/autopilot/settings/tf-minimums")));
+};
+
+var autopilot_inhibit = {
+    # Ref (up to block 40): 1F-16A-1 page 1-133
+    # Ref (block 40 and up): GR1F-16CJ-1 page 1-135
+    init: func {
+        setlistener("/systems/refuel/serviceable", me.evaluate, 0, 0);
+        setlistener("/controls/flight/flaps", me.evaluate, 0, 0);
+        setlistener("/controls/gear/gear-down", me.evaluate, 0, 0);
+        setlistener("/fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains", me.evaluate, 0, 0);
+        setlistener("/f16/fcs/trim-ap-disc-switch", me.evaluate, 0, 0);
+        setlistener("/autopilot/serviceable", me.evaluate, 0, 0);
+        if (getprop("/sim/variant-id") >= 4) {
+            # TODO: A/P FAIL PFL occurs
+            setlistener("/f16/fcs/autopilot-aoa-limit-exceed", me.evaluate, 0, 0);
+            setlistener("/fdm/jsbsim/fcs/fly-by-wire/digital-backup", me.evaluate, 0, 0);
+            setlistener("/f16/avionics/low-speed-warning-tone-a", me.evaluate, 0, 0);
+            setlistener("/f16/avionics/low-speed-warning-tone-b", me.evaluate, 0, 0);
+            setlistener("/fdm/jsbsim/fcs/fbw-override", me.evaluate, 0, 0);
+        }
+        me.evaluate();
+    },
+
+    evaluate: func {
+        if (
+            getprop("/systems/refuel/serviceable") or
+            getprop("/controls/flight/flaps") or
+            getprop("/controls/gear/gear-down") or
+            getprop("/fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains") or
+            getprop("/f16/fcs/trim-ap-disc-switch") or
+            !getprop("autopilot/serviceable") or # this makes also A/P FAIL PFL occur
+            (
+            getprop("/sim/variant-id") >= 4 and
+            (            
+            getprop("/f16/fcs/autopilot-aoa-limit-exceed") or
+            getprop("/fdm/jsbsim/fcs/fly-by-wire/digital-backup") or
+            getprop("/f16/avionics/low-speed-warning-tone-a") or
+            getprop("/f16/avionics/low-speed-warning-tone-b") or
+            getprop("/fdm/jsbsim/fcs/fbw-override")
+            )
+            )
+            ) {
+            setprop("/f16/fcs/autopilot-inhibit", 1);
+            setprop("/f16/fcs/autopilot-on", 0);
+            setprop("/f16/fcs/switch-pitch-block20", 0);
+        } else {
+            setprop("/f16/fcs/autopilot-inhibit", 0);
+        }
+    },
+
+    inhibit_check: func {
+        if (getprop("/f16/fcs/autopilot-inhibit") == 1) {
+            setprop("/f16/fcs/autopilot-on", 0);
+            setprop("/f16/fcs/switch-pitch-block20", 0);
+        }
+    },
 };
 
 props.globals.getNode("instrumentation/tfs/malfunction", 1).setBoolValue(0);

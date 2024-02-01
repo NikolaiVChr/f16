@@ -17,7 +17,7 @@ var test = func (echoHeading, echoPitch, echoRoll, bearing, frontRCS) {
 };
 
 var rcs_database = {
-	#REVISION: 2022/12/11
+	#REVISION: 2023/06/06
     "YF-16":                    5,      #higher because earlier blocks had larger RCS
     "F-16CJ":                   2,      #average
     "f16":                      2,      #average
@@ -25,6 +25,8 @@ var rcs_database = {
     "KC135":                    100,    #guess
     "onox-tanker":              100,    #guess
     "A-6E":                     9,      #average
+    "A-6E-model":               9,      #average
+    "ea6-b":                    9,      #average
     "EF2000":                   0.5,
     "brsq":                     1.5,    #average (multiple sources)
     "FA-18C_Hornet":            3.5,    #later Blocks have 1
@@ -75,6 +77,9 @@ var rcs_database = {
     "C130J":                    32,    #average
     "c130k":                    32,    #average
     "kc130":                    32,    #average
+    "C-17":                     21.5,  #average
+    "C-17-GlobemasterIII":      21.5,  #average
+    "C-17_GlobemasterIII":      21.5,  #average
     "XB-70":                    21,    #average
     # Helis:
     "uh60_Blackhawk":           4,      #average
@@ -102,6 +107,11 @@ var rcs_database = {
     "T-50":                     0.5,    #low end of sources
     "u-2s":                     0.01,
     "U-2S-model":               0.01,
+    #Carriers
+    "mp-clemenceau":            500,
+    "mp-eisenhower":            500,
+    "mp-nimitz":                500,
+    "mp-vinson":                500,
 };
 
 var prevVisible = {};
@@ -116,11 +126,11 @@ var timeNode = props.globals.getNode("sim/time/elapsed-sec");
 # In between these two values, a test is done with probability 'refresh_prob'.
 var refreshRequired = func (contact, min_refresh_sec, max_refresh_sec, refresh_prob) {
     var callsign = contact.get_Callsign();
-    if (callsign == nil or !contains(lastUpdateTime, callsign)) return TRUE;
+    if (callsign == nil or !contains(lastUpdateTime, callsign)) return 1;
 
     var update_age = timeNode.getValue() - lastUpdateTime[callsign];
-    if (update_age < min_refresh_sec) return FALSE;
-    elsif (update_age > max_refresh_sec) return TRUE;
+    if (update_age < min_refresh_sec) return 0;
+    elsif (update_age > max_refresh_sec) return 1;
     else return (rand() < refresh_prob);
 }
 
@@ -172,7 +182,7 @@ var targetRCSSignal = func(targetCoord, targetModel, targetHeading, targetPitch,
         target_front_rcs = rcs_database[targetModel];
     } else {
         return 1;
-        target_front_rcs = rcs_database["default"];
+        target_front_rcs = rcs_oprf_database["default"];
     }
     #print(target_front_rcs," RCS from ", targetModel, " m:", myRadarDistance_m, " rcs:",myRadarStrength_rcs);
     var target_rcs = getRCS(targetCoord, targetHeading, targetPitch, targetRoll, myCoord, target_front_rcs);

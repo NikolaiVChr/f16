@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery>
+    <name type="string">20FW, 79FS SW "Unit Flagship"</name>
+    <texture>Liveries/Block50/91-0379.png</texture>
+    <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Have Glass V, Flagship</scheme>
+    <block type="int">50</block>
+    <serial type="string">91-0379</serial>
+    <squad type="string">79th FS "Flying Tigers"</squad>
+    <year type="string">2022</year>
+   </livery>
+   
+   <livery-logo>
+    <texture>Liveries/standard.logos.black.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block50/patch.tigers.png</texture>
+  </livery-patch>
+
+  <livery-pod>
+        <texture>Armament/External-stores/MXU-648.png</texture>
+  </livery-pod>
+
+  <f16>
+    <dragchute type="bool">false</dragchute>
+    <cft type="bool">false</cft>
+  </f16>
+  <livery-specular type="double">0.35</livery-specular>
+  </model>
+ </sim>
+</PropertyList>

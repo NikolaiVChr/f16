@@ -41,20 +41,17 @@ var dogfight = func {
         pylons.fcs.selectWeapon("20mm Cannon");
         ded.dataEntryDisplay.page = ded.pEWS;
         radar_system.apg68Radar.setRootMode(1, prio);
-        f16.f16_mfd.MFDl.resetColorAll();
-        f16.f16_mfd.MFDl.PFD.selectPage(f16.f16_mfd.MFDl.p_RDR);
-        f16.f16_mfd.MFDl.p_RDR.selectionBox.show();
-        f16.f16_mfd.MFDl.p_RDR.setSelection(nil, f16.f16_mfd.MFDl.PFD.buttons[10], 10);
-        f16.f16_mfd.MFDr.resetColorAll();
-        f16.f16_mfd.MFDr.PFD.selectPage(f16.f16_mfd.MFDr.p_WPN);
-        f16.f16_mfd.MFDr.p_WPN.selectionBox.show();
-        f16.f16_mfd.MFDr.p_WPN.setSelection(nil, f16.f16_mfd.MFDr.PFD.buttons[18], 18);
+        displays.leftMFD.system.selectPage("PageFCR");
+        displays.rightMFD.system.selectPage("PageSMSWPN");
         setprop("f16/avionics/strf",0);
         if (pylons.fcs != nil and getprop("controls/armament/master-arm")) {
             foreach(var snake;pylons.fcs.getAllOfType("AIM-9L")) {
                 snake.setCooling(1);
             }
             foreach(var snake;pylons.fcs.getAllOfType("AIM-9M")) {
+                snake.setCooling(1);
+            }
+            foreach(var snake;pylons.fcs.getAllOfType("AIM-9X")) {
                 snake.setCooling(1);
             }
         }
@@ -116,5 +113,36 @@ var pause = func {
         } else {
             screen.log.write("Sim is resumed");
         }
+    }
+}
+
+var cycleW = props.globals.getNode("/controls/armament/weapon-selected", 1);
+cycleW.setIntValue(0);
+setlistener(cycleW, func (prop) {
+    if (prop.getIntValue() == 1) pylons.fcs.cycleLoadedWeapon();
+    if (prop.getIntValue() == -1) pylons.fcs.cycleBackLoadedWeapon();
+});
+
+var cycleT = props.globals.getNode("/controls/armament/target-selected", 1);
+cycleT.setIntValue(0);
+setlistener(cycleT, func (prop) {
+    # Only TWS mode
+    if (prop.getIntValue() == 1) radar_system.apg68Radar.cycleDesignate();
+});
+
+
+var cycleS = props.globals.getNode("/controls/armament/missile-reject", 1);
+cycleS.setBoolValue(0);
+setlistener(cycleS, func (prop) {
+    if (prop.getIntValue() == 1) pylons.fcs.cycleStation();
+});
+
+controls.applyPickle = func (value) {
+    var trigger = getprop("/controls/armament/trigger");
+    if (value == 1 and trigger == 0) {
+        setprop("/controls/armament/trigger", value);
+    }
+    if (value == 0 and trigger == 1) {
+        setprop("/controls/armament/trigger", value);
     }
 }

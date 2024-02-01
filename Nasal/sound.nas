@@ -1,5 +1,4 @@
-var TRUE = 1;
-var FALSE = 0;
+
 
 
 
@@ -154,12 +153,12 @@ var play_thunder = func (name, timeout=0.1) {
 
     #settimer(func {
         # Play the sound
-        setprop(sound_prop, TRUE);
+        setprop(sound_prop, 1);
 
         # Reset the property after timeout so that the sound can be
         # played again.
         settimer(func {
-            setprop(sound_prop, FALSE);
+            setprop(sound_prop, 0);
         }, timeout);
     #}, delay);
 };
@@ -313,7 +312,7 @@ setlistener("f16/engine/ab-reset", button2, nil, 0);
 setlistener("f16/engine/max-power", button2, nil, 0);
 setlistener("f16/avionics/hud-brt", scroll, nil, 0);
 setlistener("f16/avionics/hud-sym", scroll, nil, 0);
-setlistener("f16/avionics/rwr-int", click3, nil, 0);
+setlistener("f16/ews/rwr-int", click3, nil, 0);
 setlistener("f16/avionics/mfd-l-con", click3, nil, 0);
 setlistener("f16/avionics/mfd-l-brt", click3, nil, 0);
 setlistener("f16/avionics/mfd-r-con", click3, nil, 0);
@@ -328,9 +327,9 @@ setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-5", knob, nil,
 setlistener("instrumentation/comm[0]/volume", click3, nil, 0);
 setlistener("instrumentation/comm[1]/volume", click3, nil, 0);
 setlistener("instrumentation/tacan/volume", click3, nil, 0);
-setlistener("f16/avionics/msl-vol-knob", click3, nil, 0);
+setlistener("f16/ews/msl-vol-knob", click3, nil, 0);
 setlistener("f16/avionics/ils-volume", click3, nil, 0);
-setlistener("f16/avionics/rwr-volume", click3, nil, 0);
+setlistener("f16/ews/rwr-volume", click3, nil, 0);
 setlistener("f16/avionics/intercom-volume", click3, nil, 0);
 setlistener("controls/lighting/lighting-panel/console-flood-knob", click3, nil, 0);
 setlistener("controls/lighting/lighting-panel/flood-inst-pnl-knob", click3, nil, 0);
@@ -359,12 +358,12 @@ setlistener("f16/avionics/power-ufc", click1, nil, 0);
 setlistener("f16/avionics/power-gps", click1, nil, 0);
 setlistener("f16/avionics/power-dl", click1, nil, 0);
 setlistener("f16/avionics/ins-knob", knob, nil, 0);
-setlistener("f16/avionics/ew-disp-switch", click1, nil, 0);
-setlistener("f16/avionics/ew-rwr-switch", click1, nil, 0);
-setlistener("f16/avionics/ew-mws-switch", click1, nil, 0);
-setlistener("f16/avionics/ew-jmr-switch", click1, nil, 0);
-setlistener("f16/avionics/ew-jett-switch", click1, nil, 0);
-setlistener("f16/avionics/ew-mode-knob", knob, nil, 0);
+setlistener("f16/ews/ew-disp-switch", click1, nil, 0);
+setlistener("f16/ews/ew-rwr-switch", click1, nil, 0);
+setlistener("f16/ews/ew-mws-switch", click1, nil, 0);
+setlistener("f16/ews/ew-jmr-switch", click1, nil, 0);
+setlistener("f16/ews/ew-jett-switch", click1, nil, 0);
+setlistener("f16/ews/ew-mode-knob", knob, nil, 0);
 setlistener("f16/avionics/cmds-01-switch", button2, nil, 0);
 setlistener("f16/avionics/cmds-02-switch", button2, nil, 0);
 setlistener("f16/avionics/cmds-ch-switch", button2, nil, 0);

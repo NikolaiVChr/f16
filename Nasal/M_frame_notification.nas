@@ -28,7 +28,7 @@ var FrameNotification =
     new: func(_rate)
     {
 #print("Frame Notification Created");
-        var new_class = emesary.Notification.new("FrameNotification", _rate);
+        var new_class = emesary.Notification.new("FrameNotification16", _rate);
         new_class.Rate = _rate;
         new_class.FrameRate = 60;
         new_class.FrameCount = 0;

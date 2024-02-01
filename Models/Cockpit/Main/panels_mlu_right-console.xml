@@ -275,7 +275,7 @@
                 <property>controls/ventilation/airconditioning-source</property>
                 <factor>1</factor>
                 <min>0</min>
-                <max>2</max>
+                <max>3</max>
                 <wrap>false</wrap>
             </binding>
         </action>
@@ -1427,10 +1427,10 @@
                 <property>sim/variant-id</property>
                 <value>5</value>
             </equals>
-            <equals>
+            <greater-than-equals>
                 <property>sim/variant-id</property>
                 <value>6</value>
-            </equals>
+            </greater-than-equals>
           </or>
         </condition>
     </animation>
@@ -1498,10 +1498,10 @@
                 <property>sim/variant-id</property>
                 <value>5</value>
             </equals>
-            <equals>
+            <greater-than-equals>
                 <property>sim/variant-id</property>
                 <value>6</value>
-            </equals>
+            </greater-than-equals>
           </or>
         </condition>
     </animation>
@@ -1544,10 +1544,10 @@
                 <property>sim/variant-id</property>
                 <value>5</value>
             </equals>
-            <equals>
+            <greater-than-equals>
                 <property>sim/variant-id</property>
                 <value>6</value>
-            </equals>
+            </greater-than-equals>
           </or>
         </condition>
     </animation>

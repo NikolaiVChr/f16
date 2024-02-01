@@ -157,6 +157,14 @@
                 <name>Ctrl-4</name>
                 <desc>IFF interrogation</desc>
             </key>
+            <key>
+                <name>Home</name>
+                <desc>Push to talk COMM #1 (UHF)</desc>
+            </key>
+            <key>
+                <name>End</name>
+                <desc>Push to talk COMM #2 (VHF)</desc>
+            </key>
             <text>
 This help is old, new manual here:
 https://github.com/NikolaiVChr/f16/wiki
@@ -269,9 +277,11 @@ AIRCRAFT
 - 15: F-15
 - 18: F/A-18
 - 21: MiG-21
+- 23: MiG-23
 - 27: Su-27, J-11A
 - 28: Training scenario opponent
 - 29: MiG-29
+- 34: Su-34
 - 35: F-35
 - 37: J-37 Viggen
 - 71: SR-71
@@ -286,14 +296,17 @@ AIRCRAFT
 
 ASSETS, OTHER
 - 2: SA-2 (S-75, SAM)
-- 11: SA-11 (BUK M2, SAM)
+- 3: SA-3 (S-125, SAM)
+- 5: SA-5 (S-200, SAM)
+- 6: SA-6 (2K12, SAM)
+- 17: SA-17 (BUK M2, SAM)
 - 20: SA-20 (S-300, SAM)
 - A: Shilka (ZSU-23-4, Anti-Aircraft Artillery)
 - AI: AI scenario
 - P: Patriot (MIM-104D, SAM)
 - S: AWACS, GCI or Recon
 - SH: Frigate/Carrier/Ship
-- UK: Unknown threat
+- U/UK: Unknown threat
             ]]></text-3>
             <text-4><![CDATA[
 MFDs (Multi Function Displays)

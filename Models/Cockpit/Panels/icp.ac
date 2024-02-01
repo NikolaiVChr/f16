@@ -5,10 +5,10 @@ MATERIAL "panelMat"      rgb 1.000 1.000 1.000  amb 0.700 0.700 0.700  emis 0.00
 MATERIAL "controlMat"    rgb 1.000 1.000 1.000  amb 0.800 0.800 0.800  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 012 trans 0.000
 MATERIAL "plateMat"      rgb 0.000 1.000 0.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 000 trans 1.000
 OBJECT world
-name "Blender_exporter_v2.27__icp.ac"
+name "ICPWORLD"
 kids 21
 OBJECT poly
-name "Bolt1"
+name "BoltA"
 data 5
 Bolt1
 crease 40.0
@@ -4151,7 +4151,7 @@ refs 4
 164 0.44506 0.972374
 kids 0
 OBJECT poly
-name "Bolt2"
+name "BoltB"
 data 5
 Bolt2
 crease 40.0
@@ -8294,9 +8294,9 @@ refs 4
 164 0.448966 0.847374
 kids 0
 OBJECT poly
-name "Bolt3"
+name "BoltC"
 data 5
-Bolt4
+Bolt3
 crease 40.0
 texture "icp_panel.png"
 texrep 1 1
@@ -12437,9 +12437,9 @@ refs 4
 164 0.573966 0.847374
 kids 0
 OBJECT poly
-name "Bolt4"
+name "BoltD"
 data 5
-Bolt3
+Bolt4
 crease 40.0
 texture "icp_panel.png"
 texrep 1 1

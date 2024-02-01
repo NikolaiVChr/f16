@@ -11,14 +11,16 @@ This file selects the instrumentation modules that should be available.
 	<comm-radio>
 	    <name>comm</name>
 	    <number>0</number>
-	    <power-supply>fdm/jsbsim/systems/electrical/outputs/comm[0]</power-supply>
+	    <eight-point-three>0</eight-point-three><!-- set to 1 for 8.33kHz raster -->
+	    <power-supply>systems/electrical/outputs/comm[0]</power-supply>
 	    <minimum-supply-volts>20.0</minimum-supply-volts>
 	</comm-radio>
 
 	<comm-radio>
 	    <name>comm</name>
 	    <number>1</number>
-	    <power-supply>fdm/jsbsim/systems/electrical/outputs/comm[1]</power-supply>
+	    <eight-point-three>0</eight-point-three>
+	    <power-supply>systems/electrical/outputs/comm[1]</power-supply>
 	    <minimum-supply-volts>20.0</minimum-supply-volts>
 	</comm-radio>
 

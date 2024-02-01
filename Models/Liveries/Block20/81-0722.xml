@@ -4,9 +4,15 @@
  <sim>
   <model>
    <livery>
-    <name type="string">AMI 18 Gruppo, "1000 flight hours"</name>
+    <name type="string">37° Stormo, 18° Gruppo "1000 flight hours"</name>
     <texture>Liveries/Block20/81-0722.png</texture>
     <owner type="string">AMI</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Special Color</scheme>
+    <block type="int">20</block>
+    <serial type="string">81-0722</serial>
+    <squad type="string">18° Gruppo "Ocio che te copo"</squad>
+    <year type="string">2009</year>
    </livery>
    <livery-logo>
     <texture>Liveries/standard.logos.png</texture>

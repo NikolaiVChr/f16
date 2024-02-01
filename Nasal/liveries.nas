@@ -122,7 +122,7 @@ var diag = {
         me.ownerprop = relpath("sim/model/livery/owner");
         me.pilotprop = relpath("sim/model/livery/pilot");
         me.schemeprop = relpath("sim/model/livery/scheme");
-        me.engineprop = relpath("sim/model/livery/block");
+        me.blockprop = relpath("sim/model/livery/block");
         me.squadprop = relpath("sim/model/livery/squad");
         me.serialprop = relpath("sim/model/livery/serial");
         me.yearprop = relpath("sim/model/livery/year");
@@ -148,23 +148,32 @@ var diag = {
                 if (substr(file, -4) != ".xml")
                     continue;
                 var n = io.read_properties(me.dir ~ file);
+                if (n == nil) {
+                    print("Malformed XML livery file:\n",me.dir ~ file);
+                    continue;
+                }
                 var name = n.getNode(me.nameprop, 1).getValue();
                 var index = n.getNode(me.sortprop, 1).getValue();
                 var owner = n.getNode(me.ownerprop, 1).getValue();
                 var pilot = n.getNode(me.pilotprop, 1).getValue() or "";
                 var scheme = n.getNode(me.schemeprop, 1).getValue() or "Two-tone gray";
-                var engine = n.getNode(me.engineprop, 1).getValue();
+                var block = n.getNode(me.blockprop, 1).getValue();
                 var squad = n.getNode(me.squadprop, 1).getValue() or "";
                 var serial = n.getNode(me.serialprop, 1).getValue() or substr(file, 0, size(file) - 4);
                 var year = n.getNode(me.yearprop, 1).getValue() or "";
                 var cft = n.getNode(me.cftprop, 1).getValue() or 0;
                 var chute = n.getNode(me.chuteprop, 1).getValue() or 0;
 
-                if (name == nil or index == nil or owner == nil or (engine != nil and engineID != nil and engine != 0 and engine != 10 and engine != 20 and engineID.getValue() != right(""~engine, 1))) {
-                    #print(name == nil,index == nil,owner == nil,(engine != nil and engineID != nil and engineID.getValue() != right(""~engine, 1)));
+                if (name == nil or index == nil or owner == nil) {
+                    print("Livery not valid, missing name or owner: "~me.dir ~ file);
                     continue;
                 }
-                append(me.data, [name, index, substr(file, 0, size(file) - 4), me.dir ~ file, owner, pilot, scheme, engine, squad, serial, year, chute, cft]);
+                if (block != nil and engineID != nil and block != 0 and block != 10 and block != 20
+                     and engineID.getValue() != right(""~block, 1)) {
+                    # Engine is not matching, skipping livery for this variant
+                    continue;
+                }
+                append(me.data, [name, index, substr(file, 0, size(file) - 4), me.dir ~ file, owner, pilot, scheme, block, squad, serial, year, chute, cft]);
                 me.addOwner(owner);
             }
             me.data = sort(me.data, func(a, b) num(a[1]) == nil or num(b[1]) == nil
@@ -409,7 +418,7 @@ var diag = {
 	},
 	setInfoText: func (livery) {
 		#   0     1        2       3     4      5       6     7         8     9      10     11    12
-		# name, index, filename, path, owner, pilot, scheme, engine, squad, serial, year, chute, cft
+		# name, index, filename, path, owner, pilot, scheme, block, squad, serial, year, chute, cft
 
 		me.infoLivery.setText("Livery: "~livery[0]);
 		me.infoYear.setText(livery[10]);

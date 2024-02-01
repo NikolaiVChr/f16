@@ -12,7 +12,7 @@
     <block type="int">40</block>
     <serial type="string">89-2035</serial>
     <squad type="string">555th FS "Triple Nickel"</squad>
-    <year type="string">2000</year>
+    <year type="string">2022</year>
    </livery>
    
    <livery-logo>
@@ -24,12 +24,13 @@
   </livery-patch>
 
   <livery-pod>
-        <texture>Liveries/Block40/pod.triple_nickel.png</texture>
+        <texture>Liveries/Block40/pod.2035.png</texture>
   </livery-pod>
 
   <f16>
     <dragchute type="bool">false</dragchute>
     <link16 type="bool">false</link16>
+    <cft type="bool">false</cft>
   </f16>
   <livery-specular type="double">0.25</livery-specular>
   </model>

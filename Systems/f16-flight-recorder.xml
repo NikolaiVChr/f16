@@ -11,9 +11,9 @@
         <signals include="/Aircraft/Generic/flightrecorder/components/environment.xml"/>
         <!-- <signals include="/Aircraft/Generic/flightrecorder/components/surfaces.xml"/> -->
         <signals include="/Aircraft/Generic/flightrecorder/components/controls.xml"/>
-        <signals include="/Aircraft/Generic/flightrecorder/components/engine-jet.xml">
+        <!--signals include="/Aircraft/Generic/flightrecorder/components/engine-jet.xml">
             <count type="int">1</count>
-        </signals>
+        </signals-->
         <signals include="/Aircraft/Generic/flightrecorder/components/faults-engines.xml">
             <count type="int">1</count>
         </signals>
@@ -220,10 +220,6 @@
         <signal>
             <type>float</type>
             <property type="string">engines/engine[0]/n1</property>
-        </signal>        
-        <signal>
-            <type>bool</type>
-            <property type="string">f16/chute/enable</property>
         </signal>
         <signal>
             <type>float</type>
@@ -245,10 +241,10 @@
             <type>float</type>
             <property type="string">f16/chute/force</property>
         </signal>
-        <signal>
+        <!--signal>
             <type>float</type>
             <property type="string">velocities/speed-down-fps</property>
-        </signal>
+        </signal-->
         <signal>
             <type>int</type>
             <property type="string">velocities/groundspeed-kt</property>

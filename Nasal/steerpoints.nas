@@ -1,7 +1,10 @@
  #
 # F-16 Steerpoint/route/mark/bulls-eye system.
 #
-var lines = [nil,nil];
+var lines = [nil,nil, nil, nil];
+var linesShow = [1,1,1,1];
+
+var desired_tos = {};
 
 var number_of_threat_circles  = 15;
 var number_of_generic         = 10;
@@ -15,7 +18,11 @@ var index_of_markpoints_dlnk  = 450;
 var index_of_weapon_gps       = 500;
 var index_of_bullseye         = 555;
 var index_of_lines_1          = 100;
-var index_of_lines_1          = 200;
+var index_of_lines_2          = 200;
+var index_of_lines_3          = 600;
+var index_of_lines_4          = 700;
+
+var index_of_lines = [index_of_lines_1,index_of_lines_2,index_of_lines_3,index_of_lines_4];
 
 var stpt300 = setsize([],number_of_threat_circles);#Threat circles
 var stpt350 = setsize([],10);#Generic
@@ -25,9 +32,13 @@ var stpt500 = setsize([],1);#Weapon
 var stpt555 = setsize([],1);#Bullseye
 var current = nil;#Current STPT number, nil for route/nothing.
 
+var bullseyeMode = 1;
+
 var colorRed = 0;
 var colorYellow = 1;
 var colorGreen = 2;
+
+var autoMode = 1;# if change this then also change f16/ded/stpt-auto
 
 var STPT = {
 	# stored in the above vectors for non-route steerpoints
@@ -83,6 +94,28 @@ var getNumber = func (number) {
 	# Return a specific steerpoint, nil if none
 	if (!_isOccupiedNumber(number)) {
 		return nil;
+	}
+	if (number >= 700 and lines[3] != nil) {
+		var fp = lines[3];
+		var leg = fp.getWP(number-700);
+		var new = STPT.new();
+		new.lat = leg.lat;
+		new.lon = leg.lon;
+		if (leg.alt_cstr != nil) {
+			new.alt = leg.alt_cstr;
+		}
+		return new;
+	}
+	if (number >= 600 and lines[2] != nil) {
+		var fp = lines[2];
+		var leg = fp.getWP(number-600);
+		var new = STPT.new();
+		new.lat = leg.lat;
+		new.lon = leg.lon;
+		if (leg.alt_cstr != nil) {
+			new.alt = leg.alt_cstr;
+		}
+		return new;
 	}
 	if (number == 555) {
 		return stpt555[0];
@@ -171,6 +204,16 @@ var setNumber = func (number, stpt) {
 		return 0;
 	}
 	return 0;
+}
+
+var getCurrentDeviation = func {
+	# Get dev to current steerpoint or nil for none.
+	if (getCurrentNumber() != 0) {
+		var cc = getCurrentCoord();
+		return geo.normdeg180(geo.aircraft_position().course_to(cc) - getprop("orientation/heading-deg"));
+	} else {
+		return nil;
+	}
 }
 
 var getCurrentDirection = func {
@@ -321,6 +364,33 @@ var getLast = func {
 	return getNumber(getLastNumber());
 }
 
+var getRequiredSpeed = func (number) {
+    # Get required groundspeed in kts for TOS on specific steerpoint
+    if (getCurrentNumber() == 0) return nil;
+    var range = getNumberRange(number)*NM2M;
+    var des_tos = _getNumberDesiredTOS(number);
+    #var des_tos = getprop("f16/ded/crus-des-tos");
+    if (des_tos == nil) {
+       des_tos = 0;
+    }
+    # Subtract current time from TOS to get relative time
+    #if (des_tos > addSeconds(0, getprop("sim/time/utc/hour"),getprop("sim/time/utc/minute"),getprop("sim/time/utc/second"))) {
+        # Desired TOS is in the past, this shouldn't really matter, since we have a min of 70kts
+    #}
+    var cur_sec = (((getprop("sim/time/utc/hour")*60)+getprop("sim/time/utc/minute"))*60)+getprop("sim/time/utc/second")+math.fmod(getprop("sim/time/steady-clock-sec"), 1);
+    #var tos_sec = addSeconds(des_tos, -getprop("sim/time/utc/hour"),-getprop("sim/time/utc/minute"),-getprop("sim/time/utc/second"));
+    #tos_sec = (((tos_sec[1]*60)+tos_sec[2])*60)+tos_sec[3];
+
+    # MLU M1: if STPT not reached in time, airspeed caret remains at max
+    if (cur_sec > des_tos) {
+        return 1700;
+    }
+    var tos_sec = des_tos - cur_sec;
+    var req_spd = range / tos_sec / KT2MPS;
+    # As per MLU M1, the speed is limited between 70kts and 1700kts
+    return math.max(math.min(req_spd, 1700), 70);
+}
+
 var getLastETA = func {
 	# Get time in seconds till final steerpoint
 	if (getCurrentNumber() == 0) return nil;
@@ -339,11 +409,60 @@ var getNumberETA = func (number) {
 	return range/gs;
 }
 
+var setNumberDesiredTOS = func (number, tos) {
+    if (tos == -1) {
+        tos = nil;
+    }
+    desired_tos[number] = tos;
+    return;
+}
+
+var _getNumberDesiredTOS = func (number) {
+    if (getCurrentNumber() == 0) return nil;
+    return desired_tos[number];
+}
+
+var serializeTOS = func (number) {
+    var result = _getNumberDesiredTOS(number);
+    if (result == nil) {
+        result = -1;
+    }
+    return result;
+}
+
+var getNumberDesiredTOS = func (number) {
+    # Get string with desired time over steerpoint for specific steerpoint
+    var val = _getNumberDesiredTOS(number);
+	return _getTOS(val);
+}
+
 var getNumberTOS = func (number) {
 	# Get string with time on station for specific steerpoint
 	if (getCurrentNumber() == 0) return nil;
 	var eta = getNumberETA(number);
 	return _getTOS(eta);
+}
+
+var _getCurrentDesiredTOS = func {
+    return _getNumberDesiredTOS(getCurrentNumber());
+}
+
+var getCurrentDesiredTOS = func {
+	# Get string with desired time over steerpoint for current steerpoint
+	return getNumberDesiredTOS(getCurrentNumber());
+}
+
+var setCurrentDesiredTOS = func (tos) {
+	# Get string with desired time over steerpoint for current steerpoint
+	return setNumberDesiredTOS(getCurrentNumber(), tos);
+}
+
+var getCurrentRequiredSpeed = func {
+    return getRequiredSpeed(getCurrentNumber());
+}
+
+var getAbsoluteTOS = func (eta) {
+    return _getTOS(eta, 1);
 }
 
 var getCurrentTOS = func {
@@ -358,23 +477,35 @@ var getLastTOS = func {
 	return _getTOS(eta);
 }
 
-var _getTOS = func (eta) {
+var formatTime = func(time, absolute = 1) {
+    var result = "--:--:--";
+    if (time == nil or time>3600*24 or time < 0) {
+		return result;
+	} else {
+	    if (!absolute) {
+            var hour   = getprop("sim/time/utc/hour");
+            var minute = getprop("sim/time/utc/minute");
+            var second = getprop("sim/time/utc/second");
+        } else {
+            var hour   = 0;
+            var minute = 0;
+            var second = 0;
+        }
+        var final = addSeconds(time,second,minute,hour);
+
+		result = sprintf("%02d:%02d:%02d",final[1],final[2],final[3]);
+	}
+	return result;
+}
+
+var _getTOS = func (eta, absolute = 0) {
 	# Get string with time on station for a specific time in seconds
 	# eta is allowed to be nil
+	# if absolute the eta is assumed to be an exact time, otherwise eta is assumed to be relative to current time
 	var TOS = "--:--:--";
 	if (getCurrentNumber() == 0) return TOS;
 
-	if (eta == nil or eta>3600*24) {
-		return TOS;
-	} else {
-		var hour   = getprop("sim/time/utc/hour"); 
-		var minute = getprop("sim/time/utc/minute");
-		var second = getprop("sim/time/utc/second");		
-		var final = addSeconds(eta,second,minute,hour);
-
-		TOS = sprintf("%02d:%02d:%02d",final[1],final[2],final[3]);
-	}      
-	return TOS;
+	return formatTime(eta, !absolute);
 }
 
 var addSeconds = func (add_secs, secs, mins, hours) {
@@ -507,6 +638,7 @@ var markOFLY = func {
 	mark.lat = getprop("/position/latitude-deg");
 	mark.lon = getprop("/position/longitude-deg");
 	mark.alt = getprop("/position/altitude-ft");
+	mark.type = "OFLY";
 	addOwnMark(mark);
 }
 
@@ -516,6 +648,17 @@ var markTGP = func (coord) {
 	mark.lat = coord.lat();
 	mark.lon = coord.lon();
 	mark.alt = coord.alt()*M2FT;
+	mark.type = "TGP";
+	return addOwnMark(mark);
+}
+
+var markHUD = func (coord) {
+	# Create a HUD markpoint
+	var mark = STPT.new();
+	mark.lat = coord.lat();
+	mark.lon = coord.lon();
+	mark.alt = coord.alt()*M2FT;
+	mark.type = "HUD";
 	return addOwnMark(mark);
 }
 
@@ -581,6 +724,10 @@ var _isValidNumber = func (number) {
 		return 1;
 	} elsif (number >= 1 and number < 300) {
 		return 1;
+	} elsif (number >= 600 and number < 700) {
+		return 1;
+	} elsif (number >= 700 and number < 800) {
+		return 1;
 	}
 	return 0;
 }
@@ -588,6 +735,20 @@ var _isValidNumber = func (number) {
 var _isOccupiedNumber = func (number) {
 	# Is a steerpoint stored at this memory address?
 	if (!_isValidNumber(number)) {
+		return 0;
+	}
+	if (number < 800 and number >= 700) {
+		if (lines[3] != nil) {
+			var fp = lines[3];
+			return fp.getPlanSize() > number-700;
+		}
+		return 0;
+	}
+	if (number < 700 and number >= 600) {
+		if (lines[2] != nil) {
+			var fp = lines[2];
+			return fp.getPlanSize() > number-600;
+		}
 		return 0;
 	}
 	if (number == 555) {
@@ -634,7 +795,7 @@ var data = nil;
 var sending = nil;
 var dlink_loop = func {
   if (getprop("instrumentation/datalink/data") != 0) return;
-  foreach(contact; f16.vector_aicontacts_links) {
+  foreach(contact; displays.vector_aicontacts_links) {
     if (contact.isVisible()) {
       data = datalink.get_data(contact.get_Callsign());
       if (data != nil  and data.on_link()) {
@@ -673,6 +834,7 @@ var loadLine = func  (no,path) {
         gui.showDialog("loadfail");
     } else {
     	setprop("f16/preplanning-status", "HSD lines loaded");
+    	linesShow[no] = 1;
     }
 };
 
@@ -693,18 +855,30 @@ var serialize = func() {
 		  	ret = ret~sprintf("LINE,%d,%.6f,%.6f|",s+200,key.lat,key.lon);
 	  	}
 	}
+	if (lines[2] != nil) {
+		for (var s = 0; s < lines[2].getPlanSize() and s < 100; s+=1) {
+			var key = lines[2].getWP(s);
+		  	ret = ret~sprintf("LINE,%d,%.6f,%.6f|",s+600,key.lat,key.lon);
+	  	}
+	}
+	if (lines[3] != nil) {
+		for (var s = 0; s < lines[3].getPlanSize() and s < 100; s+=1) {
+			var key = lines[3].getWP(s);
+		  	ret = ret~sprintf("LINE,%d,%.6f,%.6f|",s+700,key.lat,key.lon);
+	  	}
+	}
 	if (flightplan() != nil) {
 		var plan = flightplan();
 		for (var s = 0; s < plan.getPlanSize(); s+=1) {
 			var key = plan.getWP(s);
-		  	ret = ret~sprintf("PLAN,%d,%.6f,%.6f,%d|",s+0,key.lat,key.lon,(key.alt_cstr_type!=nil and key.alt_cstr != nil)?key.alt_cstr:EMPTY_ALT);
+		  	ret = ret~sprintf("PLAN,%d,%.6f,%.6f,%d,%d|",s+0,key.lat,key.lon,(key.alt_cstr_type!=nil and key.alt_cstr != nil)?key.alt_cstr:EMPTY_ALT,serializeTOS(s+1));
 	  	}
 	}
   foreach(key;stpt300) {
   	if (key == nil) {
 		ret = ret~sprintf("STPT,%d,nil|",iter+300);
   	} else {
-    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s|",iter+300,key.lat,key.lon,key.alt,key.radius,key.color,key.type);
+    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s,%d|",iter+300,key.lat,key.lon,key.alt,key.radius,key.color,key.type,serializeTOS(iter+300));
     }
     iter += 1;
   }
@@ -713,7 +887,7 @@ var serialize = func() {
   	if (key == nil) {
   		ret = ret~sprintf("STPT,%d,nil|",iter+350);
   	} else {
-    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s|",iter+350,key.lat,key.lon,key.alt,key.radius,key.color,key.type);
+    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s,%d|",iter+350,key.lat,key.lon,key.alt,key.radius,key.color,key.type,serializeTOS(iter+350));
     }
     iter += 1;
   }
@@ -722,7 +896,7 @@ var serialize = func() {
   	if (key == nil) {
   		ret = ret~sprintf("STPT,%d,nil|",iter+400);
   	} else {
-    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s|",iter+400,key.lat,key.lon,key.alt,key.radius,key.color,key.type);
+    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s,%d|",iter+400,key.lat,key.lon,key.alt,key.radius,key.color,key.type,serializeTOS(iter+400));
     }
     iter += 1;
   }
@@ -731,7 +905,7 @@ var serialize = func() {
   	if (key == nil) {
   		ret = ret~sprintf("STPT,%d,nil|",iter+450);
   	} else {
-    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s|",iter+450,key.lat,key.lon,key.alt,key.radius,key.color,key.type);
+    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s,%d|",iter+450,key.lat,key.lon,key.alt,key.radius,key.color,key.type,serializeTOS(iter+450));
     }
     iter += 1;
   }
@@ -740,7 +914,7 @@ var serialize = func() {
   	if (key == nil) {
   		ret = ret~sprintf("STPT,%d,nil|",iter+500);
   	} else {
-    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s|",iter+500,key.lat,key.lon,key.alt,key.radius,key.color,key.type);
+    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s,%d|",iter+500,key.lat,key.lon,key.alt,key.radius,key.color,key.type,serializeTOS(iter+500));
     }
     iter += 1;
   }
@@ -749,7 +923,7 @@ var serialize = func() {
   	if (key == nil) {
   		ret = ret~sprintf("STPT,%d,nil|",iter+555);
   	} else {
-    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s|",iter+555,key.lat,key.lon,key.alt,key.radius,key.color,key.type);
+    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s,%d|",iter+555,key.lat,key.lon,key.alt,key.radius,key.color,key.type,serializeTOS(iter+555));
     }
     iter += 1;
   }
@@ -770,7 +944,7 @@ var unserialize = func(m) {
   var planned = nil;
 
   # clear memory:
-  lines = [nil,nil];
+  lines = [nil,nil,nil,nil];
   stpt300 = setsize([],number_of_threat_circles);#Threat circles
   stpt350 = setsize([],10);#Generic
   stpt400 = setsize([],5);#Markpoints Own
@@ -795,14 +969,22 @@ var unserialize = func(m) {
 			var leg = plan.getWP(plan.getPlanSize()-1);
 			leg.setAltitude(num(items[4]), "at");
 		}
+		if (size(items) > 5) { # TOS is supported
+            setNumberDesiredTOS(number+1, num(items[5]));
+        }
       } elsif (key == "LINE") {
       	var number = num(items[1]);
       	var no = number >= 200;
+      	if (number >= 700) {
+      		no = 3;
+      	} elsif (number >= 600) {
+      		no = 2;
+      	}
       	if (lines[no] == nil) {
       		lines[no] = createFlightplan();
       	}
       	var wp = createWP(num(items[2]), num(items[3]), ""~number);
-      	number = no?number-200:number-100;
+      	number = no==1?number-200:(no==0?number-100:(no==2?number-600:number-700));
 		lines[no].insertWP(wp, number);
       } elsif (key == "STPT") {
       	var newST = nil;
@@ -834,6 +1016,9 @@ var unserialize = func(m) {
       	} elsif (number >= 300) {
       		stpt300[number-300] = newST;
       	}
+      	if (size(items) > 8) { # TOS is supported
+            setNumberDesiredTOS(number, num(items[8]));
+        }
 
       } elsif (key == "IFF") {
       	setprop("instrumentation/iff/channel-selection", num(items[1]));
@@ -863,6 +1048,8 @@ var unserialize = func(m) {
   }
 }
 
+var dtcLast = nil;
+
 var saveSTPTs = func (path) {
     var text = serialize();
     var opn = nil;
@@ -882,6 +1069,7 @@ var saveSTPTs = func (path) {
     } else {
       io.close(opn);
       setprop("f16/preplanning-status", "DTC data saved");
+      dtcLast = string.truncateAt(io.basename(path),".f16dtc");
       return 1;
     }
 }
@@ -896,6 +1084,7 @@ var loadSTPTs = func (path) {
     } elsif (text != nil) {
       unserialize(text);
       setprop("f16/preplanning-status", "DTC data loaded");
+      dtcLast = string.truncateAt(io.basename(path),".f16dtc");
     }
 }
 

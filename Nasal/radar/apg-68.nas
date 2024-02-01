@@ -133,7 +133,7 @@ var AirborneRadar = {
 	designateRandom: func {
 		# Use this method mostly for testing
 		if (size(me.vector_aicontacts_bleps) > 0) {
-			me.designate(me.vector_aicontacts_bleps[size(me.vector_aicontacts_bleps)-1]);
+			me.designate(me.vector_aicontacts_bleps[-1]);
 		}
 	},
 	undesignate: func {
@@ -523,15 +523,7 @@ var AirborneRadar = {
 		#
 		# test method. Belongs in rcs.nas.
 		#
-	    me.target_front_rcs = nil;
-	    if ( contains(rcs.rcs_oprf_database,targetModel) ) {
-	        me.target_front_rcs = rcs.rcs_oprf_database[targetModel];
-	    } elsif ( contains(rcs.rcs_database,targetModel) ) {
-	        me.target_front_rcs = rcs.rcs_database[targetModel];
-	    } else {
-	        # GA/Commercial return most likely
-	        me.target_front_rcs = rcs.rcs_oprf_database["default"];
-	    }
+	    me.target_front_rcs = getDBEntry(targetModel).rcsFrontal;
 	    me.target_rcs = rcs.getRCS(targetCoord, targetHeading, targetPitch, targetRoll, aircraftCoord, me.target_front_rcs);
 
 	    # standard formula
@@ -914,12 +906,12 @@ var RadarMode = {
 
 
 
-#  ██████   █████  ████████  █████  ██      ██ ███    ██ ██   ██ 
-#  ██   ██ ██   ██    ██    ██   ██ ██      ██ ████   ██ ██  ██  
-#  ██   ██ ███████    ██    ███████ ██      ██ ██ ██  ██ █████  
-#  ██   ██ ██   ██    ██    ██   ██ ██      ██ ██  ██ ██ ██  ██ 
-#  ██████  ██   ██    ██    ██   ██ ███████ ██ ██   ████ ██   ██ 
-#                                                                
+#  ██████   █████  ████████  █████  ██      ██ ███    ██ ██   ██ 
+#  ██   ██ ██   ██    ██    ██   ██ ██      ██ ████   ██ ██  ██  
+#  ██   ██ ███████    ██    ███████ ██      ██ ██ ██  ██ █████  
+#  ██   ██ ██   ██    ██    ██   ██ ██      ██ ██  ██ ██ ██  ██ 
+#  ██████  ██   ██    ██    ██   ██ ███████ ██ ██   ████ ██   ██ 
+#                                                                
 #
 DatalinkRadar = {
 	# I check the sky 360 deg for anything on datalink
@@ -1082,12 +1074,12 @@ DatalinkRadar = {
 
 
 
-#   █████  ██████   ██████         ██████   █████ 
-#  ██   ██ ██   ██ ██             ██       ██   ██ 
-#  ███████ ██████  ██   ███ █████ ███████   █████  
-#  ██   ██ ██      ██    ██       ██    ██ ██   ██ 
-#  ██   ██ ██       ██████         ██████   █████  
-#                                                 
+#   █████  ██████   ██████         ██████   █████ 
+#  ██   ██ ██   ██ ██             ██       ██   ██ 
+#  ███████ ██████  ██   ███ █████ ███████   █████  
+#  ██   ██ ██      ██    ██       ██    ██ ██   ██ 
+#  ██   ██ ██       ██████         ██████   █████  
+#                                                 
 #
 var APG68 = {
 	#
@@ -1100,7 +1092,7 @@ var APG68 = {
 	rcsRefValue: 3.2,
 	targetHistory: 3,# Not used in TWS
 	isEnabled: func {
-		return getprop("/f16/avionics/power-fcr-bit") == 2 and getprop("instrumentation/radar/radar-enable") and !getprop("/fdm/jsbsim/gear/unit[0]/WOW") and getprop("instrumentation/radar/serviceable");
+		return getprop("/f16/avionics/power-fcr-bit") == 2 and getprop("instrumentation/radar/radar-enable") and getprop("instrumentation/radar/serviceable") and !getprop("/fdm/jsbsim/gear/unit[0]/WOW");
 	},
 	setAGMode: func {
 		if (me.rootMode != 3) {
@@ -1204,12 +1196,12 @@ var APG68Mode = {
 
 
 
-#  ██████  ██     ██ ███████ 
-#  ██   ██ ██     ██ ██      
-#  ██████  ██  █  ██ ███████ 
-#  ██   ██ ██ ███ ██      ██ 
-#  ██   ██  ███ ███  ███████ 
-#                            
+#  ██████  ██     ██ ███████ 
+#  ██   ██ ██     ██ ██      
+#  ██████  ██  █  ██ ███████ 
+#  ██   ██ ██ ███ ██      ██ 
+#  ██   ██  ███ ███  ███████ 
+#                            
 #
 var F16RWSMode = {
 	radar: nil,
@@ -1271,17 +1263,17 @@ var F16RWSMode = {
 	},
 	getSearchInfo: func (contact) {
 		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
-		return [1,0,1,0,0,1];
+		return [1,0,1,0,1,1];
 	},
 };
 
 
-#  ██      ██████  ███████ 
-#  ██      ██   ██ ██      
-#  ██      ██████  ███████ 
-#  ██      ██   ██      ██ 
-#  ███████ ██   ██ ███████ 
-#                          
+#  ██      ██████  ███████ 
+#  ██      ██   ██ ██      
+#  ██      ██████  ███████ 
+#  ██      ██   ██      ██ 
+#  ███████ ██   ██ ███████ 
+#                          
 #
 var F16LRSMode = {
 	shortName: "LRS",
@@ -1300,12 +1292,12 @@ var F16LRSMode = {
 };
 
 
-#  ███████ ███████  █████ 
-#  ██      ██      ██   ██ 
-#  ███████ █████   ███████ 
-#       ██ ██      ██   ██ 
-#  ███████ ███████ ██   ██ 
-#                          
+#  ███████ ███████  █████ 
+#  ██      ██      ██   ██ 
+#  ███████ █████   ███████ 
+#       ██ ██      ██   ██ 
+#  ███████ ███████ ██   ██ 
+#                          
 #
 var F16SeaMode = {
 	rootName: "SEA",
@@ -1386,7 +1378,9 @@ var F16SeaMode = {
 	},
 	getEXPsize: func {
 		# return nm of zoom width
-		if (me.getRange() == 10) {
+		if (me.getRange() == 5) {
+			return 1.75;# not in manual
+		} elsif (me.getRange() == 10) {
 			return 3.5;
 		} elsif (me.getRange() == 20) {
 			return 7;
@@ -1395,6 +1389,7 @@ var F16SeaMode = {
 		} elsif (me.getRange() == 80) {
 			return 21;
 		}
+		return 21;
 	},
 	showAZ: func {
 		return 1;
@@ -1423,12 +1418,12 @@ var F16SeaMode = {
 };
 
 
-#   ██████  ███    ███ 
-#  ██       ████  ████ 
-#  ██   ███ ██ ████ ██ 
-#  ██    ██ ██  ██  ██ 
-#   ██████  ██      ██ 
-#                      
+#   ██████  ███    ███ 
+#  ██       ████  ████ 
+#  ██   ███ ██ ████ ██ 
+#  ██    ██ ██  ██  ██ 
+#   ██████  ██      ██ 
+#                      
 #
 var F16GMMode = {
 	rootName: "GM",
@@ -1465,6 +1460,9 @@ var F16GMMode = {
 	isEXP: func {
 		return me.exp;
 	},
+	showAZ: func {
+		return !me.isEXP();
+	},
 	setExpPosition: func (azimuth, distance_nm) {
 		me.expAz = azimuth;
 		me.expDistNm = distance_nm;
@@ -1497,12 +1495,12 @@ var F16GMMode = {
 };
 
 
-#   ██████  ███    ███ ████████ 
-#  ██       ████  ████    ██    
-#  ██   ███ ██ ████ ██    ██ 
-#  ██    ██ ██  ██  ██    ██ 
-#   ██████  ██      ██    ██ 
-#                            
+#   ██████  ███    ███ ████████ 
+#  ██       ████  ████    ██    
+#  ██   ███ ██ ████ ██    ██ 
+#  ██    ██ ██  ██  ██    ██ 
+#   ██████  ██      ██    ██ 
+#                            
 #
 var F16GMTMode = {
 	rootName: "GMT",
@@ -1525,21 +1523,25 @@ var F16GMTMode = {
 	getSearchInfo: func (contact) {
 		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
 		me.devGMT = contact.getDeviationStored();
-		if (me.devGMT.speed_kt < 10) return nil;# A gain knob decide this. (should it be radial speed instead?)
+		me.min = GMT_hi_lo?16:8;
+		me.max = GMT_hi_lo?75:55;
+		if (contact["closureInclutter"] == nil) return nil;
+		if (math.abs(contact.closureInclutter) < me.min) return nil;# A gain knob decide this.
+		if (math.abs(contact.closureInclutter) > me.max) return nil;# should be radial speed instead
 		return [1,0,1,1,0,1];
 	},
 };
 
 
-#  ██    ██ ███████ ██████ 
-#  ██    ██ ██      ██   ██ 
-#  ██    ██ ███████ ██████  
-#   ██  ██       ██ ██   ██ 
-#    ████   ███████ ██   ██ 
-#                           
+#  ██    ██ ███████
+#  ██    ██ ██     
+#  ██    ██ ███████
+#   ██  ██       ██ 
+#    ████   ███████ 
+#                           
 #
 var F16VSMode = {
-	shortName: "VSR",
+	shortName: "VS",#todo: make vsr also for newer blocks
 	longName: "Velocity Search",
 	range: 160,
 	discSpeed_dps: 45,
@@ -1595,10 +1597,16 @@ var F16VSMode = {
 		}
 	},
 	increaseRange: func {
-		me._increaseRange();
+		#me._increaseRange();
 	},
 	decreaseRange: func {
-		me._decreaseRange();
+		#me._decreaseRange();
+	},
+	showRangeOptions: func {
+		return 0;
+	},
+	setRange: func {# Range is always 160 in VS
+		return 0;
 	},
 	getSearchInfo: func (contact) {
 		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
@@ -1621,12 +1629,12 @@ var F16VSMode = {
 
 
 
-#  ████████ ██     ██ ███████ 
-#     ██    ██     ██ ██      
-#     ██    ██  █  ██ ███████ 
-#     ██    ██ ███ ██      ██ 
-#     ██     ███ ███  ███████ 
-#                             
+#  ████████ ██     ██ ███████ 
+#     ██    ██     ██ ██      
+#     ██    ██  █  ██ ███████ 
+#     ██    ██ ███ ██      ██ 
+#     ██     ███ ███  ███████ 
+#                             
 #
 var F16TWSMode = {
 	radar: nil,
@@ -1786,7 +1794,7 @@ var F16TWSMode = {
 			me.currentTracked = me.tmp;
 		}
 		#print("  ONCE    ",me.currentTracked);
-		return [1,0,1,0,0,1];
+		return [1,0,1,0,1,1];
 	},
 	prunedContact: func (c) {
 		if (c.equals(me.priorityTarget)) {
@@ -1839,12 +1847,12 @@ var F16TWSMode = {
 
 
 
-#  ██████  ██     ██ ███████       ███████  █████  ███    ███ 
-#  ██   ██ ██     ██ ██            ██      ██   ██ ████  ████ 
-#  ██████  ██  █  ██ ███████ █████ ███████ ███████ ██ ████ ██ 
-#  ██   ██ ██ ███ ██      ██            ██ ██   ██ ██  ██  ██ 
-#  ██   ██  ███ ███  ███████       ███████ ██   ██ ██      ██ 
-#                                                             
+#  ██████  ██     ██ ███████       ███████  █████  ███    ███ 
+#  ██   ██ ██     ██ ██            ██      ██   ██ ████  ████ 
+#  ██████  ██  █  ██ ███████ █████ ███████ ███████ ██ ████ ██ 
+#  ██   ██ ██ ███ ██      ██            ██ ██   ██ ██  ██  ██ 
+#  ██   ██  ███ ███  ███████       ███████ ██   ██ ██      ██ 
+#                                                             
 #
 var F16RWSSAMMode = {
 	radar: nil,
@@ -1958,7 +1966,7 @@ var F16RWSSAMMode = {
 		if (me.priorityTarget != nil and contact.equals(me.priorityTarget)) {
 			return [1,1,1,1,1,1];
 		}
-		return [1,0,1,0,0,1];
+		return [1,0,1,0,1,1];
 	},
 	showRangeOptions: func {
 		return 0;
@@ -1969,12 +1977,12 @@ var F16RWSSAMMode = {
 };
 
 
-#  ██      ██████  ███████       ███████  █████  ███    ███ 
-#  ██      ██   ██ ██            ██      ██   ██ ████  ████ 
-#  ██      ██████  ███████ █████ ███████ ███████ ██ ████ ██ 
-#  ██      ██   ██      ██            ██ ██   ██ ██  ██  ██ 
-#  ███████ ██   ██ ███████       ███████ ██   ██ ██      ██ 
-#                                                           
+#  ██      ██████  ███████       ███████  █████  ███    ███ 
+#  ██      ██   ██ ██            ██      ██   ██ ████  ████ 
+#  ██      ██████  ███████ █████ ███████ ███████ ██ ████ ██ 
+#  ██      ██   ██      ██            ██ ██   ██ ██  ██  ██ 
+#  ███████ ██   ██ ███████       ███████ ██   ██ ██      ██ 
+#                                                           
 #
 var F16LRSSAMMode = {
 	shortName: "LRS",
@@ -2003,12 +2011,12 @@ var F16LRSSAMMode = {
 
 
 
-#   █████   ██████ ███    ███ 
-#  ██   ██ ██      ████  ████ 
-#  ███████ ██      ██ ████ ██ 
-#  ██   ██ ██      ██  ██  ██ 
-#  ██   ██  ██████ ██      ██ 
-#                             
+#   █████   ██████ ███    ███ 
+#  ██   ██ ██      ████  ████ 
+#  ███████ ██      ██ ████ ██ 
+#  ██   ██ ██      ██  ██  ██ 
+#  ██   ██  ██████ ██      ██ 
+#                             
 #
 var F16ACMMode = {#TODO
 	radar: nil,
@@ -2214,12 +2222,12 @@ var F16ACMBoreMode = {
 
 
 
-#  ███████ ████████ ████████ 
-#  ██         ██       ██    
-#  ███████    ██       ██ 
-#       ██    ██       ██ 
-#  ███████    ██       ██ 
-#                         
+#  ███████ ████████ ████████ 
+#  ██         ██       ██    
+#  ███████    ██       ██ 
+#       ██    ██       ██ 
+#  ███████    ██       ██ 
+#                         
 #
 var F16STTMode = {
 	radar: nil,
@@ -2390,12 +2398,12 @@ var F16MultiSTTMode = {
 };
 
 
-#  ███████ ████████ ████████ 
-#  ██         ██       ██    
-#  █████      ██       ██ 
-#  ██         ██       ██ 
-#  ██         ██       ██ 
-#                         
+#  ███████ ████████ ████████ 
+#  ██         ██       ██    
+#  █████      ██       ██ 
+#  ██         ██       ██ 
+#  ██         ██       ██ 
+#                         
 #
 var F16SEAFTTMode = {
 	rootName: "",
@@ -2456,13 +2464,14 @@ var F16GMTFTTMode = {
 
 
 
-#  ███████        ██  ██████      ██████  ██     ██ ██████ 
-#  ██            ███ ██           ██   ██ ██     ██ ██   ██ 
-#  █████   █████  ██ ███████      ██████  ██  █  ██ ██████  
-#  ██             ██ ██    ██     ██   ██ ██ ███ ██ ██   ██ 
-#  ██             ██  ██████      ██   ██  ███ ███  ██   ██ 
-#                                                           
+#  ███████        ██  ██████      ██████  ██     ██ ██████ 
+#  ██            ███ ██           ██   ██ ██     ██ ██   ██ 
+#  █████   █████  ██ ███████      ██████  ██  █  ██ ██████  
+#  ██             ██ ██    ██     ██   ██ ██ ███ ██ ██   ██ 
+#  ██             ██  ██████      ██   ██  ███ ███  ██   ██ 
+#                                                           
 #
+
 var RWR = {
 	# inherits from Radar
 	# will check radar/transponder and ground occlusion.
@@ -2488,8 +2497,8 @@ var RWR = {
 	        return emesary.Transmitter.ReceiptStatus_NotProcessed;
 	    };
 		emesary.GlobalTransmitter.Register(rr.RWRRecipient);
-		#nr.FORNotification = VectorNotification.new("FORNotification");
-		#nr.FORNotification.updateV(nr.vector_aicontacts_for);
+		rr.RWRNotification = VectorNotification.new("RWRNotification");
+		rr.RWRNotification.updateV(rr.vector_aicontacts_threats);
 		#rr.timer.start();
 		return rr;
 	},
@@ -2511,7 +2520,7 @@ var RWR = {
 		#       IFF info
 		#       ECM
 		#       radar on/off
-		if (!getprop("instrumentation/rwr/serviceable") or getprop("f16/avionics/power-ufc-warm") != 1 or getprop("f16/avionics/ew-rwr-switch") != 1) {
+		if (!getprop("instrumentation/rwr/serviceable") or getprop("f16/avionics/power-ufc-warm") != 1 or getprop("f16/ews/ew-rwr-switch") != 1) {
             setprop("sound/rwr-lck", 0);
             setprop("ai/submodels/submodel[0]/flare-auto-release-cmd", 0);
             return;
@@ -2526,6 +2535,7 @@ var RWR = {
         me.elapsed = elapsedProp.getValue();
         foreach(me.u ; me.vector_aicontacts) {
         	# [me.ber,me.head,contact.getCoord(),me.tp,me.radar,contact.getDeviationHeading(),contact.getRangeDirect()*M2NM, contact.getCallsign()]
+        	me.dbEntry = radar_system.getDBEntry(me.u.getModel());
         	me.threatDB = me.u.getThreatStored();
             me.cs = me.threatDB[7];
             me.rn = me.threatDB[6];
@@ -2548,33 +2558,15 @@ var RWR = {
                         me.heatDefense = me.heatDefenseNow;
                     }
                 }
-                me.threat = 0;
-                if (me.u.getModel() != "missile_frigate" and me.u.getModel() != "S-75" and me.u.getModel() != "SA-6" and me.u.getModel() != "buk-m2" and me.u.getModel() != "MIM104D" and me.u.getModel() != "s-200" and me.u.getModel() != "s-300" and me.u.getModel() != "fleet" and me.u.getModel() != "ZSU-23-4M") {
-                    me.threat += ((180-me.dev)/180)*0.30;# most threat if I am in front of his nose
-                    me.spd = (60-me.threatDB[8])/60;
-                    #me.threat -= me.spd>0?me.spd:0;# if his speed is lower than 60kt then give him minus threat else positive
-                } elsif (me.u.getModel() == "missile_frigate" or me.u.getModel() == "fleet") {
-                    me.threat += 0.30;
-                } else {
-                    me.threat += 0.30;
-                }
-                me.danger = 50;# within this range he is most dangerous
-                if (me.u.getModel() == "missile_frigate" or me.u.getModel() == "fleet" or me.u.getModel() == "s-300") {
-                    me.danger = 80;
-                } elsif (me.u.getModel() == "buk-m2" or me.u.getModel() == "S-75") {
-                    me.danger = 35;
-                } elsif (me.u.getModel() == "SA-6") {
-                    me.danger = 15;
-                } elsif (me.u.getModel() == "s-200") {
-                    me.danger = 150;
-                } elsif (me.u.getModel() == "MIM104D") {
-                    me.danger = 45;
-                } elsif (me.u.getModel() == "ZSU-23-4M") {
-                    me.danger = 7.5;
-                }
+
+                me.threat = me.dbEntry.baseThreat(me.dev);
+                me.danger = me.dbEntry.killZone;# within this range he is most dangerous
+                
                 if (me.threatDB[10]) me.threat += 0.30;# has me locked
                 me.threat += ((me.danger-me.rn)/me.danger)>0?((me.danger-me.rn)/me.danger)*0.60:0;# if inside danger zone then add threat, the closer the more.
                 me.threat += me.threatDB[9]>0?(me.threatDB[9]/500)*0.10:0;# more closing speed means more threat.
+                if (me.u.getModel() == "AI") me.threat = 0.01;
+                if (!me.dbEntry.hasAirRadar) me.threat = - 1;
                 if (me.threat > me.closestThreat) me.closestThreat = me.threat;
                 #printf("A %s threat:%.2f range:%d dev:%d", me.u.get_Callsign(),me.threat,me.u.get_range(),me.deviation);
                 if (me.threat > 1) me.threat = 1;
@@ -2591,7 +2583,7 @@ var RWR = {
         me.spike = 0;#getprop("payload/armament/spike")*(getprop("ai/submodels/submodel[0]/count")>15);
         me.autoFlare = me.spike?math.max(me.closestThreat*0.25,0.05):0;
 
-        if (0 and getprop("f16/avionics/ew-mode-knob") == 2)
+        if (0 and getprop("f16/ews/ew-mode-knob") == 2)
         	print("wow: ", getprop("/fdm/jsbsim/gear/unit[0]/WOW"),"  spiked: ",me.spike,"  incoming: ",me.incoming, "  launch: ",me.launchClose,"  spikeResult:", me.autoFlare,"  aggresive:",me.launchClose * 0.85 + me.incoming * 0.85,"  total:",me.launchClose * 0.85 + me.incoming * 0.85+me.autoFlare);
 
         me.autoFlare += me.launchClose * 0.85 + me.incoming * 0.85;
@@ -2602,6 +2594,7 @@ var RWR = {
         if (me.autoFlare > 0.80 and rand()>0.99 and getprop("ai/submodels/submodel[0]/count") < 1) {
             setprop("ai/submodels/submodel[0]/flare-release-out-snd", 1);
         }
+        emesary.GlobalTransmitter.NotifyAll(me.RWRNotification.updateV(me.vector_aicontacts_threats));
 	},
 	del: func {
         emesary.GlobalTransmitter.DeRegister(me.RWRRecipient);
@@ -2611,15 +2604,289 @@ var RWR = {
 
 
 
+#  ██   ██  █████  ██████  ███    ███     ███████ ███████ ███    ██ ███████  ██████  ██████  
+#  ██   ██ ██   ██ ██   ██ ████  ████     ██      ██      ████   ██ ██      ██    ██ ██   ██ 
+#  ███████ ███████ ██████  ██ ████ ██     ███████ █████   ██ ██  ██ ███████ ██    ██ ██████  
+#  ██   ██ ██   ██ ██   ██ ██  ██  ██          ██ ██      ██  ██ ██      ██ ██    ██ ██   ██ 
+#  ██   ██ ██   ██ ██   ██ ██      ██     ███████ ███████ ██   ████ ███████  ██████  ██   ██ 
+#                                                                                            
+#                                                                                            
+
+
+var radiation_list = {
+	"buk-m2": "17",
+    "s-300": "20",
+    "s-200": "5",
+    "S-75": "2",
+    "missile_frigate": "SH",
+    "fleet": "SH",
+    "SA-3": "3",
+    "SA-6": "6",
+    "MIM104D": "P",
+    "ZSU-23-4M": "AAA",
+    "gci": "S",
+    "A-50": "S",
+    "EC-137R": "S",
+    "E-3": "S",
+    "E-3R": "S",
+};
+
+var RadSensor = {
+	# inherits from Radar
+	new: func () {
+		var rs = {parents: [RadSensor, Radar]};
+
+		rs.vector_aicontacts = [];
+		rs.vector_aicontacts_seen = [];
+
+		rs.RadSensorRecipient = emesary.Recipient.new("RadSensorRecipient");
+		rs.RadSensorRecipient.radar = rs;
+		rs.RadSensorRecipient.Receive = func(notification) {
+	        if (notification.NotificationType == "OmniNotification") {
+	        	#printf("RadSensor recv: %s", notification.NotificationType);
+	            if (me.radar.enabled == 1) {
+	    		    me.radar.vector_aicontacts = notification.vector;
+	    	    }
+	            return emesary.Transmitter.ReceiptStatus_OK;
+	        }
+	        return emesary.Transmitter.ReceiptStatus_NotProcessed;
+	    };
+		emesary.GlobalTransmitter.Register(rs.RadSensorRecipient);
+		rs.timer          = maketimer(0.05, rs, func rs.scan());
+		rs.timer.singleShot = 1;
+		rs.enabled = 0;
+		return rs;
+	},
+	range: 40,
+	area: 10,
+	maxArea: 20,
+	maxDura: 90,
+	dura: 60,
+	searchTime: 0,
+	searchStart: 0,
+	index: -1,
+	timing: 0.05,
+	table: [],
+    tables: [["2","3","5","6"],["17","20","P"],["AAA","S","SH"]],
+	currtable: 0,
+	handoffTarget: nil,
+	handoffTime: 0,
+	searchCounter: 0,
+	x: [-40, 40],
+	y: [-40, 10],
+	fov: 0,
+	fov_desired: 0,
+	setEnabled: func (e) {
+		me.enabled = e;
+		if (e and !me.timer.isRunning) {
+			me.calcDura();
+        	me.timing = 0.05;
+        	me.timer.restart(me.timing);
+			me.timer.start();
+			me.searchStart = elapsedProp.getValue();
+
+			#print("setEnabled again");
+		} elsif (!e) {
+			me.timer.stop();
+			me.reset();
+		}
+	},
+	reset: func {
+		me.searchTime = 0;
+		me.searchStart = elapsedProp.getValue();
+		foreach(me.seen;me.vector_aicontacts_seen) {
+    		me.seen.discover = 0;
+    		me.seen.discoverSCT = -2;
+    	}
+		me.vector_aicontacts_seen = [];
+		me.calcDura();
+    	me.timing = 0.05;
+	},
+	calcDura: func {
+		me.dura = me.maxDura * me.area/me.maxArea * size(me.table)/5;
+	},
+	scan: func {
+		if (!me.enabled) {
+			foreach(me.seen;me.vector_aicontacts_seen) {
+        		me.seen.discover = 0;
+        		me.seen.discoverSCT = -2;
+        	}
+            me.vector_aicontacts_seen = [];
+            return;
+        }
+        me.elapsed = elapsedProp.getValue();
+        
+        me.searchTime = me.elapsed-me.searchStart;
+        if (me.searchTime > me.dura) {
+        	me.index = -1;
+        	me.searchStart = me.elapsed;
+        	me.searchCounter += 1;
+        	me.searchTime = 0;
+        	#print("finished search");
+        }
+
+        if (me.index >= size(me.vector_aicontacts)-1) {
+        	me.index = -1;
+        }
+        if (!size(me.vector_aicontacts)) {
+        	foreach(me.seen;me.vector_aicontacts_seen) {
+        		me.seen.discover = 0;
+        		me.seen.discoverSCT = -2;
+        	}
+        	me.vector_aicontacts_seen = [];
+        	me.timer.restart(me.timing);
+	        if (!me.timer.isRunning) {
+	        	me.timer.start();
+	        }
+        	return;
+        }
+        me.index += 1;
+
+        me.candidate = me.vector_aicontacts[me.index];
+        #print(size(me.vector_aicontacts)," me.candidate.rd is nil: ",me.candidate["isRadiating"]==nil);
+        me.candidateModel = me.candidate.getModel();
+        if (contains(radiation_list, me.candidateModel)) {
+	        me.ownCoord = self.getCoord();
+	        me.myHeading = radar_system.self.getHeading();
+	        me.ok = 0;
+	        if (me.candidate.isRadiating(me.ownCoord)) {
+	        	me.testBearing = me.candidate.getBearing();
+	            me.testElevation = me.candidate.getElevation();
+	            me.testDev = geo.normdeg180(me.testBearing-me.myHeading);
+	            if (me.testDev > me.x[0] and me.testDev < me.x[1] and me.candidate.get_range() < me.range) {
+		            if (me.testElevation < me.y[1] and me.testElevation > me.y[0]) {
+	    	            me.candidate.radiSpike = me.candidate.isSpikingMe()?"T":"A";
+	    	            me.candidate.pos = [me.testDev, me.testElevation];
+	    	            me.candidate.mdl = radiation_list[me.candidateModel];
+	                    
+	                    for (me.i = 0; me.i < size(me.table);me.i+=1) {
+	                        me.tableitem = me.table[me.i];
+	                        if (me.candidate.mdl == me.tableitem) {
+	                            me.ok = 1;
+	                            me.candidate.tblIdx = me.i;
+	                            if (me.candidate["discoverSCT"] != me.searchCounter) {# If we have seen this contact before in this cycle we don't recalc its discover time
+	                            	me.candidate.discover = me.dura*rand();
+	                            	me.candidate.discoverSCT = me.searchCounter;
+	                            }
+	                            break;
+	                        }
+	                    }
+	                    if (me.ok) {
+	                    	if (!me.containsVector(me.vector_aicontacts_seen, me.candidate)) {
+	                    		append(me.vector_aicontacts_seen, me.candidate);
+	                    		#print("Sensor: seen ",me.candidate.mdl,", planning reveal at ",int(me.dura-me.candidate.discover));
+	                    	}
+	                    }
+	    	        }
+	            }
+	        }
+	        if (!me.ok and me.containsVector(me.vector_aicontacts_seen, me.candidate)) {
+	        	#print("Sensor: unseen ",me.candidate.mdl);
+	        	me.temp = [];
+	        	foreach(me.seen;me.vector_aicontacts_seen) {
+	        		if (me.seen == me.candidate) continue;
+	        		append(me.temp,me.seen);
+	        	}
+	        	me.vector_aicontacts_seen = me.temp;
+	        }
+	    }
+        me.calcDura();
+        me.timing = 2/size(me.vector_aicontacts);# Expect there to be 1 to 100 contacts. The last ones in the vector should also be able to show up in the first seconds.
+        me.timing = math.clamp(me.timing, 0.01, 0.15);
+        #printf("dura %.3f  size %d  sleep %.3f",me.dura,size(me.vector_aicontacts),0.95*me.dura/size(me.vector_aicontacts));
+        me.timer.restart(me.timing);
+        if (!me.timer.isRunning) {
+        	me.timer.start();
+        }
+	},
+	containsVector: func (vec, item) {
+		foreach(test; vec) {
+			if (test == item) {
+				return 1;
+			}
+		}
+		return 0;
+	},
+	del: func {
+        emesary.GlobalTransmitter.DeRegister(me.RadSensorRecipient);
+    },
+};
 
 
 
 
+#  ███████ ██      ██ ██████      ███████ ███████ ███    ██ ███████  ██████  ██████  
+#  ██      ██      ██ ██   ██     ██      ██      ████   ██ ██      ██    ██ ██   ██ 
+#  █████   ██      ██ ██████      ███████ █████   ██ ██  ██ ███████ ██    ██ ██████  
+#  ██      ██      ██ ██   ██          ██ ██      ██  ██ ██      ██ ██    ██ ██   ██ 
+#  ██      ███████ ██ ██   ██     ███████ ███████ ██   ████ ███████  ██████  ██   ██ 
+#                                                                                    
+#                                                                                    
 
 
+var flirImageReso = 32;
+var FlirSensor = {
+	pics: [nil,nil],
+	setup: func (group, index) {
+		me.flirPicHD = group.createChild("image")
+                .set("src", "Aircraft/f16/Nasal/HUD/flir"~flirImageReso~".png")
+                #.setScale(256/flirImageReso,256/flirImageReso)#340,260
+                .set("z-index",10001);
+        me.scanY = 0;
+        me.scans = flirImageReso/(4*(getprop("f16/avionics/hud-flir-optimum")?4:2));
+        me.pics[index] = me.flirPicHD;
+        me.color = displays.colorDot2;
+        return me.flirPicHD;
+    },
+    removeImage: func {
+    	me.flirPicHD = nil;
+    	me.pics = [nil,nil];
+    },
+    extrapolate: func (x, x1, x2, y1, y2) {
+    	return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
+	},
+    scan: func (hdp, bhot) {
+		# FLIR
+        me.xBore = flirImageReso*0.5;
+        me.yBore = flirImageReso*0.5;
+        me.distMin = hdp.getproper("groundspeed_kt")*getprop("f16/avionics/hud-flir-distance-min");
+        me.distMax = hdp.getproper("groundspeed_kt")*getprop("f16/avionics/hud-flir-distance-max");
+        me.cont = getprop("f16/avionics/mfd-flir-cont");# hmmm... would be better to be mfd controls
+        me.brt = getprop("f16/avionics/mfd-flir-brt");
+        if (getprop("f16/stores/nav-mounted")==1 and getprop("f16/avionics/power-left-hdpt")==1) {
+            for(me.x = 0; me.x < flirImageReso; me.x += 1) {
+                me.xDevi = (me.x-me.xBore);
+                #me.xDevi /= me.texelPerDegreeX;
+                for(me.y = me.scanY; me.y < me.scanY+me.scans and me.y < flirImageReso; me.y += 1) {
+                    me.yDevi = (me.y-me.yBore)-7.5;# remember image y axis is opposite canvas axis y
+                    #me.yDevi /= me.texelPerDegreeY;
+                    me.start = geo.aircraft_position();
+                    me.vecto = [math.cos(me.xDevi*D2R)*math.cos(me.yDevi*D2R),math.sin(-me.xDevi*D2R)*math.cos(me.yDevi*D2R),math.sin(me.yDevi*D2R)];
 
-
-
+                    me.direction = vector.Math.vectorToGeoVector(vector.Math.rollPitchYawVector(getprop("orientation/roll-deg"),getprop("orientation/pitch-deg"),-getprop("orientation/heading-deg"), me.vecto),me.start);
+                    me.intercept = get_cart_ground_intersection({x:me.start.x(),y:me.start.y(),z:me.start.z()}, me.direction);
+                    if (me.intercept == nil) {
+                        me.value = 0;
+                    } else {
+                        me.terrain = geo.Coord.new();
+                        me.terrain.set_latlon(me.intercept.lat, me.intercept.lon ,me.intercept.elevation);
+                        me.dist_m = me.start.direct_distance_to(me.terrain);
+                        #me.value = math.min(1,((math.max(me.distMin-me.distMax, me.distMin-me.start.direct_distance_to(me.terrain))+(me.distMax-me.distMin))/me.distMax));
+                        me.value = 1-math.clamp((me.dist_m-me.distMin)/(me.distMax-me.distMin),0,1);
+                    }
+                    #if (me.y == 31) print(me.y," px value=",me.value," pitch=",me.yDevi);
+                    if (!bhot) me.value = 1 - me.value;
+                    me.gain = math.min(1,1+2*me.cont*(1-2*me.value));
+                    me.gain = 2.2;
+                    if (me.pics[0] != nil) me.pics[0].setPixel(me.x, me.y, [me.color[0],me.color[1],me.color[2],me.brt*math.pow(me.value, me.gain)]);
+                    if (me.pics[1] != nil) me.pics[1].setPixel(me.x, me.y, [me.color[0],me.color[1],me.color[2],me.brt*math.pow(me.value, me.gain)]);
+                }
+            }
+            me.scanY+=me.scans;if (me.scanY>flirImageReso-me.scans) me.scanY=0;
+            #me.flirPicHD.setPixel(me.xBore, me.yBore, [0,0,1,1]);# blue dot at bore
+        }
+    },
+};
 
 
 
@@ -2679,7 +2946,7 @@ var TerrainMapper = {
 			},
 	scanGM: func (eulerX, eulerY, verticalInstantFoV, horizontalInstantFoV, bottomBar, topBar) {
 		# GM test code
-
+		if (displays.fcrFrz) return;
 		if (me.radar.currentMode.mapper and me.enabled and me.radar.horizonStabilized and me["gmPic"] != nil and !me.exp) {
 			if (me.debug > 3) {
 				me.t0 = systime();
@@ -2808,6 +3075,9 @@ var TerrainMapper = {
 			return 0;
 		}
 	},
+	removeImage: func {
+		me.gmPic = nil;
+	},
 	paintImage: func (azData, bottomBar, topBar) {
 
 		me.iStart = math.floor(me.gmPicSize*azData.rangeFwdNm/me.radar.getRange());
@@ -2892,9 +3162,11 @@ var TerrainMapper = {
 		if (me["gmPic"] == nil) return;
 		me.gmPic.fillRect([0,0,me.gmPicSize,me.gmPicSize], [0,0,0,0]);# why does it allow 64??
 		#me.gmPic.setPixel(me.gm_x_origin, me.gm_y_origin, [0,0,1,1]);#blue pixel at ownship
-		me.dirty = 1;
+		me.gmPic.dirtyPixels();
+		me.dirty = 0;
 	},
 	loop: func {
+		if (displays.fcrFrz) return;
 		if (me.enabled and me.radar.currentMode.mapper and me["gmPic"] != nil and me.dirty) {
 			me.gmPic.dirtyPixels();
 		}
@@ -3090,6 +3362,11 @@ var ContactTGP = {
 		return 1;
 	},
 
+	getVirtualType: func {
+		# Used to debug issue #532
+		return "tgp-ground";
+	},
+
 	isPainted: func () {
 		return 0;
 	},
@@ -3253,12 +3530,12 @@ var datalink_power = props.globals.getNode("instrumentation/datalink/power",0);
 enable_tacobject = 1;
 var antennae_knob_prop = props.globals.getNode("controls/radar/antennae-knob",0);
 var wndprop = props.globals.getNode("environment/wind-speed-kt",0);
-
+var GMT_hi_lo = 0;#0=low (8-55) 1=high (16-75)
 
 # start generic radar system
 var baser = AIToNasal.new();
 var partitioner = NoseRadar.new();
-var omni = OmniRadar.new(1.0, 150, 55);
+var omni = OmniRadar.new(1.0, 150, -1);
 var terrain = TerrainChecker.new(0.05, 1, 30);# 0.05 or 0.10 is fine here
 var callsignToContact = CallsignToContact.new();
 var dlnkRadar = DatalinkRadar.new(0.03, 110, 225);# 3 seconds because cannot be too slow for DLINK targets
@@ -3268,15 +3545,16 @@ var ecm = ECMChecker.new(0.05, 6);
 var rwsMode = F16RWSMode.new(F16RWSSAMMode.new(F16MultiSTTMode.new()));
 var twsMode = F16TWSMode.new(F16MultiSTTMode.new());
 var lrsMode = F16LRSMode.new(F16LRSSAMMode.new(F16MultiSTTMode.new()));
-var vsrMode = F16VSMode.new(F16STTMode.new());
+var vsMode = F16VSMode.new(F16STTMode.new());
 var acm20Mode = F16ACM20Mode.new(F16ACMSTTMode.new());
 var acm60Mode = F16ACM60Mode.new(F16ACMSTTMode.new());
 var acmBoreMode = F16ACMBoreMode.new(F16ACMSTTMode.new());
 var seaMode = F16SeaMode.new(F16SEAFTTMode.new());
 var gmMode = F16GMMode.new(F16GMFTTMode.new());
 var gmtMode = F16GMTMode.new(F16GMTFTTMode.new());
-var apg68Radar = AirborneRadar.newAirborne([[rwsMode,twsMode,lrsMode,vsrMode],[acm20Mode,acm60Mode,acmBoreMode],[seaMode],[gmMode],[gmtMode]], APG68);
+var apg68Radar = AirborneRadar.newAirborne([[rwsMode,twsMode,lrsMode,vsMode],[acm20Mode,acm60Mode,acmBoreMode],[seaMode],[gmMode],[gmtMode]], APG68);
 var f16_rwr = RWR.new();
+var f16_radSensor = RadSensor.new();
 var acmLockSound = props.globals.getNode("f16/sound/acm-lock");
 var mapper = TerrainMapper.new(apg68Radar, 0.50);
 
@@ -3295,5 +3573,5 @@ var getCompleteList = func {
 #   HSD radar arc CW vs. CCW
 #
 # TODO:
-#   VSR switch speed at each bar instead of each frame
+#   VS switch speed at each bar instead of each frame
 #
