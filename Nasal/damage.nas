@@ -60,7 +60,7 @@ var shells = {
     "DEFA 554":          [14,0.060], # 30x113mm Mirage, 220g
     "20mm APDS":         [15,0.030], # CIWS
     "LAU-10":            [16,0.500], # 127mm, ~4-7kg warhead
-    # Max id is 41
+    # Max id is 39
 };
 
 # lbs of warheads is explosive+fragmentation+fuse, so total warhead mass.
@@ -467,7 +467,7 @@ var DamageRecipient =
                     if (notification.RemoteCallsign == callsign and getprop("payload/armament/msg") == 1) {
                         #damage enabled and were getting hit
                         
-                        if (notification.SecondaryKind < 0 and hitable_by_cannon) {
+                        if (notification.SecondaryKind < 0 and notification.SecondaryKind >= -40 and hitable_by_cannon) {
                             # cannon hit
                             if (m28_auto) mig28.engagedBy(notification.Callsign, 0);
                             var probability = id2shell[-1*notification.SecondaryKind-1][1];
