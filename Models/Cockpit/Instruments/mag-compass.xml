@@ -17,7 +17,7 @@
  <animation>
   <type>rotate</type>
   <object-name>ring</object-name>
-  <property>/instrumentation/magnetic-compass/indicated-heading-deg</property>
+  <property>instrumentation/magnetic-compass/indicated-heading-deg</property>
   <axis>
    <x>0.0</x>
    <y>0.0</y>

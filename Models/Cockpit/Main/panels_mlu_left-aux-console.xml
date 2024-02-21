@@ -202,7 +202,7 @@
     <or>
         <and>
            <equals>
-            <property>/gear/gear[0]/position-norm</property>
+            <property>gear/gear[0]/position-norm</property>
             <value>1.0</value>
            </equals>
            <equals>
@@ -238,7 +238,7 @@
     <or>
         <and>
            <equals>
-            <property>/gear/gear[1]/position-norm</property>
+            <property>gear/gear[1]/position-norm</property>
             <value>1.0</value>
            </equals>
            <equals>
@@ -274,7 +274,7 @@
     <or>
         <and>
            <equals>
-            <property>/gear/gear[2]/position-norm</property>
+            <property>gear/gear[2]/position-norm</property>
             <value>1.0</value>
            </equals>
            <equals>
@@ -314,13 +314,13 @@
 			<button>0</button>
 			<binding>
 				<command>property-assign</command>
-				<property>/controls/gear/gear-horn-cutout</property>
+				<property>controls/gear/gear-horn-cutout</property>
 				<value>1</value>
 			</binding>
 			<mod-up>
 				<binding>
 					<command>property-assign</command>
-					<property>/controls/gear/gear-horn-cutout</property>
+					<property>controls/gear/gear-horn-cutout</property>
 					<value>0</value>
 				</binding>
 			</mod-up>
@@ -330,7 +330,7 @@
 		<type>translate</type>
 		<object-name>horn_silencer</object-name>
         <factor>-0.0025</factor>
-		<property>/controls/gear/gear-horn-cutout</property>
+		<property>controls/gear/gear-horn-cutout</property>
 		<axis>
 			<x>0</x>
 			<y>0</y>
@@ -369,14 +369,14 @@
      <repeatable>false</repeatable>
      <binding>
       <command>property-toggle</command>
-      <property>/f16/cockpit/alt-gear-handle</property>
+      <property>f16/cockpit/alt-gear-handle</property>
      </binding>
     </action>
    </animation>
    <animation>
     <type>translate</type>
     <object-name>alt-gear</object-name>
-    <property>/f16/cockpit/alt-gear-handle</property>
+    <property>f16/cockpit/alt-gear-handle</property>
     <factor>0.025</factor>
     <axis>
      <x>0</x>

@@ -861,7 +861,7 @@
   <condition>
     <or>
     <greater-than>
-     <property>/fdm/jsbsim/fcs/fly-by-wire/pitch/alpha-indicated</property>
+     <property>fdm/jsbsim/fcs/fly-by-wire/pitch/alpha-indicated</property>
      <value>14.0</value>
     </greater-than>
     <property>controls/test/test-panel/mal-ind-lts</property>
@@ -886,11 +886,11 @@
     <or>
     <and>
     <greater-than>
-     <property>/fdm/jsbsim/fcs/fly-by-wire/pitch/alpha-indicated</property>
+     <property>fdm/jsbsim/fcs/fly-by-wire/pitch/alpha-indicated</property>
      <value>11.0</value>
     </greater-than>
     <less-than>
-     <property>/fdm/jsbsim/fcs/fly-by-wire/pitch/alpha-indicated</property>
+     <property>fdm/jsbsim/fcs/fly-by-wire/pitch/alpha-indicated</property>
      <value>15.0</value>
     </less-than>
     </and>
@@ -910,7 +910,7 @@
   <condition>
     <or>
     <less-than>
-     <property>/fdm/jsbsim/fcs/fly-by-wire/pitch/alpha-indicated</property>
+     <property>fdm/jsbsim/fcs/fly-by-wire/pitch/alpha-indicated</property>
      <value>12.0</value>
     </less-than>
     <property>controls/test/test-panel/mal-ind-lts</property>
@@ -1051,7 +1051,7 @@
         <object-name>screws</object-name>
         <condition>
             <not>
-            <property>/sim/rendering/shaders/skydome</property>
+            <property>sim/rendering/shaders/skydome</property>
           </not>
           </condition>
         <emission>

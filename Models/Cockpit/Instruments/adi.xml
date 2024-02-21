@@ -117,7 +117,7 @@
  <animation>
   <type>translate</type>
   <object-name>ADI_turn-indicator</object-name>
-  <property>/instrumentation/turn-indicator/indicated-turn-rate</property>
+  <property>instrumentation/turn-indicator/indicated-turn-rate</property>
   <!-- midle: ~ 1,3 G turn, full 2 G turn at mach 0.8 ??? -->
   <factor>0.0073</factor>
   <min>-0.0111</min>
@@ -280,7 +280,7 @@
  <animation>
   <type>translate</type>
   <object-name>ADI_yaw-steering-bar</object-name>
-  <property>/instrumentation/nav/heading-needle-deflection</property>
+  <property>instrumentation/nav/heading-needle-deflection</property>
   <factor>0.006</factor>
   <min-m>-0.018</min-m>
   <max-m>0.018</max-m>
@@ -317,7 +317,7 @@
  <animation>
   <type>translate</type>
   <object-name>ADI_pitch-strg-bar</object-name>
-  <property>/instrumentation/nav[0]/gs-needle-deflection</property>
+  <property>instrumentation/nav[0]/gs-needle-deflection</property>
   <factor>0.0025</factor>
   <min-m>-0.015</min-m>
   <max-m>0.015</max-m>

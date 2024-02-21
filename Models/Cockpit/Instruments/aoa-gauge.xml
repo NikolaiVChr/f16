@@ -36,7 +36,7 @@
  <animation>
 	<type>textranslate</type>
 	<object-name>AOA_tape</object-name>
-	<property>/fdm/jsbsim/fcs/fly-by-wire/pitch/alpha-indicated</property>
+	<property>fdm/jsbsim/fcs/fly-by-wire/pitch/alpha-indicated</property>
 	<condition>
 			<greater-than-equals>
 				<property>fdm/jsbsim/elec/bus/emergency-ac-1</property>

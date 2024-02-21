@@ -80,7 +80,7 @@ Oil Pressure indicator instrument.
       </transformation>
       <transformation>
        <type>y-shift</type>
-       <property>/instrumentation/altimeter/indicated-altitude-ft</property>
+       <property>instrumentation/altimeter/indicated-altitude-ft</property>
        <modulator>1000</modulator>
        <scale>1.07273e-1</scale>
        <min>0</min>
@@ -110,7 +110,7 @@ Oil Pressure indicator instrument.
       </transformation>
       <transformation>
        <type>y-shift</type>
-       <property>/instrumentation/altimeter/indicated-altitude-ft</property>
+       <property>instrumentation/altimeter/indicated-altitude-ft</property>
        <modulator>1000</modulator>
        <scale>1.07273e-1</scale>
        <min>400</min>
@@ -141,7 +141,7 @@ Oil Pressure indicator instrument.
       </transformation>
       <transformation>
        <type>y-shift</type>
-       <property>/instrumentation/altimeter/indicated-altitude-ft</property>
+       <property>instrumentation/altimeter/indicated-altitude-ft</property>
        <modulator>10000</modulator>
        <scale>1.07273e-2</scale>
        <min>0</min>
@@ -171,7 +171,7 @@ Oil Pressure indicator instrument.
       </transformation>
       <transformation>
        <type>y-shift</type>
-       <property>/instrumentation/altimeter/indicated-altitude-ft</property>
+       <property>instrumentation/altimeter/indicated-altitude-ft</property>
        <modulator>10000</modulator>
        <scale>1.07273e-2</scale>
        <min>4000</min>
@@ -202,7 +202,7 @@ Oil Pressure indicator instrument.
       </transformation>
       <transformation>
        <type>y-shift</type>
-       <property>/instrumentation/altimeter/indicated-altitude-ft</property>
+       <property>instrumentation/altimeter/indicated-altitude-ft</property>
        <modulator>100000</modulator>
        <scale>1.07273e-3</scale>
        <min>0</min>
@@ -232,7 +232,7 @@ Oil Pressure indicator instrument.
       </transformation>
       <transformation>
        <type>y-shift</type>
-       <property>/instrumentation/altimeter/indicated-altitude-ft</property>
+       <property>instrumentation/altimeter/indicated-altitude-ft</property>
        <modulator>100000</modulator>
        <scale>1.07273e-3</scale>
        <min>40000</min>
@@ -268,7 +268,7 @@ Oil Pressure indicator instrument.
      <transformations>
       <transformation>
        <type>rotation</type>
-       <property>/instrumentation/altimeter/indicated-altitude-ft</property>
+       <property>instrumentation/altimeter/indicated-altitude-ft</property>
        <max>100000.0</max>
        <scale>0.36</scale>
       </transformation>
