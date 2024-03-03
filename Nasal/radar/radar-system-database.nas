@@ -202,6 +202,7 @@ var Database = {
 	"f-20-dutchdemo":         {hasAirRadar:1, rwrCode:"TS", baseThreat:defaultFighterThreat},
 	"Tornado-GR4a":           {hasAirRadar:1, rwrCode:"TO", baseThreat:defaultFighterThreat},
 	"Tornado-IDS":            {hasAirRadar:1, rwrCode:"TO", baseThreat:defaultFighterThreat},
+	"Tornado-ECR":            {hasAirRadar:1, rwrCode:"TO", baseThreat:defaultFighterThreat},
 	"Tornado-F3":             {hasAirRadar:1, rwrCode:"TO", baseThreat:defaultFighterThreat},
 	"Tornado-ADV":            {hasAirRadar:1, rwrCode:"TO", baseThreat:defaultFighterThreat},
 	"brsq":                   {hasAirRadar:1, rwrCode:"RF", baseThreat:defaultFighterThreat},
