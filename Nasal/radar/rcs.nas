@@ -81,6 +81,10 @@ var rcs_database = {
     "C-17-GlobemasterIII":      21.5,  #average
     "C-17_GlobemasterIII":      21.5,  #average
     "XB-70":                    21,    #average
+    "Tornado-GR4a":           9,
+    "Tornado-IDS":            9,
+    "Tornado-F3":             9,
+    "Tornado-ADV":            9,
     # Helis:
     "uh60_Blackhawk":           4,      #average
     "AH-1W":                    4,      #average
