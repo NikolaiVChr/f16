@@ -28,7 +28,7 @@
     "path": "Nasal/datalink.nas"
   },
   "station-manager": {
-    "version": "1.1.0",
+    "version": "1.2.0",
     "path": "Nasal/station-manager.nas"
   },
   "rcs-mand": {
