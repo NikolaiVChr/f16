@@ -17,7 +17,7 @@ var test = func (echoHeading, echoPitch, echoRoll, bearing, frontRCS) {
 };
 
 var rcs_database = {
-	#REVISION: 2023/06/06
+	#REVISION: 2024/03/10
     "YF-16":                    5,      #higher because earlier blocks had larger RCS
     "F-16CJ":                   2,      #average
     "f16":                      2,      #average
@@ -81,10 +81,10 @@ var rcs_database = {
     "C-17-GlobemasterIII":      21.5,  #average
     "C-17_GlobemasterIII":      21.5,  #average
     "XB-70":                    21,    #average
-    "Tornado-GR4a":           9,
-    "Tornado-IDS":            9,
-    "Tornado-F3":             9,
-    "Tornado-ADV":            9,
+    "Tornado-GR4a":             9,
+    "Tornado-IDS":              9,
+    "Tornado-F3":               9,
+    "Tornado-ADV":              9,
     # Helis:
     "uh60_Blackhawk":           4,      #average
     "AH-1W":                    4,      #average
