@@ -4,15 +4,15 @@
  <sim> 
   <model>
    <livery>
-    <name type="string">31FW, 510FS AV "31FW Flagship"</name>
+    <name type="string">31FW, 510FS AV "Wing Heritage Flagship"</name>
     <texture>Liveries/Block40/89-2009.png</texture>
     <owner type="string">USAF</owner>
     <pilot type="string"></pilot>
-    <scheme type="string"></scheme>
+    <scheme type="string">Two-tone gray, Flagship</scheme>
     <block type="int">40</block>
     <serial type="string">89-2009</serial>
     <squad type="string">510th FS "Buzzards"</squad>
-    <year type="string">2015</year>
+    <year type="string">2023</year>
    </livery>
    
    <livery-logo>
