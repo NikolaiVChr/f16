@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery>
+    <name type="string">52FW, 480FS SP HGV #827</name>
+    <texture>Liveries/Block50/90-0827.png</texture>
+    <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Have Glass V</scheme>
+    <block type="int">50</block>
+    <serial type="string">90-0827</serial>
+    <squad type="string">480th FS "Warhawks"</squad>
+    <year type="string">2024</year>
+   </livery>
+
+   <livery-logo>
+    <texture>Liveries/standard.white.logos2.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block50/patch.warhawks.png</texture>
+   </livery-patch>
+
+  <livery-pod>
+        <texture>Liveries/Block50/pod.warhawks.png</texture>
+  </livery-pod>
+
+        <f16>
+            <dragchute type="bool">false</dragchute>
+            <cft type="bool">false</cft>
+        </f16>
+        <livery-specular type="double">0.35</livery-specular>
+  </model>
+ </sim>
+</PropertyList>
