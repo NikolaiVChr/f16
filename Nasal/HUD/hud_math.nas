@@ -4,7 +4,7 @@
 #
 # Version 1.09
 #
-# License: GPL 2.0
+# License: GPL 2.0 or later
 	
 var HudMath = {
 	

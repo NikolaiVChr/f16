@@ -4,11 +4,11 @@
     "path": "Nasal/vector.nas"
   },
   "missile-code": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "path": "Nasal/missile-code.nas"
   },
   "radar-system": {
-    "version": "2.0.3",
+    "version": "2.0.4",
     "path": "Nasal/radar/radar-system.nas"
   },
   "radar-system-database": {
@@ -20,7 +20,7 @@
     "path": "Nasal/damage.nas"
   },
   "iff": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "path": "Nasal/iff.nas"
   },
   "datalink": {
@@ -28,7 +28,7 @@
     "path": "Nasal/datalink.nas"
   },
   "station-manager": {
-    "version": "1.2.0",
+    "version": "1.2.1",
     "path": "Nasal/station-manager.nas"
   },
   "rcs-mand": {
@@ -36,7 +36,7 @@
     "path": "Nasal/radar/rcs_mand.nas"
   },
   "hud-math": {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "path": "Nasal/HUD/hud_math.nas"
   },
   "armament-notification": {
@@ -52,11 +52,11 @@
     "path": "Nasal/hackCanvas.nas"
   },
   "crash-and-stress": {
-    "version": "0.1.9",
+    "version": "0.1.10",
     "path": "Nasal/crash-and-stress.nas"
   },
   "airbases": {
-    "version": "1.0.28",
+    "version": "1.0.29",
     "path": "Nasal/airbases.nas"
   },
   "airbases-dialog": {

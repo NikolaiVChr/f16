@@ -1,5 +1,5 @@
 #
-# License: GPL 2.0, Copyright: Laminar research
+# License: GPL 2.0 or later, Copyright: Laminar research
 #
 # Requirements used for making list:
 #  Must have ICAO. Must have either a MIL sign, parking spots for fighters or runways used for military.

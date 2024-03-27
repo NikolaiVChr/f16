@@ -2,7 +2,7 @@
 #######
 ####### Guided/Cruise missiles, rockets and dumb/glide/guided bombs code for Flightgear.
 #######
-####### License: GPL 2.0
+####### License: GPL 2.0 or later
 #######
 ####### Authors:
 #######  Alexis Bory, Fabien Barbier, Richard Harrison, Justin Nicholson, Nikolai V. Chr., Axel Paccalin, Colin Geniet

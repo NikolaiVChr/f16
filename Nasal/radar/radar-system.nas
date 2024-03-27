@@ -49,7 +49,7 @@
 # Needs rcs.nas, missile-code.nas and vector.nas.
 # Optionally datalink.nas and iff.nas
 #
-# GPL 2.0
+# GPL 2.0 or later
 
 
 var AIR = 0;
