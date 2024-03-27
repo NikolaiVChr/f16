@@ -1,7 +1,7 @@
 # IFF system
 # turns a channel number into an iff md5 hash
 #
-# gplv2 by pinto aka justin nicholson
+# gplv2 or later by pinto aka justin nicholson
 #
 # installation instructions:
 #

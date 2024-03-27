@@ -6,7 +6,7 @@
 #
 # Initial implementation: Leto
 #
-# License: GPL 2
+# License: GPL 2.0 or later
 #
 ###############################################
 
