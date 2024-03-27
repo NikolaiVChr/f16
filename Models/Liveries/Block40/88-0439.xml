@@ -4,14 +4,14 @@
  <sim> 
   <model>
    <livery>
-    <name type="string">31FW, 510FS AV "Wing Heritage Flagship"</name>
-    <texture>Liveries/Block40/89-2009.png</texture>
+    <name type="string">USAFWS, 16WPS WA #439</name>
+    <texture>Liveries/Block40/88-0439.png</texture>
     <owner type="string">USAF</owner>
     <pilot type="string"></pilot>
-    <scheme type="string">Two-tone gray, Flagship</scheme>
+    <scheme type="string"></scheme>
     <block type="int">40</block>
-    <serial type="string">89-2009</serial>
-    <squad type="string">510th FS "Buzzards"</squad>
+    <serial type="string">88-0439</serial>
+    <squad type="string">16th WPS "Tomahawks"</squad>
     <year type="string">2023</year>
    </livery>
    
@@ -20,11 +20,11 @@
    </livery-logo>
 
    <livery-patch>
-      <texture>Liveries/Block40/patch.buzzards.png</texture>
+      <texture>Liveries/Block40/patch.weaponsschool.png</texture>
   </livery-patch>
 
   <livery-pod>
-        <texture>Liveries/Block40/pod.buzzards.png</texture>
+        <texture>Liveries/External-stores/MXU-648.png</texture>
   </livery-pod>
 
   <f16>

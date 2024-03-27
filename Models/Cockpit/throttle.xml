@@ -30,7 +30,7 @@
   <object-name>PINKY_SWITCH</object-name>
   <object-name>PINKY_SWITCH_HANDLE</object-name>
   <object-name>PINKY_SWITCH_LB</object-name>
-  <property>/controls/engines/engine/throttle-movement</property>
+  <property>controls/engines/engine/throttle-movement</property>
   <offset-deg>40</offset-deg>
   <factor>-80</factor><!-- should really move 130 degs, but isn't modeled for that -->
   <center>
@@ -64,7 +64,7 @@
  <animation>
   <type>rotate</type>
   <object-name>BASE</object-name>
-  <property>/controls/engines/engine/augmentation</property>
+  <property>controls/engines/engine/augmentation</property>
   <factor>7</factor>
   <center>
    <x-m>0.0</x-m>

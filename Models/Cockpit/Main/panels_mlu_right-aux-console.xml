@@ -315,7 +315,7 @@
   <animation>
   <type>rotate</type>
   <object-name>CAB_PRESS_needle</object-name><!-- could not find which elec this gauge relies on -->
-  <property>/f16/cockpit/pressure-ft</property>
+  <property>f16/cockpit/pressure-ft</property>
   <factor>0.0061</factor>
   <offset-deg>-48</offset-deg>
   <center>
@@ -339,7 +339,7 @@
                   <value>20</value>
               </greater-than-equals>
   </condition>
-  <property>/f16/cockpit/hydrazine-minutes</property>
+  <property>f16/cockpit/hydrazine-minutes</property>
   <factor>24</factor>
   <offset-deg>135</offset-deg><!-- 135 -->
   <center>
@@ -363,7 +363,7 @@
                   <value>100</value>
               </greater-than-equals>
   </condition>
-  <property>/f16/cockpit/oxygen-liters-output</property>
+  <property>f16/cockpit/oxygen-liters-output</property>
   <factor>36</factor>
   <offset-deg>-160</offset-deg>
   <center>

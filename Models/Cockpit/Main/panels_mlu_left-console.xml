@@ -1369,7 +1369,7 @@
 			<button>0</button>
             <binding>
                 <command>property-toggle</command>
-                <property>/controls/test/test-panel/fire-ovht-test</property>
+                <property>controls/test/test-panel/fire-ovht-test</property>
             </binding>
         </action>
     </animation>
@@ -1377,7 +1377,7 @@
 	<animation>
         <type>translate</type>
         <object-name>FIRE_OHEAT_DETECT</object-name>
-		<property>/controls/test/test-panel/fire-ovht-test</property>
+		<property>controls/test/test-panel/fire-ovht-test</property>
         <factor>-0.0035</factor>
         <axis>
 		  <z>1</z>
@@ -1391,7 +1391,7 @@
 			<button>0</button>
             <binding>
                 <command>property-toggle</command>
-                <property>/controls/test/test-panel/pbg-test</property>
+                <property>controls/test/test-panel/pbg-test</property>
             </binding>
         </action>
     </animation>
@@ -1399,7 +1399,7 @@
 	<animation>
         <type>translate</type>
         <object-name>HF-PBG_TEST</object-name>
-		<property>/controls/test/test-panel/pbg-test</property>
+		<property>controls/test/test-panel/pbg-test</property>
         <factor>-0.0005</factor>
         <axis>
 		  <z>1</z>
@@ -2761,7 +2761,7 @@
         <type>knob</type>
         <object-name>SW_MPO</object-name>
         <visible>true</visible>
-        <property>/fdm/jsbsim/fcs/fbw-override</property>
+        <property>fdm/jsbsim/fcs/fbw-override</property>
         <drag-direction>horizontal</drag-direction>
         <drag-scale-px>-10</drag-scale-px><!-- 10 is default -->
         <repeatable>true</repeatable>
@@ -2781,7 +2781,7 @@
         <increase>
             <binding>
                 <command>property-adjust</command>
-                <property>/fdm/jsbsim/fcs/fbw-override</property>
+                <property>fdm/jsbsim/fcs/fbw-override</property>
                 <step>1</step>
                 <min>0</min>
                 <max>1</max>
@@ -2791,7 +2791,7 @@
         <decrease>
             <binding>
                 <command>property-adjust</command>
-                <property>/fdm/jsbsim/fcs/fbw-override</property>
+                <property>fdm/jsbsim/fcs/fbw-override</property>
                 <step>-1</step>
                 <min>0</min>
                 <max>1</max>
@@ -2957,7 +2957,7 @@
     <animation>
         <type>rotate</type>
         <object-name>eec-cover</object-name>
-        <property>/f16/engine/eec-cover</property>
+        <property>f16/engine/eec-cover</property>
         <factor>-40</factor>
         <offset-deg>0</offset-deg>
         <center>
