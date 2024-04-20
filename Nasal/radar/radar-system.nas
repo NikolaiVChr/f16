@@ -917,7 +917,7 @@ var AIContact = {
 		me.virt.rz = rand()*spheric_dist_m*2-spheric_dist_m;
 		me.virt.r = spheric_dist_m != 0;
 		me.virt.lastBleep = me.getLastBlep();
-		me.virtCoord.set_xyz(me.virtCoord.x()+me.virt.rx,me.virtCoord.y()+me.virt.ry,me.virtCoord.z()+me.virt.rz;
+		me.virtCoord.set_xyz(me.virtCoord.x()+me.virt.rx,me.virtCoord.y()+me.virt.ry,me.virtCoord.z()+me.virt.rz);
 		me.virt.elevpick = geo.elevation(me.virtCoord.lat(),me.virtCoord.lon());
 		if (spheric_dist_m != 0 and me.virt.elevpick != nil) me.virtCoord.set_alt(me.virt.elevpick);# TODO: Not convinced this is the place for the 1m offset since both missiles and radar subtract 1m from targetdistance, but for slanted picking with undulations its still good idea to not place it at the base.
 		me.virt.coord = me.virtCoord;
@@ -933,7 +933,7 @@ var AIContact = {
 				# we have a new blep, calculate the offset coord for it
 				me.virtCoord = me.getLastCoord();
 				if (me.virtCoord != nil) {
-					me.virtCoord.set_xyz(me.virtCoord.x()+me.virt.rx,me.virtCoord.y()+me.virt.ry,me.virtCoord.z()+me.virt.rz;
+					me.virtCoord.set_xyz(me.virtCoord.x()+me.virt.rx,me.virtCoord.y()+me.virt.ry,me.virtCoord.z()+me.virt.rz);
 					me.virt.elevpick = geo.elevation(me.virtCoord.lat(),me.virtCoord.lon());
 					if (me.virt.r and me.virt.elevpick != nil) me.virtCoord.set_alt(me.virt.elevpick);# TODO
 					me.virt.coord = me.virtCoord;
