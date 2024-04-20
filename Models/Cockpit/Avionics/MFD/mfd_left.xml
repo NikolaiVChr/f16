@@ -382,7 +382,7 @@
                 <property>controls/MFD[0]/button-pressed</property>
                 <value>20</value>
             </binding>
-        <mod-up>
+            <mod-up>
                 <binding>
                     <command>property-assign</command>
                     <property>controls/MFD[0]/button-pressed</property>
