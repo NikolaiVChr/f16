@@ -19,7 +19,8 @@
 		<buoyancy>32.1</buoyancy>
                 <aero-stabilised>false</aero-stabilised>
                 <fuse-range>0</fuse-range>
-		<life>20</life>
+		<life>2</life>
+		<random>false</random>
 	</submodel> 
 
 

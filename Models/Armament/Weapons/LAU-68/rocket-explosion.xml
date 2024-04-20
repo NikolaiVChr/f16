@@ -4,7 +4,7 @@
      <name>rocket-explosion</name>
      <texture>../smoke.png</texture>
 
-     <emissive type="bool">false</emissive>
+     <emissive type="bool">true</emissive>
      <lighting type="bool">false</lighting>
 
      <attach>world</attach>

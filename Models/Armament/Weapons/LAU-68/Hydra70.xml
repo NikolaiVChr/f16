@@ -3,6 +3,19 @@
   <name>Hydra 70</name>
   <path>Hydra70.ac</path>
 
+  <!--animation> for testing
+    <type>scale</type>
+    <object-name>Hydra70</object-name>
+        <x-offset>100</x-offset>
+        <y-offset>100</y-offset>
+        <z-offset>100</z-offset>
+        <center>
+           <x-m> 0  </x-m>
+           <y-m> 0   </y-m>
+           <z-m> 0   </z-m>
+        </center>
+  </animation-->
+
   <effect>
         <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
         <parameters>
