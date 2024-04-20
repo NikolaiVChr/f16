@@ -372,7 +372,7 @@
                 </limits>
             </config>
         </view>
-        <view n="105"><!-- if change this number, also change it in tgp.nas and mfd.nas -->
+        <view n="105"><!-- if change this number, also change it in tgp.nas and display-system.nas -->
             <name>TGP</name>
             <enabled>false</enabled>
             <internal type="bool">true</internal>
