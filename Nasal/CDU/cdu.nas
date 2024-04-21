@@ -80,15 +80,22 @@ var providers = {
                 templateLoad: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
                 templateStore: "/arcgis-topo/{z}/{y}/{x}.jpg",
                 attribution: ""},
+    arcgis_vfr: {
+                templateLoad: "https://tiles.arcgis.com/tiles/ssFJjBXIUyZDrSYZ/arcgis/rest/services/VFR_Sectional/MapServer/tile/{z}/{y}/{x}",
+                templateStore: "/arcgis-vfr/{z}/{y}/{x}.jpg",#some of them are png though :(
+                attribution: "",
+                min: 8, max: 12},                
 };
 
 var providerOption = 1;
 var providerOptionLast = providerOption;
+var providerOptionTags = ["TOPO","PHOTO","VFR_US"];
 var providerOptions = [
 # This one works on Linux and Windows only
 ["arcgis_topo","arcgis_topo","arcgis_topo","arcgis_topo","arcgis_topo","arcgis_topo","arcgis_topo"],
 # This one works on MacOS also, so is default
-["arcgis_terrain","arcgis_terrain","arcgis_terrain","arcgis_terrain","arcgis_terrain","arcgis_terrain","arcgis_terrain"]
+["arcgis_terrain","arcgis_terrain","arcgis_terrain","arcgis_terrain","arcgis_terrain","arcgis_terrain","arcgis_terrain"],
+["arcgis_vfr","arcgis_vfr","arcgis_vfr","arcgis_vfr","arcgis_vfr","arcgis_vfr","arcgis_vfr"]
 ];
 
 var zoom_provider = providerOptions[providerOption];
@@ -553,7 +560,7 @@ var CDU = {
     toggleMAP: func {
         if (!me.instrConf[me.instrView].showMap) return;
         providerOption += 1;
-        if (providerOption > 1) providerOption = 0;
+        if (providerOption > size(providerOptions)-1) providerOption = 0;
         zoom_provider = providerOptions[providerOption];
         me.changeProvider();
     },
@@ -743,7 +750,7 @@ var CDU = {
         }
         me.dayText.setText(me.day?"DAY":"NIGHT");
         me.instrText.setText(me.instrConf[me.instrView].descr);
-        me.mapText.setText(providerOption==0?"DRAWN":"PHOTO");
+        me.mapText.setText(providerOptionTags[providerOption]);
         me.gridText.setText(me.mapShowGrid?"GRID":"CLEAN");
         me.afbText.setText(me.mapShowAFB?"AFB  ON":"AFB OFF");
         me.afbText.setVisible(me.instrConf[me.instrView].showMap);
@@ -1069,13 +1076,8 @@ var CDU = {
         if (!me.instrConf[me.instrView].showMap) return;
         zoom_curr += 1;
         if (zoom_curr >= size(zooms)) {
-            zoom_curr = size(zooms)-1;
-            return;
-            zoom_curr = 0;
+            zoom_curr = size(zooms) - 1;
         }
-        zoom = zooms[zoom_curr];
-        M2TEX = 1/(meterPerPixel[zoom]*math.cos(getprop('/position/latitude-deg')*D2R));
-        me.setRangeInfo();
         me.changeProvider();
     },
 
@@ -1084,16 +1086,28 @@ var CDU = {
         zoom_curr -= 1;
         if (zoom_curr < 0) {
             zoom_curr = 0;
-            return;
-            zoom_curr = 4;
+        }
+        me.changeProvider();
+    },
+
+    checkZoom: func {
+        if(providers[providerOptions[providerOption][zoom_curr]]["max"] != nil) {
+            while(zooms[zoom_curr] > providers[providerOptions[providerOption][zoom_curr]]["max"]) {
+                zoom_curr -= 1;
+            }
+        }
+        if(providers[providerOptions[providerOption][zoom_curr]]["min"] != nil) {
+            while(zooms[zoom_curr] < providers[providerOptions[providerOption][zoom_curr]]["min"]) {
+                zoom_curr += 1;
+            }
         }
         zoom = zooms[zoom_curr];
         M2TEX = 1/(meterPerPixel[zoom]*math.cos(getprop('/position/latitude-deg')*D2R));
         me.setRangeInfo();
-        me.changeProvider();
     },
 
     changeProvider: func {
+        me.checkZoom();
         makeUrl   = string.compileTemplate(providers[zoom_provider[zoom_curr]].templateLoad);
         makePath  = string.compileTemplate(maps_base ~ providers[zoom_provider[zoom_curr]].templateStore);
     },
@@ -1886,16 +1900,6 @@ var CDU = {
             .set("z-index",  layer_z.display.mapOverlay);
 
         me.hdgUp = 1;
-    },
-
-    updateMapNames: func {
-        if (me.mapShowPlaces) {
-            type = "light_all";
-            makePath = string.compileTemplate(maps_base ~ '/cartoLN/{z}/{x}/{y}.png');
-        } else {
-            type = "light_nolabels";
-            makePath = string.compileTemplate(maps_base ~ '/cartoL/{z}/{x}/{y}.png');
-        }
     },
 
     setupMap: func {
