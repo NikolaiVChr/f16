@@ -161,9 +161,11 @@ var FLIRCameraUpdater = {
         # return pos in canvas from center origin (simplified from hud_math used in HMCS)
         gpsCoord.alt();# TODO: once fixed in FG this line is no longer needed.
         me.ptch = vector.Math.getPitch(from, gpsCoord);
-        me.brng = from.course_to(gpsCoord);
+        #me.brng = from.course_to(gpsCoord);
+        me.cd = courseAndDistance(from, gpsCoord);# More precise than course_to()
+        me.brng = me.cd[0];
         
-        me.global = vector.Math.rollPitchYawVector(0,me.ptch,-me.brng, [1,0,0]);#same as eulerToCartesian3X # global direction from tgp to target
+        me.global = vector.Math.eulerToCartesian2(-me.brng, me.ptch);# global direction from tgp to target
         var dv  = vector.Math.yawPitchRollVector(radar_system.self.getHeading(),-radar_system.self.getPitch(),-radar_system.self.getRoll(),me.global);# local in aircraft view vector to target
 
         var angles = vector.Math.cartesianToEuler(dv);
