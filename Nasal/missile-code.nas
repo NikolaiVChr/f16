@@ -3245,7 +3245,7 @@ var AIM = {
 		me.dist_curr_direct = me.coord.direct_distance_to(me.t_coord_sampled);
 		me.dist_curr_hypo   = math.sqrt(me.dist_curr_direct*me.dist_curr_direct+math.pow(me.t_coord_sampled.alt()-me.coord.alt(),2));
 		me.t_elev_deg       = me.getPitch(me.coord, me.t_coord_sampled);
-		me.t_course         = me.coord.course_to(me.t_coord_sampled);
+		me.t_course         = me.courseTo(me.coord,me.t_coord_sampled);
 		me.curr_deviation_e = me.t_elev_deg - me.pitch;
 		me.curr_deviation_h = me.t_course - me.hdg;
 
@@ -4000,8 +4000,8 @@ var AIM = {
 				me.K2 =   10.0;
 
 				me.R_m = me.ac_init.distance_to(me.coord)*M2FT;
-	    		me.course_to_missile = me.ac_init.course_to(me.coord);
-				me.course_to_target  = me.ac_init.course_to(me.t_coord);
+	    		me.course_to_missile = me.courseTo(me.ac_init,me.coord);
+				me.course_to_target  = me.courseTo(me.ac_init,me.t_coord);
 				me.CREh_old_old = me.CREh_old;
 				me.CREh_old = me.CREh;
 				# cross range error:
@@ -4159,6 +4159,11 @@ var AIM = {
 			}
 			me.CRE_old_dt = me.dt;
 		}
+	},
+
+	courseTo: func (from, to) {
+		me.csds = courseAndDistance(from, to);
+		return me.csds[0];
 	},
 
 	scalarProj: func (head, pitch, magn, projHead, projPitch) {
