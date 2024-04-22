@@ -197,20 +197,18 @@ var targetRCSSignal = func(targetCoord, targetModel, targetHeading, targetPitch,
     return currMaxDist > target_distance;
 }
 
-var getRCS = func (echoCoord, echoHeading, echoPitch, echoRoll, myCoord, frontRCS) {
+var getRCS = func (echoCoord, echoHeading, echoPitch, echoRoll, radarCoord, frontRCS) {
     var sideRCSFactor  = 2.50;
     var rearRCSFactor  = 1.75;
-    var bellyRCSFactor = 3.50;
-    #first we calculate the 2D RCS:
-    var vectorToEcho   = vector.Math.eulerToCartesian2(myCoord.course_to(echoCoord), vector.Math.getPitch(myCoord,echoCoord));
-    var vectorEchoNose = vector.Math.eulerToCartesian3X(echoHeading, echoPitch, echoRoll);
-    var vectorEchoTop  = vector.Math.eulerToCartesian3Z(echoHeading, echoPitch, echoRoll);
-    var view2D         = vector.Math.projVectorOnPlane(vectorEchoTop,vectorToEcho);
-    #print("top  "~vector.Math.format(vectorEchoTop));
-    #print("nose "~vector.Math.format(vectorEchoNose));
-    #print("view "~vector.Math.format(vectorToEcho));
-    #print("view2D "~vector.Math.format(view2D));
-    var angleToNose    = geo.normdeg180(vector.Math.angleBetweenVectors(vectorEchoNose, view2D)+180);
+    var bellyRCSFactor = 3.50;# and top
+
+    var vectorToEcho   = vector.Math.eulerToCartesian2(-radarCoord.course_to(echoCoord), vector.Math.getPitch(radarCoord,echoCoord));
+    var vectorFromEcho = vector.Math.opposite(vectorToEcho);
+    var vectorEchoNose = vector.Math.eulerToCartesian3X(-echoHeading, echoPitch, echoRoll);
+    var vectorEchoTop  = vector.Math.eulerToCartesian3Z(-echoHeading, echoPitch, echoRoll);
+    var view2D         = vector.Math.projVectorOnPlane(vectorEchoTop,vectorFromEcho);
+
+    var angleToNose    = geo.normdeg180(vector.Math.angleBetweenVectors(vectorEchoNose, view2D));
     #print("horz aspect "~angleToNose);
     var horzRCS = 0;
     if (math.abs(angleToNose) <= 90) {
@@ -220,13 +218,13 @@ var getRCS = func (echoCoord, echoHeading, echoPitch, echoRoll, myCoord, frontRC
     }
     #print("RCS horz "~horzRCS);
     #next we calculate the 3D RCS:
-    var angleToBelly    = geo.normdeg180(vector.Math.angleBetweenVectors(vectorEchoTop, vectorToEcho));
-    #print("angle to belly "~angleToBelly);
+    var angleToTop    = geo.normdeg180(vector.Math.angleBetweenVectors(vectorEchoTop, vectorFromEcho));
+    #print("angle to top "~angleToTop);
     var realRCS = 0;
-    if (math.abs(angleToBelly) <= 90) {
-      realRCS = extrapolate(math.abs(angleToBelly),  0,  90, bellyRCSFactor*frontRCS, horzRCS);
+    if (math.abs(angleToTop) <= 90) {
+      realRCS = extrapolate(math.abs(angleToTop),  0,  90, bellyRCSFactor*frontRCS, horzRCS);
     } else {
-      realRCS = extrapolate(math.abs(angleToBelly), 90, 180, horzRCS, bellyRCSFactor*frontRCS);
+      realRCS = extrapolate(math.abs(angleToTop), 90, 180, horzRCS, bellyRCSFactor*frontRCS);
     }
     return realRCS;
 };
