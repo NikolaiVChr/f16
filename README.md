@@ -52,5 +52,3 @@ GitHub: https://github.com/NikolaiVChr/f16
 Forum: https://forum.flightgear.org/viewtopic.php?f=4&t=2003
 
 Discord: https://discord.gg/CJYTUAQ (development server)
-
-![GitHub zip downloads](https://img.shields.io/github/downloads/NikolaiVChr/f16/total?label=zip%20downloads)
