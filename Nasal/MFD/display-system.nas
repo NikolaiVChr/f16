@@ -4622,10 +4622,10 @@ var DisplaySystem = {
             }
             if (cursor_click == me.index) {
                 if (me.desig_new == nil) {
-                	print("Nothing found");
+                	#print("Nothing found");
                     radar_system.apg68Radar.undesignate();
                 } else {
-                	print("Found designation");
+                	#print("Found designation");
                     radar_system.apg68Radar.designate(me.desig_new);
                 }
                 cursor_click = -1;
