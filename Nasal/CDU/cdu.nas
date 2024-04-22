@@ -84,7 +84,7 @@ var providers = {
                 templateLoad: "https://tiles.arcgis.com/tiles/ssFJjBXIUyZDrSYZ/arcgis/rest/services/VFR_Sectional/MapServer/tile/{z}/{y}/{x}",
                 templateStore: "/arcgis-vfr/{z}/{y}/{x}.jpg",#some of them are png though :(
                 attribution: "",
-                min: 8, max: 12},                
+                min: 8, max: 12, mix: 1},                
 };
 
 var providerOption = 1;
@@ -105,7 +105,7 @@ var makeUrl   = string.compileTemplate(providers[zoom_provider[zoom_curr]].templ
 #var makePath  = string.compileTemplate(maps_base ~ '/cartoL/{z}/{x}/{y}.png');
 var makePath  = string.compileTemplate(maps_base ~ providers[zoom_provider[zoom_curr]].templateStore);
 var num_tiles = [7, 7];# must be uneven, 7x7 will ensure we never see edge of map tiles when canvas is 1024px high.
-
+var mix = providers[zoom_provider[zoom_curr]]["mix"] == 1;#if the images are a mix of png and jpg
 var center_tile_offset = [(num_tiles[0] - 1) / 2,(num_tiles[1] - 1) / 2];#(width/tile_size)/2,(height/tile_size)/2];
 #  (num_tiles[0] - 1) / 2,
 #  (num_tiles[1] - 1) / 2
@@ -247,7 +247,7 @@ var CDU = {
               "view": [me.canvasX, me.canvasY],
               "mipmapping": 0,
         });
-            
+                            print(me.cduCanvas.getPath());
         me.placement = me.cduCanvas.addPlacement({"node": "cdu_canvas"});
         me.cduCanvas.setColorBackground(0.5, 0.5, 0.5, 1.00);
 
@@ -1110,6 +1110,7 @@ var CDU = {
         me.checkZoom();
         makeUrl   = string.compileTemplate(providers[zoom_provider[zoom_curr]].templateLoad);
         makePath  = string.compileTemplate(maps_base ~ providers[zoom_provider[zoom_curr]].templateStore);
+        mix = providers[zoom_provider[zoom_curr]]["mix"] == 1;
     },
 
     setRangeInfo: func  {
@@ -1403,7 +1404,7 @@ var CDU = {
             .setStrokeLineWidth(lineWidth.pfd);
         me.ladderStep = (me.max_y-me.ehsiPosY)/6;# 10 degs
         me.ladderWidth = me.ehsiPosX*0.15;
-        if(me.input.linker.getValue()<3*2) settimer(4, unload);
+        if(me.input.linker.getValue()<3*2) settimer(unload, 4);
         me.pfdLadderGroup = me.pfdRoot.createChild("group")
             .set("z-index", 20);
         me.pfdLadder = me.pfdLadderGroup.createChild("path")
@@ -2022,8 +2023,45 @@ var CDU = {
                                 .done(func(r) {
                                     logprint(LOG_DEBUG, 'received image ' ~ img_path~" " ~ r.status ~ " " ~ r.reason);
                                     logprint(LOG_DEBUG, ""~(io.stat(img_path) != nil));
-                                    tile.set("src", img_path);# this sometimes fails with: 'Cannot find image file' if use me. instead of var.
-                                    tile.update();
+                                    if (!mix) {
+                                        tile.set("src", img_path);
+                                        tile.update();
+                                    } else {
+                                        var img_path2 = img_path;
+                                        var img_url2 = img_url;
+                                        var tile2 = tile;
+                                        tile2.set("src", "Just ignore this console warning");# Set a bogus image
+                                        var mt = maketimer(0, func {
+                                            tile2.set("src", img_path2);# this sometimes fails with: 'Cannot find image file' if use me. instead of var.
+                                            if (tile2.get("size") != 256) {
+                                                print("A0:",tile2.get("size"));
+                                                if( io.stat(img_path2~".png") == nil and me.liveMap == 1) {
+                                                    logprint(LOG_DEBUG, 'requesting ' ~ img_url2);
+                                                    http.save(img_url2, img_path2~".png")
+                                                        .done(func(r) {
+                                                            logprint(LOG_DEBUG, 'received image ' ~ img_path2~".png " ~ r.status ~ " " ~ r.reason);
+                                                            logprint(LOG_DEBUG, ""~(io.stat(img_path2~".png") != nil));
+                                                            tile2.set("src", img_path2~".png");# this sometimes fails with: 'Cannot find image file' if use me. instead of var.
+                                                            print(" B0:",tile2.get("size"));
+                                                            tile2.update();
+                                                            })
+                                                      #.done(func {logprint(LOG_DEBUG, 'received image ' ~ img_path2); tile.set("src", img_path);})
+                                                      .fail(func (r) {logprint(LOG_INFO, 'Failed to get image ' ~ img_path2~".png" ~ ' ' ~ r.status ~ ': ' ~ r.reason);
+                                                                    tile2.set("src", "Aircraft/f16/Nasal/CDU/emptyTile.png");
+                                                                    tile2.update();
+                                                                    });
+                                                } else {
+                                                    tile2.set("src", img_path2~".png");
+                                                    tile2.update();
+                                                    print(" C0:",tile2.get("size"));
+                                                }
+                                            } else {
+                                                print("ok0= ",tile.get("src"));
+                                            }
+                                        });
+                                        mt.singleShot = 1;
+                                        mt.start();
+                                    }
                                     })
                               #.done(func {logprint(LOG_DEBUG, 'received image ' ~ img_path); tile.set("src", img_path);})
                               .fail(func (r) {logprint(LOG_INFO, 'Failed to get image ' ~ img_path ~ ' ' ~ r.status ~ ': ' ~ r.reason);
@@ -2032,8 +2070,47 @@ var CDU = {
                                             });
                         } elsif (io.stat(img_path) != nil) {# cached image found, reusing
                             logprint(LOG_DEBUG, 'loading ' ~ img_path);
-                            tile.set("src", img_path);
-                            tile.update();
+                            if (!mix) {
+                                tile.set("src", img_path);
+                                tile.update();
+                            } else {
+                                tile.set("src", "Just ignore this console warning");# Set a bogus image
+                                print("src01= ",tile.get("src"));
+                                var img_url = makeUrl(pos);
+                                var img_path2 = img_path;
+                                var tile2 = tile;
+                                var mt = maketimer(0, func {
+                                    tile2.set("src", img_path2);
+                                    printit(img_path2,"src11= ",tile2.get("src"));
+                                    if (tile2.get("size") != 256) {
+                                        printit(img_path2,"A1:",tile2.get("size"));
+                                        if( io.stat(img_path2~".png") == nil and me.liveMap == 1) {
+                                            logprint(LOG_DEBUG, 'requesting ' ~ img_url);
+                                            http.save(img_url, img_path2~".png")
+                                                .done(func(r) {
+                                                    logprint(LOG_DEBUG, 'received image ' ~ img_path2~".png " ~ r.status ~ " " ~ r.reason);
+                                                    logprint(LOG_DEBUG, ""~(io.stat(img_path2~".png") != nil));
+                                                    tile2.set("src", img_path2~".png");# this sometimes fails with: 'Cannot find image file' if use me. instead of var.
+                                                    printit(img_path2," B1:",tile2.get("size"));
+                                                    tile2.update();
+                                                    })
+                                              #.done(func {logprint(LOG_DEBUG, 'received image ' ~ img_path2); tile.set("src", img_path2);})
+                                              .fail(func (r) {logprint(LOG_INFO, 'Failed to get image ' ~ img_path2~".png" ~ ' ' ~ r.status ~ ': ' ~ r.reason);
+                                                            tile2.set("src", "Aircraft/f16/Nasal/CDU/emptyTile.png");
+                                                            tile2.update();
+                                                            });
+                                        } else {
+                                            tile2.set("src", img_path2~".png");
+                                            tile2.update();
+                                            printit(img_path2," C1:",tile2.get("size"));
+                                        }
+                                    } else {
+                                        printit(img_path2,"ok1= ",tile2.get("src"));
+                                    }
+                                });
+                                mt.singleShot = 1;
+                                mt.start();
+                            }
                         } else {
                             # internet not allowed, so noise tile shown
                             tile.set("src", "Aircraft/f16/Nasal/CDU/noiseTile.png");
@@ -2057,6 +2134,12 @@ var CDU = {
         me.mapCenter.update();
     },
 };
+
+var printit = func (s,es,es2) {
+    if (s=="C:/Users/shaol/AppData/Roaming/flightgear.org/cache/mapsCDU60/arcgis-vfr/8/100/40.jpg") {
+        print(es,es2);
+    }
+}
 
 var reinit_listener = setlistener("/sim/signals/reinit", func {CDU.calcZoomLevels();CDU.updateBasesNear();});
 
