@@ -1621,9 +1621,6 @@
         <f16_fuel>
             <file>Aircraft/f16/Nasal/fuel.nas</file>
         </f16_fuel>
-        <f16_switches>
-            <file>Aircraft/f16/Nasal/switches.nas</file>
-        </f16_switches>
         <ai>
           <file>Aircraft/f16/Nasal/AI_list.nas</file>
         </ai>

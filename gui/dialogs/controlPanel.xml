@@ -279,12 +279,10 @@
 					    	<col>3</col>
 						    <property>controls/lighting/ext-lighting-panel/master</property>
 						    <live>true</live>
-						    <binding>
-								<command>nasal</command>
-								<script>
-								f16_switches.toggleMaster();
-								</script>
-					      	</binding>
+					      	<binding>
+						        <command>property-toggle</command>
+						        <property>controls/lighting/ext-lighting-panel/master</property>
+						    </binding>
 					    </checkbox>
 					    <text><row>0</row>
 					    	<col>2</col><label>MASTER</label></text>
@@ -293,12 +291,10 @@
 					    	<col>7</col>
 						    <property>controls/lighting/ext-lighting-panel/anti-collision</property>
 						    <live>true</live>
-						    <binding>
-								<command>nasal</command>
-								<script>
-								f16_switches.toggleAntiCollision();
-								</script>
-					      	</binding>
+					      	<binding>
+						        <command>property-toggle</command>
+						        <property>controls/lighting/ext-lighting-panel/anti-collision</property>
+						     </binding>
 					    </checkbox>
 					    <text><row>0</row>
 					    	<col>6</col><label>ANTI-COLL</label></text>
@@ -308,12 +304,10 @@
 					    	<col>1</col>
 						    <property>controls/lighting/ext-lighting-panel/pos-lights-flash</property>
 						    <live>true</live>
-						    <binding>
-								<command>nasal</command>
-								<script>
-								f16_switches.togglePosLightsFlash();
-								</script>
-					      	</binding>
+					      	<binding>
+						        <command>property-toggle</command>
+						        <property>controls/lighting/ext-lighting-panel/pos-lights-flash</property>
+						     </binding>
 					    </checkbox>
 					    <text><row>1</row>
 					    	<col>0</col><label>FLASH</label></text>
@@ -592,12 +586,12 @@
 			    <layout>hbox</layout>
 			    <text><label>MAL IND LTS</label></text>
 			    <checkbox>
-			      <property>controls/test/test-panel/mal-ind-lts</property>
+			      <property>controls/test/test-panel/mal-ind-lts-btn</property>
 			      <live>true</live>
 			      <binding>
-			          <command>nasal</command>
-			          <script>f16_switches.toggleMalIndLts();</script>
-			      </binding>
+			        <command>property-toggle</command>
+			        <property>controls/test/test-panel/mal-ind-lts-btn</property>
+			     </binding>
 			    </checkbox>
 			</group>
 

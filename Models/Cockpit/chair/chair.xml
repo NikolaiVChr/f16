@@ -14,10 +14,8 @@
     <action>
      <button>0</button>
      <binding>
-      <command>nasal</command>
-      <script>
-                f16_switches.toggleEjectionSafetyLever();
-      </script>
+        <command>property-toggle</command>
+        <property>controls/seat/ejection-safety-lever</property>
      </binding>
     </action>
    </animation>
