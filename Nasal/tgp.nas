@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Lines below FLIRCameraUpdater has been modified/added by Nikolai V. Chr.
+# Heavily modified by Nikolai V. Chr.
 #
 # Position of the FLIR camera ([z (back), x (right), y (up)])
 var coords_cam = [
@@ -22,7 +22,7 @@ var coords_cam = [
     getprop("/sim/view[105]/config/y-offset-m")
 ];
 io.include("Aircraft/Generic/updateloop.nas");
-#io.load_nasal(getprop("/sim/fg-root") ~ "/Aircraft/c172p/Nasal/generic/math_ext2.nas","math_ext2");
+
 var FLIRCameraUpdater = {
 
     new: func {
@@ -30,12 +30,6 @@ var FLIRCameraUpdater = {
             parents: [FLIRCameraUpdater, Updatable]
         };
         m.loop = UpdateLoop.new(components: [m], update_period: 0.0);
-
-        # Create a function to update the position of the FLIR camera
-        m.update_cam = me._get_flir_auto_updater(180.0);
-
-        # Create a function to update the position using an input device
-        m.manual_update_cam = me._get_flir_updater(180.0, m.update_cam);
 
         m.click_coord_cam = nil;
 
@@ -76,39 +70,6 @@ var FLIRCameraUpdater = {
     reset: func {
         #print("reset called?!?!");
         return;
-        me.remove_listeners();
-        me.listeners.append(setlistener("/sim/signals/click", func {
-            var lat = getprop("/sim/input/click/latitude-deg");
-            var lon = getprop("/sim/input/click/longitude-deg");
-            var elev = getprop("/sim/input/click/elevation-m");
-
-            var click_position = geo.Coord.new().set_latlon(lat, lon, elev);
-
-            var origin_position = geo.aircraft_position();
-            var distance_m = origin_position.direct_distance_to(click_position);
-
-            if (getprop("/aircraft/flir/locks/auto-track")) {
-                me.click_coord_cam = click_position;
-                setprop("/aircraft/flir/target/auto-track", 1);
-                logger.screen.white(sprintf("New tracking position at %d meter distance", distance_m));
-            }
-            else {
-                setprop("/aircraft/flir/target/auto-track", 0);
-                me.click_coord_cam = nil;
-                logger.screen.red("Press F6 to enable automatic tracking by FLIR camera");
-            }
-        }));
-
-        me.listeners.append(setlistener("/aircraft/flir/locks/auto-track", func (n) {
-            setprop("/aircraft/flir/target/auto-track", 0);
-            me.click_coord_cam = nil;
-            if (n.getBoolValue()) {
-                logger.screen.green("Automatic tracking by FLIR camera enabled. Click on the terrain to start tracking.");
-            }
-            else {
-                logger.screen.red("Automatic tracking by FLIR camera disabled");
-            }
-        }));
     },
 
     update: func (dt) {
@@ -116,23 +77,16 @@ var FLIRCameraUpdater = {
         var pitch_deg = getprop("/orientation/pitch-deg");
         var heading   = getprop("/orientation/heading-deg");
 
-        var computer = me._get_flir_computer(roll_deg, pitch_deg, heading);
-
         if (getprop("/aircraft/flir/target/auto-track") and me.click_coord_cam != nil) {
-
-            var (yaw, pitch, distance) = computer(coords_cam, me.click_coord_cam);
             #printf("C %.5f,%.5f,%.5f",me.click_coord_cam.lat(),me.click_coord_cam.lon(),me.click_coord_cam.alt());
             if (lock_tgp) {
                 #print("L");
-                me.update_cam(roll_deg, pitch_deg, yaw, pitch);
+                me.update_cam2(me.click_coord_cam,roll_deg,pitch_deg,heading,0,0);
             } else {
                 #print("NO      LLLLLLLLLLL");
-                me.update_cam(roll_deg, pitch_deg, yaw+me.offsetH, pitch+me.offsetP);
+                me.update_cam2(me.click_coord_cam,roll_deg,pitch_deg,heading,me.offsetH,me.offsetP);
             }
         }
-#        else {
-#            me.manual_update_cam(roll_deg, pitch_deg);
-#        }
     },
 
     aim: func () {
@@ -140,13 +94,10 @@ var FLIRCameraUpdater = {
         var pitch_deg = getprop("/orientation/pitch-deg");
         var heading   = getprop("/orientation/heading-deg");
 
-        var computer = me._get_flir_computer(roll_deg, pitch_deg, heading);
-
         if (getprop("/sim/current-view/name") == "TGP" and me.click_coord_cam != nil) {
             #printf("B %.5f,%.5f,%.5f",me.click_coord_cam.lat(),me.click_coord_cam.lon(),me.click_coord_cam.alt());
             me.click_coord_cam.lat();
-            var (yaw, pitch, distance) = computer(coords_cam, me.click_coord_cam);
-            me.update_cam(roll_deg, pitch_deg, yaw, pitch);
+            me.update_cam2(me.click_coord_cam,roll_deg,pitch_deg,heading,0,0);
         }
     },
 
@@ -167,9 +118,21 @@ var FLIRCameraUpdater = {
     # Automatic tracking computation                                     #
     ######################################################################
 
-    _get_flir_auto_updater: func (offset) {
-        return func (roll_deg, pitch_deg, yaw, pitch) {
-            (yaw, pitch) = math_ext2.get_yaw_pitch_body(roll_deg, pitch_deg, yaw, pitch, offset);
+    _get_flir_auto_updater: func (yaw_offset) { # update_cam
+        return func (aircraft_roll_deg, aircraft_pitch_deg, tgp_yaw_relative, tgp_pitch) {
+            var (yaw, pitch) = math_ext2.get_yaw_pitch_body(aircraft_roll_deg, aircraft_pitch_deg, tgp_yaw_relative, tgp_pitch, yaw_offset);
+
+            # aircraft attitude
+            # aircraft coord
+            # target   coord
+            # tgp      offset
+
+            # calc:
+            # tgp coord
+            # tgp-to-target attitude (world)
+            # tgp local attitude
+
+            
 
             setprop("/aircraft/flir/target/yaw-deg", yaw);
             setprop("/aircraft/flir/target/pitch-deg", pitch);
@@ -182,24 +145,50 @@ var FLIRCameraUpdater = {
         };
     },
 
-    _get_flir_computer: func (roll_deg, pitch_deg, heading) {
-        return func (coords, target) {
-            var (position_2d, position) = math_ext2.get_point(coords[0], coords[1], coords[2], roll_deg, pitch_deg, heading);
-            return get_yaw_pitch_distance_inert(position_2d, position, target, heading);
+    update_cam2: func (gpsCoord, ac_roll_deg, ac_pitch_deg, ac_heading_deg,local_offset_h,local_offset_p) {
+        var cPos = geo.Coord.new();
+        var pos = aircraftToCart({x:-1*coords_cam[0], y:1*coords_cam[1], z:-1*coords_cam[2]});            
+        cPos.set_xyz(pos.x, pos.y, pos.z);
+        cPos.alt();# TODO: once fixed in FG this line is no longer needed.
+        var (yaw, pitch) = me.getDevFromCoord(gpsCoord, ac_roll_deg, ac_pitch_deg, ac_heading_deg, cPos);
+        yaw+=local_offset_h;
+        pitch+=local_offset_p;
+        setprop("/aircraft/flir/target/yaw-deg", yaw);
+        setprop("/aircraft/flir/target/pitch-deg", pitch);
+        if (getprop("/sim/current-view/name") == "TGP") {
+            setprop("/sim/current-view/goal-heading-offset-deg", -yaw);
+            setprop("/sim/current-view/goal-pitch-offset-deg", pitch);
         }
-    }
+        setprop("sim/view[105]/heading-offset-deg", yaw);
+        setprop("sim/view[105]/pitch-offset-deg", pitch);
+    },
 
+    getDevFromCoord: func (gpsCoord, ac_roll_deg, ac_pitch_deg, ac_heading_deg, from=nil) {
+        # return pos in canvas from center origin (simplified from hud_math used in HMCS)
+        if (from== nil) {
+            me.crft = geo.viewer_position();
+        } else {
+            me.crft = from;
+        }
+        me.ptch = vector.Math.getPitch(me.crft, gpsCoord);
+        me.brng = me.crft.course_to(gpsCoord);
+        
+        me.rollM  = vector.Math.rollMatrix(-ac_roll_deg);
+        me.pitchM = vector.Math.pitchMatrix(-ac_pitch_deg);
+        me.yawM   = vector.Math.yawMatrix(ac_heading_deg);
+        me.rotation = vector.Math.multiplyMatrices(me.rollM, vector.Math.multiplyMatrices(me.pitchM, me.yawM));
+        
+        me.coord_x = math.cos(me.brng*D2R)*math.cos(me.ptch*D2R);
+        me.coord_y = -math.sin(me.brng*D2R)*math.cos(me.ptch*D2R);
+        me.coord_z = math.sin(me.ptch*D2R);
+        
+        var tv = [me.coord_x,me.coord_y,me.coord_z];# global direction from hmcs to target
+        var dv = vector.Math.multiplyMatrixWithVector(me.rotation, tv);# local in HMCS view vector to target
+        var angles = vector.Math.cartesianToEuler(dv);
+        
+        return [angles[0]==nil?0:angles[0],angles[1]];
+    },
 };
-
-get_yaw_pitch_distance_inert = func (position_2d, position, target_position, heading, f=nil) {
-    # Does the same as Onox's version, except takes curvature of Earth into account.
-    #printf("A %.5f,%.5f,%.5f",target_position.lat(),target_position.lon(),target_position.alt());
-    target_position.lat();
-    var heading_deg = positioned.courseAndDistance(position_2d, target_position)[0] - heading;
-    var pitch_deg   = vector.Math.getPitch(position, target_position);
-    var distance_m  = position.direct_distance_to(target_position);
-    return [heading_deg, pitch_deg, distance_m];
-}
 
 var flir_updater = FLIRCameraUpdater.new();
 
@@ -242,10 +231,10 @@ var list = func (node) {
             armament.contactPoint = nil;print("Second click with TGP lock unlocks!");
             return;
         }
-        var x = -2.5856;
-        var y =  0.8536;
-        var z = -1.4121;
-        var pos = aircraftToCart({x:-x, y:y, z: -z});
+        var x = coords_cam[0];
+        var y = coords_cam[1];# TGP sensor local coords in meters inside aircraft.
+        var z = coords_cam[2];
+        var pos = aircraftToCart({x:-1*x, y:1*y, z: -1*z});
         var coordA = geo.Coord.new();
         coordA.set_xyz(pos.x, pos.y, pos.z);
         coordA.alt();# TODO: once fixed in FG this line is no longer needed.
@@ -293,7 +282,7 @@ var list = func (node) {
         #var directionLOS = {"x":dirCoord.x()-coordA.x(),   "y":dirCoord.y()-coordA.y(),  "z":dirCoord.z()-coordA.z()};
         var directionLOS = {"x":V[0],   "y":V[1],  "z":V[2]};
 
-        # Check for terrain between own weapon and target:
+        # Check for terrain between sensor and target:
         var terrainGeod = get_cart_ground_intersection(xyz, directionLOS);
         if (terrainGeod == nil) {
             #print("0 terrain");

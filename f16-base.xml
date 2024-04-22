@@ -1659,9 +1659,6 @@
         <frd>
           <file>Aircraft/f16/Nasal/freq-display.nas</file>
         </frd>
-        <math_ext2>
-          <file>Aircraft/f16/Nasal/math_ext2.nas</file>
-        </math_ext2>
         <tgp>
           <file>Aircraft/f16/Nasal/tgp.nas</file>
         </tgp>
