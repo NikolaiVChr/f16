@@ -5026,14 +5026,18 @@ var AIM = {
 	},
 
 	goToLock: func {
-		me.status = MISSILE_LOCK;
+        me.callsign = damage.processCallsign(me.tagt.get_Callsign());
+        if (multiplayer.ignore[me.callsign] == 1) {
+        	me.callsign = "Unknown";
+        	if (me.tagt == contact) contact = nil;
+        	settimer(func me.search(), 0.1);
+        	return;
+        }
+        me.status = MISSILE_LOCK;
 		me.SwSoundOnOff.setBoolValue(1);
 		me.SwSoundVol.setDoubleValue(me.vol_track);
 
 		me.Tgt = me.tagt;
-
-        me.callsign = damage.processCallsign(me.Tgt.get_Callsign());
-
 		settimer(func me.update_lock(), 0.1);
 	},
 

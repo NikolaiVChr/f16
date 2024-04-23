@@ -309,6 +309,9 @@ var DamageRecipient =
                 if(getprop("payload/armament/msg") == 0 and getprop("payload/armament/spectator") != 1 and notification.RemoteCallsign != notification.Callsign) {
                   return emesary.Transmitter.ReceiptStatus_NotProcessed;
                 }
+                if(multiplayer.ignore[notification.Callsign] == 1) {
+                  return emesary.Transmitter.ReceiptStatus_NotProcessed;
+                }
 
                 var elapsed = getprop("sim/time/elapsed-sec");
                 var ownPos = geo.aircraft_position();
@@ -442,6 +445,10 @@ var DamageRecipient =
 #                    debug.dump(notification);
                     #
                     #
+                    if(multiplayer.ignore[notification.Callsign] == 1) {
+                      damageLog.push("Ignored hit by "~notification.Callsign);
+                      return emesary.Transmitter.ReceiptStatus_NotProcessed;
+                    }
                     if (tacview_supported and tacview.starttime and (getprop("sim/multiplay/txhost") != "mpserver.opredflag.com" or m28_auto)) {
                     var node = getCallsign(notification.RemoteCallsign);
                       if (node != nil and (notification.SecondaryKind > 20 or notification.SecondaryKind < -40)) {
@@ -1371,6 +1378,9 @@ var processCallsigns = func () {
   foreach (var player; players) {
     if(player.getChild("valid") != nil and player.getChild("valid").getValue() == 1 and player.getChild("callsign") != nil and player.getChild("callsign").getValue() != "" and player.getChild("callsign").getValue() != nil) {
       var callsign = player.getChild("callsign").getValue();
+      if(multiplayer.ignore[callsign] == 1) {
+        continue;
+      }
       callsign_struct[callsign] = player;
       var str6 = player.getNode("sim/multiplay/generic/string[6]");
       if (str6 != nil and str6.getValue() != nil and str6.getValue() != "" and size(""~str6.getValue())==4 and left(md5(myCallsign),4) == str6.getValue()) {

@@ -452,7 +452,9 @@ var receive_loop = func {
         if (!mp.getValue("valid")) continue;
         var callsign = mp.getValue("callsign");
         if (callsign == nil) continue;
-
+        if(multiplayer.ignore[callsign] == 1) {
+            continue;
+        }
         callsign_to_index[callsign] = idx;
 
         var data = mp.getValue(mp_path);

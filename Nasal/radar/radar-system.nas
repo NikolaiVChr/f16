@@ -252,6 +252,10 @@ var AIToNasal = {
         } else {
         	me.callsign = me.callsign.getValue();
         }
+        if(me.callsign != nil and multiplayer.ignore[me.callsign] == 1) {
+        	me.nextReadTreeFrame();
+		    return;
+		}
         if (me.callsign != nil and me.callsign != "" and me.callsign == DualSeaterCallsign.getValue()) {
         	# Ignore the dual seater
         	me.nextReadTreeFrame();
