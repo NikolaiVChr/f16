@@ -2,7 +2,7 @@
 #
 # Author: Nikolai V. Chr. (FPI location code adapted from Buccaneer aircraft)
 #
-# Version 1.09
+# Version 1.10
 #
 # License: GPL 2.0 or later
 	
