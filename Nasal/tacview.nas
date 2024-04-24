@@ -94,6 +94,8 @@ var input = {
     mach:       "velocities/mach",
     aoa:        "orientation/alpha-deg",
     gforce:     "accelerations/pilot-g",
+    throttle:   "controls/engines/engine/throttle-movement",
+    afterburner:"sim/multiplay/generic/bool[39]",
 };
 
 foreach (var name; keys(input)) {
@@ -160,12 +162,14 @@ var mainloop = func() {
         var color = ",Color=Blue";
         if (left(cx.get_Callsign(),5)=="OPFOR" or left(cx.get_Callsign(),4)=="OPFR") {
             color=",Color=Red";
+        } elsif (left(cx.get_Callsign(),5)=="GREFR" or left(cx.get_Callsign(),5)=="GRFOR" or left(cx.get_Callsign(),4)=="GRFR") {
+            color=",Color=Green";
         }
         thread.lock(mutexWrite);
         if (find_in_array(seen_ids, cx.tacobj.tacviewID) == -1) {
             append(seen_ids, cx.tacobj.tacviewID);
             var model_is = cx.getModel();
-            if (model_is=="Mig-28") {
+            if (model_is==mig28.OPFOR_AIRCRAFT_TYPE) {
                 model_is = tacview_ac_type;
                 color=",Color=Red";
             }
@@ -255,7 +259,7 @@ var writeMyPlaneAttributes = func() {
     } else {
         tas = "";
     }
-    var str = myplaneID ~ fuel~rmode~rrange~gear~tas~",CAS="~getCas()~",Mach="~getMach()~",AOA="~getAoA()~",HDG="~getHeading()~tgt~",VerticalGForce="~getG()~"\n";#",Throttle="~getThrottle()~",Afterburner="~getAfterburner()~
+    var str = myplaneID ~ fuel~rmode~rrange~gear~tas~",CAS="~getCas()~",Mach="~getMach()~",AOA="~getAoA()~",HDG="~getHeading()~tgt~",VerticalGForce="~getG()~",Afterburner="~getAfterburner()~",Throttle="~getThrottle()~"\n";#
     thread.lock(mutexWrite);
     write(str);
     thread.unlock(mutexWrite);
@@ -355,13 +359,13 @@ var getG = func() {
     return sprintf("%.2f", input.gforce.getValue());
 }
 
-#var getThrottle = func() {
-#    return sprintf("%.2f", getprop("velocities/thrust");
-#}
+var getThrottle = func() {
+    return sprintf("%.2f", input.throttle.getValue());
+}
 
-#var getAfterburner = func() {
-#    return getprop("velocities/thrust")>0.61*0.61;
-#}
+var getAfterburner = func() {
+    return input.afterburner.getValue();
+}
 
 var find_in_array = func(arr,val) {
     forindex(var i; arr) {
