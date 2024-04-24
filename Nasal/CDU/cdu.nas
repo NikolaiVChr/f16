@@ -1,5 +1,7 @@
 var COLOR_YELLOW     = [1.00,1.00,0.00];
 var COLOR_BLUE_LIGHT = [0.50,0.50,1.00];
+var COLOR_BLUE_WHITE = [0.75,0.75,1.00];
+var COLOR_BLUE_DARK  = [0.00,0.00,0.25];
 var COLOR_SKY_LIGHT  = [0.30,0.30,1.00];
 var COLOR_RED        = [1.00,0.00,0.00];
 var COLOR_WHITE      = [1.00,1.00,1.00];
@@ -9,6 +11,8 @@ var COLOR_GRAY       = [0.25,0.25,0.25,0.50];
 var COLOR_GRAY_LIGHT = [0.75,0.75,0.75,0.50];
 var COLOR_SKY_DARK   = [0.15,0.15,0.60];
 var COLOR_BLACK      = [0.00,0.00,0.00];
+var COLOR_BUTTON_TEXT = COLOR_BLUE_DARK;
+
 
 var str = func (d) {return ""~d};
 
@@ -600,12 +604,12 @@ var CDU = {
             .lineTo(0,0)
             .setStrokeLineWidth(lineWidth.rangeArrows)
             .set("z-index",layer_z.display.buttonSymbols)
-            .setColor(COLOR_YELLOW)
+            .setColor(COLOR_BUTTON_TEXT)
             .setTranslation(me.buttonMap.b1.pos[0]+40, me.buttonMap.b1.pos[1]-15);
 
         me.rangeText = me.root.createChild("text")
             .set("z-index",layer_z.display.buttonSymbols)
-            .setColor(COLOR_YELLOW)
+            .setColor(COLOR_BUTTON_TEXT)
             .setFontSize(font.range, 1.0)
             .setAlignment("center-center")
             .setTranslation(me.buttonMap.b1.pos[0]+40, (me.buttonMap.b1.pos[1]+me.buttonMap.b2.pos[1])*0.5)
@@ -617,7 +621,7 @@ var CDU = {
             .lineTo(0,0)
             .setStrokeLineWidth(lineWidth.rangeArrows)
             .set("z-index",layer_z.display.buttonSymbols)
-            .setColor(COLOR_YELLOW)
+            .setColor(COLOR_BUTTON_TEXT)
             .setTranslation(me.buttonMap.b2.pos[0]+40, me.buttonMap.b2.pos[1]+15);
 
         me.conc = me.rootCenter.createChild("path")
@@ -668,7 +672,7 @@ var CDU = {
 
         me.hdgUpText = me.root.createChild("text")
             .set("z-index",layer_z.display.buttonSymbols)
-            .setColor(COLOR_YELLOW)
+            .setColor(COLOR_BUTTON_TEXT)
             .setFontSize(font.range, 1.0)
             .setAlignment("right-center")
             .setTranslation(me.buttonMap.b9.pos[0]-20, me.buttonMap.b9.pos[1])
@@ -676,7 +680,7 @@ var CDU = {
 
         me.dayText = me.root.createChild("text")
             .set("z-index",layer_z.display.buttonSymbols)
-            .setColor(COLOR_YELLOW)
+            .setColor(COLOR_BUTTON_TEXT)
             .setFontSize(font.range, 1.0)
             .setAlignment("left-center")
             .setTranslation(me.buttonMap.b4.pos[0]+20, me.buttonMap.b4.pos[1])
@@ -684,7 +688,7 @@ var CDU = {
 
         me.mapText = me.root.createChild("text")
             .set("z-index",layer_z.display.buttonSymbols)
-            .setColor(COLOR_YELLOW)
+            .setColor(COLOR_BUTTON_TEXT)
             .setFontSize(font.range, 1.0)
             .setAlignment("right-center")
             .setTranslation(me.buttonMap.b12.pos[0]-20, me.buttonMap.b12.pos[1])
@@ -692,7 +696,7 @@ var CDU = {
 
         me.instrText = me.root.createChild("text")
             .set("z-index",layer_z.display.buttonSymbolsTop)
-            .setColor(COLOR_YELLOW)
+            .setColor(COLOR_BUTTON_TEXT)
             .setFontSize(font.range, 1.0)
             .setAlignment("center-top")
             .setTranslation(me.buttonMap.b19.pos[0], me.buttonMap.b19.pos[1]+20)
@@ -700,7 +704,7 @@ var CDU = {
 
         me.gridText = me.root.createChild("text")
             .set("z-index",layer_z.display.buttonSymbols)
-            .setColor(COLOR_YELLOW)
+            .setColor(COLOR_BUTTON_TEXT)
             .setFontSize(font.range, 1.0)
             .setAlignment("right-center")
             .setTranslation(me.buttonMap.b13.pos[0]-20, me.buttonMap.b13.pos[1])
@@ -708,7 +712,7 @@ var CDU = {
 
         me.afbText = me.root.createChild("text")
             .set("z-index",layer_z.display.buttonSymbols)
-            .setColor(COLOR_YELLOW)
+            .setColor(COLOR_BUTTON_TEXT)
             .setFontSize(font.range, 1.0)
             .setAlignment("right-center")
             .setTranslation(me.buttonMap.b11.pos[0]-20, me.buttonMap.b11.pos[1])
