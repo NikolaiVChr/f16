@@ -481,7 +481,6 @@ var DamageRecipient =
                           tacview.writeExplosion(node.getNode("position/latitude-deg").getValue(), node.getNode("position/longitude-deg").getValue(), node.getNode("position/altitude-ft").getValue()*FT2M, 5);
                           thread.unlock(tacview.mutexWrite);
                         }
-                      }
                     }
                     
                     if (notification.RemoteCallsign == callsign and getprop("payload/armament/msg") == 1) {
