@@ -1,0 +1,252 @@
+﻿<?xml version="1.0"?>
+
+<PropertyList>
+
+	<scenario>
+
+		<description>
+			The following scenario creates a factory near KXTA.
+
+			VFA-101 "Grimreapers" (OPRF-member)
+		</description>
+
+		<nasal>
+			<load>
+				<![CDATA[
+				  var finish = 0;
+
+				  var loop2 = func () {
+				  	  # put everything on ground level
+				      foreach( var tanker; props.globals.getNode("/ai/models",1).getChildren("ship") ) {
+				        var lat = tanker.getNode("position/latitude-deg").getValue();
+				        var lon = tanker.getNode("position/longitude-deg").getValue();
+				        var node = tanker.getNode("position/altitude-ft", 1 );
+				        var alt = geo.elevation(lat, lon);
+				        node.setDoubleValue(alt==nil?0:alt*M2FT+1.5);
+				        tanker.getNode("controls/tgt-speed-kts", 1).setDoubleValue(0); # hmm, this control seems to have changed in 2019.1?! Well works now.               
+				      }
+				      if (finish == 0) {
+				        settimer(loop2, 10.00);
+				        return;
+				      }
+				      print("Factory scenario proper unloaded.");
+				  }
+				  loop2();
+				    debug.dump('Factory scenario load script complete');
+				]]>
+			</load>
+			<unload>
+				<![CDATA[
+				  finish = 1;
+				  debug.dump('Factory scenario unload script complete');
+				  ]]>
+			</unload>
+		</nasal>
+
+		<entry>
+			<type>ship</type>
+			<model>Models/Buildings/factory.ac</model>
+			<name>Factory1</name>
+			<latitude type="double">37.26213143</latitude>
+			<longitude type="double">-115.75991765</longitude>
+			<speed type="double">0</speed>
+			<rudder type="double">0</rudder>
+			<heading type="double">000</heading>
+			<altitude type="double">4477</altitude>
+		</entry>
+		
+		<entry>
+			<type>ship</type>
+			<model>Models/Buildings/factory.ac</model>
+			<name>Factory2</name>
+			<latitude type="double">37.26213143</latitude>
+			<longitude type="double">-115.76041560</longitude>
+			<speed type="double">0</speed>
+			<rudder type="double">0</rudder>
+			<heading type="double">000</heading>
+			<altitude type="double">‪‪‬‪4477.29625984252</altitude>
+		</entry>
+		
+		<entry>
+			<type>ship</type>
+			<model>Models/Buildings/factory.ac</model>
+			<name>Factory3</name>
+			<latitude type="double">37.26213143</latitude>
+			<longitude type="double">-115.76091355</longitude>
+			<speed type="double">0</speed>
+			<rudder type="double">0</rudder>
+			<heading type="double">000</heading>
+			<altitude type="double">‪‪‬‪4477.29625984252</altitude>
+		</entry>
+		
+		<entry>
+			<type>ship</type>
+			<model>Models/Buildings/factory.ac</model>
+			<name>Factory4</name>
+			<latitude type="double">37.26271000</latitude>
+			<longitude type="double">-115.76015671</longitude>
+			<speed type="double">0</speed>
+			<rudder type="double">0</rudder>
+			<heading type="double">270</heading>
+			<altitude type="double">‪4477</altitude>
+		</entry>
+		
+		<entry>
+			<type>ship</type>
+			<model>Models/Commercial/Office30x47.ac</model>
+			<name>Storage_Shelter1</name>
+			<latitude type="double">37.26276980</latitude>
+			<longitude type="double">-115.76079770</longitude>
+			<speed type="double">0</speed>
+			<rudder type="double">0</rudder>
+			<heading type="double">000</heading>
+			<altitude type="double">‪‬‪4477</altitude>
+		</entry>
+		
+		<entry>
+			<type>ship</type>
+			<model>Models/Commercial/Office30x47.ac</model>
+			<name>Storage_Shelter2</name>
+			<latitude type="double">37.26276980</latitude>
+			<longitude type="double">-115.76116618</longitude>
+			<speed type="double">0</speed>
+			<rudder type="double">0</rudder>
+			<heading type="double">000</heading>
+			<altitude type="double">4477</altitude>
+		</entry>
+		
+		<entry>
+			<type>ship</type>
+			<model>Models/Buildings/oil-tanks.ac</model>
+			<name>Oil_Tank1</name>
+			<latitude type="double">37.26317562</latitude>
+			<longitude type="double">-115.75987194</longitude>
+			<speed type="double">0</speed>
+			<rudder type="double">0</rudder>
+			<heading type="double">180</heading>
+			<altitude type="double">4477</altitude>
+		</entry>
+		
+		<entry>
+			<type>ship</type>
+			<model>Models/Buildings/oil-tanks.ac</model>
+			<name>Oil_Tank2</name>
+			<latitude type="double">37.26317562</latitude>
+			<longitude type="double">-115.76035767</longitude>
+			<speed type="double">0</speed>
+			<rudder type="double">0</rudder>
+			<heading type="double">180</heading>
+			<altitude type="double">4477</altitude>
+		</entry>
+		
+		<entry>
+			<type>ship</type>
+			<model>Models/Buildings/oil-tanks.ac</model>
+			<name>Oil_Tank3</name>
+			<latitude type="double">37.26317562</latitude>
+			<longitude type="double">-115.7608434</longitude>
+			<speed type="double">0</speed>
+			<rudder type="double">0</rudder>
+			<heading type="double">180</heading>
+			<altitude type="double">4477</altitude>
+		</entry>
+		
+		<entry>
+			<type>ship</type>
+			<model>Models/Buildings/oil-tanks.ac</model>
+			<name>Oil_Tank4</name>
+			<latitude type="double">37.26317562</latitude>
+			<longitude type="double">-115.76132913</longitude>
+			<speed type="double">0</speed>
+			<rudder type="double">0</rudder>
+			<heading type="double">180</heading>
+			<altitude type="double">4477</altitude>
+		</entry>
+		
+		<entry>
+			<type>ship</type>
+			<model>Models/Buildings/oil-tanks.ac</model>
+			<name>Oil_Tank5</name>
+			<latitude type="double">37.26317562</latitude>
+			<longitude type="double">-115.76181486</longitude>
+			<speed type="double">0</speed>
+			<rudder type="double">0</rudder>
+			<heading type="double">180</heading>
+			<altitude type="double">4477</altitude>
+		</entry>
+		
+		<entry>
+			<type>ship</type>
+			<model>Models/Industrial/Industrial60x50.xml</model>
+			<name>Distribution_Center</name>
+			<latitude type="double">37.26266865</latitude>
+			<longitude type="double">-115.76166985</longitude>
+			<speed type="double">0</speed>
+			<rudder type="double">0</rudder>
+			<heading type="double">270</heading>
+			<altitude type="double">4477</altitude>
+		</entry>
+		
+		<entry>
+			<type>ship</type>
+			<model>Models/Buildings/brick-school.ac</model>
+			<name>Headquater</name>
+			<latitude type="double">37.26203717</latitude>
+			<longitude type="double">-115.76126173</longitude>
+			<speed type="double">0</speed>
+			<rudder type="double">0</rudder>
+			<heading type="double">180</heading>
+			<altitude type="double">4477</altitude>
+		</entry>
+		
+		<entry>
+			<type>ship</type>
+			<model>Models/Commercial/Office30x47.xml</model>
+			<name>Storage_Shelter3</name>
+			<latitude type="double">37.26198217</latitude>
+			<longitude type="double">-115.76179404</longitude>
+			<speed type="double">0</speed>
+			<rudder type="double">0</rudder>
+			<heading type="double">000</heading>
+			<altitude type="double">4477</altitude>
+		</entry>
+		
+		<entry>
+			<type>ship</type>
+			<model>Models/Commercial/Office17x17.xml</model>
+			<name>Electrics</name>
+			<latitude type="double">37.26243915</latitude>
+			<longitude type="double">-115.76125632</longitude>
+			<speed type="double">0</speed>
+			<rudder type="double">0</rudder>
+			<heading type="double">000</heading>
+			<altitude type="double">4477</altitude>
+		</entry>
+		
+		<entry>
+			<type>ship</type>
+			<model>Models/Commercial/Office15x15.xml</model>
+			<name>Small_Storage1</name>
+			<latitude type="double">37.26180380</latitude>
+			<longitude type="double">-115.76149162</longitude>
+			<speed type="double">0</speed>
+			<rudder type="double">0</rudder>
+			<heading type="double">000</heading>
+			<altitude type="double">4477</altitude>
+		</entry>
+		
+		<entry>
+			<type>ship</type>
+			<model>Models/Commercial/Office15x15.xml</model>
+			<name>Small_Storage2</name>
+			<latitude type="double">37.26213798</latitude>
+			<longitude type="double">-115.76149162</longitude>
+			<speed type="double">0</speed>
+			<rudder type="double">0</rudder>
+			<heading type="double">000</heading>
+			<altitude type="double">4477</altitude>
+		</entry>
+		
+	</scenario>
+
+</PropertyList>

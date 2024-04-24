@@ -16,7 +16,7 @@
     "path": "Nasal/radar/radar-system-database.nas"
   },
   "damage": {
-    "version": "1.4.5",
+    "version": "1.4.7",
     "path": "Nasal/damage.nas"
   },
   "iff": {
@@ -64,15 +64,15 @@
     "path": "gui/dialogs/airbases.xml"
   },
   "scenario-factory-homey": {
-    "version": null,
+    "version": "1.0.0",
     "path": "Scenarios/KXTA_factory.xml"
   },
   "scenario-aircraft-homey": {
-    "version": null,
+    "version": "1.0.0",
     "path": "Scenarios/moving_targets_around_KXTA.xml"
   },
   "scenario-targets-tonopah": {
-    "version": null,
+    "version": "1.0.0",
     "path": "Scenarios/target_range_near_KTNX.xml"
   }
 }

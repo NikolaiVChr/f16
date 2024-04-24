@@ -7,9 +7,7 @@
     <name>Tonopah target range KTNX</name>
 
     <description>
-      The following scenario puts 17 target near KTNX.
-
-      Nikolai V. Chr.
+      The following scenario puts 18 target near KTNX.
     </description>
     
     <search-order>DATA_ONLY</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->

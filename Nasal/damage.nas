@@ -293,7 +293,7 @@ var DamageRecipient =
 #                      " RemoteCallsign=",notification.RemoteCallsign,
 #                      " Flags=",notification.Flags,
 #                      " Radar=",bits.test(notification.Flags, 0),
-#                      " Thrust=",bits.test(notification.Flags, 1));
+#                      " Thrust=",bits.test(notification.Flags, 1),
 #                      " CWI=",bits.test(notification.Flags, 2));
                 #
                 # todo:
