@@ -1,0 +1,1 @@
+If you are new to contributing to this project, please make an issue at https://github.com/NikolaiVChr/f16/issues describing what you will contribute with, before you make the pull request. That potentially also saves you work if it is something we do not want included.
