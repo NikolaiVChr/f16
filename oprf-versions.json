@@ -62,5 +62,17 @@
   "airbases-dialog": {
     "version": "1.1.0",
     "path": "gui/dialogs/airbases.xml"
+  },
+  "scenario-factory-homey": {
+    "version": null,
+    "path": "Scenarios/KXTA_factory.xml"
+  },
+  "scenario-aircraft-homey": {
+    "version": null,
+    "path": "Scenarios/moving_targets_around_KXTA.xml"
+  },
+  "scenario-targets-tonopah": {
+    "version": null,
+    "path": "Scenarios/target_range_near_KTNX.xml"
   }
 }

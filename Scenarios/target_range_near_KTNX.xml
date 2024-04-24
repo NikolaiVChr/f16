@@ -41,7 +41,6 @@
       </load>
       <unload>
         <![CDATA[
-          finish = 1;
           print('Tonopah target range scenario unload script complete');
           ]]>
       </unload>
