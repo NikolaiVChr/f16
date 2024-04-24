@@ -2533,6 +2533,7 @@ var RWR = {
         me.autoFlare = 0;
         me.closestThreat = 0;
         me.elapsed = elapsedProp.getValue();
+        #print("RWR from omni: ",size(me.vector_aicontacts));
         foreach(me.u ; me.vector_aicontacts) {
         	# [me.ber,me.head,contact.getCoord(),me.tp,me.radar,contact.getDeviationHeading(),contact.getRangeDirect()*M2NM, contact.getCallsign()]
         	me.dbEntry = radar_system.getDBEntry(me.u.getModel());
@@ -2565,6 +2566,7 @@ var RWR = {
                 if (me.threatDB[10]) me.threat += 0.30;# has me locked
                 me.threat += ((me.danger-me.rn)/me.danger)>0?((me.danger-me.rn)/me.danger)*0.60:0;# if inside danger zone then add threat, the closer the more.
                 me.threat += me.threatDB[9]>0?(me.threatDB[9]/500)*0.10:0;# more closing speed means more threat.
+                #if (me.threatDB[10] or getprop("payload/armament/spike") != 0) me.printThreatDB(me.threatDB, me.dbEntry, me.u);
                 if (me.u.getModel() == "AI") me.threat = 0.01;
                 if (!me.dbEntry.hasAirRadar) me.threat = - 1;
                 if (me.threat > me.closestThreat) me.closestThreat = me.threat;
@@ -2595,6 +2597,22 @@ var RWR = {
             setprop("ai/submodels/submodel[0]/flare-release-out-snd", 1);
         }
         emesary.GlobalTransmitter.NotifyAll(me.RWRNotification.updateV(me.vector_aicontacts_threats));
+	},
+	printThreatDB: func (threatDB, dbEntry, contact) {
+		print("\n",contact.getModel()," OMNI radar contact:"
+		,"bearing ",threatDB[0]#me.bearing,  #  0
+        ,"\n heading ",threatDB[1] #   		me.heading,
+        ,"\n transponder ",threatDB[3]#    		me.tp,
+        ,"\n radar ",threatDB[4]#    		me.radar,    #  4
+        ,"\n dev bearing ",threatDB[5]#    		contact.getDeviationHeading(),
+        ,"\n slant nm ",threatDB[6]#    		me.rangeDirectNM, 
+        ,"\n callsign ",threatDB[7]#    		contact.getCallsign(), 
+        ,"\n speed ",threatDB[8]#    		contact.getSpeed(), 
+        ,"\n closure ",threatDB[9]#    		contact.getClosureRate(), 
+        ,"\n spike me ",threatDB[10]#    		me.seeSpike  # 10
+        ,"\n air rdr ",dbEntry.hasAirRadar#
+        ,"\n ",contact.prop.getPath()
+        ,"\n");
 	},
 	del: func {
         emesary.GlobalTransmitter.DeRegister(me.RWRRecipient);

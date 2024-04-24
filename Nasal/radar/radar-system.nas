@@ -2064,7 +2064,8 @@ var OmniRadar = {
 		if (!me.enabled) return;
 		me.vector_aicontacts_for = [];
 		foreach(contact ; me.vector_aicontacts) {
-			if (!contact.isVisible()) {
+			me.seeSpike = contact.isSpikingMe();# no matter what, if spiking us, we need to see it on rwr.
+			if (!contact.isVisible() and !me.seeSpike) {
 				# This is not expensive as terrain manager set this in a loop.
 				continue;
 			}
@@ -2072,7 +2073,7 @@ var OmniRadar = {
 				continue;
 			}
 			me.rangeDirectNM = contact.getRangeDirect()*M2NM;
-			if (me.rangeDirectNM > me.max_dist_nm) {
+			if (me.rangeDirectNM > me.max_dist_nm and !me.seeSpike) {
 				continue;
 			}
 			me.bearing = contact.getBearing();
@@ -2080,7 +2081,7 @@ var OmniRadar = {
 			me.test = me.bearing+180-me.heading;# The deviation of us seen from his nose
 			me.tp = contact.isTransponderEnable();
 			me.radar = contact.isRadarEnable();
-			me.seeSpike = contact.isSpikingMe();
+			
 			me.seeRadar = me.radar and math.abs(geo.normdeg180(me.test)) < getRadarFieldRadius(contact.getModel());
 			me.seeTp = me.tp and me.rangeDirectNM < me.tp_dist_nm;
             if (me.seeRadar or me.seeSpike or me.seeTp) {
