@@ -64,7 +64,7 @@
     "path": "gui/dialogs/airbases.xml"
   },
   "scenario-factory-homey": {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "path": "Scenarios/KXTA_factory.xml"
   },
   "scenario-aircraft-homey": {
