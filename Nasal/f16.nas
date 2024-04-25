@@ -156,7 +156,9 @@ var resetView = func () {
     var hd_t = getprop("sim/current-view/config/heading-offset-deg");
     var field = getprop("sim/current-view/config/default-field-of-view-deg");
     var raw = getprop("sim/current-view/view-number-raw");
-    if (debug.isnan(hd) or debug.isnan(hd_t) or debug.isnan(field) or debug.isnan(raw) or hd==nil or hd_t==nil or field==nil or raw==nil) {
+    var pos = getprop("sim/current-view/config/pitch-offset-deg");
+    var ros = getprop("sim/current-view/config/roll-offset-deg");
+    if (debug.isnan(hd) or debug.isnan(hd_t) or debug.isnan(field) or debug.isnan(raw) or debug.isnan(pos) or pos==nil or debug.isnan(ros) or ros==nil or hd==nil or hd_t==nil or field==nil or raw==nil) {
         return;
     }
     if (hd > 180) {
@@ -164,14 +166,20 @@ var resetView = func () {
     }
     interpolate("sim/current-view/field-of-view", field, 0.66);
     interpolate("sim/current-view/heading-offset-deg", hd_t,0.66);
-    interpolate("sim/current-view/pitch-offset-deg", getprop("sim/current-view/config/pitch-offset-deg"),0.66);
-    interpolate("sim/current-view/roll-offset-deg", getprop("sim/current-view/config/roll-offset-deg"),0.66);
+    interpolate("sim/current-view/pitch-offset-deg", pos,0.66);
+    interpolate("sim/current-view/roll-offset-deg", ros,0.66);
 
     #if (getprop("sim/current-view/view-number") == 0) {
 
-    interpolate("sim/current-view/x-offset-m", getprop("sim/view["~raw~"]/config/x-offset-m"), 1);
-    interpolate("sim/current-view/y-offset-m", getprop("sim/view["~raw~"]/config/y-offset-m"), 1);
-    interpolate("sim/current-view/z-offset-m", getprop("sim/view["~raw~"]/config/z-offset-m"), 1);
+    var x = getprop("sim/view["~raw~"]/config/x-offset-m");
+    var y = getprop("sim/view["~raw~"]/config/x-offset-m");
+    var z = getprop("sim/view["~raw~"]/config/x-offset-m");
+    if (debug.isnan(x) or debug.isnan(y) or debug.isnan(z) or x==nil or y==nil or z==nil) {
+        return;
+    }
+    interpolate("sim/current-view/x-offset-m", x, 1);
+    interpolate("sim/current-view/y-offset-m", y, 1);
+    interpolate("sim/current-view/z-offset-m", z, 1);
     #} else {
     #  interpolate("sim/current-view/x-offset-m", 0, 1);
     #}
