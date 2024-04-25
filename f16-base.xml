@@ -1709,6 +1709,14 @@
         <!--spaces>
             <file>Aircraft/f16/Nasal/utils/namespaces.nas</file>
         </spaces-->
+        <pilot-movment>
+            <file>Aircraft/Generic/Human/Nasal/pilot-movment.nas</file>
+            <script>
+                        var head_x = "f16/pilot/head/x-deg";
+                        var head_y = "f16/pilot/head/y-deg";
+                        var head_z = "f16/pilot/head/z-deg";
+            </script>
+        </pilot-movment>
     </nasal>
 
 

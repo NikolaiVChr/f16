@@ -127,6 +127,75 @@
 		<!--object-name>LR-leg</object-name-->
    </effect>
 
+    <animation>
+			  <type>rotate</type>
+			  <object-name>L-head</object-name>
+			  <object-name>L-visor</object-name>
+			  <object-name>helmet</object-name>
+			  <object-name>L-face-mask</object-name>
+				<object-name>L-mask-tube</object-name>
+				<object-name>L-oxy-tube</object-name>
+				<object-name>eye-balls</object-name>
+			  <property>f16/pilot/head/z-deg</property>
+			  <factor>-0.5</factor>
+			  <center>
+			   	<x-m>-4.000</x-m>
+	        <y-m>0</y-m>
+	        <z-m>0.737863</z-m>
+			  </center>
+			  <axis>
+			   <x>0.0</x>
+			   <y>0.0</y>
+			   <z>1.0</z>
+			  </axis>
+ 		</animation>
+   
+   <animation>
+			  <type>rotate</type>
+			  <object-name>L-head</object-name>
+			  <object-name>L-visor</object-name>
+			  <object-name>helmet</object-name>
+			  <object-name>L-face-mask</object-name>
+				<object-name>L-mask-tube</object-name>
+				<object-name>L-oxy-tube</object-name>
+				<object-name>eye-balls</object-name>
+			  <property>f16/pilot/head/y-deg</property>
+			  <factor>-0.5</factor>
+			  <center>
+			   	<x-m>-4.000</x-m>
+	        <y-m>0</y-m>
+	        <z-m>0.737863</z-m>
+			  </center>
+			  <axis>
+			   <x>0.0</x>
+			   <y>1.0</y>
+			   <z>0.0</z>
+			  </axis>
+ 		</animation>
+
+ 		<animation>
+			  <type>rotate</type>
+			  <object-name>L-head</object-name>
+			  <object-name>L-visor</object-name>
+			  <object-name>helmet</object-name>
+			  <object-name>L-face-mask</object-name>
+				<object-name>L-mask-tube</object-name>
+				<object-name>L-oxy-tube</object-name>
+				<object-name>eye-balls</object-name>
+			  <property>f16/pilot/head/x-deg</property>
+			  <factor>-0.5</factor>
+			  <center>
+			   	<x-m>-4.000</x-m>
+	        <y-m>0</y-m>
+	        <z-m>0.737863</z-m>
+			  </center>
+			  <axis>
+			   <x>1.0</x>
+			   <y>0.0</y>
+			   <z>0.0</z>
+			  </axis>
+ 		</animation>
+
    <animation>
      <type>select</type>
      <object-name>mount</object-name>
