@@ -106,8 +106,8 @@
       <rudder type="double">0.5</rudder>
       <heading type="double">030</heading>
       <altitude type="double">4750</altitude>
-      <collision-length>10</collision-length><!-- meters of bounding circle -->
-      <collision-height>10</collision-height><!-- bounding circle height (cut off) -->
+      <collision-length>5</collision-length><!-- meters of bounding circle radius -->
+      <collision-height>5</collision-height><!-- bounding circle top cut off from center (and its similar cut below). These 'cuts' do not roll or bank with the AI model, its an altitude comparison. -->
       <search-order>PREFER_DATA</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
     </entry>
 
@@ -121,8 +121,8 @@
       <rudder type="double">0.25</rudder>
       <heading type="double">020</heading>
       <altitude type="double">4750</altitude>
-      <collision-length>10</collision-length><!-- meters of bounding circle -->
-      <collision-height>10</collision-height><!-- bounding circle height (cut off) -->
+      <collision-length>5</collision-length><!-- meters of bounding circle -->
+      <collision-height>5</collision-height><!-- bounding circle height (cut off) -->
       <search-order>PREFER_DATA</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
     </entry>
 
@@ -136,8 +136,8 @@
       <rudder type="double">0.75</rudder>
       <heading type="double">010</heading>
       <altitude type="double">4750</altitude>
-      <collision-length>10</collision-length><!-- meters of bounding circle -->
-      <collision-height>10</collision-height><!-- bounding circle height (cut off) -->
+      <collision-length>5</collision-length><!-- meters of bounding circle -->
+      <collision-height>5</collision-height><!-- bounding circle height (cut off) -->
       <search-order>PREFER_DATA</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
     </entry>
 
@@ -151,8 +151,8 @@
       <rudder type="double">1</rudder>
       <heading type="double">000</heading>
       <altitude type="double">4750</altitude>
-      <collision-length>10</collision-length><!-- meters of bounding circle -->
-      <collision-height>10</collision-height><!-- bounding circle height (cut off) -->
+      <collision-length>5</collision-length><!-- meters of bounding circle -->
+      <collision-height>5</collision-height><!-- bounding circle height (cut off) -->
       <search-order>PREFER_DATA</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
     </entry>
 
@@ -167,7 +167,7 @@
       <heading type="double">000</heading>
       <altitude type="double">4750</altitude>
       <collision-length>500</collision-length><!-- meters of bounding circle -->
-      <collision-height>500</collision-height><!-- bounding circle height (cut off) -->
+      <collision-height>50</collision-height><!-- bounding circle height (cut off) -->
       <search-order>PREFER_DATA</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
     </entry>
 
@@ -191,8 +191,8 @@
       <heading>020</heading>
       <speed>300</speed>
       <roll>-80</roll>
-      <collision-length>50</collision-length><!-- meters of bounding circle -->
-      <collision-height>25</collision-height><!-- bounding circle height (cut off) -->
+      <collision-length>20</collision-length><!-- meters of bounding circle -->
+      <collision-height>10</collision-height><!-- bounding circle height (cut off) -->
       <search-order>PREFER_DATA</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
     </entry>
 
@@ -210,8 +210,8 @@
       <heading>020</heading>
       <speed>300</speed>
       <roll>90</roll>
-      <collision-length>50</collision-length><!-- meters of bounding circle -->
-      <collision-height>25</collision-height><!-- bounding circle height (cut off) -->
+      <collision-length>20</collision-length><!-- meters of bounding circle -->
+      <collision-height>10</collision-height><!-- bounding circle height (cut off) -->
       <search-order>PREFER_DATA</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
     </entry>
 
@@ -229,8 +229,8 @@
       <heading>020</heading>
       <speed>250</speed>
       <roll>15</roll>
-      <collision-length>50</collision-length><!-- meters of bounding circle -->
-      <collision-height>25</collision-height><!-- bounding circle height (cut off) -->
+      <collision-length>20</collision-length><!-- meters of bounding circle -->
+      <collision-height>10</collision-height><!-- bounding circle height (cut off) -->
       <search-order>PREFER_DATA</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
     </entry>
 
@@ -252,8 +252,8 @@
       <heading>020</heading>
       <speed>450</speed>
       <roll>80</roll>
-      <collision-length>50</collision-length><!-- meters of bounding circle -->
-      <collision-height>25</collision-height><!-- bounding circle height (cut off) -->
+      <collision-length>20</collision-length><!-- meters of bounding circle -->
+      <collision-height>10</collision-height><!-- bounding circle height (cut off) -->
       <search-order>PREFER_DATA</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
     </entry>
 
@@ -271,8 +271,8 @@
       <heading>020</heading>
       <speed>450</speed>
       <roll>-40</roll>
-      <collision-length>50</collision-length><!-- meters of bounding circle -->
-      <collision-height>25</collision-height><!-- bounding circle height (cut off) -->
+      <collision-length>20</collision-length><!-- meters of bounding circle -->
+      <collision-height>10</collision-height><!-- bounding circle height (cut off) -->
       <search-order>PREFER_DATA</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
     </entry>
 
@@ -290,8 +290,8 @@
       <heading>020</heading>
       <speed>375</speed>
       <roll>-80</roll>
-      <collision-length>50</collision-length><!-- meters of bounding circle -->
-      <collision-height>25</collision-height><!-- bounding circle height (cut off) -->
+      <collision-length>20</collision-length><!-- meters of bounding circle -->
+      <collision-height>10</collision-height><!-- bounding circle height (cut off) -->
       <search-order>PREFER_DATA</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
     </entry>
 
@@ -309,8 +309,8 @@
       <heading>020</heading>
       <speed>650</speed>
       <roll>-100</roll>
-      <collision-length>50</collision-length><!-- meters of bounding circle -->
-      <collision-height>25</collision-height><!-- bounding circle height (cut off) -->
+      <collision-length>20</collision-length><!-- meters of bounding circle -->
+      <collision-height>10</collision-height><!-- bounding circle height (cut off) -->
       <search-order>PREFER_DATA</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
     </entry>
 
@@ -334,8 +334,8 @@
       <heading>020</heading>
       <speed>650</speed>
       <roll>-90</roll>
-      <collision-length>50</collision-length><!-- meters of bounding circle -->
-      <collision-height>25</collision-height><!-- bounding circle height (cut off) -->
+      <collision-length>20</collision-length><!-- meters of bounding circle -->
+      <collision-height>10</collision-height><!-- bounding circle height (cut off) -->
       <search-order>PREFER_DATA</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
     </entry>
 
@@ -353,8 +353,8 @@
       <heading>020</heading>
       <speed>650</speed>
       <roll>30</roll>
-      <collision-length>50</collision-length><!-- meters of bounding circle -->
-      <collision-height>25</collision-height><!-- bounding circle height (cut off) -->
+      <collision-length>20</collision-length><!-- meters of bounding circle -->
+      <collision-height>10</collision-height><!-- bounding circle height (cut off) -->
       <search-order>PREFER_DATA</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
     </entry>
 
@@ -372,8 +372,8 @@
       <heading>020</heading>
       <speed>500</speed>
       <roll>15</roll>
-      <collision-length>50</collision-length><!-- meters of bounding circle -->
-      <collision-height>25</collision-height><!-- bounding circle height (cut off) -->
+      <collision-length>20</collision-length><!-- meters of bounding circle -->
+      <collision-height>10</collision-height><!-- bounding circle height (cut off) -->
       <search-order>PREFER_DATA</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
     </entry>
 
@@ -395,8 +395,8 @@
       <heading>020</heading>
       <speed>850</speed>
       <roll>90</roll>
-      <collision-length>50</collision-length><!-- meters of bounding circle -->
-      <collision-height>25</collision-height><!-- bounding circle height (cut off) -->
+      <collision-length>20</collision-length><!-- meters of bounding circle -->
+      <collision-height>10</collision-height><!-- bounding circle height (cut off) -->
       <search-order>PREFER_DATA</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
     </entry>
 
@@ -414,8 +414,8 @@
       <heading>020</heading>
       <speed>750</speed>
       <roll>-40</roll>
-      <collision-length>50</collision-length><!-- meters of bounding circle -->
-      <collision-height>25</collision-height><!-- bounding circle height (cut off) -->
+      <collision-length>20</collision-length><!-- meters of bounding circle -->
+      <collision-height>10</collision-height><!-- bounding circle height (cut off) -->
       <search-order>PREFER_DATA</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
     </entry>
 
@@ -433,8 +433,8 @@
       <heading>020</heading>
       <speed>700</speed>
       <roll>-80</roll>
-      <collision-length>50</collision-length><!-- meters of bounding circle -->
-      <collision-height>25</collision-height><!-- bounding circle height (cut off) -->
+      <collision-length>20</collision-length><!-- meters of bounding circle -->
+      <collision-height>10</collision-height><!-- bounding circle height (cut off) -->
       <search-order>PREFER_DATA</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
     </entry>
 
@@ -452,8 +452,8 @@
       <heading>020</heading>
       <speed>900</speed>
       <roll>-90</roll>
-      <collision-length>50</collision-length><!-- meters of bounding circle -->
-      <collision-height>25</collision-height><!-- bounding circle height (cut off) -->
+      <collision-length>20</collision-length><!-- meters of bounding circle -->
+      <collision-height>10</collision-height><!-- bounding circle height (cut off) -->
       <search-order>PREFER_DATA</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
     </entry>
 
@@ -474,8 +474,8 @@
       <heading>000</heading>
       <speed>624</speed>
       <roll>0</roll>
-      <collision-length>50</collision-length><!-- meters of bounding circle -->
-      <collision-height>25</collision-height><!-- bounding circle height (cut off) -->
+      <collision-length>20</collision-length><!-- meters of bounding circle -->
+      <collision-height>10</collision-height><!-- bounding circle height (cut off) -->
       <search-order>PREFER_DATA</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
     </entry>
 
@@ -496,8 +496,8 @@
       <heading>000</heading>
       <speed>613</speed>
       <roll>0</roll>
-      <collision-length>50</collision-length><!-- meters of bounding circle -->
-      <collision-height>25</collision-height><!-- bounding circle height (cut off) -->
+      <collision-length>20</collision-length><!-- meters of bounding circle -->
+      <collision-height>10</collision-height><!-- bounding circle height (cut off) -->
       <search-order>PREFER_DATA</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
     </entry>
 
@@ -518,8 +518,8 @@
       <heading>000</heading>
       <speed>588</speed>
       <roll>0</roll>
-      <collision-length>50</collision-length><!-- meters of bounding circle -->
-      <collision-height>25</collision-height><!-- bounding circle height (cut off) -->
+      <collision-length>20</collision-length><!-- meters of bounding circle -->
+      <collision-height>10</collision-height><!-- bounding circle height (cut off) -->
       <search-order>PREFER_DATA</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
     </entry>
 
@@ -540,8 +540,8 @@
       <heading>000</heading>
       <speed>585</speed>
       <roll>0</roll>
-      <collision-length>50</collision-length><!-- meters of bounding circle -->
-      <collision-height>25</collision-height><!-- bounding circle height (cut off) -->
+      <collision-length>20</collision-length><!-- meters of bounding circle -->
+      <collision-height>10</collision-height><!-- bounding circle height (cut off) -->
       <search-order>PREFER_DATA</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
     </entry>
 

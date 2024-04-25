@@ -68,7 +68,7 @@
     "path": "Scenarios/KXTA_factory.xml"
   },
   "scenario-aircraft-homey": {
-    "version": "1.0.0",
+    "version": "1.0.2",
     "path": "Scenarios/moving_targets_around_KXTA.xml"
   },
   "scenario-targets-tonopah": {
