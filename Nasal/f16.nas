@@ -158,7 +158,8 @@ var resetView = func () {
     var raw = getprop("sim/current-view/view-number-raw");
     var pos = getprop("sim/current-view/config/pitch-offset-deg");
     var ros = getprop("sim/current-view/config/roll-offset-deg");
-    if (debug.isnan(hd) or debug.isnan(hd_t) or debug.isnan(field) or debug.isnan(raw) or debug.isnan(pos) or pos==nil or debug.isnan(ros) or ros==nil or hd==nil or hd_t==nil or field==nil or raw==nil) {
+    if (!checkNumber([hd,"hd"],[hd_t,"hd_t"],[field,"field"],[raw,"raw"],[pos,"pos"],[ros,"ros"])) {
+        print("Problem was in view ", raw);
         return;
     }
     if (hd > 180) {
@@ -174,7 +175,8 @@ var resetView = func () {
     var x = getprop("sim/view["~raw~"]/config/x-offset-m");
     var y = getprop("sim/view["~raw~"]/config/y-offset-m");
     var z = getprop("sim/view["~raw~"]/config/z-offset-m");
-    if (debug.isnan(x) or debug.isnan(y) or debug.isnan(z) or x==nil or y==nil or z==nil) {
+    if (!checkNumber([x,"x"],[y,"y"],[z,"z"])) {
+        print("Problem was in view ", raw);
         return;
     }
     interpolate("sim/current-view/x-offset-m", x, 1);
@@ -183,6 +185,18 @@ var resetView = func () {
     #} else {
     #  interpolate("sim/current-view/x-offset-m", 0, 1);
     #}
+}
+
+var checkNumber = func {
+    # Check if number is nil or NaN and print to console if it is.
+    # Can take any number of arguments.
+    foreach(var test ; arg) {
+        if (test[0] == nil or debug.isnan(test[0])) {
+            print("ERROR: Variable ",test[1]," is not valid number NaN=",debug.isnan(test[0])," nil=",test[0]==nil);
+            return 0;
+        }
+    }
+    return 1;
 }
 
 var HDDView = func () {
