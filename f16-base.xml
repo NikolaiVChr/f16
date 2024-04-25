@@ -1490,7 +1490,7 @@
         </scene>
         <pilot>
             <head>
-                <x-deg type="double">0.0</x-deg>
+                <!--x-deg type="double">0.0</x-deg-->
                 <y-deg type="double">0.0</y-deg>
                 <z-deg type="double">0.0</z-deg>
             </head>
@@ -1719,9 +1719,9 @@
         <pilot-movment>
             <file>Aircraft/Generic/Human/Nasal/pilot-movment.nas</file>
             <script>
-                        var head_x = "f16/pilot/head/x-deg";
-                        var head_y = "f16/pilot/head/y-deg";
-                        var head_z = "f16/pilot/head/z-deg";
+                #var head_x = "f16/pilot/head/x-deg";
+                var head_y = "f16/pilot/head/y-deg";
+                var head_z = "f16/pilot/head/z-deg";
             </script>
         </pilot-movment>
     </nasal>

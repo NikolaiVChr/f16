@@ -142,7 +142,7 @@
 			  <center>
 			   	<x-m>-4.000</x-m>
 	        <y-m>0</y-m>
-	        <z-m>0.737863</z-m>
+	        <z-m>0.738</z-m>
 			  </center>
 			  <axis>
 			   <x>0.0</x>
@@ -166,7 +166,7 @@
 			  <center>
 			   	<x-m>-4.000</x-m>
 	        <y-m>0</y-m>
-	        <z-m>0.737863</z-m>
+	        <z-m>0.738</z-m>
 			  </center>
 			  <axis>
 			   <x>0.0</x>
@@ -175,7 +175,7 @@
 			  </axis>
  		</animation>
 
- 		<animation>
+ 		<!--animation>
 			  <type>rotate</type>
 			  <object-name>L-head</object-name>
 			  <object-name>L-visor</object-name>
@@ -190,14 +190,14 @@
 			  <center>
 			   	<x-m>-4.000</x-m>
 	        <y-m>0</y-m>
-	        <z-m>0.737863</z-m>
+	        <z-m>0.738</z-m>
 			  </center>
 			  <axis>
 			   <x>1.0</x>
 			   <y>0.0</y>
 			   <z>0.0</z>
 			  </axis>
- 		</animation>
+ 		</animation-->
 
    <animation>
      <type>select</type>
