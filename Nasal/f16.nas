@@ -172,8 +172,8 @@ var resetView = func () {
     #if (getprop("sim/current-view/view-number") == 0) {
 
     var x = getprop("sim/view["~raw~"]/config/x-offset-m");
-    var y = getprop("sim/view["~raw~"]/config/x-offset-m");
-    var z = getprop("sim/view["~raw~"]/config/x-offset-m");
+    var y = getprop("sim/view["~raw~"]/config/y-offset-m");
+    var z = getprop("sim/view["~raw~"]/config/z-offset-m");
     if (debug.isnan(x) or debug.isnan(y) or debug.isnan(z) or x==nil or y==nil or z==nil) {
         return;
     }
