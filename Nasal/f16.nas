@@ -154,18 +154,24 @@ setlistener("sim/rendering/redout/new", func {
 var resetView = func () {
     var hd = getprop("sim/current-view/heading-offset-deg");
     var hd_t = getprop("sim/current-view/config/heading-offset-deg");
+    var field = getprop("sim/current-view/config/default-field-of-view-deg");
+    var raw = getprop("sim/current-view/view-number-raw");
+    if (debug.isnan(hd) or debug.isnan(hd_t) or debug.isnan(field) or debug.isnan(raw) or hd==nil or hd_t==nil or field==nil or raw==nil) {
+        return;
+    }
     if (hd > 180) {
         hd_t = hd_t + 360;
     }
-    interpolate("sim/current-view/field-of-view", getprop("sim/current-view/config/default-field-of-view-deg"), 0.66);
+    interpolate("sim/current-view/field-of-view", field, 0.66);
     interpolate("sim/current-view/heading-offset-deg", hd_t,0.66);
     interpolate("sim/current-view/pitch-offset-deg", getprop("sim/current-view/config/pitch-offset-deg"),0.66);
     interpolate("sim/current-view/roll-offset-deg", getprop("sim/current-view/config/roll-offset-deg"),0.66);
 
     #if (getprop("sim/current-view/view-number") == 0) {
-    interpolate("sim/current-view/x-offset-m", getprop("sim/view["~getprop("sim/current-view/view-number-raw")~"]/config/x-offset-m"), 1);
-    interpolate("sim/current-view/y-offset-m", getprop("sim/view["~getprop("sim/current-view/view-number-raw")~"]/config/y-offset-m"), 1);
-    interpolate("sim/current-view/z-offset-m", getprop("sim/view["~getprop("sim/current-view/view-number-raw")~"]/config/z-offset-m"), 1);
+
+    interpolate("sim/current-view/x-offset-m", getprop("sim/view["~raw~"]/config/x-offset-m"), 1);
+    interpolate("sim/current-view/y-offset-m", getprop("sim/view["~raw~"]/config/y-offset-m"), 1);
+    interpolate("sim/current-view/z-offset-m", getprop("sim/view["~raw~"]/config/z-offset-m"), 1);
     #} else {
     #  interpolate("sim/current-view/x-offset-m", 0, 1);
     #}
