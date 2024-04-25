@@ -136,6 +136,7 @@
 				<object-name>L-mask-tube</object-name>
 				<object-name>L-oxy-tube</object-name>
 				<object-name>eye-balls</object-name>
+				<object-name>disk.001</object-name>
 			  <property>f16/pilot/head/z-deg</property>
 			  <factor>-0.5</factor>
 			  <center>
@@ -159,6 +160,7 @@
 				<object-name>L-mask-tube</object-name>
 				<object-name>L-oxy-tube</object-name>
 				<object-name>eye-balls</object-name>
+				<object-name>disk.001</object-name>
 			  <property>f16/pilot/head/y-deg</property>
 			  <factor>-0.5</factor>
 			  <center>
@@ -182,6 +184,7 @@
 				<object-name>L-mask-tube</object-name>
 				<object-name>L-oxy-tube</object-name>
 				<object-name>eye-balls</object-name>
+				<object-name>disk.001</object-name>
 			  <property>f16/pilot/head/x-deg</property>
 			  <factor>-0.5</factor>
 			  <center>

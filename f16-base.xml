@@ -1488,6 +1488,13 @@
             <ambient-occlusion type="double">0.35</ambient-occlusion>
             <version type="bool">1</version>
         </scene>
+        <pilot>
+            <head>
+                <x-deg type="double">0.0</x-deg>
+                <y-deg type="double">0.0</y-deg>
+                <z-deg type="double">0.0</z-deg>
+            </head>
+        </pilot>
     </f16>
     <damage>
         <sound>
