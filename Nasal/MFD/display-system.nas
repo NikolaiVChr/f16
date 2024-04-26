@@ -5234,11 +5234,9 @@ var DisplaySystem = {
                 var tfrSmooth = getprop("f16/fcs/adv-mode-smooth");
                 if (tfrSmooth == 1) {
                 	tfrSmooth = 10;
-                }
-                if (tfrSmooth == 10) {
+                } elsif (tfrSmooth == 10) {
                 	tfrSmooth = 20;# Is 20 too smooth?
-                }
-                if (tfrSmooth == 20) {
+                } elsif (tfrSmooth == 20) {
                 	tfrSmooth = 1;
                 }
                 setprop("f16/fcs/adv-mode-smooth", tfrSmooth);
@@ -5298,8 +5296,8 @@ var DisplaySystem = {
 				}
 			}
 			if (me.smooth == 1) me.device.controls["OSB12"].setControlText("HARD");
-			if (me.smooth == 10) me.device.controls["OSB12"].setControlText("SOFT");
-			if (me.smooth == 20) me.device.controls["OSB12"].setControlText("SMTH");
+			elsif (me.smooth == 10) me.device.controls["OSB12"].setControlText("SOFT");
+			elsif (me.smooth == 20) me.device.controls["OSB12"].setControlText("SMTH");
 			me.device.controls["OSB1"].setControlText("NORM",1,me.enable and (!me.mal or math.mod(int(8*(systime()-int(systime()))),2)>0));
 			me.device.controls["OSB2"].setControlText("LPI",1,tfrMode == 2);
 			me.device.controls["OSB3"].setControlText("STBY",1,tfrMode == 3);
@@ -6701,6 +6699,7 @@ var forcePages = func (v, system) {
 }
 
 var main = func (module) {
+	if (module != nil) print("Display-system init as module");
 	# TEST CODE:
 	var height = 512;#482;
 	var width  = 512;#552;
@@ -6793,7 +6792,13 @@ var unload = func {
 }
 
 var debugDisplays = 0;
-var printDebug = func {if (debugDisplays) {call(print,arg,nil,nil,var err = []); if(size(err)) print (err[0]);}};
+var printDebug = func {
+	if (debugDisplays) {
+		var err = [];
+		call(func print,arg,nil,nil,err);
+		if(size(err)) print (err[0]);
+	}
+};
 var printfDebug = func {if (debugDisplays) {var str = call(sprintf,arg,nil,nil,var err = []);if(size(err))print (err[0]);else print (str);}};
 # Note calling printf directly with call() will sometimes crash the sim, so we call sprintf instead.
 
