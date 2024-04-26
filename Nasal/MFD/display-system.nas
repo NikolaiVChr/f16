@@ -5232,11 +5232,11 @@ var DisplaySystem = {
                 setprop("autopilot/settings/tf-minimums", 100);
             } elsif (controlName == "OSB12") {
                 var tfrSmooth = getprop("f16/fcs/adv-mode-smooth");
-                if (tfrSmooth == 1) {
+                if (tfrSmooth < 10) {
                 	tfrSmooth = 10;
-                } elsif (tfrSmooth == 10) {
+                } elsif (tfrSmooth < 20) {
                 	tfrSmooth = 20;# Is 20 too smooth?
-                } elsif (tfrSmooth == 20) {
+                } elsif (tfrSmooth >= 20) {
                 	tfrSmooth = 1;
                 }
                 setprop("f16/fcs/adv-mode-smooth", tfrSmooth);
@@ -5296,8 +5296,8 @@ var DisplaySystem = {
 				}
 			}
 			if (me.smooth == 1) me.device.controls["OSB12"].setControlText("HARD");
-			elsif (me.smooth == 10) me.device.controls["OSB12"].setControlText("SOFT");
-			elsif (me.smooth == 20) me.device.controls["OSB12"].setControlText("SMTH");
+			elsif (me.smooth > 1 and me.smooth < 15) me.device.controls["OSB12"].setControlText("SOFT");
+			elsif (me.smooth > 15) me.device.controls["OSB12"].setControlText("SMTH");
 			me.device.controls["OSB1"].setControlText("NORM",1,me.enable and (!me.mal or math.mod(int(8*(systime()-int(systime()))),2)>0));
 			me.device.controls["OSB2"].setControlText("LPI",1,tfrMode == 2);
 			me.device.controls["OSB3"].setControlText("STBY",1,tfrMode == 3);
@@ -5709,39 +5709,65 @@ var DisplaySystem = {
 			me.device.controls["OSB7"].setControlText("RS");
 			me.device.controls["OSB11"].setControlText("HAS",0);
 			me.device.controls["OSB15"].setControlText("UFC");
+			me.device.controls["OSB14"].setControlText("SRCH");
 			me.device.controls["OSB16"].setControlText("SWAP");
 			me.device.controls["OSB17"].setControlText("HSD");
 			me.device.controls["OSB18"].setControlText("SMS");
 			me.device.controls["OSB19"].setControlText("WPN");
 			me.device.controls["OSB20"].setControlText("TGP");
 			me.device.system.fetchLayer("SharedStations").init(me, me.getType);
+			me.srchSelect = 0;
 		},
 		getType: func {
 			return ["AGM-88", 50];
 		},
 		controlAction: func (controlName) {
 			printDebug(me.name,": ",controlName," activated on ",me.device.name);
-			if (controlName == "OSB1" or controlName == "OSB2" or controlName == "OSB3" or controlName == "OSB4" or controlName == "OSB5") {
-                if (me.sensor.handoffTarget != nil and me.sensor.handoffTarget["tblIdx"] == num(right(controlName,1))-1) {
-                    me.sensor.handoffTarget = nil;
-                }
-            } elsif (controlName == "OSB7") {
-                me.sensor.reset();
-                me.sensor.searchCounter += 1;
-            } elsif (controlName == "OSB12") {
-                me.sensor.currtable += 1;
-                if (me.sensor.currtable > 2) me.sensor.currtable = 0;
-                me.sensor.handoffTarget = nil;
-            } elsif (controlName == "OSB13") {
-                me.sensor.fov_desired += 1;
-                if (me.sensor.fov_desired > 3) me.sensor.fov_desired = 0;
-            } elsif (controlName == "OSB15") {
-                ded.dataEntryDisplay.harmTablePage = me.sensor.currtable;
-                ded.dataEntryDisplay.page = ded.pHARM;
-            } elsif (controlName == "OSB16") {
-                me.device.swap();
-            } elsif (controlName == "OSB20") {
-                switchTGP();
+			if (!me.srchSelect) {
+				if (controlName == "OSB1" or controlName == "OSB2" or controlName == "OSB3" or controlName == "OSB4" or controlName == "OSB5") {
+	                if (me.sensor.handoffTarget != nil and me.sensor.handoffTarget["tblIdx"] == num(right(controlName,1))-1) {
+	                    me.sensor.handoffTarget = nil;
+	                }
+	            } elsif (controlName == "OSB7") {
+	                me.sensor.reset();
+	                me.sensor.searchCounter += 1;
+	            } elsif (controlName == "OSB12") {
+	                me.sensor.currtable += 1;
+	                if (me.sensor.currtable > 2) me.sensor.currtable = 0;
+	                me.sensor.handoffTarget = nil;
+	                me.sensor.currtableSelects = [1,1,1,1,1];
+	            } elsif (controlName == "OSB13") {
+	                me.sensor.fov_desired += 1;
+	                if (me.sensor.fov_desired > 3) me.sensor.fov_desired = 0;
+	            } elsif (controlName == "OSB14") {
+	            	me.srchSelect = !me.srchSelect;
+	            } elsif (controlName == "OSB15") {
+	                ded.dataEntryDisplay.harmTablePage = me.sensor.currtable;
+	                ded.dataEntryDisplay.page = ded.pHARM;
+	            } elsif (controlName == "OSB16") {
+	                me.device.swap();
+	            } elsif (controlName == "OSB20") {
+	                switchTGP();
+	            }
+            } else {
+            	if (controlName == "OSB1") {
+            		me.sensor.currtableSelects[0] = !me.sensor.currtableSelects[0];
+	            } elsif (controlName == "OSB2") {
+	            	me.sensor.currtableSelects[1] = !me.sensor.currtableSelects[1];
+	            } elsif (controlName == "OSB3") {
+	            	me.sensor.currtableSelects[2] = !me.sensor.currtableSelects[2];
+	            } elsif (controlName == "OSB4") {
+	            	me.sensor.currtableSelects[3] = !me.sensor.currtableSelects[3];
+	            } elsif (controlName == "OSB5") {
+	            	me.sensor.currtableSelects[4] = !me.sensor.currtableSelects[4];
+	            }
+	            if (controlName == "OSB14") {
+	            	me.srchSelect = 0;
+		            if (me.sensor.currtableSelects[0] == 0 and me.sensor.currtableSelects[1] == 0 and me.sensor.currtableSelects[2] == 0 and me.sensor.currtableSelects[3] == 0 and me.sensor.currtableSelects[4] == 0) {
+		            	# Not allowing zero emitters
+		            	me.sensor.currtableSelects = [1,1,1,1,1];
+		            }
+	            }
             }
 		},
 		update: func (noti = nil) {
@@ -5792,275 +5818,301 @@ var DisplaySystem = {
                 return;
             }
 
-            #CURSOR
+            if (me.srchSelect) {
+            	me.groupRdr.hide();
+            	me.cursor.hide();
 
-            me.IMSOI = me.device.soi == 1;
-
-            me.slew_x = getprop("controls/displays/target-management-switch-x[" ~ me.model_index ~ "]");
-            me.slew_y = -getprop("controls/displays/target-management-switch-y[" ~ me.model_index ~ "]");
-
-            if (noti.getproper("viewName") != "TGP" and me.IMSOI) {
-                f16.resetSlew();
-            }
-
-            if (me.IMSOI) {
-                if ((me.slew_x != 0 or me.slew_y != 0 or slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.index) and noti.getproper("viewName") != "TGP" and me.sensor.handoffTarget == nil) {
-                    cursor_destination = nil;
-                    cursor_posHAS[0] += me.slew_x*175;
-                    cursor_posHAS[1] -= me.slew_y*175;
-                    cursor_posHAS[0] = math.clamp(cursor_posHAS[0], -displayWidthHalf, displayWidthHalf);
-                    cursor_posHAS[1] = math.clamp(cursor_posHAS[1], -displayHeight, 0);
-                    cursor_click = (slew_c and !me.slew_c_last)?me.index:-1;
-                    cursor_lock = me.index;
-                } elsif (cursor_lock == me.index or (me.slew_x == 0 or me.slew_y == 0 or slew_c == 0)) {
-                    cursor_lock = -1;
-                }
-            
-                me.slew_c_last = slew_c;
-                slew_c = 0;
-            }
-            me.elapsed = noti.getproper("elapsed");
-            me.cursor.setTranslation(cursor_posHAS);
-            me.cursor.setVisible(me.sensor.handoffTarget == nil);
-            if (0 and cursor_click==0) printDebug(cursor_posHAS[0],", ",cursor_posHAS[1]+displayHeight, "  click: ", cursor_click);
-
-            
-            
-            me.device.controls["OSB12"].setControlText("TBL"~(me.sensor.currtable + 1));
-            
-            if (me.sensor.fov_desired == 1) {
-                me.fovTxt = "CTR";
-                me.crossX.setTranslation(0,me.fieldH*0.25); 
-                me.crossY.setTranslation(0,0);
-                me.crossX1.setTranslation(me.fieldX+20*me.fieldW/6, me.fieldY+me.fieldH*0.5); 
-                me.crossX2.setTranslation(me.fieldX+20*me.fieldW/6, me.fieldY+me.fieldH*0.5); 
-                me.crossX3.setTranslation(me.fieldX+1*me.fieldW/6, me.fieldY+me.fieldH*0.5); 
-                me.crossX4.setTranslation(me.fieldX+5*me.fieldW/6, me.fieldY+me.fieldH*0.5); 
-                me.crossX5.setTranslation(me.fieldX+20*me.fieldW/6, me.fieldY+me.fieldH*0.5); 
-                me.crossX6.setTranslation(me.fieldX+20*me.fieldW/6, me.fieldY+me.fieldH*0.5); 
-                me.crossY1.setTranslation(0, me.fieldY+me.fieldH*0.5+2*me.fieldH*0.75/3);
-                me.crossY2.setTranslation(0, me.fieldY+me.fieldH*0.5+4*me.fieldH*0.75/3);
-                me.crossY3.setTranslation(0, me.fieldY+me.fieldH*0.5+6*me.fieldH*0.75/3);
-            } elsif (me.sensor.fov_desired == 2) {
-                me.fovTxt = "LEFT";
-                me.crossX.setTranslation(0,0); 
-                me.crossY.setTranslation(-me.fieldX,0);
-                me.crossX1.setTranslation(me.fieldX,                    me.fieldY+me.fieldH*0.25); 
-                me.crossX2.setTranslation(me.fieldX+2*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
-                me.crossX3.setTranslation(me.fieldX+4*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
-                me.crossX4.setTranslation(me.fieldX+6*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
-                me.crossX5.setTranslation(me.fieldX+8*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
-                me.crossX6.setTranslation(me.fieldX+10*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
-                me.crossY1.setTranslation(-me.fieldX, me.fieldY+me.fieldH*0.25+1*me.fieldH*0.75/3);
-                me.crossY2.setTranslation(-me.fieldX, me.fieldY+me.fieldH*0.25+2*me.fieldH*0.75/3);
-                me.crossY3.setTranslation(-me.fieldX, me.fieldY+me.fieldH*0.25+3*me.fieldH*0.75/3);
-            } elsif (me.sensor.fov_desired == 3) {
-                me.fovTxt = "RGHT";
-                me.crossX.setTranslation(0,0); 
-                me.crossY.setTranslation(me.fieldX,0);
-                me.crossX1.setTranslation(me.fieldX,                    me.fieldY+me.fieldH*0.25); 
-                me.crossX2.setTranslation(me.fieldX+2*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
-                me.crossX3.setTranslation(me.fieldX+4*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
-                me.crossX4.setTranslation(me.fieldX+6*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
-                me.crossX5.setTranslation(me.fieldX+8*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
-                me.crossX6.setTranslation(me.fieldX+10*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
-                me.crossY1.setTranslation(me.fieldX, me.fieldY+me.fieldH*0.25+1*me.fieldH*0.75/3);
-                me.crossY2.setTranslation(me.fieldX, me.fieldY+me.fieldH*0.25+2*me.fieldH*0.75/3);
-                me.crossY3.setTranslation(me.fieldX, me.fieldY+me.fieldH*0.25+3*me.fieldH*0.75/3);
-            } else {
-                me.fovTxt = "WIDE";
-                me.crossX.setTranslation(0,0); 
-                me.crossY.setTranslation(0,0);
-                me.crossX1.setTranslation(me.fieldX, me.fieldY+me.fieldH*0.25); 
-                me.crossX2.setTranslation(me.fieldX+1*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
-                me.crossX3.setTranslation(me.fieldX+2*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
-                me.crossX4.setTranslation(me.fieldX+3*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
-                me.crossX5.setTranslation(me.fieldX+4*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
-                me.crossX6.setTranslation(me.fieldX+5*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
-                me.crossY1.setTranslation(0, me.fieldY+me.fieldH*0.25+1*me.fieldH*0.75/3);
-                me.crossY2.setTranslation(0, me.fieldY+me.fieldH*0.25+2*me.fieldH*0.75/3);
-                me.crossY3.setTranslation(0, me.fieldY+me.fieldH*0.25+3*me.fieldH*0.75/3);
-            }
-            me.device.controls["OSB13"].setControlText(me.fovTxt);
-
-            if (me.sensor.enabled) {
-                me.cycleTimeLeft = math.max(0,me.sensor.dura-(me.elapsed-me.sensor.searchStart));
-                me.searchText.setText(sprintf("%d:%02d   SCT-%d",(me.cycleTimeLeft)/60, math.mod(me.cycleTimeLeft,60),me.sensor.searchCounter));
-                me.searchText.show();
-            } else {
-                me.searchText.hide();
-            }
-
-            me.items = me.sensor.vector_aicontacts_seen;
-            me.iter = size(me.items)-1;
-
-            if (me.harmSelected and me.sensor.handoffTarget != nil and me.radWeap.status < armament.MISSILE_LOCK) {
-                # This makes sure we go from handover back to search when missile loses lock
-                if (me.elapsed-me.sensor.handoffTime > 1) {
-                    # It had time to get lock, but failed or masterarm was off
-                    me.radWeap.setContacts([]);
-                    me.sensor.handoffTarget = nil;
-                }
-            } elsif (!me.harmSelected) {
-                me.sensor.handoffTarget = nil;
-            }
-
-            if (noti.FrameCount == 1 and me.sensor.handoffTarget == nil) {
-                for (me.jj = 0; me.jj < 5;me.jj += 1) {
-                	me.osbShow[me.jj] = 1;
-                }
-            }
-
-            if (me.sensor.handoffTarget != nil) {
-                # Handoff
-                me.dataPos = [me.extrapolate(me.sensor.handoffTarget.get_bearing()-radar_system.self.getHeading(), -30, 30, -me.fieldW*0.5, me.fieldW*0.5), me.extrapolate(me.sensor.handoffTarget.getElevation()-radar_system.self.getPitch(), -30, 30, me.fieldW*0.5, -me.fieldW*0.5)];
-                if (math.sqrt(me.dataPos[0]*me.dataPos[0]+me.dataPos[1]*me.dataPos[1]) < me.fieldDiag) {
-                    me.rot = radar_system.self.getRoll()*D2R;
-                    me.handoffRot.setRotation(-me.rot);
-                    me.handoffTxt.setTranslation(me.dataPos);
-                    me.handoffTxt.setRotation(me.rot);
-                    me.handoffTxt.setText(me.sensor.handoffTarget.mdl~me.sensor.handoffTarget.radiSpike);
-                    me.handoffTxt.show();
-                } else {
-                    me.handoffTxt.hide();
-                }
-                me.cross.setTranslation(0, me.fieldY + me.fieldH*0.5);
-                me.rdrTxt[0].hide();
-                me.rdrTxt[1].hide();
-                me.rdrTxt[2].hide();
-                me.rdrTxt[3].hide();
-                me.rdrTxt[4].hide();
-                me.crossX.hide();
-                me.crossY.hide();
-                me.crossX1.hide();
-                me.crossX2.hide(); 
-                me.crossX3.hide();
-                me.crossX4.hide();
-                me.crossX5.hide();
-                me.crossX6.hide();
-                me.crossY1.hide();
-                me.crossY2.hide();
-                me.crossY2.hide();
-                #me.dashBox.hide();
-                me.cross.show();
+            	me.device.controls["OSB7"].setControlText("");
+                me.device.controls["OSB11"].setControlText("");
+                me.device.controls["OSB12"].setControlText("");
+                me.device.controls["OSB13"].setControlText("");
+                me.device.controls["OSB14"].setControlText("SRCH",0);
+                me.device.controls["OSB15"].setControlText("");
 
                 for (me.jj = 0; me.jj < 5;me.jj += 1) {
-                    if (me.sensor.handoffTarget["tblIdx"] == me.jj) {
-                        me.osbShow[me.jj] = 0;
-                    } else {
-                        me.osbShow[me.jj] = 1;
-                    }
-                }
-
-                if (cursor_click == me.index) {
-                    me.sensor.handoffTarget = nil;
-                    cursor_click = -1;
-                    # not needed anymore due to last lines in method:
-                    #if (me.radWeap != nil and me.radWeap["guidance"] == "radiation") {
-                    #    me.radWeap.setContacts([]);
-                    #    me.radWeap.clearTgt();
-                    #}
-                } elsif (me.harmSelected) {
-                    me.radWeap.setContacts([me.sensor.handoffTarget]);
-                }
-            } elsif (me.sensor.enabled) {
-                # Search
-                me.crossX.show();
-                me.crossY.show();
-                me.crossX1.show();
-                me.crossX2.show(); 
-                me.crossX3.show();
-                me.crossX4.show();
-                me.crossX5.show();
-                me.crossX6.show();
-                me.crossY1.show();
-                me.crossY2.show();
-                me.crossY2.show();
-                #me.dashBox.show();
-                me.cross.hide();
-                me.handoffTxt.hide();
-                me.topLine = "   ";
-                me.topCheck = [0,0,0,0,0];
-                me.clickableItems = [];
-                for (me.txt_count = 0; me.txt_count < 5; me.txt_count += 1) {
-                    me.check = !(me.txt_count > me.iter);
-                    me.checkFresh = me.check and me.items[me.txt_count].discover < me.elapsed-me.sensor.searchStart and me.items[me.txt_count].discoverSCT==me.sensor.searchCounter;
-                    me.checkFading = me.check and me.items[me.txt_count]["discoverSCTShown"] == me.sensor.searchCounter-1;
-                    #if (me.check) printDebug(" fresh ",me.checkFresh,", fading ",me.checkFading, ", timetoshow ", me.items[me.txt_count].discover);
-                    #if (me.check) printDebug("  time ",me.items[me.txt_count].discover > systime()-me.sensor.searchStart,",  shown ",me.items[me.txt_count].discoverSCT," now",me.sensor.searchCounter);
-                    if (!me.check or (!me.checkFresh and !me.checkFading) ) {
-                        me.rdrTxt[me.txt_count].hide();
-                        continue;
-                    }
-                    me.data = me.items[me.txt_count];
-                    append(me.clickableItems, me.data);
-                    if (me.checkFresh) {
-                        me.data.discoverShown = me.data.discover;
-                        me.data.discoverSCTShown = me.data.discoverSCT;
-                    }
-                    me.dataPos = [me.extrapolate(me.data.pos[0], me.sensor.x[0], me.sensor.x[1], me.fieldX, me.fieldX + me.fieldW), me.extrapolate(me.data.pos[1], me.sensor.y[0], me.sensor.y[1], me.fieldY + me.fieldH, me.fieldY)];
-                    me.data.xyPos = me.dataPos;
-                    me.rdrTxt[me.txt_count].setText(me.data.mdl~me.data.radiSpike);
-                    me.rdrTxt[me.txt_count].setTranslation(me.dataPos);
-                    me.rdrTxt[me.txt_count].show();
-                    if (!me.topCheck[me.data.tblIdx]) {
-                        me.topLine ~= me.data.mdl~"   ";
-                        me.topCheck[me.data.tblIdx] = 1;
-                    }
-                }
-                me.detectedThreatStatusBoxText.setText(me.topLine);
-                if (cursor_click == me.index) {
-                    me.handoffTarget = me.click(me.clickableItems);
-                    if (me.handoffTarget != nil) {
-                        me.sensor.handoffTime = me.elapsed;
-                        me.sensor.handoffTarget = me.handoffTarget;
-                        #printDebug("MFD: Clicked handoff on ",!cursor_click?"LEFT":"RIGHT");#TODO: need right display
-                    }
-                    cursor_click = -1;
-                } elsif(cursor_click != -1) {
-                    #printDebug("MFD: Failed click. It was ",!cursor_click?"LEFT":"RIGHT");#TODO: need right display
-                }
+	            	var osb = "OSB"~(me.jj+1);
+	                if (size(me.sensor.tables[me.sensor.currtable])>me.jj) {
+	                    me.device.controls[osb].setControlText(me.sensor.tables[me.sensor.currtable][me.jj], !me.sensor.currtableSelects[me.jj]);
+	                } else {
+	                	me.device.controls[osb].setControlText("");
+	                }
+	            }
             } else {
-                # Not searching
-                me.crossX.show();
-                me.crossY.show();
-                me.crossX1.show();
-                me.crossX2.show(); 
-                me.crossX3.show();
-                me.crossX4.show();
-                me.crossX5.show();
-                me.crossX6.show();
-                me.crossY1.show();
-                me.crossY2.show();
-                me.crossY2.show();
-                #me.dashBox.show();
-                me.cross.hide();
-                me.handoffTxt.hide();
-                me.topLine = "   ";
-                me.topCheck = [0,0,0,0,0];
-                me.detectedThreatStatusBoxText.setText(me.topLine);
+            	me.groupRdr.show();
+            	me.device.controls["OSB7"].setControlText("RS");
+            	me.device.controls["OSB11"].setControlText("HAS",0);
+				me.device.controls["OSB15"].setControlText("UFC");
 
-                for (me.txt_count = 0; me.txt_count < 5; me.txt_count += 1) {
-                    me.rdrTxt[me.txt_count].hide();
-                }
+	            #CURSOR
 
-                if (cursor_click == me.index) {
-                    cursor_click = -1;
-                }
-            }
+	            me.IMSOI = me.device.soi == 1;
 
-            if (me.sensor.handoffTarget == nil and me.harmSelected) {
-                me.radWeap.clearTgt();
-                me.radWeap.setContacts([]);
-            }
-            for (me.jj = 0; me.jj < 5;me.jj += 1) {
-            	var osb = "OSB"~(me.jj+1);
-                if (size(me.sensor.tables[me.sensor.currtable])>me.jj) {
-                    me.device.controls[osb].setControlText(me.sensor.tables[me.sensor.currtable][me.jj], me.osbShow[me.jj]);
-                } else {
-                	me.device.controls[osb].setControlText("");
-                }
-            }
+	            me.slew_x = getprop("controls/displays/target-management-switch-x[" ~ me.model_index ~ "]");
+	            me.slew_y = -getprop("controls/displays/target-management-switch-y[" ~ me.model_index ~ "]");
+
+	            if (noti.getproper("viewName") != "TGP" and me.IMSOI) {
+	                f16.resetSlew();
+	            }
+
+	            if (me.IMSOI) {
+	                if ((me.slew_x != 0 or me.slew_y != 0 or slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.index) and noti.getproper("viewName") != "TGP" and me.sensor.handoffTarget == nil) {
+	                    cursor_destination = nil;
+	                    cursor_posHAS[0] += me.slew_x*175;
+	                    cursor_posHAS[1] -= me.slew_y*175;
+	                    cursor_posHAS[0] = math.clamp(cursor_posHAS[0], -displayWidthHalf, displayWidthHalf);
+	                    cursor_posHAS[1] = math.clamp(cursor_posHAS[1], -displayHeight, 0);
+	                    cursor_click = (slew_c and !me.slew_c_last)?me.index:-1;
+	                    cursor_lock = me.index;
+	                } elsif (cursor_lock == me.index or (me.slew_x == 0 or me.slew_y == 0 or slew_c == 0)) {
+	                    cursor_lock = -1;
+	                }
+	            
+	                me.slew_c_last = slew_c;
+	                slew_c = 0;
+	            }
+	            me.elapsed = noti.getproper("elapsed");
+	            me.cursor.setTranslation(cursor_posHAS);
+	            me.cursor.setVisible(me.sensor.handoffTarget == nil);
+	            if (0 and cursor_click==0) printDebug(cursor_posHAS[0],", ",cursor_posHAS[1]+displayHeight, "  click: ", cursor_click);
+
+	            
+	            
+	            me.device.controls["OSB12"].setControlText("TBL"~(me.sensor.currtable + 1));
+	            
+	            if (me.sensor.fov_desired == 1) {
+	                me.fovTxt = "CTR";
+	                me.crossX.setTranslation(0,me.fieldH*0.25); 
+	                me.crossY.setTranslation(0,0);
+	                me.crossX1.setTranslation(me.fieldX+20*me.fieldW/6, me.fieldY+me.fieldH*0.5); 
+	                me.crossX2.setTranslation(me.fieldX+20*me.fieldW/6, me.fieldY+me.fieldH*0.5); 
+	                me.crossX3.setTranslation(me.fieldX+1*me.fieldW/6, me.fieldY+me.fieldH*0.5); 
+	                me.crossX4.setTranslation(me.fieldX+5*me.fieldW/6, me.fieldY+me.fieldH*0.5); 
+	                me.crossX5.setTranslation(me.fieldX+20*me.fieldW/6, me.fieldY+me.fieldH*0.5); 
+	                me.crossX6.setTranslation(me.fieldX+20*me.fieldW/6, me.fieldY+me.fieldH*0.5); 
+	                me.crossY1.setTranslation(0, me.fieldY+me.fieldH*0.5+2*me.fieldH*0.75/3);
+	                me.crossY2.setTranslation(0, me.fieldY+me.fieldH*0.5+4*me.fieldH*0.75/3);
+	                me.crossY3.setTranslation(0, me.fieldY+me.fieldH*0.5+6*me.fieldH*0.75/3);
+	            } elsif (me.sensor.fov_desired == 2) {
+	                me.fovTxt = "LEFT";
+	                me.crossX.setTranslation(0,0); 
+	                me.crossY.setTranslation(-me.fieldX,0);
+	                me.crossX1.setTranslation(me.fieldX,                    me.fieldY+me.fieldH*0.25); 
+	                me.crossX2.setTranslation(me.fieldX+2*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
+	                me.crossX3.setTranslation(me.fieldX+4*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
+	                me.crossX4.setTranslation(me.fieldX+6*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
+	                me.crossX5.setTranslation(me.fieldX+8*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
+	                me.crossX6.setTranslation(me.fieldX+10*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
+	                me.crossY1.setTranslation(-me.fieldX, me.fieldY+me.fieldH*0.25+1*me.fieldH*0.75/3);
+	                me.crossY2.setTranslation(-me.fieldX, me.fieldY+me.fieldH*0.25+2*me.fieldH*0.75/3);
+	                me.crossY3.setTranslation(-me.fieldX, me.fieldY+me.fieldH*0.25+3*me.fieldH*0.75/3);
+	            } elsif (me.sensor.fov_desired == 3) {
+	                me.fovTxt = "RGHT";
+	                me.crossX.setTranslation(0,0); 
+	                me.crossY.setTranslation(me.fieldX,0);
+	                me.crossX1.setTranslation(me.fieldX,                    me.fieldY+me.fieldH*0.25); 
+	                me.crossX2.setTranslation(me.fieldX+2*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
+	                me.crossX3.setTranslation(me.fieldX+4*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
+	                me.crossX4.setTranslation(me.fieldX+6*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
+	                me.crossX5.setTranslation(me.fieldX+8*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
+	                me.crossX6.setTranslation(me.fieldX+10*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
+	                me.crossY1.setTranslation(me.fieldX, me.fieldY+me.fieldH*0.25+1*me.fieldH*0.75/3);
+	                me.crossY2.setTranslation(me.fieldX, me.fieldY+me.fieldH*0.25+2*me.fieldH*0.75/3);
+	                me.crossY3.setTranslation(me.fieldX, me.fieldY+me.fieldH*0.25+3*me.fieldH*0.75/3);
+	            } else {
+	                me.fovTxt = "WIDE";
+	                me.crossX.setTranslation(0,0); 
+	                me.crossY.setTranslation(0,0);
+	                me.crossX1.setTranslation(me.fieldX, me.fieldY+me.fieldH*0.25); 
+	                me.crossX2.setTranslation(me.fieldX+1*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
+	                me.crossX3.setTranslation(me.fieldX+2*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
+	                me.crossX4.setTranslation(me.fieldX+3*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
+	                me.crossX5.setTranslation(me.fieldX+4*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
+	                me.crossX6.setTranslation(me.fieldX+5*me.fieldW/6, me.fieldY+me.fieldH*0.25); 
+	                me.crossY1.setTranslation(0, me.fieldY+me.fieldH*0.25+1*me.fieldH*0.75/3);
+	                me.crossY2.setTranslation(0, me.fieldY+me.fieldH*0.25+2*me.fieldH*0.75/3);
+	                me.crossY3.setTranslation(0, me.fieldY+me.fieldH*0.25+3*me.fieldH*0.75/3);
+	            }
+	            me.device.controls["OSB13"].setControlText(me.fovTxt);
+
+	            if (me.sensor.enabled) {
+	                me.cycleTimeLeft = math.max(0,me.sensor.dura-(me.elapsed-me.sensor.searchStart));
+	                me.searchText.setText(sprintf("%d:%02d   SCT-%d",(me.cycleTimeLeft)/60, math.mod(me.cycleTimeLeft,60),me.sensor.searchCounter));
+	                me.searchText.show();
+	            } else {
+	                me.searchText.hide();
+	            }
+
+	            me.items = me.sensor.vector_aicontacts_seen;
+	            me.iter = size(me.items)-1;
+
+	            if (me.harmSelected and me.sensor.handoffTarget != nil and me.radWeap.status < armament.MISSILE_LOCK) {
+	                # This makes sure we go from handover back to search when missile loses lock
+	                if (me.elapsed-me.sensor.handoffTime > 1) {
+	                    # It had time to get lock, but failed or masterarm was off
+	                    me.radWeap.setContacts([]);
+	                    me.sensor.handoffTarget = nil;
+	                }
+	            } elsif (!me.harmSelected) {
+	                me.sensor.handoffTarget = nil;
+	            }
+
+	            if (noti.FrameCount == 1 and me.sensor.handoffTarget == nil) {
+	                for (me.jj = 0; me.jj < 5;me.jj += 1) {
+	                	me.osbShow[me.jj] = 1;
+	                }
+	            }
+
+	            if (me.sensor.handoffTarget != nil) {
+	                # Handoff
+	                me.dataPos = [me.extrapolate(me.sensor.handoffTarget.get_bearing()-radar_system.self.getHeading(), -30, 30, -me.fieldW*0.5, me.fieldW*0.5), me.extrapolate(me.sensor.handoffTarget.getElevation()-radar_system.self.getPitch(), -30, 30, me.fieldW*0.5, -me.fieldW*0.5)];
+	                if (math.sqrt(me.dataPos[0]*me.dataPos[0]+me.dataPos[1]*me.dataPos[1]) < me.fieldDiag) {
+	                    me.rot = radar_system.self.getRoll()*D2R;
+	                    me.handoffRot.setRotation(-me.rot);
+	                    me.handoffTxt.setTranslation(me.dataPos);
+	                    me.handoffTxt.setRotation(me.rot);
+	                    me.handoffTxt.setText(me.sensor.handoffTarget.mdl~me.sensor.handoffTarget.radiSpike);
+	                    me.handoffTxt.show();
+	                } else {
+	                    me.handoffTxt.hide();
+	                }
+	                me.cross.setTranslation(0, me.fieldY + me.fieldH*0.5);
+	                me.rdrTxt[0].hide();
+	                me.rdrTxt[1].hide();
+	                me.rdrTxt[2].hide();
+	                me.rdrTxt[3].hide();
+	                me.rdrTxt[4].hide();
+	                me.crossX.hide();
+	                me.crossY.hide();
+	                me.crossX1.hide();
+	                me.crossX2.hide(); 
+	                me.crossX3.hide();
+	                me.crossX4.hide();
+	                me.crossX5.hide();
+	                me.crossX6.hide();
+	                me.crossY1.hide();
+	                me.crossY2.hide();
+	                me.crossY2.hide();
+	                #me.dashBox.hide();
+	                me.cross.show();
+
+	                for (me.jj = 0; me.jj < 5;me.jj += 1) {
+	                    if (me.sensor.handoffTarget["tblIdx"] == me.jj) {
+	                        me.osbShow[me.jj] = 0;
+	                    } else {
+	                        me.osbShow[me.jj] = 1;
+	                    }
+	                }
+
+	                if (cursor_click == me.index) {
+	                    me.sensor.handoffTarget = nil;
+	                    cursor_click = -1;
+	                    # not needed anymore due to last lines in method:
+	                    #if (me.radWeap != nil and me.radWeap["guidance"] == "radiation") {
+	                    #    me.radWeap.setContacts([]);
+	                    #    me.radWeap.clearTgt();
+	                    #}
+	                } elsif (me.harmSelected) {
+	                    me.radWeap.setContacts([me.sensor.handoffTarget]);
+	                }
+	            } elsif (me.sensor.enabled) {
+	                # Search
+	                me.crossX.show();
+	                me.crossY.show();
+	                me.crossX1.show();
+	                me.crossX2.show(); 
+	                me.crossX3.show();
+	                me.crossX4.show();
+	                me.crossX5.show();
+	                me.crossX6.show();
+	                me.crossY1.show();
+	                me.crossY2.show();
+	                me.crossY2.show();
+	                #me.dashBox.show();
+	                me.cross.hide();
+	                me.handoffTxt.hide();
+	                me.topLine = "   ";
+	                me.topCheck = [0,0,0,0,0];
+	                me.clickableItems = [];
+	                for (me.txt_count = 0; me.txt_count < 5; me.txt_count += 1) {
+	                    me.check = !(me.txt_count > me.iter);
+	                    me.checkFresh = me.check and me.items[me.txt_count].discover < me.elapsed-me.sensor.searchStart and me.items[me.txt_count].discoverSCT==me.sensor.searchCounter;
+	                    me.checkFading = me.check and me.items[me.txt_count]["discoverSCTShown"] == me.sensor.searchCounter-1;
+	                    #if (me.check) printDebug(" fresh ",me.checkFresh,", fading ",me.checkFading, ", timetoshow ", me.items[me.txt_count].discover);
+	                    #if (me.check) printDebug("  time ",me.items[me.txt_count].discover > systime()-me.sensor.searchStart,",  shown ",me.items[me.txt_count].discoverSCT," now",me.sensor.searchCounter);
+	                    if (!me.check or (!me.checkFresh and !me.checkFading) ) {
+	                        me.rdrTxt[me.txt_count].hide();
+	                        continue;
+	                    }
+	                    me.data = me.items[me.txt_count];
+	                    append(me.clickableItems, me.data);
+	                    if (me.checkFresh) {
+	                        me.data.discoverShown = me.data.discover;
+	                        me.data.discoverSCTShown = me.data.discoverSCT;
+	                    }
+	                    me.dataPos = [me.extrapolate(me.data.pos[0], me.sensor.x[0], me.sensor.x[1], me.fieldX, me.fieldX + me.fieldW), me.extrapolate(me.data.pos[1], me.sensor.y[0], me.sensor.y[1], me.fieldY + me.fieldH, me.fieldY)];
+	                    me.data.xyPos = me.dataPos;
+	                    me.rdrTxt[me.txt_count].setText(me.data.mdl~me.data.radiSpike);
+	                    me.rdrTxt[me.txt_count].setTranslation(me.dataPos);
+	                    me.rdrTxt[me.txt_count].show();
+	                    if (!me.topCheck[me.data.tblIdx]) {
+	                        me.topLine ~= me.data.mdl~"   ";
+	                        me.topCheck[me.data.tblIdx] = 1;
+	                    }
+	                }
+	                me.detectedThreatStatusBoxText.setText(me.topLine);
+	                if (cursor_click == me.index) {
+	                    me.handoffTarget = me.click(me.clickableItems);
+	                    if (me.handoffTarget != nil) {
+	                        me.sensor.handoffTime = me.elapsed;
+	                        me.sensor.handoffTarget = me.handoffTarget;
+	                        #printDebug("MFD: Clicked handoff on ",!cursor_click?"LEFT":"RIGHT");#TODO: need right display
+	                    }
+	                    cursor_click = -1;
+	                } elsif(cursor_click != -1) {
+	                    #printDebug("MFD: Failed click. It was ",!cursor_click?"LEFT":"RIGHT");#TODO: need right display
+	                }
+	            } else {
+	                # Not searching
+	                me.crossX.show();
+	                me.crossY.show();
+	                me.crossX1.show();
+	                me.crossX2.show(); 
+	                me.crossX3.show();
+	                me.crossX4.show();
+	                me.crossX5.show();
+	                me.crossX6.show();
+	                me.crossY1.show();
+	                me.crossY2.show();
+	                me.crossY2.show();
+	                #me.dashBox.show();
+	                me.cross.hide();
+	                me.handoffTxt.hide();
+	                me.topLine = "   ";
+	                me.topCheck = [0,0,0,0,0];
+	                me.detectedThreatStatusBoxText.setText(me.topLine);
+
+	                for (me.txt_count = 0; me.txt_count < 5; me.txt_count += 1) {
+	                    me.rdrTxt[me.txt_count].hide();
+	                }
+
+	                if (cursor_click == me.index) {
+	                    cursor_click = -1;
+	                }
+	            }
+
+	            if (me.sensor.handoffTarget == nil and me.harmSelected) {
+	                me.radWeap.clearTgt();
+	                me.radWeap.setContacts([]);
+	            }
+	            for (me.jj = 0; me.jj < 5;me.jj += 1) {
+	            	var osb = "OSB"~(me.jj+1);
+	                if (size(me.sensor.tables[me.sensor.currtable])>me.jj and me.sensor.currtableSelects[me.jj]) {
+	                    me.device.controls[osb].setControlText(me.sensor.tables[me.sensor.currtable][me.jj], me.osbShow[me.jj]);
+	                } else {
+	                	me.device.controls[osb].setControlText("");
+	                }
+	            }
+	        }
         },
         click: func (items) {
             me.clostestItem = nil;
@@ -6088,6 +6140,7 @@ var DisplaySystem = {
         },
 		exit: func {
 			printDebug("Exit ",me.name~" on ",me.device.name);
+			me.srchSelect = 0;
 		},
 		links: {
 			"OSB11": "PageMenu",

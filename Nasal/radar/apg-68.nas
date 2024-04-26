@@ -2686,6 +2686,7 @@ var RadSensor = {
 	timing: 0.05,
 	table: [],
     tables: [["2","3","5","6"],["17","20","P"],["AAA","S","SH"]],
+    currtableSelects: [1,1,1,1,1],
 	currtable: 0,
 	handoffTarget: nil,
 	handoffTime: 0,
@@ -2721,7 +2722,12 @@ var RadSensor = {
     	me.timing = 0.05;
 	},
 	calcDura: func {
-		me.dura = me.maxDura * me.area/me.maxArea * size(me.table)/5;
+		me.numberMax = size(me.table);
+		me.number = 0;
+		for (me.k = 0; me.k < me.numberMax; me.k += 1) {
+			if (me.currtableSelects[me.k]) me.number += 1;
+		}
+		me.dura = me.maxDura * me.area/me.maxArea * me.number/5;
 	},
 	scan: func {
 		if (!me.enabled) {
@@ -2778,6 +2784,7 @@ var RadSensor = {
 	    	            me.candidate.mdl = radiation_list[me.candidateModel];
 	                    
 	                    for (me.i = 0; me.i < size(me.table);me.i+=1) {
+	                    	if (!me.currtableSelects[me.i]) continue;
 	                        me.tableitem = me.table[me.i];
 	                        if (me.candidate.mdl == me.tableitem) {
 	                            me.ok = 1;
