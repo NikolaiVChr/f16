@@ -72,6 +72,7 @@ var margin = {
 	has: {
 		statusBox: 40,
 		searchText: 45,
+		statusText: 10,
 	},
 };
 
@@ -5619,6 +5620,12 @@ var DisplaySystem = {
 	                        .setFontSize(me.device.fontSize, 1.0)
 	                        .setColor(colorText2);
 
+	        me.statusText = me.groupRdr.createChild("text")
+	                        .setAlignment("center-top")
+	                        .setTranslation(0, margin.has.statusText+me.height * 0.25 + fieldH)
+	                        .setFontSize(me.device.fontSize, 1.0)
+	                        .setColor(colorText2);
+
 	        me.crossY = me.groupRdr.createChild("path")
 	                .moveTo(0, me.fieldY)
 	                .vert(fieldH)
@@ -5965,6 +5972,7 @@ var DisplaySystem = {
 
 	            if (me.sensor.handoffTarget != nil) {
 	                # Handoff
+	                me.statusText.setText("RDY");
 	                me.dataPos = [me.extrapolate(me.sensor.handoffTarget.get_bearing()-radar_system.self.getHeading(), -45, 45, -me.fieldW*0.5, me.fieldW*0.5), me.extrapolate(me.sensor.handoffTarget.getElevation()-radar_system.self.getPitch(), -45, 45, me.fieldW*0.5, -me.fieldW*0.5)];
 	                if (math.sqrt(me.dataPos[0]*me.dataPos[0]+me.dataPos[1]*me.dataPos[1]) < me.fieldDiag) {
 	                    me.rot = radar_system.self.getRoll()*D2R;
@@ -6017,6 +6025,7 @@ var DisplaySystem = {
 	                }
 	            } elsif (me.sensor.enabled) {
 	                # Search
+	                me.statusText.setText("");
 	                me.crossX.show();
 	                me.crossY.show();
 	                me.crossX1.show();
@@ -6074,6 +6083,7 @@ var DisplaySystem = {
 	                }
 	            } else {
 	                # Not searching
+	                me.statusText.setText("");
 	                me.crossX.show();
 	                me.crossY.show();
 	                me.crossX1.show();
