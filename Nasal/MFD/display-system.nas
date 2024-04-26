@@ -5789,18 +5789,22 @@ var DisplaySystem = {
                     if (me.radWeap["guidance"] == "radiation" and me.radWeap.getStatus() >= armament.MISSILE_SEARCH) {
                         me.sensor.maxArea = me.fieldW * me.fieldH;
                         if (me.sensor.fov_desired == 1) {
+                        	# center
                             me.sensor.area = me.sensor.maxArea*0.25;
                             me.sensor.x    = [-15, 15];
                             me.sensor.y    = [-10, 10];#todo: something of here, decide proper
                         } elsif (me.sensor.fov_desired == 2) {
+                        	# left
                             me.sensor.area = me.sensor.maxArea*0.5;
                             me.sensor.x    = [-30, 0];
                             me.sensor.y    = [-30, 10];
                         } elsif (me.sensor.fov_desired == 3) {
+                        	# right
                             me.sensor.area = me.sensor.maxArea*0.5;
                             me.sensor.x    = [0, 30];
                             me.sensor.y    = [-30, 10];
                         } else {
+                        	# wide
                             me.sensor.area = me.sensor.maxArea;
                             me.sensor.x    = [-30, 30];
                             me.sensor.y    = [-30, 10];
