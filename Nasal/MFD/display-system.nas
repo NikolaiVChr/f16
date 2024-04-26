@@ -5841,6 +5841,7 @@ var DisplaySystem = {
             	me.groupRdr.show();
             	me.device.controls["OSB7"].setControlText("RS");
             	me.device.controls["OSB11"].setControlText("HAS",0);
+            	me.device.controls["OSB14"].setControlText("SRCH");
 				me.device.controls["OSB15"].setControlText("UFC");
 
 	            #CURSOR
