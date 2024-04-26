@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery> 
+    <name type="string">111PM 347 Mira, #075</name>
+    <texture>Liveries/Block50/93-1075.png</texture>
+    <owner type="string">HAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Three-tone camo</scheme>
+    <block type="int">50</block>
+    <serial type="string">93-1075</serial>
+    <squad type="string">347 Mira</squad>
+    <year type="string">2007</year>
+   </livery>
+
+   <livery-logo>
+    <texture>Liveries/Block50/greek.logo.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block30/patch.Hellas.png</texture>
+   </livery-patch>
+
+  <livery-pod>
+        <texture>Liveries/Block10/pod.white.png</texture>
+    </livery-pod>
+
+  <f16>
+    <dragchute type="bool">true</dragchute>
+    <cft type="bool">false</cft>
+  </f16>
+  <livery-specular type="double">0.35</livery-specular>
+  </model>
+ </sim>
+</PropertyList>
