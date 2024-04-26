@@ -5964,7 +5964,7 @@ var DisplaySystem = {
 
 	            if (me.sensor.handoffTarget != nil) {
 	                # Handoff
-	                me.dataPos = [me.extrapolate(me.sensor.handoffTarget.get_bearing()-radar_system.self.getHeading(), -30, 30, -me.fieldW*0.5, me.fieldW*0.5), me.extrapolate(me.sensor.handoffTarget.getElevation()-radar_system.self.getPitch(), -30, 30, me.fieldW*0.5, -me.fieldW*0.5)];
+	                me.dataPos = [me.extrapolate(me.sensor.handoffTarget.get_bearing()-radar_system.self.getHeading(), -45, 45, -me.fieldW*0.5, me.fieldW*0.5), me.extrapolate(me.sensor.handoffTarget.getElevation()-radar_system.self.getPitch(), -45, 45, me.fieldW*0.5, -me.fieldW*0.5)];
 	                if (math.sqrt(me.dataPos[0]*me.dataPos[0]+me.dataPos[1]*me.dataPos[1]) < me.fieldDiag) {
 	                    me.rot = radar_system.self.getRoll()*D2R;
 	                    me.handoffRot.setRotation(-me.rot);
