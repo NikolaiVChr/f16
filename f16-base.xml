@@ -1282,6 +1282,7 @@
             <msl-vol-knob type="double">0.5</msl-vol-knob>
             <rwr-volume type="double">0.7</rwr-volume>
             <rwr-int type="double">1.0</rwr-int>
+            <ewpi-brt type="double">0.6</ewpi-brt>
             <rwr-separate type="bool">false</rwr-separate>
             <rwr-show-priority-only type="bool">false</rwr-show-priority-only>
             <rwr-show-unknowns type="bool">false</rwr-show-unknowns>

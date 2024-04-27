@@ -10,6 +10,7 @@
   <object-name>button_pri</object-name>
   <object-name>button_sep</object-name>
   <object-name>button_unk</object-name>
+  <object-name>md</object-name>
   <type>material</type>
   <emission>
    <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
@@ -18,6 +19,64 @@
    <blue>0.18</blue>
   </emission>
  </animation>
+
+ <animation>
+        <object-name>jmrDisplay</object-name>
+        <object-name>cmDisplay</object-name>
+        <type>material</type>
+        <condition>
+            <greater-than-equals>
+                <property>f16/avionics/power-ufc-warm</property>
+                <value>0.90</value>
+            </greater-than-equals>
+        </condition>
+        <emission>
+            <factor-prop>f16/ews/ewpi-brt</factor-prop>
+            <red>  1</red>
+            <green>1</green>
+            <blue> 1</blue>
+        </emission>
+    </animation>
+
+ <animation>
+        <type>knob</type>
+        <object-name>brt-knob</object-name>
+        <property>f16/ews/ewpi-brt</property>
+        <factor>360</factor>
+        <offset-deg>0</offset-deg>
+        <center>
+            <x-m>  0.00 </x-m>
+            <y-m> 0.021798 </y-m>
+            <z-m> 0.013802 </z-m>
+        </center>
+        <axis>
+            <x> 1.0 </x>
+            <y> 0.0 </y>
+            <z> 0.0 </z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/ews/ewpi-brt</property>
+                <factor>1</factor>
+                <step>0.05</step>
+                <min>0.05</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/ews/ewpi-brt</property>
+                <factor>1</factor>
+                <step>-0.05</step>
+                <min>0.05</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </decrease>
+    </animation>
 
   <animation>
   <object-name>launch</object-name>
@@ -127,6 +186,33 @@
                 <label>Hold down to separate RWR contacts</label>
             </binding>
         </hovered>
+    </animation>
+
+    <animation>
+        <type>pick</type>
+        <object-name>md</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>property-assign</command>
+                <property>f16/ews/jmr-md</property>
+                <value>1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/ews/jmr-md</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
+        </action>
+        <!--hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-md</tooltip-id>
+                <label>Jammer mode</label>
+            </binding>
+        </hovered-->
     </animation>
 
      <animation>

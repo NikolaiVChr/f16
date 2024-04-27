@@ -274,8 +274,8 @@ var medium_fast = {
             setprop("ai/submodels/submodel[0]/flare-release-snd", 0);
             setprop("ai/submodels/submodel[0]/flare-release-out-snd", 0);
         }
-        var flareOn = getprop("ai/submodels/submodel[0]/flare-release-cmd") and getprop("f16/ews/ew-mode-knob") == 1;
-        var flareOnA = getprop("ai/submodels/submodel[0]/flare-auto-release-cmd") > rand() and getprop("f16/ews/ew-mode-knob") == 2 and getprop("ai/submodels/submodel[0]/flare-release-cmd") == 0;
+        var flareOn = getprop("ai/submodels/submodel[0]/flare-release-cmd") and getprop("f16/ews/ew-mode-knob") == 1 and getprop("f16/avionics/cmds-fl-switch") == 1;#todo: seperate chaff and flare counting
+        var flareOnA = getprop("ai/submodels/submodel[0]/flare-auto-release-cmd") > rand() and getprop("f16/ews/ew-mode-knob") == 2 and getprop("ai/submodels/submodel[0]/flare-release-cmd") == 0 and getprop("f16/avionics/cmds-fl-switch") == 1;
         flareOn = flareOn or flareOnA;
 
         if (flareOn == 1 and getprop("ai/submodels/submodel[0]/flare-release") == 0
@@ -1832,6 +1832,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
         pfd.callInit();
         pfd.loop_pfd();
         frd.callInit();
+        frd.callInit2();
         frd.loop_freqDsply();
         mps.loop();
         start.enableViews();

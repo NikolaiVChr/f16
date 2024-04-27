@@ -185,7 +185,10 @@
                 <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
                 <value>20</value>
             </greater-than-equals>
-            <property>f16/ews/ew-disp-switch</property>
+            <greater-than>
+                <property>f16/ews/ew-mode-knob</property>
+                <value>0</value>
+            </greater-than>
           </condition>
         <emission>
             <red>1</red>
