@@ -212,6 +212,7 @@ var radar_signatures = {
 var id2warhead = [];
 var launched = {};# callsign: elapsed-sec
 var approached = {};# callsign: uniqueID
+var lastSeenTacObject = {};# tacID: last time seen
 var heavy_smoke = [61,62,63,65,92,96,97,100];
 
 var k = keys(warheads);
@@ -322,6 +323,31 @@ var DamageRecipient =
                 var index = DamageRecipient.emesaryID2typeID(notification.SecondaryKind);
                 var typ = id2warhead[index];
 
+                if (tacview_supported and tacview.starttime and (getprop("sim/multiplay/txhost") != "mpserver.opredflag.com" or m28_auto) and notification.NotificationType == "ObjectInFlightNotification") {
+                  # record other aircraft flares to tacview
+                  var wh = id2warhead[DamageRecipient.emesaryID2typeID(notification.SecondaryKind)][4];
+                  var tacID = left(md5(notification.Callsign~notification.UniqueIdentity~wh),6);
+                  var elapsed = getprop("sim/time/elapsed-sec");
+                  lastSeenTacObject[tacID] = elapsed;
+                  if (notification.Kind == 2) {
+                    var target = ",Color=Red";                  
+                    if (wh=="Flare") wh=wh~",Type=Flare";
+                    var content = sprintf("%s,T=%.6f|%.6f|%.2f|0|%.1f|%.1f,TAS=%.2f,AOA=0,Visible=1,Name=%s,%s\n",tacID,notification.Position.lon(),notification.Position.lat(),notification.Position.alt(),0,0,0,wh,target);
+                    thread.lock(tacview.mutexWrite);
+                    tacview.write("#" ~ (systime() - tacview.starttime)~"\n");
+                    tacview.write(content);
+                    thread.unlock(tacview.mutexWrite);
+                  } else {
+                    thread.lock(tacview.mutexWrite);
+                    tacview.write("#" ~ (systime() - tacview.starttime)~"\n");
+                    tacview.write(tacID ~ ",Visible=0"~"\n");
+                    tacview.write("0,Event=LeftArea|"~tacID~"|\n");
+                    #tacview.write("0,Event=Destroyed|"~tacID~"|\n");
+                    #tacview.write("-"~tacID~"\n");
+                    thread.unlock(tacview.mutexWrite);
+                  }
+                }
+
                 if (notification.Kind == MOVE) {
                   if (thrustOn or index == 93 or index == 95) {
                     # visualize missile smoke trail
@@ -332,6 +358,7 @@ var DamageRecipient =
                       } elsif (index == 95) {
                         smoke = 3;
                         if (notification.Position.distance_to(ownPos)*M2NM > 5) {
+                          # Don't bother to show flares further than 5 nm
                           return emesary.Transmitter.ReceiptStatus_OK;
                         }
                       } else {
@@ -353,8 +380,11 @@ var DamageRecipient =
                 }
 
                 if (tacview_supported and (getprop("sim/multiplay/txhost") != "mpserver.opredflag.com" or m28_auto)) {
+                  # Record armament flightpath in tacview
                   if (tacview.starttime) {
                     var tacID = left(md5(notification.Callsign~notification.UniqueIdentity),6);
+                    var elapsed = getprop("sim/time/elapsed-sec");
+                    lastSeenTacObject[tacID] = elapsed;
                     if (notification.Kind == DESTROY) {
                       thread.lock(tacview.mutexWrite);
                       tacview.write("#" ~ (systime() - tacview.starttime)~"\n");
@@ -451,6 +481,7 @@ var DamageRecipient =
                     }
                     var callsign = processCallsign(getprop("sim/multiplay/callsign"));
                     if (tacview_supported and tacview.starttime and (getprop("sim/multiplay/txhost") != "mpserver.opredflag.com" or m28_auto or notification.RemoteCallsign == callsign)) {
+                      # Record hits in tacview
                         var node = getCallsign(notification.RemoteCallsign);
                         if (notification.RemoteCallsign == callsign) node = 1;
                         if (node != nil and (notification.SecondaryKind > 20 or notification.SecondaryKind < -40)) {
@@ -1407,6 +1438,23 @@ var processCallsigns = func () {
       setprop("payload/armament/MAW-active", 0);# resets every 1.1 seconds without warning
       setprop("payload/armament/MAW-semiactive", 0);
       setprop("payload/armament/MAW-semiactive-callsign", "");
+  }
+  if (tacview_supported and tacview.starttime) {
+    var keyss = keys(lastSeenTacObject);
+    var elapsed = getprop("sim/time/elapsed-sec");
+    var new_lastSeenTacObject = {};
+    foreach (var key; keyss) {
+      if (elapsed - lastSeenTacObject[key] > 30) {
+        thread.lock(tacview.mutexWrite);
+        tacview.write("#" ~ (systime() - tacview.starttime)~"\n");
+        tacview.write(key ~ ",Visible=0"~"\n");
+        tacview.write("0,Event=LeftArea|"~key~"|\n");
+        thread.unlock(tacview.mutexWrite);
+      } else {
+        new_lastSeenTacObject[key] = lastSeenTacObject[key];
+      }
+    }
+    lastSeenTacObject = new_lastSeenTacObject;
   }
 
   # spike handling:
