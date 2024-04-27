@@ -22,13 +22,7 @@
 #This is done for detecting a terrain between aircraft and target. Since 2017.2.1, a new method allow to do the same, faster, and with more precision. (See isNotBehindTerrain function)
 var versionString = getprop("sim/version/flightgear");
 var version = split(".", versionString);
-var major = num(version[0]);
-var minor = num(version[1]);
-var pica  = num(version[2]);
-var pickingMethod = 0;
-if ((major == 2017 and minor == 2 and pica >= 1) or (major == 2017 and minor > 2) or major > 2017) {
-    pickingMethod = 1;
-}
+
 setprop("/instrumentation/tfs/ground-altitude-ft",0);
 
 
@@ -175,7 +169,7 @@ var tfs_radar_calculation = func(delay_sec) {
 #settimer (tfs_radar, 0.1);
 
 var check_terrain_avoiding = func(coord){
-  if(pickingMethod != 1){return 1;}
+
   #We check that there is no terrain between our aircraft and our futur target altitude
   myPos = geo.aircraft_position();
 

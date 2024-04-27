@@ -962,8 +962,26 @@ append(obj.total, obj.speed_curr);
             .setColor(0,1,0)
             .set("z-index",11000);
             #.setTranslation(sx*0.5*uv_used,sy*0.25);
-            append(obj.total, obj.VV);
+        append(obj.total, obj.VV);
         obj.localizer = obj.centerOrigin.createChild("group");
+
+        obj.tfr = obj.centerOrigin.createChild("path")
+            .moveTo(-30*mr,-10*mr)
+            .horiz(60*mr)
+            .vert(20*mr)
+            .horiz(-60*mr)
+            .vert(-20*mr)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0);
+        append(obj.total, obj.tfr);
+        obj.tfrX = obj.centerOrigin.createChild("path")
+            .moveTo(-30*mr,-10*mr)
+            .lineTo(30*mr,10*mr)
+            .moveTo(30*mr,-10*mr)
+            .lineTo(-30*mr,10*mr)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0);
+        append(obj.total, obj.tfrX);
 
         obj.ilsGroup  = obj.localizer.createChild("group");
         obj.gsGroup   = obj.localizer.createChild("group");
@@ -1462,6 +1480,17 @@ append(obj.total, obj.speed_curr);
              func(hdp)
                                       {
                                         obj.r_show = 1;
+
+                                        if (getprop("f16/fcs/adv-mode") == 1 and getprop("f16/stores/nav-mounted") == 1) {
+                                                obj.tfr.show();
+                                                obj.tfrDiff = getprop("fdm/jsbsim/autoflight/pitch/vs/target")/150;#-3k to 3k
+                                                obj.tfr.setTranslation (hdp.VV_x, hdp.VV_y-obj.tfrDiff);
+                                                obj.tfrX.setTranslation (hdp.VV_x, hdp.VV_y-obj.tfrDiff);
+                                                obj.tfrX.setVisible(getprop("instrumentation/tfs/malfunction"));
+                                        } else {
+                                                obj.tfr.hide();
+                                                obj.tfrX.hide();
+                                        }
                                         
                                         if (hdp.getproper("fpm") > 0 and !hdp.getproper("dgft")) {
                                             obj.VV.setTranslation (hdp.VV_x, hdp.VV_y);
