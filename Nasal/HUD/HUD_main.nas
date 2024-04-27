@@ -1483,7 +1483,7 @@ append(obj.total, obj.speed_curr);
 
                                         if (getprop("f16/fcs/adv-mode") == 1 and getprop("f16/stores/nav-mounted") == 1) {
                                                 obj.tfr.show();
-                                                obj.tfrDiff = getprop("fdm/jsbsim/autoflight/pitch/vs/target")/150;#-3k to 3k
+                                                obj.tfrDiff = getprop("fdm/jsbsim/autoflight/pitch/vs/target-kin")/150;#-3k to 3k
                                                 obj.tfr.setTranslation (hdp.VV_x, hdp.VV_y-obj.tfrDiff);
                                                 obj.tfrX.setTranslation (hdp.VV_x, hdp.VV_y-obj.tfrDiff);
                                                 obj.tfrX.setVisible(getprop("instrumentation/tfs/malfunction"));

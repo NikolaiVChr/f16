@@ -320,6 +320,21 @@
 			</clipto>
 		</pure_gain>
 
+		<kinematic name="autoflight/pitch/vs/target-kin">
+            <input>autoflight/pitch/vs/target</input>
+            <noscale/>
+            <traverse>
+                <setting>
+                    <position>-3000</position>
+                    <time>0.0</time>
+                </setting>
+                <setting>
+                    <position>3000</position>
+                    <time>1.0</time>
+                </setting>
+            </traverse>
+        </kinematic>
+
 	</channel>
 
 	<channel name="Autoflight: Roll Channel">
