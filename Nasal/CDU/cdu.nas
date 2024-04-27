@@ -1,7 +1,8 @@
 var COLOR_YELLOW     = [1.00,1.00,0.00];
 var COLOR_BLUE_LIGHT = [0.50,0.50,1.00];
 var COLOR_BLUE_WHITE = [0.75,0.75,1.00];
-var COLOR_BLUE_DARK  = [0.00,0.00,0.25];
+var COLOR_BLUE_VERY_DARK  = [0.00,0.00,0.25];
+var COLOR_BLUE_DARK  = [0.00,0.00,0.50];
 var COLOR_SKY_LIGHT  = [0.30,0.30,1.00];
 var COLOR_RED        = [1.00,0.00,0.00];
 var COLOR_WHITE      = [1.00,1.00,1.00];
@@ -11,7 +12,7 @@ var COLOR_GRAY       = [0.25,0.25,0.25,0.50];
 var COLOR_GRAY_LIGHT = [0.75,0.75,0.75,0.50];
 var COLOR_SKY_DARK   = [0.15,0.15,0.60];
 var COLOR_BLACK      = [0.00,0.00,0.00];
-var COLOR_BUTTON_TEXT = COLOR_BLUE_DARK;
+var COLOR_BUTTON_TEXT = COLOR_BLUE_VERY_DARK;
 
 
 var str = func (d) {return ""~d};
@@ -1296,7 +1297,7 @@ var CDU = {
             append(me.baseLargeText,
                 me.base_grp.createChild("text")
                     .setText("ICAO")
-                    .setColor(COLOR_WHITE)
+                    .setColor(COLOR_BLUE_DARK)
                     .setAlignment("center-center")
                     .setTranslation(0,0)
                     .hide()
@@ -1987,10 +1988,18 @@ var CDU = {
         # me.center_tile_fraction is where in that tile we are located (normalized)
         # me.tile_offset is the negative buffer so that we show tiles all around us instead of only in x,y positive direction
 
-
+#print();
+#var posx = 0;
+#var posy = 0;
         for(var xxx = 0; xxx < num_tiles[0]; xxx += 1) {
             for(var yyy = 0; yyy < num_tiles[1]; yyy += 1) {
                 tiles[xxx][yyy].setTranslation(-math.floor((me.center_tile_fraction_x - xxx+me.tile_offset[0]) * tile_size), -math.floor((me.center_tile_fraction_y - yyy+me.tile_offset[1]) * tile_size));
+#var xxxx = posx -math.floor((me.center_tile_fraction_x - xxx+me.tile_offset[0]) * tile_size);
+#var yyyy = posy -math.floor((me.center_tile_fraction_y - yyy+me.tile_offset[1]) * tile_size);
+#printf("Pos %d,%d  (%d,%d)", -math.floor((me.center_tile_fraction_x - xxx+me.tile_offset[0]) * tile_size), -math.floor((me.center_tile_fraction_y - yyy+me.tile_offset[1]) * tile_size),xxxx,yyyy);                
+#printf("  center_tile_fraction_x(%.3f)-xxx(%d)+tile_offset(%.3f) =%.3f  [*tile_size=%.3f]",me.center_tile_fraction_x,xxx,me.tile_offset[0],me.center_tile_fraction_x - xxx+me.tile_offset[0],(me.center_tile_fraction_x - xxx+me.tile_offset[0]) * tile_size);
+#posx = math.floor((me.center_tile_fraction_x - xxx+me.tile_offset[0]) * tile_size);
+#posy = math.floor((me.center_tile_fraction_y - yyy+me.tile_offset[1]) * tile_size);
             }
         }
 
