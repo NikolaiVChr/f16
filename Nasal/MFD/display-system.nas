@@ -218,7 +218,9 @@ var zIndex = {
 		ring: 1,
 	},
 	has: {
-
+		statusBox: 12,
+		dashBox: 12,
+		cross: 20,
 	},
 };
 
@@ -5589,7 +5591,7 @@ var DisplaySystem = {
 	                .horiz(-fieldW)
 	                .vert(-me.height * 0.10)
 	                .setColor(colorLine1)
-	                .set("z-index",12)
+	                .set("z-index", zIndex.has.statusBox)
 	                .setStrokeLineWidth(lineWidth.has.statusBox);
 	        me.detectedThreatStatusBoxText = me.groupRdr.createChild("text")
 	                        .setAlignment("left-center")
@@ -5604,7 +5606,7 @@ var DisplaySystem = {
 	                .vert(-fieldH)
 	                .setColor(colorCircle1)
 	                .setStrokeDashArray([20,20])
-	                .set("z-index",12)
+	                .set("z-index", zIndex.has.dashBox)
 	                .setStrokeLineWidth(lineWidth.has.enclosure);
 
 	        me.handoffGrp = me.groupRdr.createChild("group");
@@ -5630,67 +5632,67 @@ var DisplaySystem = {
 	                .moveTo(0, me.fieldY)
 	                .vert(fieldH)
 	                .setColor(colorLine3)
-	                .set("z-index",20)
+	                .set("z-index",zIndex.has.cross)
 	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.crossX = me.groupRdr.createChild("path")
 	                .moveTo(-fieldW * 0.5, me.fieldY + fieldH * 0.25)
 	                .horiz(fieldW)
 	                .setColor(colorLine3)
-	                .set("z-index",20)
+	                .set("z-index",zIndex.has.cross0)
 	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.crossX1 = me.groupRdr.createChild("path")
 	                .moveTo(0, symbolSize.has.tick*0.5)
 	                .vert(-symbolSize.has.tick)
 	                .setColor(colorLine3)
-	                .set("z-index",20)
+	                .set("z-index",zIndex.has.cross)
 	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.crossX2 = me.groupRdr.createChild("path")
 	                .moveTo(0, symbolSize.has.tick*0.5)
 	                .vert(-symbolSize.has.tick)
 	                .setColor(colorLine3)
-	                .set("z-index",20)
+	                .set("z-index",zIndex.has.cross)
 	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.crossX3 = me.groupRdr.createChild("path")
 	                .moveTo(0, symbolSize.has.tick*0.5)
 	                .vert(-symbolSize.has.tick)
 	                .setColor(colorLine3)
-	                .set("z-index",20)
+	                .set("z-index",zIndex.has.cross)
 	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.crossX4 = me.groupRdr.createChild("path")
 	                .moveTo(0, symbolSize.has.tick*0.5)
 	                .vert(-symbolSize.has.tick)
 	                .setColor(colorLine3)
-	                .set("z-index",20)
+	                .set("z-index",zIndex.has.cross)
 	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.crossX5 = me.groupRdr.createChild("path")
 	                .moveTo(0, symbolSize.has.tick*0.5)
 	                .vert(-symbolSize.has.tick)
 	                .setColor(colorLine3)
-	                .set("z-index",20)
+	                .set("z-index",zIndex.has.cross)
 	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.crossX6 = me.groupRdr.createChild("path")
 	                .moveTo(0, symbolSize.has.tick*0.5)
 	                .vert(-symbolSize.has.tick)
 	                .setColor(colorLine3)
-	                .set("z-index",20)
+	                .set("z-index",zIndex.has.cross)
 	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.crossY1 = me.groupRdr.createChild("path")
 	                .moveTo(-symbolSize.has.tick*0.5, 0)
 	                .horiz(symbolSize.has.tick)
 	                .setColor(colorLine3)
-	                .set("z-index",20)
+	                .set("z-index",zIndex.has.cross)
 	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.crossY2 = me.groupRdr.createChild("path")
 	                .moveTo(-symbolSize.has.tick*0.5, 0)
 	                .horiz(symbolSize.has.tick)
 	                .setColor(colorLine3)
-	                .set("z-index",20)
+	                .set("z-index",zIndex.has.cross)
 	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.crossY3 = me.groupRdr.createChild("path")
 	                .moveTo(-symbolSize.has.tick*0.5, 0)
 	                .horiz(symbolSize.has.tick)
 	                .setColor(colorLine3)
-	                .set("z-index",20)
+	                .set("z-index",zIndex.has.cross)
 	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.cross = me.groupRdr.createChild("path")
 	                .moveTo(symbolSize.has.crossInner, 0)
@@ -5702,7 +5704,7 @@ var DisplaySystem = {
 	                .moveTo(0, -symbolSize.has.crossInner)
 	                .vert(-fieldH * 0.5+symbolSize.has.crossInner)
 	                .setColor(colorLine3)
-	                .set("z-index",20)
+	                .set("z-index",zIndex.has.cross)
 	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.osbShow = [0,0,0,0,0];
         },
