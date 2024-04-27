@@ -5547,6 +5547,7 @@ var DisplaySystem = {
 	        me.sensor = radar_system.f16_radSensor;
 	        me.model_index = me.device.name=="LeftMFD"?0:1;
 	        me.setupHARM(me.device.name=="LeftMFD"?0:1);
+	        me.srchSelect = 0;
 		},
 		setupHARM: func (index) {
 	        me.buttonView = me.group.createChild("group")
@@ -5638,7 +5639,7 @@ var DisplaySystem = {
 	                .moveTo(-fieldW * 0.5, me.fieldY + fieldH * 0.25)
 	                .horiz(fieldW)
 	                .setColor(colorLine3)
-	                .set("z-index",zIndex.has.cross0)
+	                .set("z-index",zIndex.has.cross)
 	                .setStrokeLineWidth(lineWidth.has.aim);
 	        me.crossX1 = me.groupRdr.createChild("path")
 	                .moveTo(0, symbolSize.has.tick*0.5)
