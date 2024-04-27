@@ -56,7 +56,7 @@
  <system file="jsb-electrical"/>
  <system file="jsb-misc"/>
  <flight_control file="Systems/jsb-controls"/>
- <system file="autoflight"/>
+ <system file="jsb-autoflight"/>
  <propulsion file="Systems/jsb-propulsion-block1"/>
  <aerodynamics file="Systems/jsb-aerodynamics-block1.xml"/>
 

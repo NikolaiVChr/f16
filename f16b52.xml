@@ -55,7 +55,7 @@
  <metrics file="Systems/jsb-metrics"/>
  <mass_balance file="Systems/jsb-mass-52"/> 
  <flight_control file="Systems/jsb-controls"/>
- <system file="autoflight"/>
+ <system file="jsb-autoflight"/>
  <propulsion file="Systems/jsb-propulsion-block52"/>
  <aerodynamics file="Systems/jsb-aerodynamics-block15-subtle.xml"/>
 
