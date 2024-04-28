@@ -767,6 +767,7 @@ var DisplaySystem = {
 
 	selectPage: func (pageName) {
 		if (me.pages[pageName] == nil) {print(me.device.name," page not found: ",pageName);return;}
+		if (me.pages[pageName] == me.currPage) {print(me.device.name," page wont switch to itself: ",pageName);return;}
 		me.wasSOI = me.device.soi == 1;# The ==1 must be here since soi can be -1 in the device
 		if (me["currPage"] != nil) {
 			if(me.currPage.needGroup) me.currPage.group.hide();
@@ -5547,7 +5548,6 @@ var DisplaySystem = {
 	        me.sensor = radar_system.f16_radSensor;
 	        me.model_index = me.device.name=="LeftMFD"?0:1;
 	        me.setupHARM(me.device.name=="LeftMFD"?0:1);
-	        me.srchSelect = 0;
 		},
 		setupHARM: func (index) {
 	        me.buttonView = me.group.createChild("group")
@@ -5733,6 +5733,7 @@ var DisplaySystem = {
 		},
 		controlAction: func (controlName) {
 			printDebug(me.name,": ",controlName," activated on ",me.device.name);
+			if (me["srchSelect"] == nil) {print("HAS: me.srchSelect not defined.");return;}# Strange bug that Jmav had. Not sure why..
 			if (!me.srchSelect) {
 				if (controlName == "OSB1" or controlName == "OSB2" or controlName == "OSB3" or controlName == "OSB4" or controlName == "OSB5") {
 	                if (me.sensor.handoffTarget != nil and me.sensor.handoffTarget["tblIdx"] == num(right(controlName,1))-1) {
@@ -6862,12 +6863,21 @@ var unload = func {
 	radar_system.FlirSensor.removeImage();
 }
 
+var print2 = func {
+	# regression in 2020.3.19: call(print,arg) crashes sim.
+	var out = "";
+	foreach(ar;arg) {
+		out ~= ar;
+	}
+	print(out);
+};
 var debugDisplays = 0;
 var printDebug = func {
 	if (debugDisplays) {
 		var err = [];
-		call(func print,arg,nil,nil,err);
-		if(size(err)) print (err[0]);
+		call(print2,arg,nil,nil,err);
+		if(size(err)>0) print (err[0]);
+		if(size(err)>1) print (err[1]);
 	}
 };
 var printfDebug = func {if (debugDisplays) {var str = call(sprintf,arg,nil,nil,var err = []);if(size(err))print (err[0]);else print (str);}};
