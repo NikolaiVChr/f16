@@ -767,9 +767,9 @@ var DisplaySystem = {
 
 	selectPage: func (pageName) {
 		if (me.pages[pageName] == nil) {print(me.device.name," page not found: ",pageName);return;}
-		if (me.pages[pageName] == me.currPage) {print(me.device.name," page wont switch to itself: ",pageName);return;}
 		me.wasSOI = me.device.soi == 1;# The ==1 must be here since soi can be -1 in the device
 		if (me["currPage"] != nil) {
+			if (me.pages[pageName] == me.currPage) {print(me.device.name," page wont switch to itself: ",pageName);return;}
 			if(me.currPage.needGroup) me.currPage.group.hide();
 			me.currPage.exit();
 			foreach(var layer; me.currPage.layers) {
