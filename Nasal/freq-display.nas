@@ -31,20 +31,6 @@ var callInit = func {
                 .setColorFill(color);
 };
 
-var loop_freqDsply = func {# one line is max 24 chars
-	if (!getprop("f16/avionics/uhf-radio-display-test")) {
-      var freq   = getprop("instrumentation/comm[0]/frequencies/selected-mhz");
-      freq *= 1000;
-      line1.setText(sprintf("%06d",math.round(freq)));
-	} else {
-	  line1.setText(sprintf("888888"));
-	}
-    settimer(loop_freqDsply, 0.25);
-};
-
-
-
-
 
 var line2 = nil;
 var line3 = nil;
