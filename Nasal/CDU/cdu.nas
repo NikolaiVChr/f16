@@ -12,7 +12,7 @@ var COLOR_GRAY       = [0.25,0.25,0.25,0.50];
 var COLOR_GRAY_LIGHT = [0.75,0.75,0.75,0.50];
 var COLOR_SKY_DARK   = [0.15,0.15,0.60];
 var COLOR_BLACK      = [0.00,0.00,0.00];
-var COLOR_BUTTON_TEXT = COLOR_BLUE_VERY_DARK;
+var COLOR_BUTTON_TEXT = COLOR_WHITE;
 
 
 var str = func (d) {return ""~d};
@@ -196,6 +196,7 @@ var layer_z = {
     display: {
         map: 1,
         mapOverlay: 7,
+        buttonSymbolsBackground: 8,
         buttonSymbols: 9,
         buttonSymbolsTop: 25,
         pfd: 20,
@@ -718,6 +719,90 @@ var CDU = {
             .setAlignment("right-center")
             .setTranslation(me.buttonMap.b11.pos[0]-20, me.buttonMap.b11.pos[1])
             .setFont("NotoMono-Regular.ttf");
+
+        me.afbTextBK = me.root.createChild("path")
+                .moveTo(0, -12)
+                .vert(25)
+                .horiz(-125)
+                .vert(-25)
+                .horiz(125)
+                .setTranslation(me.buttonMap.b11.pos[0]-20, me.buttonMap.b11.pos[1])
+              .setColor(COLOR_BLACK)
+              .set("z-index", layer_z.display.buttonSymbolsBackground)
+              .setColorFill(COLOR_BLACK)
+              .setStrokeLineWidth(1);
+
+        me.gridTextBK = me.root.createChild("path")
+                .moveTo(0, -12)
+                .vert(25)
+                .horiz(-95)
+                .vert(-25)
+                .horiz(95)
+                .setTranslation(me.buttonMap.b13.pos[0]-20, me.buttonMap.b13.pos[1])
+              .setColor(COLOR_BLACK)
+              .set("z-index", layer_z.display.buttonSymbolsBackground)
+              .setColorFill(COLOR_BLACK)
+              .setStrokeLineWidth(1);
+
+        me.mapTextBK = me.root.createChild("path")
+                .moveTo(0, -12)
+                .vert(25)
+                .horiz(-100)
+                .vert(-25)
+                .horiz(100)
+                .setTranslation(me.buttonMap.b12.pos[0]-20, me.buttonMap.b12.pos[1])
+              .setColor(COLOR_BLACK)
+              .set("z-index", layer_z.display.buttonSymbolsBackground)
+              .setColorFill(COLOR_BLACK)
+              .setStrokeLineWidth(1);
+
+        me.hdgUpTextBK = me.root.createChild("path")
+                .moveTo(0, -12)
+                .vert(25)
+                .horiz(-110)
+                .vert(-25)
+                .horiz(110)
+                .setTranslation(me.buttonMap.b9.pos[0]-20, me.buttonMap.b9.pos[1])
+              .setColor(COLOR_BLACK)
+              .set("z-index", layer_z.display.buttonSymbolsBackground)
+              .setColorFill(COLOR_BLACK)
+              .setStrokeLineWidth(1);
+
+        me.dayTextBK = me.root.createChild("path")
+                .moveTo(0, -12)
+                .vert(25)
+                .horiz(95)
+                .vert(-25)
+                .horiz(-95)
+                .setTranslation(me.buttonMap.b4.pos[0]+20, me.buttonMap.b4.pos[1])
+              .setColor(COLOR_BLACK)
+              .set("z-index", layer_z.display.buttonSymbolsBackground)
+              .setColorFill(COLOR_BLACK)
+              .setStrokeLineWidth(1);
+
+        me.rangeTextBK = me.root.createChild("path")
+                .moveTo(0, -74.5)
+                .vert(150)
+                .horiz(50)
+                .vert(-150)
+                .horiz(-50)
+                .setTranslation(me.buttonMap.b1.pos[0]+15, (me.buttonMap.b1.pos[1]+me.buttonMap.b2.pos[1])*0.5)
+              .setColor(COLOR_BLACK)
+              .set("z-index", layer_z.display.buttonSymbolsBackground)
+              .setColorFill(COLOR_BLACK)
+              .setStrokeLineWidth(1);
+
+        me.instrTextBK = me.root.createChild("path")
+                .moveTo(-50, 0)
+                .vert(25)
+                .horiz(100)
+                .vert(-25)
+                .horiz(-100)
+                .setTranslation(me.buttonMap.b19.pos[0], me.buttonMap.b19.pos[1]+18)
+              .setColor(COLOR_BLACK)
+              .set("z-index", layer_z.display.buttonSymbolsBackground)
+              .setColorFill(COLOR_BLACK)
+              .setStrokeLineWidth(1);
     },
 
     updateSymbols: func {
@@ -759,6 +844,13 @@ var CDU = {
         me.gridText.setText(me.mapShowGrid?"GRID":"CLEAN");
         me.afbText.setText(me.mapShowAFB?"AFB  ON":"AFB OFF");
         me.afbText.setVisible(me.instrConf[me.instrView].showMap);
+        me.afbTextBK.setVisible(me.instrConf[me.instrView].showMap);
+        me.gridTextBK.setVisible(me.instrConf[me.instrView].showMap);
+        me.mapTextBK.setVisible(me.instrConf[me.instrView].showMap);
+        me.hdgUpTextBK.setVisible(me.instrConf[me.instrView].showMap);
+        me.dayTextBK.setVisible(me.instrConf[me.instrView].showMap);
+        me.rangeTextBK.setVisible(me.instrConf[me.instrView].showMap);
+        me.instrTextBK.setVisible(1);
         me.gridText.setVisible(me.instrConf[me.instrView].showMap);
         me.mapText.setVisible(me.instrConf[me.instrView].showMap);
         me.dayText.setVisible(me.instrConf[me.instrView].showMap);
