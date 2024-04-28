@@ -121,7 +121,7 @@ var loop_freqDsply = func {# one line is max 24 chars
     line3.setVisible(EWMU_knob > 0);
 
     var jmrMode = EWMU_jmr == 0?"OFF":"SBY";
-    var jmrMethod = EWMU_jmr == 0?"":(notquiet==1?methods[jmrMD]:"");# Not doing anything anyway so just some random stuff
+    var jmrMethod = EWMU_jmr == 0?"---":(notquiet==1?methods[jmrMD]:"---");# Not doing anything anyway so just some random stuff
 
     if (!EWMU_chaff) {
       chaffCount = "OFF";
