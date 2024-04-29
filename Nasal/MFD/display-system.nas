@@ -192,8 +192,12 @@ var zIndex = {
 		markpoint: 2,
 		beyeCursor: 2,
 		bullseye: 5,
+		route: 4,
+		lines: 4,
 	},
 	fcr: {
+		rootFCR: 0,
+		rootImage: 2,
 		blep: 10,
 		track: 11,
 		iff: 12,
@@ -222,6 +226,14 @@ var zIndex = {
 		dashBox: 12,
 		cross: 20,
 	},
+	layerArrows: {
+		foreground: 20,
+		background: 10,
+	},
+	test: {
+		foreground: 10,
+		background: 5,
+	}
 };
 
 
@@ -892,7 +904,6 @@ var DisplaySystem = {
 	           .setTranslation(displayWidthHalf * -0.85, staPosY)
 	           .setAlignment("center-center")
 	           .setText("1")
-	           .set("z-index",12)
 	           .setFontSize(staFont, 1.0)
 	           .hide()
 	           .setColor(colorText1);
@@ -900,7 +911,6 @@ var DisplaySystem = {
 	           .setTranslation(displayWidthHalf * -0.75, staPosY)
 	           .setAlignment("center-center")
 	           .setText("2")
-	           .set("z-index",12)
 	           .setFontSize(staFont, 1.0)
 	           .hide()
 	           .setColor(colorText1);
@@ -908,7 +918,6 @@ var DisplaySystem = {
 	           .setTranslation(displayWidthHalf * -0.65, staPosY)
 	           .setAlignment("center-center")
 	           .setText("3")
-	           .set("z-index",12)
 	           .setFontSize(staFont, 1.0)
 	           .hide()
 	           .setColor(colorText1);
@@ -916,7 +925,6 @@ var DisplaySystem = {
 	           .setTranslation(displayWidthHalf * -0.55, staPosY)
 	           .setAlignment("center-center")
 	           .setText("4")
-	           .set("z-index",12)
 	           .setFontSize(staFont, 1.0)
 	           .hide()
 	           .setColor(colorText1);
@@ -924,7 +932,6 @@ var DisplaySystem = {
 	           .setTranslation(displayWidthHalf * 0.0, staPosY)
 	           .setAlignment("center-center")
 	           .setText("5")
-	           .set("z-index",12)
 	           .setFontSize(staFont, 1.0)
 	           .hide()
 	           .setColor(colorText1);
@@ -932,7 +939,6 @@ var DisplaySystem = {
 	           .setTranslation(displayWidthHalf * 0.55, staPosY)
 	           .setAlignment("center-center")
 	           .setText("6")
-	           .set("z-index",12)
 	           .setFontSize(staFont, 1.0)
 	           .hide()
 	           .setColor(colorText1);
@@ -940,7 +946,6 @@ var DisplaySystem = {
 	           .setTranslation(displayWidthHalf * 0.65, staPosY)
 	           .setAlignment("center-center")
 	           .setText("7")
-	           .set("z-index",12)
 	           .setFontSize(staFont, 1.0)
 	           .hide()
 	           .setColor(colorText1);
@@ -948,7 +953,6 @@ var DisplaySystem = {
 	           .setTranslation(displayWidthHalf * 0.75, staPosY)
 	           .setAlignment("center-center")
 	           .setText("8")
-	           .set("z-index",12)
 	           .setFontSize(staFont, 1.0)
 	           .hide()
 	           .setColor(colorText1);
@@ -956,7 +960,6 @@ var DisplaySystem = {
 	           .setTranslation(displayWidthHalf * 0.85, staPosY)
 	           .setAlignment("center-center")
 	           .setText("9")
-	           .set("z-index",12)
 	           .setFontSize(staFont, 1.0)
 	           .hide()
 	           .setColor(colorText1);
@@ -1099,21 +1102,18 @@ var DisplaySystem = {
 	            .setStrokeLineWidth(lineWidth.bullseyeLayer.eye)
 	            .setStrokeLineCap("round")
 	            .setTranslation(-margin.bullseye.x, -margin.bullseye.y)
-	            .set("z-index",1)
 	            .setColor(colorBullseye);
 	        me.bullOwnDist = me.group.createChild("text")
 	                .setAlignment("center-center")
 	                .setColor(colorBullseye)
 	                .setTranslation(-margin.bullseye.x, -margin.bullseye.y)
 	                .setText("12")
-	                .set("z-index",1)
 	                .setFontSize(font.bullseye.center, 1.0);
 	        me.bullOwnDir = me.group.createChild("text")
 	                .setAlignment("center-top")
 	                .setColor(colorBullseye)
 	                .setTranslation(-margin.bullseye.x, -margin.bullseye.y+margin.bullseye.text)
 	                .setText("270")
-	                .set("z-index",1)
 	                .setFontSize(font.bullseye.below, 1.0);
 	        me.refW = me.group.createChild("path")
 	            .moveTo(-30*symbolSize.bullseye.ref, -5*symbolSize.bullseye.ref)
@@ -1126,14 +1126,12 @@ var DisplaySystem = {
 	            .setStrokeLineWidth(lineWidth.bullseyeLayer.ref)
 	            .setScale(0.9, 1)
 	            .setTranslation(-margin.bullseye.x+5, -margin.bullseye.y)
-	            .set("z-index",1)
 	            .setColor(colorBullseye);
 	        me.refLine = me.group.createChild("path")
 	        	.moveTo(  0, -20*symbolSize.bullseye.ref)
 	            .lineTo(  0,  30*symbolSize.bullseye.ref)
 	            .setStrokeLineWidth(lineWidth.bullseyeLayer.ref)
 	            .setTranslation(-margin.bullseye.x+5, -margin.bullseye.y)
-	            .set("z-index",1)
 	            .setColor(colorBullseye);
 	    },
 	    update: func (noti = nil) {
@@ -1195,7 +1193,7 @@ var DisplaySystem = {
 			me.group.setTranslation(0, me.offset);
 			me.leftMargin = 5;
 			me.up = me.group.createChild("path")
-						.set("z-index", 20)
+						.set("z-index", zIndex.layerArrows.foreground)
 						.setStrokeLineJoin("round") # "miter", "round" or "bevel"
 	                    .moveTo(me.leftMargin,displayHeightHalf-105-27.5)
 	                    .horiz(30)
@@ -1206,13 +1204,13 @@ var DisplaySystem = {
 	                    .hide()
 	                    .setColor(me.device.colorFront);
 	        me.txt = me.group.createChild("text")
-		        		.set("z-index", 20)
+		        		.set("z-index", zIndex.layerArrows.foreground)
 		                .setTranslation(me.leftMargin+me.device.fontSize*0.75, displayHeightHalf-105)
 		                .setAlignment("center-center")
 		                .setColor(me.device.colorFront)
 		                .setFontSize(me.device.fontSize, 1.0);
 	        me.down = me.group.createChild("path")
-	        			.set("z-index", 20)
+	        			.set("z-index", zIndex.layerArrows.foreground)
 	        			.setStrokeLineJoin("round")
 	                    .moveTo(me.leftMargin,displayHeightHalf-105+27.5)
 	                    .horiz(30)
@@ -1223,7 +1221,7 @@ var DisplaySystem = {
 	                    .hide()
 	                    .setColor(me.device.colorFront);
 	        me.plate = me.group.createChild("path")
-	        			.set("z-index", 10)
+	        			.set("z-index", zIndex.layerArrows.background)
 	                    .moveTo(me.leftMargin,displayHeightHalf-105+27.5+15)
 	                    .horiz(30)
 	                    .vert(-85)
@@ -1770,7 +1768,6 @@ var DisplaySystem = {
 		setup: func {
 			printDebug(me.name," on ",me.device.name," is being setup");
 			me.pageText = me.group.createChild("text")
-				.set("z-index", 10)
 				.setColor(colorText1)
 				.setAlignment("center-center")
 				.setTranslation(displayWidthHalf, displayHeightHalf)
@@ -2113,7 +2110,6 @@ var DisplaySystem = {
 	                                .lineTo(0,symbolSize.hsd.contact*-16)
 	                                .lineTo(symbolSize.hsd.contact*-14,symbolSize.hsd.contact*8)
 	                                .setColor(colorCircle2)
-	                                .set("z-index",10)
 	                                .setStrokeLineWidth(lineWidth.hsd.targetTrack);
 	                me.lnk[i] = me.concentricGrp.createChild("path")
 	                                .moveTo(symbolSize.hsd.contact*-10,symbolSize.hsd.contact*-10)
@@ -2532,7 +2528,7 @@ var DisplaySystem = {
                                     .lineTo(me.radarX2,me.radarY2)#left
                                     .arcSmallCW(me.rdrRangePixels,me.rdrRangePixels, 0, me.radarX1-me.radarX2, me.radarY1-me.radarY2)
                                     .setStrokeLineWidth(lineWidth.hsd.radarCone)
-                                    .set("z-index",5)
+                                    .set("z-index",zIndex.hsd.ownship)
                                     .setColor(colorLine1)
                                     .update();
                     }
@@ -2568,7 +2564,7 @@ var DisplaySystem = {
                             .arcSmallCW(symbolSize.hsd.steerpoint,symbolSize.hsd.steerpoint, 0, symbolSize.hsd.steerpoint*2, 0)
                             .arcSmallCW(symbolSize.hsd.steerpoint,symbolSize.hsd.steerpoint, 0,-symbolSize.hsd.steerpoint*2, 0)
                             .setStrokeLineWidth(lineWidth.hsd.route)
-                            .set("z-index",4)
+                            .set("z-index",zIndex.hsd.route)
                             .setColor(colorLine3)
                             .update();
                         if (steerpoints.getCurrentNumber() == me.j+1) {
@@ -2579,7 +2575,7 @@ var DisplaySystem = {
                                 .moveTo(me.legX,me.legY)
                                 .lineTo(me.prevX,me.prevY)
                                 .setStrokeLineWidth(lineWidth.hsd.route)
-                                .set("z-index",4)
+                                .set("z-index",zIndex.hsd.route)
                                 .setColor(colorLine3)
                                 .update();
                         }
@@ -2634,7 +2630,7 @@ var DisplaySystem = {
                                     .lineTo(me.prevX,me.prevY)
                                     .setStrokeLineWidth(lineWidth.hsd.line)
                                     .setStrokeDashArray([10, 10])
-                                    .set("z-index",4)
+                                    .set("z-index",zIndex.hsd.lines)
                                     .setColor(colorLines[0]*0.70,colorLines[1]*0.70,colorLines[2]*0.70)
                                     .update();
                             } else if (me.prevX != nil and u > 0) {
@@ -2643,7 +2639,7 @@ var DisplaySystem = {
                                     .lineTo(me.prevX,me.prevY)
                                     .setStrokeLineWidth(lineWidth.hsd.line)
                                     .setStrokeDashArray([10, 10])
-                                    .set("z-index",4)
+                                    .set("z-index",zIndex.hsd.lines)
                                     .setColor(colorLines[0]*0.70,colorLines[1]*0.70,colorLines[2]*0.70)
                                     .update();
                             }
@@ -3663,11 +3659,11 @@ var DisplaySystem = {
 
 	        me.p_RDR = me.group.createChild("group")
 	                .setTranslation(displayWidthHalf,displayHeight)
-	                .set("z-index",2)
+	                .set("z-index",zIndex.fcr.rootFCR)
 	                .set("font","LiberationFonts/LiberationMono-Regular.ttf");#552,displayHeight , 0.795 is for UV map
 	        me.p_RDR_image = me.group.createChild("group")
 	                .setTranslation(displayWidthHalf,displayHeight)
-	                .set("z-index",0)
+	                .set("z-index",zIndex.fcr.rootImage)
 	                .hide()
 	                .set("font","LiberationFonts/LiberationMono-Regular.ttf");#552,displayHeight , 0.795 is for UV map
 
@@ -3724,7 +3720,6 @@ var DisplaySystem = {
 	                                .lineTo(0,-16*symbolSize.fcr.track)
 	                                .lineTo(-14*symbolSize.fcr.track,8*symbolSize.fcr.track)
 	                                .setColor(colorCircle2)
-	                                .set("z-index",10)
 	                                .setStrokeLineWidth(lineWidth.fcr.track);
 	                me.iff[i] = me.p_RDR.createChild("path")
 	                                .moveTo(-symbolSize.fcr.iff,0)
@@ -3905,7 +3900,6 @@ var DisplaySystem = {
 	           .moveTo(0, 0)
 	           .lineTo( -10*symbolSize.fcr.dlzArrow, -8*symbolSize.fcr.dlzArrow)
 	           .setColor(colorLine3)
-	           .set("z-index",1)
 	           .setStrokeLineWidth(me.dlzLW);
 	        me.az1 = me.p_RDR.createChild("path")
 	           .moveTo(0, 0)
@@ -4690,7 +4684,7 @@ var DisplaySystem = {
                         .setTranslation(-displayWidth*0.5,-displayHeight)
                         #.setCenter(sized*0.5, -sized)
                         .setScale(scaled,scaled)
-                        .set("z-index",0);#TODO: lower than GM text background
+                        .set("z-index",zIndex.fcr.image);#TODO: lower than GM text background
 
                     me.mono = (variantID<2 or variantID ==3)?0.4:1;
                     me.gainNode = me.model_index?props.globals.getNode("f16/avionics/mfd-l-gain",0):props.globals.getNode("f16/avionics/mfd-l-gain",0);
@@ -6329,7 +6323,6 @@ var DisplaySystem = {
 		setup: func {
 			printDebug(me.name," on ",me.device.name," is being setup");
 			me.pageText = me.group.createChild("text")
-				.set("z-index", 10)
 				.setColor(colorText1)
 				.setAlignment("center-center")
 				.setTranslation(displayWidthHalf, displayHeightHalf)
@@ -6386,7 +6379,6 @@ var DisplaySystem = {
 		setup: func {
 			printDebug(me.name," on ",me.device.name," is being setup");
 			me.pageText = me.group.createChild("text")
-				.set("z-index", 10)
 				.setColor(colorText1)
 				.setAlignment("center-center")
 				.setTranslation(displayWidthHalf, displayHeightHalf)
@@ -6453,14 +6445,14 @@ var DisplaySystem = {
 		setup: func {
 			printDebug(me.name," on ",me.device.name," is being setup");
 			me.pageText = me.group.createChild("text")
-				.set("z-index", 10)
+				.set("z-index", zIndex.test.foreground)
 				.setColor(colorText1)
 				.setAlignment("left-center")
 				.setTranslation(displayWidth*0.6, displayHeight*0.8)
 				.setFontSize(me.device.fontSize)
 				.setText("BBRAM OFPID\nSUROM OFPID");
 			me.mfdsGreyTest = me.group.createChild("path")
-				.set("z-index", 5)
+				.set("z-index", zIndex.test.background)
 				.setColor(colorDot2[0]*0.5,colorDot2[1]*0.5,colorDot2[2]*0.5)
 				.moveTo(- displayWidth, - displayHeight)
 				.lineTo(displayWidth*2, displayHeight*2)
@@ -6901,7 +6893,7 @@ main(nil);# disable this line if running as module
 #      FLIR: 21x28 degs instead of 32x32
 #      Lookup tables for z-index, symbol sizes, font sizes, line thickness
 #          Done: Device, HSD, bullseye, arrows, (sms-inv, sms-sj,) tfr, grid, cube, flir, has, fcr
-#          Todo: z-index
+#          Todo: 
 #          Issues: SMS INV/S-J still pixel based
 #                  6% x 16% larger resolution might make some symbols appear smaller.
 #      GM EXP should imagescan
