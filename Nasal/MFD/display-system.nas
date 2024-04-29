@@ -5733,7 +5733,6 @@ var DisplaySystem = {
 		},
 		controlAction: func (controlName) {
 			printDebug(me.name,": ",controlName," activated on ",me.device.name);
-			if (me["srchSelect"] == nil) {print("HAS: me.srchSelect not defined.");return;}# Strange bug that Jmav had. Not sure why..
 			if (!me.srchSelect) {
 				if (controlName == "OSB1" or controlName == "OSB2" or controlName == "OSB3" or controlName == "OSB4" or controlName == "OSB5") {
 	                if (me.sensor.handoffTarget != nil and me.sensor.handoffTarget["tblIdx"] == num(right(controlName,1))-1) {
