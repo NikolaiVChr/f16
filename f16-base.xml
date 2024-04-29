@@ -995,6 +995,7 @@
             <indicated-vertical-speed type="double">0</indicated-vertical-speed>
         </gps>
         <radar>
+            <ovrd type="bool">false</ovrd>
             <enabled type="bool">true</enabled>
             <iff type="bool">false</iff>
             <az-field type="int">120</az-field>

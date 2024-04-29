@@ -4107,6 +4107,8 @@ var DisplaySystem = {
             	if (fcrFrz) return;
                 #if (rdrMode != RADAR_MODE_GM) return;
                 #setprop("instrumentation/radar/mode-hd-switch", me.model_index);
+            } elsif (controlName == "OSB14") {
+            	setprop("instrumentation/radar/ovrd"), !getprop("instrumentation/radar/ovrd"));
             } elsif (controlName == "OSB16") {
 				me.device.swap();
             } elsif (controlName == "OSB20") {
@@ -4120,10 +4122,11 @@ var DisplaySystem = {
             me.IMSOI = me.device.soi == 1;
 
             setprop("instrumentation/radar/mode-switch", 0);
-
+            me.ovrd = getprop("instrumentation/radar/ovrd");
             me.device.controls["OSB6"].setControlText("CONT", 1, size(datalink.get_connected_indices()));
             me.device.controls["OSB12"].setControlText(radar_system.apg68Radar.currentMode.shortName);
             me.device.controls["OSB11"].setControlText(radar_system.apg68Radar.currentMode.rootName, 0);
+            me.device.controls["OSB14"].setControlText("OVRD", 1, me.ovrd);
 
             me.prevExp = exp;
             if (fcrModeChange) {
