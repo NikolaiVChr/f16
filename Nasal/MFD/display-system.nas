@@ -4109,7 +4109,7 @@ var DisplaySystem = {
                 #if (rdrMode != RADAR_MODE_GM) return;
                 #setprop("instrumentation/radar/mode-hd-switch", me.model_index);
             } elsif (controlName == "OSB14") {
-            	setprop("instrumentation/radar/ovrd"), !getprop("instrumentation/radar/ovrd"));
+            	setprop("instrumentation/radar/ovrd", !getprop("instrumentation/radar/ovrd"));
             } elsif (controlName == "OSB16") {
 				me.device.swap();
             } elsif (controlName == "OSB20") {
