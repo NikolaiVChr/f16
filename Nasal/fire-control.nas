@@ -784,6 +784,12 @@ var FireControl = {
 		return me.sjSelect[number];
 	},
 
+	isSelectedHot: func {
+		# if selected pylon is ready for jettison
+		if (me.selected == nil) return 0;
+		return getprop(masterArmSwitch) == pylons.ARM_ARM and me.isSelectStationForSJ(me.selected[0]);
+	},
+
 	clearStationForSJ: func {
 		me.sjSelect = nil;
 	},

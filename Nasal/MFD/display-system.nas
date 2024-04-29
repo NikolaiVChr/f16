@@ -1653,6 +1653,8 @@ var DisplaySystem = {
                 me.status = "MAL";
             } elsif (me.wpn.powerOnRequired and me.wpn.isPowerOn() and !me.wpn.hasPowerEnough()) {
                 me.status = "MAL";
+            } elsif (pylons.fcs != nil and pylons.fcs.isSelectedHot()) {
+                me.status = "HOT";# ready for jettison
             } elsif (me.wpn.status < armament.MISSILE_STARTING or (me.wpn.powerOnRequired and !me.wpn.isPowerOn())) {
                 me.status = "OFF";
             } elsif (me.wpn.powerOnRequired and me.wpn.status == armament.MISSILE_STARTING and me.wpn.hasPowerEnough()) {
@@ -4896,7 +4898,7 @@ var DisplaySystem = {
                     if (me.iiiii < me.maxHL and me.bleppy.getClosureRate() != nil and me.count == size(me.bleps)-1 and radar_system.apg68Radar.currentMode.detectAIR) {# The last in the vector is the most fresh (hack)
                     	me.spd = me.bleppy.getClosureRate()-radar_system.self.getSpeed();
                     	if (me.bleppy.getSpeed() != nil and me.bleppy.getSpeed() < 60) {
-                    		me.spd = 0.1;
+                    		me.spd = 0.1;# Why 0.1, why not 0.001?
                     	}
                     	me.hot = me.spd > 0?1:-1;                    	
                     	me.hotlinePos = [me.echoPos[0], me.echoPos[1]+symbolSize.fcr.blep*0.5*me.hot];
