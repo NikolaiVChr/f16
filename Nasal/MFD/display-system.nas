@@ -800,6 +800,7 @@ var DisplaySystem = {
 	},
 
 	PageOSB: {
+		# Stub of page that will change which pages will be shortcut on bottom row of OSB.
 		name: "PageOSB",
 		isNew: 1,
 		supportSOI: 0,
@@ -3470,6 +3471,12 @@ var DisplaySystem = {
 	                .setAlignment("left-center")
 	                .setColor(colorText1)
 	                .setFontSize(me.device.fontSize, 1.0);
+	        me.status = me.group.createChild("text")
+	                .setTranslation(0, -displayHeight*0.20)
+	                .setText("")
+	                .setAlignment("center-center")
+	                .setColor(colorText1)
+	                .setFontSize(me.device.fontSize, 1.0);
 
 
 	        me.p3f = me.group.createChild("path")
@@ -3571,6 +3578,7 @@ var DisplaySystem = {
             me.setTextOnStation([me.p5, me.p5l1, me.p5l2], pylons.pylon5);
             me.setTextOnStation([me.p6, me.p6l1, me.p6l2], pylons.pylon6);
             me.setTextOnStation([me.p7, me.p7l1, me.p7l2], pylons.pylon7);
+            me.status.setText(pylons.fcs.getJettisonStatusTxt());
         },
 		setTextOnStation: func (lines, pylon) {
             # no check for pylon 1 and 9 if you enter both rack and pylon for them, this method will fail. So take care.
@@ -6906,3 +6914,5 @@ main(nil);# disable this line if running as module
 #      GM show hot lines on statics, a symptom of a deeper issue that too lazy to fix
 #      GM FTT does not imagescan around it.
 #      OSB are wrongly numbered (legacy from old MFD code from F15). Should start at top-left with 1 and go clockwise to 20 for f16.
+#      Make DCLT page (declutter)
+#      Make FLCS page (control system)

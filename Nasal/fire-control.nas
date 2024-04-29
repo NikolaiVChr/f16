@@ -768,6 +768,7 @@ var FireControl = {
 	toggleStationForSJ: func (number) {
 		me.activateSJ();
 		me.sjSelect[number] = !me.sjSelect[number];
+		me.deactivateSJ();
 	},
 
 	activateSJ: func {
@@ -779,8 +780,19 @@ var FireControl = {
 		}
 	},
 
+	deactivateSJ: func {
+		if (me["sjSelect"] != nil) {
+			for(var i=0;i<size(me.pylons);i+=1) {
+				if (me.sjSelect[i]) {
+					return;
+				}
+			}
+			me.sjSelect = nil;
+		}
+	},
+
 	isSelectStationForSJ: func (number) {
-		me.activateSJ();
+		if (me["sjSelect"] == nil) return 0;
 		return me.sjSelect[number];
 	},
 
@@ -788,6 +800,12 @@ var FireControl = {
 		# if selected pylon is ready for jettison
 		if (me.selected == nil) return 0;
 		return getprop(masterArmSwitch) == pylons.ARM_ARM and me.isSelectStationForSJ(me.selected[0]);
+	},
+
+	getJettisonStatusTxt: func {
+		# if anything is ready for jettison
+		if (me["sjSelect"] == nil) return "";
+		return getprop(masterArmSwitch) == pylons.ARM_ARM?"HOT":(getprop(masterArmSwitch) == pylons.ARM_SIM?"SIM":"");
 	},
 
 	clearStationForSJ: func {
