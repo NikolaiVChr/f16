@@ -6905,3 +6905,4 @@ main(nil);# disable this line if running as module
 #      GM EXP should imagescan
 #      GM show hot lines on statics, a symptom of a deeper issue that too lazy to fix
 #      GM FTT does not imagescan around it.
+#      OSB are wrongly numbered (legacy from old MFD code from F15). Should start at top-left with 1 and go clockwise to 20 for f16.
