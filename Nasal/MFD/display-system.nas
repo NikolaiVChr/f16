@@ -198,6 +198,7 @@ var zIndex = {
 	fcr: {
 		rootFCR: 0,
 		rootImage: 2,
+		image: 0,
 		blep: 10,
 		track: 11,
 		iff: 12,
@@ -6858,7 +6859,7 @@ var unload = func {
 }
 
 var print2 = func {
-	# regression in 2020.3.19: call(print,arg) crashes sim.
+	# workaround to avoid regression in 2020.3.19: call(print,arg) crashes sim.
 	var out = "";
 	foreach(ar;arg) {
 		out ~= ar;
@@ -6886,7 +6887,7 @@ main(nil);# disable this line if running as module
 #      HSDCNTL/FCRCNTL/MENU/FCRMENU should be an overlay
 #      HSD: MSG page with max 9 lines of 15 chars. MLU1 page 35.
 #      HSD: OSB8 FRZ freeze
-#      FCR: OVRD
+#      FCR: OBS7 FZ freeze (only GM)
 #      TGP and HUD-FLIR not work on mac
 #      More FLIR info at 1-249 (265) of dash-34
 #      More TFR 1-333 (349) + 1-242 (258)
