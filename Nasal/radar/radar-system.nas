@@ -815,13 +815,17 @@ var AIContact = {
 	    #print((me.getCoord().alt()*M2FT)~": "~me.get_Callsign()~" / "~me.model~" is type "~me.type);
 
 	    if (enable_tacobject) {
+	    	if (me["tacobj"] != nil) {
+	    		me.tacobj.valid = 0;
+	    	}
 		    me.tacobj = {parents: [tacview.tacobj]};
-	        me.tacobj.tacviewID = left(md5(me.getUnique()),5);
+	        me.tacobj.tacviewID = left(md5(me.getUnique()),6);
 	        me.tacobj.valid = 1;
 	    }
 	},
 
 	update: func (newC) {
+		# will only happen if me.equals() is true
 		if (me.prop.getPath() != newC.prop.getPath()) {
 			me.prop = newC.prop;
 			me.needInit = 1;

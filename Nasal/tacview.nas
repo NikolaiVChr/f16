@@ -120,7 +120,7 @@ var startwrite = func() {
     }
     var meta = sprintf(",DataSource=FlightGear %s,DataRecorder=%s v%s", getprop("sim/version/flightgear"), getprop("sim/description"), getprop("sim/aircraft-version"));
     thread.lock(mutexWrite);
-    write("FileType=text/acmi/tacview\nFileVersion=2.1\n");
+    write("FileType=text/acmi/tacview\nFileVersion=2.2\n");
     write("0,ReferenceTime=" ~ timestamp ~ meta ~ "\n#0\n");
     write(myplaneID ~ ",T=" ~ getLon() ~ "|" ~ getLat() ~ "|" ~ getAlt() ~ "|" ~ getRoll() ~ "|" ~ getPitch() ~ "|" ~ getHeading() ~ ",Name="~tacview_ac_type~",CallSign="~getprop("/sim/multiplay/callsign")~color~"\n"); #
     thread.unlock(mutexWrite);
@@ -135,6 +135,7 @@ var stopwrite = func() {
     writetofile();
     starttime = 0;
     seen_ids = [];
+    seenStruct = {};
     explo_arr = [];
     explosion_timeout_loop(1);
 }
@@ -159,6 +160,9 @@ var mainloop = func() {
         if (cx["prop"] != nil and cx.prop.getName() == "multiplayer" and input.mp_host.getValue() == "mpserver.opredflag.com") {
             continue;
         }
+        if (!cx.isValid() or !cx.tacobj.valid) {
+            continue;
+        }
         var color = ",Color=Blue";
         if (left(cx.get_Callsign(),5)=="OPFOR" or left(cx.get_Callsign(),4)=="OPFR") {
             color=",Color=Red";
@@ -173,8 +177,21 @@ var mainloop = func() {
                 model_is = tacview_ac_type;
                 color=",Color=Red";
             }
-            write(cx.tacobj.tacviewID ~ ",Name="~ model_is~ ",CallSign=" ~ cx.get_Callsign() ~color~"\n")
+            write(cx.tacobj.tacviewID ~ ",Name="~ model_is~ ",Visible=1,CallSign=" ~ cx.get_Callsign() ~color~"\n");
+            seenStruct[cx.tacobj.tacviewID] = [systime(),1,cx,cx.getModel()];# time, visible, contact, model
+            #print(cx.tacobj.tacviewID ~ ",Name="~ model_is~ ",Visible=1,CallSign=" ~ cx.get_Callsign() ~color~" (first seen)");
+            #print("Its unique is "~cx.getUnique()~" = "~left(md5(cx.getUnique()),6));
+        } elsif (!seenStruct[cx.tacobj.tacviewID][1]) {
+            write(cx.tacobj.tacviewID ~ ",Visible=1\n");
+            #print(cx.tacobj.tacviewID ~ ",Visible=1 (seen but was invis)");
+            if (seenStruct[cx.tacobj.tacviewID] == nil) {
+                # Should not happen
+                seenStruct[cx.tacobj.tacviewID] = [systime(),1,cx,cx.getModel()];# time, visible, contact, model
+            } else {
+                seenStruct[cx.tacobj.tacviewID][1] = 1;
+            }
         }
+        seenStruct[cx.tacobj.tacviewID][0] = systime();
         if (cx.tacobj.valid) {
             var cxC = cx.getCoord();
             lon = cxC.lon();
@@ -220,6 +237,9 @@ var mainloop = func() {
                 cx.tacobj.speed = speed;
             }
             write("\n");
+        } else {
+            write(cx.tacobj.tacviewID ~ ",Visible=0\n");
+            seenStruct[cx.tacobj.tacviewID][1] = 0;# visible
         }
         thread.unlock(mutexWrite);
     }
@@ -281,6 +301,59 @@ var writeExplosion = func(lat,lon,altm,rad) {
     write("#" ~ (systime() - starttime)~"\n");
     write(e.tacviewID ~",T="~lon~"|"~lat~"|"~altm~",Radius="~rad~",Type=Explosion\n");
 }
+
+var seenStruct = {
+
+};
+
+var checkOnline = func() {
+    settimer(checkOnline, 5);
+    if (!starttime) return;
+    var kes = keys(seenStruct);
+    var tme = systime();
+    foreach(var k; kes) {
+        var entry = seenStruct[k];
+        if (entry[1]) {
+            var cx = entry[2];
+            if (!cx.isValid() or !cx.tacobj.valid) {
+                thread.lock(mutexWrite);
+                write("#" ~ (tme - starttime)~"\n");
+                write(k ~ ",Visible=0\n");
+                thread.unlock(mutexWrite);
+                entry[1] = 0;
+                #print(k ~ ",Visible=0 (not valid)");
+            }
+        } elsif (tme - entry[0] > 30 and entry[1]) {
+            # Havent seen this aircraft in 30+ secs
+            thread.lock(mutexWrite);
+            write("#" ~ (tme - starttime)~"\n");
+            write(k ~ ",Visible=0\n");
+            thread.unlock(mutexWrite);
+            entry[1] = 0;
+            #print(k ~ ",Visible=0 (not seen for 30 secs)");
+        } elsif (entry[2].getModel() != nil and entry[2].getModel() != "" and entry[2].getModel() != entry[3]) {
+            # User switched aircraft type (due to unique IDs, this should not happen on f16)
+            thread.lock(mutexWrite);
+            write("#" ~ (tme - starttime)~"\n");
+            write("-"~ k ~ "\n");
+            thread.unlock(mutexWrite);
+            delete(seenStruct, k);
+            seen_ids = deleteInVector(seen_ids, k);
+            #print("-"~ k ~ " (switch "~entry[3]~" to "~entry[2].getModel());
+            #print("Its unique is "~entry[2].getUnique()~" = "~left(md5(entry[2].getUnique()),6));
+        }
+    }
+}
+var deleteInVector = func (vec,item) {
+    var nw = [];
+    foreach(var it;vec) {
+        if (it != item) {
+            append(nw, it);
+        }
+    }
+    return nw;
+}
+checkOnline();
 
 var explosion_timeout_loop = func(all = 0) {
     foreach(var e; explo_arr) {

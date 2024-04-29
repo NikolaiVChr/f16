@@ -212,7 +212,7 @@ var radar_signatures = {
 var id2warhead = [];
 var launched = {};# callsign: elapsed-sec
 var approached = {};# callsign: uniqueID
-var lastSeenTacObject = {};# tacID: last time seen
+var lastSeenTacObject = {};# tacID: last time seen weapon/flare
 var heavy_smoke = [61,62,63,65,92,96,97,100];
 
 var k = keys(warheads);
@@ -340,10 +340,7 @@ var DamageRecipient =
                   } else {
                     thread.lock(tacview.mutexWrite);
                     tacview.write("#" ~ (systime() - tacview.starttime)~"\n");
-                    tacview.write(tacID ~ ",Visible=0"~"\n");
-                    tacview.write("0,Event=LeftArea|"~tacID~"|\n");
-                    #tacview.write("0,Event=Destroyed|"~tacID~"|\n");
-                    #tacview.write("-"~tacID~"\n");
+                    tacview.write("-"~tacID~"\n");
                     thread.unlock(tacview.mutexWrite);
                   }
                 }
@@ -382,19 +379,19 @@ var DamageRecipient =
                 if (tacview_supported and (getprop("sim/multiplay/txhost") != "mpserver.opredflag.com" or m28_auto)) {
                   # Record armament flightpath in tacview
                   if (tacview.starttime) {
-                    var tacID = left(md5(notification.Callsign~notification.UniqueIdentity),6);
+                    var tacID = left(md5(notification.Callsign~notification.UniqueIdentity~typ[4]),6);
                     var elapsed = getprop("sim/time/elapsed-sec");
                     lastSeenTacObject[tacID] = elapsed;
                     if (notification.Kind == DESTROY) {
                       thread.lock(tacview.mutexWrite);
                       tacview.write("#" ~ (systime() - tacview.starttime)~"\n");
-                      tacview.write(tacID~",Visible=0\n-"~tacID~"\n");
+                      tacview.write("-"~tacID~"\n");
                       thread.unlock(tacview.mutexWrite);
                     } else {
                       var typp = typ[4]=="pilot"?"Parachutist":typ[4];
                       var extra = typp=="Parachutist"?"|0|0|0":"";
                       var extra2 = typ[2]==0?",Type=Weapon+Missile":",Type=Weapon+Bomb";
-                      extra2 = typ[4]=="Flare"?",Type=Flare":extra2;
+                      extra2 = typp=="Flare"?",Type=Flare":extra2;
                       extra2 = typp=="Parachutist"?"":extra2;
                       var color = radarOn or CWIOn?",Color=Red":",Color=Yellow";
                       thread.lock(tacview.mutexWrite);
@@ -1068,7 +1065,7 @@ var recordOwnFlare = func (msg) {
         if (msg.Kind == DESTROY) {
           thread.lock(tacview.mutexWrite);
           tacview.write("#" ~ (systime() - tacview.starttime)~"\n");
-          tacview.write(tacID~",Visible=0\n-"~tacID~"\n");
+          tacview.write("-"~tacID~"\n");
           thread.unlock(tacview.mutexWrite);
         } else {
           var typp = "Flare";
@@ -1447,8 +1444,7 @@ var processCallsigns = func () {
       if (elapsed - lastSeenTacObject[key] > 30) {
         thread.lock(tacview.mutexWrite);
         tacview.write("#" ~ (systime() - tacview.starttime)~"\n");
-        tacview.write(key ~ ",Visible=0"~"\n");
-        tacview.write("0,Event=LeftArea|"~key~"|\n");
+        tacview.write("-"~key~"\n");
         thread.unlock(tacview.mutexWrite);
       } else {
         new_lastSeenTacObject[key] = lastSeenTacObject[key];
