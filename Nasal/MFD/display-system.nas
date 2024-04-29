@@ -1585,7 +1585,9 @@ var DisplaySystem = {
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.status = "MAL";
                     } else {
-                        if (getprop("controls/armament/master-arm-switch") == pylons.ARM_SIM) me.status = "SIM";
+                    	me.armSwitch = getprop("controls/armament/master-arm-switch");
+                        if (me.armSwitch == pylons.ARM_SIM) me.status = "SIM";
+                        elsif (me.armSwitch == pylons.ARM_OFF) me.status = "SAF";
                         else me.status = "RDY";
                     }
                 } elsif (me.wpn.type == "LAU-68") {
@@ -1596,7 +1598,9 @@ var DisplaySystem = {
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.status = "MAL";
                     } else {
-                        if (getprop("controls/armament/master-arm-switch") == pylons.ARM_SIM) me.status = "SIM";
+                        me.armSwitch = getprop("controls/armament/master-arm-switch");
+                        if (me.armSwitch == pylons.ARM_SIM) me.status = "SIM";
+                        elsif (me.armSwitch == pylons.ARM_OFF) me.status = "SAF";
                         else me.status = "RDY";
                     }
                 } else {
@@ -1607,17 +1611,12 @@ var DisplaySystem = {
                 if (me.wpn.type == "20mm Cannon") {
                     if (me.myammo ==0) me.myammo = "0";
                     elsif (me.myammo <10) me.myammo = "1";
-                    else me.myammo = ""~int(me.myammo*0.1);
-                #} elsif (me.myammo==1) {
-                #    me.myammo = "";
+                    else me.myammo = sprintf("%d",int(me.myammo*0.1));
                 } else {
                     me.myammo = ""~me.myammo;
                 }
                 
                 me.osb6 = sprintf("%4s   %7s",me.status,me.myammo~me.wpn.typeShort);
-                if (0 and getprop("controls/armament/master-arm") != 1) {
-                    me.osb8 = "";# What was this for??
-                }
             } else {
                 me.osb6 = "";
             }
