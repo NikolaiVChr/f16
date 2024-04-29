@@ -2324,52 +2324,45 @@
             <name>Bottom detent 1</name>
             <path>Aircraft/f16/Sounds/Cockpit/throttle-idle.wav</path>
             <mode>once</mode>
-            <type>fx</type>
-            <reference-dist>0</reference-dist>
-            <max-dist>2</max-dist>
+            <type>avionics</type>
             <condition>
                 <equals>
                     <property>controls/engines/engine[0]/throttle-movement</property>
                     <value>0.0</value>
                 </equals>
             </condition>
-            <position>
-                <x>-3.75</x>
-                <y>0.50</y>                <!-- minus means right, plus means left -->
-                <z>0.015</z>
-            </position>
             <volume>
                 <factor>0.5</factor>
+            </volume>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1.00</factor>
             </volume>
         </throttle>
         <throttle>
             <name>Bottom detent 2</name>
             <path>Aircraft/f16/Sounds/Cockpit/throttle-idle.wav</path>
             <mode>once</mode>
-            <type>fx</type>
-            <reference-dist>0</reference-dist>
-            <max-dist>2</max-dist>
+            <type>avionics</type>
             <condition>
                 <greater-than>
                     <property>controls/engines/engine[0]/throttle-movement</property>
                     <value>0</value>
                 </greater-than>
             </condition>
-            <position>
-                <x>-3.75</x>
-                <y>0.50</y>                <!-- minus means right, plus means left -->
-                <z>0.015</z>
-            </position>
             <volume>
                 <factor>0.5</factor>
+            </volume>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1.00</factor>
             </volume>
         </throttle>
         <throttle>
             <name>AB1 detent</name>
             <path>Aircraft/f16/Sounds/Cockpit/throttle-detent.wav</path>
             <mode>once</mode>
-            <reference-dist>0</reference-dist>
-            <max-dist>2</max-dist>
+            <type>avionics</type>
             <condition>
                 <not>
                     <property>/f16/engine/cutoff-release-lever</property>
@@ -2379,21 +2372,19 @@
                     <value>91</value>
                 </greater-than-equals>
             </condition>
-            <position>
-                <x>-3.50</x>
-                <y>0.50</y>
-                <z>0.015</z>
-            </position>
             <volume>
                 <factor>0.5</factor>
+            </volume>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1.00</factor>
             </volume>
         </throttle>
         <throttle>
             <name>AB2 detent</name>
             <path>Aircraft/f16/Sounds/Cockpit/throttle-detent.wav</path>
             <mode>once</mode>
-            <reference-dist>0</reference-dist>
-            <max-dist>2</max-dist>
+            <type>avionics</type>
             <condition>
                 <not>
                     <property>/f16/engine/cutoff-release-lever</property>
@@ -2403,13 +2394,12 @@
                     <value>91</value>
                 </less-than>
             </condition>
-            <position>
-                <x>-3.50</x>
-                <y>0.50</y>
-                <z>0.015</z>
-            </position>
             <volume>
                 <factor>0.5</factor>
+            </volume>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1.00</factor>
             </volume>
         </throttle>
         <switch>
