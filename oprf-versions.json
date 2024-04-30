@@ -4,11 +4,11 @@
     "path": "Nasal/vector.nas"
   },
   "missile-code": {
-    "version": "1.1.5",
+    "version": "1.1.6",
     "path": "Nasal/missile-code.nas"
   },
   "radar-system": {
-    "version": "2.0.5",
+    "version": "2.0.6",
     "path": "Nasal/radar/radar-system.nas"
   },
   "radar-system-database": {
@@ -16,7 +16,7 @@
     "path": "Nasal/radar/radar-system-database.nas"
   },
   "damage": {
-    "version": "1.4.8",
+    "version": "1.4.10",
     "path": "Nasal/damage.nas"
   },
   "iff": {

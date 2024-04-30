@@ -945,7 +945,6 @@ var AIM = {
 				if (tacview.starttime) {
 					thread.lock(tacview.mutexWrite);
 					tacview.write("#" ~ (systime() - tacview.starttime)~"\n");
-					tacview.write("0,Event=Destroyed|"~me.tacviewID~"\n");
 					tacview.write("-"~me.tacviewID~"\n");
 					thread.unlock(tacview.mutexWrite);
 				}
