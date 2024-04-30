@@ -335,6 +335,15 @@
             </traverse>
         </kinematic>
 
+        <lag_filter name="autoflight/pitch/alt/error-tf-lag">
+            <input>autoflight/pitch/alt/error-tf</input>
+            <c1>1</c1>
+            <clipto>
+				<min>-3000</min>
+				<max>3000</max>
+			</clipto>
+		</lag_filter>
+
 	</channel>
 
 	<channel name="Autoflight: Roll Channel">

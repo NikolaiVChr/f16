@@ -5279,10 +5279,10 @@ var DisplaySystem = {
 				me.linu = me.group.createChild("path")
 					.moveTo(0,displayHeight*0.5)
 					.horiz(displayWidth)
-					.moveTo(margin.tfr.sides,displayHeight*0.5+0.5*displayHeight*(me.myAlt-tfr_current_terr)/1500)
-					.vert(symbolSize.tfr.terrain)
-					.moveTo(displayWidth-margin.tfr.sides,displayHeight*0.5+0.5*displayHeight*(me.myAlt-tfr_target_altitude_m)/1500)
-					.vert(symbolSize.tfr.terrain)
+					#.moveTo(margin.tfr.sides,displayHeight*0.5+0.5*displayHeight*(me.myAlt-tfr_current_terr)/1500)
+					#.vert(symbolSize.tfr.terrain)
+					#.moveTo(displayWidth-margin.tfr.sides,displayHeight*0.5+0.5*displayHeight*(me.myAlt-tfr_target_altitude_m)/1500)
+					#.vert(symbolSize.tfr.terrain)
 					.moveTo(margin.tfr.sides,displayHeight-margin.tfr.bottom)
 					.horiz(displayWidth-margin.tfr.sides*2)
 					.moveTo(displayWidth-margin.tfr.sides,displayHeight-margin.tfr.bottom)
@@ -5299,12 +5299,21 @@ var DisplaySystem = {
 					.vert(-symbolSize.tfr.tick)
 					.setStrokeLineWidth(lineWidth.tfr.terrain)
 					.setColor(colorDot2);
+				me.vsTarget = math.clamp((-1*getprop("fdm/jsbsim/autoflight/pitch/alt/error-tf-lag")+3000)/6000,0.05,1);
+				me.linu2 = me.group.createChild("path").moveTo(margin.tfr.sides,displayHeight-margin.tfr.bottom).setStrokeLineWidth(lineWidth.tfr.terrain)
+					.setColor(colorDot2);
+				me.smooth2 = me.smooth<10?0.4:(me.smooth<15?0.5:0.6);
 				for (var i = 1;i<50; i+=1) {
-					me.m = me.extrapolate(i, 0, 50, me.myAlt-tfr_current_terr, me.myAlt-tfr_target_altitude_m)*(0.9+0.2*rand());
-					me.d = me.extrapolate(i, 0, 50, margin.tfr.sides, displayWidth-margin.tfr.sides);
-					me.linu.moveTo(me.d,displayHeight*0.5+0.5*displayHeight*(me.m/1500))
+					me.axisX = i/50;
+					me.formulaY = math.sqrt(me.axisX)*me.vsTarget*(0.9+0.2*rand());
+					#me.m = me.extrapolate(i, 0, 50, me.myAlt-tfr_current_terr, me.myAlt-tfr_target_altitude_m)*(0.9+0.2*rand());
+					me.formulaX = me.extrapolate(i, 0, 50, margin.tfr.sides, displayWidth-margin.tfr.sides);
+					me.linu.moveTo(me.formulaX,(displayHeight-margin.tfr.bottom)-(displayHeight-margin.tfr.bottom)*me.formulaY)
 						.vert(symbolSize.tfr.terrain);
+					me.linu2.lineTo(me.formulaX,(displayHeight-margin.tfr.bottom)-(displayHeight-margin.tfr.bottom)*(math.sqrt(me.axisX)*me.smooth2+me.axisX*me.axisX));
 				}
+				# Todo: draw pseudo log scale at bottom: 1,2,4,6,10 nm
+				# E-scope: y-axis is angle, the full drawn line is 1 G flightpath.
 			}
 			if (me.smooth == 1) me.device.controls["OSB12"].setControlText("HARD");
 			elsif (me.smooth > 1 and me.smooth < 15) me.device.controls["OSB12"].setControlText("SOFT");
