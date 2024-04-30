@@ -965,7 +965,7 @@ append(obj.total, obj.speed_curr);
         append(obj.total, obj.VV);
         obj.localizer = obj.centerOrigin.createChild("group");
 
-        obj.tfr = obj.centerOrigin.createChild("path")
+        obj.tfrVertSteeringCue = obj.centerOrigin.createChild("path")
             .moveTo(-30*mr,-10*mr)
             .horiz(60*mr)
             .vert(20*mr)
@@ -973,15 +973,15 @@ append(obj.total, obj.speed_curr);
             .vert(-20*mr)
             .setStrokeLineWidth(1)
             .setColor(0,1,0);
-        append(obj.total, obj.tfr);
-        obj.tfrX = obj.centerOrigin.createChild("path")
+        append(obj.total, obj.tfrVertSteeringCue);
+        obj.tfrVertSteeringCueX = obj.centerOrigin.createChild("path")
             .moveTo(-30*mr,-10*mr)
             .lineTo(30*mr,10*mr)
             .moveTo(30*mr,-10*mr)
             .lineTo(-30*mr,10*mr)
             .setStrokeLineWidth(1)
             .setColor(0,1,0);
-        append(obj.total, obj.tfrX);
+        append(obj.total, obj.tfrVertSteeringCueX);
 
         obj.ilsGroup  = obj.localizer.createChild("group");
         obj.gsGroup   = obj.localizer.createChild("group");
@@ -1482,14 +1482,14 @@ append(obj.total, obj.speed_curr);
                                         obj.r_show = 1;
 
                                         if (getprop("f16/fcs/adv-mode") == 1 and getprop("f16/stores/nav-mounted") == 1) {
-                                                obj.tfr.show();
-                                                obj.tfrDiff = getprop("fdm/jsbsim/autoflight/pitch/vs/target-kin")/150;#-3k to 3k
-                                                obj.tfr.setTranslation (hdp.VV_x, hdp.VV_y-obj.tfrDiff);
-                                                obj.tfrX.setTranslation (hdp.VV_x, hdp.VV_y-obj.tfrDiff);
-                                                obj.tfrX.setVisible(getprop("instrumentation/tfs/malfunction"));
+                                                obj.tfrVertSteeringCue.show();
+                                                obj.tfrVertSteeringCueDiff = getprop("fdm/jsbsim/autoflight/pitch/vs/target-kin")/150;#-3k to 3k
+                                                obj.tfrVertSteeringCue.setTranslation (hdp.VV_x, hdp.VV_y-obj.tfrVertSteeringCueDiff);
+                                                obj.tfrVertSteeringCueX.setTranslation (hdp.VV_x, hdp.VV_y-obj.tfrVertSteeringCueDiff);
+                                                obj.tfrVertSteeringCueX.setVisible(getprop("instrumentation/tfs/malfunction"));
                                         } else {
-                                                obj.tfr.hide();
-                                                obj.tfrX.hide();
+                                                obj.tfrVertSteeringCue.hide();
+                                                obj.tfrVertSteeringCueX.hide();
                                         }
                                         
                                         if (hdp.getproper("fpm") > 0 and !hdp.getproper("dgft")) {
