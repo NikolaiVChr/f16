@@ -1745,6 +1745,7 @@ var Heading = {
             var hdg = geo.normdeg(center_mark + (i-3) * 5);
             var txt = math.mod(hdg, 10) == 0;
             if (math.abs(hdg - fpv_heading) < 5) hdg = nil;
+            elsif (math.abs(geo.normdeg180(hdg - fpv_heading)) < 5) hdg = nil;
             me.markers[i].update(hdg, txt);
         }
 
