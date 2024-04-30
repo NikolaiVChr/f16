@@ -1272,6 +1272,7 @@
         <factor>270</factor>
         <offset-deg>-140</offset-deg>
         <drag-direction>horizontal</drag-direction>
+        <drag-scale-px>0.1</drag-scale-px><!-- 10 is default -->
         <center>
             <x-m>-0.002007</x-m>
             <y-m>-0.340686</y-m>
@@ -1286,7 +1287,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>f16/avionics/hmd-sym-int-knob</property>
-                <factor>0.05</factor>
+                <factor>0.1</factor>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
@@ -1301,6 +1302,7 @@
         <factor>270</factor>
         <offset-deg>-140</offset-deg>
         <drag-direction>horizontal</drag-direction>
+        <drag-scale-px>0.1</drag-scale-px><!-- 10 is default -->
         <center>
             <x-m>-0.001971</x-m>
             <y-m>-0.32754</y-m>
@@ -1315,7 +1317,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>f16/avionics/hmd-sym-int-knob</property>
-                <factor>0.05</factor>
+                <factor>0.1</factor>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>

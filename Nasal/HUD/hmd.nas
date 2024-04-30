@@ -587,8 +587,9 @@ var F16_HMD = {
         append(obj.total, obj.locatorLine);
 
 
-
-
+        obj.headingScale = Heading.new(obj.centerOrigin);
+        obj.headingScale.set_dclt(0);
+        append(obj.total, obj.headingScale.getGroup());
 
 
 
@@ -709,6 +710,7 @@ var F16_HMD = {
                                             var lookingAt = obj.lookEuler[0]==nil?hdp.getproper("heading"):obj.lookEuler[0];
                                             lookingAt += (hdp.getproper("headingMag")-hdp.getproper("heading"));#convert to magn
                                             obj.head_curr.setText(sprintf("%03d",geo.normdeg(lookingAt)));
+                                            obj.headingScale.update(geo.normdeg(lookingAt));
                                           }
 
                                       }
@@ -1626,6 +1628,149 @@ var dropping = func {
         dropTimer.singleShot = 1;
         dropTimer.start();
     }
+}
+
+# Heading scale
+# 
+# Adapted from JA37 (Colin Genier)
+var Heading = {
+    Marker: {
+        new: func(parent) {
+            var m = { parents: [Heading.Marker], parent: parent, };
+            m.initialize();
+            return m;
+        },
+
+        initialize: func {
+            me.group = me.parent.createChild("group");
+            me.mark = make_path(me.group).vert(-25);
+            me.text = make_text(me.group)
+                .setAlignment("center-bottom")
+                .setTranslation(0, 45);
+            me.text.enableUpdate();
+            me.long = 1;
+        },
+
+        set_pos: func(pos) { me.group.setTranslation(pos, 0); },
+
+        update: func(hdg, long) {
+            # Marker length
+            if (long and !me.long) {
+                me.long = 1;
+                me.mark.setScale(1, 0.6);
+                me.text.show();
+            } elsif (!long and me.long) {
+                me.long = 0;
+                me.mark.setScale(1, 0.6);
+                me.text.hide();
+            }
+            if (me.long and hdg != nil) {
+                me.text.updateText(sprintf("%d", hdg));
+            } else {
+                me.text.updateText("");
+            }
+        },
+    },
+
+    new: func(parent) {
+        var m = { parents: [Heading], parent: parent, mode: -1, };
+        m.initialize();
+        return m;
+    },
+
+    initialize: func {
+        me.group = me.parent.createChild("group")
+            .setTranslation(0, 100);
+
+        # Fixed track index
+        #make_path(me.group).moveTo(0,0).lineTo(-25,50).moveTo(0,0).lineTo(25,50);
+
+        # Commanded track index
+        #me.index = make_path(me.group)
+        #    .moveTo(0,50).vert(75)
+        #    .moveTo(-25,75).vert(50)
+        #    .moveTo(25,75).vert(50);
+
+        me.marker_grp = me.group.createChild("group");
+
+        me.markers = [];
+        setsize(me.markers, 7);
+        forindex (var i; me.markers) {
+            me.markers[i] = Heading.Marker.new(me.marker_grp);
+        }
+
+        me.scale_factor = -1;
+        me.set_scale_factor(100/6.7);
+    },
+
+    getGroup: func {
+        return me.group;
+    },
+
+    set_scale_factor: func(factor) {
+        if (factor == me.scale_factor) return;
+        me.scale_factor = factor;
+
+        forindex (var i; me.markers) {
+            me.markers[i].set_pos(me.scale_factor * (i-3) * 5);
+        }
+    },
+
+    set_dclt: func(dclt) {
+        me.mode = dclt;
+        if (me.mode == 1) {
+            me.group.hide();
+        } elsif (me.mode == 0) {
+            me.group.setTranslation(0, 350);
+            me.set_scale_factor(14);
+            me.group.show();
+            #me.index.hide();
+        }
+    },
+
+    update: func(fpv_heading) {
+        if (me.mode == 1) return;
+
+        # Track angle.
+        var track = fpv_heading;
+
+        var center_mark = math.round(track, 5);
+
+        me.marker_grp.setTranslation((center_mark - track) * me.scale_factor, 0);
+        # update() required: otherwise show()/hide() applies immediately,
+        # while other changes wait for the next frame.
+        me.marker_grp.update();
+
+        forindex (var i; me.markers) {
+            var hdg = geo.normdeg(center_mark + (i-3) * 5);
+            var txt = math.mod(hdg, 10) == 0;
+            if (math.abs(hdg - fpv_heading) < 5) hdg = nil;
+            me.markers[i].update(hdg, txt);
+        }
+
+        var pos = geo.normdeg180(track);
+        pos *= me.scale_factor;
+        pos = math.clamp(pos, -200, 200);
+        #me.index.setTranslation(pos, 0);
+        #me.index.hide();
+    },
+};
+
+### Canvas elements creators
+
+# Create a new path.
+var make_path = func(parent, fill=0) {
+    var p = parent.createChild("path");
+    # Mask the global "fill" colour, cf. remarks above.
+    if (!fill) p.set("fill", "none");
+    return p;
+}
+
+# Create a new text element with default options.
+var make_text = func(parent) {
+    return parent.createChild("text")
+        # Mask the global "stroke" colour, cf. remarks above.
+        .set("stroke", "none");
 }
 
 var isMarking = 0;
