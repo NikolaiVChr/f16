@@ -28,7 +28,10 @@
                 <pow>
                     <div>
                         <property>engines/engine/thrust_lb</property>
-                        <property>engines/engine/rated-mil-dry</property>
+                        <product>
+                            <property>engines/engine/rated-mil-dry</property>
+                            <value>0.6</value>
+                        </product>
                     </div>
                     <value>3</value>
                 </pow>

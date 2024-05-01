@@ -1083,10 +1083,11 @@ var flexer = {
         var mach = getprop("velocities/mach") >= 1;
         var cam = getprop("sim/current-view/name");
         var still = cam == "Fly-By View" or cam == "Tower View" or cam == "Tower View Look From";
-        var nofrontsound = still and mach;
+        var frontsound = !still or !mach;
 
-        setprop("f16/sound/front-on", !nofrontsound);
-        setprop("f16/sound/front-off", nofrontsound);
+        setprop("f16/sound/still-cam",  still);
+        setprop("f16/sound/front-on",  frontsound);
+        setprop("f16/sound/front-off", !frontsound);
     },
 };
 
