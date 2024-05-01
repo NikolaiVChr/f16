@@ -1085,7 +1085,7 @@ var flexer = {
         var still = cam == "Fly-By View" or cam == "Tower View" or cam == "Tower View Look From";
         var frontsound = !still or !mach;
 
-        setprop("f16/sound/still-cam",  still);
+        setprop("f16/sound/still-cam",  still and mach > 0.4);
         setprop("f16/sound/front-on",  frontsound);
         setprop("f16/sound/front-off", !frontsound);
     },
