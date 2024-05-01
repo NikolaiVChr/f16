@@ -110,7 +110,9 @@ var lineWidth = {
 		aim: 2,
 	},
 	tfr: {
-		terrain: 1,
+		terrain: 3,
+		axis: 1,
+		flyup: 1,
 	},
 	stations: {
 		outline: 1.5,
@@ -365,7 +367,7 @@ var DisplayDevice = {
 
 	loop: func {
 		me.setSOI(me["aircraftSOI"] == f16.SOI);
-		me.update(notifications.frameNotification);# TODO: emesary
+		me.update(notifications.frameNotification);
 	},
 
 	setColorBackground: func (colorBackground) {
@@ -5093,11 +5095,11 @@ var DisplaySystem = {
 			printDebug(me.name," on ",me.device.name," is being setup");
 			me.flirPicHD = radar_system.FlirSensor.setup(me.group, me.device.name=="LeftMFD"?0:1);
             me.flirPicHD.setScale(displayWidth/radar_system.flirImageReso, displayHeight/radar_system.flirImageReso);
-            if (flirMode == -2) {
+            if (flirMode == FLIR_NOT_INIT) {
             	if (getprop("f16/stores/nav-mounted")!=1 or getprop("f16/avionics/power-left-hdpt")!=1) {
-					flirMode = -1;
+					flirMode = FLIR_OFF;
 				} else {
-					flirMode = 0;
+					flirMode = FLIR_SBY;
 				}
 			}
             me.bhot = 1;
@@ -5120,21 +5122,21 @@ var DisplaySystem = {
 			if (controlName == "OSB6") {
                 me.bhot = !me.bhot;
             } elsif (controlName == "OSB1") {
-                flirMode = 1;
+                flirMode = FLIR_OPER;
             } elsif (controlName == "OSB3") {
-                flirMode = 0;
+                flirMode = FLIR_SBY;
             } elsif (controlName == "OSB15") {
-                flirMode = -1;
+                flirMode = FLIR_OFF;
             } elsif (controlName == "OSB16") {
                 me.device.swap();
             }
 		},
 		update: func (noti = nil) {
 			if (getprop("f16/stores/nav-mounted")!=1 or getprop("f16/avionics/power-left-hdpt")!=1) {
-				flirMode = -1;
+				flirMode = FLIR_OFF;
 			}
 			me.device.controls["OSB6"].setControlText(me.bhot?"BHOT":"WHOT",1,0);
-			if (flirMode == 1) {
+			if (flirMode == FLIR_OPER) {
 				me.caraOn = getprop("f16/avionics/cara-on");
 				if (me.caraOn) {
 					me.cara   = getprop("position/altitude-agl-ft");
@@ -5150,30 +5152,24 @@ var DisplaySystem = {
 					me.device.controls["OSB4"].setControlText(""~int(noti.getproper("calibrated")),1,1);
 				else
 					me.device.controls["OSB4"].setControlText("",1,1);
-				me.device.controls["OSB1"].setControlText("OPER",1,1);
-				me.device.controls["OSB15"].setControlText("OFF",1,0);
-				me.device.controls["OSB3"].setControlText("STBY",1,0);
 
 				radar_system.FlirSensor.scan(noti, me.bhot);
 				me.flirPicHD.dirtyPixels();
 	            me.flirPicHD.show();
-            } elsif (flirMode == 0) {
+            } elsif (flirMode == FLIR_SBY) {
             	me.device.controls["OSB13"].setControlText("",1,1);
 				me.device.controls["OSB4"].setControlText("",1,1);
-            	me.device.controls["OSB1"].setControlText("OPER",1,0);
-            	me.device.controls["OSB15"].setControlText("OFF",1,0);
-            	me.device.controls["OSB3"].setControlText("STBY",1,1);
             	me.device.controls["OSB9"].setControlText("",1,0);
             	me.flirPicHD.hide();
         	} else {
         		me.device.controls["OSB13"].setControlText("",1,1);
 				me.device.controls["OSB4"].setControlText("",1,1);
-        		me.device.controls["OSB1"].setControlText("OPER",1,0);
-        		me.device.controls["OSB15"].setControlText("OFF",1,1);
-        		me.device.controls["OSB3"].setControlText("STBY",1,0);
         		me.device.controls["OSB9"].setControlText("",1,0);
         		me.flirPicHD.hide();
         	}
+        	me.device.controls["OSB1"].setControlText("OPER",1,flirMode == FLIR_OPER);
+        	me.device.controls["OSB15"].setControlText("OFF",1,flirMode == FLIR_OFF or flirMode == FLIR_NOT_INIT);
+        	me.device.controls["OSB3"].setControlText("STBY",1,flirMode == FLIR_SBY);
 		},
 		exit: func {
 			printDebug("Exit ",me.name~" on ",me.device.name);
@@ -5273,7 +5269,7 @@ var DisplaySystem = {
 			if (getprop("f16/stores/nav-mounted")!=1 or getprop("f16/avionics/power-left-hdpt")!=1) {
 				me.enable = 0;
 			}
-			if (me.enable and !me.mal) {
+			if (me.enable and !me.mal and noti.FrameCount != 1 and noti.FrameCount != 3) {
 				me.myAlt = noti.getproper("altitude_ft")*FT2M;
 				me.group.removeAllChildren();
 				me.linu = me.group.createChild("path")
@@ -5297,24 +5293,26 @@ var DisplaySystem = {
 					.vert(-symbolSize.tfr.tick)
 					.moveTo(margin.tfr.sides+(displayWidth-margin.tfr.sides*2)*0.8,displayHeight-margin.tfr.bottom)
 					.vert(-symbolSize.tfr.tick)
-					.setStrokeLineWidth(lineWidth.tfr.terrain)
+					.setStrokeLineWidth(lineWidth.tfr.axis)
 					.setColor(colorDot2);
 				me.vsTarget = math.clamp((-1*getprop("fdm/jsbsim/autoflight/pitch/alt/error-tf-lag")+3000)/6000,0.05,1);
-				me.linu2 = me.group.createChild("path").moveTo(margin.tfr.sides,displayHeight-margin.tfr.bottom).setStrokeLineWidth(lineWidth.tfr.terrain)
+				me.linu3 = me.group.createChild("path").setStrokeLineWidth(lineWidth.tfr.terrain).setColor(colorDot2);
+				me.linu2 = me.group.createChild("path").moveTo(margin.tfr.sides,displayHeight-margin.tfr.bottom).setStrokeLineWidth(lineWidth.tfr.flyup)
 					.setColor(colorDot2);
 				me.smooth2 = me.smooth<10?0.4:(me.smooth<15?0.5:0.6);
+				me.vertDistTillMargin = displayHeight-margin.tfr.bottom;
 				for (var i = 0;i<=50; i+=1) {
 					me.axisX = i/50;
 					me.formulaY = math.sqrt(me.axisX)*me.vsTarget*(0.9+0.2*rand());
 					#me.m = me.extrapolate(i, 0, 50, me.myAlt-tfr_current_terr, me.myAlt-tfr_target_altitude_m)*(0.9+0.2*rand());
 					me.formulaX = me.extrapolate(i, 0, 50, margin.tfr.sides, displayWidth-margin.tfr.sides);
-					me.linu.moveTo(me.formulaX,(displayHeight-margin.tfr.bottom)-(displayHeight-margin.tfr.bottom)*me.formulaY)
-						.vert(symbolSize.tfr.terrain);
+					me.linu3.moveTo(me.formulaX,me.vertDistTillMargin-me.vertDistTillMargin*me.formulaY)
+						.vert(symbolSize.tfr.terrain+(symbolSize.tfr.terrain*rand()*2));
 				}
 				for (var i = 0;i<=50; i+=2) {
 					me.axisX = i/50;
 					me.formulaX = me.extrapolate(i, 0, 50, margin.tfr.sides, displayWidth-margin.tfr.sides);
-					me.linu2.lineTo(me.formulaX,(displayHeight-margin.tfr.bottom)-(displayHeight-margin.tfr.bottom)*(math.sqrt(me.axisX)*me.smooth2+me.axisX*me.axisX));
+					me.linu2.lineTo(me.formulaX,me.vertDistTillMargin-me.vertDistTillMargin*(math.sqrt(me.axisX)*me.smooth2+me.axisX*me.axisX));
 				}
 				# Todo: draw pseudo log scale at bottom: 1,2,4,6,10 nm
 				# E-scope: y-axis is angle, the full drawn line is 1 G flightpath.
@@ -6637,7 +6635,12 @@ var fcrFrz = 0;
 var fcrBand = 0;
 var fcrChan = 2;
 
-var flirMode = -2;
+var FLIR_NOT_INIT = -2;
+var FLIR_OFF = -1;
+var FLIR_SBY =  0;
+var FLIR_OPER  =  1;
+
+var flirMode = FLIR_NOT_INIT;
 var tfrMode  =  1;
 var tfrFreq  =  1;
 var tfr_current_terr = 1000;
