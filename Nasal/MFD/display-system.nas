@@ -5303,13 +5303,17 @@ var DisplaySystem = {
 				me.linu2 = me.group.createChild("path").moveTo(margin.tfr.sides,displayHeight-margin.tfr.bottom).setStrokeLineWidth(lineWidth.tfr.terrain)
 					.setColor(colorDot2);
 				me.smooth2 = me.smooth<10?0.4:(me.smooth<15?0.5:0.6);
-				for (var i = 1;i<50; i+=1) {
+				for (var i = 0;i<=50; i+=1) {
 					me.axisX = i/50;
 					me.formulaY = math.sqrt(me.axisX)*me.vsTarget*(0.9+0.2*rand());
 					#me.m = me.extrapolate(i, 0, 50, me.myAlt-tfr_current_terr, me.myAlt-tfr_target_altitude_m)*(0.9+0.2*rand());
 					me.formulaX = me.extrapolate(i, 0, 50, margin.tfr.sides, displayWidth-margin.tfr.sides);
 					me.linu.moveTo(me.formulaX,(displayHeight-margin.tfr.bottom)-(displayHeight-margin.tfr.bottom)*me.formulaY)
 						.vert(symbolSize.tfr.terrain);
+				}
+				for (var i = 0;i<=50; i+=2) {
+					me.axisX = i/50;
+					me.formulaX = me.extrapolate(i, 0, 50, margin.tfr.sides, displayWidth-margin.tfr.sides);
 					me.linu2.lineTo(me.formulaX,(displayHeight-margin.tfr.bottom)-(displayHeight-margin.tfr.bottom)*(math.sqrt(me.axisX)*me.smooth2+me.axisX*me.axisX));
 				}
 				# Todo: draw pseudo log scale at bottom: 1,2,4,6,10 nm
