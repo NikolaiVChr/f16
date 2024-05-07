@@ -1047,14 +1047,14 @@
             <test  logic="AND" value="1">
                 /orientation/pitch-deg gt 45
                 velocities/vc-kts lt /f16/avionics/low-speed-warning-tone-schedule-hystLow
-                /controls/flight/flaps == 0
+                /controls/flight/alt-flaps == 0
                 /controls/gear/gear-down ne 1
             </test>
             <test  logic="AND" value="1">
                 /orientation/pitch-deg gt 45
                 /f16/avionics/low-speed-warning-tone-a == 1
                 velocities/vc-kts lt /f16/avionics/low-speed-warning-tone-schedule-hystHigh
-                /controls/flight/flaps == 0
+                /controls/flight/alt-flaps == 0
                 /controls/gear/gear-down ne 1
             </test>
         </switch>

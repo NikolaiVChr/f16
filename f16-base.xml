@@ -685,6 +685,9 @@
                 <throttle-movement type="double">0</throttle-movement>
             </engine>
         </engines>
+        <flight>
+            <alt-flaps type="bool">0</alt-flaps>
+        </flight>
         <ventilation>
             <airconditioning-type type="int">0</airconditioning-type><!-- cold for 12s: -1 auto: 0 warm for 12s: 1 -->
             <airconditioning-enabled type="bool">false</airconditioning-enabled>

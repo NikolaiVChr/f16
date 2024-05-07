@@ -181,7 +181,7 @@ var autopilot_inhibit = {
     # Ref (block 40 and up): GR1F-16CJ-1 page 1-135
     init: func {
         setlistener("/systems/refuel/serviceable", me.evaluate, 0, 0);
-        setlistener("/controls/flight/flaps", me.evaluate, 0, 0);
+        setlistener("/controls/flight/alt-flaps", me.evaluate, 0, 0);
         setlistener("/controls/gear/gear-down", me.evaluate, 0, 0);
         setlistener("/fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains", me.evaluate, 0, 0);
         setlistener("/f16/fcs/trim-ap-disc-switch", me.evaluate, 0, 0);
@@ -200,7 +200,7 @@ var autopilot_inhibit = {
     evaluate: func {
         if (
             getprop("/systems/refuel/serviceable") or
-            getprop("/controls/flight/flaps") or
+            getprop("/controls/flight/alt-flaps") or
             getprop("/controls/gear/gear-down") or
             getprop("/fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains") or
             getprop("/f16/fcs/trim-ap-disc-switch") or

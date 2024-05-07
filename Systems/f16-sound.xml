@@ -4257,7 +4257,7 @@
                                 <value>1</value>
                             </less-than>
                             <not>
-                                <property>controls/flight/flaps</property>
+                                <property>controls/flight/alt-flaps</property>
                             </not>
                         </or>
                         <less-than>

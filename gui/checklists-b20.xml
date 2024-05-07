@@ -1521,7 +1521,7 @@
                 <value>NORM</value>
                 <condition>
                     <equals>
-                        <property>controls/flight/flaps</property>
+                        <property>controls/flight/alt-flaps</property>
                         <value>0</value>
                     </equals>
                 </condition>
@@ -1533,7 +1533,7 @@
                 </marker>
                 <binding>
                     <command>property-assign</command>
-                    <property>controls/flight/flaps</property>
+                    <property>controls/flight/alt-flaps</property>
                     <value>0</value>
                 </binding>
             </item>

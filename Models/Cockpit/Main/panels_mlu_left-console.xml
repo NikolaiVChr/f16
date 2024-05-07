@@ -1595,7 +1595,7 @@
         <type>knob</type>
         <object-name>SW_ALT_FLAPS</object-name>
         <visible>true</visible>
-        <property>controls/flight/flaps</property>
+        <property>controls/flight/alt-flaps</property>
         <drag-direction>vertical</drag-direction>
         <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
         <repeatable>true</repeatable>
@@ -1615,7 +1615,7 @@
         <increase>
             <binding>
                 <command>property-adjust</command>
-                <property>controls/flight/flaps</property>
+                <property>controls/flight/alt-flaps</property>
                 <step>-1</step>
                 <min>0</min>
                 <max>1</max>
@@ -1625,7 +1625,7 @@
         <decrease>
             <binding>
                 <command>property-adjust</command>
-                <property>controls/flight/flaps</property>
+                <property>controls/flight/alt-flaps</property>
                 <step>1</step>
                 <min>0</min>
                 <max>1</max>
@@ -1638,7 +1638,7 @@
         <type>knob</type>
         <object-name>SW_ALT_FLAPS_50</object-name>
         <visible>true</visible>
-        <property>controls/flight/flaps</property>
+        <property>controls/flight/alt-flaps</property>
         <drag-direction>vertical</drag-direction>
         <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
         <repeatable>true</repeatable>
@@ -1658,7 +1658,7 @@
         <increase>
             <binding>
                 <command>property-adjust</command>
-                <property>controls/flight/flaps</property>
+                <property>controls/flight/alt-flaps</property>
                 <step>1</step>
                 <min>0</min>
                 <max>1</max>
@@ -1668,7 +1668,7 @@
         <decrease>
             <binding>
                 <command>property-adjust</command>
-                <property>controls/flight/flaps</property>
+                <property>controls/flight/alt-flaps</property>
                 <step>-1</step>
                 <min>0</min>
                 <max>1</max>

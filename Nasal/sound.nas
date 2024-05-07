@@ -257,7 +257,7 @@ setlistener("fdm/jsbsim/elec/switches/master-fuel-cmd", click1, nil, 0);
 setlistener("controls/fuel/tank-inerting", button2, nil, 0);
 setlistener("f16/engine/feed", knob, nil, 0);
 setlistener("systems/refuel/serviceable", button2, nil, 0);
-setlistener("controls/flight/flaps", button2, nil, 0);
+setlistener("controls/flight/alt-flaps", button2, nil, 0);
 setlistener("controls/test/test-panel/mal-ind-lts", doubleClick2, nil, 0);
 setlistener("controls/test/test-panel/fire-ovht-test", doubleClick2, nil, 0);
 setlistener("controls/test/test-panel/oxy-test", click2, nil, 0);

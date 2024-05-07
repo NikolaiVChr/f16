@@ -33,7 +33,7 @@
             <default value="0"/>
             <test logic="OR" value="1">
                 gear/gear-cmd-norm == 1
-                /controls/flight/flaps gt 0
+                /controls/flight/alt-flaps gt 0
             </test>
         </switch>
 
@@ -54,7 +54,7 @@
             </test>
             <test logic="AND" value="1">
                 fcs/fly-by-wire/ada189675 == 0
-                /controls/flight/flaps gt 0
+                /controls/flight/alt-flaps gt 0
             </test>
             <test logic="AND" value="1">
                 fcs/fly-by-wire/ada189675 == 0
@@ -2977,7 +2977,7 @@
             <test logic="AND" value="0">
                 fcs/fly-by-wire/enable-standby-gains == 1
                 gear/gear-cmd-norm == 0
-                /controls/flight/flaps eq 0
+                /controls/flight/alt-flaps eq 0
             </test>
             <test logic="AND" value="15">
                 fcs/fly-by-wire/enable-standby-gains == 1
@@ -3093,7 +3093,7 @@
         <switch name="fcs/fly-by-wire/tef/cmd-switch">
             <default value="fcs/fly-by-wire/tef/cmd-gear"/>
             <test logic="AND" value="1">
-                /controls/flight/flaps gt 0
+                /controls/flight/alt-flaps gt 0
             </test>
         </switch>
 
@@ -3126,7 +3126,7 @@
             <test logic="OR" value="20">
                 fcs/fly-by-wire/tef/cmd-gear == 1
                 <test logic="AND">
-                    /controls/flight/flaps == 1
+                    /controls/flight/alt-flaps == 1
                     velocities/vc-kts lt 290
                 </test>
             </test>

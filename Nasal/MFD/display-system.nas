@@ -5295,12 +5295,12 @@ var DisplaySystem = {
 					.vert(-symbolSize.tfr.tick)
 					.setStrokeLineWidth(lineWidth.tfr.axis)
 					.setColor(colorDot2);
-				me.vsTarget = math.clamp((-1*getprop("fdm/jsbsim/autoflight/pitch/alt/error-tf-lag")+3000)/6000,0.05,1);
+				me.vsTarget = math.clamp((-1*getprop("fdm/jsbsim/autoflight/pitch/alt/error-tf-lag")+3000)/6000,0.05,0.95);
 				me.linu3 = me.group.createChild("path").setStrokeLineWidth(lineWidth.tfr.terrain).setColor(colorDot2);
 				me.linu2 = me.group.createChild("path").moveTo(margin.tfr.sides,displayHeight-margin.tfr.bottom).setStrokeLineWidth(lineWidth.tfr.flyup)
 					.setColor(colorDot2);
 				me.smooth2 = me.smooth<10?0.4:(me.smooth<15?0.5:0.6);
-				me.vertDistTillMargin = displayHeight-margin.tfr.bottom;
+				me.vertDistTillMargin = displayHeight-margin.tfr.bottom*2;
 				for (var i = 0;i<=50; i+=1) {
 					me.axisX = i/50;
 					me.formulaY = math.sqrt(me.axisX)*me.vsTarget*(0.9+0.2*rand());
