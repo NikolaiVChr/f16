@@ -866,6 +866,7 @@ append(obj.total, obj.speed_curr);
             .hide()
             .setColor(0,1,0);
         append(obj.total, obj.target_locked);
+        obj.eegsTargetDesignationGrp = obj.centerOrigin.createChild("group");
         obj.boreSymbol = obj.centerOrigin.createChild("path")
                 .moveTo(-5,0)
                 .horiz(10)
@@ -2391,8 +2392,7 @@ append(obj.total, obj.speed_curr);
         me.target_idx = 0;
         me.designated = 0;
 
-        me.target_locked.setVisible(0);
-
+       
         me.irL = 0;
         me.irS = 0;
         me.rdL = 0;
@@ -2437,6 +2437,8 @@ append(obj.total, obj.speed_curr);
         me.u = radar_system.apg68Radar.getPriorityTarget();
         var showACMBore = 0;
         var showACMVert = 0;
+        me.target_locked_setVisible=0;
+        me.eegsTargetDesignationGrp_setVisible=0;
         if (me.u != nil) {
             me.lastCoord = me.u.getLastCoord();
             if (me.lastCoord == nil) {
@@ -2471,11 +2473,15 @@ append(obj.total, obj.speed_curr);
                         }
                         me.ulrd = me.u.getLastRangeDirect();
                         if (me.ulrd != nil) me.designatedDistanceFT = me.ulrd*M2FT;
-                        me.target_locked.setVisible(!me.clamped);
+                        me.eegsTDshowing = !getprop("f16/avionics/strf") and !me.hydra and eegsShow and me.ulrd != nil;
+                        me.target_locked_setVisible = !me.clamped and !me.eegsTDshowing;
+                        me.eegsTargetDesignationGrp_setVisible = !me.clamped and me.eegsTDshowing;
                         if (me.tgt != nil) {
                             me.tgt.hide();
                         }
                         me.target_locked.setTranslation (me.echoPos);
+                        me.eegsTargetDesignationGrp.setTranslation (me.echoPos);
+                        me.eegsTargetDesignationGrp.update();
                         me.loft_cue = 0;
                         if (currASEC != nil) {
                             # disabled for now as it has issues
@@ -2590,6 +2596,8 @@ append(obj.total, obj.speed_curr);
         #me.ASC2.setVisible(showASC);
         me.acmBoreSymbol.setVisible(showACMBore);
         me.acmVertSymbol.setVisible(showACMVert);
+        me.target_locked.setVisible(me.target_locked_setVisible);
+        me.eegsTargetDesignationGrp.setVisible(me.eegsTargetDesignationGrp_setVisible);
 
         #print(me.irS~" "~me.irL);
 
@@ -3475,9 +3483,42 @@ append(obj.total, obj.speed_curr);
                 me.eegsMe.pitch = math.atan2(-me.eegsMe.speed_down_fps,me.eegsMe.speed_horizontal_fps)*R2D;
             }
         }
+        if (!(strf or me.hydra) and me.designatedDistanceFT != nil) {
+                #me.eegsTargetDesignationGrp.setTranslation(0,0); for testing
+                me.eegsTargetDesignationGrp.removeAllChildren();
+                var mr = 0.4 * 1.5;
+                var radius = 20 * mr;
+                #me.designatedDistanceFT = getprop("a"); for testing
+                me.td_rads = me.interpolate(me.designatedDistanceFT, 0, 12000, 0, 2*math.pi);
+                me.td_x = radius*math.sin(me.td_rads);
+                me.td_y = -radius*math.cos(me.td_rads);
+                me.td_factor = me.designatedDistanceFT >= 12000?1:0.75;
+                me.td_x2 = me.td_factor*radius*math.sin(me.td_rads);
+                me.td_y2 = -me.td_factor*radius*math.cos(me.td_rads);
+                if (me.td_x >= 0) {
+                        me.eegsTargetDesignationGrp.createChild("path")
+                                .moveTo(0, -radius)
+                                .arcSmallCW(radius, radius, 0, me.td_x, me.td_y+radius)
+                                .lineTo(me.td_x2, me.td_y2)
+                                .setStrokeLineWidth(1)
+                                .setColor(me.color)
+                                .update();
+                } else {
+                        me.eegsTargetDesignationGrp.createChild("path")
+                                .moveTo(0, -radius)
+                                .arcLargeCW(radius, radius, 0, me.td_x, me.td_y+radius)
+                                .lineTo(me.td_x2, me.td_y2)
+                                .setStrokeLineWidth(1)
+                                .setColor(me.color)
+                                .update();
+                }
+        }
     },
     extrapolate: func (x, x1, x2, y1, y2) {
         return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
+    },
+    interpolate: func (x, x1, x2, y1, y2) {
+        return math.clamp(me.extrapolate(x, x1, x2, y1, y2),math.min(y1,y2),math.max(y1,y2));
     },
     clamp: func(v, min, max) { v < min ? min : v > max ? max : v },
     list: [],
