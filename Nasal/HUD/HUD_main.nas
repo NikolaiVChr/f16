@@ -3554,8 +3554,6 @@ append(obj.total, obj.speed_curr);
                                 .update();
                 }
         }
-        #me.funnelParts = gunSight==2?4:me.funnelPartsMax;
-        #me.averageDt = gunSight==2?0.5:0.1;
     },
     extrapolate: func (x, x1, x2, y1, y2) {
         return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
