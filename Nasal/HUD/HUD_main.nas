@@ -1875,7 +1875,7 @@ append(obj.total, obj.speed_curr);
                                                      } elsif (obj.showmeCCIP) {
                                                         submodeVar = "CCIP";
                                                      } elsif (obj.eegsLoop.isRunning) {
-                                                        submodeVar = obj.hydra?"CCIP":(hdp.getproper("strf")?"STRF":"EEGS");
+                                                        submodeVar = obj.hydra?"CCIP":(hdp.getproper("gunSight")==0?"EEGS":(hdp.getproper("gunSight")==1?"STRF":"SNAP"));
                                                      } elsif (hdp.submode == 1) {
                                                         submodeVar = "BORE";
                                                      }
@@ -1900,9 +1900,10 @@ append(obj.total, obj.speed_curr);
 
         ];
 
-        #EEGS: (other gun sights not made: lcos snap sslc)
+        #EEGS: (other gun sights not made: lcos sslc)
         obj.eegsGroup = obj.centerOrigin.createChild("group");
-        obj.funnelParts = 17;#number of segments in funnel sides. If increase, remember to increase all relevant vectors also.
+        obj.funnelPartsMax = 17;#number of segments in funnel sides. If increase, remember to increase all relevant vectors also.
+        obj.funnelParts = obj.funnelPartsMax;
         obj.eegsRightX = obj.makeVector(obj.funnelParts,0);
         obj.eegsRightY = obj.makeVector(obj.funnelParts,0);
         obj.eegsLeftX  = obj.makeVector(obj.funnelParts,0);
@@ -1910,7 +1911,7 @@ append(obj.total, obj.speed_curr);
         obj.gunPos   = nil;#[[nil,nil],[nil,nil,nil],[nil,nil,nil,nil],[nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil]];
         obj.eegsMe = {ac: geo.Coord.new(), eegsPos: geo.Coord.new(),shellPosX: obj.makeVector(obj.funnelParts,0),shellPosY: obj.makeVector(obj.funnelParts,0),shellPosDist: obj.makeVector(obj.funnelParts,0)};
         obj.lastTime = systime();
-        obj.averageDt = 0.100;
+        obj.averageDt = 0.100;#eegs
         obj.eegsLoop = maketimer(obj.averageDt, obj, obj.displayEEGS);
         obj.eegsLoop.simulatedTime = 1;
         obj.resetGunPos();
@@ -2473,7 +2474,7 @@ append(obj.total, obj.speed_curr);
                         }
                         me.ulrd = me.u.getLastRangeDirect();
                         if (me.ulrd != nil) me.designatedDistanceFT = me.ulrd*M2FT;
-                        me.eegsTDshowing = !getprop("f16/avionics/strf") and !me.hydra and eegsShow and me.ulrd != nil;
+                        me.eegsTDshowing = getprop("f16/avionics/gun-sight") != 1 and !me.hydra and eegsShow and me.ulrd != nil;
                         me.target_locked_setVisible = !me.clamped and !me.eegsTDshowing;
                         me.eegsTargetDesignationGrp_setVisible = !me.clamped and me.eegsTDshowing;
                         if (me.tgt != nil) {
@@ -2974,7 +2975,7 @@ append(obj.total, obj.speed_curr);
 
     resetGunPos: func {
         me.gunPos   = [];
-        for(i = 0;i < me.funnelParts*2;i+=1){
+        for(i = 0;i < me.funnelPartsMax*2;i+=1){
           var tmp = [];
           for(var myloopy = 0;myloopy <= i+1;myloopy+=1){
             append(tmp,nil);
@@ -3223,7 +3224,7 @@ append(obj.total, obj.speed_curr);
 
     displayEEGS: func() {
         #note: this stuff is expensive like hell to compute, but..lets do it anyway.
-        var strf = getprop("f16/avionics/strf");
+        var gunSight = getprop("f16/avionics/gun-sight");
         var st = systime();
         me.eegsMe.dt = st-me.lastTime;
         if (me.eegsMe.dt > me.averageDt*3) {
@@ -3246,7 +3247,7 @@ append(obj.total, obj.speed_curr);
             me.eegsMe.allow = 1;
             me.drawEEGSPipper = 0;
             me.strfRange = 10000;
-            if(strf or me.hydra) {
+            if(gunSight == 1 or me.hydra) {
                 me.groundDistanceFT = nil;
                 var l = 0;
                 for (l = 0;l < me.funnelParts*2;l+=1) {
@@ -3311,7 +3312,8 @@ append(obj.total, obj.speed_curr);
                         me.eegsMe.shellPosX[l] = me.eegsMe.posTemp[0];#me.eegsMe.xcS;
                         me.eegsMe.shellPosY[l] = me.eegsMe.posTemp[1];#me.eegsMe.ycS;
 
-                        if (me.designatedDistanceFT != nil and !me.drawEEGSPipper) {
+                        if (me.designatedDistanceFT != nil and !me.drawEEGSPipper and gunSight != 2) {
+                          #eegs pipper
                           if (l != 0 and me.eegsMe.shellPosDist[l] >= me.designatedDistanceFT and me.eegsMe.shellPosDist[l]>me.eegsMe.shellPosDist[l-1]) {
                             var highdist = me.eegsMe.shellPosDist[l];
                             var lowdist = me.eegsMe.shellPosDist[l-1];
@@ -3322,8 +3324,20 @@ append(obj.total, obj.speed_curr);
                         }
                     }
                 }
+                if (me.designatedDistanceFT != nil and gunSight == 2) {
+                        #snap pipper
+                        for (var l = 6;l < me.funnelParts;l+=5) {
+                          if (!me.drawEEGSPipper and me.eegsMe.shellPosDist[l] >= me.designatedDistanceFT and me.eegsMe.shellPosDist[l]>me.eegsMe.shellPosDist[l-5]) {
+                            var highdist = me.eegsMe.shellPosDist[l];
+                            var lowdist = me.eegsMe.shellPosDist[l-5];
+                            me.eegsPipperX = HudMath.extrapolate(me.designatedDistanceFT,lowdist,highdist,me.eegsMe.shellPosX[l-5],me.eegsMe.shellPosX[l]);
+                            me.eegsPipperY = HudMath.extrapolate(me.designatedDistanceFT,lowdist,highdist,me.eegsMe.shellPosY[l-5],me.eegsMe.shellPosY[l]);
+                            me.drawEEGSPipper = 1;
+                          }
+                        }
+                }
             }
-            if (me.eegsMe.allow and !(strf or me.hydra)) {
+            if (me.eegsMe.allow and gunSight == 0 and !me.hydra) {
                 # draw the funnel
                 for (var k = 0;k<me.funnelParts;k+=1) {
                     var halfspan = math.atan2(getprop("f16/avionics/eegs-wingspan-ft")*0.5,me.eegsMe.shellPosDist[k])*R2D*me.texelPerDegreeX;#35ft average fighter wingspan
@@ -3352,8 +3366,35 @@ append(obj.total, obj.speed_curr);
                           .setColor(me.color);
                 }
                 me.eegsGroup.update();
-            }
-            if (me.eegsMe.allow and (strf or me.hydra)) {
+            } elsif (me.eegsMe.allow and gunSight == 2 and !me.hydra) {
+                # draw snap
+                me.eegsGroup.removeAllChildren();
+                for (var i = 1; i < me.funnelParts-5; i+=5) {#changed to i=1 as we dont need lines to start so close
+                     me.tmpSegment = me.eegsGroup.createChild("path")
+                        .moveTo(me.eegsMe.shellPosX[i], me.eegsMe.shellPosY[i])
+                        .lineTo(me.eegsMe.shellPosX[i+5], me.eegsMe.shellPosY[i+5])
+                        .setStrokeLineWidth(1)
+                        .setColor(me.color);
+                    if (i==0) {
+                        #me.dists = math.sqrt(math.pow(me.eegsMe.shellPosX[i]-me.eegsMe.shellPosX[i+1],2)+math.pow(me.eegsMe.shellPosY[i]-me.eegsMe.shellPosY[i+1],2));
+                        #me.tmpSegment.setStrokeDashArray([1, me.dists*0.5, me.dists, 0]);
+                    } elsif (i > 5) {
+                        me.tmpSegment
+                                .moveTo(me.eegsMe.shellPosX[i+5]-3, me.eegsMe.shellPosY[i+5])
+                                .horiz(6);
+                    }
+                }
+                if (me.drawEEGSPipper) {
+                    var radius = 2;
+                    me.eegsGroup.createChild("path")
+                          .moveTo(me.eegsPipperX, me.eegsPipperY-radius)
+                          .arcSmallCW(radius,radius,0,0,radius*2)
+                          .arcSmallCW(radius,radius,0,0,-radius*2)
+                          .setStrokeLineWidth(1)
+                          .setColor(me.color);
+                }
+                me.eegsGroup.update();
+            } elsif (me.eegsMe.allow and (gunSight == 1 or me.hydra)) {
                 # draw the STRF pipper (T.O. GR1F-16CJ-34-1-1 page 1-442)
                 me.eegsGroup.removeAllChildren();
                 if (me.drawEEGSPipper) {
@@ -3434,7 +3475,8 @@ append(obj.total, obj.speed_curr);
             #print("x,y");
             #printf("%d,%d",0,0);
             #print("-----");
-            var multi = (strf or me.hydra)?2:1;
+            
+            var multi = (gunSight == 1 or me.hydra)?2:1;# double the funnel segments for STRF or HYDRA
             for (var j = 0;j < me.funnelParts*multi;j+=1) {
 
                 #calc new speed
@@ -3483,18 +3525,17 @@ append(obj.total, obj.speed_curr);
                 me.eegsMe.pitch = math.atan2(-me.eegsMe.speed_down_fps,me.eegsMe.speed_horizontal_fps)*R2D;
             }
         }
-        if (!(strf or me.hydra) and me.designatedDistanceFT != nil) {
-                #me.eegsTargetDesignationGrp.setTranslation(0,0); for testing
+        if (!(gunSight == 1 or me.hydra) and me.designatedDistanceFT != nil) {
                 me.eegsTargetDesignationGrp.removeAllChildren();
                 var mr = 0.4 * 1.5;
                 var radius = 20 * mr;
-                #me.designatedDistanceFT = getprop("a"); for testing
                 me.td_rads = me.interpolate(me.designatedDistanceFT, 0, 12000, 0, 2*math.pi);
                 me.td_x = radius*math.sin(me.td_rads);
                 me.td_y = -radius*math.cos(me.td_rads);
                 me.td_factor = me.designatedDistanceFT >= 12000?1:0.75;
                 me.td_x2 = me.td_factor*radius*math.sin(me.td_rads);
                 me.td_y2 = -me.td_factor*radius*math.cos(me.td_rads);
+                # the open part of the circle is not segmented as per manuals and YT (1FJF5PD1uqM)
                 if (me.td_x >= 0) {
                         me.eegsTargetDesignationGrp.createChild("path")
                                 .moveTo(0, -radius)
@@ -3513,6 +3554,8 @@ append(obj.total, obj.speed_curr);
                                 .update();
                 }
         }
+        #me.funnelParts = gunSight==2?4:me.funnelPartsMax;
+        #me.averageDt = gunSight==2?0.5:0.1;
     },
     extrapolate: func (x, x1, x2, y1, y2) {
         return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);

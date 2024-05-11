@@ -72,15 +72,15 @@ var rtExec_loop = func
 }
 
 # setup the properties to monitor for this system
-input = {
+var input_exec = {
 FrameRate                 : "/sim/frame-rate",
 frame_rate                : "/sim/frame-rate",
 frame_rate_worst          : "/sim/frame-rate-worst",
 elapsed_seconds           : "/sim/time/elapsed-sec",
 };
 
-foreach (var name; keys(input)) {
-    emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("EXEC", name, input[name]));
+foreach (var name; keys(input_exec)) {
+    emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("EXEC", name, input_exec[name]));
 }
 
 #var execTimer = maketimer(1, rtExec_loop);

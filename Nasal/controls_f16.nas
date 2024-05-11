@@ -43,7 +43,7 @@ var dogfight = func {
         radar_system.apg68Radar.setRootMode(1, prio);
         displays.leftMFD.system.selectPage("PageFCR");
         displays.rightMFD.system.selectPage("PageSMSWPN");
-        setprop("f16/avionics/strf",0);
+        f16.setDefaultAAgunSight();#eegs
         if (pylons.fcs != nil and getprop("controls/armament/master-arm")) {
             foreach(var snake;pylons.fcs.getAllOfType("AIM-9L")) {
                 snake.setCooling(1);

@@ -1444,8 +1444,22 @@ var DisplaySystem = {
                     return;
                 }
                 if (me.wpnType == "gun") {
-                    setprop("f16/avionics/strf", !getprop("f16/avionics/strf"));
-                }
+	                var sight = getprop("f16/avionics/gun-sight");
+	                # eegs strf snap
+	                if (variantID == 0 or variantID == 1 or variantID == 3) {
+	                	# does not support eegs
+	                    if (sight == 1) sight = 2;
+	                    else sight = 1;
+	                } elsif (variantID == 6) {
+	                	# does not support snap
+	                	sight += 1;
+	                    if (sight == 2) sight = 0;
+	                } else {
+	                    sight += 1;
+	                    if (sight == 3) sight = 0;
+	                }
+	                setprop("f16/avionics/gun-sight", sight);
+	            }
             } elsif (controlName == "OSB16") {
                 me.device.swap();
             } elsif (controlName == "OSB20") {
@@ -1583,7 +1597,7 @@ var DisplaySystem = {
                     me.setWeaponStatus();
                 } elsif (me.wpn.type == "20mm Cannon") {
                     me.wpnType ="gun";
-                    me.osb14 = getprop("f16/avionics/strf")?"STRF":"EEGS";
+                    me.osb14 = getprop("f16/avionics/gun-sight")==0?"EEGS":(getprop("f16/avionics/gun-sight")==1?"STRF":"SNAP");
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.status = "MAL";
                     } else {

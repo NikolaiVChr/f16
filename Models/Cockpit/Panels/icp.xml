@@ -556,7 +556,7 @@
             <button>0</button>
             <binding>
                 <command>nasal</command>
-                <script>sound.doubleClick();if (pylons.fcs!=nil) pylons.fcs.cycleAA();radar_system.apg68Radar.setAAMode(); setprop("f16/avionics/strf",0);
+                <script>sound.doubleClick();if (pylons.fcs!=nil) pylons.fcs.cycleAA();radar_system.apg68Radar.setAAMode(); f16.setDefaultAAgunSight();
                 displays.leftMFD.system.selectPage("PageFCR");
                 displays.rightMFD.system.selectPage("PageSMSWPN");
                 f16.autoPrioritySOI();</script>
@@ -589,7 +589,7 @@
             <button>0</button>
             <binding>
                 <command>nasal</command>
-                <script>sound.doubleClick();if (pylons.fcs!=nil) pylons.fcs.cycleAG();radar_system.apg68Radar.setAGMode(); setprop("f16/avionics/strf",1);
+                <script>sound.doubleClick();if (pylons.fcs!=nil) pylons.fcs.cycleAG();radar_system.apg68Radar.setAGMode(); setprop("f16/avionics/gun-sight",1);
                     displays.leftMFD.system.selectPage("PageFCR");
                     displays.rightMFD.system.selectPage("PageSMSWPN");
                     f16.autoPrioritySOI();</script>

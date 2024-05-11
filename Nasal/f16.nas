@@ -1210,7 +1210,7 @@ setlistener("/ai/models/model-impact", impact_listener, 0, 0);
 # NOTE: This is a deprecated way of doing things; each subsystem should do this
 #       for the properties that are required, however this aircraft predates
 #       the updated frame notifier that supports this.
-
+var input = nil;
 var ownship_pos = geo.Coord.new();
 var SubSystem_Main = {
     new : func (_ident){
@@ -1311,7 +1311,7 @@ var SubSystem_Main = {
             servStatic                : "systems/static/serviceable",
             servPitot                 : "systems/pitot/serviceable",
             warn                      : "f16/avionics/fault-warning",
-            strf                      : "f16/avionics/strf",
+            gunSight                  : "f16/avionics/gun-sight",
             data                      : "instrumentation/datalink/data",
             hmdH:                       "sim/current-view/heading-offset-deg",
             hmdP:                       "sim/current-view/pitch-offset-deg",
@@ -1697,6 +1697,16 @@ var setInvisible = func (m) {
 }
 
 settimer( func { ignoreLoop(); }, 5);
+
+setDefaultAAgunSight = func {
+    var vari = getprop(input.variantID);
+    if (vari == 0 or vari == 1 or vari == 3) {
+        setprop(input.gunSight, 2);#snap
+    } else {
+        setprop(input.gunSight, 0);#eegs
+    }
+}
+
 
 setlistener("controls/armament/alt-rel-button", func (node) {setprop("controls/armament/trigger", node.getValue());});
 

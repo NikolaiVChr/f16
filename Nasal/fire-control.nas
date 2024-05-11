@@ -524,7 +524,7 @@ var FireControl = {
 				return 0;
 			}
 			if (me.selectedType == defaultCannon) {
-				return !getprop("f16/avionics/strf");
+				return getprop("f16/avionics/gun-sight") != 1;
 			}
 			me.waa = me.getSelectedWeapon();
 			if (me.waa != nil and me.waa["parents"][0] == armament.AIM) {
