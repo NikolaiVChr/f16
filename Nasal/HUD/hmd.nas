@@ -1646,7 +1646,7 @@ var Heading = {
             me.mark = make_path(me.group).vert(-25);
             me.text = make_text(me.group)
                 .setAlignment("center-bottom")
-                .setTranslation(0, 45);
+                .setTranslation(0, 39);
             me.text.enableUpdate();
             me.long = 1;
         },
@@ -1771,7 +1771,8 @@ var make_path = func(parent, fill=0) {
 var make_text = func(parent) {
     return parent.createChild("text")
         # Mask the global "stroke" colour, cf. remarks above.
-        .set("stroke", "none");
+        .set("stroke", "none")
+        .setFont("NotoMono-Regular.ttf");
 }
 
 var isMarking = 0;
