@@ -3354,19 +3354,20 @@ append(obj.total, obj.speed_curr);
                 for (var i = 1; i < me.funnelParts-1; i+=1) {#changed to i=1 as we dont need funnel to start so close
                     me.eegsGroup.createChild("path")
                         .moveTo(me.eegsRightX[i], me.eegsRightY[i])
-                        #.lineTo(me.eegsRightX[i+1], me.eegsRightY[i+1])
+                        .lineTo(me.eegsRightX[i+1], me.eegsRightY[i+1])
                         .moveTo(me.eegsLeftX[i], me.eegsLeftY[i])
-                        #.lineTo(me.eegsLeftX[i+1], me.eegsLeftY[i+1])
+                        .lineTo(me.eegsLeftX[i+1], me.eegsLeftY[i+1])
                         .setStrokeLineWidth(1)
                         .setColor(me.color);
                 }
-                for (var i = 0; i < me.funnelParts-1; i+=1) {
-                     me.tmpSegment = me.eegsGroup.createChild("path")
-                        .moveTo(me.eegsMe.shellPosX[i], me.eegsMe.shellPosY[i])
-                        .lineTo(me.eegsMe.shellPosX[i+1], me.eegsMe.shellPosY[i+1])
-                        .setStrokeLineWidth(1)
-                        .setColor(me.color);
-                }
+                # Test snake:
+                #for (var i = 0; i < me.funnelParts-1; i+=1) {
+                #     me.tmpSegment = me.eegsGroup.createChild("path")
+                #        .moveTo(me.eegsMe.shellPosX[i], me.eegsMe.shellPosY[i])
+                #        .lineTo(me.eegsMe.shellPosX[i+1], me.eegsMe.shellPosY[i+1])
+                #        .setStrokeLineWidth(1)
+                #        .setColor(me.color);
+                #}
                 if (me.drawEEGSPipper) {
                     var radius = 2;
                     me.eegsGroup.createChild("path")
