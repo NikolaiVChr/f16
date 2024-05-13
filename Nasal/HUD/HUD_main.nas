@@ -2434,7 +2434,7 @@ append(obj.total, obj.speed_curr);
             }
         }
         me.designatedDistanceFT = nil;
-        me.groundDistanceFT = nil;
+        me.groundAltDiffLastPointFT = nil;
         me.u = radar_system.apg68Radar.getPriorityTarget();
         var showACMBore = 0;
         var showACMVert = 0;
@@ -3250,10 +3250,11 @@ append(obj.total, obj.speed_curr);
 
             me.eegsMe.ac = geo.aircraft_position();
             me.eegsMe.allow = 1;
-            me.drawEEGSPipper = 0;
+            me.drawSTRFPipper = 0;
+            me.drawGunAim = 0;
             me.strfRange = 10000;
             if(gunSight == 1 or me.hydra) {
-                me.groundDistanceFT = nil;
+                me.groundAltDiffLastPointFT = nil;
                 var l = 0;
                 for (l = 0;l < me.funnelParts*2;l+=1) {
                     # compute display positions of funnel on hud
@@ -3271,7 +3272,7 @@ append(obj.total, obj.speed_curr);
                         if (l != 0 and el > pos.alt()) {
                             var hitPos = geo.Coord.new(pos);
                             hitPos.set_alt(el);
-                            me.groundDistanceFT = (el-pos.alt())*M2FT;#ac.direct_distance_to(hitPos)*M2FT;
+                            me.groundAltDiffLastPointFT = (el-pos.alt())*M2FT;#ac.direct_distance_to(hitPos)*M2FT;
                             me.strfRange = hitPos.direct_distance_to(me.eegsMe.ac)*M2FT;
                             l = l;
                             break;
@@ -3281,7 +3282,7 @@ append(obj.total, obj.speed_curr);
 
                 # compute display positions of pipper on hud
 
-                if (me.eegsMe.allow and me.groundDistanceFT != nil) {
+                if (me.eegsMe.allow and me.groundAltDiffLastPointFT != nil) {
                     for (var ll = l-1;ll <= l;ll+=1) {
                         var ac    = me.gunPos[ll][0][1];
                         var pos   = me.gunPos[ll][0][0];
@@ -3292,13 +3293,14 @@ append(obj.total, obj.speed_curr);
                         me.eegsMe.shellPosX[ll] = me.eegsMe.posTemp[0];
                         me.eegsMe.shellPosY[ll] = me.eegsMe.posTemp[1];
 
-                        if (l == ll and me.strfRange < 10000) {
+                        if (l == ll and me.strfRange < 24000) {
                             var highdist = me.eegsMe.shellPosDist[ll];
                             var lowdist = me.eegsMe.shellPosDist[ll-1];
-                            me.groundDistanceFT = me.groundDistanceFT/math.cos((90-pitch)*D2R);
-                            me.eegsPipperX = HudMath.extrapolate(highdist-me.groundDistanceFT,lowdist,highdist,me.eegsMe.shellPosX[ll-1],me.eegsMe.shellPosX[ll]);
-                            me.eegsPipperY = HudMath.extrapolate(highdist-me.groundDistanceFT,lowdist,highdist,me.eegsMe.shellPosY[ll-1],me.eegsMe.shellPosY[ll]);
-                            me.drawEEGSPipper = 1;
+                            if (pitch == 0) me.groundDistDiffLastPointFT = 0;
+                            else me.groundDistDiffLastPointFT = me.groundAltDiffLastPointFT/math.sin(-pitch*D2R);# We assume the ground is level and flat at impact position
+                            me.eegsPipperX = me.interpolate(highdist-me.groundDistDiffLastPointFT,lowdist,highdist,me.eegsMe.shellPosX[ll-1],me.eegsMe.shellPosX[ll]);
+                            me.eegsPipperY = me.interpolate(highdist-me.groundDistDiffLastPointFT,lowdist,highdist,me.eegsMe.shellPosY[ll-1],me.eegsMe.shellPosY[ll]);
+                            me.drawSTRFPipper = 1;
                         }
                     }
                 }
@@ -3316,14 +3318,14 @@ append(obj.total, obj.speed_curr);
                         me.eegsMe.shellPosX[l] = me.eegsMe.posTemp[0];
                         me.eegsMe.shellPosY[l] = me.eegsMe.posTemp[1];
 
-                        if (me.designatedDistanceFT != nil and !me.drawEEGSPipper and gunSight != 2) {
+                        if (me.designatedDistanceFT != nil and !me.drawGunAim and gunSight != 2) {
                           #eegs pipper
                           if (l != 0 and me.eegsMe.shellPosDist[l] >= me.designatedDistanceFT and me.eegsMe.shellPosDist[l]>me.eegsMe.shellPosDist[l-1]) {
                             var highdist = me.eegsMe.shellPosDist[l];
                             var lowdist = me.eegsMe.shellPosDist[l-1];
                             me.eegsPipperX = HudMath.extrapolate(me.designatedDistanceFT,lowdist,highdist,me.eegsMe.shellPosX[l-1],me.eegsMe.shellPosX[l]);
                             me.eegsPipperY = HudMath.extrapolate(me.designatedDistanceFT,lowdist,highdist,me.eegsMe.shellPosY[l-1],me.eegsMe.shellPosY[l]);
-                            me.drawEEGSPipper = 1;
+                            me.drawGunAim = 1;
                           }
                         }
                     }
@@ -3331,12 +3333,12 @@ append(obj.total, obj.speed_curr);
                 if (me.designatedDistanceFT != nil and gunSight == 2) {
                         #snap pipper
                         for (var l = 6;l < me.funnelParts;l+=5) {
-                          if (!me.drawEEGSPipper and me.eegsMe.shellPosDist[l] >= me.designatedDistanceFT and me.eegsMe.shellPosDist[l]>me.eegsMe.shellPosDist[l-5]) {
+                          if (!me.drawGunAim and me.eegsMe.shellPosDist[l] >= me.designatedDistanceFT and me.eegsMe.shellPosDist[l]>me.eegsMe.shellPosDist[l-5]) {
                             var highdist = me.eegsMe.shellPosDist[l];
                             var lowdist = me.eegsMe.shellPosDist[l-5];
                             me.eegsPipperX = HudMath.extrapolate(me.designatedDistanceFT,lowdist,highdist,me.eegsMe.shellPosX[l-5],me.eegsMe.shellPosX[l]);
                             me.eegsPipperY = HudMath.extrapolate(me.designatedDistanceFT,lowdist,highdist,me.eegsMe.shellPosY[l-5],me.eegsMe.shellPosY[l]);
-                            me.drawEEGSPipper = 1;
+                            me.drawGunAim = 1;
                           }
                         }
                 }
@@ -3368,7 +3370,7 @@ append(obj.total, obj.speed_curr);
                 #        .setStrokeLineWidth(1)
                 #        .setColor(me.color);
                 #}
-                if (me.drawEEGSPipper) {
+                if (me.drawGunAim) {
                     var radius = 2;
                     me.eegsGroup.createChild("path")
                           .moveTo(me.eegsPipperX, me.eegsPipperY-radius)
@@ -3393,7 +3395,7 @@ append(obj.total, obj.speed_curr);
                                 .horiz(6);
                     }
                 }
-                if (me.drawEEGSPipper) {
+                if (me.drawGunAim) {
                     var radius = 2;
                     me.eegsGroup.createChild("path")
                           .moveTo(me.eegsPipperX, me.eegsPipperY-radius)
@@ -3404,34 +3406,125 @@ append(obj.total, obj.speed_curr);
                 }
                 me.eegsGroup.update();
             } elsif (me.eegsMe.allow and (gunSight == 1 or me.hydra)) {
-                # draw the STRF pipper (T.O. GR1F-16CJ-34-1-1 page 1-442)
                 me.eegsGroup.removeAllChildren();
-                if (me.drawEEGSPipper) {
-                    var mr = 0.4 * 1.5;
-                    var pipperRadius = 15 * mr;
-                    if (me.strfRange <= 4000) {
-                        me.eegsGroup.createChild("path")
-                            .moveTo(me.eegsPipperX-pipperRadius, me.eegsPipperY-pipperRadius-2)
-                            .horiz(pipperRadius*2)
-                            .moveTo(me.eegsPipperX-pipperRadius, me.eegsPipperY)
-                            .arcSmallCW(pipperRadius, pipperRadius, 0, pipperRadius*2, 0)
-                            .arcSmallCW(pipperRadius, pipperRadius, 0, -pipperRadius*2, 0)
-                            .moveTo(me.eegsPipperX-2*mr,me.eegsPipperY)
-                            .arcSmallCW(2*mr,2*mr, 0, 2*mr*2, 0)
-                            .arcSmallCW(2*mr,2*mr, 0, -2*mr*2, 0)
-                            .setStrokeLineWidth(1)
-                            .setColor(me.color);
-                    } else {
-                        me.eegsGroup.createChild("path")
-                            .moveTo(me.eegsPipperX-pipperRadius, me.eegsPipperY)
-                            .arcSmallCW(pipperRadius, pipperRadius, 0, pipperRadius*2, 0)
-                            .arcSmallCW(pipperRadius, pipperRadius, 0, -pipperRadius*2, 0)
-                            .moveTo(me.eegsPipperX-2*mr,me.eegsPipperY)
-                            .arcSmallCW(2*mr,2*mr, 0, 2*mr*2, 0)
-                            .arcSmallCW(2*mr,2*mr, 0, -2*mr*2, 0)
-                            .setStrokeLineWidth(1)
-                            .setColor(me.color);
-                    }
+                if (me.drawSTRFPipper) {
+                        me.vari = getprop("sim/variant-id");
+                        me.oldStrf = me.vari == 0 or me.vari == 1 or me.vari == 3;
+                        var mr = 0.4 * 1.5;
+                        if (me.oldStrf) {
+                                # draw the old STRF pipper (T.O. GR1F-16CJ-34-1-1 page 1-442 and MLU Tape 1 page 185)
+                                var pipperRadius = 15 * mr;
+                                if (me.strfRange <= 4000) {
+                                        me.eegsGroup.createChild("path")
+                                                .moveTo(me.eegsPipperX-pipperRadius, me.eegsPipperY-pipperRadius-2)
+                                                .horiz(pipperRadius*2)
+                                                .moveTo(me.eegsPipperX-pipperRadius, me.eegsPipperY)
+                                                .arcSmallCW(pipperRadius, pipperRadius, 0, pipperRadius*2, 0)
+                                                .arcSmallCW(pipperRadius, pipperRadius, 0, -pipperRadius*2, 0)
+                                                .moveTo(me.eegsPipperX-2*mr,me.eegsPipperY)
+                                                .arcSmallCW(2*mr,2*mr, 0, 2*mr*2, 0)
+                                                .arcSmallCW(2*mr,2*mr, 0, -2*mr*2, 0)
+                                                .setStrokeLineWidth(1)
+                                                .setColor(me.color);
+                                } else {
+                                        me.eegsGroup.createChild("path")
+                                                .moveTo(me.eegsPipperX-pipperRadius, me.eegsPipperY)
+                                                .arcSmallCW(pipperRadius, pipperRadius, 0, pipperRadius*2, 0)
+                                                .arcSmallCW(pipperRadius, pipperRadius, 0, -pipperRadius*2, 0)
+                                                .moveTo(me.eegsPipperX-2*mr,me.eegsPipperY)
+                                                .arcSmallCW(2*mr,2*mr, 0, 2*mr*2, 0)
+                                                .arcSmallCW(2*mr,2*mr, 0, -2*mr*2, 0)
+                                                .setStrokeLineWidth(1)
+                                                .setColor(me.color);
+                                }
+                        } else {
+                                # draw the new STRF pipper (T.O. GR1F-16CJ-34-1-1(new) page 2-299 and MLU Tape 2 page 79)
+                                me.pipperOuterRadius = 25 * mr;
+                                me.pipperInnerRadius = 20 * mr;
+                                me.pipperRangeTick   =  5 * mr;
+                                me.pipperRangeMode = me.strfRange <= 4000?0:(me.strfRange <= 12000?1:(me.strfRange <= 24000?2:3));
+                                
+                                if (me.pipperRangeMode != 3) {
+
+                                        if (me.pipperRangeMode < 2) {
+                                                me.td_rads = me.interpolate(me.strfRange, 0, 12000, 0, 2*math.pi);
+                                        } else {
+                                                me.td_rads = me.interpolate(me.strfRange, 12000, 24000, 0, 2*math.pi);
+                                        }
+                                        me.td_x = me.pipperInnerRadius*math.sin(me.td_rads);
+                                        me.td_y = -me.pipperInnerRadius*math.cos(me.td_rads);
+                                        me.td_x2 = me.pipperOuterRadius*math.sin(me.td_rads);
+                                        me.td_y2 = -me.pipperOuterRadius*math.cos(me.td_rads);
+                                        me.td_rads = me.interpolate(4000, 0, 12000, 0, 2*math.pi);
+                                        me.td_x3 = (me.pipperOuterRadius+me.pipperRangeTick)*math.sin(me.td_rads);
+                                        me.td_y3 = -(me.pipperOuterRadius+me.pipperRangeTick)*math.cos(me.td_rads);
+
+                                        # Draw inner arc and range tick
+                                        if (me.pipperRangeMode == 3) {
+                                                #  (more than 24000 ft)
+                                                me.newPipper = me.eegsGroup.createChild("path");
+                                        } elsif (me.pipperRangeMode == 2) {
+                                                # Out of range (more than 12000 ft)
+                                                me.newPipper = me.eegsGroup.createChild("path")
+                                                        #.moveTo(0, -me.pipperInnerRadius) this arc is for being in range with more than 12000 ft. (when range is custom set above 12000 ft)
+                                                        #.arcLargeCW(me.pipperInnerRadius, me.pipperInnerRadius, 0, 0, -me.pipperInnerRadius)
+                                                        .moveTo(me.td_x, me.td_y)
+                                                        .lineTo(me.td_x2, me.td_y2);
+                                        } elsif (me.pipperRangeMode == 1) {
+                                                # Out of range (less than 12000 ft)
+                                                me.newPipper = me.eegsGroup.createChild("path")
+                                                                .moveTo(me.td_x, me.td_y)
+                                                                .lineTo(me.td_x2, me.td_y2);
+                                        } elsif (me.pipperRangeMode == 0) {
+                                                # in range (less than 12000 ft)
+                                                if (me.td_x >= 0) {
+                                                        me.newPipper = me.eegsGroup.createChild("path")
+                                                                .moveTo(0, -me.pipperInnerRadius)
+                                                                .arcSmallCW(me.pipperInnerRadius, me.pipperInnerRadius, 0, me.td_x, me.td_y+me.pipperInnerRadius)
+                                                                .lineTo(me.td_x2, me.td_y2)
+                                                                .moveTo(0, -me.pipperInnerRadius)
+                                                                .vert(-me.pipperRangeTick);
+                                                } else {
+                                                        me.newPipper = me.eegsGroup.createChild("path")
+                                                                .moveTo(0, -me.pipperInnerRadius)
+                                                                .arcLargeCW(me.pipperInnerRadius, me.pipperInnerRadius, 0, me.td_x, me.td_y+me.pipperInnerRadius)
+                                                                .lineTo(me.td_x2, me.td_y2)
+                                                                .moveTo(0, -me.pipperInnerRadius)
+                                                                .vert(-me.pipperRangeTick);
+                                                }
+                                        }
+
+                                        # Draw outer arc and outer ticks
+                                        me.newPipper
+                                                .moveTo(-me.pipperOuterRadius, 0)
+                                                .arcSmallCW(me.pipperOuterRadius, me.pipperOuterRadius, 0, 2*me.pipperOuterRadius, 0)
+                                                .arcSmallCW(me.pipperOuterRadius, me.pipperOuterRadius, 0, -2*me.pipperOuterRadius, 0)
+                                                .moveTo(me.pipperOuterRadius, 0)
+                                                .horiz(me.pipperRangeTick)
+                                                .moveTo(-me.pipperOuterRadius, 0)
+                                                .horiz(-me.pipperRangeTick)
+                                                .moveTo(0, me.pipperOuterRadius)
+                                                .vert(me.pipperRangeTick)
+                                                .moveTo(0, -me.pipperOuterRadius)
+                                                .vert(-me.pipperRangeTick);
+
+                                        # Draw center dot
+                                        me.newPipper.moveTo(-mr,0);
+                                        me.newPipper.arcSmallCW(mr,mr, 0, mr*2, 0);
+                                        me.newPipper.arcSmallCW(mr,mr, 0, -mr*2, 0);
+
+                                        # Draw in-range dot (at 4000 mark for now, but really can be set custom)
+                                        me.newPipper.moveTo(-mr+me.td_x3,me.td_y3);
+                                        me.newPipper.arcSmallCW(mr,mr, 0, mr*2, 0);
+                                        me.newPipper.arcSmallCW(mr,mr, 0, -mr*2, 0);
+
+                                        # Place the pipper on impact point
+                                        me.newPipper.setTranslation(me.eegsPipperX, me.eegsPipperY)
+                                                .setStrokeLineWidth(1)
+                                                .setColor(me.color)
+                                                .update();
+                                }
+                        }
                 }
                 me.eegsGroup.update();
             }
@@ -3531,7 +3624,8 @@ append(obj.total, obj.speed_curr);
                 me.eegsMe.pitch = math.atan2(-me.eegsMe.speed_down_fps,me.eegsMe.speed_horizontal_fps)*R2D;
             }
         }
-        if (!(gunSight == 1 or me.hydra) and me.designatedDistanceFT != nil) {
+        if (gunSight != 1 and !me.hydra and me.designatedDistanceFT != nil) {
+                # Draw A-A gun reticle
                 me.eegsTargetDesignationGrp.removeAllChildren();
                 var mr = 0.4 * 1.5;
                 var radius = 20 * mr;
