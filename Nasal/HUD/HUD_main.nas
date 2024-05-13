@@ -3252,7 +3252,7 @@ append(obj.total, obj.speed_curr);
             me.eegsMe.allow = 1;
             me.drawSTRFPipper = 0;
             me.drawGunAim = 0;
-            me.strfRange = 10000;
+            me.strfRange = 24000;
             if(gunSight == 1 or me.hydra) {
                 me.groundAltDiffLastPointFT = nil;
                 var l = 0;
@@ -3296,10 +3296,11 @@ append(obj.total, obj.speed_curr);
                         if (l == ll and me.strfRange < 24000) {
                             var highdist = me.eegsMe.shellPosDist[ll];
                             var lowdist = me.eegsMe.shellPosDist[ll-1];
-                            if (pitch == 0) me.groundDistDiffLastPointFT = 0;
+                            if (pitch >= 0) me.groundDistDiffLastPointFT = 0;
                             else me.groundDistDiffLastPointFT = me.groundAltDiffLastPointFT/math.sin(-pitch*D2R);# We assume the ground is level and flat at impact position
                             me.eegsPipperX = me.interpolate(highdist-me.groundDistDiffLastPointFT,lowdist,highdist,me.eegsMe.shellPosX[ll-1],me.eegsMe.shellPosX[ll]);
                             me.eegsPipperY = me.interpolate(highdist-me.groundDistDiffLastPointFT,lowdist,highdist,me.eegsMe.shellPosY[ll-1],me.eegsMe.shellPosY[ll]);
+                            me.strfRange -= me.groundDistDiffLastPointFT;
                             me.drawSTRFPipper = 1;
                         }
                     }
@@ -3414,7 +3415,7 @@ append(obj.total, obj.speed_curr);
                         if (me.oldStrf) {
                                 # draw the old STRF pipper (T.O. GR1F-16CJ-34-1-1 page 1-442 and MLU Tape 1 page 185)
                                 var pipperRadius = 15 * mr;
-                                if (me.strfRange <= 4000) {
+                                if (me.strfRange <= (me.hydra?4000:getprop("f16/avionics/strf-range"))) {
                                         me.eegsGroup.createChild("path")
                                                 .moveTo(me.eegsPipperX-pipperRadius, me.eegsPipperY-pipperRadius-2)
                                                 .horiz(pipperRadius*2)
@@ -3442,9 +3443,9 @@ append(obj.total, obj.speed_curr);
                                 me.pipperOuterRadius = 25 * mr;
                                 me.pipperInnerRadius = 20 * mr;
                                 me.pipperRangeTick   =  5 * mr;
-                                me.pipperRangeMode = me.strfRange <= 4000?0:(me.strfRange <= 12000?1:(me.strfRange <= 24000?2:3));
+                                me.pipperRangeMode = me.strfRange <= getprop("f16/avionics/strf-range") and me.strfRange <= 12000?0:(me.strfRange <= 12000?1:(me.strfRange <= getprop("f16/avionics/strf-range") and me.strfRange <= 24000?2:(me.strfRange <= 24000?3:4)));
                                 
-                                if (me.pipperRangeMode != 3) {
+                                if (me.pipperRangeMode < 4) {
 
                                         if (me.pipperRangeMode < 2) {
                                                 me.td_rads = me.interpolate(me.strfRange, 0, 12000, 0, 2*math.pi);
@@ -3455,19 +3456,27 @@ append(obj.total, obj.speed_curr);
                                         me.td_y = -me.pipperInnerRadius*math.cos(me.td_rads);
                                         me.td_x2 = me.pipperOuterRadius*math.sin(me.td_rads);
                                         me.td_y2 = -me.pipperOuterRadius*math.cos(me.td_rads);
-                                        me.td_rads = me.interpolate(4000, 0, 12000, 0, 2*math.pi);
+
+                                        if (getprop("f16/avionics/strf-range") <= 12000) {
+                                                me.td_rads = me.interpolate(getprop("f16/avionics/strf-range"), 0, 12000, 0, 2*math.pi);
+                                        } else {
+                                                me.td_rads = me.interpolate(getprop("f16/avionics/strf-range"), 12000, 24000, 0, 2*math.pi);
+                                        }
                                         me.td_x3 = (me.pipperOuterRadius+me.pipperRangeTick)*math.sin(me.td_rads);
                                         me.td_y3 = -(me.pipperOuterRadius+me.pipperRangeTick)*math.cos(me.td_rads);
 
                                         # Draw inner arc and range tick
                                         if (me.pipperRangeMode == 3) {
-                                                #  (more than 24000 ft)
-                                                me.newPipper = me.eegsGroup.createChild("path");
-                                        } elsif (me.pipperRangeMode == 2) {
-                                                # Out of range (more than 12000 ft)
+                                                # Out of range (between 12000 and 24000 ft)
                                                 me.newPipper = me.eegsGroup.createChild("path")
-                                                        #.moveTo(0, -me.pipperInnerRadius) this arc is for being in range with more than 12000 ft. (when range is custom set above 12000 ft)
-                                                        #.arcLargeCW(me.pipperInnerRadius, me.pipperInnerRadius, 0, 0, -me.pipperInnerRadius)
+                                                        .moveTo(me.td_x, me.td_y)
+                                                        .lineTo(me.td_x2, me.td_y2);
+                                        } elsif (me.pipperRangeMode == 2) {
+                                                # In range (between 12000 and 24000 ft)
+                                                me.newPipper = me.eegsGroup.createChild("path")
+                                                        .moveTo(-me.pipperInnerRadius, 0)
+                                                        .arcSmallCW(me.pipperInnerRadius, me.pipperInnerRadius, 0, 2*me.pipperInnerRadius, 0)
+                                                        .arcSmallCW(me.pipperInnerRadius, me.pipperInnerRadius, 0, -2*me.pipperInnerRadius, 0)
                                                         .moveTo(me.td_x, me.td_y)
                                                         .lineTo(me.td_x2, me.td_y2);
                                         } elsif (me.pipperRangeMode == 1) {

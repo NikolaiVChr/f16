@@ -1418,6 +1418,11 @@ var DisplaySystem = {
                     foreach(var snake;pylons.fcs.getAllOfType("AIM-9X")) {
                         snake.setCooling(me.cooling);
                     }
+                } elsif (me.wpnType == "gun" and getprop("f16/avionics/gun-sight") == 1) {
+                	var rng = getprop("f16/avionics/strf-range");
+                	rng += 2000;
+                	if (rng > 8000) rng = 2000;# should really be 24000, but we dont compute shells trajectories that far
+                	setprop("f16/avionics/strf-range", rng);
                 }
             } elsif (controlName == "OSB10") {
                 if (variantID == 0) {
@@ -1605,6 +1610,10 @@ var DisplaySystem = {
                         if (me.armSwitch == pylons.ARM_SIM) me.status = "SIM";
                         elsif (me.armSwitch == pylons.ARM_OFF) me.status = "SAF";
                         else me.status = "RDY";
+                    }
+                    if (me.osb14 == "STRF") {
+                    	me.strfrng = getprop("f16/avionics/strf-range");
+                    	me.osb9 = me.strfrng~"FT\nRNG"
                     }
                 } elsif (me.wpn.type == "LAU-68") {
                     me.wpnType ="rocket";
