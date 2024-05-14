@@ -3246,6 +3246,10 @@ append(obj.total, obj.speed_curr);
             me.eegsMe.pitch = getprop("orientation/pitch-deg");
             me.eegsMe.roll  = getprop("orientation/roll-deg");
 
+            me.eegsMe.hdg_ac   = me.eegsMe.hdg;
+            me.eegsMe.pitch_ac = me.eegsMe.pitch;
+            me.eegsMe.roll_ac  = me.eegsMe.roll;
+
             var hdp = {roll:me.eegsMe.roll,current_view_z_offset_m: getprop("sim/current-view/z-offset-m")};
 
             me.eegsMe.ac = geo.aircraft_position();
@@ -3293,7 +3297,7 @@ append(obj.total, obj.speed_curr);
                         var pos   = me.gunPos[ll][0][0];
                         var pitch = me.gunPos[ll][0][2];
 
-                        me.eegsMe.posTemp = HudMath.getPosFromCoord(pos,ac);
+                        me.eegsMe.posTemp = HudMath.getPosFromCoord(pos,me.eegsMe.ac);
                         me.eegsMe.shellPosDist[ll] = ac.direct_distance_to(pos)*M2FT;
                         me.eegsMe.shellPosX[ll] = me.eegsMe.posTemp[0];
                         me.eegsMe.shellPosY[ll] = me.eegsMe.posTemp[1];
@@ -3330,7 +3334,7 @@ append(obj.total, obj.speed_curr);
                     } else {
                         var ac  = me.gunPos[currSegmentPt][currSegmentPt][1];
                         pos     = me.gunPos[currSegmentPt][currSegmentPt][0];
-                        me.eegsMe.posTemp = HudMath.getPosFromCoord(pos,ac);
+                        me.eegsMe.posTemp = HudMath.getPosFromCoord(pos,me.eegsMe.ac);
                         me.eegsMe.shellPosDist[currSegmentPt] = ac.direct_distance_to(pos)*M2FT;
                         me.eegsMe.shellPosX[currSegmentPt] = me.eegsMe.posTemp[0];
                         me.eegsMe.shellPosY[currSegmentPt] = me.eegsMe.posTemp[1];
@@ -3559,17 +3563,17 @@ append(obj.total, obj.speed_curr);
 
             #calc shell positions
 
-            # speed = groundspeed vector + aircraftvector with shell speed for magnitude
+            # speed = aircraft groundspeed vector + aircraft attitude vector with shell speed for magnitude
             #
 
             me.eegs_ac_north_fps = getprop("velocities/speed-north-fps");
             me.eegs_ac_east_fps  = getprop("velocities/speed-east-fps");
             me.eegs_ac_down_fps  = getprop("velocities/speed-down-fps");
 
-            me.eegs_sm_down_fps       = -math.sin(me.eegsMe.pitch * D2R) * (me.hydra?2000:me.gunSpeed);
-            me.eegs_sm_horizontal_fps = math.cos(me.eegsMe.pitch * D2R) * (me.hydra?2000:me.gunSpeed);
-            me.eegs_sm_north_fps      = math.cos(me.eegsMe.hdg * D2R) * me.eegs_sm_horizontal_fps;
-            me.eegs_sm_east_fps       = math.sin(me.eegsMe.hdg * D2R) * me.eegs_sm_horizontal_fps;
+            me.eegs_sm_down_fps       = -math.sin(me.eegsMe.pitch_ac * D2R) * (me.hydra?2000:me.gunSpeed);
+            me.eegs_sm_horizontal_fps = math.cos(me.eegsMe.pitch_ac * D2R) * (me.hydra?2000:me.gunSpeed);
+            me.eegs_sm_north_fps      = math.cos(me.eegsMe.hdg_ac * D2R) * me.eegs_sm_horizontal_fps;
+            me.eegs_sm_east_fps       = math.sin(me.eegsMe.hdg_ac * D2R) * me.eegs_sm_horizontal_fps;
 
             me.eegs_north_fps = me.eegs_ac_north_fps + me.eegs_sm_north_fps;
             me.eegs_east_fps  = me.eegs_ac_east_fps  + me.eegs_sm_east_fps;
@@ -3604,7 +3608,7 @@ append(obj.total, obj.speed_curr);
             for (var j = 0;j < me.funnelParts*multi;j+=1) {
 
                 #calc new speed
-                me.eegsMe.Cd = drag(me.eegsMe.vel/ me.eegsMe.rs[1],me.hydra?0:me.gunCd);#0.193=cd
+                me.eegsMe.Cd = drag(me.eegsMe.vel/ me.eegsMe.rs[1],me.hydra?0:me.gunCd);
                 me.eegsMe.q = 0.5 * me.eegsMe.rho * me.eegsMe.vel * me.eegsMe.vel;
                 me.eegsMe.deacc = (me.eegsMe.Cd * me.eegsMe.q * (me.hydra?0.00136354:me.gunEda)) / me.eegsMe.mass;#0.00136354=eda
                 me.eegsMe.vel -= me.eegsMe.deacc * me.averageDt;
@@ -3625,8 +3629,9 @@ append(obj.total, obj.speed_curr);
 
                 #printf("vel_x %d  acc_x %d", me.eegsMe.vel_x,me.eegsMe.acc);
                 #printf("pitch=%.1f  vel=%d  vdown=%.1f",me.eegsMe.pitch, me.eegsMe.vel, me.eegsMe.speed_down_fps, );
-                me.eegsMe.eegsPos.apply_course_distance(me.eegsMe.hdg, me.eegsMe.dist);
-                me.eegsMe.eegsPos.set_alt(me.eegsMe.altC);
+                #me.eegsMe.eegsPos.apply_course_distance(me.eegsMe.hdg, me.eegsMe.dist);
+                me.great = greatCircleMove(me.eegsMe.eegsPos, me.eegsMe.hdg, me.eegsMe.dist*M2NM);
+                me.eegsMe.eegsPos.set_latlon(me.great.lat, me.great.lon, me.eegsMe.altC);
 
                 var old = me.gunPos[j];
                 me.gunPos[j] = [[geo.Coord.new(me.eegsMe.eegsPos),me.eegsMe.ac, me.eegsMe.pitch]];
