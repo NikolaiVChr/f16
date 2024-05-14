@@ -1421,7 +1421,7 @@ var DisplaySystem = {
                 } elsif (me.wpnType == "gun" and getprop("f16/avionics/gun-sight") == 1) {
                 	var rng = getprop("f16/avionics/strf-range");
                 	rng += 2000;
-                	if (rng > 8000) rng = 2000;# should really be 24000, but we dont compute shells trajectories that far
+                	if (rng > 14000) rng = 2000;# should really be 24000, but we dont compute shells trajectories that far
                 	setprop("f16/avionics/strf-range", rng);
                 }
             } elsif (controlName == "OSB10") {

@@ -1902,14 +1902,14 @@ append(obj.total, obj.speed_curr);
 
         #EEGS: (other gun sights not made: lcos sslc)
         obj.eegsGroup = obj.centerOrigin.createChild("group");
-        obj.funnelPartsMax = 17;#number of segments in funnel sides. If increase, remember to increase all relevant vectors also.
-        obj.funnelParts = obj.funnelPartsMax;
+        obj.funnelPartsMax = 51;#strf (hydra is 34)
+        obj.funnelParts = 17;#eegs (number of segments in funnel sides. If increase, remember to increase all relevant vectors also.)
         obj.eegsRightX = obj.makeVector(obj.funnelParts,0);
         obj.eegsRightY = obj.makeVector(obj.funnelParts,0);
         obj.eegsLeftX  = obj.makeVector(obj.funnelParts,0);
         obj.eegsLeftY  = obj.makeVector(obj.funnelParts,0);
         obj.gunPos   = nil;#[[nil,nil],[nil,nil,nil],[nil,nil,nil,nil],[nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil]];
-        obj.eegsMe = {ac: geo.Coord.new(), eegsPos: geo.Coord.new(),shellPosX: obj.makeVector(obj.funnelParts,0),shellPosY: obj.makeVector(obj.funnelParts,0),shellPosDist: obj.makeVector(obj.funnelParts,0)};
+        obj.eegsMe = {ac: geo.Coord.new(), eegsPos: geo.Coord.new(),shellPosX: obj.makeVector(obj.funnelPartsMax,0),shellPosY: obj.makeVector(obj.funnelPartsMax,0),shellPosDist: obj.makeVector(obj.funnelPartsMax,0)};
         obj.lastTime = systime();
         obj.averageDt = 0.100;
         obj.eegsLoop = maketimer(obj.averageDt, obj, obj.displayEEGS);
@@ -2975,7 +2975,7 @@ append(obj.total, obj.speed_curr);
 
     resetGunPos: func {
         me.gunPos   = [];
-        for(i = 0;i < me.funnelPartsMax*2;i+=1){
+        for(i = 0;i < me.funnelPartsMax;i+=1){
           var tmp = [];
           for(var myloopy = 0;myloopy <= i+1;myloopy+=1){
             append(tmp,nil);
@@ -3253,6 +3253,7 @@ append(obj.total, obj.speed_curr);
             var hdp = {roll:me.eegsMe.roll,current_view_z_offset_m: getprop("sim/current-view/z-offset-m")};
 
             me.eegsMe.ac = geo.aircraft_position();
+            me.eegsMe.eye = geo.viewer_position();
             me.eegsMe.allow = 1;
             me.drawSTRFPipper = 0;
             me.drawGunAim = 0;
@@ -3260,8 +3261,8 @@ append(obj.total, obj.speed_curr);
             if(gunSight == 1 or me.hydra) {
                 me.groundAltDiffLastPointFT = nil;
                 var currSegmentPt = 0;
-                for (currSegmentPt = 0;currSegmentPt < me.funnelParts*2;currSegmentPt+=1) {
-                    # compute display positions of funnel on hud
+                for (currSegmentPt = 0;currSegmentPt < me.funnelPartsMax;currSegmentPt+=1) {
+                    # compute terrain impact position of trajectory
                     var pos = me.gunPos[currSegmentPt][0];
                     if (pos == nil) {
                         me.eegsMe.allow = 0;
@@ -3288,36 +3289,37 @@ append(obj.total, obj.speed_curr);
                         }
                     }
                 }
-
-                # compute display positions of pipper on hud
-
+                
                 if (me.eegsMe.allow and me.groundAltDiffLastPointFT != nil) {
+                    # compute display positions of STRF pipper on hud
                     for (var ll = currSegmentPt-1;ll <= currSegmentPt;ll+=1) {
-                        var ac    = me.gunPos[ll][0][1];
                         var pos   = me.gunPos[ll][0][0];
+                        var ac    = me.gunPos[ll][0][1];
                         var pitch = me.gunPos[ll][0][2];
 
-                        me.eegsMe.posTemp = HudMath.getPosFromCoord(pos,me.eegsMe.ac);
-                        me.eegsMe.shellPosDist[ll] = ac.direct_distance_to(pos)*M2FT;
+                        me.eegsMe.posTemp = HudMath.getPosFromCoord(pos,me.eegsMe.eye);
+                        #me.eegsMe.shellPosDist[ll] = ac.direct_distance_to(pos)*M2FT;
                         me.eegsMe.shellPosX[ll] = me.eegsMe.posTemp[0];
                         me.eegsMe.shellPosY[ll] = me.eegsMe.posTemp[1];
 
                         if (currSegmentPt == ll and me.strfRange < 24000) {
-                            var highdist = me.eegsMe.shellPosDist[ll];
-                            var lowdist = me.eegsMe.shellPosDist[ll-1];
+                            #var highdist = me.eegsMe.shellPosDist[ll];
+                            #var lowdist = me.eegsMe.shellPosDist[ll-1];
                             if (pitch >= 0) {
-                                me.groundDistDiffLastPointFT = 0;
-                                me.eegsPipperX = me.interpolate(highdist-me.groundDistDiffLastPointFT,lowdist,highdist,me.eegsMe.shellPosX[ll-1],me.eegsMe.shellPosX[ll]);
-                                me.eegsPipperY = me.interpolate(highdist-me.groundDistDiffLastPointFT,lowdist,highdist,me.eegsMe.shellPosY[ll-1],me.eegsMe.shellPosY[ll]);
+                                #me.eegsPipperX = me.interpolate(highdist-me.groundAltDiffLastPointFT,lowdist,highdist,me.eegsMe.shellPosX[ll-1],me.eegsMe.shellPosX[ll]);
+                                #me.eegsPipperY = me.interpolate(highdist-me.groundAltDiffLastPointFT,lowdist,highdist,me.eegsMe.shellPosY[ll-1],me.eegsMe.shellPosY[ll]);
+                                me.eegsPipperX = 0.5*me.eegsMe.shellPosX[ll-1]+0.5*me.eegsMe.shellPosX[ll];
+                                me.eegsPipperY = 0.5*me.eegsMe.shellPosY[ll-1]+0.5*me.eegsMe.shellPosY[ll];
                             } else {
                                 # increasing accuracy me.strfRange and pipper HUD position
                                 me.groundDistDiffLastPointFT = me.groundAltDiffLastPointFT/math.sin(-pitch*D2R);# We assume the ground is level and flat at impact position
+
                                 me.posLow = me.gunPos[ll-1][0][0];
                                 me.posHigh = me.gunPos[ll][0][0];
-                                me.posDist = me.posHigh.direct_distance_to(me.posLow);
-                                me.impactPos = me.extrapolateCoords(me.posLow, me.posHigh, 1-FT2M*me.groundDistDiffLastPointFT/me.posDist);
+                                me.posDist = me.posHigh.direct_distance_to(me.posLow)*M2FT;
+                                me.impactPos = me.interpolateCoords(me.posLow, me.posHigh, 1-me.groundDistDiffLastPointFT/me.posDist);
                                 me.strfRange = me.impactPos.direct_distance_to(me.eegsMe.ac)*M2FT;
-                                me.tmpImpact = HudMath.getPosFromCoord(me.impactPos,me.eegsMe.ac);
+                                me.tmpImpact = HudMath.getPosFromCoord(me.impactPos,me.eegsMe.eye);
                                 me.eegsPipperX = me.tmpImpact[0];
                                 me.eegsPipperY = me.tmpImpact[1];
                             }
@@ -3334,10 +3336,10 @@ append(obj.total, obj.speed_curr);
                     } else {
                         var ac  = me.gunPos[currSegmentPt][currSegmentPt][1];
                         pos     = me.gunPos[currSegmentPt][currSegmentPt][0];
-                        me.eegsMe.posTemp = HudMath.getPosFromCoord(pos,me.eegsMe.ac);
-                        me.eegsMe.shellPosDist[currSegmentPt] = ac.direct_distance_to(pos)*M2FT;
+                        me.eegsMe.posTemp = HudMath.getPosFromCoord(pos,me.eegsMe.eye);
                         me.eegsMe.shellPosX[currSegmentPt] = me.eegsMe.posTemp[0];
                         me.eegsMe.shellPosY[currSegmentPt] = me.eegsMe.posTemp[1];
+                        me.eegsMe.shellPosDist[currSegmentPt] = ac.direct_distance_to(pos)*M2FT;
 
                         if (me.designatedDistanceFT != nil and !me.drawGunAim and gunSight != 2) {
                           #eegs pipper
@@ -3427,6 +3429,7 @@ append(obj.total, obj.speed_curr);
                 }
                 me.eegsGroup.update();
             } elsif (me.eegsMe.allow and (gunSight == 1 or me.hydra)) {
+                # draw STRF
                 me.eegsGroup.removeAllChildren();
                 if (me.drawSTRFPipper) {
                         me.vari = getprop("sim/variant-id");
@@ -3604,7 +3607,7 @@ append(obj.total, obj.speed_curr);
             #printf("%d,%d",0,0);
             #print("-----");
             
-            var multi = (gunSight == 1 or me.hydra)?2:1;# double the funnel segments for STRF or HYDRA
+            var multi = gunSight == 1?3:(me.hydra?2:1);# double the funnel segments for HYDRA (3.4 secs) and triple for STRF (5.1 secs)
             for (var j = 0;j < me.funnelParts*multi;j+=1) {
 
                 #calc new speed
@@ -3685,11 +3688,10 @@ append(obj.total, obj.speed_curr);
                 }
         }
     },
-    extrapolateCoords: func (start, end, fraction) {
-        me.xx = (start.x()*(1-fraction)
-            +end.x()*fraction);
-        me.yy = (start.y()*(1-fraction)+end.y()*fraction);
-        me.zz = (start.z()*(1-fraction)+end.z()*fraction);
+    interpolateCoords: func (start, end, fraction) {
+        me.xx = math.clamp((start.x()*(1-fraction)+end.x()*fraction),math.min(start.x(),end.x()),math.max(start.x(),end.x()));
+        me.yy = math.clamp((start.y()*(1-fraction)+end.y()*fraction),math.min(start.y(),end.y()),math.max(start.y(),end.y()));
+        me.zz = math.clamp((start.z()*(1-fraction)+end.z()*fraction),math.min(start.z(),end.z()),math.max(start.z(),end.z()));
 
         me.cc = geo.Coord.new();
         me.cc.set_xyz(me.xx,me.yy,me.zz);

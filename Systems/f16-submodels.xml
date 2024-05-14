@@ -34,7 +34,7 @@
     <weight>0.226</weight><!-- lbm -->
     <cd>0.09</cd>
     <eda>0.00338158219</eda><!-- sqft -->
-    <life>3.0</life>
+    <life>6.0</life>
     <repeat>true</repeat>
     <delay>0.12</delay>
     <count>-1</count>
