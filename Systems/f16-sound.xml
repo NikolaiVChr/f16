@@ -2281,8 +2281,8 @@
             <condition>
                 <property>sim/current-view/internal</property>
                 <or>
-                    <property>gear/gear[1]/wow</property>
-                    <property>gear/gear[2]/wow</property>
+                    <property>fdm/jsbsim/gear/unit[1]/WOW</property>
+                    <property>fdm/jsbsim/gear/unit[2]/WOW</property>
                 </or>
             </condition>
             <reference-dist>30</reference-dist>
@@ -2345,8 +2345,8 @@
                     <property>sim/current-view/internal</property>
                 </not>
                 <or>
-                    <property>gear/gear[1]/wow</property>
-                    <property>gear/gear[2]/wow</property>
+                    <property>fdm/jsbsim/gear/unit[1]/WOW</property>
+                    <property>fdm/jsbsim/gear/unit[2]/WOW</property>
                 </or>
             </condition>
             <reference-dist>150</reference-dist>
@@ -2856,9 +2856,9 @@
                 <not>
                     <property>sim/current-view/internal</property>
                 </not>
-                <property>gear/gear[0]/wow</property>
-                <property>gear/gear[1]/wow</property>
-                <property>gear/gear[2]/wow</property>
+                <property>fdm/jsbsim/gear/unit[0]/WOW</property>
+                <property>fdm/jsbsim/gear/unit[1]/WOW</property>
+                <property>fdm/jsbsim/gear/unit[2]/WOW</property>
                 <not>
                     <property>engines/engine[0]/running</property>
                 </not>
@@ -2874,9 +2874,9 @@
             <type>avionics</type>
             <condition>
                 <property>sim/current-view/internal</property>
-                <property>gear/gear[0]/wow</property>
-                <property>gear/gear[1]/wow</property>
-                <property>gear/gear[2]/wow</property>
+                <property>fdm/jsbsim/gear/unit[0]/WOW</property>
+                <property>fdm/jsbsim/gear/unit[1]/WOW</property>
+                <property>fdm/jsbsim/gear/unit[2]/WOW</property>
                 <not>
                     <property>engines/engine[0]/running</property>
                 </not>
@@ -3714,7 +3714,7 @@
             <type>avionics</type>
             <condition>
                 <not><property>f16/avionics/voice-msg-inhibit</property></not>
-                <!--not><property>gear/gear[2]/wow</property></not-->
+                <!--not><property>fdm/jsbsim/gear/unit[2]/WOW</property></not-->
                 <or>
                     <property>payload/armament/MAW-active</property>
                     <property>payload/armament/MAW-semiactive</property>
@@ -3761,7 +3761,7 @@
             <path>Aircraft/f16/Sounds/betty/chaff-flare.wav</path>
             <condition>
                 <not><property>f16/avionics/voice-msg-inhibit</property></not>
-                <not><property>gear/gear[2]/wow</property></not>
+                <not><property>fdm/jsbsim/gear/unit[2]/WOW</property></not>
                 <property>ai/submodels/submodel[0]/flare-release-snd</property>
                 <greater-than>
                   <property>fdm/jsbsim/elec/bus/batt-1</property>
@@ -3784,7 +3784,7 @@
             <path>Aircraft/f16/Sounds/betty/chaff-flare-out.wav</path>
             <condition>
                 <not><property>f16/avionics/voice-msg-inhibit</property></not>
-                <not><property>gear/gear[2]/wow</property></not>
+                <not><property>fdm/jsbsim/gear/unit[2]/WOW</property></not>
                 <property>ai/submodels/submodel[0]/flare-release-out-snd</property>
                 <greater-than>
                   <property>fdm/jsbsim/elec/bus/batt-1</property>
@@ -3829,7 +3829,7 @@
             <type>avionics</type>
             <condition>
                 <not><property>f16/avionics/voice-msg-inhibit</property></not>
-                <not><property>gear/gear[2]/wow</property></not>
+                <not><property>fdm/jsbsim/gear/unit[2]/WOW</property></not>
                 <and>
                     <greater-than>
                         <property>instrumentation/radar/time-till-crash</property>
@@ -3861,7 +3861,7 @@
             <type>avionics</type>
             <condition>
                 <not><property>f16/avionics/voice-msg-inhibit</property></not>
-                <not><property>gear/gear[2]/wow</property></not>
+                <not><property>fdm/jsbsim/gear/unit[2]/WOW</property></not>
                 <greater-than>
                     <property>instrumentation/datalink/data</property>
                     <value>0</value>
@@ -3887,7 +3887,7 @@
             <type>avionics</type>
             <condition>
                 <not><property>f16/avionics/voice-msg-inhibit</property></not>
-                <not><property>gear/gear[2]/wow</property></not>
+                <not><property>fdm/jsbsim/gear/unit[2]/WOW</property></not>
                 <equals>
                     <property>f16/avionics/bingo</property>
                     <value>1</value>
@@ -3913,7 +3913,7 @@
             <type>avionics</type>
             <condition>
                 <not><property>f16/avionics/voice-msg-inhibit</property></not>
-                <not><property>gear/gear[2]/wow</property></not>
+                <not><property>fdm/jsbsim/gear/unit[2]/WOW</property></not>
                 <equals>
                     <property>gear/gear/position-norm</property>
                     <value>0</value>
@@ -3946,7 +3946,7 @@
             <condition>
                 <property>/f16/avionics/msl-floor-reached</property>
                 <not><property>f16/avionics/voice-msg-inhibit</property></not>
-                <not><property>gear/gear[2]/wow</property></not>
+                <not><property>fdm/jsbsim/gear/unit[2]/WOW</property></not>
                 <greater-than>
                   <property>fdm/jsbsim/elec/bus/batt-1</property>
                   <value>20</value>
@@ -3968,7 +3968,7 @@
             <path>Aircraft/f16/Sounds/betty/caution.wav</path>
             <condition>
                     <not><property>f16/avionics/voice-msg-inhibit</property></not>
-                    <not><property>gear/gear[2]/wow</property></not>
+                    <not><property>fdm/jsbsim/gear/unit[2]/WOW</property></not>
                     <property>f16/avionics/caution/master</property>
                     <greater-than>
                       <property>fdm/jsbsim/elec/bus/batt-1</property>
@@ -3991,7 +3991,7 @@
             <type>avionics</type>
             <path>Aircraft/f16/Sounds/betty/warning.wav</path>
             <condition>
-                <not><property>gear/gear[2]/wow</property></not>
+                <not><property>fdm/jsbsim/gear/unit[2]/WOW</property></not>
                 <or>
                     <equals>
                         <property>f16/avionics/fault-warning</property>
@@ -4199,8 +4199,8 @@
                     </or>
                     <not>
                         <or>
-                            <property>gear/gear[1]/wow</property>
-                            <property>gear/gear[2]/wow</property>
+                            <property>fdm/jsbsim/gear/unit[1]/WOW</property>
+                            <property>fdm/jsbsim/gear/unit[2]/WOW</property>
                         </or>
                     </not>
                 </and>
@@ -4212,7 +4212,7 @@
             <type>avionics</type>
             <path>Sounds/250hz-square.wav</path><!-- Source: Dash-1  1-70 and AD-A145-469. 250hz square tone in 1hz intervals. -->
             <condition>
-                <not><property>gear/gear[2]/wow</property></not>
+                <not><property>fdm/jsbsim/gear/unit[2]/WOW</property></not>
                 <property>/f16/avionics/gear-horn</property>
                 <greater-than>
                   <property>fdm/jsbsim/elec/bus/batt-1</property>
@@ -4246,7 +4246,7 @@
                     </greater-than>
                 </or>
                 <not>
-                    <property>gear/gear[0]/wow</property>
+                    <property>fdm/jsbsim/gear/unit[0]/WOW</property>
                 </not>
                 <or>
                     <!--and>
