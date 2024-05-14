@@ -3611,14 +3611,15 @@ append(obj.total, obj.speed_curr);
             for (var j = 0;j < me.funnelParts*multi;j+=1) {
 
                 #calc new speed
+                me.eegsMe.vel_kt = me.eegsMe.vel * FPS2KT;# there is bug in FG 2020.3.19, so we convert this to KT.
                 me.eegsMe.Cd = drag(me.eegsMe.vel/ me.eegsMe.rs[1],me.hydra?0:me.gunCd);
-                me.eegsMe.q = 0.5 * me.eegsMe.rho * me.eegsMe.vel * me.eegsMe.vel;
+                me.eegsMe.q = 0.5 * me.eegsMe.rho * me.eegsMe.vel_kt * me.eegsMe.vel_kt;
                 me.eegsMe.deacc = (me.eegsMe.Cd * me.eegsMe.q * (me.hydra?0.00136354:me.gunEda)) / me.eegsMe.mass;#0.00136354=eda
                 me.eegsMe.vel -= me.eegsMe.deacc * me.averageDt;
                 me.eegsMe.speed_down_fps       = -math.sin(me.eegsMe.pitch * D2R) * (me.eegsMe.vel);
                 me.eegsMe.speed_horizontal_fps = math.cos(me.eegsMe.pitch * D2R) * (me.eegsMe.vel);
 
-                me.eegsMe.speed_down_fps += 9.81 *M2FT *me.averageDt;
+                me.eegsMe.speed_down_fps += getprop("environment/gravitational-acceleration-mps2") * M2FT * me.averageDt;
 
 
 
