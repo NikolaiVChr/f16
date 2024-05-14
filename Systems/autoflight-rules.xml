@@ -163,11 +163,11 @@
 				<condition>
 					<and>
 						<equals>
-							<property>gear/gear[1]/wow</property>
+							<property>fdm/jsbsim/gear/unit[1]/WOW</property>
 							<value>0</value>
 						</equals>
 						<equals>
-							<property>gear/gear[2]/wow</property>
+							<property>fdm/jsbsim/gear/unit[2]/WOW</property>
 							<value>0</value>
 						</equals>
 					</and>
@@ -186,11 +186,11 @@
 				<condition>
 					<or>
 						<equals>
-							<property>gear/gear[1]/wow</property>
+							<property>fdm/jsbsim/gear/unit[1]/WOW</property>
 							<value>1</value>
 						</equals>
 						<equals>
-							<property>gear/gear[2]/wow</property>
+							<property>fdm/jsbsim/gear/unit[2]/WOW</property>
 							<value>1</value>
 						</equals>
 					</or>
@@ -201,11 +201,11 @@
 				<condition>
 					<and>
 						<equals>
-							<property>gear/gear[1]/wow</property>
+							<property>fdm/jsbsim/gear/unit[1]/WOW</property>
 							<value>0</value>
 						</equals>
 						<equals>
-							<property>gear/gear[2]/wow</property>
+							<property>fdm/jsbsim/gear/unit[2]/WOW</property>
 							<value>0</value>
 						</equals>
 					</and>
@@ -224,11 +224,11 @@
 				<condition>
 					<or>
 						<equals>
-							<property>gear/gear[1]/wow</property>
+							<property>fdm/jsbsim/gear/unit[1]/WOW</property>
 							<value>1</value>
 						</equals>
 						<equals>
-							<property>gear/gear[2]/wow</property>
+							<property>fdm/jsbsim/gear/unit[2]/WOW</property>
 							<value>1</value>
 						</equals>
 					</or>
