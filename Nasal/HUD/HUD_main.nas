@@ -3413,9 +3413,19 @@ append(obj.total, obj.speed_curr);
                         .setStrokeLineWidth(1)
                         .setColor(me.color);
                     if (i > 5) {
-                        me.tmpSegment
-                                .moveTo(me.eegsMe.shellPosX[i+5]-3, me.eegsMe.shellPosY[i+5])
-                                .horiz(6);
+                        me.dx = me.eegsMe.shellPosX[i] - me.eegsMe.shellPosX[i+5];
+                        me.dy = me.eegsMe.shellPosY[i] - me.eegsMe.shellPosY[i+5];
+                        me.dl = math.sqrt(me.dx*me.dx+me.dy*me.dy);
+                        if (me.dl != 0) {
+                            me.angle1 = math.acos(math.clamp(me.dx/me.dl,-1,1));
+                            me.angle2 = math.asin(math.clamp(me.dy/me.dl,-1,1));
+                            me.angle  = me.angle2<0?-me.angle1:me.angle1;
+                            me.angle += 90 * D2R;
+                            me.segmentRel = [3*math.cos(me.angle),3*math.sin(me.angle)];
+                            me.tmpSegment
+                                    .moveTo(me.eegsMe.shellPosX[i+5]+me.segmentRel[0], me.eegsMe.shellPosY[i+5]+me.segmentRel[1])
+                                    .lineTo(me.eegsMe.shellPosX[i+5]-me.segmentRel[0], me.eegsMe.shellPosY[i+5]-me.segmentRel[1]);
+                        }
                     }
                 }
                 if (me.drawGunAim) {
