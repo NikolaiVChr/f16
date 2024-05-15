@@ -38,7 +38,7 @@ var dogfight = func {
         if (prio == nil) {
             setprop("instrumentation/radar/radar-enable", 0);
         }
-        pylons.fcs.selectWeapon("20mm Cannon");
+        pylons.fcs.selectWeapon(fc.defaultCannon);
         ded.dataEntryDisplay.page = ded.pEWS;
         radar_system.apg68Radar.setRootMode(1, prio);
         displays.leftMFD.system.selectPage("PageFCR");

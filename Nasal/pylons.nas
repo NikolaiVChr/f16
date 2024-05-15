@@ -17,7 +17,7 @@ var pylon10 = nil;
 var pylon11 = nil;
 
 var block = getprop("/sim/variant-id");
-var cannon = stations.SubModelWeapon.new("20mm Cannon", 0.254, 510, [2], [1,3], props.globals.getNode("fdm/jsbsim/fcs/guntrigger",1), 0, func{return getprop("fdm/jsbsim/elec/bus/emergency-dc-2")>=20 and getprop("fdm/jsbsim/elec/bus/emergency-ac-2")>=100 and getprop("fdm/jsbsim/systems/hydraulics/sysb-psi")>=2000 and getprop("payload/armament/fire-control/serviceable") and getprop("controls/armament/master-arm") == 1;},0);
+var cannon = stations.SubModelWeapon.new(fc.defaultCannon, 0.254, 510, [2], [1,3], props.globals.getNode("fdm/jsbsim/fcs/guntrigger",1), 0, func{return getprop("fdm/jsbsim/elec/bus/emergency-dc-2")>=20 and getprop("fdm/jsbsim/elec/bus/emergency-ac-2")>=100 and getprop("fdm/jsbsim/systems/hydraulics/sysb-psi")>=2000 and getprop("payload/armament/fire-control/serviceable") and getprop("controls/armament/master-arm") == 1;},0);
 cannon.typeShort = "GUN";
 cannon.brevity = "Guns guns";
 var hyd70lh3 = stations.SubModelWeapon.new("LAU-68", 23.6, 7, [4], [], props.globals.getNode("fdm/jsbsim/fcs/hydra3ltrigger",1), 1, func{return getprop("payload/armament/fire-control/serviceable") and getprop("controls/armament/master-arm") == 1;},1);
@@ -89,7 +89,7 @@ var crgpd = stations.Dummy.new("MXU-648 Cargopod", "TRVL");
 var pylonSets = {
     empty:     {name: "Empty", pylon: nil, rack: nil, content: [], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
     mau:       {name: "--------", pylon: "1 MAU", rack: nil, content: [], fireOrder: [], launcherDragArea: 0.05, launcherMass: 220, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
-    mm20:      {name: "20mm Cannon", content: [cannon], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    mm20:      {name: "M61A1", content: [cannon], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     hyd70h3:   {name: "2 x M151", pylon: "1 MAU", rack: "2 L68", content: [hyd70lh3,hyd70rh3], fireOrder: [0,1], launcherDragArea: 0.14, launcherMass: 625.0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     hyd70h7:   {name: "2 x M151", pylon: "1 MAU", rack: "2 L68", content: [hyd70lh7,hyd70rh7], fireOrder: [0,1], launcherDragArea: 0.14, launcherMass: 625.0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     a65b:      {name: "3 x AGM-65B", pylon: "1 MAU", rack: "1 L88", content: ["AGM-65B", "AGM-65B", "AGM-65B"], fireOrder: [0,1,2], launcherDragArea: 0.075, launcherMass: 689, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
@@ -292,7 +292,7 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
     var pylons = [pylon1,pylon2,pylon3,pylon4,pylon5,pylon6,pylon7,pylon8,pylon9,pylonI,pylon10,pylon11];
 
     # The order in this line is the order key 'w' will cycle through the weapons:
-	fcs = fc.FireControl.new(pylons, [9,0,8,1,7,2,6,3,5,4], ["20mm Cannon","LAU-68","AIM-9L","AIM-9M","AIM-9X","AIM-120","AIM-7","MK-82","MK-82AIR","MK-83","MK-84","GBU-12","GBU-24","GBU-31","GBU-54","AGM-65B","AGM-65D","AGM-84","AGM-88","AGM-119","AGM-154A","AGM-158","CBU-87","CBU-105"]);
+	fcs = fc.FireControl.new(pylons, [9,0,8,1,7,2,6,3,5,4], [fc.defaultCannon,"LAU-68","AIM-9L","AIM-9M","AIM-9X","AIM-120","AIM-7","MK-82","MK-82AIR","MK-83","MK-84","GBU-12","GBU-24","GBU-31","GBU-54","AGM-65B","AGM-65D","AGM-84","AGM-88","AGM-119","AGM-154A","AGM-158","CBU-87","CBU-105"]);
 
 	var aimListener = func (obj) {
 		#If auto focus on missile is activated the we call the function

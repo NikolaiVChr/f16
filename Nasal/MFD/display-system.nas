@@ -1499,7 +1499,6 @@ var DisplaySystem = {
             }
             me.wpn = pylons.fcs.getSelectedWeapon();
             me.pylon = pylons.fcs.getSelectedPylon();
-
             me.wpnType = "";
             me.status = "";
             me.osb3 = "";
@@ -1600,7 +1599,7 @@ var DisplaySystem = {
                     me.osb12 = "SLAV";
                     me.osb14 = "A-A";
                     me.setWeaponStatus();
-                } elsif (me.wpn.type == "20mm Cannon") {
+                } elsif (me.wpn.type == fc.defaultCannon) {
                     me.wpnType ="gun";
                     me.osb14 = getprop("f16/avionics/gun-sight")==0?"EEGS":(getprop("f16/avionics/gun-sight")==1?"STRF":"SNAP");
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
@@ -1633,7 +1632,7 @@ var DisplaySystem = {
                     me.wpnType ="void";
                 }
                 me.myammo = pylons.fcs.getAmmo();
-                if (me.wpn.type == "20mm Cannon") {
+                if (me.wpn.type == fc.defaultCannon) {
                     if (me.myammo ==0) me.myammo = "0";
                     elsif (me.myammo <10) me.myammo = "1";
                     else me.myammo = sprintf("%d",int(me.myammo*0.1));
@@ -3310,7 +3309,7 @@ var DisplaySystem = {
 
             var gunAmmo = "-----";
             if (getprop("sim/model/f16/wingmounts") != 0) {
-                gunAmmo = pylons.pylonI.getAmmo("20mm Cannon");
+                gunAmmo = pylons.pylonI.getAmmo(fc.defaultCannon);
                 if (gunAmmo ==0) gunAmmo = "0";
                 elsif (gunAmmo <10) gunAmmo = "1";
                 else gunAmmo = ""~int(gunAmmo*0.1);

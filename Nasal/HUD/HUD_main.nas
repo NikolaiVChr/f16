@@ -2093,7 +2093,7 @@ append(obj.total, obj.speed_curr);
                 if (hdp.weapon_selected != nil)
                 {
                     var mr = 0.4;
-                    if (hdp.weapon_selected == "20mm Cannon") {
+                    if (hdp.weapon_selected == fc.defaultCannon) {
                         me.window9_txt = sprintf("%3d", pylons.fcs.getAmmo());
                         eegsShow = 1;
                         me.ALOW_top = 1;
@@ -2564,8 +2564,8 @@ append(obj.total, obj.speed_curr);
                             me.align = me.lineRot>0?"right-center":"left-center";
                             me.alignX = me.lineRot>0?-10:10;
                             me.locatorAngle.setText(sprintf("%d", vector.Math.angleBetweenVectors([1,0,0], vector.Math.pitchYawVector(me.drE,-me.dr, [1,0,0]))))
-                                            .setAlignment(me.align)
-                                            .setTranslation(HudMath.getBorePos()[0]+me.alignX, HudMath.getBorePos()[1]);
+                                .setAlignment(me.align)
+                                .setTranslation(HudMath.getBorePos()[0]+me.alignX, HudMath.getBorePos()[1]);
                             me.locatorLineShow = 1;
                         } elsif (!me.clamped and me.eegsTDshowing and !me.hydra and eegsShow and getprop("f16/avionics/gun-sight") == 0) {
                             if (me.u.getLastHeading() != nil) {
@@ -2573,10 +2573,12 @@ append(obj.total, obj.speed_curr);
                                 if (me.azimuth == 180 or me.azimuth == 0) {
                                     me.azSide = " ";
                                 } else {
-                                    me.azSide = me.azimuth > 0 ?"L":"R";
+                                    me.azSide = me.azimuth > 0 ?"L":"R";# 0 is looking at its engine
                                 }
                                 me.azimuth = sprintf("AA%3d%s", math.abs(me.azimuth), me.azSide);
-                                me.locatorAngle.setText(me.azimuth).setAlignment("center-bottom").setTranslation(HudMath.getBorePos()[0], HudMath.getBorePos()[1]-6);;
+                                me.locatorAngle.setText(me.azimuth)
+                                    .setAlignment("center-bottom")
+                                    .setTranslation(HudMath.getBorePos()[0], HudMath.getBorePos()[1]-6);
                             }
                         }
                         if (me.tgt != nil) {
