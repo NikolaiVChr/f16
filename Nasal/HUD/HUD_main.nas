@@ -3610,12 +3610,15 @@ append(obj.total, obj.speed_curr);
             var multi = gunSight == 1?3:(me.hydra?2:1);# double the funnel segments for HYDRA (3.4 secs) and triple for STRF (5.1 secs)
             for (var j = 0;j < me.funnelParts*multi;j+=1) {
 
-                #calc new speed
-                me.eegsMe.vel_kt = me.eegsMe.vel * FPS2KT;# there is bug in FG 2020.3.19, so we convert this to KT.
+                # there is a unit bug in FG 2020.3.19 submodels which is applied every frame, which means we gotta compensate:
+                me.eegsMe.vel_kt = me.eegsMe.vel * FPS2KT;
+
+                #calc new speed incorrect (using wrong units like FG do)
                 me.eegsMe.Cd = drag(me.eegsMe.vel/ me.eegsMe.rs[1],me.hydra?0:me.gunCd);
                 me.eegsMe.q = 0.5 * me.eegsMe.rho * me.eegsMe.vel_kt * me.eegsMe.vel_kt;
                 me.eegsMe.deacc = (me.eegsMe.Cd * me.eegsMe.q * (me.hydra?0.00136354:me.gunEda)) / me.eegsMe.mass;#0.00136354=eda
-                me.eegsMe.vel -= me.eegsMe.deacc * me.averageDt;
+                me.eegsMe.vel -= me.eegsMe.deacc * KT2FPS * me.averageDt;
+
                 me.eegsMe.speed_down_fps       = -math.sin(me.eegsMe.pitch * D2R) * (me.eegsMe.vel);
                 me.eegsMe.speed_horizontal_fps = math.cos(me.eegsMe.pitch * D2R) * (me.eegsMe.vel);
 
