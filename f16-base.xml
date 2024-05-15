@@ -1351,6 +1351,7 @@
 			<ded-up-down type="int">0</ded-up-down>
             <laser-code type="int">0000</laser-code>
             <eegs-wingspan-ft type="int">35</eegs-wingspan-ft>
+            <eegs-maxrange-ft type="int">3000</eegs-maxrange-ft>
             <strf-range type="int">4000</strf-range>
             <power-mmc type="bool">false</power-mmc>
             <power-st-sta type="bool">false</power-st-sta>

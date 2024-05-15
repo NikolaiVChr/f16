@@ -866,7 +866,7 @@ append(obj.total, obj.speed_curr);
             .hide()
             .setColor(0,1,0);
         append(obj.total, obj.target_locked);
-        obj.eegsTargetDesignationGrp = obj.centerOrigin.createChild("group");
+        obj.aaTargetDesignationGrp = obj.centerOrigin.createChild("group");
         obj.boreSymbol = obj.centerOrigin.createChild("path")
                 .moveTo(-5,0)
                 .horiz(10)
@@ -2439,7 +2439,7 @@ append(obj.total, obj.speed_curr);
         var showACMBore = 0;
         var showACMVert = 0;
         me.target_locked_setVisible=0;
-        me.eegsTargetDesignationGrp_setVisible=0;
+        me.aaTargetDesignationGrp_setVisible=0;
         if (me.u != nil) {
             me.lastCoord = me.u.getLastCoord();
             if (me.lastCoord == nil) {
@@ -2476,13 +2476,13 @@ append(obj.total, obj.speed_curr);
                         if (me.ulrd != nil) me.designatedDistanceFT = me.ulrd*M2FT;
                         me.eegsTDshowing = getprop("f16/avionics/gun-sight") != 1 and !me.hydra and eegsShow and me.ulrd != nil;
                         me.target_locked_setVisible = !me.clamped and !me.eegsTDshowing;
-                        me.eegsTargetDesignationGrp_setVisible = !me.clamped and me.eegsTDshowing;
+                        me.aaTargetDesignationGrp_setVisible = !me.clamped and me.eegsTDshowing;
                         if (me.tgt != nil) {
                             me.tgt.hide();
                         }
                         me.target_locked.setTranslation (me.echoPos);
-                        me.eegsTargetDesignationGrp.setTranslation (me.echoPos);
-                        me.eegsTargetDesignationGrp.update();
+                        me.aaTargetDesignationGrp.setTranslation (me.echoPos);
+                        me.aaTargetDesignationGrp.update();
                         me.loft_cue = 0;
                         if (currASEC != nil) {
                             # disabled for now as it has issues
@@ -2598,7 +2598,7 @@ append(obj.total, obj.speed_curr);
         me.acmBoreSymbol.setVisible(showACMBore);
         me.acmVertSymbol.setVisible(showACMVert);
         me.target_locked.setVisible(me.target_locked_setVisible);
-        me.eegsTargetDesignationGrp.setVisible(me.eegsTargetDesignationGrp_setVisible);
+        me.aaTargetDesignationGrp.setVisible(me.aaTargetDesignationGrp_setVisible);
 
         #print(me.irS~" "~me.irL);
 
@@ -3356,7 +3356,8 @@ append(obj.total, obj.speed_curr);
                 if (me.designatedDistanceFT != nil and gunSight == 2) {
                     #snap pipper
                     for (var currSegmentPt = 6;currSegmentPt < me.funnelParts;currSegmentPt+=5) {
-                        if (!me.drawGunAim and me.eegsMe.shellPosDist[currSegmentPt] >= me.designatedDistanceFT and me.eegsMe.shellPosDist[currSegmentPt]>me.eegsMe.shellPosDist[currSegmentPt-5]) {
+                        if (!me.drawGunAim and (me.eegsMe.shellPosDist[currSegmentPt] >= me.designatedDistanceFT or currSegmentPt==16) and me.eegsMe.shellPosDist[currSegmentPt]>me.eegsMe.shellPosDist[currSegmentPt-5]) {
+                            # The check for 16 is to draw the aim extending from last segment if range is larger than last.
                             var highdist = me.eegsMe.shellPosDist[currSegmentPt];
                             var lowdist = me.eegsMe.shellPosDist[currSegmentPt-5];
                             me.eegsPipperX = HudMath.extrapolate(me.designatedDistanceFT,lowdist,highdist,me.eegsMe.shellPosX[currSegmentPt-5],me.eegsMe.shellPosX[currSegmentPt]);
@@ -3555,7 +3556,7 @@ append(obj.total, obj.speed_curr);
                                         me.newPipper.arcSmallCW(mr,mr, 0, mr*2, 0);
                                         me.newPipper.arcSmallCW(mr,mr, 0, -mr*2, 0);
 
-                                        # Draw in-range dot (at 4000 mark for now, but really can be set custom)
+                                        # Draw in-range dot
                                         me.newPipper.moveTo(-mr+me.td_x3,me.td_y3);
                                         me.newPipper.arcSmallCW(mr,mr, 0, mr*2, 0);
                                         me.newPipper.arcSmallCW(mr,mr, 0, -mr*2, 0);
@@ -3672,34 +3673,43 @@ append(obj.total, obj.speed_curr);
             }
         }
         if (gunSight != 1 and !me.hydra and me.designatedDistanceFT != nil) {
-                # Draw A-A gun reticle
-                me.eegsTargetDesignationGrp.removeAllChildren();
-                var mr = 0.4 * 1.5;
-                var radius = 20 * mr;
-                me.td_rads = me.interpolate(me.designatedDistanceFT, 0, 12000, 0, 2*math.pi);
-                me.td_x = radius*math.sin(me.td_rads);
-                me.td_y = -radius*math.cos(me.td_rads);
-                me.td_factor = me.designatedDistanceFT >= 12000?1:0.75;
-                me.td_x2 = me.td_factor*radius*math.sin(me.td_rads);
-                me.td_y2 = -me.td_factor*radius*math.cos(me.td_rads);
-                # the open part of the circle is not segmented as per manuals and YT (1FJF5PD1uqM)
-                if (me.td_x >= 0) {
-                        me.eegsTargetDesignationGrp.createChild("path")
-                                .moveTo(0, -radius)
-                                .arcSmallCW(radius, radius, 0, me.td_x, me.td_y+radius)
-                                .lineTo(me.td_x2, me.td_y2)
-                                .setStrokeLineWidth(1)
-                                .setColor(me.color)
-                                .update();
-                } else {
-                        me.eegsTargetDesignationGrp.createChild("path")
-                                .moveTo(0, -radius)
-                                .arcLargeCW(radius, radius, 0, me.td_x, me.td_y+radius)
-                                .lineTo(me.td_x2, me.td_y2)
-                                .setStrokeLineWidth(1)
-                                .setColor(me.color)
-                                .update();
-                }
+            # Draw A-A gun reticle
+            me.aaTargetDesignationGrp.removeAllChildren();
+            var mr = 0.4 * 1.5;
+            var radius = 20 * mr;
+            me.td_rads = me.interpolate(me.designatedDistanceFT, 0, 12000, 0, 2*math.pi);
+            me.td_x = radius*math.sin(me.td_rads);
+            me.td_y = -radius*math.cos(me.td_rads);
+            me.td_factor = me.designatedDistanceFT >= 12000?1:0.75;
+            me.td_x2 = me.td_factor*radius*math.sin(me.td_rads);
+            me.td_y2 = -me.td_factor*radius*math.cos(me.td_rads);
+            # the open part of the circle is not segmented as per manuals and YT (1FJF5PD1uqM)
+            if (me.td_x >= 0) {
+                me.aaTargetDesignator = me.aaTargetDesignationGrp.createChild("path")
+                    .moveTo(0, -radius)
+                    .arcSmallCW(radius, radius, 0, me.td_x, me.td_y+radius)
+                    .lineTo(me.td_x2, me.td_y2)
+                    .setStrokeLineWidth(1)
+                    .setColor(me.color)
+                    .update();
+            } else {
+                me.aaTargetDesignator = me.aaTargetDesignationGrp.createChild("path")
+                    .moveTo(0, -radius)
+                    .arcLargeCW(radius, radius, 0, me.td_x, me.td_y+radius)
+                    .lineTo(me.td_x2, me.td_y2)
+                    .setStrokeLineWidth(1)
+                    .setColor(me.color)
+                    .update();
+            }
+            # Draw in-range dot
+            if (me.designatedDistanceFT > getprop("f16/avionics/eegs-maxrange-ft")) {
+                me.td_rads = me.interpolate(getprop("f16/avionics/eegs-maxrange-ft"), 0, 12000, 0, 2*math.pi);
+                me.td_x3 = (1.20*radius)*math.sin(me.td_rads);
+                me.td_y3 = -(1.20*radius)*math.cos(me.td_rads);
+                me.aaTargetDesignator.moveTo(-mr+me.td_x3,me.td_y3);
+                me.aaTargetDesignator.arcSmallCW(mr,mr, 0, mr*2, 0);
+                me.aaTargetDesignator.arcSmallCW(mr,mr, 0, -mr*2, 0);
+            }
         }
     },
     interpolateCoords: func (start, end, fraction) {

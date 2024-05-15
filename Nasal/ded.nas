@@ -5,6 +5,7 @@ var tacanBandTF = toggleableField.new(["X", "Y"], "instrumentation/tacan/frequen
 var ilsFrqEF = EditableField.new("instrumentation/nav[0]/frequencies/selected-mhz", "%6.2f", 6);
 var ilsCrsEF = EditableField.new("f16/crs-ils", "%3d", 3);
 var wingspanEF = EditableField.new("f16/avionics/eegs-wingspan-ft", "%3d", 3);
+var gunrngEF = EditableField.new("f16/avionics/eegs-maxrange-ft", "%5d", 5);
 var alowEF = EditableField.new("f16/settings/cara-alow", "%5d", 5);
 var tfEF = EditableField.new("autopilot/settings/tf-minimums", "%4d", 4);
 var mslFloorEF = EditableField.new("f16/settings/msl-floor", "%5d", 5);
@@ -45,7 +46,7 @@ var pDEST  = EditableFieldPage.new(9);
 var pBINGO = EditableFieldPage.new(10, [bingoEF]);
 var pVIP   = EditableFieldPage.new(11);
 var pNAV   = EditableFieldPage.new(12);
-var pMAN   = EditableFieldPage.new(13, [wingspanEF]);
+var pMAN   = EditableFieldPage.new(13, [wingspanEF,gunrngEF]);
 var pINS   = EditableFieldPage.new(14);
 var pEWS   = EditableFieldPage.new(15);
 var pMODE  = EditableFieldPage.new(16);
@@ -855,7 +856,7 @@ var dataEntryDisplay = {
 		me.text[0] = sprintf("      MAN            %s",me.no);
 		me.text[1] = sprintf("WSPAN   %sFT",pMAN.vector[0].getText());
 		me.text[2] = sprintf("      MBAL    ");
-		me.text[3] = sprintf("RNG      2000FT  ");
+		me.text[3] = sprintf("RNG   %sFT  ",pMAN.vector[1].getText());
 		me.text[4] = sprintf("TOF      5.4SEC ");
 	},
 
