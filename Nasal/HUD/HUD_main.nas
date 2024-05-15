@@ -1464,7 +1464,6 @@ append(obj.total, obj.speed_curr);
                                                      obj.boreSymbol.hide();
                                                  } else {
                                                      obj.boreSymbol.setTranslation(HudMath.getBorePos());
-                                                     obj.locatorAngle.setTranslation(HudMath.getBorePos()[0]-10, HudMath.getBorePos()[1]);
                                                      obj.boreSymbol.show();
                                                  }
                                       },
@@ -2440,6 +2439,7 @@ append(obj.total, obj.speed_curr);
         var showACMVert = 0;
         me.target_locked_setVisible=0;
         me.aaTargetDesignationGrp_setVisible=0;
+        me.azimuth = "";
         if (me.u != nil) {
             me.lastCoord = me.u.getLastCoord();
             if (me.lastCoord == nil) {
@@ -2559,9 +2559,25 @@ append(obj.total, obj.speed_curr);
                             me.locatorLine.setTranslation(HudMath.getBorePos());
                             me.veccy = vector.Math.pitchYawVector(me.u.getLastElev(),-me.dr, [1,0,0]);# There is probably simpler ways to do this, but at least I know this works well at great angles.
                             me.veccy = vector.Math.yawPitchRollVector(0, -hdp.getproper("pitch"), -hdp.getproper("roll"), me.veccy);
-                            me.locatorLine.setRotation(math.atan2(-me.veccy[1],me.veccy[2]));
-                            me.locatorAngle.setText(sprintf("%d", vector.Math.angleBetweenVectors([1,0,0], vector.Math.pitchYawVector(me.drE,-me.dr, [1,0,0]))));
+                            me.lineRot = math.atan2(-me.veccy[1],me.veccy[2]);
+                            me.locatorLine.setRotation(me.lineRot);
+                            me.align = me.lineRot>0?"right-center":"left-center";
+                            me.alignX = me.lineRot>0?-10:10;
+                            me.locatorAngle.setText(sprintf("%d", vector.Math.angleBetweenVectors([1,0,0], vector.Math.pitchYawVector(me.drE,-me.dr, [1,0,0]))))
+                                            .setAlignment(me.align)
+                                            .setTranslation(HudMath.getBorePos()[0]+me.alignX, HudMath.getBorePos()[1]);
                             me.locatorLineShow = 1;
+                        } elsif (!me.clamped and me.eegsTDshowing and !me.hydra and eegsShow and getprop("f16/avionics/gun-sight") == 0) {
+                            if (me.u.getLastHeading() != nil) {
+                                me.azimuth = geo.normdeg180(me.u.get_bearing()-me.u.getLastHeading());
+                                if (me.azimuth == 180 or me.azimuth == 0) {
+                                    me.azSide = " ";
+                                } else {
+                                    me.azSide = me.azimuth > 0 ?"L":"R";
+                                }
+                                me.azimuth = sprintf("AA%3d%s", math.abs(me.azimuth), me.azSide);
+                                me.locatorAngle.setText(me.azimuth).setAlignment("center-bottom").setTranslation(HudMath.getBorePos()[0], HudMath.getBorePos()[1]-6);;
+                            }
                         }
                         if (me.tgt != nil) {
                             me.tgt.setTranslation (me.echoPos);
@@ -2603,7 +2619,7 @@ append(obj.total, obj.speed_curr);
         #print(me.irS~" "~me.irL);
 
         me.locatorLine.setVisible(me.locatorLineShow);
-        me.locatorAngle.setVisible(me.locatorLineShow);
+        me.locatorAngle.setVisible(me.locatorLineShow or me.azimuth != "");
 
         if (hdp.getproper("dgft")) {
             me.ALOW_top = 1;# thsi line is AFTER the code that needs it
