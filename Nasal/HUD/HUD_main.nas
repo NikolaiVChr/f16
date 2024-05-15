@@ -3388,7 +3388,7 @@ append(obj.total, obj.speed_curr);
             if (me.eegsMe.allow and gunSight == 0 and !me.hydra) {
                 # draw the funnel
                 for (var k = 0;k<me.funnelParts;k+=1) {
-                    var halfspan = math.atan2(getprop("f16/avionics/eegs-wingspan-ft")*0.5,me.eegsMe.shellPosDist[k])*R2D*me.texelPerDegreeX;#35ft average fighter wingspan
+                    var halfspan = math.atan2(getprop("f16/avionics/gun-eegs-wingspan-ft")*0.5,me.eegsMe.shellPosDist[k])*R2D*me.texelPerDegreeX;#35ft average fighter wingspan
                     me.eegsRightX[k] = me.eegsMe.shellPosX[k]-halfspan;
                     me.eegsRightY[k] = me.eegsMe.shellPosY[k];
                     me.eegsLeftX[k]  = me.eegsMe.shellPosX[k]+halfspan;
@@ -3467,7 +3467,7 @@ append(obj.total, obj.speed_curr);
                         if (me.oldStrf) {
                                 # draw the old STRF pipper (T.O. GR1F-16CJ-34-1-1 page 1-442 and MLU Tape 1 page 185)
                                 var pipperRadius = 15 * mr;
-                                if (me.strfRange <= (me.hydra?4000:getprop("f16/avionics/strf-range"))) {
+                                if (me.strfRange <= (me.hydra?4000:getprop("f16/avionics/gun-strf-max-range-ft"))) {
                                         me.eegsGroup.createChild("path")
                                                 .moveTo(me.eegsPipperX-pipperRadius, me.eegsPipperY-pipperRadius-2)
                                                 .horiz(pipperRadius*2)
@@ -3495,7 +3495,7 @@ append(obj.total, obj.speed_curr);
                                 me.pipperOuterRadius = 25 * mr;
                                 me.pipperInnerRadius = 20 * mr;
                                 me.pipperRangeTick   =  5 * mr;
-                                me.pipperRangeMode = me.strfRange <= getprop("f16/avionics/strf-range") and me.strfRange <= 12000?0:(me.strfRange <= 12000?1:(me.strfRange <= getprop("f16/avionics/strf-range") and me.strfRange <= 24000?2:(me.strfRange <= 24000?3:4)));
+                                me.pipperRangeMode = me.strfRange <= getprop("f16/avionics/gun-strf-max-range-ft") and me.strfRange <= 12000?0:(me.strfRange <= 12000?1:(me.strfRange <= getprop("f16/avionics/gun-strf-max-range-ft") and me.strfRange <= 24000?2:(me.strfRange <= 24000?3:4)));
                                 
                                 if (me.pipperRangeMode < 4) {
 
@@ -3509,10 +3509,10 @@ append(obj.total, obj.speed_curr);
                                         me.td_x2 = me.pipperOuterRadius*math.sin(me.td_rads);
                                         me.td_y2 = -me.pipperOuterRadius*math.cos(me.td_rads);
 
-                                        if (getprop("f16/avionics/strf-range") <= 12000) {
-                                                me.td_rads = me.interpolate(getprop("f16/avionics/strf-range"), 0, 12000, 0, 2*math.pi);
+                                        if (getprop("f16/avionics/gun-strf-max-range-ft") <= 12000) {
+                                                me.td_rads = me.interpolate(getprop("f16/avionics/gun-strf-max-range-ft"), 0, 12000, 0, 2*math.pi);
                                         } else {
-                                                me.td_rads = me.interpolate(getprop("f16/avionics/strf-range"), 12000, 24000, 0, 2*math.pi);
+                                                me.td_rads = me.interpolate(getprop("f16/avionics/gun-strf-max-range-ft"), 12000, 24000, 0, 2*math.pi);
                                         }
                                         me.td_x3 = (me.pipperOuterRadius+me.pipperRangeTick)*math.sin(me.td_rads);
                                         me.td_y3 = -(me.pipperOuterRadius+me.pipperRangeTick)*math.cos(me.td_rads);
@@ -3720,8 +3720,8 @@ append(obj.total, obj.speed_curr);
                     .update();
             }
             # Draw in-range dot
-            if (me.designatedDistanceFT > getprop("f16/avionics/eegs-maxrange-ft")) {
-                me.td_rads = me.interpolate(getprop("f16/avionics/eegs-maxrange-ft"), 0, 12000, 0, 2*math.pi);
+            if (me.designatedDistanceFT > getprop("f16/avionics/gun-aa-max-range-ft")) {
+                me.td_rads = me.interpolate(getprop("f16/avionics/gun-aa-max-range-ft"), 0, 12000, 0, 2*math.pi);
                 me.td_x3 = (1.20*radius)*math.sin(me.td_rads);
                 me.td_y3 = -(1.20*radius)*math.cos(me.td_rads);
                 me.aaTargetDesignator.moveTo(-mr+me.td_x3,me.td_y3);

@@ -1419,10 +1419,10 @@ var DisplaySystem = {
                         snake.setCooling(me.cooling);
                     }
                 } elsif (me.wpnType == "gun" and getprop("f16/avionics/gun-sight") == 1) {
-                	var rng = getprop("f16/avionics/strf-range");
+                	var rng = getprop("f16/avionics/gun-strf-max-range-ft");
                 	rng += 2000;
                 	if (rng > 14000) rng = 2000;# should really be 24000, but we dont compute shells trajectories that far
-                	setprop("f16/avionics/strf-range", rng);
+                	setprop("f16/avionics/gun-strf-max-range-ft", rng);
                 }
             } elsif (controlName == "OSB10") {
                 if (variantID == 0) {
@@ -1611,7 +1611,7 @@ var DisplaySystem = {
                         else me.status = "RDY";
                     }
                     if (me.osb14 == "STRF") {
-                    	me.strfrng = getprop("f16/avionics/strf-range");
+                    	me.strfrng = getprop("f16/avionics/gun-strf-max-range-ft");
                     	me.osb9 = me.strfrng~"FT\nRNG"
                     }
                 } elsif (me.wpn.type == "LAU-68") {

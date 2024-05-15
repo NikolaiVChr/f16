@@ -113,7 +113,7 @@
 			<input>
 			  	<width>75</width>
 			  	<height>25</height>
-			  	<property>f16/avionics/eegs-wingspan-ft</property>
+			  	<property>f16/avionics/gun-eegs-wingspan-ft</property>
 			  	<live>true</live>
 			  	<halign>left</halign>
 		        <binding>

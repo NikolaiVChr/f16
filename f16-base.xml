@@ -1297,7 +1297,6 @@
         <avionics>
 			<probe-heat-switch type="int">0</probe-heat-switch>
 			<probe-heat-light type="bool">false</probe-heat-light>
-            <dgft type="bool">false</dgft>
             <emer-jett-switch type="bool">false</emer-jett-switch>
             <hud-drift type="int">1</hud-drift><!-- 2: drift c/o 0: reset -->
             <hud-flir-distance-min type="double">1.0</hud-flir-distance-min><!-- must be larger than zero -->
@@ -1350,9 +1349,11 @@
 			<rtn-seq type="int">0</rtn-seq>
 			<ded-up-down type="int">0</ded-up-down>
             <laser-code type="int">0000</laser-code>
-            <eegs-wingspan-ft type="int">35</eegs-wingspan-ft>
-            <eegs-maxrange-ft type="int">3000</eegs-maxrange-ft>
-            <strf-range type="int">4000</strf-range>
+            <dgft type="bool">false</dgft>
+            <gun-sight type="int">0</gun-sight><!-- 0:EEGS 1:STRF 2:SNAP -->
+            <gun-eegs-wingspan-ft type="int">35</gun-eegs-wingspan-ft>
+            <gun-aa-max-range-ft type="int">3000</gun-aa-max-range-ft>
+            <gun-strf-max-range-ft type="int">4000</gun-strf-max-range-ft>
             <power-mmc type="bool">false</power-mmc>
             <power-st-sta type="bool">false</power-st-sta>
             <power-mfd type="bool">false</power-mfd>
@@ -1412,7 +1413,6 @@
             <bingo type="int">0</bingo><!-- 0: No warn 1: warn 2: warn reset -->
             <fault-warning type="int">0</fault-warning><!-- 0: No warn 1: warn 2: warn reset -->
             <voice-msg-inhibit type="bool">false</voice-msg-inhibit>
-            <gun-sight type="int">0</gun-sight><!-- 0:EEGS 1:STRF 2:SNAP -->
             <hmd-sym-int-knob type="double">0.0</hmd-sym-int-knob>
         </avionics>
         <fcs>
