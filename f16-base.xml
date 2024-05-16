@@ -13,7 +13,7 @@
         <serviceable type="bool">true</serviceable>
     </autopilot>
     <sim>
-        <aircraft-version>3.81</aircraft-version>
+        <aircraft-version>3.82</aircraft-version>
         <minimum-fg-version>2020.3</minimum-fg-version>
         <expected-aircraft-dir-name>f16</expected-aircraft-dir-name>
         <!-- enable "parkpos=AVAILABLE" option for the F-16 -->
