@@ -1891,6 +1891,14 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
 
         setDefaultAAgunSight();
 
+        var versionString = getprop("sim/version/flightgear");
+        var version = split(".", versionString);
+        var major = num(version[0]);
+        var minor = num(version[1]);
+
+        
+        if (getprop("scenery/use-vpb") == 1 and (major > 2020 or (major == 2020 and minor == 4))) fgcommand("dialog-show", props.Node.new({ "dialog-name": "wsfail" }));
+
         #-- load HMD as reloadable module
         var hmd = modules.Module.new("f16_HMD"); # Module name
         hmd.setDebug(0); # 0=(mostly) silent; 1=print setlistener and maketimer calls to console; 2=print also each listener hit, be very careful with this!
