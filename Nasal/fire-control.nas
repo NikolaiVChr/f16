@@ -1618,7 +1618,7 @@ ccrp_loopTimer.simulatedTime = 1;#started from f16.nas
 var CCIP_CCRP = ["MK-82","MK-82AIR","MK-83","MK-84","GBU-12","GBU-24","GBU-54","CBU-87","CBU-105","GBU-31","B61-7","B61-12"];
 # List of weapons that can be ripple/dual dropped:
 var dualWeapons = ["MK-82","MK-82AIR","MK-83","MK-84","GBU-12","GBU-24","GBU-54","CBU-87","CBU-105","GBU-31","B61-7","B61-12","AGM-154A"];
-var defaultCannon = "M61A1 20mm Cannon";
+var defaultCannon = "M61A1-20mm-Cannon";
 var defaultRocket = "LAU-68";
 var getCompleteRadarTargetsList = func {
 	# A list of all MP/AI aircraft/ships/surface-targets around the aircraft, including those that is outside radar line of sight etc..
