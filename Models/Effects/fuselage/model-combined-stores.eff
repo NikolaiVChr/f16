@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+The fuselage effect is a modified version of model-combined-deffered.
+Modifications author: Nikolai V. Chr.
+-->
+<PropertyList>
+	<name>Aircraft/f16/Models/Effects/fuselage/model-combined-stores</name>
+	<inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+	<parameters>
+		<!-- PBR HDR -->
+		<texture n="9">
+			<type>white</type>
+		</texture>
+		<metallic-factor type="float">1</metallic-factor>
+    	<roughness-factor type="float">0.75</roughness-factor>
+	</parameters>
+</PropertyList>

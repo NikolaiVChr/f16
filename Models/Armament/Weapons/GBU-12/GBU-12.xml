@@ -13,7 +13,7 @@ Used for non fired GBU-12
   </effect>
 
   <effect>
-      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-stores</inherits-from>
       <parameters>
           <metallic type="float">0.80</metallic>
           <ambient-factor type="float">0.0</ambient-factor>

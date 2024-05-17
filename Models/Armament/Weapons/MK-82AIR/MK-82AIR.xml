@@ -8,7 +8,7 @@ Used for non fired MK-82AIR
   <path>MK-82AIR.ac</path>
 
   <effect>
-      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-stores</inherits-from>
       <parameters>
           <metallic type="float">0.80</metallic>
           <ambient-factor type="float">0.0</ambient-factor>
