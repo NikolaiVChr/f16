@@ -3701,7 +3701,8 @@ append(obj.total, obj.speed_curr);
             me.td_factor = me.designatedDistanceFT >= 12000?1:0.75;
             me.td_x2 = me.td_factor*radius*math.sin(me.td_rads);
             me.td_y2 = -me.td_factor*radius*math.cos(me.td_rads);
-            # the open part of the circle is not segmented as per manuals and YT (1FJF5PD1uqM)
+            # The open part of the circle is not segmented as per manuals and YT (1FJF5PD1uqM)
+            # More modern MLU (or some export models) do have it segmented though.
             if (me.td_x >= 0) {
                 me.aaTargetDesignator = me.aaTargetDesignationGrp.createChild("path")
                     .moveTo(0, -radius)
