@@ -2,7 +2,7 @@ AC3Db
 MATERIAL "Knobs9"       rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 050 trans 0.000
 MATERIAL "ac3dmat1"     rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 010 trans 0.000
 MATERIAL "lights"       rgb 0.000 0.000 0.000  amb 0.500 0.500 0.500  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 010 trans 0.000
-MATERIAL "displays"     rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 040 trans 0.000
+MATERIAL "displays"     rgb 1 1 1  amb 1 1 1  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 040 trans 0.000
 OBJECT world
 name "Blender_exporter_v2.27__MLU_threat_warning_prime.ac"
 kids 11

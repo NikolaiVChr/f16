@@ -34,6 +34,8 @@ var uv_used = uv_x2-uv_x1;
 var tran_x = 0;
 var tran_y = 0;
 
+var useMasks = getprop("f16/pr") != 1;
+
 var F16_HUD = {
     map: func (value, leftMin, leftMax, rightMin, rightMax) {
         # Figure out how 'wide' each range is
@@ -98,11 +100,11 @@ var F16_HUD = {
         obj.sx = sx*uv_used;
 
         obj.canvas.addPlacement({"node": canvas_item});
-        obj.canvas.setColorBackground(0.30, 1, 0.3, 0.00);
+        obj.canvas.setColorBackground(1, 1, 1, 0.00);
 
         # Create a group for the parsed elements
         obj.svg = obj.canvas.createGroup().hide();
-        obj.main_mask = obj.canvas.createGroup().set("z-index",20000);
+        if(useMasks)obj.main_mask = obj.canvas.createGroup().set("z-index",20000);
 
         # Parse an SVG file and add the parsed elements to the given group
         canvas.parsesvg(obj.svg, svgname);
@@ -323,7 +325,7 @@ var F16_HUD = {
                 .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL);
         append(obj.total, obj.speed_type);
         append(obj.total, obj.alt_type);
-        obj.super_mask = obj.main_mask.createChild("image")
+        if(useMasks)obj.super_mask = obj.main_mask.createChild("image")
                 .setTranslation(0,0)
                 #.set("blend-source-rgb","one")
                 #.set("blend-source-alpha","one")
@@ -334,9 +336,9 @@ var F16_HUD = {
                 .set("src", "Aircraft/f16/Nasal/HUD/main_mask.png");
         if (use_war_hud) {
             #obj.super_mask.hide();
-            obj.super_mask.setScale(1.132,1);
+            if(useMasks)obj.super_mask.setScale(1.132,1);
         }
-        obj.speed_mask = obj.svg.createChild("image")
+        if(useMasks)obj.speed_mask = obj.svg.createChild("image")
                 .setTranslation(-27+0.21*sx*uv_used,sy*0.245-6)
                 .set("z-index",10000)
                 #.set("blend-source-rgb","one")
@@ -370,7 +372,7 @@ var F16_HUD = {
                 .setFont(HUD_FONT)
                 .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL);
 append(obj.total, obj.speed_curr);
-        obj.alt_mask = obj.svg.createChild("image")
+        if(useMasks)obj.alt_mask = obj.svg.createChild("image")
                 .setTranslation(5+3+0.79*sx*uv_used-10,sy*0.245-6)
                 .set("z-index",10000)
                 #.set("blend-source-rgb","one")
@@ -404,7 +406,7 @@ append(obj.total, obj.speed_curr);
                 .setFont(HUD_FONT)
                 .setFontSize(HUD_FONT_SIZE_SMALL, HUD_FONT_ASPECT_SMALL);
                 append(obj.total, obj.alt_curr);
-        obj.head_mask = obj.svg.createChild("image")
+        if(useMasks)obj.head_mask = obj.svg.createChild("image")
                 .setTranslation(-10+0.5*sx*uv_used,sy*0.1-20)
                 .set("z-index",10000)
                 #.set("blend-source-rgb","one")
@@ -1657,7 +1659,7 @@ append(obj.total, obj.speed_curr);
                                             obj.alt_type.setText("");
                                             obj.alt_range.hide();
                                             obj.alt_curr.hide();
-                                            obj.alt_mask.hide();
+                                            if(useMasks)obj.alt_mask.hide();
                                             obj.alt_frame.hide();
                                             obj.ralt.hide();
                                             obj.radalt_box.hide();
@@ -1699,7 +1701,7 @@ append(obj.total, obj.speed_curr);
                                             obj.radalt_box.hide();
                                             obj.thermometerScaleGrp.hide();
                                             obj.alt_curr.show();
-                                            obj.alt_mask.show();
+                                            if(useMasks)obj.alt_mask.show();
                                             obj.alt_frame.show();
                                             if (!obj.hidingScales) {
                                                 obj.alti_indicator.show();
@@ -1715,7 +1717,7 @@ append(obj.total, obj.speed_curr);
                                             obj.radalt_box.show();
                                             obj.thermometerScaleGrp.hide();
                                             obj.alt_curr.show();
-                                            obj.alt_mask.show();
+                                            if(useMasks)obj.alt_mask.show();
                                             obj.alt_frame.show();
                                             if (!obj.hidingScales) {
                                                 obj.alti_indicator.show();
@@ -1786,12 +1788,12 @@ append(obj.total, obj.speed_curr);
                                           if (hdp.getproper("gear_down")) {
                                               obj.heading_tape_positionY = -10;
                                               obj.head_curr.setTranslation(0.5*sx*uv_used,sy*0.1-12);
-                                              obj.head_mask.setTranslation(-10+0.5*sx*uv_used,sy*0.1-20);
+                                              if(useMasks)obj.head_mask.setTranslation(-10+0.5*sx*uv_used,sy*0.1-20);
                                               obj.head_frame.setTranslation(0,0);
                                           } else {
                                               obj.heading_tape_positionY = 95;
                                               obj.head_curr.setTranslation(0.5*sx*uv_used,sy*0.1-12+105);
-                                              obj.head_mask.setTranslation(-10+0.5*sx*uv_used,sy*0.1-20+105);
+                                              if(useMasks)obj.head_mask.setTranslation(-10+0.5*sx*uv_used,sy*0.1-20+105);
                                               obj.head_frame.setTranslation(0,105);
                                           }
                                           if (hdp.getproper("servHead")) {

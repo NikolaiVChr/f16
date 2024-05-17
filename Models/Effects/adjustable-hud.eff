@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PropertyList>
   <name>HUD adjustements</name>
-  <inherits-from>Effects/hud</inherits-from>
+  <inherits-from>Effects/glass</inherits-from>
 
   <parameters>
 	<hud-brightness><use>f16/avionics/hud-sym</use></hud-brightness>

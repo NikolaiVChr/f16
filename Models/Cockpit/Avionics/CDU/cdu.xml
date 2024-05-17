@@ -513,25 +513,6 @@
         <object-name>b25</object-name>
         <object-name>b26</object-name>
     </effect>
-    <effect>
-        <inherits-from>Aircraft/f16/Models/Effects/displays/lcd</inherits-from>
-        <parameters>
-            <inner-angle type="float">45</inner-angle>
-            <outer-angle type="float">60</outer-angle>
-            <black-angle type="float">80</black-angle>
-            <contrast>1</contrast>
-            <texture n="1">
-                <type>2d</type>
-                <filter>linear-mipmap-linear</filter>
-                <wrap-s>clamp</wrap-s>
-                <wrap-t>clamp</wrap-t>
-                <internal-format>normalized</internal-format>
-                <image>Aircraft/f16/Models/Effects/dust3.png</image>
-            </texture>
-            <dirt-factor>0.05</dirt-factor>
-        </parameters>
-        <object-name>cdu_canvas</object-name>
-    </effect>
     <animation>
         <object-name>beacon</object-name>
         <type>material</type>

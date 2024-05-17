@@ -21,4 +21,22 @@
     </axis>
 </animation>
 
+<effect>
+    <inherits-from>Effects/model-pbr</inherits-from>
+    <parameters>
+      <metallic-factor type="float">1</metallic-factor>
+      <roughness-factor type="float">0.4</roughness-factor>
+    </parameters>
+    <object-name>exhaustFan</object-name>
+ </effect>
+
+ <effect>
+    <inherits-from>Effects/model-pbr</inherits-from>
+    <parameters>
+      <metallic-factor type="float">0.5</metallic-factor>
+      <roughness-factor type="float">0.65</roughness-factor>
+    </parameters>
+    <object-name>exhaustGrid</object-name>
+ </effect>
+
 </PropertyList>

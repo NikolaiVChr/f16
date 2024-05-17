@@ -4,17 +4,6 @@
 
 	<path>rwr.ac</path>
 
-	<effect>
-        <inherits-from>Aircraft/f16/Models/Effects/displays/lcd</inherits-from>
-        <parameters><!-- RWR is a CRT display, hence the big angles -->
-            <inner-angle type="float">78</inner-angle><!-- 0-90, use 90 for LED or plasma display-->
-            <outer-angle type="float">79</outer-angle><!-- 0-90, but greater than inner -->
-            <black-angle type="float">80</black-angle><!-- 0-90, but greater than outer -->
-            <contrast type="float"><use>f16/ews/rwr-int</use></contrast>
-            <dirt-factor>0.09</dirt-factor>
-        </parameters>
-        <object-name>bkg</object-name>
-    </effect>
     
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/model-interior/panel-standard</inherits-from>

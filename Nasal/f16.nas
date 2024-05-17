@@ -43,9 +43,39 @@ var _tree = func(n, graph = 1, prefix = "", level = 0) {
 }
 
 
+if (getprop("sim/rendering/default-compositor") != nil) {
+    setprop("f16/pr",1);
+    print("HR detected. Enabling PR.");
+}
 
+var changeWeather = func {
+    #setprop("/sim/rendering/hdr/atmos/aerosol-type",      int(rand()*10));
+    #setprop("/sim/rendering/hdr/atmos/aerosol-turbidity", math.pow(10,2*rand()));
+    var albedo = rand()*0.8+0.10;
+    setprop("/sim/rendering/hdr/atmos/ground-albedo[0]",      albedo);
+    setprop("/sim/rendering/hdr/atmos/ground-albedo[1]",      albedo);
+    setprop("/sim/rendering/hdr/atmos/ground-albedo[2]",      albedo);
+    setprop("/sim/rendering/hdr/atmos/ground-albedo[3]",      albedo);
 
+    setprop("/sim/rendering/hdr/atmos/ozone-mean-dobson", rand()*200+150);
 
+    setprop("/sim/rendering/hdr/atmos/aerosol-scale-height",  math.pow(10,3*rand())+0.001);#the plus is to avoid divide by zero
+    setprop("/sim/rendering/hdr/atmos/fog-density",           rand()*0.75);
+    setprop("/sim/rendering/hdr/atmos/fog-scale-height",      math.pow(10,2*rand())+0.001);
+
+    setprop("/sim/rendering/hdr/atmos/aerosol-base-density", (rand()*0.75+0.5)*1.3681e17);
+    setprop("/sim/rendering/hdr/atmos/aerosol-relative-background-density", (rand()*0.5+0.75)*1.4619e-17);
+
+    setprop("/sim/rendering/hdr/atmos/aerosol-absorption-cross-section[0]", (rand()*0.5+0.75)* 2.8722e-24);
+    setprop("/sim/rendering/hdr/atmos/aerosol-absorption-cross-section[1]", (rand()*0.5+0.75)*4.6168e-24);
+    setprop("/sim/rendering/hdr/atmos/aerosol-absorption-cross-section[2]", (rand()*0.5+0.75)*7.9706e-24);
+    setprop("/sim/rendering/hdr/atmos/aerosol-absorption-cross-section[3]", (rand()*0.5+0.75)*1.3578e-23);
+
+    setprop("/sim/rendering/hdr/atmos/aerosol-scattering-cross-section[0]", (rand()*0.5+0.75)*1.5908e-22);
+    setprop("/sim/rendering/hdr/atmos/aerosol-scattering-cross-section[1]", (rand()*0.5+0.75)*1.7711e-22);
+    setprop("/sim/rendering/hdr/atmos/aerosol-scattering-cross-section[2]", (rand()*0.5+0.75)*2.0942e-22);
+    setprop("/sim/rendering/hdr/atmos/aerosol-scattering-cross-section[3]", (rand()*0.5+0.75)*2.4033e-22);
+}
 
 
 

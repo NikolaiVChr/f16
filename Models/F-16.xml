@@ -494,7 +494,7 @@
  </animation>
 
 
-<effect>
+<!--effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
       <parameters>
           <metallic type="float">0.80</metallic>
@@ -510,6 +510,26 @@
           </render-bin>
           <opaque type="int">0</opaque>
       </parameters>
+      <object-name>VstabBandLeftAft</object-name>
+      <object-name>VstabBandLeftFront</object-name>
+      <object-name>VstabBandRightAft</object-name>
+      <object-name>VstabBandRightFront</object-name>
+      <object-name>VstabLogoLeftBottom</object-name>
+      <object-name>VstabLogoLeftTop</object-name>
+      <object-name>VstabLogoRightBottom</object-name>
+      <object-name>VstabLogoRightTop</object-name>
+      <object-name>LogoPilotRight</object-name>
+      <object-name>FuselageLogoRight</object-name>
+      <object-name>FuselageLogoLeft</object-name>
+  </effect-->
+
+<!-- logos -->
+
+  <effect>
+      <!--inherits-from>Effects/model-pbr-transparent</inherits-from-->
+      <inherits-from>Effects/model-transparent</inherits-from>
+      <parameters>
+      </parameters>
       <!-- logos -->
       <object-name>VstabBandLeftAft</object-name>
       <object-name>VstabBandLeftFront</object-name>
@@ -522,6 +542,10 @@
       <object-name>LogoPilotRight</object-name>
       <object-name>FuselageLogoRight</object-name>
       <object-name>FuselageLogoLeft</object-name>
+      <object-name>WinglogoLeftTop</object-name>
+      <object-name>WinglogoRightBottom</object-name>
+      <object-name>WinglogoRightTop</object-name>
+      <object-name>Rect</object-name>
   </effect>
 
   <animation>
@@ -547,7 +571,7 @@
     <object-name>CanopyBackInside</object-name>
   </animation>
 
-  <animation>
+  <!--animation>
     <type>select</type>
       <inherits-from>Effects/model-transparent</inherits-from>
       <condition>
@@ -556,7 +580,6 @@
           <value>0</value>
         </equals>
       </condition>
-      <!-- logos -->
       <object-name>WinglogoLeftTop</object-name>
       <object-name>WinglogoRightBottom</object-name>
       <object-name>WinglogoRightTop</object-name>
@@ -572,7 +595,7 @@
       <object-name>LogoPilotRight</object-name>
       <object-name>FuselageLogoRight</object-name>
       <object-name>FuselageLogoLeft</object-name>
-  </animation>
+  </animation-->
 
   <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
@@ -595,6 +618,14 @@
           <rain-enabled type="int">0</rain-enabled>
           <snow-enabled type="int">0</snow-enabled>
           <reflection-enabled type="int">1</reflection-enabled>
+          <texture n="9">
+            <image>Aircraft/f16/Models/Effects/fuselage/orm.png</image>
+            <type>2d</type>
+            <filter>linear</filter>
+            <wrap-s>clamp</wrap-s>
+            <wrap-t>clamp</wrap-t>
+            <internal-format>normalized</internal-format>
+          </texture>
       </parameters>
       <object-name>PitotTube</object-name>
     </effect>
@@ -602,9 +633,11 @@
   <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
       <parameters>
-          <lightmap-enabled type="int">1</lightmap-enabled>
-          <lightmap-multi type="int">1</lightmap-multi>
+          <!--lightmap-enabled type="int">1</lightmap-enabled>
+          <lightmap-multi type="int">1</lightmap-multi-->
           <specular-material-ignore type="int">0</specular-material-ignore><!-- 0 or 1 -->
+          <metallic-factor type="float">1</metallic-factor>
+          <roughness-factor type="float">1</roughness-factor>
       </parameters>
 
       <object-name>RadarDomeTop</object-name>
@@ -659,6 +692,14 @@
           <grain-magnification type="float"><use>f16/effects/rust-mag</use></grain-magnification>
           <dirt-enabled type="int"><use>f16/effects/dirt</use></dirt-enabled>
           <dirt-factor type="float"><use>f16/effects/dirt-fac</use></dirt-factor>
+          <texture n="9">
+            <image>Aircraft/f16/Models/Effects/fuselage/orm.png</image>
+            <type>2d</type>
+            <filter>linear</filter>
+            <wrap-s>clamp</wrap-s>
+            <wrap-t>clamp</wrap-t>
+            <internal-format>normalized</internal-format>
+          </texture>
       </parameters>
       <!-- fuselage -->
 
@@ -707,6 +748,14 @@
           <grain-magnification type="float"><use>f16/effects/rust-mag</use></grain-magnification>
           <dirt-enabled type="int"><use>f16/effects/dirt</use></dirt-enabled>
           <dirt-factor type="float"><use>f16/effects/dirt-fac</use></dirt-factor>
+          <texture n="9">
+            <image>Aircraft/f16/Models/Effects/fuselage/orm.png</image>
+            <type>2d</type>
+            <filter>linear</filter>
+            <wrap-s>clamp</wrap-s>
+            <wrap-t>clamp</wrap-t>
+            <internal-format>normalized</internal-format>
+          </texture>
       </parameters>
       
       <!-- gear struts and oleos -->
@@ -743,6 +792,14 @@
           <dirt-factor type="float"><use>f16/effects/dirt-fac</use></dirt-factor>
           <lightmap-enabled type="int">1</lightmap-enabled>
           <lightmap-multi type="int">1</lightmap-multi>
+          <texture n="9">
+            <image>Aircraft/f16/Models/Effects/fuselage/orm.png</image>
+            <type>2d</type>
+            <filter>linear</filter>
+            <wrap-s>clamp</wrap-s>
+            <wrap-t>clamp</wrap-t>
+            <internal-format>normalized</internal-format>
+          </texture>
       </parameters>
       <!-- tail -->
 
@@ -791,9 +848,9 @@
  </effect>
 
  <effect>
-  <inherits-from>Effects/model-combined-transparent</inherits-from>
+  <inherits-from>Effects/model-pbr-transparent</inherits-from>
   <parameters>
-    <rain-enabled>1</rain-enabled>
+    <!--rain-enabled>1</rain-enabled>
     <normalmap-enabled type="int">0</normalmap-enabled>
     <lightmap-enabled type="int">0</lightmap-enabled>
     <reflection-enabled type="int">1</reflection-enabled>
@@ -819,7 +876,9 @@
     <render-bin>
       <bin-number>111</bin-number>
       <bin-name>DepthSortedBin</bin-name>
-    </render-bin>
+    </render-bin-->
+    <metallic-factor type="float">0.0</metallic-factor>
+    <roughness-factor type="float">0.01</roughness-factor>
   </parameters>
   <object-name>CanopyForwardOutside</object-name>
   <object-name>CanopyBackOutside</object-name>

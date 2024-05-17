@@ -889,7 +889,7 @@
           <object-name>MFDButtonSym</object-name>
           <object-name>MFDButtonGain</object-name>
     </effect>
-    <animation>
+    <!--animation>
         <object-name>MFDimage2</object-name>
         <type>material</type>
         <condition>
@@ -913,7 +913,7 @@
             <green>1</green>
             <blue> 1</blue>
         </emission>
-    </animation>
+    </animation-->
     <!--<animation>
        <type>touch</type>
        <visible>true</visible>
@@ -927,16 +927,16 @@
            </binding>
        </action>
    </animation>-->
-    <effect>
-        <inherits-from>Aircraft/f16/Models/Effects/displays/lcd</inherits-from>
+
+   <!--effect>
+        <inherits-from>Aircraft/f16/Models/Cockpit/Avionics/MFD/mfd</inherits-from>
         <parameters>
-            <inner-angle type="float">45</inner-angle><!-- 0-90, use 90 for LED or plasma display-->
-            <outer-angle type="float">60</outer-angle><!-- 0-90, but greater than inner -->
-            <black-angle type="float">80</black-angle><!-- 0-90, but greater than outer -->
-            <contrast><use>f16/avionics/mfd-r-con</use></contrast>
+            <metallic-factor type="float">0.01</metallic-factor>
+            <roughness-factor type="float">0.05</roughness-factor>
+            <lightmap-enabled type="int">0</lightmap-enabled>
         </parameters>
         <object-name>MFDimage2</object-name>
-    </effect>
+    </effect-->
 
     <animation><!-- must be at end of file -->
       <object-name>MFDButtonL1</object-name>

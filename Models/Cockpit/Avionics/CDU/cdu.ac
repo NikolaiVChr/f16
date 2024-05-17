@@ -1,7 +1,7 @@
 AC3Db
 MATERIAL "buttonMat"    rgb 0.640 0.640 0.640  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 012 trans 0.000
 MATERIAL "lightMat"     rgb 0.058 0.058 0.058  amb 0.136 0.136 0.136  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 012 trans 0.000
-MATERIAL "canvasMat"    rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 096 trans 0.000
+MATERIAL "canvasMat"    rgb 1 1 1  amb 1 1 1  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 096 trans 0.000
 MATERIAL "knobMat"      rgb 0.640 0.640 0.640  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 012 trans 0.000
 MATERIAL "caseMat"      rgb 0.640 0.640 0.640  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 012 trans 0.000
 OBJECT world

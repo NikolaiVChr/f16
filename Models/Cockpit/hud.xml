@@ -27,14 +27,26 @@
     <use-mask type="int">0</use-mask>
     <use-overlay type="int">1</use-overlay>
     <hud-brightness><use>f16/avionics/hud-sym</use></hud-brightness>
-    <rendering-hint>transparent</rendering-hint>
-    <transparent>true</transparent>
     <sample-res>0.0006</sample-res>
     <sample-far>1.25</sample-far>
+    <!--rendering-hint>transparent</rendering-hint>
+    <transparent>true</transparent>
     <render-bin>
       <bin-number>111</bin-number>
       <bin-name>DepthSortedBin</bin-name>
-    </render-bin>
+    </render-bin-->
+
+    <lightmap-multi type="int">1</lightmap-multi>
+    <lightmap-enabled type="int">1</lightmap-enabled>
+    <texture n="3">
+      <type>white</type>
+    </texture>
+    
+
+    <metallic-factor type="float">1.0</metallic-factor>
+    <roughness-factor type="float">1.0</roughness-factor>
+    <alpha-cutoff>-1.0</alpha-cutoff>
+    <blend>1</blend>
   </parameters>
  </effect>
 

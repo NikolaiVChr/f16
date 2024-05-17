@@ -14,6 +14,14 @@
           <grain-magnification type="float"><use>f16/effects/rust-mag</use></grain-magnification>
           <dirt-enabled type="int"><use>f16/effects/dirt</use></dirt-enabled>
           <dirt-factor type="float"><use>f16/effects/dirt-fac</use></dirt-factor>
+          <texture n="9">
+            <image>Aircraft/f16/Models/Effects/fuselage/orm.png</image>
+            <type>2d</type>
+            <filter>linear</filter>
+            <wrap-s>clamp</wrap-s>
+            <wrap-t>clamp</wrap-t>
+            <internal-format>normalized</internal-format>
+          </texture>
       </parameters>
       <object-name>fuel_tank600</object-name>
       <object-name>fillercap-600</object-name>

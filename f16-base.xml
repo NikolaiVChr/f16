@@ -1233,6 +1233,7 @@
         <rwr-launch-sam type="bool">false</rwr-launch-sam>
     </sound>
     <f16>
+        <pr type="int">0</pr>
         <stores-cat type="int">1</stores-cat>
         <fuel>
             <hand-fwd type="double">1000</hand-fwd>
