@@ -136,7 +136,9 @@ var stopwrite = func() {
     starttime = 0;
     seen_ids = [];
     seenStruct = {};
+    thread.lock(mutexWrite);
     explo_arr = [];
+    thread.unlock(mutexWrite);
     explosion_timeout_loop(1);
 }
 
@@ -356,17 +358,17 @@ var deleteInVector = func (vec,item) {
 checkOnline();
 
 var explosion_timeout_loop = func(all = 0) {
+    thread.lock(mutexWrite);# since we use explo_arr we lock the whole function.
     foreach(var e; explo_arr) {
         if (e.time) {
             if (systime() - e.time > 15 or all) {
-                thread.lock(mutexWrite);
                 write("#" ~ (systime() - starttime)~"\n");
                 write("-"~e.tacviewID);
-                thread.unlock(mutexWrite);
                 e.time = 0;
             }
         }
     }
+    thread.unlock(mutexWrite);
 }
 
 var write = func(str) {
