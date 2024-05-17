@@ -557,7 +557,7 @@ var FireControl = {
 				if (me.first == "0" or me.first == "1" or me.first == "2" or me.first == "3" or me.first == "4" or me.first == "5" or me.first == "6" or me.first == "7" or me.first == "8" or me.first == "9") {
 					continue;
 				}
-				me.class = getprop("payload/armament/"~string.lc(me.typeTest)~"/class");
+				me.class = getprop("payload/armament/"~string.lc(me.typeTest)~"/class");# this does that no spaces can be in weapon name
 				if (me.class != nil) {
 					me.isAG = find("A", me.class)!=-1;
 					if (me.isAG) {
