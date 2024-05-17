@@ -3331,7 +3331,7 @@ var AIM = {
 						# target has released a new flare, lets check if it fools us
 						me.flareTime = me.life_time;
 						me.flareLast = me.flareNumber;
-						me.aspectDeg = me.aspectToExhaust(me.coord, me.Tgt) / 180;# 0 = viewing engine, 1 = front
+						#me.aspectNorm = me.aspectToExhaust(me.coord, me.Tgt) / 180;# 0 = viewing engine, 1 = front
 						me.flareLock = rand() < (1-me.flareResistance);
 						if (me.flareLock) {
 							# fooled by the flare
@@ -3364,10 +3364,10 @@ var AIM = {
 						# target has released a new chaff, lets check if it blinds us
 						me.chaffLast = me.chaffNumber;
 						me.chaffTime = me.life_time;
-						me.aspectDeg = me.aspectToExhaust(me.coord, me.Tgt) / 180;# 0 = viewing engine, 1 = front
+						me.aspectNorm = me.aspectToExhaust(me.coord, me.Tgt) / 180;# 0 = viewing engine, 1 = front
 						me.redux = me.guidance == "semi-radar" or me.guidance == "command" or me.guidance == "tvm"?(me.gnd_launch?0.5:0.75):1;
 						me.chaffChance = (1-me.chaffResistance)*me.redux;
-						me.chaffLock = rand() < (me.chaffChance - (me.chaffChance * 0.70 * me.aspectDeg));# 70% less chance to be fooled if front aspect
+						me.chaffLock = rand() < (me.chaffChance - (me.chaffChance * 0.70 * me.aspectNorm));# 70% less chance to be fooled if front aspect
 
 						if (me.chaffLock) {
 							me.printStats(me.type~": Missile locked on chaff from "~me.callsign);

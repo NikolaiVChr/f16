@@ -268,45 +268,54 @@ var medium_fast = {
         me.timer.start();
     },
 
+    cmReleaseSound: props.globals.getNode("ai/submodels/submodel[0]/flare-release-snd"),
+    cmReleaseOutSound: props.globals.getNode("ai/submodels/submodel[0]/flare-release-out-snd"),
+    cmReleaseCmd: props.globals.getNode("ai/submodels/submodel[0]/flare-release-cmd"),
+    cmReleaseAutoCmd: props.globals.getNode("ai/submodels/submodel[0]/flare-auto-release-cmd"),
+    cmRelease: props.globals.getNode("ai/submodels/submodel[0]/flare-release"),
+    cmCount: props.globals.getNode("ai/submodels/submodel[0]/count"),
+    elapsed: props.globals.getNode("sim/time/elapsed-sec"),
+    cmElec: props.globals.getNode("fdm/jsbsim/elec/bus/emergency-dc-2"),
+    cmFlare: props.globals.getNode("rotors/main/blade[3]/flap-deg"),
+    cmChaff: props.globals.getNode("rotors/main/blade[3]/position-deg"),
+    cmKnob: props.globals.getNode("f16/ews/ew-mode-knob"),
+    cmSwitch: props.globals.getNode("f16/avionics/cmds-fl-switch"),
+
     loop: func {
         # Flare/chaff release
-        if (getprop("ai/submodels/submodel[0]/flare-release-snd") == nil) {
-            setprop("ai/submodels/submodel[0]/flare-release-snd", 0);
-            setprop("ai/submodels/submodel[0]/flare-release-out-snd", 0);
-        }
-        var flareOn = getprop("ai/submodels/submodel[0]/flare-release-cmd") and getprop("f16/ews/ew-mode-knob") == 1 and getprop("f16/avionics/cmds-fl-switch") == 1;#todo: seperate chaff and flare counting
-        var flareOnA = getprop("ai/submodels/submodel[0]/flare-auto-release-cmd") > rand() and getprop("f16/ews/ew-mode-knob") == 2 and getprop("ai/submodels/submodel[0]/flare-release-cmd") == 0 and getprop("f16/avionics/cmds-fl-switch") == 1;
+        var flareOn = me.cmReleaseCmd.getBoolValue() and me.cmKnob.getIntValue() == 1 and me.cmSwitch.getBoolValue() == 1;#todo: seperate chaff and flare counting
+        var flareOnA = me.cmReleaseAutoCmd.getDoubleValue() > rand() and me.cmKnob.getIntValue() == 2 and me.cmReleaseCmd.getBoolValue() == 0 and me.cmSwitch.getBoolValue() == 1;
         flareOn = flareOn or flareOnA;
 
-        if (flareOn == 1 and getprop("ai/submodels/submodel[0]/flare-release") == 0
-                and getprop("ai/submodels/submodel[0]/flare-release-out-snd") == 0
-                and getprop("ai/submodels/submodel[0]/flare-release-snd") == 0) {
-            me.flareCount = getprop("ai/submodels/submodel[0]/count");
-            me.flareStart = getprop("sim/time/elapsed-sec");
-            setprop("ai/submodels/submodel[0]/flare-release-cmd", 0);
-            if (me.flareCount > 0 and getprop("fdm/jsbsim/elec/bus/emergency-dc-2")>20) {
-                # release a flare
-                setprop("ai/submodels/submodel[0]/flare-release-snd", 1);
-                setprop("ai/submodels/submodel[0]/flare-release", 1);
-                setprop("rotors/main/blade[3]/flap-deg", me.flareStart);
-                setprop("rotors/main/blade[3]/position-deg", me.flareStart);
+        if (flareOn == 1 and me.cmRelease.getBoolValue() == 0
+                and me.cmReleaseOutSound.getBoolValue() == 0
+                and me.cmReleaseSound.getBoolValue() == 0) {
+            me.flareCount = me.cmCount.getIntValue();
+            me.flareStart = me.elapsed.getDoubleValue();
+            me.cmReleaseCmd.setBoolValue(0);
+            if (me.flareCount > 0 and me.cmElec.getDoubleValue()>20) {
+                # release a chaff/flare
+                me.cmReleaseSound.setBoolValue(1);
+                me.cmRelease.setBoolValue(1);
+                me.cmFlare.setDoubleValue(rand());
+                me.cmChaff.setDoubleValue(rand());
                 damage.flare_released();
             } else {
                 # play the sound for out of flares
-                setprop("ai/submodels/submodel[0]/flare-release-out-snd", 1);
+                me.cmReleaseOutSound.setBoolValue(1);
             }
         }
-        if (getprop("ai/submodels/submodel[0]/flare-release-snd") == 1 and (me.flareStart + 1) < getprop("sim/time/elapsed-sec")) {
-            setprop("ai/submodels/submodel[0]/flare-release-snd", 0);
-            setprop("rotors/main/blade[3]/flap-deg", 0);
-            setprop("rotors/main/blade[3]/position-deg", 0);#MP interpolates between numbers, so nil is better than 0.
+        if (me.cmReleaseSound.getBoolValue() == 1 and (me.flareStart + 0.95) < me.elapsed.getDoubleValue()) {
+            me.cmReleaseSound.setBoolValue(0);
+            me.cmFlare.setDoubleValue(0);
+            me.cmChaff.setDoubleValue(0);#MP interpolates between numbers, so nil is better than 0.
         }
-        if (getprop("ai/submodels/submodel[0]/flare-release-out-snd") == 1 and (me.flareStart + 1.5) < getprop("sim/time/elapsed-sec")) {
-            setprop("ai/submodels/submodel[0]/flare-release-out-snd", 0);
+        if (me.cmReleaseOutSound.getBoolValue() == 1 and (me.flareStart + 1.5) < me.elapsed.getDoubleValue()) {
+            me.cmReleaseOutSound.setBoolValue(0);
         }
-        if (me.flareCount > getprop("ai/submodels/submodel[0]/count")) {
-            # A flare was released in last loop, we stop releasing flares, so user have to press button again to release new.
-            setprop("ai/submodels/submodel[0]/flare-release", 0);
+        if (me.flareCount > me.cmCount.getIntValue()) {
+            # A cm was released in last loop, we stop releasing cm, so user have to press button again to release new.
+            me.cmRelease.setBoolValue(0);
             me.flareCount = -1;
         }
 

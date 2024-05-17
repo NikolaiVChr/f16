@@ -7,13 +7,16 @@
     <model>Aircraft/f16/Models/Effects/flare/flare.xml</model>
     <trigger>ai/submodels/submodel[0]/flare-release</trigger>
     <speed>75.0</speed>   <!-- ft/sec -->
-    <repeat>true</repeat>
+    <repeat>false</repeat>
     <delay>0.75</delay>
     <count>100</count>
-    <x-offset>-10.67</x-offset><!-- positive forward -->
-    <y-offset>2.99</y-offset><!-- feet -->
-    <z-offset>0.15</z-offset>
-    <pitch-offset>-89.0</pitch-offset>
+    <offsets>
+        <x-m>  3.25</x-m>
+        <y-m> -0.911</y-m>
+        <z-m>  0.00457</z-m>
+        <heading-deg>0</heading-deg>
+        <pitch-deg>-89.0</pitch-deg>
+    </offsets>
     <life>7</life>
     <buoyancy>8</buoyancy>
     <wind>true</wind>
@@ -208,13 +211,16 @@
     <model>Aircraft/f16/Models/Effects/flare/flare.xml</model>
     <trigger>ai/submodels/submodel[0]/flare-release</trigger>
     <speed>68.0</speed>   <!-- ft/sec -->
-    <repeat>true</repeat>
+    <repeat>false</repeat>
     <delay>0.75</delay>
     <count>100</count>
-    <x-offset>-10.67</x-offset><!-- positive forward -->
-    <y-offset>-2.99</y-offset><!-- feet -->
-    <z-offset>0.15</z-offset>
-    <pitch-offset>-91.0</pitch-offset>
+    <offsets>
+        <x-m>  3.25</x-m>
+        <y-m>  0.911</y-m>
+        <z-m>  0.00457</z-m>
+        <heading-deg>0</heading-deg>
+        <pitch-deg>-91.0</pitch-deg>
+    </offsets>
     <life>6</life>
     <buoyancy>8</buoyancy>
     <wind>true</wind>

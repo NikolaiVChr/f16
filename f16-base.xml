@@ -1219,6 +1219,8 @@
                 <flare-release-cmd type="bool">false</flare-release-cmd>
                 <flare-auto-release-cmd type="double">0</flare-auto-release-cmd>
                 <flare-release type="bool">false</flare-release>
+                <flare-release-snd type="bool">false</flare-release-snd>
+                <flare-release-out-snd type="bool">false</flare-release-out-snd>
             </submodel>
         </submodels>
     </ai>

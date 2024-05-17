@@ -329,7 +329,7 @@ var DamageRecipient =
                   var tacID = left(md5(notification.Callsign~notification.UniqueIdentity~wh),6);
                   var elapsed = getprop("sim/time/elapsed-sec");
                   lastSeenTacObject[tacID] = elapsed;
-                  if (notification.Kind == 2) {
+                  if (notification.Kind == MOVE) {
                     var target = ",Color=Red";                  
                     if (wh=="Flare") wh=wh~",Type=Flare";
                     var content = sprintf("%s,T=%.6f|%.6f|%.2f|0|%.1f|%.1f,TAS=%.2f,AOA=0,Visible=1,Name=%s,%s\n",tacID,notification.Position.lon(),notification.Position.lat(),notification.Position.alt(),0,0,0,wh,target);
@@ -346,13 +346,13 @@ var DamageRecipient =
                 }
 
                 if (notification.Kind == MOVE) {
-                  if (thrustOn or index == 93 or index == 95) {
+                  if (thrustOn or index == warheads["pilot"][0] or index == warheads["Flare"][0]) {
                     # visualize missile smoke trail
 
                       var smoke = 1;
-                      if (index == 93) {
+                      if (index == warheads["pilot"][0]) {
                         smoke = 0;
-                      } elsif (index == 95) {
+                      } elsif (index == warheads["Flare"][0]) {
                         smoke = 3;
                         if (notification.Position.distance_to(ownPos)*M2NM > 5) {
                           # Don't bother to show flares further than 5 nm
@@ -406,7 +406,7 @@ var DamageRecipient =
                   return emesary.Transmitter.ReceiptStatus_OK;
                 }
 
-                if (index == 95 or index == 93) {
+                if (index == warheads["Flare"][0] or index == warheads["pilot"][0]) {
                   return emesary.Transmitter.ReceiptStatus_OK;
                 }
 
@@ -979,15 +979,10 @@ var animate_flare = func {
   flare_list = sort(flare_list, flare_sorter);
   foreach(flare; flare_list) {
     if (stime-flare[1] > flare_duration) {
-      var msg = notifications.ObjectInFlightNotification.new("ffly", flare[6], DESTROY, 21+95);
-      msg.Flags = 0;
+      var msg = notifications.ObjectInFlightNotification.new("ffly", flare[6], DESTROY, DamageRecipient.typeID2emesaryID(warheads["Flare"][0]));
       msg.Position = flare[2];
       msg.IsDistinct = 1;
-      msg.RemoteCallsign = "";
       msg.UniqueIndex = flare[6];
-      msg.Pitch = 0;
-      msg.Heading = 0;
-      msg.u_fps = 0;
       notifications.objectBridgedTransmitter.NotifyAll(msg);
       recordOwnFlare(msg);
       continue;
@@ -999,15 +994,10 @@ var animate_flare = func {
       flare[2].apply_course_distance(flare[3], flare_dt*flare[5]);
       flare[2].set_alt(flare[2].alt()-flare_dt*flare[4]);
 
-      var msg = notifications.ObjectInFlightNotification.new("ffly", flare[6], MOVE, 21+95);
-      msg.Flags = 0;
+      var msg = notifications.ObjectInFlightNotification.new("ffly", flare[6], MOVE, DamageRecipient.typeID2emesaryID(warheads["Flare"][0]));
       msg.Position = flare[2];
       msg.IsDistinct = 1;
-      msg.RemoteCallsign = "";
       msg.UniqueIndex = flare[6];
-      msg.Pitch = 0;
-      msg.Heading = 0;
-      msg.u_fps = 0;
       notifications.objectBridgedTransmitter.NotifyAll(msg);
       recordOwnFlare(msg);
       flares_sent += 1;
@@ -1045,15 +1035,10 @@ var flare_released = func {
     flare_sequencer += 1;
     if (flare_sequencer > 120) flare_sequencer = -120;
     append(flare_list, flare);
-    var msg = notifications.ObjectInFlightNotification.new("ffly", flare[6], MOVE, 21+95);
-    msg.Flags = 0;
+    var msg = notifications.ObjectInFlightNotification.new("ffly", flare[6], MOVE, DamageRecipient.typeID2emesaryID(warheads["Flare"][0]));
     msg.Position = flare[2];
     msg.IsDistinct = 1;
-    msg.RemoteCallsign = "";
     msg.UniqueIndex = flare[6];
-    msg.Pitch = 0;
-    msg.Heading = 0;
-    msg.u_fps = 0;
     notifications.objectBridgedTransmitter.NotifyAll(msg);
     recordOwnFlare(msg);
 }
