@@ -12,14 +12,7 @@
   	</effect>
 	
 	<effect>
-      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
-      <parameters>
-          <metallic type="float">0.80</metallic>
-          <ambient-factor type="float">0.0</ambient-factor>
-          <rain-enabled type="int">0</rain-enabled>
-          <ambient-correction type="float">0.00</ambient-correction>
-          <reflection-enabled type="int">0</reflection-enabled>
-      </parameters>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-stores</inherits-from>
       <object-name>AGM-119</object-name>
       <object-name>AGM-119_Front-wing</object-name>
       <object-name>AGM-119_Tail-wing</object-name>
