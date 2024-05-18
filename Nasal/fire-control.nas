@@ -13,8 +13,7 @@ var RIPPLE_INTERVAL_METERS = 0;
 var RIPPLE_INTERVAL_SECONDS = 1;
 var DROP_CCRP = 0;
 var DROP_CCIP = 1;
-var GUN_STRF = 0;
-var GUN_EEGS = 1;
+
 var FireControl = {
 	new: func (pylons, pylonOrder, typeOrder) {
 		var fc = {parents:[FireControl]};
@@ -310,7 +309,7 @@ var FireControl = {
 				printfDebug("FC: Selected next weapon type: %s, but none is loaded.", me.selectedType);
 			}
 		}
-		screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
+		outToScreen("Selected "~me.selectedType);
 	},
 
 	cycleLoadedWeapon: func {
@@ -342,7 +341,7 @@ var FireControl = {
 			me.wp = me.nextWeapon(me.selType);
 			if (me.wp != nil) {			
 				printfDebug("FC: Selected next weapon type: %s on pylon %d position %d",me.selectedType,me.selected[0],me.selected[1]);
-				screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
+				outToScreen("Selected "~me.selectedType);
 				return;
 			}
 			me.selTypeIndex += 1;
@@ -351,7 +350,7 @@ var FireControl = {
 		me.selected = nil;
 		me.selectedAdd = nil;
 		me.selectedType = nil;
-		screen.log.write("Selected nothing", 0.5, 0.5, 1);
+		outToScreen("Selected nothing");
 		if (me.changeListener != nil) me.changeListener();
 	},
 
@@ -373,6 +372,9 @@ var FireControl = {
 		while (me.selTypeIndex != me.cont) {
 			if (me.selTypeIndex < 0) {
 				me.selTypeIndex = size(me.typeOrder)-1;
+				if (me.selTypeIndex == me.cont) {
+					break;
+				}
 			}
 			me.selectedType = me.typeOrder[me.selTypeIndex];
 			me.selType = me.selectedType;
@@ -380,7 +382,7 @@ var FireControl = {
 			me.wp = me.nextWeapon(me.selType);
 			if (me.wp != nil) {			
 				printfDebug("FC: Selected prev weapon type: %s on pylon %d position %d",me.selectedType,me.selected[0],me.selected[1]);
-				screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
+				outToScreen("Selected "~me.selectedType);
 				return;
 			}
 			me.selTypeIndex -= 1;
@@ -388,14 +390,15 @@ var FireControl = {
 		me.selected = nil;
 		me.selectedAdd = nil;
 		me.selectedType = nil;
-		screen.log.write("Selected nothing", 0.5, 0.5, 1);
+		outToScreen("Selected nothing");
 		if (me.changeListener != nil) me.changeListener();
 	},
 
-	cycleStation: func {
+	cycleStation: func (reverseOrder = 0) {
+		# Cycle stations but with same type as current
 		if (me.selectedType != nil) {
 			me.stopCurrent();
-			me.nextWeapon(me.selectedType);
+			me.nextWeapon(me.selectedType, reverseOrder);
 		}
 	},
 
@@ -406,7 +409,7 @@ var FireControl = {
 				return 0;
 			}
 			me.first = left(me.selectedType,1);
-			if (me.first == "0" or me.first == "1" or me.first == "2" or me.first == "3" or me.first == "4" or me.first == "5" or me.first == "6" or me.first == "7" or me.first == "8" or me.first == "9") {
+			if (num(me.first) != nil) {
 				return 0;
 			}
 			if (getprop("payload/armament/"~string.lc(me.selectedType)~"/class") != nil) {
@@ -417,110 +420,58 @@ var FireControl = {
 	},
 
 	cycleAG: func {
-		# will stop current weapon and select next A-G weapon and start it.
-		# horrible programming though, but since its called seldom and in no loop, it will do for now.
+		# will stop current weapon and select next A-G weapon(s) and start it.
 		me.stopCurrent();
-		if (!me._isSelectedWeapon()) {
+		me.typeOrderDouble = me.typeOrder;
+		me.selTypeIndex = me.vectorIndex(me.typeOrder, me.selectedType);
+		if (me.selTypeIndex != -1) {
+			me.typeOrderDouble ~= me.typeOrder;
+		} else {
 			me.selected = nil;
 			me.selectedAdd = nil;
 			me.selectedType = nil;
 		}
-		if (me.selectedType == nil) {
-			foreach (me.typeTest;me.typeOrder) {
-				me.first = left(me.typeTest,1);
-				if (me.first == "0" or me.first == "1" or me.first == "2" or me.first == "3" or me.first == "4" or me.first == "5" or me.first == "6" or me.first == "7" or me.first == "8" or me.first == "9") {
-					continue;
-				}
-				me.class = getprop("payload/armament/"~string.lc(me.typeTest)~"/class");
-				if (me.typeTest == defaultRocket) me.class = "G";
-				if (me.class != nil) {
-					me.isAG = find("G", me.class)!=-1 or find("M", me.class)!=-1 or find("P", me.class)!=-1;
-					if (me.isAG) {
-						me.selType = me.nextWeapon(me.typeTest);
-						if (me.selType != nil) {
-							#me.updateCurrent();
-							me.selectedType = me.selType.type;
-							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
-							return;
-						}
-					}
-				}
+		for (me.iter = me.selTypeIndex + 1; me.iter < size(me.typeOrderDouble) and me.typeOrderDouble[me.iter] != me.selectedType; me.iter += 1) {
+			me.testMeForAG = me.typeOrderDouble[me.iter];
+			me.first = left(me.testMeForAG,1);
+			if (num(me.first) != nil) {
+				# Todo: Do not remember why not allow these. They cannot be properties, so is not AIM but could be a submodel weap..
+				continue;
 			}
-		} else {
-			me.hasSeen = 0;
-			foreach (me.typeTest;me.typeOrder) {
-				me.first = left(me.typeTest,1);
-				if (me.first == "0" or me.first == "1" or me.first == "2" or me.first == "3" or me.first == "4" or me.first == "5" or me.first == "6" or me.first == "7" or me.first == "8" or me.first == "9") {
-					continue;
-				}
-				if (!me.hasSeen) {
-					if (me.typeTest == me.selectedType) {
-						me.hasSeen = 1;
-					} 
-					continue;
-				}
-				me.class = getprop("payload/armament/"~string.lc(me.typeTest)~"/class");
-				if (me.typeTest == defaultRocket) me.class = "G";
-				if (me.class != nil) {
-					me.isAG = find("G", me.class)!=-1 or find("M", me.class)!=-1 or find("P", me.class)!=-1;
-					if (me.isAG) {
-						me.selType = me.nextWeapon(me.typeTest);
-						if (me.selType != nil) {
-							#me.updateCurrent();
-							me.selectedType = me.selType.type;
-							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
-							return;
-						}
-					}
-				}
-			}
-			if (me.hasSeen) {
-				foreach (me.typeTest;me.typeOrder) {
-					me.first = left(me.typeTest,1);
-					if (me.first == "0" or me.first == "1" or me.first == "2" or me.first == "3" or me.first == "4" or me.first == "5" or me.first == "6" or me.first == "7" or me.first == "8" or me.first == "9") {
-						continue;
-					}
-					if (me.typeTest == me.selectedType) {
-						me.selType = me.nextWeapon(me.typeTest);
-						if (me.selType != nil and ((me.selType.parents[0] == armament.AIM and (me.selType.target_gnd == 1 or me.selType.target_sea==1)) or me.typeTest == defaultRocket)) {
-							#me.updateCurrent();
-							me.selectedType = me.selType.type;
-							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
-							return;
-						} else {
-							me.selectedType = nil;
-							me.selectedAdd = nil;
-							me.selected = nil;
-							screen.log.write("Selected nothing", 0.5, 0.5, 1);
-						}
+			me.class = getprop("payload/armament/"~string.lc(me.testMeForAG)~"/class");# this does that no spaces can be in weapon name
+			if (me.testMeForAG == defaultRocket) me.class = "G";
+			if (me.testMeForAG == defaultCannon) me.class = "AGM";
+			if (me.class != nil) {
+				me.isAG = find("G", me.class) != -1 or find("M", me.class) != -1 or find("P", me.class) != -1;
+				if (me.isAG) {
+					me.selType = me.nextWeapon(me.testMeForAG);
+					if (me.selType != nil) {
+						me.selectedType = me.selType.type;
+						outToScreen("Selected "~me.selectedType);
 						return;
-					}
-					me.class = getprop("payload/armament/"~string.lc(me.typeTest)~"/class");
-					if (me.typeTest == defaultRocket) me.class = "G";
-					if (me.class != nil) {
-						me.isAG = find("G", me.class)!=-1 or find("M", me.class)!=-1 or find("P", me.class)!=-1;
-						if (me.isAG) {
-							me.selType = me.nextWeapon(me.typeTest);
-							if (me.selType != nil) {
-								me.selectedType = me.selType.type;
-								#me.updateCurrent();
-								screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
-								return;
-							}
-						}
 					}
 				}
 			}
 		}
+		
 		if (me.selectedType != nil) {
 			me.stopCurrent();
 		}
-		
-		me.selectedType = defaultCannon;
-		me.nextWeapon(me.selectedType);
-		
+
 		me.selectedAdd = nil;
-		me.updateDual();
+		
+		me.selType = me.nextWeapon(defaultCannon);
+		if (me.selType != nil) {
+			me.selectedType = me.selType.type;
+			outToScreen("Selected "~me.selectedType);
+			return;
+		}
+
+		outToScreen("Selected nothing");
+		
+		me.selectedType = nil;
+		
+		if (me.changeListener != nil) me.changeListener();
 	},
 
 	isAAMode: func {
@@ -546,103 +497,56 @@ var FireControl = {
 	cycleAA: func {
 		# will stop current weapon and select next A-A weapon and start it.
 		me.stopCurrent();
-		if (!me._isSelectedWeapon()) {
+		me.typeOrderDouble = me.typeOrder;
+		me.selTypeIndex = me.vectorIndex(me.typeOrder, me.selectedType);
+		if (me.selTypeIndex != -1) {
+			me.typeOrderDouble ~= me.typeOrder;
+		} else {
 			me.selected = nil;
 			me.selectedAdd = nil;
 			me.selectedType = nil;
 		}
-		if (me.selectedType == nil) {
-			foreach (me.typeTest;me.typeOrder) {
-				me.first = left(me.typeTest,1);
-				if (me.first == "0" or me.first == "1" or me.first == "2" or me.first == "3" or me.first == "4" or me.first == "5" or me.first == "6" or me.first == "7" or me.first == "8" or me.first == "9") {
-					continue;
-				}
-				me.class = getprop("payload/armament/"~string.lc(me.typeTest)~"/class");# this does that no spaces can be in weapon name
-				if (me.class != nil) {
-					me.isAG = find("A", me.class)!=-1;
-					if (me.isAG) {
-						me.selType = me.nextWeapon(me.typeTest);
-						if (me.selType != nil) {
-							me.selectedType = me.selType.type;
-							#me.updateCurrent();
-							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
-							return;
-						}
-					}
-				}
+
+		for (me.iter = me.selTypeIndex + 1; me.iter < size(me.typeOrderDouble) and me.typeOrderDouble[me.iter] != me.selectedType; me.iter += 1) {
+			me.testMeForAA = me.typeOrderDouble[me.iter];
+			me.first = left(me.testMeForAA,1);
+			if (num(me.first) != nil) {
+				# Todo: Do not remember why not allow these. They cannot be properties, so is not AIM but could be a submodel weap..
+				continue;
 			}
-		} else {
-			me.hasSeen = 0;
-			foreach (me.typeTest;me.typeOrder) {
-				me.first = left(me.typeTest,1);
-				if (me.first == "0" or me.first == "1" or me.first == "2" or me.first == "3" or me.first == "4" or me.first == "5" or me.first == "6" or me.first == "7" or me.first == "8" or me.first == "9") {
-					continue;
-				}
-				if (!me.hasSeen) {
-					if (me.typeTest == me.selectedType) {
-						me.hasSeen = 1;
-					} 
-					continue;
-				}
-				me.class = getprop("payload/armament/"~string.lc(me.typeTest)~"/class");
-				if (me.class != nil) {
-					me.isAG = find("A", me.class)!=-1;
-					if (me.isAG) {
-						me.selType = me.nextWeapon(me.typeTest);
-						if (me.selType != nil) {
-							me.selectedType = me.selType.type;
-							#me.updateCurrent();
-							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
-							return;
-						}
-					}
-				}
-			}
-			if (me.hasSeen) {
-				foreach (me.typeTest;me.typeOrder) {
-					me.first = left(me.typeTest,1);
-					if (me.first == "0" or me.first == "1" or me.first == "2" or me.first == "3" or me.first == "4" or me.first == "5" or me.first == "6" or me.first == "7" or me.first == "8" or me.first == "9") {
-						continue;
-					}
-					if (me.typeTest == me.selectedType) {
-						me.selType = me.nextWeapon(me.typeTest);
-						if (me.selType != nil and me.selType.parents[0] == armament.AIM and me.selType.target_air==1) {
-							#me.updateCurrent();
-							me.selectedType = me.selType.type;
-							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
-							return;
-						} else {
-							me.selectedType = nil;
-							me.selected = nil;
-							me.selectedAdd = nil;
-							screen.log.write("Selected nothing", 0.5, 0.5, 1);
-						}
+			me.class = getprop("payload/armament/"~string.lc(me.testMeForAA)~"/class");# this does that no spaces can be in weapon name
+			if (me.testMeForAA == defaultRocket) me.class = "G";
+			if (me.testMeForAA == defaultCannon) me.class = "AGM";
+			if (me.class != nil) {
+				me.isAA = find("A", me.class) != -1;
+				if (me.isAA) {
+					me.selType = me.nextWeapon(me.testMeForAA);
+					if (me.selType != nil) {
+						me.selectedType = me.selType.type;
+						outToScreen("Selected "~me.selectedType);
 						return;
-					}
-					me.class = getprop("payload/armament/"~string.lc(me.typeTest)~"/class");
-					if (me.class != nil) {
-						me.isAG = find("A", me.class)!=-1;
-						if (me.isAG) {
-							me.selType = me.nextWeapon(me.typeTest);
-							if (me.selType != nil) {
-								me.selectedType = me.selType.type;
-								#me.updateCurrent();
-								screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
-								return;
-							}
-						}
 					}
 				}
 			}
 		}
+
 		if (me.selectedType != nil) {
 			me.stopCurrent();
 		}
-		
-		me.selectedType = defaultCannon;
-		me.nextWeapon(me.selectedType);
-		
+
 		me.selectedAdd = nil;
+		
+		me.selType = me.nextWeapon(defaultCannon);
+		if (me.selType != nil) {
+			me.selectedType = me.selType.type;
+			outToScreen("Selected "~me.selectedType);
+			return;
+		}
+
+		outToScreen("Selected nothing");
+
+		me.selectedType = nil;
+		
 		if (me.changeListener != nil) me.changeListener();
 	},
 
@@ -666,6 +570,7 @@ var FireControl = {
 	},
 
 	weaponHot: func {
+		# If current weapon is ready for firing
 		if (me.getSelectedWeapon() == nil) {
 			return 0;
 		}
@@ -1191,7 +1096,7 @@ var FireControl = {
 					me.isRippling = 0;
 					# gravity assisted munition finished dropping.
 					setprop("payload/armament/gravity-dropping", 0);
-					screen.log.write("Finished ripple", 0.5, 0.5, 1);
+					outToScreen("Finished ripple");
 					return;
 				}
 			}
@@ -1201,7 +1106,7 @@ var FireControl = {
 			# after 7.5 seconds if its not finished rippling, cancel it. Might happen if the aircraft is still.
 			me.isRippling = 0;
 			setprop("payload/armament/gravity-dropping", 0);
-			screen.log.write("Cancelled ripple", 0.5, 0.5, 1);
+			outToScreen("Cancelled ripple");
 			return;
 		}
 		settimer(func me.rippleTest(), delayTimer);
@@ -1349,7 +1254,7 @@ var FireControl = {
 #		print("duals found "~size(me.selectedAdd));
 	},
 
-	nextWeapon: func (type) {
+	nextWeapon: func (type, reverseOrder = 0) {
 		# find next weapon of type. Will select and start it. Will not select weapons on inactive pylons.
 		# will NOT stop previous weapon
 		# will NOT set selectedType
@@ -1360,13 +1265,15 @@ var FireControl = {
 		}
 		printDebug("");
 		printfDebug("Start find next weapon of type %s, starting from pylon %d", type, me.pylon);
-		me.indexWeapon = -1;
+		me.indexWeapon = reverseOrder?size(me.pylonOrder):-1;
 		me.index = me.vectorIndex(me.pylonOrder, me.pylon);
 		for(me.i=0;me.i<size(me.pylonOrder);me.i+=1) {
 			#printDebug("me.i="~me.i);
-			me.index += 1;
+			me.index += reverseOrder?-1:1;
 			if (me.index >= size(me.pylonOrder)) {
 				me.index = 0;
+			} elsif (me.index < 0) {
+				me.index = size(me.pylonOrder)-1;
 			}
 			me.pylon = me.pylonOrder[me.index];
 			if (!me.pylons[me.pylon].isActive()) {
@@ -1551,6 +1458,10 @@ var printDebug = func (msg) {if (debugFC) print(msg);};
 var printfDebug = func {if (debugFC) {var str = call(sprintf,arg,nil,nil,var err = []);if(size(err))print(err[0]);else print (str);}};
 # Note calling printf directly with call() will sometimes crash the sim, so we call sprintf instead.
 
+var outToScreen = func (out,r=0.5,g=1.0,b=0.5) {
+	if (changesOnScreen) screen.log.write(out, r,g,b);
+}
+
 var containsVector = func (vec, item) {
     foreach(test; vec) {
         if (test == item) {
@@ -1614,6 +1525,7 @@ ccrp_loopTimer.simulatedTime = 1;#started from f16.nas
 
 # This is non-generic methods, please edit it to fit your radar/weapon setup:
 
+var changesOnScreen = 0;
 # List of weapons that can be CCIP/CCRP dropped:
 var CCIP_CCRP = ["MK-82","MK-82AIR","MK-83","MK-84","GBU-12","GBU-24","GBU-54","CBU-87","CBU-105","GBU-31","B61-7","B61-12"];
 # List of weapons that can be ripple/dual dropped:
