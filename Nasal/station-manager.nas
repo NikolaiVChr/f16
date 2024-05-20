@@ -13,6 +13,15 @@
 var fdm = getprop("/sim/flight-model");
 var baseGui = fdm=="jsb"?"payload":"sim";
 
+var reload_payload_dialog = func {
+	# Touching payload-reload reloads the fuel and payload dialog (duh).
+	# This function might be called (through Pylon.guiChanged) inside the update function of said dialog.
+	# Reloading the dialog while its update function is running sounds like a bad idea,
+	# and segfaults in some systems with FG 2020.4.  Delay the update to the next frame to avoid that.
+	settimer(func { setprop("sim/gui/dialogs/payload-reload",!getprop("sim/gui/dialogs/payload-reload")); }, 0, 1);
+}
+
+
 var Station = {
 # pylon or fixed mounted weapon on the aircraft
 	new: func (name, id, position, sets, guiID, pointmassNode, operableFunction = nil, activeFunction = nil) {
@@ -1158,7 +1167,7 @@ var FuelTank = {
 		me.setv("selected", 1);
 		me.setv("name", me.typeLong);
 		setprop(me.modelPath, 1);
-		setprop("sim/gui/dialogs/payload-reload",!getprop("sim/gui/dialogs/payload-reload"));
+		reload_payload_dialog();
 	},
 
 	eject: func {
@@ -1169,7 +1178,7 @@ var FuelTank = {
 		me.setv("selected", 0);
 		me.setv("name", "Not attached");
 		setprop(me.modelPath, 0);
-		setprop("sim/gui/dialogs/payload-reload",!getprop("sim/gui/dialogs/payload-reload"));
+		reload_payload_dialog();
 		if (fdm == "jsb") {
 			setprop("fdm/jsbsim/propulsion/tank["~me.fuelTankNumber~"]/external-flow-rate-pps", -1000);
 		}
@@ -1185,7 +1194,7 @@ var FuelTank = {
 		me.setv("selected", 0);
 		me.setv("name", "Not attached");
 		setprop(me.modelPath, 0);
-		setprop("sim/gui/dialogs/payload-reload",!getprop("sim/gui/dialogs/payload-reload"));
+		reload_payload_dialog();
 		if (fdm == "jsb") {
 			setprop("fdm/jsbsim/propulsion/tank["~me.fuelTankNumber~"]/external-flow-rate-pps", -1000);
 		}
