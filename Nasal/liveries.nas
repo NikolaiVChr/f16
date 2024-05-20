@@ -94,7 +94,7 @@ viper.DefaultStyle.new = func(name, name_icon_theme)
     };
 };
 
-var viperStyle = viper.DefaultStyle.new("ViperModern", "Humanity");
+var viperStyle = viper.DefaultStyle.new("ViperModern", "Humanity");#canvas.style;
 
 #viper.style = viperStyle;# Sets the viper style on the window itself
 
