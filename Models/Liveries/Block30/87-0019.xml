@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model> 
+   <livery>
+    <name type="string">3.AJU 132 Filo, Özgür Camo</name>
+    <texture>Liveries/Block30/87-0019.png</texture>
+    <owner type="string">TuAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Airshow Special Color</scheme>
+    <block type="int">30</block>
+    <serial type="string">87-0019</serial>
+    <squad type="string">132 Filo</squad>
+    <year type="string">2019</year>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/block50/turkish.logos.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+            <texture>Liveries/Block30/patch.132filo.png</texture>
+    </livery-patch>
+
+    <livery-pod>
+        <texture>Armament/External-stores/MXU-648.png</texture>
+    </livery-pod>
+    <f16>
+        <dragchute type="bool">true</dragchute>
+        <link16 type="bool">true</link16>
+        <cft type="bool">false</cft>
+    </f16>
+    <livery-specular type="double">0.40</livery-specular>
+  </model>
+ </sim>
+</PropertyList>
