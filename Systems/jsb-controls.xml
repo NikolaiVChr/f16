@@ -842,15 +842,6 @@
             <gain> 57.2957795 </gain>
         </pure_gain>
 
-        <lag_filter name="fcs/fly-by-wire/pitch/q-lagged">
-            <description>
-                Niko: JSBSim cannot really handle lag filters that is so close to 60 when fdm running at 120Hz.
-                        Therefore this component is bypassed in fcs/fly-by-wire/pitch/q-lagged-gained
-            </description>
-            <input> velocities/q-deg_sec </input>
-            <c1> 50 </c1>
-        </lag_filter>
-
         <washout_filter name="fcs/fly-by-wire/pitch/q-washout">
           <input> velocities/q-deg_sec </input>
           <c1> 1 </c1>
@@ -1347,7 +1338,7 @@
             </description>
             <input> fcs/fly-by-wire/pitch/integrator-pre </input>
             <trigger>fcs/fly-by-wire/pitch/integrator-trigger</trigger>
-            <c1 type="ab2"> 5 </c1>
+            <c1 type="trap"> 5 </c1>
         </integrator>
 
         <pure_gain name="fcs/fly-by-wire/pitch/ground-input">
@@ -1541,7 +1532,8 @@
                 Ref.: TN D-8176
                 Servodynamics
                 2 poles. Low pass filter. cutoff around 11 Hz.
-                Disabled due to too slow to react to changes?
+                Disabled due to oscillations before reaching steady state.
+                There is 5 of these in total, all bypassed.
             </description>
             <input> fcs/fly-by-wire/pitch/right-hyd </input>
             <c1> 0 </c1>
@@ -2129,7 +2121,7 @@
             <description>
                 (52)^2
                 div
-                (s^2+2(.7)(52)S+(52)^2
+                s^2+2(.7)(52)S+(52)^2
             </description>
             <input> fcs/fly-by-wire/roll/top-limit </input>
             <c1> 0 </c1>
@@ -2202,7 +2194,7 @@
             <description>
                 (52)^2
                 div
-                (s^2+2(.7)(52)S+(52)^2
+                s^2+2(.7)(52)S+(52)^2
             </description>
             <input> fcs/fly-by-wire/roll/bottom-limit </input>
             <c1> 0 </c1>
@@ -2690,7 +2682,7 @@
             <description>
                 (52)^2
                 div
-                (s^2+2(.7)(52)S+(52)^2
+                s^2+2(.7)(52)S+(52)^2
             </description>
             <input> fcs/fly-by-wire/yaw/struct-filter </input>
             <c1> 0 </c1>
@@ -3010,10 +3002,18 @@
             </test>
         </switch>
 
-        <lag_filter name="fcs/fly-by-wire/lef/servo">
+        <lead_lag_filter name="fcs/fly-by-wire/lef/servo">
+            <description>
+                Lag filter, but in general form,
+                so using a lead-lag to build it.
+                This way its clear what tau is.
+            </description>
             <input> fcs/fly-by-wire/lef/cmd-pos-elec </input>
-            <c1> 7.3529 </c1><!-- 1/0.136 -->
-        </lag_filter>
+            <c1> 0 </c1>
+            <c2> 1 </c2>
+            <c3> 0.136 </c3>
+            <c4> 1 </c4>
+        </lead_lag_filter>
 
         <switch name="fcs/fly-by-wire/lef/pos-hyd">
           <default value="0"/>

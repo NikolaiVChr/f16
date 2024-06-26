@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 
  <mass_balance negated_crossproduct_inertia="false">
-  <ixx unit="SLUG*FT2"> 9496 </ixx>
-  <iyy unit="SLUG*FT2"> 55814 </iyy>
-  <izz unit="SLUG*FT2"> 63100 </izz>
+  <ixx unit="SLUG*FT2"> 9007.5 </ixx>
+  <iyy unit="SLUG*FT2"> 49956 </iyy>
+  <izz unit="SLUG*FT2"> 56770 </izz><!-- source 1977: AD A055417 -->
   <ixy unit="SLUG*FT2"> 0 </ixy>
-  <ixz unit="SLUG*FT2"> 982 </ixz><!-- why is this negated when flying???? -->
+  <ixz unit="SLUG*FT2"> 198 </ixz>
   <iyz unit="SLUG*FT2"> 0 </iyz>
   <emptywt unit="LBS"> 17078 </emptywt>
   <location name="CG" unit="IN">

@@ -3,9 +3,9 @@
  <mass_balance negated_crossproduct_inertia="false">
   <ixx unit="SLUG*FT2"> 9496 </ixx>
   <iyy unit="SLUG*FT2"> 55814 </iyy>
-  <izz unit="SLUG*FT2"> 63100 </izz>
+  <izz unit="SLUG*FT2"> 63100 </izz><!-- source 1979: TP-1538 -->
   <ixy unit="SLUG*FT2"> 0 </ixy>
-  <ixz unit="SLUG*FT2"> 982 </ixz><!-- why is this negated when flying???? -->
+  <ixz unit="SLUG*FT2"> 982 </ixz>
   <iyz unit="SLUG*FT2"> 0 </iyz>
   <emptywt unit="LBS"> 15100 </emptywt>
   <location name="CG" unit="IN">
