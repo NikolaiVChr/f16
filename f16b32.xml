@@ -61,10 +61,13 @@
  <aerodynamics file="Systems/jsb-aerodynamics-block15-subtle.xml"/>
 
 
-<!--
-<output name="c:/users/nikolai/documents/f16_datalog.csv" type="CSV" rate="120">
- <property> fcs/fly-by-wire/pitch/q-washout </property>
- <property> velocities/q-aero-deg_sec </property>-->
+
+<!--<output name="c:/users/shaol/documents/f16_datalog.csv" type="CSV" rate="120">
+ <property> aero/coefficient/Cn </property>
+ <property> aero/alpha-deg </property>
+ <property> aero/beta-deg </property>
+ <property> fcs/fly-by-wire/pitch/horz-tail-deflection-deg </property>
+ <property> velocities/vtrue-kts </property>-->
  <!--<property> attitude/phi-rad </property>
  <property> position/h-sl-ft </property>
  <property> velocities/vc-kts </property>

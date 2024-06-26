@@ -616,6 +616,7 @@
         <gear>
 			<gear-horn-cutout type="bool">false</gear-horn-cutout>
             <brake-parking type="bool">true</brake-parking>
+            <nose-wheel-steering type="bool">true</nose-wheel-steering>
         </gear>
         <MFD n="0">
             <mode type="int">1</mode>
