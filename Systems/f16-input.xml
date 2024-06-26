@@ -492,6 +492,7 @@
             <name>C</name>
             <desc>Toggle canopy</desc>
             <binding>
+                <!-- Wont work on carriers due to Input/keyboard/carrier-binding.xml in fgdata -->
                 <command>property-toggle</command>
                 <property>/fdm/jsbsim/fcs/canopy-engage</property>
             </binding>
