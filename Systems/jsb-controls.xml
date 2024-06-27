@@ -2052,16 +2052,6 @@
             </test>
         </switch>
 
-        <!--pure_gain name="fcs/fly-by-wire/roll/final">
-            <description></description>
-            <input>fcs/fly-by-wire/roll/switch-elec</input>
-            <gain> 0.12 </gain>
-            <clipto>
-                <min> -21.5 </min>
-                <max>  21.5 </max>
-            </clipto>
-        </pure_gain-->
-
         <scheduled_gain name="fcs/fly-by-wire/roll/final">
             <description>TN-20D-8176 page 150</description>
             <input>fcs/fly-by-wire/roll/switch-elec</input>
