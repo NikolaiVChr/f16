@@ -1531,6 +1531,8 @@
             <description>
                 Ref.: TN D-8176
                 Servodynamics
+                Damping (zeta) is 0.7 [underdamped]
+                Natural freq. (omega) is 52 rad/s
                 2 poles. Low pass filter. cutoff around 11 Hz.
                 Disabled due to oscillations before reaching steady state.
                 There is 5 of these in total, all bypassed.
