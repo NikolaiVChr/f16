@@ -2052,7 +2052,7 @@
             </test>
         </switch>
 
-        <pure_gain name="fcs/fly-by-wire/roll/final">
+        <!--pure_gain name="fcs/fly-by-wire/roll/final">
             <description></description>
             <input>fcs/fly-by-wire/roll/switch-elec</input>
             <gain> 0.12 </gain>
@@ -2060,16 +2060,16 @@
                 <min> -21.5 </min>
                 <max>  21.5 </max>
             </clipto>
-        </pure_gain>
+        </pure_gain-->
 
-        <!--scheduled_gain name="fcs/fly-by-wire/roll/final">
-            <description>N27 AD-A-189675</description>
+        <scheduled_gain name="fcs/fly-by-wire/roll/final">
+            <description>TN-20D-8176 page 150</description>
             <input>fcs/fly-by-wire/roll/switch-elec</input>
             <table>
-                <independentVar lookup="row">fcs/fly-by-wire/qcps-ratio</independentVar>
+                <independentVar lookup="row">fcs/fly-by-wire/q_c_Nsqm</independentVar>
                 <tableData>
-                    0     0.36
-                    3.23  0.00
+                    19153     .20
+                    23941     .12
                 </tableData>
             </table>
             <output>fcs/steer-pos-deg</output>
@@ -2077,7 +2077,7 @@
                 <min> -21.5 </min>
                 <max>  21.5 </max>
             </clipto>
-        </scheduled_gain-->
+        </scheduled_gain>
 
         <summer name="fcs/fly-by-wire/roll/top-sum">
             <input>fcs/fly-by-wire/roll/final</input>
