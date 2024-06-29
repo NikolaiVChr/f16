@@ -10,12 +10,24 @@
     AD-A189-675 - Some parts of this used (except for in the YF-16).
         Pitch error gain = 0.7
         Made by LJQC
-    TP-1538 - used for control system B/C and non-prototype gains.
+    TP-1538 - Used for high-alpha departure guards, such as spin,
+        nose-slide and deep stall protection.
         Pitch error gain = 1.5
-    TN-D-8176 - used for servodynamic filters. Disabled for now as all 5 is not damped enough.
+    TN-D-8176 - Has servodynamic filters. And LEF schedule.
+        Disabled for now as all 5 is not damped enough to be useful
+        in simulation, since the flaps in reality have inertia
+        which will dampen the signal, which we not have modeled.
+        LEF schedule also not used.
         Pitch error gain = 2.5
-    ICAS-90-5.10.2 - used for MPO switch
-    AFSC 32657C - has more clean view of Integrator pitch loop.
+    ICAS-90-5.10.2 - Used for MPO switch
+    AFSC 32657C - Has more clean view of Integrator pitch loop.
+        Pitch error gain = 1.5
+    T.O.GR1F-16CJ-1
+        Some LEF and TEF conditions
+        CAT I and III schedules
+        Trim conditions
+        Some standby gains algorithms
+        Gear up condition
  -->
 
     <channel execrate="1" name="FCS Lookup">
@@ -33,7 +45,7 @@
 
         <switch name="fcs/fly-by-wire/Note-5">
             <description>
-                LJQC: Note 5 in 189675
+                LJQC: Note 5 in AD-A189-675
             </description>
             <default value="0"/>
             <test logic="OR" value="1">
@@ -44,7 +56,7 @@
 
         <switch name="fcs/fly-by-wire/condition-a">
             <description>
-                LJQC: According to Note 1 in 189675, condition on q_c is 600.
+                LJQC: According to Note 1 in AD-A189-675, condition on q_c is 600.
             </description>
             <default value="0"/>
             <test logic="AND" value="1">
@@ -91,7 +103,7 @@
 
         <switch name="fcs/fly-by-wire/condition-aar">
             <description>
-                LJQC: According to 189675, condition on q_c is 600.
+                LJQC: According to AD-A189-675, condition on q_c is 600.
             </description>
             <default value="0"/>
             <test logic="AND" value="1">
@@ -235,7 +247,7 @@
         </fcs_function>
 		
 		<fcs_function name="fcs/fly-by-wire/pitch/N3">
-            <description>LJQC: 189675 pitch loop gain N3 schedule.</description>
+            <description>LJQC: AD-A189-675 pitch loop gain N3 schedule.</description>
             <function>
                 <table>
                     <independentVar lookup="row">fcs/fly-by-wire/q_c</independentVar>
@@ -250,7 +262,7 @@
         </fcs_function>
 		
 		<fcs_function name="fcs/fly-by-wire/pitch/N4">
-            <description>LJQC: 189675 low alpha pitch rate gain N4 schedule.</description>
+            <description>LJQC: AD-A189-675 low alpha pitch rate gain N4 schedule.</description>
             <function>
                 <table>
                     <independentVar lookup="row">fcs/fly-by-wire/q_c</independentVar>
@@ -265,7 +277,7 @@
         </fcs_function>
 		
 		<summer name="fcs/fly-by-wire/pitch/N7">
-			<description>LJQC: 189675 high alpha pitch rate gain N7.</description>
+			<description>LJQC: AD-A189-675 high alpha pitch rate gain N7.</description>
             <input>fcs/fly-by-wire/pitch/N4</input>
             <clipto>
                 <min>0.14</min>
@@ -376,6 +388,21 @@
                 </table>
             </function>
         </fcs_function>
+
+        <pure_gain name="velocities/p-deg_sec">
+            <input>velocities/p-rad_sec</input>
+            <gain> 57.2957795 </gain>
+        </pure_gain>
+
+        <pure_gain name="velocities/q-deg_sec">
+            <input>velocities/q-rad_sec</input>
+            <gain> 57.2957795 </gain>
+        </pure_gain>
+
+        <pure_gain name="velocities/r-deg_sec">
+            <input>velocities/r-rad_sec</input>
+            <gain> 57.2957795 </gain>
+        </pure_gain>
 
         <fcs_function name="accelerations/a_n">
             <description>
@@ -502,7 +529,7 @@
 
         <fcs_function name="fcs/fly-by-wire/pitch/stick-force-lbf">
             <description>
-                LJQC: Stick cmd gradient according to 189675. Stand true for both Analog and Digital FLCS.
+                LJQC: Stick cmd gradient according to AD-A189-675. Stand true for both Analog and Digital FLCS.
             </description>
             <function>
                 <ifthen>
@@ -527,10 +554,25 @@
             </function>
         </fcs_function>
 
+        <!--second_order_filter name="fcs/fly-by-wire/pitch/stick-force-lbf">
+            <description>
+                This filter should also be on roll and yaw input,
+                according to AD A189 675.
+                But it has quite a large phase delay.
+            </description>
+            <input> fcs/fly-by-wire/pitch/stick-force-lbf-instant </input>
+            <c1> 0 </c1>
+            <c2> 0 </c2>
+            <c3> 33040 </c3>
+            <c4> 1 </c4>
+            <c5> 407 </c5>
+            <c6> 33040 </c6>
+        </second_order_filter-->
+
         <fcs_function name="fcs/fly-by-wire/pitch/command-g">
             <function>
                 <description>
-                    LJQC: Stick cmd gradient according to 189675. Stand true for both Analog and Digital FLCS.
+                    LJQC: Stick cmd gradient according to AD-A189-675. Stand true for both Analog and Digital FLCS.
                 </description>
                 <ifthen>
                     <p>fcs/fly-by-wire/ada189675</p>
@@ -592,7 +634,7 @@
 
         <switch name="fcs/fly-by-wire/pitch/g-limit-clip">
             <description>
-                LJQC: Max g according to 189675.
+                LJQC: Max g according to AD-A189-675.
             </description>
             <default value="8.0"/>
             <test logic="OR" value="8.3">
@@ -714,7 +756,7 @@
 
         <fcs_function name="fcs/fly-by-wire/pitch/control-c/roll-rate-schedule">
             <description>
-                LJQC: Under CAT III it is limited to an output of 2.7, ref 189675.
+                LJQC: Under CAT III it is limited to an output of 2.7, ref AD-A189-675.
             </description>
             <function>
                 <table>
@@ -729,7 +771,7 @@
 
         <summer name="fcs/fly-by-wire/pitch/control-c/roll-rate-schedule-limited">
             <description>
-                LJQC: 189675 variable F. This is later used in yaw axis at rudder authority limiter.
+                LJQC: AD-A189-675 variable F. This is later used in yaw axis at rudder authority limiter.
             </description>
             <input>fcs/fly-by-wire/pitch/control-c/roll-rate-schedule</input>
             <clipto>
@@ -773,7 +815,7 @@
 
         <summer name="fcs/fly-by-wire/pitch/alpha-sum">
             <description>
-                LJQC: According to 189675, alpha-sum only goes into the 20.4 limiter path. It doesn't goes into the 15.0/0.322 path.
+                LJQC: According to AD-A189-675, alpha-sum only goes into the 20.4 limiter path. It doesn't goes into the 15.0/0.322 path.
             </description>
             <input> fcs/fly-by-wire/pitch/a_f </input>
             <input> fcs/fly-by-wire/pitch/control-c/da_p </input>
@@ -845,18 +887,13 @@
             <input> -autoflight/pitch/g-demand-switched </input><!-- autopilot input -->
         </summer>
 
-        <pure_gain name="velocities/q-deg_sec">
-            <input>velocities/q-rad_sec</input>
-            <gain> 57.2957795 </gain>
-        </pure_gain>
-
         <washout_filter name="fcs/fly-by-wire/pitch/q-washout">
           <input> velocities/q-deg_sec </input>
           <c1> 1 </c1>
         </washout_filter>
 
         <pure_gain name="fcs/fly-by-wire/pitch/q-gain-1">
-			<description>LJQC: 055417 gain, not used in 189675.</description>
+			<description>LJQC: 055417 gain, not used in AD-A189-675.</description>
             <input>fcs/fly-by-wire/pitch/q-washout</input>
             <gain> 0.7 </gain>
         </pure_gain>
@@ -999,7 +1036,7 @@
 
         <switch name="fcs/fly-by-wire/pitch/bias-final">
             <description>
-                LJQC: Fixed 15.8 in 189675, unrelated to CAT I/III or landing gains. Cross checked the value with BMS developer mav-jp.
+                LJQC: Fixed 15.8 in AD-A189-675, unrelated to CAT I/III or landing gains. Cross checked the value with BMS developer mav-jp.
             </description>
             <default value="fcs/fly-by-wire/pitch/bias-final-1975"/>
             <test logic="AND" value="15.8">
@@ -1009,7 +1046,7 @@
 
         <switch name="fcs/fly-by-wire/pitch/pitch-rate-alpha-input">
             <description>
-                LJQC: 189675 uses a_f instead of alpha-sum in this path. alpha-sum only used in the 20.4 path.
+                LJQC: AD-A189-675 uses a_f instead of alpha-sum in this path. alpha-sum only used in the 20.4 path.
             </description>
             <default value="fcs/fly-by-wire/pitch/alpha-sum"/>
             <test logic="AND" value="fcs/fly-by-wire/pitch/a_f">
@@ -1318,21 +1355,21 @@
             <gain> fcs/fly-by-wire/pitch/F3 </gain>
         </pure_gain>
 
-        <summer name="fcs/fly-by-wire/pitch/integrator-feedback">
+        <summer name="fcs/fly-by-wire/pitch/integrator-feed-air">
             <input> fcs/fly-by-wire/pitch/main-error-scheduled </input>
-            <input> -fcs/fly-by-wire/pitch/integrator-feedback-gain </input>
+            <input> -fcs/fly-by-wire/pitch/inner-loop-feedback-deadzone </input>
         </summer>
 
-        <switch name="fcs/fly-by-wire/pitch/integrator-feedback-mlg">
-            <default value="fcs/fly-by-wire/pitch/integrator-feedback"/>
-            <test logic="AND" value="fcs/fly-by-wire/pitch/ground-input">
+        <switch name="fcs/fly-by-wire/pitch/integrator-feed">
+            <default value="fcs/fly-by-wire/pitch/integrator-feed-air"/>
+            <test logic="AND" value="fcs/fly-by-wire/pitch/integrator-feed-ground">
                 fcs/fly-by-wire/MLG-GND == 1
             </test>
         </switch>
 
         <summer name="fcs/fly-by-wire/pitch/integrator-pre">
-            <input> fcs/fly-by-wire/pitch/integrator-feedback-mlg </input>
-            <input> -fcs/fly-by-wire/pitch/amplifier </input>
+            <input> fcs/fly-by-wire/pitch/integrator-feed </input>
+            <input> -fcs/fly-by-wire/pitch/amp-gain </input>
             <input> -fcs/fly-by-wire/pitch/int-balance </input>
         </summer>
 
@@ -1350,11 +1387,11 @@
             <c1 type="trap"> 5 </c1>
         </integrator>
 
-        <pure_gain name="fcs/fly-by-wire/pitch/ground-input">
+        <pure_gain name="fcs/fly-by-wire/pitch/integrator-feed-ground">
             <description>
                 Diagram say 0.5, but negative makes more sense.
                 AFSC 32657C diagram says -0.5, so yes indeed.
-                Negative will limit the integrator action when on ground.
+                Negative will more or less bypass the integrator action when on ground.
                 DNU
             </description>
             <input>fcs/fly-by-wire/pitch/integrator</input>
@@ -1362,54 +1399,65 @@
         </pure_gain>
 
         <deadband name="fcs/fly-by-wire/pitch/amp-deadzone">
+            <description>
+                This feedback keeps the integrator inside the +/- 25 limits.
+            </description>
           <input> fcs/fly-by-wire/pitch/integrator </input>
           <width> 50 </width>
         </deadband>
 
-        <pure_gain name="fcs/fly-by-wire/pitch/amplifier">
+        <pure_gain name="fcs/fly-by-wire/pitch/amp-gain">
+            <description>
+                The open loop amplifier gain is currently 2.
+                Diagrams suggest both 2000 and 50 though.
+            </description>
             <input>fcs/fly-by-wire/pitch/amp-deadzone</input>
             <gain> fcs/fly-by-wire/K_A </gain>
         </pure_gain>
 
-        <summer name="fcs/fly-by-wire/pitch/integrator-post">
+        <summer name="fcs/fly-by-wire/pitch/integrator-proportional-mix">
+            <description>
+                Here we mix integrator output with proportional error.
+            </description>
             <input> fcs/fly-by-wire/pitch/integrator </input>
             <input> fcs/fly-by-wire/pitch/main-error-scheduled </input>
         </summer>
 
-        <pure_gain name="fcs/fly-by-wire/pitch/integrator-selftest">
-            <input>fcs/fly-by-wire/pitch/integrator-post</input>
-            <gain> fcs/fly-by-wire/integrator-selftest-value </gain>
+        <pure_gain name="fcs/fly-by-wire/pitch/selector">
+            <description>
+                This is the mixer for the 4 FCS ABCD
+                Not implemented.
+            </description>
+            <input>fcs/fly-by-wire/pitch/integrator-proportional-mix</input>
+            <gain> 1 </gain>
         </pure_gain>
 
         <summer name="fcs/fly-by-wire/pitch/int-balance-summer">
             <description></description>
-            <input> fcs/fly-by-wire/pitch/integrator-post </input>
-            <input> -fcs/fly-by-wire/pitch/integrator-selftest </input>
+            <input> fcs/fly-by-wire/pitch/integrator-proportional-mix </input>
+            <input> -fcs/fly-by-wire/pitch/selector </input>
         </summer>
 
         <pure_gain name="fcs/fly-by-wire/pitch/int-balance">
+            <description>
+                This is meant to counter drift of the integrator.
+            </description>
             <input>fcs/fly-by-wire/pitch/int-balance-summer</input>
             <gain> 0.5 </gain>
         </pure_gain>
 
-        <!--<summer name="fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int-sum-sum">
-            <input> fcs/fly-by-wire/pitch/integrator-post </input>
-            <input> fcs/fly-by-wire/pitch/alpha-feedback </input>
-        </summer>-->
-
-        <deadband name="fcs/fly-by-wire/pitch/integrator-feedback-deadzone">
+        <deadband name="fcs/fly-by-wire/pitch/inner-loop-feedback-deadzone">
             <description>
-                         It deceptionally looks like 23 on diagram.
-                         But it +-25 since that the actuatorlimit.
+                It deceptionally looks like 23 on diagram.
+                But its +-25 since that the actuatorlimit.
+
+                When airborne, this will keep the inner loop output
+                within +/-25.
             </description>
             <input> fcs/fly-by-wire/pitch/integrator-almost-final </input>
+            <gain> 5.0 </gain>
             <width> 50 </width>
         </deadband>
-
-        <pure_gain name="fcs/fly-by-wire/pitch/integrator-feedback-gain">
-            <input>fcs/fly-by-wire/pitch/integrator-feedback-deadzone</input>
-            <gain> 5 </gain>
-        </pure_gain>
 
         <pure_gain name="fcs/fly-by-wire/pitch/alpha-feedback">
             <description>
@@ -1421,13 +1469,13 @@
         </pure_gain>
 
         <summer name="fcs/fly-by-wire/pitch/integrator-almost-final">
-            <input> fcs/fly-by-wire/pitch/integrator-post </input>
+            <input> fcs/fly-by-wire/pitch/integrator-proportional-mix </input>
             <input> fcs/fly-by-wire/pitch/alpha-feedback </input>
         </summer>
 
         <summer name="fcs/fly-by-wire/pitch/integrator-final">
             <input> fcs/fly-by-wire/pitch/alpha-feedback </input>
-            <input> fcs/fly-by-wire/pitch/integrator-selftest </input>
+            <input> fcs/fly-by-wire/pitch/selector </input>
         </summer>
 
         <switch name="fcs/fly-by-wire/pitch/integrator-final-elec">
@@ -1538,7 +1586,7 @@
 
         <!--<second_order_filter name="fcs/fly-by-wire/pitch/right-servo">
             <description>
-                Ref.: TN D-8176
+                Ref.: TN-D-8176
                 Servodynamics
                 Damping (zeta) is 0.7 [underdamped]
                 Natural freq. (omega) is 52 rad/s
@@ -1769,8 +1817,8 @@
                 The -1 factor was removed since it was wrong. When more than
                 5 deg nosedown elev is commanded this comes into effect.
 
-                LJQC: 4.2 deg in 189675.
-                Niko: Was -5.0 instead in 1975.
+                LJQC: 4.2 deg in AD-A189-675.
+                Niko:-5.0 deg in AD-A055-417.
             </description>
             <function>
                 <product>
@@ -1823,7 +1871,7 @@
                         <table>
                             <independentVar lookup="row">fcs/fly-by-wire/pitch/control-c/roll-rate-abs</independentVar>
                             <tableData>
-                                30 1 <!-- changed to 1 due to FG pilots use stick not pressure sticks. not exist in 189675. -->
+                                30 1 <!-- changed to 1 due to FG pilots use stick not pressure sticks. not exist in AD-A189-675. -->
                                 50 1
                             </tableData>
                         </table>
@@ -1850,7 +1898,7 @@
             <description>
                 GR1F-16CJ-1 page 120
                 DBU - Maximum roll rate command is a constant 167 degrees per second.
-                LJQC: According to 189675, 167deg/s is a direct overriding limit by roll rate command limiter, instead of applying a 0.542208 gain.
+                LJQC: According to AD-A189-675, 167deg/s is a direct overriding limit by roll rate command limiter, instead of applying a 0.542208 gain.
             </description>
             <default value="308"/>
             <test logic="OR" value="167">
@@ -1996,11 +2044,6 @@
             <gain> 1.67 </gain>
         </pure_gain>
 
-        <pure_gain name="velocities/p-deg_sec">
-            <input>velocities/p-rad_sec</input>
-            <gain> 57.2957795 </gain>
-        </pure_gain>
-
         <second_order_filter name="fcs/fly-by-wire/roll/lead-exit">
             <description>
                 Exit B in diagram.
@@ -2035,7 +2078,7 @@
                 Is +8.34 in diagram, but must be negative to really work as flat spin protection.
                 And for slow flat spins it was way too small.
 
-                LJQC: 1.0 in 189675 (=8.34*0.12). So seems correct.
+                LJQC: 1.0 in AD-A189-675 (=8.34*0.12). So seems correct.
             </description>
             <input> velocities/r-deg_sec </input>
             <gain> -8.34 </gain>
@@ -2059,7 +2102,9 @@
         </switch>
 
         <scheduled_gain name="fcs/fly-by-wire/roll/final">
-            <description>TN-20D-8176 page 150</description>
+            <description>
+                TN-D-8176 page 150
+            </description>
             <input>fcs/fly-by-wire/roll/switch-elec</input>
             <table>
                 <independentVar lookup="row">fcs/fly-by-wire/q_c_Nsqm</independentVar>
@@ -2519,7 +2564,7 @@
                 TODO: Consider using aero/alpha-deg here instead of a_f.
                       TP-1538 does say it uses alpha indicated directly.
 
-                LJQC: 189675 uses a_f + variable-F * 4.0.
+                LJQC: AD-A189-675 uses a_f + variable-F * 4.0.
             </description>
             <function>
                 <product>
@@ -2555,10 +2600,10 @@
 
         <fcs_function name="fcs/fly-by-wire/yaw/control-c/command-schedule">
             <description>
-                LJQC: In 189675, it is the variable F (fcs/fly-by-wire/pitch/roll-rate-schedule-limited)
+                LJQC: In AD-A189-675, it is the variable F (fcs/fly-by-wire/pitch/roll-rate-schedule-limited)
                 multiplied by 4.0 that is added to the rudder authority limiter.
 
-                This schedule not used in 189675.
+                This schedule not used in AD-A189-675.
 
                 Niko: Reverted the values and instead bypassed this component.
             </description>
@@ -2602,11 +2647,6 @@
         <pure_gain name="fcs/fly-by-wire/yaw/g-gain">
             <input>accelerations/a_y</input>
             <gain> 19.32 </gain>
-        </pure_gain>
-
-        <pure_gain name="velocities/r-deg_sec">
-            <input>velocities/r-rad_sec</input>
-            <gain> 57.2957795 </gain>
         </pure_gain>
 
         <pure_gain name="fcs/fly-by-wire/yaw/cross-gain">
@@ -2655,7 +2695,7 @@
                 Is +0.75 in diagram.
                 TODO: check the validity
 
-                LJQC: +0.75 valid in 189675. Rudder against the yaw.
+                LJQC: +0.75 valid in AD-A189-675. Rudder against the yaw.
             </description>
             <input> velocities/r-deg_sec </input>
             <gain>  0.75 </gain>
@@ -2905,9 +2945,9 @@
 
     <channel execrate="1" name="Leading edge flaps">
 
-        <!-- TN D-8176 has an alternative LEF schedule, consider trying it, even though it older than TP-1538,
+        <!-- TN-D-8176 has an alternative LEF schedule, consider trying it, even though it older than TP-1538,
              simply cause TP-1538 is a simplified schedule.
-             ADA189675 has the real schedule, but its unreadable, sadly. -->
+             AD-A189-675 has the real schedule, but its unreadable, sadly. -->
 
         <lead_lag_filter name="fcs/fly-by-wire/lef/lead-lag">
           <input> aero/alpha-deg </input>
@@ -3422,7 +3462,7 @@
    </switch>
 
    <switch name="fcs/gear-wow-cmd-norm">
-        <!-- prevent gear up command while wheels on ground. Block 50 manual page 1-70 -->
+        <!-- prevent gear up command while wheels on ground. T.O.GR1F-16CJ-1 page 1-70 -->
       <default value="gear/gear-cmd-norm"/>
       <test  logic="OR" value="1">
         fcs/gear-wow == 1

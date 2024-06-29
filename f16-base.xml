@@ -925,7 +925,6 @@
                     <K_A type="double">2</K_A><!-- AFSC 32657C say 50, but that give instability. Another paper said 2000. -->
                     <q_c type="double">0</q_c>
 
-                    <integrator-selftest-value type="double">1</integrator-selftest-value>
                     <enable-standby-gains type="bool">false</enable-standby-gains>
                     <enable-ari type="bool">true</enable-ari>
                     <enable-cat-III type="bool">false</enable-cat-III>
