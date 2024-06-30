@@ -2044,11 +2044,12 @@
             <gain> 1.67 </gain>
         </pure_gain>
 
-        <second_order_filter name="fcs/fly-by-wire/roll/lead-exit">
+        <second_order_filter name="fcs/fly-by-wire/roll/roll-rate-filtered">
             <description>
                 Exit B in diagram.
 
                 Bandstop 8 Hz, 2 poles, 2 zeros.
+                AD-A055-417
             </description>
             <input> velocities/p-deg_sec </input>
             <c1> 1 </c1>
@@ -2059,10 +2060,29 @@
             <c6> 3025 </c6>
         </second_order_filter>
 
+        <!--second_order_filter name="fcs/fly-by-wire/roll/roll-rate-filtered">
+            <description>
+                Exit B in diagram.
+
+                Bandstop 8 Hz, 2 poles, 2 zeros.
+
+                Bandstop freq. changed to 11.6 Hz
+                TP 2857
+            </description>
+            <input> velocities/p-deg_sec </input>
+            <c1> 0.8563 </c1>
+            <c2> 0 </c2>
+            <c3> 4590 </c3>
+            <c4> 1 </c4>
+            <c5> 135.5 </c5>
+            <c6> 4590 </c6>
+        </second_order_filter-->
+
         <second_order_filter name="fcs/fly-by-wire/roll/roll-filter">
             <description>
                 Bandstop/highpass filter 6.35 Hz.
                 2 poles, 2 zeros
+                AD-A055-417
             </description>
           <input> velocities/p-deg_sec </input>
           <c1> 4 </c1>
@@ -2072,6 +2092,22 @@
           <c5> 80 </c5>
           <c6> 6400 </c6>
         </second_order_filter>
+
+        <!--second_order_filter name="fcs/fly-by-wire/roll/roll-filter">
+            <description>
+                Bandstop/highpass filter 6.35 Hz.
+                2 poles, 2 zeros
+                Higher magnitude response at high freq.
+                TP-2857
+            </description>
+          <input> velocities/p-deg_sec </input>
+          <c1> 4.867 </c1>
+          <c2> 85.5 </c2>
+          <c3> 8274 </c3>
+          <c4> 1 </c4>
+          <c5> 106.8 </c5>
+          <c6> 8274 </c6>
+        </second_order_filter-->
 
         <pure_gain name="fcs/fly-by-wire/roll/yaw-rate-input">
             <description>
@@ -2650,7 +2686,7 @@
         </pure_gain>
 
         <pure_gain name="fcs/fly-by-wire/yaw/cross-gain">
-            <input>fcs/fly-by-wire/roll/lead-exit</input>
+            <input>fcs/fly-by-wire/roll/roll-rate-filtered</input>
             <gain> 0.01745 </gain><!-- deg/sec to rad/sec -->
         </pure_gain>
 
@@ -2726,6 +2762,7 @@
         <second_order_filter name="fcs/fly-by-wire/yaw/struct-filter">
             <description>
                 Bandstop 5.6 Hz. 2 poles, 2 zeros.
+                AD-A055-417
             </description>
           <input> fcs/fly-by-wire/yaw/rudder-sum-elec </input>
           <c1> 1 </c1>
@@ -2735,6 +2772,21 @@
           <c5> 70 </c5>
           <c6> 1225 </c6>
         </second_order_filter>
+
+        <!--second_order_filter name="fcs/fly-by-wire/yaw/struct-filter">
+            <description>
+                Bandstop 5.6 Hz. 2 poles, 2 zeros.
+                Softer response.
+                TP-2857
+            </description>
+          <input> fcs/fly-by-wire/yaw/rudder-sum-elec </input>
+          <c1> 0.9630 </c1>
+          <c2> 18.867 </c2>
+          <c3> 955.8 </c3>
+          <c4> 1 </c4>
+          <c5> 61.83 </c5>
+          <c6> 955.8 </c6>
+        </second_order_filter-->
 
         <!--<second_order_filter name="fcs/fly-by-wire/yaw/servodynamics">
             <description>
