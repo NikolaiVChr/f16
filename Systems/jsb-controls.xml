@@ -2309,7 +2309,7 @@
             <c1> 20 </c1>
         </lag_filter>
 
-        <summer name="fcs/fly-by-wire/roll/mech-left-right">
+        <summer name="fcs/fly-by-wire/roll/mech-bias-left">
             <input> fcs/fly-by-wire/roll/flaperon-left-lag </input>
             <bias> -1.5 </bias>
         </summer>
