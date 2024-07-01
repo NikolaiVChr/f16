@@ -2240,14 +2240,10 @@
             <c1> 20 </c1>
         </lag_filter>
 
-        <fcs_function name="fcs/fly-by-wire/roll/mech-bias-right">
-            <function>
-                <sum>
-                    <property> fcs/fly-by-wire/roll/flaperon-right-lag </property>
-                    <value> -1.5 </value>
-                </sum>
-            </function>
-        </fcs_function>
+        <summer name="fcs/fly-by-wire/roll/mech-bias-right">
+            <input> fcs/fly-by-wire/roll/flaperon-right-lag </input>
+            <bias> -1.5 </bias>
+        </summer>
 
         <switch name="fcs/fly-by-wire/roll/mech-bias-hyd-right">
           <default value="0"/>
@@ -2313,14 +2309,10 @@
             <c1> 20 </c1>
         </lag_filter>
 
-        <fcs_function name="fcs/fly-by-wire/roll/mech-bias-left">
-            <function>
-                <sum>
-                    <property> fcs/fly-by-wire/roll/flaperon-left-lag </property>
-                    <value> -1.5 </value>
-                </sum>
-            </function>
-        </fcs_function>
+        <summer name="fcs/fly-by-wire/roll/mech-left-right">
+            <input> fcs/fly-by-wire/roll/flaperon-left-lag </input>
+            <bias> -1.5 </bias>
+        </summer>
 
          <switch name="fcs/fly-by-wire/roll/mech-bias-hyd-left">
           <default value="0"/>
@@ -3711,16 +3703,20 @@
 
   </channel>
 
-  <!--<channel name="Gun">
-    <switch name="fcs/guntrigger">
-    <default value="0"/>
-    <test logic="AND" value="1">
-         /controls/armament/trigger eq 1
-         systems/hydraulics/sysb-psi ge 2000
-    </test>
-    </switch>
-  </channel>-->
 
 
+    <!--angle name="myName" unit="DEG">
+        <source_angle unit="RAD"> property_name </source_angle>
+        <target_angle unit="RAD"> property_name </target_angle>
+        
+        common:
+        <init> 60 </init>
+        <delay type="time"> 0 </delay> choose one
+        <delay type="frames"> 0 </delay>
+        <clipto type="cyclic">
+            <min> 0 </min>
+            <max> 360 </max>
+        </clipto>
+    </angle-->
 
  </flight_control>
