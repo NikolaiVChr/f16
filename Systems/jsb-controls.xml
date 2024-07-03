@@ -695,13 +695,14 @@
 
         <switch name="fcs/fly-by-wire/pitch/negative-g-limit-final">
             <description>
-                The second test is for MPO switch enabled.
-                Source: The Israeli document.
+                Source of -10: ICAS-90-5.10.2
             </description>
             <default value="fcs/fly-by-wire/pitch/F1"/>
+            <test logic="OR" value="-10.86">
+                fcs/fbw-override == 1
+            </test>
             <test logic="OR" value="-4">
                 fcs/fly-by-wire/condition-a == 1
-                fcs/fbw-override == 1
             </test>
         </switch>
 
