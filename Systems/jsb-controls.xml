@@ -319,6 +319,21 @@
             </function>
         </fcs_function>
 
+        <fcs_function name="fcs/fly-by-wire/pitch/N14">
+            <description>
+                AD-A189-675 pitch command lag schedule.
+            </description>
+            <function>
+                <table>
+                    <independentVar lookup="row">fcs/fly-by-wire/q_c</independentVar>
+                    <tableData>
+                         260 8.3
+                        1400 6.0
+                    </tableData>
+                </table>
+            </function>
+        </fcs_function>
+
         <fcs_function name="fcs/fly-by-wire/pitch/F3-loop-alt">
             <description>
                 TP-1538: pitch loop gain schedule.
@@ -706,7 +721,7 @@
 
         <lag_filter name="fcs/fly-by-wire/pitch/command-final">
             <input> fcs/fly-by-wire/pitch/g-limit-gain </input>
-            <c1> 8.3 </c1>
+            <c1> fcs/fly-by-wire/pitch/N14 </c1>
         </lag_filter>
 
         <switch name="fcs/fly-by-wire/pitch/alpha-indicated">
