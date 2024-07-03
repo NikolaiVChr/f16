@@ -232,7 +232,11 @@
         </fcs_function>
 
         <fcs_function name="fcs/fly-by-wire/pitch/F3">
-            <description>Pitch rate gain and pitch loop gain schedule.</description>
+            <description>
+                Pitch rate gain and pitch loop gain schedule.
+
+                AD-A033-969 has a slightly different schedule.
+            </description>
             <function>
                 <table>
                     <independentVar lookup="row">fcs/fly-by-wire/q_c</independentVar>
@@ -284,6 +288,36 @@
                 <max>0.7</max>
             </clipto>
         </summer>
+
+        <fcs_function name="fcs/fly-by-wire/pitch/N8">
+            <description>
+                AD-A189-675 pitch lead lag network schedule.
+            </description>
+            <function>
+                <difference>
+                    <table name="N8a">
+                        <independentVar lookup="row">fcs/fly-by-wire/q_c</independentVar>
+                        <independentVar lookup="column">fcs/fly-by-wire/pitch/enable-cat-III</independentVar>
+                        <tableData>
+                                   0    1
+                               0  7.4  7.4
+                             611 14.9 14.9
+                             897 16.2 16.2
+                            1086 17.0 16.2
+                            1403 21.1 16.2
+                            1616 21.1 16.2
+                        </tableData>
+                    </table>
+                    <table name="N8b">
+                        <independentVar lookup="row">fcs/fly-by-wire/qcps-ratio</independentVar>
+                        <tableData>
+                            0.9   0
+                            1.4   4
+                        </tableData>
+                    </table>
+                </difference>
+            </function>
+        </fcs_function>
 
         <fcs_function name="fcs/fly-by-wire/pitch/F3-loop-alt">
             <description>
@@ -950,7 +984,6 @@
 
         <lag_filter name="fcs/fly-by-wire/pitch/bias-top-lag">
             <description>
-                DNU
             </description>
             <input> fcs/fly-by-wire/pitch/bias-top </input>
             <c1> 10 </c1>
@@ -963,8 +996,6 @@
                 In order not to try and keep 6 deg AoA right
                 after takeoff I have increased the time
                 it takes to grow to 6 after takeoff. ~Nikolai
-
-                DNU
             </description>
             <input> fcs/fly-by-wire/pitch/bias-top </input>
             <rate_limit sense="incr"> 0.01 </rate_limit>
@@ -978,7 +1009,6 @@
             <description>
                 Diagram say 0.125, but that takes 30 seconds to change.
                 So 1.25 now, thats about 5 seconds.
-                DNU
             </description>
             <input> fcs/fly-by-wire/pitch/bias-bottom </input>
             <c1> 0.125 </c1>
@@ -1001,8 +1031,6 @@
                 from take-off.
 
                 In diagram this is 0.125 lag filter. ~Nikolai
-
-                DNU
             </description>
           <input> fcs/fly-by-wire/pitch/bias-bottom </input>
           <rate_limit sense="incr"> fcs/fly-by-wire/pitch/actuator-incr </rate_limit>
@@ -1089,8 +1117,6 @@
 
         <switch name="fcs/fly-by-wire/pitch/pitch-rate-lower-switch">
             <description>
-                DNU
-
                 It makes negative pitch rate (washed out) plus alpha (minus a bias)
                 give zero input on FBW when gear is up. And full influence with gear down.
 
@@ -1113,7 +1139,6 @@
         <!--lag_filter name="fcs/fly-by-wire/pitch/pitch-rate-lower-lag">
             <description>
                 Diagram say 0.125, but that does a pitch up for too long after takeoff
-                DNU
             </description>
             <input> fcs/fly-by-wire/pitch/pitch-rate-lower-switch </input>
             <c1> 1.25 </c1>
@@ -1126,8 +1151,6 @@
                 from take-off.
 
                 In diagram this is 0.125 lag filter. ~Nikolai
-
-                DNU
             </description>
           <input> fcs/fly-by-wire/pitch/pitch-rate-lower-switch </input>
           <rate_limit sense="incr"> 0.04 </rate_limit>
@@ -1283,35 +1306,40 @@
             </test>
         </switch>
 
-        <lead_lag_filter name="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lead-lagged">
+        <lead_lag_filter name="fcs/fly-by-wire/pitch/sensor-input-mix-1">
+            <description>
+                The N8 schedule comes from AD-A189-675.
+                Since using N8, the old next structural bandstop filter is bypassed,
+                mainly due to typo in the numbers on the AD-A055-417 diagram,
+                but also because more recent diagrams don't seem to have it.
+            </description>
             <input> fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lag-switch </input>
             <c1> 3 </c1>
-            <c2> 12 </c2>
+            <c2> fcs/fly-by-wire/pitch/N8 </c2>
             <c3> 1 </c3>
-            <c4> 12 </c4>
+            <c4> fcs/fly-by-wire/pitch/N8 </c4>
         </lead_lag_filter>
 
-        <second_order_filter name="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-demand">
+        <!--second_order_filter name="fcs/fly-by-wire/pitch/sensor-input-mix-2">
             <description>
-                On old diagram looks to be 25
+                On old diagram c1 looks to be 25
                 But that filter don't make sense.
-                replaced with one that has 2 poles and 2 zeros and very damped and stable.
+                replaced with c1=1 that has 2 poles and 2 zeros and very damped and stable.
                 It is a bandstop filter for approx 4.75 to 19.08 Hz band.
                 Above the band it has lead phase, and below it has lag phase.
-                DNU
             </description>
-            <input> fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lead-lagged </input>
+            <input> fcs/fly-by-wire/pitch/sensor-input-mix-1 </input>
             <c1>  1 </c1>
             <c2> 20 </c2>
             <c3> 3500 </c3>
             <c4> 1 </c4>
             <c5> 40 </c5>
             <c6> 3500 </c6>
-        </second_order_filter>
+        </second_order_filter-->
 
         <summer name="fcs/fly-by-wire/pitch/error">
             <input> fcs/fly-by-wire/pitch/command-neutralized-by-high-alpha </input>
-            <input> fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-demand </input>
+            <input> fcs/fly-by-wire/pitch/sensor-input-mix-1 </input>
         </summer>
 
     </channel>
@@ -1392,7 +1420,6 @@
                 Diagram say 0.5, but negative makes more sense.
                 AFSC 32657C diagram says -0.5, so yes indeed.
                 Negative will more or less bypass the integrator action when on ground.
-                DNU
             </description>
             <input>fcs/fly-by-wire/pitch/integrator</input>
             <gain> -0.5 </gain>
