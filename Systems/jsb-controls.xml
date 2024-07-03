@@ -82,6 +82,9 @@
                 /systems/refuel/serviceable == 1
                 fcs/fly-by-wire/q_c lt 646
             </test>
+            <!-- Note 1 in AD-A189-675 is
+                 similar to Condition A in AD-A055-417 -->
+            <output>fcs/fly-by-wire/Note-1</output>
         </switch>
 
         <switch name="fcs/fly-by-wire/condition-b">
@@ -266,17 +269,38 @@
         </fcs_function>
 		
 		<fcs_function name="fcs/fly-by-wire/pitch/N4">
-            <description>LJQC: AD-A189-675 low alpha pitch rate gain N4 schedule.</description>
+            <description>
+                LJQC: AD-A189-675 low alpha pitch rate gain N4 schedule.
+
+                Niko notes:
+                    Low Alpha Bias Path
+
+                    N4 = N4a - N4b
+
+                    if Note 1
+                    then N4b = 0.0
+                    else N4b = 0.07
+
+                    Standby gain of N4: 0.630
+            </description>
             <function>
-                <table>
-                    <independentVar lookup="row">fcs/fly-by-wire/q_c</independentVar>
-                    <tableData>
-                        0.0 0.7
-                        100 0.7
-                        220 0.25
-                        400 0.0
-                    </tableData>
-                </table>
+                <difference>
+                    <table name="N4a">
+                        <independentVar lookup="row">fcs/fly-by-wire/q_c</independentVar>
+                        <tableData>
+                            0.0 0.7
+                            100 0.7
+                            220 0.25
+                            400 0.0
+                        </tableData>
+                    </table>
+                    <ifthen>
+                        <!-- N4b -->
+                        <p>fcs/fly-by-wire/Note-1</p>
+                        <v>0.0</v>
+                        <v>0.07</v>
+                    </ifthen>
+                </difference>
             </function>
         </fcs_function>
 		
@@ -942,7 +966,7 @@
         </washout_filter>
 
         <pure_gain name="fcs/fly-by-wire/pitch/q-gain-1">
-			<description>LJQC: 055417 gain, not used in AD-A189-675.</description>
+			<description>LJQC: AD-A055-417 gain, not used in AD-A189-675.</description>
             <input>fcs/fly-by-wire/pitch/q-washout</input>
             <gain> 0.7 </gain>
         </pure_gain>
