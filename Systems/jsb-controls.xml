@@ -946,7 +946,12 @@
         </fcs_function>
 
         <pure_gain name="fcs/fly-by-wire/pitch/high-alpha-cmd-neutralizer">
-            <description></description>
+            <description>
+                On AD-A189-675, this is the alpha output below the other one, the one
+                that continue upwards.
+                There is no 0.5 gain on the diagram there, but its needed to
+                scale to AD-A055-417 signal strengths.
+            </description>
             <input>fcs/fly-by-wire/pitch/alpha-indicated-sum</input>
             <gain> 0.5 </gain>
             <clipto>
@@ -956,6 +961,7 @@
         </pure_gain>
 
         <summer name="fcs/fly-by-wire/pitch/command-neutralized-by-high-alpha">
+            <description></description>
             <input> -fcs/fly-by-wire/pitch/command-final </input>
             <input> fcs/fly-by-wire/pitch/high-alpha-cmd-neutralizer </input>
             <input> -autoflight/pitch/g-demand-switched </input><!-- autopilot input -->
@@ -1133,6 +1139,13 @@
         </summer>
 
         <pure_gain name="fcs/fly-by-wire/pitch/pitch-rate-gain-sum-gain">
+            <description>
+                On AD-A189-675, this is the alpha output above the other one, the one
+                that continue downwards.
+                Here however, it does not go down to sum with normal path,
+                instead the normal path goes up and get summed to end up
+                in the sensor-input-mix.
+            </description>
             <input>fcs/fly-by-wire/pitch/pitch-rate-gain-sum</input>
             <gain> 0.161 </gain>
         </pure_gain>
@@ -1289,6 +1302,11 @@
         </pure_gain>
 
         <summer name="fcs/fly-by-wire/pitch/normal-gain-path-1987">
+            <description>
+                Note. This does not get pitch-rate-gain-sum-gain added,
+                as in AD-A189-675. Instead this entire path, gets summed
+                into what becomes sensor-input-mix.
+            </description>
             <input>fcs/fly-by-wire/pitch/q-washout-gained-1987 </input>
             <input> fcs/fly-by-wire/pitch/normal-1-gain-half </input>
         </summer>
@@ -1320,11 +1338,15 @@
         </switch>
 
         <summer name="fcs/fly-by-wire/pitch/n-and-pitch-rate-combined">
+            <description>
+            </description>
             <input> fcs/fly-by-wire/pitch/normal-gain-path </input>
             <input> fcs/fly-by-wire/pitch/pitch-rate-gain-path </input>
         </summer>
 
         <summer name="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-combined">
+            <description>
+            </description>
             <input> fcs/fly-by-wire/pitch/pitch-rate-upper </input>
             <input> fcs/fly-by-wire/pitch/pitch-rate-lower-gain </input>
             <input> fcs/fly-by-wire/pitch/n-and-pitch-rate-combined </input>
