@@ -857,7 +857,7 @@
         <switch name="fcs/fly-by-wire/control-c-actual">
             <description>
                 GR1F-16CJ-1 page 120
-                DBU - There is no roll rate input to the AOA limiter.
+                There is no roll rate input to the AOA limiter.
             </description>
             <default value="fcs/fly-by-wire/enable-control-c"/>
             <test value="0">
@@ -867,13 +867,16 @@
 
         <pure_gain name="fcs/fly-by-wire/pitch/control-c/da_p">
             <description>
-                I just named this control-c since it uses the
+                Named control-c since it uses the
                 same enable switch, its really control-b.
 
                 da_p is factored in 3 places in pitch system.
                       Purpose is to reduce inertia-coupling pitch-out departures
                       when rolling at high angle of attack.
                       its not used in yaw, ari or roll.
+
+                      It essentially increase alpha in the high-alpha limiter
+                      so it starts pitch limiting earlier at high roll rates.
             </description>
             <input> fcs/fly-by-wire/pitch/control-c/roll-rate-schedule-limited </input>
             <gain> fcs/fly-by-wire/control-c-actual </gain>
@@ -887,15 +890,15 @@
             <c1> 10 </c1>
         </lag_filter>
 
-        <summer name="fcs/fly-by-wire/pitch/alpha-sum">
+        <summer name="fcs/fly-by-wire/pitch/a_f-antideparture">
             <description>
-                LJQC: According to AD-A189-675, alpha-sum only goes into the 20.4 limiter path. It doesn't goes into the 15.0/0.322 path.
+                LJQC: According to AD-A189-675, a_f-antideparture only goes into the 20.4 limiter path. It doesn't goes into the 15.0/0.322 path.
             </description>
             <input> fcs/fly-by-wire/pitch/a_f </input>
             <input> fcs/fly-by-wire/pitch/control-c/da_p </input>
         </summer>
 
-        <switch name="fcs/fly-by-wire/pitch/alpha-indicated-mpo">
+        <switch name="fcs/fly-by-wire/pitch/a_f-mpo-antideparture">
             <description>
                 The test is for MPO switch enabled.
                 Source: The Israeli document.
@@ -903,7 +906,7 @@
                 Since this is part of pitch limiter scheme it
                 uses alpha-sum instead of a_f.
             </description>
-            <default value="fcs/fly-by-wire/pitch/alpha-sum"/>
+            <default value="fcs/fly-by-wire/pitch/a_f-antideparture"/>
             <test logic="AND" value="0"><!-- consider to lag this 0 -->
                 fcs/fbw-override == 1
                 aero/alpha-deg   gt 29
@@ -913,7 +916,7 @@
         <switch name="fcs/fly-by-wire/pitch/enable-cat-III">
             <description>
                 GR1F-16CJ-1 page 120
-                DBU - Stick commands are essentially CAT III limited.
+                Stick commands are essentially CAT III limited.
             </description>
             <default value="fcs/fly-by-wire/enable-cat-III"/>
             <test value="1">
@@ -935,10 +938,10 @@
             </function>
         </fcs_function>
 
-        <fcs_function name="fcs/fly-by-wire/pitch/alpha-indicated-sum">
+        <fcs_function name="fcs/fly-by-wire/pitch/high-alpha-sum">
             <function>
                 <sum>
-                    <property> fcs/fly-by-wire/pitch/alpha-indicated-mpo </property>
+                    <property> fcs/fly-by-wire/pitch/a_f-mpo-antideparture </property>
                     <p> fcs/fly-by-wire/pitch/alpha-reduction </p>
                     <property> fcs/fly-by-wire/pitch/pitch-rate-gain-high-alpha</property>
                 </sum>
@@ -952,7 +955,7 @@
                 There is no 0.5 gain on the diagram there, but its needed to
                 scale to AD-A055-417 signal strengths.
             </description>
-            <input>fcs/fly-by-wire/pitch/alpha-indicated-sum</input>
+            <input>fcs/fly-by-wire/pitch/high-alpha-sum</input>
             <gain> 0.5 </gain>
             <clipto>
                 <min> 0 </min>
@@ -1120,9 +1123,14 @@
 
         <switch name="fcs/fly-by-wire/pitch/pitch-rate-alpha-input">
             <description>
-                LJQC: AD-A189-675 uses a_f instead of alpha-sum in this path. alpha-sum only used in the 20.4 path.
+                LJQC: AD-A189-675 uses a_f instead of a_f-antideparture in this path. a_f-antideparture only used in the 20.4 path.
+
+                Niko: AD-A189-675 doesn't have the anti-departure alpha at all,
+                      so that does not make so much sense.
+                      It does also not have MPO switch. So even its 'full' diagram is
+                      simplified.
             </description>
-            <default value="fcs/fly-by-wire/pitch/alpha-sum"/>
+            <default value="fcs/fly-by-wire/pitch/a_f-antideparture"/>
             <test logic="AND" value="fcs/fly-by-wire/pitch/a_f">
                 fcs/fly-by-wire/ada189675 == 1
             </test>
@@ -1130,8 +1138,8 @@
 
         <summer name="fcs/fly-by-wire/pitch/pitch-rate-gain-sum">
             <description>
-                         Since this is part of pitch limiter scheme it
-                         uses alpha-sum instead of a_f.
+                Since this is part of pitch limiter scheme it
+                uses a_f-antideparture instead of a_f.
             </description>
             <input>fcs/fly-by-wire/pitch/pitch-rate-alpha-input</input>
             <input> fcs/fly-by-wire/pitch/pitch-rate-gain-low-alpha</input>
@@ -1344,7 +1352,7 @@
             <input> fcs/fly-by-wire/pitch/pitch-rate-gain-path </input>
         </summer>
 
-        <summer name="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-combined">
+        <summer name="fcs/fly-by-wire/pitch/sensor-mix">
             <description>
             </description>
             <input> fcs/fly-by-wire/pitch/pitch-rate-upper </input>
@@ -1352,30 +1360,30 @@
             <input> fcs/fly-by-wire/pitch/n-and-pitch-rate-combined </input>
         </summer>
 
-        <lag_filter name="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lagged">
+        <lag_filter name="fcs/fly-by-wire/pitch/sensor-mix-lagged">
             <description>
                 LJQC: Additional lag filter when MLG WOW
             </description>
-            <input> fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-combined </input>
+            <input> fcs/fly-by-wire/pitch/sensor-mix </input>
             <c1> 17.2 </c1>
         </lag_filter>
 
-        <switch name="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lag-switch">
-            <default value="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-combined"/>
-            <test logic="AND" value="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lagged">
+        <switch name="fcs/fly-by-wire/pitch/sensor-mix-semifinal">
+            <default value="fcs/fly-by-wire/pitch/sensor-mix"/>
+            <test logic="AND" value="fcs/fly-by-wire/pitch/sensor-mix-lagged">
                 fcs/fly-by-wire/MLG-GND == 1
                 fcs/fly-by-wire/ada189675 == 1
             </test>
         </switch>
 
-        <lead_lag_filter name="fcs/fly-by-wire/pitch/sensor-input-mix-1">
+        <lead_lag_filter name="fcs/fly-by-wire/pitch/sensor-mix-final">
             <description>
                 The N8 schedule comes from AD-A189-675.
                 Since using N8, the old next structural bandstop filter is bypassed,
                 mainly due to typo in the numbers on the AD-A055-417 diagram,
                 but also because more recent diagrams don't seem to have it.
             </description>
-            <input> fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lag-switch </input>
+            <input> fcs/fly-by-wire/pitch/sensor-mix-semifinal </input>
             <c1> 3 </c1>
             <c2> fcs/fly-by-wire/pitch/N8 </c2>
             <c3> 1 </c3>
@@ -1390,7 +1398,7 @@
                 It is a bandstop filter for approx 4.75 to 19.08 Hz band.
                 Above the band it has lead phase, and below it has lag phase.
             </description>
-            <input> fcs/fly-by-wire/pitch/sensor-input-mix-1 </input>
+            <input> fcs/fly-by-wire/pitch/sensor-mix-final </input>
             <c1>  1 </c1>
             <c2> 20 </c2>
             <c3> 3500 </c3>
@@ -1399,9 +1407,18 @@
             <c6> 3500 </c6>
         </second_order_filter-->
 
+        <pure_gain name="fcs/fly-by-wire/pitch/alpha-feedback">
+            <description>
+                         Since this is part of pitch limiter scheme it
+                         uses a_f-antideparture instead of a_f.
+            </description>
+            <input>fcs/fly-by-wire/pitch/a_f-mpo-antideparture</input>
+            <gain> fcs/fly-by-wire/pitch/F2 </gain>
+        </pure_gain>
+
         <summer name="fcs/fly-by-wire/pitch/error">
             <input> fcs/fly-by-wire/pitch/command-neutralized-by-high-alpha </input>
-            <input> fcs/fly-by-wire/pitch/sensor-input-mix-1 </input>
+            <input> fcs/fly-by-wire/pitch/sensor-mix-final </input>
         </summer>
 
     </channel>
@@ -1547,15 +1564,6 @@
             <gain> 5.0 </gain>
             <width> 50 </width>
         </deadband>
-
-        <pure_gain name="fcs/fly-by-wire/pitch/alpha-feedback">
-            <description>
-                         Since this is part of pitch limiter scheme it
-                         uses alpha-sum instead of a_f.
-            </description>
-            <input>fcs/fly-by-wire/pitch/alpha-sum</input>
-            <gain> fcs/fly-by-wire/pitch/F2 </gain>
-        </pure_gain>
 
         <summer name="fcs/fly-by-wire/pitch/integrator-almost-final">
             <input> fcs/fly-by-wire/pitch/integrator-proportional-mix </input>
