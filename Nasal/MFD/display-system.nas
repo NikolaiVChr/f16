@@ -198,8 +198,8 @@ var zIndex = {
 		lines: 4,
 	},
 	fcr: {
-		rootFCR: 0,
-		rootImage: 2,
+		rootFCR: 2,
+		rootImage: 0,
 		image: 0,
 		blep: 10,
 		track: 11,
