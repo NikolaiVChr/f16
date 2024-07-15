@@ -312,6 +312,8 @@ setlistener("f16/engine/ab-reset", button2, nil, 0);
 setlistener("f16/engine/max-power", button2, nil, 0);
 setlistener("f16/avionics/hud-brt", scroll, nil, 0);
 setlistener("f16/avionics/hud-sym", scroll, nil, 0);
+setlistener("f16/avionics/hud-depr-ret", scroll, nil, 0);
+setlistener("f16/avionics/hud-cont", scroll, nil, 0);
 setlistener("f16/ews/rwr-int", click3, nil, 0);
 setlistener("f16/avionics/mfd-l-con", click3, nil, 0);
 setlistener("f16/avionics/mfd-l-brt", click3, nil, 0);
