@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery> 
+    <name type="string">10W 31 Sqn, FA-116 "45 Years F-16 MNFP"</name>
+    <texture>Liveries/Block20/88-0041_1.png</texture>
+    <owner type="string">BAC</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Two-tone gray, Special Color</scheme>
+    <block type="int">20</block>
+    <serial type="string">88-0041</serial>
+    <squad type="string">31 Sqn "Tigers"</squad>
+    <year type="string">2020</year>
+   </livery>
+
+   <livery-logo>
+    <texture>Liveries/standard.logos.color.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block20/patch.BAF_tiger.png</texture>
+   </livery-patch>
+
+    <livery-pod>
+        <texture>Liveries/Block10/pod.white.png</texture>
+    </livery-pod>
+
+    <f16>
+     <dragchute type="bool">true</dragchute>
+    </f16>
+    <livery-specular type="double">0.5</livery-specular>
+  </model>
+ </sim>
+</PropertyList>
