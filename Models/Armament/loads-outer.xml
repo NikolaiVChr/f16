@@ -81,7 +81,25 @@
     </equals>
   </condition>
  </animation>
- 
+
+  <!-- in peacetime we don't carry live ammunition -->
+  <!-- however for aerodynamic reasons we carry dummy missiles --> 
+  <animation>
+  <type>select</type>
+  <object-name>Station2_CATM-120B</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-1-type</property>
+      <value>CATM-120B</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-1-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+
 <animation>
   <type>select</type>
   <object-name>Station2_ACMIpod</object-name>
@@ -168,6 +186,23 @@
       <property>payload/armament/station/id-7-type</property>
       <value>CATM-9L</value>
     </equals>
+  </condition>
+ </animation>
+
+  <!-- in peacetime we don't carry live ammunition -->
+  <!-- however for aerodynamic reasons we carry dummy missiles --> 
+  <animation>
+  <type>select</type>
+  <object-name>Station8_CATM-120B</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-7-type</property>
+      <value>CATM-120B</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-7-count</property>
+      <value>0</value>
+    </greater-than>
   </condition>
  </animation>
 
