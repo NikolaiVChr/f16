@@ -12,11 +12,11 @@
     "path": "Nasal/radar/radar-system.nas"
   },
   "radar-system-database": {
-    "version": "1.1.13",
+    "version": "1.1.14",
     "path": "Nasal/radar/radar-system-database.nas"
   },
   "damage": {
-    "version": "1.4.11",
+    "version": "1.4.12",
     "path": "Nasal/damage.nas"
   },
   "iff": {
