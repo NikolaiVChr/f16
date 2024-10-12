@@ -159,7 +159,7 @@ var major = num(version[0]);
 var minor = num(version[1]);
 var pica  = num(version[2]);
 
-var sep_thread = getprop("payload/threading") != nil or !(major == 2020 and minor == 4);#Bug in 2020.4.0 threadsafe properties makes this needed.
+var sep_thread = getprop("payload/threading") != nil or !((major == 2020 and minor == 4) or (major > 2020));#Bug in 2024.4 threadsafe properties makes this needed.
 
 var wingedGuideFactor = 0.1;
 
