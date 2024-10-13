@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery>
+    <name type="string">2W, FA-87 "Dream Viper Solo Display"</name>
+    <texture>Liveries/Block20/80-3578_2.png</texture>
+    <owner type="string">BAC</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Airshow Special Color</scheme>
+    <block type="int">20</block>
+    <serial type="string">80-3578</serial>
+    <squad type="string">31 Sqn</squad>
+    <year type="string">2022</year>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/Block20/DreamViper.logos.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block20/patch.dream-viper.png</texture>
+  </livery-patch>
+
+  <livery-pod>
+        <texture>Armament/External-stores/MXU-648.png</texture>
+    </livery-pod>
+
+  <f16>
+     <dragchute type="bool">true</dragchute>
+  </f16>
+  <livery-specular type="double">0.8</livery-specular>
+  </model>
+ </sim>
+</PropertyList>
