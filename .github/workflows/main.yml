@@ -35,7 +35,7 @@ jobs:
       contents: write
     steps:
       - name: "Manual Update"
-        uses: BobDotCom/OPRFAssetUpdater@v0.9
+        uses: BobDotCom/OPRFAssetUpdater@v0.91
         if: "${{ github.event_name == 'workflow_dispatch' }}"
         with:
           include: ${{ inputs.include }}
@@ -43,7 +43,7 @@ jobs:
           compatibility: ${{ inputs.compatibility }}
           commit_message: "Auto-Update shared Files"
       - name: "Scheduled Update"
-        uses: BobDotCom/OPRFAssetUpdater@v0.9
+        uses: BobDotCom/OPRFAssetUpdater@v0.91
         with:
           # Optional. The title of the commit that is made
           # Default: "Update OPRF Assets"
