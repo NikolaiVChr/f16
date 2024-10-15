@@ -1772,7 +1772,7 @@ var b50_a2g_sead1 = func {
         pylon7.loadSet(pylonSets.a88);
         pylon8.loadSet(pylonSets.aim120);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podSAtp);
+        pylon10.loadSet(pylonSets.podLite);
         pylon11.loadSet(pylonSets.podHarm);
         f16.reloadCannon();
     } else {
@@ -1808,7 +1808,7 @@ var b50_a2g_sdead = func {
         pylon2.loadSet(pylonSets.aim120);
         pylon3.loadSet(pylonSets.a88);
         pylon4.loadSet(pylonSets.fuel37L);
-        pylon5.loadSet(pylonSets.podEcm184);
+        pylon5.loadSet(pylonSets.podEcm131);
         pylon6.loadSet(pylonSets.fuel37R);
         pylon7.loadSet(pylonSets.g54x2);
         pylon8.loadSet(pylonSets.aim9m);
