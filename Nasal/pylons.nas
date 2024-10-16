@@ -1966,7 +1966,7 @@ var b40_a2g_jassm = func {
         pylon7.loadSet(pylonSets.a158);
         pylon8.loadSet(pylonSets.aim9m);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podSAtp);
+        pylon10.loadSet(pylonSets.podLite);
         pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
