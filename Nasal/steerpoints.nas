@@ -505,7 +505,7 @@ var _getTOS = func (eta, absolute = 0) {
 	var TOS = "--:--:--";
 	if (getCurrentNumber() == 0) return TOS;
 
-	return formatTime(eta, !absolute);
+	return formatTime(eta, absolute);
 }
 
 var addSeconds = func (add_secs, secs, mins, hours) {
