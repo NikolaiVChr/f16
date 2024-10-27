@@ -6,7 +6,7 @@
    <livery>
     <name type="string">31FW, 555FS AV #068</name>
     <texture>Liveries/Block40/89-2068.png</texture>
-    <owner type="string">USAF</owner>
+    <owner type="string">USAF-USAFE</owner>
     <pilot type="string">Lt Gen J Maverick 16</pilot>
     <scheme type="string">Special Color, SQ/CC</scheme>
     <block type="int">40</block>

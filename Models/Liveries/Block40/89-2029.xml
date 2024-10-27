@@ -6,7 +6,7 @@
    <livery>
     <name type="string">31FW, 510FS AV "Friends of Aviano"</name>
     <texture>Liveries/Block40/89-2029.png</texture>
-    <owner type="string">USAF</owner>
+    <owner type="string">USAF-USAFE</owner>
     <pilot type="string"></pilot>
     <scheme type="string"></scheme>
     <block type="int">40</block>

@@ -6,7 +6,7 @@
    <livery>
     <name type="string">USAFWS, 16WPS WA "J Maverick 16"</name>
     <texture>Liveries/Block40/89-2116.png</texture>
-    <owner type="string">USAF</owner>
+    <owner type="string">USAF-ACC</owner>
     <pilot type="string">Gen J Maverick 16</pilot>
     <scheme type="string">Have Glass V, Flagship</scheme>
     <block type="int">40</block>

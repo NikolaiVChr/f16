@@ -6,7 +6,7 @@
    <livery>
     <name type="string">51FW, 36FS OS #130</name>
     <texture>Liveries/Block40/89-2130.png</texture>
-    <owner type="string">USAF</owner>
+    <owner type="string">USAF-PACAF</owner>
     <pilot type="string"></pilot>
     <scheme type="string"></scheme>
     <block type="int">40</block>

@@ -6,7 +6,7 @@
    <livery>
     <name type="string">USAFWS, 16WPS WA #439</name>
     <texture>Liveries/Block40/88-0439.png</texture>
-    <owner type="string">USAF</owner>
+    <owner type="string">USAF-ACC</owner>
     <pilot type="string"></pilot>
     <scheme type="string"></scheme>
     <block type="int">40</block>
