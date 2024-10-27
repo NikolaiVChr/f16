@@ -67,9 +67,10 @@ var rcs_database = {
     "tu95":                     20,    #average
     "Tu-95MR":                  20,    #average
     "Tu-160-Blackjack":         15,
-    "G91-R1B":                  6,     #guess
+    "G91-R1B":                  4,     #average
     "mb339":                    4,     #guess
     "mb339pan":                 4,     #guess
+    "M-346":                    4.5,   #average
     "alphajet":                 4.5,   #average
     "E-2C-Hawkeye":             22,    #average
     "c-2a":                     20,    #average
@@ -85,6 +86,11 @@ var rcs_database = {
     "Tornado-IDS":              9,
     "Tornado-F3":               9,
     "Tornado-ADV":              9,
+    "AvroVulcanB2":             16,
+    "vulcanb2":                 16,
+    "B-52F":                    20,
+    "P-8A":                     18,
+    "E-7A":                     16,
     # Helis:
     "uh60_Blackhawk":           4,      #average
     "AH-1W":                    4,      #average
