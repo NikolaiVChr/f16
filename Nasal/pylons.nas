@@ -86,6 +86,11 @@ var crgpd = stations.Dummy.new("MXU-648 Cargopod", "TRVL");
 # Clean aircraft: 14.67          (big and somewhat good aerodynamic shape)
 # MK-84:           0.224         (medium size and very good aerodynamic shape)
 #
+# These are negative on purpose, as wingtip drag is already factored into aero dynamics.
+var wingtip9Lda = -getprop("payload/armament/aim-9l/drag-coeff")*getprop("payload/armament/aim-9l/cross-section-sqft");
+var wingtip9Mda = -getprop("payload/armament/aim-9m/drag-coeff")*getprop("payload/armament/aim-9m/cross-section-sqft");
+var wingtip9Xda = -getprop("payload/armament/aim-9x/drag-coeff")*getprop("payload/armament/aim-9x/cross-section-sqft");
+var wingtip120da = -getprop("payload/armament/aim-120/drag-coeff")*getprop("payload/armament/aim-120/cross-section-sqft");
 var pylonSets = {
     empty:     {name: "Empty", pylon: nil, rack: nil, content: [], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
     mau:       {name: "--------", pylon: "1 MAU", rack: nil, content: [], fireOrder: [], launcherDragArea: 0.05, launcherMass: 220, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
@@ -116,11 +121,11 @@ var pylonSets = {
     c87:       {name: "2 x CBU-87", pylon: "1 MAU", rack: "1 TER", content: ["CBU-87","CBU-87"], fireOrder: [0,1], launcherDragArea: 0.075, launcherMass: 313, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     c105:      {name: "1 x CBU-105", pylon: "1 MAU", rack: nil, content: ["CBU-105"], fireOrder: [0], launcherDragArea: 0.05, launcherMass: 220, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     c105x2:    {name: "2 x CBU-105", pylon: "1 MAU", rack: "1 BR57", content: ["CBU-105","CBU-105"], fireOrder: [0,1], launcherDragArea: 0.075, launcherMass: 470, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
-    dumb1:     {name: "CATM-9L", pylon: "1 MRL", content: [catm9], fireOrder: [], launcherDragArea: 0.07865, launcherMass: 275, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    dumb1:     {name: "CATM-9L", pylon: "1 MRL", content: [catm9], fireOrder: [], launcherDragArea: -wingtip9Lda, launcherMass: 275, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     dumb1WT:   {name: "CATM-9L", pylon: "1 MRLW", content: [catm9], fireOrder: [], launcherDragArea: 0, launcherMass: 275, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-    dumb2:     {name: "AN-T-17", pylon: "1 MRL", rack: nil, content: [ant17], fireOrder: [], launcherDragArea: 0.07865, launcherMass: 275, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    dumb2:     {name: "AN-T-17", pylon: "1 MRL", rack: nil, content: [ant17], fireOrder: [], launcherDragArea: -wingtip9Lda, launcherMass: 275, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     dumb2WT:   {name: "AN-T-17", pylon: "1 MRLW", rack: nil, content: [ant17], fireOrder: [], launcherDragArea: 0, launcherMass: 275, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-    dumb3  :   {name: "CATM-120B", pylon: "1 MRL", content: [catm120], fireOrder: [], launcherDragArea: 0, launcherMass: 380, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    dumb3  :   {name: "CATM-120B", pylon: "1 MRL", content: [catm120], fireOrder: [], launcherDragArea: -wingtip120da, launcherMass: 380, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     dumb3WT:   {name: "CATM-120B", pylon: "1 MRLW", content: [catm120], fireOrder: [], launcherDragArea: 0, launcherMass: 380, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     smokeRL:   {name: "Smokewinder Red", pylon: "1 MRLW", content: [smokewinderRed1], fireOrder: [0], launcherDragArea: 0, launcherMass: 293, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     smokeGL:   {name: "Smokewinder Green", pylon: "1 MRLW", content: [smokewinderGreen1], fireOrder: [0], launcherDragArea: 0, launcherMass: 293, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
@@ -135,14 +140,14 @@ var pylonSets = {
     fuel37R:   {name: fuelTank370Right.type, pylon: "1 MAU", rack: nil, content: [fuelTank370Right], fireOrder: [0], launcherDragArea: 0.70, launcherMass: 751, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1, category: 2},
     fuel60L:   {name: fuelTank600Left.type, pylon: "1 MAU", rack: nil, content: [fuelTank600Left], fireOrder: [0], launcherDragArea: 1.00, launcherMass: 675, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 3},
     fuel60R:   {name: fuelTank600Right.type, pylon: "1 MAU", rack: nil, content: [fuelTank600Right], fireOrder: [0], launcherDragArea: 1.00, launcherMass: 675, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 3},
-    aim9lWT:   {name: "1 x AIM-9L", pylon: "1 MRLW", content: ["AIM-9L"], fireOrder: [0], launcherDragArea: -0.07865, launcherMass: 90, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#wingtip
-    aim9mWT:   {name: "1 x AIM-9M", pylon: "1 MRLW", content: ["AIM-9M"], fireOrder: [0], launcherDragArea: -0.07865, launcherMass: 90, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#wingtip
-    aim9xWT:   {name: "1 x AIM-9X", pylon: "1 MRLW", content: ["AIM-9X"], fireOrder: [0], launcherDragArea: -0.07865, launcherMass: 90, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#wingtip
+    aim9lWT:   {name: "1 x AIM-9L", pylon: "1 MRLW", content: ["AIM-9L"], fireOrder: [0], launcherDragArea: wingtip9Lda, launcherMass: 90, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#wingtip
+    aim9mWT:   {name: "1 x AIM-9M", pylon: "1 MRLW", content: ["AIM-9M"], fireOrder: [0], launcherDragArea: wingtip9Mda, launcherMass: 90, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#wingtip
+    aim9xWT:   {name: "1 x AIM-9X", pylon: "1 MRLW", content: ["AIM-9X"], fireOrder: [0], launcherDragArea: wingtip9Xda, launcherMass: 90, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#wingtip
     aim9l:     {name: "1 x AIM-9L", pylon: "1 MRL", content: ["AIM-9L"], fireOrder: [0], launcherDragArea: 0.025, launcherMass: 90, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#non wingtip
     aim9m:     {name: "1 x AIM-9M", pylon: "1 MRL", content: ["AIM-9M"], fireOrder: [0], launcherDragArea: 0.025, launcherMass: 90, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#non wingtip
     aim9x:     {name: "1 x AIM-9X", pylon: "1 MRL", content: ["AIM-9X"], fireOrder: [0], launcherDragArea: 0.025, launcherMass: 90, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#non wingtip
     aim120:    {name: "1 x AIM-120", pylon: "1 MRL", content: ["AIM-120"], fireOrder: [0], launcherDragArea: 0.025, launcherMass: 90, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#non wingtip
-    aim120WT:  {name: "1 x AIM-120", pylon: "1 MRLW", content: ["AIM-120"], fireOrder: [0], launcherDragArea: -0.08217, launcherMass: 90, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#wingtip
+    aim120WT:  {name: "1 x AIM-120", pylon: "1 MRLW", content: ["AIM-120"], fireOrder: [0], launcherDragArea: wingtip120da, launcherMass: 90, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#wingtip
     aim7:      {name: "1 x AIM-7", pylon: "1 LNCH", content: ["AIM-7"], fireOrder: [0], launcherDragArea: 0.025, launcherMass: 52, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#Real launcher: 16S1501
     podEcm131: {name: "AN/ALQ-131(V) ECM Pod", pylon: "1 MAU", rack: nil, content: [ecm131], fireOrder: [0], launcherDragArea: 0.16, launcherMass: 480, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 2},
     podEcm184: {name: "AN/ALQ-184(V) ECM Pod", pylon: "1 MAU", rack: nil, content: [ecm184], fireOrder: [0], launcherDragArea: 0.1, launcherMass: 705, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 2},
