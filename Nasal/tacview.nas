@@ -54,6 +54,7 @@ var f = "";
 var myplaneID = int(rand()*10000);
 var starttime = 0;
 var writetime = 0;
+var alphaID = "ID";# md5 can start with number so not good for key in hash. So using this in front.
 
 var seen_ids = [];
 
@@ -180,20 +181,21 @@ var mainloop = func() {
                 color=",Color=Red";
             }
             write(cx.tacobj.tacviewID ~ ",Name="~ model_is~ ",Visible=1,CallSign=" ~ cx.get_Callsign() ~color~"\n");
-            seenStruct[cx.tacobj.tacviewID] = [systime(),1,cx,cx.getModel()];# time, visible, contact, model
+            seenStruct[alphaID ~ cx.tacobj.tacviewID] = [systime(),1,cx,cx.getModel()];# time, visible, contact, model
             #print(cx.tacobj.tacviewID ~ ",Name="~ model_is~ ",Visible=1,CallSign=" ~ cx.get_Callsign() ~color~" (first seen)");
             #print("Its unique is "~cx.getUnique()~" = "~left(md5(cx.getUnique()),6));
-        } elsif (!seenStruct[cx.tacobj.tacviewID][1]) {
+        } elsif (seenStruct[alphaID ~ cx.tacobj.tacviewID] == nil) {
+            # Should not happen, as if its not here then in seen_ids it would also not be and the other IF would
+            # have been activated.
+            # Has happened though. Perhaps the tacID started with a number which makes it not retrievable
+            # from seenStruct.
+            seenStruct[alphaID ~ cx.tacobj.tacviewID] = [systime(),1,cx,cx.getModel()];# time, visible, contact, model
+        } elsif (!seenStruct[alphaID ~ cx.tacobj.tacviewID][1]) {
             write(cx.tacobj.tacviewID ~ ",Visible=1\n");
             #print(cx.tacobj.tacviewID ~ ",Visible=1 (seen but was invis)");
-            if (seenStruct[cx.tacobj.tacviewID] == nil) {
-                # Should not happen
-                seenStruct[cx.tacobj.tacviewID] = [systime(),1,cx,cx.getModel()];# time, visible, contact, model
-            } else {
-                seenStruct[cx.tacobj.tacviewID][1] = 1;
-            }
+            seenStruct[alphaID ~ cx.tacobj.tacviewID][1] = 1;
         }
-        seenStruct[cx.tacobj.tacviewID][0] = systime();
+        seenStruct[alphaID ~ cx.tacobj.tacviewID][0] = systime();
         if (cx.tacobj.valid) {
             var cxC = cx.getCoord();
             lon = cxC.lon();
@@ -241,7 +243,7 @@ var mainloop = func() {
             write("\n");
         } else {
             write(cx.tacobj.tacviewID ~ ",Visible=0\n");
-            seenStruct[cx.tacobj.tacviewID][1] = 0;# visible
+            seenStruct[alphaID ~ cx.tacobj.tacviewID][1] = 0;# not visible
         }
         thread.unlock(mutexWrite);
     }
