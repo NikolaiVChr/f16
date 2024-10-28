@@ -235,7 +235,6 @@ var AIM = {
 
 		m.status            = MISSILE_STANDBY; # -1 = stand-by, 0 = searching, 1 = locked, 2 = fired.
 		m.free              = 0; # 0 = status fired with lock, 1 = status fired but having lost lock.
-		m.prop              = AcModel.getNode("armament/"~m.type_lc~"/").getChild("msl", 0, 1);
 		m.SwSoundOnOff      = AcModel.getNode("armament/"~m.type_lc~"/sound-on-off",1);
 		m.launchSoundProp  = AcModel.getNode("armament/"~m.type_lc~"/sound-fire-on-off",1);
         m.SwSoundVol        = AcModel.getNode("armament/"~m.type_lc~"/sound-volume",1);
@@ -1631,8 +1630,7 @@ var AIM = {
 		me.model.getNode("heading-deg-prop", 1).setValue(me.hdgN.getPath());
 		me.model.getNode("pitch-deg-prop", 1).setValue(me.pitchN.getPath());
 		me.model.getNode("roll-deg-prop", 1).setValue(me.rollN.getPath());
-		var loadNode = me.model.getNode("load", 1);
-		loadNode.setBoolValue(1);
+		
 
 		# Get initial velocity vector (aircraft):
 		me.speed_down_fps = getprop("velocities/speed-down-fps");
@@ -1765,7 +1763,7 @@ var AIM = {
 
 		me.lock_on_sun = 0;
 
-		loadNode.remove();
+		
 
 		if(!sep_thread) {
 			me.flightTimer = maketimer(0, me, me.flight);
@@ -2130,6 +2128,13 @@ var AIM = {
 		#
 		#############################################################################################################
 		me.counter += 1;#main counter for which number of loop we are in.
+
+		if (me.counter == 1) {
+			me.loadNode = me.model.getNode("load", 1);
+			me.loadNode.setBoolValue(1);
+			me.loadNode.remove();
+			me.loadNode = nil;
+		}
 
 		if (me.pendingLaunchSound > -1 and me.life_time >= me.pendingLaunchSound and me.counter >= 5) {
 			# For some reason, sound needs some time to see that the property is false, so we let counter go to 5 before we set it to true.
@@ -5494,24 +5499,30 @@ var AIM = {
 
 		if (hitGround) {
 			if (info == nil) {
+				me.printStatsDetails("Hit terrasunk");
 				me.explode_water_prop.setBoolValue(0);
 			} elsif (info[1] == nil) {
+				me.printStatsDetails("Hit building");
 				#print ("Building hit!");
 			} elsif (!info[1].solid) {
+				me.printStatsDetails("Hit water");
 			 	me.explode_water_prop.setBoolValue(1);
 			} else {
+				me.printStatsDetails("Hit ground");
 				me.explode_water_prop.setBoolValue(0);
 			}
 		} else {
+			me.printStatsDetails("Did not hit terrain");
 			me.explode_water_prop.setBoolValue(0);
 		}
 
 		#print (me.typeShort);
 
 		me.explode_prop.setBoolValue(1);
+
 		me.explode_angle_prop.setDoubleValue((rand() - 0.5) * 50);
 		lockMutex(mutexTimer);
-		appendTimer(AIM.timerQueue, [me, func me.explode_prop.setBoolValue(0), [], 0.5]);
+		appendTimer(AIM.timerQueue, [me, func {me.explode_prop.setBoolValue(0);}, [], 0.5]);
 		appendTimer(AIM.timerQueue, [me, func me.explode_smoke_prop.setBoolValue(1), [], 0.5]);
 		appendTimer(AIM.timerQueue, [me, func {me.explode_smoke_prop.setBoolValue(0);if (me.first and size(keys(AIM.flying))>1) {me.resetFirst();}}, [], 3]);
 		unlockMutex(mutexTimer);
@@ -5902,8 +5913,7 @@ var appendTimer = func (queue, cmd) {
 	if (sep_thread) {
 		append(AIM.timerQueue, cmd);
 	} else {
-		call(cmd[1], cmd[2], cmd[0], nil, var err = []);
-		debug.printerror(err);
+		AIM.timerCall(cmd);
 	}
 }
 var lockMutex = func (m) {
@@ -6058,7 +6068,10 @@ var printff = func{
 }
 
 var makesettimer = func {
-	var t = maketimer(arg[1], arg[0]);
+	var code = "timer_"~rand();
+	var funct = arg[0];
+	var t = maketimer(arg[1], func {funct();delete(AIM.timers, code);});
+	AIM.timers[code] = t;
 	t.singleShot = 1;
 	t.start();
 }
