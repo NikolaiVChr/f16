@@ -117,8 +117,8 @@ var Database = {
     "MQ-9":                   {killZone: 15, baseThreat:defaultFighterThreat},
     "MQ-9-2":                 {killZone: 15, baseThreat:defaultFighterThreat},
 # Helis 
-    "212-TwinHuey":           {isSlow: 1},
-    "412-Griffin":            {isSlow: 1},
+    "abc212-TwinHuey":        {isSlow: 1, rcsFrontal: 19},# These two helis wont work, as keys that start with numbers dont work.
+    "abc412-Griffin":         {isSlow: 1, rcsFrontal: 19},# So doing some extra for these in methods.
     "AH-1W":                  {isSlow: 1},
     "AS532-Cougar":           {isSlow: 1},
     "AW139":                  {isSlow: 1},
@@ -272,7 +272,12 @@ foreach (entry ; keys(Database)) {
 }
 
 var getDBEntry = func (model) {
-	var entry = Database[model];
+	var entry = nil;
+	if (model == "212-TwinHuey" or model == "412-Griffin") {
+		entry = Database["abc" ~ model];
+	} else {
+		entry = Database[model];
+	}
 	if (entry == nil) {
 		entry = Database.default;
 	}

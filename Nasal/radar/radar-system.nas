@@ -65,7 +65,7 @@ var GPS = 1;
 var DualSeaterCallsign = props.globals.getNode("/sim/remote/pilot-callsign", 1);
 
 var emptyCoord = geo.Coord.new().set_xyz(10,10,10);
-
+var preAlphaKey = "ABC";# for hash keys that could start with number, which is not allowed.
 
 var VectorNotification = {
     new: func(type) {
@@ -306,7 +306,7 @@ var AIToNasal = {
 
         me.aicontact.coord = me.aircraftPos;
         
-        me.usign = sprintf("%s%04d",me.callsign,me.id);
+        me.usign = sprintf("%s%s%04d",preAlphaKey,me.callsign,me.id);
         me.usignLookup = [me.aicontact];
         
         me.updateVectorFrame(me.usign,me.usignLookup);
@@ -442,7 +442,7 @@ var CallsignToContact = {
 	    		    foreach(contact ; notification.vector) {
 	    		    	var cs = contact.getCallsign();
 	    		    	if (cs == nil or cs == "") continue;
-	    		    	me.radar.struct_csContact[cs] = contact;
+	    		    	me.radar.struct_csContact[preAlphaKey~cs] = contact;
 	    		    }
 	    	    }
 	            return emesary.Transmitter.ReceiptStatus_OK;
@@ -455,7 +455,7 @@ var CallsignToContact = {
 
 	get: func (cs) {
 		if (!me.enabled) return nil;
-		return me.struct_csContact[cs];
+		return me.struct_csContact[preAlphaKey~cs];
 	},
 
 	del: func {

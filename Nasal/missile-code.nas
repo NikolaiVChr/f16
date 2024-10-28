@@ -159,6 +159,7 @@ var major = num(version[0]);
 var minor = num(version[1]);
 var pica  = num(version[2]);
 
+var preAlphaKey = "ABC";# for hash keys that could start with number, which is not allowed.
 var sep_thread = getprop("payload/threading") != nil or !((major == 2020 and minor == 4) or (major > 2020));#Bug in 2024.4 threadsafe properties makes this needed.
 
 var wingedGuideFactor = 0.1;
@@ -214,7 +215,7 @@ var AIM = {
 	lowestETA: nil,
 	#done
 	new : func (p, type = "AIM-9L", sign = "Sidewinder", midFlightFunction = nil, nasalPosition = nil) {
-		if(AIM.active[p] != nil) {
+		if(AIM.active[preAlphaKey ~ p] != nil) {
 			#do not make new missile logic if one exist for this pylon.
 			return -1;
 		} elsif (AcModel.getNode("armament/"~string.lc(type)~"/") == nil) {
@@ -919,7 +920,7 @@ var AIM = {
 		if (sep_thread) m.frameToggle = thread.newsem();
 		m.myMath = {parents:[vector.Math],};#personal vector library, to avoid using a mutex on it.
 
-		return AIM.active[m.ID] = m;
+		return AIM.active[preAlphaKey ~ m.ID] = m;
 	},
 
 	del: func {
@@ -943,7 +944,7 @@ var AIM = {
 		me.model.remove();
 		me.ai.remove();
 		if (me.status == MISSILE_FLYING) {
-			delete(AIM.flying, me.flyID);
+			delete(AIM.flying, preAlphaKey ~ me.flyID);
 			if (me.tacview_support) {
 				if (tacview.starttime) {
 					lockMutex(tacview.mutexWrite);
@@ -959,7 +960,7 @@ var AIM = {
 				unlockMutex(mutexTimer);
 			}
 		} else {
-			delete(AIM.active, me.ID);
+			delete(AIM.active, preAlphaKey ~ me.ID);
 		}
 		AIM.setETA(nil);
 		me.SwSoundVol.setDoubleValue(0);
@@ -1550,8 +1551,8 @@ var AIM = {
 		}
 
 		me.flyID = rand();
-		AIM.flying[me.flyID] = me;
-		delete(AIM.active, me.ID);
+		AIM.flying[preAlphaKey ~ me.flyID] = me;
+		delete(AIM.active, preAlphaKey ~ me.ID);
 		me.animation_flags_props();
 
 		# Get the A/C position and orientation values.
