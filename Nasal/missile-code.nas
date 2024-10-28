@@ -1719,7 +1719,7 @@ var AIM = {
 		me.SwSoundVol.setDoubleValue(0);
 		#me.trackWeak = 1;
 		if (use_fg_default_hud) {
-		  settimer(func { HudReticleDeg.setValue(0) }, 2);
+		  makesettimer(func { HudReticleDeg.setDoubleValue(0) }, 2);
 		  interpolate(HudReticleDev, 0, 2);
 		}
 
@@ -2680,7 +2680,7 @@ var AIM = {
 		# telemetry
 		me.sendTelemetry();
 
-        if (me.life_time - me.last_noti > me.noti_time and getprop("payload/armament/msg")) {
+        if (me.life_time - me.last_noti > me.noti_time and props.globals.getNode("payload/armament/msg").getValue()) {
             # notify in flight using Emesary.
             me.last_noti = me.life_time;
         	lockMutex(mutexTimer);
@@ -2835,8 +2835,8 @@ var AIM = {
 			me.ai.getNode("hit").setIntValue(me.hit);
 
 			if (me.gnd_launch) {
-				setprop("sam/impact"~me.ID,me.eta);
-				setprop("sam/hit"~me.ID,me.hit);
+				props.globals.getNode("sam/impact"~me.ID,1).setDoubleValue(me.eta);
+				props.globals.getNode("sam/hit"~me.ID,1).setDoubleValue(me.hit);
 			}
 
 			if (me["prevETA"] != nil) {
@@ -3386,7 +3386,7 @@ var AIM = {
 	},
 
 	checkForSun: func () {
-		if (me.fovLost != 1 and me.guidance == "heat" and me.sun_enabled and getprop("/rendering/scene/diffuse/red") > 0.6) {
+		if (me.fovLost != 1 and me.guidance == "heat" and me.sun_enabled and props.globals.getNode("/rendering/scene/diffuse/red").getValue() > 0.6) {
 			# test for heat seeker locked on to sun
 			me.sun_dev_e = me.getPitch(me.coord, me.sun) - me.pitch;
 			me.sun_dev_h = me.coord.course_to(me.sun) - me.hdg;
@@ -4429,7 +4429,7 @@ var AIM = {
 
 		me.coord = coordinates;  # Set the current missile coordinates at the explosion point.
 
-		if(getprop("payload/armament/msg")) {
+		if(props.globals.getNode("payload/armament/msg").getValue()) {
 			lockMutex(mutexTimer);
 			appendTimer(AIM.timerQueue, [AIM, AIM.notifyInFlight, [me.coord.lat(), me.coord.lon(), me.coord.alt(),0,0,me.typeID,me.type,me.unique_id,0,"", me.hdg, me.pitch, 0, 0], -1]);
 			unlockMutex(mutexTimer);
@@ -4463,7 +4463,7 @@ var AIM = {
 			}
 			if (phrase != nil) {
 				me.printStats("%s  time %.1f", phrase, me.life_time);
-				if(getprop("payload/armament/msg") and hitPrimaryTarget and wh_mass > 0){
+				if(props.globals.getNode("payload/armament/msg").getValue() and hitPrimaryTarget and wh_mass > 0){
 					lockMutex(mutexTimer);
 					appendTimer(AIM.timerQueue, [AIM, AIM.notifyHit, [coordinates.alt() - me.t_coord.alt(),range,me.callsign,coordinates.course_to(me.t_coord),reason,me.typeID, me.typeLong, 0], -1]);
 					unlockMutex(mutexTimer);
@@ -4509,7 +4509,7 @@ var AIM = {
 				var phrase = sprintf("%s %s: %.1f meters from: %s", me.type,event, min_distance, me.testMe.get_Callsign());
 				me.printStats(phrase);
 
- 				if(getprop("payload/armament/msg") and wh_mass > 0){
+ 				if(props.globals.getNode("payload/armament/msg").getValue() and wh_mass > 0){
  					var cs = damage.processCallsign(me.testMe.get_Callsign());
  					var cc = me.testMe.get_Coord();
  					lockMutex(mutexTimer);
@@ -4528,7 +4528,7 @@ var AIM = {
 		var min_distance = geo.aircraft_position().direct_distance_to(explode_coord);
 		if (min_distance < me.reportDist) {
 			# hitting oneself :)
-			var cs = damage.processCallsign(getprop("sim/multiplay/callsign"));
+			var cs = damage.processCallsign(props.globals.getNode("sim/multiplay/callsign").getValue());
 			var phrase = sprintf("%s %s: %.1f meters from: %s", me.type,event, min_distance, cs);# if we mention ourself then we need to explicit add ourself as author.
 			me.printStats(phrase);
 			if (wh_mass > 0) {
@@ -4542,10 +4542,10 @@ var AIM = {
 	},
 
 	sendMessage: func (str) {
-		if (getprop("payload/armament/msg")) {
+		if (props.globals.getNode("payload/armament/msg").getValue()) {
 			defeatSpamFilter(str);
-		} else {
-			setprop("/sim/messages/atc", str);
+		} elsif (str != nil) {
+			props.globals.getNode("/sim/messages/atc",1).setValue(str);
 		}
 	},
 
@@ -4603,7 +4603,7 @@ var AIM = {
 		# looping in standby mode
 		if (deltaSec.getValue()==0) {
 			# paused
-			settimer(func me.standby(), 0.5);
+			makesettimer(func me.standby(), 0.5);
 			return;
 		}
 		me.printCode("In standby(%d)",me.status);
@@ -4624,7 +4624,7 @@ var AIM = {
 		me.reset_seeker();
 		#print(me.type~" standby "~me.ID);
 
-		settimer(func me.standby(), deltaSec.getValue()==0?0.5:0.25);
+		makesettimer(func me.standby(), deltaSec.getValue()==0?0.5:0.25);
 	},
 
 	startup: func {
@@ -4632,7 +4632,7 @@ var AIM = {
 		#print("startup");
 		if (deltaSec.getValue()==0) {
 			# Paused
-			settimer(func me.startup(), 0.5);
+			makesettimer(func me.startup(), 0.5);
 			return;
 		}
 		me.printCode("In startup()");
@@ -4655,7 +4655,7 @@ var AIM = {
 		#print("Starting up");
 		me.coolingSyst();
 		me.reset_seeker();
-		settimer(func me.startup(), deltaSec.getValue()==0?0.5:0.25);
+		makesettimer(func me.startup(), deltaSec.getValue()==0?0.5:0.25);
 	},
 
 	coolingSyst: func {
@@ -4847,7 +4847,7 @@ var AIM = {
 	search: func {
 		# looping in search mode
 		if (deltaSec.getValue()==0) {
-			settimer(func me.search(), 0.5);
+			makesettimer(func me.search(), 0.5);
 		}
 		me.printCode("In search()");
 		if (me.deleted) {
@@ -4924,7 +4924,7 @@ var AIM = {
 			me.Tgt = nil;
 			me.SwSoundVol.setDoubleValue(me.vol_search);
 			me.SwSoundOnOff.setBoolValue(1);
-			settimer(func me.search(), 0.05);# this mode needs to be a bit faster.
+			makesettimer(func me.search(), 0.05);# this mode needs to be a bit faster.
 			return;
 		} elsif (me.slave_to_radar) {
 			me.slaveContact = nil;
@@ -5033,7 +5033,7 @@ var AIM = {
 		me.Tgt = nil;
 		me.SwSoundVol.setDoubleValue(me.vol_search);
 		me.SwSoundOnOff.setBoolValue(1);
-		settimer(func me.search(), 0.05);
+		makesettimer(func me.search(), 0.05);
 	},
 
 	goToLock: func {
@@ -5041,7 +5041,7 @@ var AIM = {
         if (multiplayer.ignore[me.callsign] == 1) {
         	me.callsign = "Unknown";
         	if (me.tagt == contact) contact = nil;
-        	settimer(func me.search(), 0.1);
+        	makesettimer(func me.search(), 0.1);
         	return;
         }
         me.status = MISSILE_LOCK;
@@ -5049,7 +5049,7 @@ var AIM = {
 		me.SwSoundVol.setDoubleValue(me.vol_track);
 
 		me.Tgt = me.tagt;
-		settimer(func me.update_lock(), 0.1);
+		makesettimer(func me.update_lock(), 0.1);
 	},
 
 	convertGlobalToSeekerViewDirection: func  (bearing, elevation, heading, pitch, roll) {
@@ -5217,7 +5217,7 @@ var AIM = {
 		# Missile locked on target
 		#
 		if (deltaSec.getValue()==0) {
-			settimer(func me.update_lock(), 0.5);
+			makesettimer(func me.update_lock(), 0.5);
 		}
 		if (me.status == MISSILE_FLYING) {
 			return;
@@ -5314,7 +5314,7 @@ var AIM = {
 				me.Tgt = nil;
 				me.SwSoundOnOff.setBoolValue(1);
 				me.SwSoundVol.setDoubleValue(me.vol_search);
-				settimer(func me.search(), 0.1);
+				makesettimer(func me.search(), 0.1);
 				return;
 			}
 
@@ -5337,7 +5337,7 @@ var AIM = {
 				}
 			}
 
-			settimer(func me.update_lock(), deltaSec.getValue()==0?0.5:0.1);
+			makesettimer(func me.update_lock(), deltaSec.getValue()==0?0.5:0.1);
 			return;
 		}
 		me.standby();
@@ -5351,7 +5351,7 @@ var AIM = {
 		me.SwSoundVol.setDoubleValue(me.vol_search);
 		#me.trackWeak = 1;
 		me.reset_seeker();
-		settimer(func me.search(), 0.1);
+		makesettimer(func me.search(), 0.1);
 	},
 
 	###################################################################
@@ -5568,7 +5568,7 @@ var AIM = {
 		var dt = deltaSec.getValue();
 		if (dt == 0) {
 			#FG is likely paused
-			settimer(func me.sndPropagate(), 0.01);
+			makesettimer(func me.sndPropagate(), 0.01);
 			return;
 		}
 		#dt = update_loop_time;
@@ -5587,14 +5587,14 @@ var AIM = {
 			me.printStats(me.type~": Explosion heard "~distance~"m vol:"~volume);
 			me.explode_sound_vol_prop.setDoubleValue(volume);
 			me.explode_sound_prop.setBoolValue(1);
-			settimer( func me.explode_sound_prop.setBoolValue(0), 3);
-			settimer( func me.del(), 4);
+			makesettimer( func me.explode_sound_prop.setBoolValue(0), 3);
+			makesettimer( func me.del(), 4);
 			return;
 		} elsif (me.sndDistance > 5000) {
-			settimer(func { me.del(); }, 4 );
+			makesettimer(func { me.del(); }, 4 );
 			return;#TODO: I added this return recently, but not sure why it wasn't there..
 		} else {
-			settimer(func me.sndPropagate(), 0.05);
+			makesettimer(func me.sndPropagate(), 0.05);
 			return;
 		}
 	},
@@ -5890,11 +5890,11 @@ var AIM = {
 	},
 
 	setModelAdded: func {
-		setprop("ai/models/model-added", me.ai.getPath());
+		props.globals.getNode("ai/models/model-added",1).setValue(me.ai.getPath());
 	},
 
 	setModelRemoved: func {
-		setprop("ai/models/model-removed", me.ai.getPath());
+		props.globals.getNode("ai/models/model-removed",1).setValue(me.ai.getPath());
 	},
 };
 
@@ -5958,7 +5958,7 @@ var impact_report = func(pos, mass, string, name, speed_mps) {
 	impact.getNode("name", 1).setValue(name);
 
 	var impact_str = "/ai/models/" ~ string ~ "[" ~ i ~ "]";
-	setprop("ai/models/model-impact", impact_str);
+	props.globals.getNode("ai/models/model-impact",1).setValue(impact_str);
 }
 
 # HUD clamped target blinker
@@ -6029,7 +6029,7 @@ var defeatSpamFilter = func (str) {
   for (var i = 1; i <= spams; i+=1) {
     str = str~".";
   }
-  var myCallsign = getprop("sim/multiplay/callsign");
+  var myCallsign = props.globals.getNode("sim/multiplay/callsign",1).getValue();
   if (myCallsign != nil and find(myCallsign, str) != -1) {
   	str = myCallsign~": "~str;
   }
@@ -6046,15 +6046,21 @@ var spamLoop = func {
   var spam = pop(spamList);
   unlockMutex(mutexMsg);
   if (spam != nil) {
-    setprop("/sim/multiplay/chat", spam);
+    props.globals.getNode("/sim/multiplay/chat").setValue( spam);
   }
-  settimer(spamLoop, 1.20);
+  makesettimer(spamLoop, 1.20);
 }
 
 var printff = func{
 	var str = call(sprintf, arg,nil,nil,var err = []);#call to printf directly sometimes crashes FG
 	debug.printerror(err);
 	print(str);
+}
+
+var makesettimer = func {
+	var t = maketimer(arg[1], arg[0]);
+	t.singleShot = 1;
+	t.start();
 }
 
 spamLoop();
