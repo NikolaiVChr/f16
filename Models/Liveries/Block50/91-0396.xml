@@ -6,7 +6,7 @@
    <livery>
     <name type="string">96TW, 40FLTS ET #396</name>
     <texture>Liveries/Block50/91-0396.png</texture>
-    <owner type="string">USAF</owner>
+    <owner type="string">USAF-AFMC</owner>
     <pilot type="string"></pilot>
     <scheme type="string"></scheme>
     <block type="int">50</block>

@@ -6,7 +6,7 @@
    <livery>
     <name type="string">ADS, Thunderbirds #1</name>
     <texture>Liveries/Block50/93-0553.png</texture>
-    <owner type="string">USAF</owner>
+    <owner type="string">USAF-ACC</owner>
     <pilot type="string"></pilot>
     <scheme type="string">Airshow Special Color</scheme>
     <block type="int">52</block>

@@ -6,7 +6,7 @@
    <livery>
     <name type="string">169FW, 157FS "9/11 Special"</name>
     <texture>Liveries/Block50/92-3911.png</texture>
-    <owner type="string">USAF</owner>
+    <owner type="string">USAF-ANG</owner>
     <pilot type="string"></pilot>
     <scheme type="string">Have Glass V, Special Color</scheme>
     <block type="int">52</block>

@@ -6,7 +6,7 @@
    <livery>
     <name type="string">35FW, 13FS WW #892</name>
     <texture>Liveries/Block50/92-3892.png</texture>
-    <owner type="string">USAF</owner>
+    <owner type="string">USAF-PACAF</owner>
     <pilot type="string"></pilot>
     <scheme type="string"></scheme>
     <block type="int">50</block>

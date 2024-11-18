@@ -6,7 +6,7 @@
    <livery>
     <name type="string">52FW, 480FS SP #918 (2011)</name>
     <texture>Liveries/Block50/92-9318.png</texture>
-    <owner type="string">USAF</owner>
+    <owner type="string">USAF-USAFE</owner>
     <pilot type="string"></pilot>
     <scheme type="string">Weathered two-tone gray</scheme>
     <block type="int">50</block>

@@ -6,7 +6,7 @@
    <livery>
     <name type="string">35FW, 14FS WW "Unit Flagship"</name>
     <texture>Liveries/Block50/90-0825.png</texture>
-    <owner type="string">USAF</owner>
+    <owner type="string">USAF-PACAF</owner>
     <pilot type="string"></pilot>
     <scheme type="string"></scheme>
     <block type="int">50</block>
