@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery>
+    <name type="string">20FW, 55FS SW "Viper Demo Team 2024, 50 Years F-16"</name>
+    <texture>Liveries/Block50/91-0395.png</texture>
+    <owner type="string">USAF</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Airshow Special Color</scheme>
+    <block type="int">50</block>
+    <serial type="string">91-0395</serial>
+    <squad type="string">55th FS "Fightin' Fifty Fifth"</squad>
+    <year type="string">2024</year>
+   </livery>
+   
+   <livery-logo>
+    <texture>Liveries/Block50/special.logos.color.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block50/patch.F16Demo.png</texture>
+  </livery-patch>
+
+  <livery-pod>
+        <texture>Liveries/Block50/pod.ViperDemo.png</texture>
+  </livery-pod>
+
+  <f16>
+    <dragchute type="bool">false</dragchute>
+    <cft type="bool">false</cft>
+  </f16>
+  <livery-specular type="double">0.5</livery-specular>
+  </model>
+ </sim>
+</PropertyList>
