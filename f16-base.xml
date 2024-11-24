@@ -1187,15 +1187,6 @@
     <rotors>
         <main>
             <!--<rpm alias="/engines/engine/nozzle-pos-norm"/>-->
-            <blade n="0">
-                <position-deg alias="/gear/gear[0]/rollspeed-ms"/>
-            </blade>
-            <blade n="1">
-                <position-deg alias="/gear/gear[1]/rollspeed-ms"/>
-            </blade>
-            <blade n="2">
-                <position-deg alias="/gear/gear[2]/rollspeed-ms"/>
-            </blade>
             <blade n="3">
                 <flap-deg type="double">0</flap-deg>        <!-- used for releasing flares -->
                 <position-deg type="double">0</position-deg><!-- used for releasing chaff  -->

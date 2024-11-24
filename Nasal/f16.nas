@@ -426,6 +426,8 @@ var medium_fast = {
         setprop("f16/external", !getprop("sim/current-view/internal"));
 
         setprop("sim/multiplay/generic/float[19]",  getprop("controls/engines/engine/throttle"));
+
+        sendTireSpeedToMP();
     },
 };
 
@@ -515,6 +517,20 @@ var medium = {
         buffeting();
         f16_fuel.fuelqty();
     },
+};
+
+var tire_0_mp = props.globals.getNode("rotors/main/blade[0]/position-deg",1);
+var tire_1_mp = props.globals.getNode("rotors/main/blade[1]/position-deg",1);
+var tire_2_mp = props.globals.getNode("rotors/main/blade[2]/position-deg",1);
+
+var tire_0_local = props.globals.getNode("gear/gear[0]/rollspeed-ms",1);
+var tire_1_local = props.globals.getNode("gear/gear[1]/rollspeed-ms",1);
+var tire_2_local = props.globals.getNode("gear/gear[2]/rollspeed-ms",1);
+
+var sendTireSpeedToMP = func {
+    tire_0_mp.setDoubleValue(getprop("fdm/jsbsim/gear/unit[0]/WOW")*tire_0_local.getValue());
+    tire_1_mp.setDoubleValue(getprop("fdm/jsbsim/gear/unit[1]/WOW")*tire_1_local.getValue());
+    tire_2_mp.setDoubleValue(getprop("fdm/jsbsim/gear/unit[2]/WOW")*tire_2_local.getValue());
 };
 
 var LOOP_SLOW_RATE = 5;

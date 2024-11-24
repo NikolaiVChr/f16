@@ -2212,9 +2212,6 @@
 <animation>
     <type>spin</type>
     <object-name>FrontTire</object-name>
-    <condition>
-        <property>gear/gear[0]/wow</property>
-    </condition>
     <property>rotors/main/blade[0]/position-deg</property><!-- gear/gear[0]/rollspeed-ms -->
     <factor>41.1288</factor>
     <center>
@@ -2400,9 +2397,6 @@
 <animation>
     <type>spin</type>
     <object-name>RightMainTire</object-name>
-    <condition>
-        <property>gear/gear[1]/wow</property>
-    </condition>
     <property>rotors/main/blade[1]/position-deg</property><!-- gear/gear[0]/rollspeed-ms -->
     <factor>33.0666</factor>
     <axis>
@@ -2564,9 +2558,6 @@
 <animation>
     <type>spin</type>
     <object-name>LeftMainTire</object-name>
-    <condition>
-        <property>gear/gear[2]/wow</property>
-    </condition>
     <property>rotors/main/blade[2]/position-deg</property><!-- gear/gear[0]/rollspeed-ms -->
     <factor>-33.0666</factor>
     <axis>
