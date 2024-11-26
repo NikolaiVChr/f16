@@ -71,8 +71,6 @@ var crgpd = stations.Dummy.new("MXU-648 Cargopod", "TRVL");
 #
 # Dragarea for launchers
 #
-# AIM-9WT should be -0.07865    (to cancel out the dragarea from missile-code, since F-16 aero has that included)
-# AIM-120WT should be -0.08217  (to cancel out the dragarea from missile-code, since F-16 aero has that included)
 # dummy AIM-9WT should be 0     (F-16 aero has that already included)
 # dummy AIM-120WT should be 0   (F-16 aero has that already included)
 #
@@ -91,6 +89,7 @@ var wingtip9Lda = -getprop("payload/armament/aim-9l/drag-coeff")*getprop("payloa
 var wingtip9Mda = -getprop("payload/armament/aim-9m/drag-coeff")*getprop("payload/armament/aim-9m/cross-section-sqft");
 var wingtip9Xda = -getprop("payload/armament/aim-9x/drag-coeff")*getprop("payload/armament/aim-9x/cross-section-sqft");
 var wingtip120da = -getprop("payload/armament/aim-120/drag-coeff")*getprop("payload/armament/aim-120/cross-section-sqft");
+var wingtipDummyDa = 0;
 var pylonSets = {
     empty:     {name: "Empty", pylon: nil, rack: nil, content: [], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
     mau:       {name: "--------", pylon: "1 MAU", rack: nil, content: [], fireOrder: [], launcherDragArea: 0.05, launcherMass: 220, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
@@ -122,11 +121,11 @@ var pylonSets = {
     c105:      {name: "1 x CBU-105", pylon: "1 MAU", rack: nil, content: ["CBU-105"], fireOrder: [0], launcherDragArea: 0.05, launcherMass: 220, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     c105x2:    {name: "2 x CBU-105", pylon: "1 MAU", rack: "1 BR57", content: ["CBU-105","CBU-105"], fireOrder: [0,1], launcherDragArea: 0.075, launcherMass: 470, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     dumb1:     {name: "CATM-9L", pylon: "1 MRL", content: [catm9], fireOrder: [], launcherDragArea: -wingtip9Lda, launcherMass: 275, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-    dumb1WT:   {name: "CATM-9L", pylon: "1 MRLW", content: [catm9], fireOrder: [], launcherDragArea: 0, launcherMass: 275, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    dumb1WT:   {name: "CATM-9L", pylon: "1 MRLW", content: [catm9], fireOrder: [], launcherDragArea: wingtipDummyDa, launcherMass: 275, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     dumb2:     {name: "AN-T-17", pylon: "1 MRL", rack: nil, content: [ant17], fireOrder: [], launcherDragArea: -wingtip9Lda, launcherMass: 275, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-    dumb2WT:   {name: "AN-T-17", pylon: "1 MRLW", rack: nil, content: [ant17], fireOrder: [], launcherDragArea: 0, launcherMass: 275, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    dumb2WT:   {name: "AN-T-17", pylon: "1 MRLW", rack: nil, content: [ant17], fireOrder: [], launcherDragArea: wingtipDummyDa, launcherMass: 275, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     dumb3  :   {name: "CATM-120B", pylon: "1 MRL", content: [catm120], fireOrder: [], launcherDragArea: -wingtip120da, launcherMass: 380, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-    dumb3WT:   {name: "CATM-120B", pylon: "1 MRLW", content: [catm120], fireOrder: [], launcherDragArea: 0, launcherMass: 380, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    dumb3WT:   {name: "CATM-120B", pylon: "1 MRLW", content: [catm120], fireOrder: [], launcherDragArea: wingtipDummyDa, launcherMass: 380, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     smokeRL:   {name: "Smokewinder Red", pylon: "1 MRLW", content: [smokewinderRed1], fireOrder: [0], launcherDragArea: 0, launcherMass: 293, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     smokeGL:   {name: "Smokewinder Green", pylon: "1 MRLW", content: [smokewinderGreen1], fireOrder: [0], launcherDragArea: 0, launcherMass: 293, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     smokeBL:   {name: "Smokewinder Blue", pylon: "1 MRLW", content: [smokewinderBlue1], fireOrder: [0], launcherDragArea: 0, launcherMass: 293, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
