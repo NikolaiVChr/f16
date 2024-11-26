@@ -665,7 +665,7 @@
                 <command>nasal</command>
                 <script>
                     <!-- GR1F-16CJ-1 page 1-133 -->
-                    var wow = getprop("/gear/gear[1]/wow");
+                    var wow = getprop("/fdm/jsbsim/gear/unit[1]/WOW");
                     var spd = getprop("/gear/gear[1]/rollspeed-ms");
                     if ((!wow) or (spd * MPS2KT >= 28)) {
                         setprop("/f16/fcs/bit", 0);

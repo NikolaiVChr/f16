@@ -172,9 +172,9 @@
  <object-name>extinguisher</object-name>
  <condition>
    <property>controls/gear/brake-parking</property>
-   <property>gear/gear[0]/wow</property>
-   <property>gear/gear[1]/wow</property>
-   <property>gear/gear[2]/wow</property>
+   <property>fdm/jsbsim/gear/unit[0]/WOW</property>
+   <property>fdm/jsbsim/gear/unit[1]/WOW</property>
+   <property>fdm/jsbsim/gear/unit[2]/WOW</property>
    <not>
      <property>engines/engine[0]/running</property>
    </not>
@@ -191,9 +191,9 @@
  <object-name>fuel-truck</object-name>
  <condition>
   <property>controls/gear/brake-parking</property>
-   <property>gear/gear[0]/wow</property>
-   <property>gear/gear[1]/wow</property>
-   <property>gear/gear[2]/wow</property>
+   <property>fdm/jsbsim/gear/unit[0]/WOW</property>
+   <property>fdm/jsbsim/gear/unit[1]/WOW</property>
+   <property>fdm/jsbsim/gear/unit[2]/WOW</property>
    <property>systems/refuel/serviceable</property>
    <value>0</value>
  </condition>

@@ -81,7 +81,7 @@
         <binding>
           <command>nasal</command>
           <script>
-          if (!getprop("gear/gear[0]/wow")) {
+          if (!getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
             screen.log.write("This is only possible on ground.");
             return;
           }
@@ -169,7 +169,7 @@
 		<binding>
 		  <command>nasal</command>
 		  <script>
-			if (!getprop("gear/gear[0]/wow")) {
+			if (!getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
 			  screen.log.write("This is only possible on ground.");
 			  return;
 			}
