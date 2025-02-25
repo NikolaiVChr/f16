@@ -1254,4 +1254,88 @@
       </switch>
   </channel>
 
+  <channel name="Auto-GCAS" execrate="8">
+      <switch name="/systems/agcas/serviceable">
+          <default value="0"/>
+          <test logic="AND" value="1">
+              /systems/agcas/switch == 1
+          </test>
+      </switch>
+      <switch name="/systems/agcas/engage">
+          <description>
+              <!-- TODO: Find documentation for this -->
+              Engage auto-gcas when flyup is initiated (8s before predicted impact time)
+          </description>
+          <default value="0"/>
+          <!-- Disable if not serviceable -->
+          <test logic="AND" value="0">
+              /systems/agcas/switch == 0
+          </test>
+          <test value="1">
+              /systems/agcas/manual-enable == 1
+          </test>
+          <!-- TODO: Disable AGCAS via manual-override -->
+          <!-- Test if time-till-crash is between 0-8 seconds -->
+          <test logic="AND" value="1">
+              /instrumentation/radar/time-till-crash gt 0
+              /instrumentation/radar/time-till-crash lt 8
+          </test>
+          <!-- Stay engaged until determined to be safe -->
+          <test value="0">
+              /instrumentation/radar/time-till-crash == 15
+          </test>
+          <test value="1">
+              /systems/agcas/engage == 1
+          </test>
+      </switch>
+
+      <switch name="/systems/agcas/roll-cmd">
+          <description>Roll to wings-level (180 deg/sec)</description>
+          <!--
+          Modes:
+          0 = Disabled
+          1 = Command roll right to wings-level
+          2 = Command roll left to wings-level
+          3 = Hold roll angle
+          -->
+          <default value="0"/>
+          <test value="0">
+              /systems/agcas/engage == 0
+          </test>
+          <test logic="AND" value="3">
+              /orientation/roll-deg lt 20
+              /orientation/roll-deg gt -20
+          </test>
+          <test value="1">
+              /orientation/roll-deg lt 0
+          </test>
+          <test value="2">
+              /orientation/roll-deg gt 0
+          </test>
+      </switch>
+
+      <switch name="/systems/agcas/pitch-cmd">
+          <description>Pull-up command (4G/sec)</description>
+          <!--
+          Modes:
+          0 = Disabled
+          1 = Target 5G
+          2 = Target max AoA
+          -->
+          <test logic="OR" value="0">
+              /systems/agcas/engage == 0
+
+              /orientation/roll-deg gt 90
+              /orientation/roll-deg lt -90
+          </test>
+          <!-- TODO: Remove mode 2? -->
+          <test value="2">
+              <!-- Max AoA is 25, using 20 so we don't prematurely exceed that -->
+              /orientation/alpha-deg gt 20
+          </test>
+          <default value="1"/>
+
+      </switch>
+  </channel>
+
 </system>
