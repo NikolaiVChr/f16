@@ -4,10 +4,10 @@
  <sim> 
   <model>
    <livery>
-    <name type="string">31FW, 510FS AV #525</name>
+    <name type="string">31FW, 510FS AV #525 "Bird"</name>
     <texture>Liveries/Block40/88-0525.png</texture>
     <owner type="string">USAF-USAFE</owner>
-    <pilot type="string"></pilot>
+    <pilot type="string">Capt Bird</pilot>
     <scheme type="string"></scheme>
     <block type="int">40</block>
     <serial type="string">88-0525</serial>
@@ -16,7 +16,7 @@
    </livery>
    
    <livery-logo>
-    <texture>Liveries/standard.logos.grey.png</texture>
+    <texture>Liveries/Block40/AV-525_Bird.png</texture>
    </livery-logo>
 
    <livery-patch>
