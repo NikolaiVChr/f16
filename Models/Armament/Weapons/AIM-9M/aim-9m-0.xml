@@ -4,7 +4,7 @@
 
 <PropertyList>
 
-	<name>AIM-9L</name>
+	<name>AIM-9M</name>
 	<path>AIM-9M_LW.ac</path>
 
 	<effect>  
@@ -14,7 +14,7 @@
 
 	<effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-stores</inherits-from>
-      <object-name>AIM-9L</object-name>
+      <object-name>AIM-9M</object-name>
       <object-name>AIM9_Back</object-name>
       <object-name>AIM9_Mounts</object-name>
       <object-name>AIM9_Rearwing</object-name>
@@ -23,7 +23,7 @@
 
 	<animation>
 		<type>select</type>
-      		<object-name>AIM-9L</object-name>
+      		<object-name>AIM-9M</object-name>
       		<object-name>AIM9_Back</object-name>
       		<object-name>AIM9_Mounts</object-name>
       		<object-name>AIM9_Rearwing</object-name>
@@ -421,7 +421,7 @@
 	 </particlesystem>
 
 	<animation>
-      		<object-name>AIM-9L</object-name>
+      		<object-name>AIM-9M</object-name>
       		<object-name>AIM9_Back</object-name>
       		<object-name>AIM9_Mounts</object-name>
       		<object-name>AIM9_Rearwing</object-name>
