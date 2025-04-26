@@ -3771,7 +3771,7 @@
         elec/switches/main-pwr == 0
     </test>
     <test value="0">
-     velocities/u-fps gt 1.0
+     velocities/u-fps gt 70.0
     </test>
    </switch>
 
