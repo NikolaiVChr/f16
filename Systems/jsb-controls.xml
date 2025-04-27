@@ -3771,8 +3771,8 @@
         elec/switches/main-pwr == 0
     </test>
     <test value="0">
-     velocities/u-fps gt 70.0
-    </test>
+     velocities/u-fps gt 118.1
+    </test><!-- 70kts -->
    </switch>
 
    <kinematic name="fcs/canopy-control-1">
