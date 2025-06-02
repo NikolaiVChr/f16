@@ -4,19 +4,19 @@
  <sim> 
   <model>
    <livery>
-    <name type="string">31FW, 510FS AV "Mars006"</name>
-    <texture>Liveries/Block40/88-0516.png</texture>
+    <name type="string">31FW, 510FS AV "Buzzard 01 '97"</name>
+    <texture>Liveries/Block40/89-2047.png</texture>
     <owner type="string">USAF-USAFE</owner>
-    <pilot type="string">Capt Marsdolphin</pilot>
-    <scheme type="string"></scheme>
+    <pilot type="string"></pilot>
+    <scheme type="string">Two-tone gray, Flagship</scheme>
     <block type="int">40</block>
-    <serial type="string">88-0516</serial>
+    <serial type="string">89-2047</serial>
     <squad type="string">510th FS "Buzzards"</squad>
-    <year type="string">2020</year>
+    <year type="string">1997</year>
    </livery>
    
    <livery-logo>
-    <texture>Liveries/Block40/AV-516_Mars.png</texture>
+    <texture>Liveries/standard.logos.grey.png</texture>
    </livery-logo>
 
    <livery-patch>
