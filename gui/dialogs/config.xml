@@ -100,6 +100,26 @@
       </button>
 
       <button>
+        <legend>Stow tailhook</legend>
+        <binding>
+          <command>nasal</command>
+          <script>
+          if (!getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
+            screen.log.write("This is only possible on ground.");
+            return;
+          }
+          if (!getprop("f16/cockpit/tailhook-handle")) {
+            setprop("fdm/jsbsim/systems/hook/tailhook-cmd-norm-b", 0);
+            setprop("fdm/jsbsim/systems/hook/tailhook-cmd-norm", 0);
+            screen.log.write("Tailhook stowed.");
+          } else {
+            screen.log.write("Can't stow. The tailhook switch is engaged.");
+          }
+          </script>
+        </binding>
+      </button>
+
+      <button>
       <row>1</row>
       <col>1</col>
       <legend>Call pushback</legend>

@@ -878,7 +878,10 @@
             <systems>
                 <hook>
                     <serviceable type="bool">1</serviceable>
-                    <tailhook-cmd-norm type="bool">false</tailhook-cmd-norm>
+                    <tailhook-cmd-norm type="double">0</tailhook-cmd-norm>
+                    <tailhook-cmd-norm-a type="double">0</tailhook-cmd-norm-a>
+                    <tailhook-cmd-norm-b type="double">0</tailhook-cmd-norm-b>
+                    <tailhook-cmd-norm-ab type="double">0</tailhook-cmd-norm-ab>
                     <tailhook-length-ft type="double">4.2979</tailhook-length-ft><!-- 1.31m -->
                     <tailhook-pos-min-deg type="double">-3.806</tailhook-pos-min-deg>
                     <tailhook-pos-max-deg type="double">53.369</tailhook-pos-max-deg>
@@ -1457,6 +1460,7 @@
             <enable type="bool">false</enable>
         </chute>
         <cockpit>
+            <tailhook-handle type="bool">false</tailhook-handle>
             <alt-gear-handle type="bool">false</alt-gear-handle>
             <alt-gear-pneu type="bool">true</alt-gear-pneu>
             <oxygen-liters type="double">5.0</oxygen-liters>

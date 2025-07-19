@@ -24,6 +24,58 @@
 
     <channel name="Hook">
 
+    <!--
+      GR1F-16CJ-1 page 1-118
+      The hook is electrically controlled and pneumatically
+      operated. Pneumatic pressure is supplied by the
+      LG/hook emergency pneumatic bottle which contains
+      sufficient pressure to lower the LG and hook.
+      When extended, pneumatic pressure holds the hook
+      on the runway. When subsequently retracted, the
+      hook rises enough to allow the cable to drop off the
+      hook or to be disengaged. The hook is spring-loaded
+      partially up to allow taxiing over a cable. The hook
+      must be raised manually to reset it to the stowed
+      position.
+
+      How to handle partial retraction:
+      Use the tailhook handle to trigger two switches.
+      One switch (a) goes from 0 to 0.75 and back, the other (b) latches to 0.25.
+      The output of the switches is summed, giving the cmd for the tailhook:
+        handle:0 -> handle:1 -> handle:0 -> handle:1 -> handle:0
+           0     ->    1     ->   0.25   ->    1     ->   0.25
+      A third switch latches the cmd once it reaches 0.25:
+        handle:0 -> handle:1 -> handle:0 -> handle:1 -> handle:0
+           0     ->    1     ->   0.25   ->   0.25   ->   0.25
+      The cmd can be reset by resetting switch a and b and the latch.
+    -->
+
+        <switch name="systems/hook/tailhook-cmd-norm-a">
+            <default value="0"/>
+            <test logic="AND" value="0.75">
+                /f16/cockpit/tailhook-handle == 1
+                elec/bus/batt-2 ge 20
+            </test>
+        </switch>
+        <switch name="systems/hook/tailhook-cmd-norm-b">
+            <default value="systems/hook/tailhook-cmd-norm-b"/>
+            <test logic="AND" value="0.25">
+                /f16/cockpit/tailhook-handle == 1
+                elec/bus/batt-2 ge 20
+            </test>
+        </switch>
+        <summer name="systems/hook/tailhook-cmd-norm-ab">
+            <input>systems/hook/tailhook-cmd-norm-a</input>
+            <input>systems/hook/tailhook-cmd-norm-b</input>
+        </summer>
+
+        <switch name="systems/hook/tailhook-cmd-norm">
+            <default value="systems/hook/tailhook-cmd-norm-ab"/>
+            <test value="0.25">
+                systems/hook/tailhook-cmd-norm == 0.25
+            </test>
+        </switch>
+
         <kinematic name="systems/hook/tailhook-control">
             <input>systems/hook/tailhook-cmd-norm</input>
             <traverse>

@@ -124,7 +124,7 @@
                 <value>UP</value>
                 <condition>
                     <equals>
-                        <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
+                        <property>/f16/cockpit/tailhook-handle</property>
                         <value>0</value>
                     </equals>
                 </condition>
@@ -136,7 +136,7 @@
                 </marker>
                 <binding>
                     <command>property-assign</command>
-                    <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
+                    <property>/f16/cockpit/tailhook-handle</property>
                     <value>0</value>
                 </binding>
             </item>

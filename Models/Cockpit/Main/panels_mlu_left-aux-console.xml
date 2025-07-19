@@ -394,7 +394,7 @@
         <type>knob</type>
         <object-name>SW_HOOK</object-name>
         <visible>true</visible>
-        <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
+        <property>f16/cockpit/tailhook-handle</property>
         <drag-direction>vertical</drag-direction>
         <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
         <repeatable>true</repeatable>
@@ -416,7 +416,7 @@
         <increase>
             <binding>
                 <command>property-adjust</command>
-                <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
+                <property>f16/cockpit/tailhook-handle</property>
                 <step>-1</step>
                 <min>0</min>
                 <max>1</max>
@@ -426,7 +426,7 @@
         <decrease>
             <binding>
                 <command>property-adjust</command>
-                <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
+                <property>f16/cockpit/tailhook-handle</property>
                 <step>1</step>
                 <min>0</min>
                 <max>1</max>

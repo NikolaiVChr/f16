@@ -463,7 +463,7 @@
             <desc>Toggle arrester hook</desc>
             <binding>
                 <command>property-toggle</command>
-                <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
+                <property>f16/cockpit/tailhook-handle</property>
                 <condition>
                     <greater-than-equals>
                         <property>fdm/jsbsim/elec/bus/batt-2</property>
