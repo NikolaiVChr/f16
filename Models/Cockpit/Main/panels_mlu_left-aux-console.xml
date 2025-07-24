@@ -514,12 +514,14 @@
         </axis>
         <increase>
             <binding>
-                <command>property-adjust</command>
-                <property>controls/gear/gear-down</property>
-                <step>-1</step>
-                <min>0</min>
-                <max>1</max>
-                <wrap>false</wrap>
+                <command>nasal</command>
+                <script>
+                    <!-- T.O. GR1F-16CJ-1 page 1-104 and page 1-107:
+                         Left MLG WOW prevents LG handle movement -->
+                    if (!getprop("fdm/jsbsim/gear/unit[2]/WOW")) {
+                        setprop("controls/gear/gear-down", 0);
+                    }
+                </script>
            </binding>
         </increase>
         <decrease>
