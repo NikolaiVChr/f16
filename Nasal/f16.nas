@@ -554,7 +554,6 @@ var slow = {
         } else {
             setprop("fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains", 0);
         }
-        setprop("f16/avionics/emer-jett-switch",0);
     },
 };
 
@@ -793,7 +792,23 @@ setlistener("/fdm/jsbsim/fcs/fly-by-wire/digital-backup", func(node) {
 });
 
 
+var emer_jett_switch = {
+    init : func {
+        me.timer = maketimer(1, me, me.done);
+        setlistener("f16/avionics/emer-jett-switch", func(switch) {
+            if (switch.getValue() == 1) {
+                me.timer.start();
+            } else {
+                me.timer.stop();
+            }
+        }, 0, 0);
+    },
 
+    done : func {
+        setprop("f16/avionics/emer-jett-switch", 0);
+    },
+};
+emer_jett_switch.init();
 
 
 var cockpit_temperature_control = {
