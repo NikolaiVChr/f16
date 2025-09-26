@@ -312,7 +312,7 @@ var DamageRecipient =
                 if(getprop("payload/armament/msg") == 0 and getprop("payload/armament/spectator") != 1 and notification.RemoteCallsign != notification.Callsign) {
                   return emesary.Transmitter.ReceiptStatus_NotProcessed;
                 }
-                if(multiplayer.ignore[notification.Callsign] == 1) {
+                if(isIgnoredCallsign(notification.Callsign)) {
                   return emesary.Transmitter.ReceiptStatus_NotProcessed;
                 }
 
@@ -474,7 +474,7 @@ var DamageRecipient =
 #                    debug.dump(notification);
                     #
                     #
-                    if(multiplayer.ignore[notification.Callsign] == 1) {
+                    if(isIgnoredCallsign(notification.Callsign)) {
                       damageLog.push("Ignored hit by "~notification.Callsign);
                       return emesary.Transmitter.ReceiptStatus_NotProcessed;
                     }
@@ -1387,6 +1387,30 @@ var getCallsign = func (callsign) {
   return node;
 }
 
+# 'ignored' player test
+# In FG 2024, multiplayer.ignore hash was removed in favour of property controls/invisible.
+# These methods test both for compatibility.
+
+var ignored_struct = {};
+
+var isIgnoredNode = func(node) {
+    if (contains(multiplayer, "ignore")) {
+        var callsign = node.getValue("callsign");
+        return callsign != nil and multiplayer.ignore[callsign];
+    } else {
+        node = node.getNode("controls/invisible");
+        return node != nil and node.getBoolValue();
+    }
+}
+
+var isIgnoredCallsign = func(callsign) {
+    if (contains(multiplayer, "ignore")) {
+        return multiplayer.ignore[callsign];
+    } else {
+        return contains(ignored_struct, preAlphaKey ~ callsign);
+    }
+}
+
 var MAW_elapsed = 0;
 
 var radarSpikes = {};
@@ -1397,6 +1421,7 @@ foreach (key ; keys(radar_signatures)) {
 
 var processCallsigns = func () {
   callsign_struct = {};
+  ignored_struct = {};
   var players = props.globals.getNode("ai/models").getChildren();
   var myCallsign = getprop("sim/multiplay/callsign");
   myCallsign = size(myCallsign) < 8 ? myCallsign : left(myCallsign,7);
@@ -1405,7 +1430,8 @@ var processCallsigns = func () {
   foreach (var player; players) {
     if(player.getChild("valid") != nil and player.getChild("valid").getValue() == 1 and player.getChild("callsign") != nil and player.getChild("callsign").getValue() != "" and player.getChild("callsign").getValue() != nil) {
       var callsign = player.getChild("callsign").getValue();
-      if(multiplayer.ignore[callsign] == 1) {
+      if(isIgnoredNode(player)) {
+        ignored_struct[preAlphaKey ~ callsign] = player;
         continue;
       }
       callsign_struct[preAlphaKey ~ callsign] = player;

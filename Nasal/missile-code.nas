@@ -5043,7 +5043,7 @@ var AIM = {
 
 	goToLock: func {
         me.callsign = damage.processCallsign(me.tagt.get_Callsign());
-        if (multiplayer.ignore[me.callsign] == 1) {
+		if (damage.isIgnoredCallsign(me.callsign)) {
         	me.callsign = "Unknown";
         	if (me.tagt == contact) contact = nil;
         	makesettimer(func me.search(), 0.1);
