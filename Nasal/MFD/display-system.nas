@@ -150,7 +150,8 @@ var font = {
 	},
 	fcr: {
 		silent: 18,
-		bit: 18,
+		bitTime: 18,
+		bitVers: 18,
 		cursorAlt: 18,
 		beyeCursor: 18,
 	},
@@ -172,6 +173,7 @@ var zIndex = {
 		page: 5,
 		pullUp: 20000,
 		layer: 200,
+		rfState: 300,
 	},
 	deviceObs: {
 		text: 10,
@@ -216,7 +218,8 @@ var zIndex = {
 		azimuthLine: 13,
 		horizLine: 15,
 		silent: 16,
-		bit: 16,
+		bitTime: 16,
+		bitVers: 16,
 		expBox: 1,
 		cursor: 1000,
 		bullseye: 1,
@@ -366,7 +369,7 @@ var DisplayDevice = {
 	},
 
 	loop: func {
-		me.setSOI(me["aircraftSOI"] == f16.SOI);
+		#me.setSOI(me["aircraftSOI"] == f16.SOI);
 		me.update(notifications.frameNotification);
 	},
 
@@ -454,6 +457,16 @@ var DisplayDevice = {
 			# Neither
 			me.setSOI(-1);
 		}
+
+		var rfSwitch = getprop("f16/avionics/rf/rf-switch");
+		if (rfSwitch == 1) {
+			me.setRFState("QUIET");
+		} else if (rfSwitch == 2) {
+			me.setRFState("SILENT");
+		} else {
+			me.setRFState("");
+		}
+
 		me.system.update(noti);
 	},
 
@@ -580,6 +593,20 @@ var DisplayDevice = {
 		return me.system.getSOIPrio();
 	},
 
+	addRFState: func {
+		me.rfState = me.controlGrp.createChild("text")
+				.set("z-index", zIndex.device.rfState)
+				.setColor(me.colorFront)
+				.setAlignment("center-center")
+				.setTranslation(me.uvMap[0]*me.resolution[0]*0.5, me.uvMap[1]*me.resolution[1]*0.80)
+				.setFontSize(me.fontSize);
+		return me.rfState;
+	},
+
+	setRFState: func (info) {
+		me.rfState.setText(info);
+	},
+
 	setControlTextColors: func (foreground, background) {
 		me.colorFront = foreground;
 		me.colorBack  = background;
@@ -670,6 +697,7 @@ var DisplaySystem = {
 		me.device.addSOILines();
 		me.device.addSOIText("NOT SOI");
 		me.device.setSOI(-1);
+		me.device.addRFState();
 	},
 
 	getSOIPrio: func {
@@ -3970,12 +3998,18 @@ var DisplaySystem = {
 	           .set("z-index",zIndex.fcr.silent)
 	           .setFontSize(font.fcr.silent, 1.0)
 	           .setColor(colorText2);
-	        me.bitText = me.p_RDR.createChild("text")
+	        me.bitTime = me.p_RDR.createChild("text")
+	           .setTranslation(0, -displayHeight*0.825)
+	           .setAlignment("center-center")
+	           .set("z-index",zIndex.fcr.bitTime)
+	           .setFontSize(font.fcr.bitTime, 1.0)
+	           .setColor(colorText2);
+	        me.bitVers = me.p_RDR.createChild("text")
 	           .setTranslation(0, -displayHeight*0.75)
 	           .setAlignment("center-center")
 	           .setText("    VERSION C021-IPOO-MRO3258674  ")
-	           .set("z-index",zIndex.fcr.bit)
-	           .setFontSize(font.fcr.bit, 1.0)
+	           .set("z-index",zIndex.fcr.bitVers)
+	           .setFontSize(font.fcr.bitVers, 1.0)
 	           .setColor(colorText2);
 
 	        me.expBox = me.p_RDR.createChild("path")
@@ -4277,23 +4311,28 @@ var DisplaySystem = {
                 me.silent.hide();
             } elsif (noti.getproper("fcrBit") == 2) {
                 me.silent.setText("SILENT");
-                me.silent.setVisible(!getprop("/fdm/jsbsim/gear/unit[0]/WOW") or !getprop("instrumentation/radar/radar-enable"));
+                if ((getprop("f16/avionics/rf/rf-switch") == 1) and !me.ovrd) {
+                    me.silent.setText("QUIET");
+                }
+                me.silent.setVisible(!noti.getproper("wow0") or !noti.getproper("radarOn"));
             } elsif (noti.getproper("fcrBit") == 1) {
-                me.fcrBITsecs = (1.0-noti.getproper("fcrWarm"))*120;
-                me.silent.setText(sprintf("  BIT TIME REMAINING IS %-3d SEC", me.fcrBITsecs));
-                me.silent.show();
+                me.silent.hide();
             } elsif (noti.getproper("fcrBit") == 0) {
                 me.silent.setText("  OFF  ");
                 me.silent.show();
             }
 
             if (noti.getproper("fcrBit") == 1) {
-                me.silent.setTranslation(0, -displayHeight*0.825);
-                me.bitText.show();
+                me.fcrBITsecs = (1.0-noti.getproper("fcrWarm"))*120;
+                me.bitTime.setText(sprintf("  BIT TIME REMAINING IS %-3d SEC", me.fcrBITsecs));
+                me.bitTime.show();
+                me.bitVers.show();
             } else {
-                me.silent.setTranslation(0, -displayHeight*0.25);
-                me.bitText.hide();
+                me.bitTime.hide();
+                me.bitVers.hide();
             }
+
+            me.device.setRFState(""); # The FCR page has its own way of showing RF state
 
             me.exp_modi = exp?(me.isFixedEXPCursor?0.50:0.25):1.00;# slow down cursor movement when in zoom mode
 
@@ -6531,6 +6570,7 @@ var DisplaySystem = {
 			me.device.controls["OSB6"].setControlText("MFDS",1,me.testMFDS);
 			me.mfdsGreyTest.setVisible(me.testMFDS);
 			me.pageText.setVisible(me.testMFDS);
+			me.device.setRFState(""); # The only page not showing RF state
 		},
 		exit: func {
 			printDebug("Exit ",me.name~" on ",me.device.name);

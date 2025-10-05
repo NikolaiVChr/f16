@@ -443,16 +443,23 @@ var toggleTACANBand = func() {
 var toggleTACANMode = func() {
 	if (dataEntryDisplay.tacanMode == "REC    ") {
 		dataEntryDisplay.tacanMode = "T/R    ";
-		setprop("f16/avionics/tacan-receive-only", 0);
 	} elsif (dataEntryDisplay.tacanMode == "T/R    ") {
 		dataEntryDisplay.tacanMode = "A/A REC";
-		setprop("f16/avionics/tacan-receive-only", 1);
 	} elsif (dataEntryDisplay.tacanMode == "A/A REC") {
 		dataEntryDisplay.tacanMode = "A/A T/R";
-		setprop("f16/avionics/tacan-receive-only", 0);
 	} else {
 		dataEntryDisplay.tacanMode = "REC    ";
+	}
+	setTACANmode();
+};
+
+var setTACANmode = func() {
+	if (getprop("f16/avionics/rf/rf-switch") or
+	   (dataEntryDisplay.tacanMode == "REC    ") or
+	   (dataEntryDisplay.tacanMode == "A/A REC")) {
 		setprop("f16/avionics/tacan-receive-only", 1);
+	} else {
+		setprop("f16/avionics/tacan-receive-only", 0);
 	}
 };
 

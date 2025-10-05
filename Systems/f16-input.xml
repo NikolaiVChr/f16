@@ -523,14 +523,10 @@
         </key>
         <key n="114">
             <name>r</name>
-            <desc>Toggle radar standby mode</desc>
+            <desc>Toggle RF switch</desc>
             <binding>
                 <command>property-toggle</command>
-                <property>instrumentation/radar/radar-enable</property>
-            </binding>
-            <binding>
-                <command>nasal</command>
-                <script>controls_f16.radar_standby();</script>
+                <property>f16/avionics/rf/rf-switch</property>
             </binding>
         </key>
         <key n="127">

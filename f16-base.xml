@@ -1023,7 +1023,6 @@
             <radar2-range-std type="int">40</radar2-range-std>
             <radar-standby type="bool">true</radar-standby>
             <radar-enable type="bool">false</radar-enable>
-            <radar-enable-std type="bool">false</radar-enable-std>
             <symbols-enabled type="bool">true</symbols-enabled>
             <debug-mode type="bool">true</debug-mode>
             <serviceable type="bool">true</serviceable>
@@ -1417,6 +1416,11 @@
             <fault-warning type="int">0</fault-warning><!-- 0: No warn 1: warn 2: warn reset -->
             <voice-msg-inhibit type="bool">false</voice-msg-inhibit>
             <hmd-sym-int-knob type="double">0.0</hmd-sym-int-knob>
+            <rf>
+                <rf-switch type="int">0</rf-switch>
+                <ant-sel-iff-switch type="int">0</ant-sel-iff-switch>
+                <ant-sel-uhf-switch type="int">0</ant-sel-uhf-switch>
+            </rf>
         </avionics>
         <fcs>
             <stby-mode type="bool">false</stby-mode>

@@ -28,16 +28,42 @@ var speed_down = func {
     }
 }
 
+var rf_state = {
+    init: func {
+        setlistener("f16/avionics/rf/rf-switch", rf_state.eval_rf_switch, 1, 0);
+        setlistener("f16/avionics/dgft", rf_state.eval_fcr_state, 0, 0);
+    },
+
+    # See MLU Tape 1, Table 7-1 RF Switch Functionality
+    # See GR1F-16CJ-34-1-1, page 1-31 and 1-32
+    eval_rf_switch: func {
+        rf_state.eval_fcr_state();
+        # CARA through f16.CARA
+        ded.setTACANmode();
+        # AIFF through JSB switch elec/various/iff
+        # IDM through JSB switch elec/various/datalink
+        # TODO: ECM pods, when controls become available
+    },
+
+    eval_fcr_state: func {
+        if (getprop("f16/avionics/dgft") or getprop("f16/avionics/rf/rf-switch")) {
+            var prio = radar_system.apg68Radar.getPriorityTarget();
+            if ((prio == nil) or (getprop("f16/avionics/rf/rf-switch") == 2)) {
+                setprop("instrumentation/radar/radar-enable", 0);
+            }
+        } else {
+            setprop("instrumentation/radar/radar-enable", 1);
+        }
+    },
+};
+rf_state.init();
+
 var dogfight = func {        
 	var dg = getprop("f16/avionics/dgft");
     dg = !dg;
     setprop("f16/avionics/dgft", dg);
     if (dg) {
         var prio = radar_system.apg68Radar.getPriorityTarget();
-        setprop("instrumentation/radar/radar-enable-std", getprop("instrumentation/radar/radar-enable"));
-        if (prio == nil) {
-            setprop("instrumentation/radar/radar-enable", 0);
-        }
         pylons.fcs.selectWeapon(fc.defaultCannon);
         ded.dataEntryDisplay.page = ded.pEWS;
         radar_system.apg68Radar.setRootMode(1, prio);
@@ -58,7 +84,6 @@ var dogfight = func {
         #f16.rdrModeGM = 0;
     } else {
         radar_system.apg68Radar.setRootMode(0, radar_system.apg68Radar.getPriorityTarget());
-        setprop("instrumentation/radar/radar-enable", getprop("instrumentation/radar/radar-enable") and getprop("instrumentation/radar/radar-enable-std"));
     }
     setprop("f16/avionics/dgft", dg); # extra invocation on purpose
 }
