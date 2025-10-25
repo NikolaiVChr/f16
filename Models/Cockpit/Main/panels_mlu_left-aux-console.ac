@@ -11,7 +11,7 @@ MATERIAL "dark3" rgb 0.063 0.063 0.063  amb 0.3 0.3 0.3  emis 0 0 0  spec 0.176 
 MATERIAL "unlit" rgb 0 0 0  amb 0 0 0  emis 0 0 0  spec 0.5 0.5 0.5  shi 10  trans 0
 MATERIAL "Display" rgb 0 0 0  amb 0 0 0  emis 0 0 0  spec 0.5 0.5 0.5  shi 64  trans 0
 OBJECT world
-kids 31
+kids 32
 OBJECT group
 name "TWA_LEFT"
 kids 2
