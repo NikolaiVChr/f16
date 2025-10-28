@@ -12,9 +12,20 @@
   <animation>
     <type>rotate</type>
     <object-name>DragChute</object-name>
-    <property>sim/multiplay/generic/float[17]</property><!-- alpha -->
-    <factor>-1</factor>
-    <offset-deg>90</offset-deg>
+    <!-- After landing alpha-deg can become < 0. Prevent dragchute from flipping forward. -->
+    <expression>
+      <sum>
+        <product>
+          <clip>
+            <property>sim/multiplay/generic/float[17]</property><!-- orientation/alpha-deg -->
+            <clipMin>0.001</clipMin>
+            <clipMax>89.999</clipMax>
+          </clip>
+          <value>-1</value>
+        </product>
+        <value>90</value>
+      </sum>
+    </expression>
     <center>
       <x-m> 0.0 </x-m>
       <y-m> 0.0000</y-m>
