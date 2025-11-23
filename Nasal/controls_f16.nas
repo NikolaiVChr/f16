@@ -47,8 +47,12 @@ var rf_state = {
 
     eval_fcr_state: func {
         if (getprop("f16/avionics/dgft") or getprop("f16/avionics/rf/rf-switch")) {
-            var prio = radar_system.apg68Radar.getPriorityTarget();
-            if ((prio == nil) or (getprop("f16/avionics/rf/rf-switch") == 2)) {
+            # 'No priority target' used to be a condition to move the radar to standby,
+            # but the RF-switch is not the radar enable switch, and there's no other.
+            # TODO: All exceptions listed in Table 7-1 referenced above to be implemented.
+            #var prio = radar_system.apg68Radar.getPriorityTarget();
+            #if ((prio == nil) or (getprop("f16/avionics/rf/rf-switch") == 2)) {
+            if (getprop("f16/avionics/rf/rf-switch") == 2) {
                 setprop("instrumentation/radar/radar-enable", 0);
             }
         } else {
