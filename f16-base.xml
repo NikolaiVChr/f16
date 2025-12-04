@@ -995,6 +995,15 @@
             <offset-z-m>0.68</offset-z-m>
             <max-fuel-transfer-lbs-min>6000</max-fuel-transfer-lbs-min>
         </refuel>
+        <agcas>
+            <engage type="bool">false</engage>
+            <manual-enable type="bool">false</manual-enable>
+            <pitch-cmd type="int">0</pitch-cmd>
+            <roll-cmd type="int">0</roll-cmd>
+            <serviceable type="bool">true</serviceable>
+            <stage type="int">1</stage>
+            <switch type="bool">true</switch>
+        </agcas>
     </systems>
     <instrumentation>
         <altimeter>
