@@ -952,7 +952,7 @@
     <animation>
         <type>knob</type>
         <object-name>ant-sel-iff-switch</object-name>
-        <property>f16/avionics/ant-sel-iff-switch</property>
+        <property>f16/avionics/rf/ant-sel-iff-switch</property>
         <factor>-25</factor>
         <offset-deg>0</offset-deg>
         <drag-direction>vertical</drag-direction>
@@ -965,7 +965,7 @@
         <increase>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/ant-sel-iff-switch</property>
+                <property>f16/avionics/rf/ant-sel-iff-switch</property>
                 <step>1</step>
                 <min>-1</min>
                 <max>1</max>
@@ -975,7 +975,7 @@
         <decrease>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/ant-sel-iff-switch</property>
+                <property>f16/avionics/rf/ant-sel-iff-switch</property>
                 <step>-1</step>
                 <min>-1</min>
                 <max>1</max>
@@ -987,7 +987,7 @@
     <animation>
         <type>knob</type>
         <object-name>ant-sel-uhf-switch</object-name>
-        <property>f16/avionics/ant-sel-uhf-switch</property>
+        <property>f16/avionics/rf/ant-sel-uhf-switch</property>
         <factor>-25</factor>
         <offset-deg>0</offset-deg>
         <drag-direction>vertical</drag-direction>
@@ -1000,7 +1000,7 @@
         <increase>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/ant-sel-uhf-switch</property>
+                <property>f16/avionics/rf/ant-sel-uhf-switch</property>
                 <step>1</step>
                 <min>-1</min>
                 <max>1</max>
@@ -1010,7 +1010,7 @@
         <decrease>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/ant-sel-uhf-switch</property>
+                <property>f16/avionics/rf/ant-sel-uhf-switch</property>
                 <step>-1</step>
                 <min>-1</min>
                 <max>1</max>

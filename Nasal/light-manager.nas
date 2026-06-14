@@ -424,10 +424,4 @@ var fix = FixedBeamRadar.new();
 # Beam: -10.14+(-4.86/2) = -12.57
 fix.setBeamPitch(-12.57);
 
-if (getprop("/sim/version/compositor-support") != 1) {
-    # we only start this if not running in 2020.4.0
-    #light_manager.init();
-}
-
-
-
+light_manager.init();

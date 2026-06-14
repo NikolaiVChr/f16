@@ -6,13 +6,13 @@
    <livery>
     <name type="string">31FW, 555FS AV HGV #425</name>
     <texture>Liveries/Block40/88-0425.png</texture>
-    <owner type="string">USAF</owner>
+    <owner type="string">USAF-USAFE</owner>
     <pilot type="string"></pilot>
     <scheme type="string">Have Glass V</scheme>
     <block type="int">40</block>
     <serial type="string">88-0425</serial>
     <squad type="string">555th FS "Triple Nickel"</squad>
-    <year type="string">2021</year>
+    <year type="string">2025</year>
    </livery>
    
    <livery-logo>

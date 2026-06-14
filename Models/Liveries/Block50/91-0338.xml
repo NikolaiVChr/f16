@@ -6,7 +6,7 @@
    <livery>
     <name type="string">52FW, 480FS SP HGV #338</name>
     <texture>Liveries/Block50/91-0338.png</texture>
-    <owner type="string">USAF</owner>
+    <owner type="string">USAF-USAFE</owner>
     <pilot type="string"></pilot>
     <scheme type="string">Have Glass V</scheme>
     <block type="int">50</block>

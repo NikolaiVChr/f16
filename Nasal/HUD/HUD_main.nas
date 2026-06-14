@@ -34,6 +34,12 @@ var uv_used = uv_x2-uv_x1;
 var tran_x = 0;
 var tran_y = 0;
 
+var versionString = getprop("sim/version/flightgear");
+var version = split(".", versionString);
+var major = num(version[0]);
+var minor = num(version[1]);
+var pica  = num(version[2]);
+
 var F16_HUD = {
     map: func (value, leftMin, leftMax, rightMin, rightMax) {
         # Figure out how 'wide' each range is
@@ -3636,17 +3642,29 @@ append(obj.total, obj.speed_curr);
             #printf("%d,%d",0,0);
             #print("-----");
             
+            var buggedFG = major < 2024;
+
             var multi = gunSight == 1?3:(me.hydra?2:1);# double the funnel segments for HYDRA (3.4 secs) and triple for STRF (5.1 secs)
             for (var j = 0;j < me.funnelParts*multi;j+=1) {
 
-                # there is a unit bug in FG 2020.3.19 submodels which is applied every frame, which means we gotta compensate:
-                me.eegsMe.vel_kt = me.eegsMe.vel * FPS2KT;
+                if (buggedFG) {
+                        # there is a unit bug in FG 2020.3.19 submodels which is applied every frame, which means we gotta compensate:
+                        me.eegsMe.vel_kt = me.eegsMe.vel * FPS2KT;
 
-                #calc new speed incorrect (using wrong units like FG do)
+                        #calc new airpressure incorrect (using wrong units like FG do)
+                        me.eegsMe.q = 0.5 * me.eegsMe.rho * me.eegsMe.vel_kt * me.eegsMe.vel_kt;
+                } else {
+                        me.eegsMe.q = 0.5 * me.eegsMe.rho * me.eegsMe.vel * me.eegsMe.vel;
+                }
                 me.eegsMe.Cd = drag(me.eegsMe.vel/ me.eegsMe.rs[1],me.hydra?0:me.gunCd);
-                me.eegsMe.q = 0.5 * me.eegsMe.rho * me.eegsMe.vel_kt * me.eegsMe.vel_kt;
+                        
                 me.eegsMe.deacc = (me.eegsMe.Cd * me.eegsMe.q * (me.hydra?0.00136354:me.gunEda)) / me.eegsMe.mass;#0.00136354=eda
-                me.eegsMe.vel -= me.eegsMe.deacc * KT2FPS * me.averageDt;
+                
+                if (buggedFG) {
+                        me.eegsMe.vel -= me.eegsMe.deacc * KT2FPS * me.averageDt;
+                } else {
+                        me.eegsMe.vel -= me.eegsMe.deacc * me.averageDt;
+                }
 
                 me.eegsMe.speed_down_fps       = -math.sin(me.eegsMe.pitch * D2R) * (me.eegsMe.vel);
                 me.eegsMe.speed_horizontal_fps = math.cos(me.eegsMe.pitch * D2R) * (me.eegsMe.vel);

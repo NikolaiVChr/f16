@@ -27,6 +27,7 @@ var mlw_max=getprop("payload/d-config/mlw_max"); #
 var auto_flare_caller = getprop("payload/d-config/auto_flare_caller"); # If damage.nas should detect flare releases, or if function is called from somewhere in aircraft
 ############################################################################################################################
 
+var preAlphaKey = "ABC";# for hash keys that could start with number, which is not allowed.
 srand();
 var hp = hp_max;
 setprop("sam/damage", math.max(0,100*hp/hp_max));#used in HUD
@@ -174,6 +175,7 @@ var warheads = {
 var AIR_RADAR = "air";
 
 var radar_signatures = {
+    # be careful these keys do not start with a number char
                 "unknown-model":            AIR_RADAR,
                 "f-14b":                    AIR_RADAR,
                 "F-14D":                    AIR_RADAR,
@@ -310,7 +312,7 @@ var DamageRecipient =
                 if(getprop("payload/armament/msg") == 0 and getprop("payload/armament/spectator") != 1 and notification.RemoteCallsign != notification.Callsign) {
                   return emesary.Transmitter.ReceiptStatus_NotProcessed;
                 }
-                if(multiplayer.ignore[notification.Callsign] == 1) {
+                if(isIgnoredCallsign(notification.Callsign)) {
                   return emesary.Transmitter.ReceiptStatus_NotProcessed;
                 }
 
@@ -328,7 +330,7 @@ var DamageRecipient =
                   var wh = id2warhead[DamageRecipient.emesaryID2typeID(notification.SecondaryKind)][4];
                   var tacID = left(md5(notification.Callsign~notification.UniqueIdentity~wh),6);
                   var elapsed = getprop("sim/time/elapsed-sec");
-                  lastSeenTacObject[tacID] = elapsed;
+                  lastSeenTacObject[preAlphaKey ~ tacID] = elapsed;
                   if (notification.Kind == MOVE) {
                     var target = ",Color=Red";                  
                     if (wh=="Flare") wh=wh~",Type=Flare";
@@ -381,7 +383,7 @@ var DamageRecipient =
                   if (tacview.starttime) {
                     var tacID = left(md5(notification.Callsign~notification.UniqueIdentity~typ[4]),6);
                     var elapsed = getprop("sim/time/elapsed-sec");
-                    lastSeenTacObject[tacID] = elapsed;
+                    lastSeenTacObject[preAlphaKey ~ tacID] = elapsed;
                     if (notification.Kind == DESTROY) {
                       thread.lock(tacview.mutexWrite);
                       tacview.write("#" ~ (systime() - tacview.starttime)~"\n");
@@ -412,10 +414,10 @@ var DamageRecipient =
 
                 # Missile launch warning:
                 if (thrustOn) {
-                  var launch = launched[notification.Callsign~notification.UniqueIdentity];
+                  var launch = launched[preAlphaKey ~ notification.Callsign~notification.UniqueIdentity];
                   if (launch == nil or elapsed - launch > 300) {
                     launch = elapsed;
-                    launched[notification.Callsign~notification.UniqueIdentity] = launch;
+                    launched[preAlphaKey ~ notification.Callsign~notification.UniqueIdentity] = launch;
                     if (notification.Position.direct_distance_to(ownPos)*M2NM < mlw_max) {
                       setprop("payload/armament/MLW-bearing", bearing);
                       setprop("payload/armament/MLW-launcher", notification.Callsign);
@@ -443,7 +445,7 @@ var DamageRecipient =
                     if (notification.Callsign != nil) setprop("payload/armament/MAW-semiactive-callsign", notification.Callsign);# resets every 1 seconds
                 }
                 MAW_elapsed = elapsed;
-                var appr = approached[notification.Callsign~notification.UniqueIdentity];
+                var appr = approached[preAlphaKey ~ notification.Callsign~notification.UniqueIdentity];
                 if (appr == nil or elapsed - appr > 450) {
                   if (radarOn) {
                       #printf("Missile Approach Warning from %03d degrees.", bearing);
@@ -454,7 +456,7 @@ var DamageRecipient =
                       damageLog.push(sprintf("Missile Approach Warning from %s.", notification.Callsign));
                       if (rwr_to_screen) screen.log.write(sprintf("Missile Approach Warning (semi-active)."), 1,0.5,0);# temporary till someone models a RWR in RIO seat
                   }
-                  approached[notification.Callsign~notification.UniqueIdentity] = elapsed;
+                  approached[preAlphaKey ~ notification.Callsign~notification.UniqueIdentity] = elapsed;
                   if (m28_auto) mig28.engagedBy(notification.Callsign, 1);
                 }
                 return emesary.Transmitter.ReceiptStatus_OK;
@@ -472,7 +474,7 @@ var DamageRecipient =
 #                    debug.dump(notification);
                     #
                     #
-                    if(multiplayer.ignore[notification.Callsign] == 1) {
+                    if(isIgnoredCallsign(notification.Callsign)) {
                       damageLog.push("Ignored hit by "~notification.Callsign);
                       return emesary.Transmitter.ReceiptStatus_NotProcessed;
                     }
@@ -1381,8 +1383,32 @@ var nearby_explosion_b = func {
 
 var callsign_struct = {};
 var getCallsign = func (callsign) {
-  var node = callsign_struct[callsign];
+  var node = callsign_struct[preAlphaKey ~ callsign];
   return node;
+}
+
+# 'ignored' player test
+# In FG 2024, multiplayer.ignore hash was removed in favour of property controls/invisible.
+# These methods test both for compatibility.
+
+var ignored_struct = {};
+
+var isIgnoredNode = func(node) {
+    if (contains(multiplayer, "ignore")) {
+        var callsign = node.getValue("callsign");
+        return callsign != nil and multiplayer.ignore[callsign];
+    } else {
+        node = node.getNode("controls/invisible");
+        return node != nil and node.getBoolValue();
+    }
+}
+
+var isIgnoredCallsign = func(callsign) {
+    if (contains(multiplayer, "ignore")) {
+        return multiplayer.ignore[callsign];
+    } else {
+        return contains(ignored_struct, preAlphaKey ~ callsign);
+    }
 }
 
 var MAW_elapsed = 0;
@@ -1395,6 +1421,7 @@ foreach (key ; keys(radar_signatures)) {
 
 var processCallsigns = func () {
   callsign_struct = {};
+  ignored_struct = {};
   var players = props.globals.getNode("ai/models").getChildren();
   var myCallsign = getprop("sim/multiplay/callsign");
   myCallsign = size(myCallsign) < 8 ? myCallsign : left(myCallsign,7);
@@ -1403,10 +1430,11 @@ var processCallsigns = func () {
   foreach (var player; players) {
     if(player.getChild("valid") != nil and player.getChild("valid").getValue() == 1 and player.getChild("callsign") != nil and player.getChild("callsign").getValue() != "" and player.getChild("callsign").getValue() != nil) {
       var callsign = player.getChild("callsign").getValue();
-      if(multiplayer.ignore[callsign] == 1) {
+      if(isIgnoredNode(player)) {
+        ignored_struct[preAlphaKey ~ callsign] = player;
         continue;
       }
-      callsign_struct[callsign] = player;
+      callsign_struct[preAlphaKey ~ callsign] = player;
       var str6 = player.getNode("sim/multiplay/generic/string[6]");
       if (str6 != nil and str6.getValue() != nil and str6.getValue() != "" and size(""~str6.getValue())==4 and left(md5(myCallsign),4) == str6.getValue()) {
         painted = 1;
@@ -1429,7 +1457,7 @@ var processCallsigns = func () {
       if (elapsed - lastSeenTacObject[key] > 30) {
         thread.lock(tacview.mutexWrite);
         tacview.write("#" ~ (systime() - tacview.starttime)~"\n");
-        tacview.write("-"~key~"\n");
+        tacview.write("-"~substr(key,size(preAlphaKey))~"\n");
         thread.unlock(tacview.mutexWrite);
       } else {
         new_lastSeenTacObject[key] = lastSeenTacObject[key];

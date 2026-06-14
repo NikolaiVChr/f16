@@ -6,7 +6,7 @@
    <livery> 
     <name type="string">412TW, 416FLTS ED "75 Years Supersonic Flight"</name>
     <texture>Liveries/Block40/88-0456.png</texture>
-    <owner type="string">USAF</owner>
+    <owner type="string">USAF-AFMC</owner>
     <pilot type="string"></pilot>
     <scheme type="string">Two-tone gray, Special Color</scheme>
     <block type="int">42</block>

@@ -6,7 +6,7 @@
    <livery>
     <name type="string">114 FW, 175FS "75th Anniversary"</name>
     <texture>Liveries/Block40/88-0485.png</texture>
-    <owner type="string">USAF</owner>
+    <owner type="string">USAF-ANG</owner>
     <pilot type="string"></pilot>
     <scheme type="string">Special Color</scheme>
     <block type="int">40</block>

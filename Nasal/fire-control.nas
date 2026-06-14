@@ -1537,6 +1537,6 @@ var getCompleteRadarTargetsList = func {
 	return radar_system.getCompleteList();
 }
 var isArmsReleasePermitted = func {
-	return getprop("f16/avionics/gnd-jett") or !getprop("gear/gear[0]/wow");
+	return getprop("f16/avionics/gnd-jett") or !getprop("fdm/jsbsim/gear/unit[0]/WOW");
 }
 var masterArmSwitch = "controls/armament/master-arm-switch";

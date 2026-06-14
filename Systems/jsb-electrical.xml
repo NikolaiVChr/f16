@@ -940,6 +940,7 @@
 			<test logic="AND" value="1">
 				elec/bus/emergency-dc-1 ge 20
 				/instrumentation/iff/activate eq 1
+				/f16/avionics/rf/rf-switch eq 0
 			</test>
 			<output>/instrumentation/iff/power</output>
 		</switch>
@@ -949,6 +950,7 @@
 			<test logic="AND" value="1">
 				elec/bus/ess-dc ge 20
 				/f16/avionics/power-dl eq 1
+				/f16/avionics/rf/rf-switch eq 0
 			</test>
 			<output>/instrumentation/datalink/power</output>
 		</switch>

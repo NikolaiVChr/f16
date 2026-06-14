@@ -6,7 +6,7 @@
    <livery>
     <name type="string">169FW, 157FS "Unit Flagship"</name>
     <texture>Liveries/Block50/93-0551.png</texture>
-    <owner type="string">USAF</owner>
+    <owner type="string">USAF-ANG</owner>
     <pilot type="string"></pilot>
     <scheme type="string">Have Glass V</scheme>
     <block type="int">52</block>

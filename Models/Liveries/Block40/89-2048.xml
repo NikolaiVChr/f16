@@ -6,7 +6,7 @@
    <livery>
     <name type="string">57WG, 64AGRS WA "Wraith"</name>
     <texture>Liveries/Block40/89-2048.png</texture>
-    <owner type="string">USAF</owner>
+    <owner type="string">USAF-ACC</owner>
     <pilot type="string"></pilot>
     <scheme type="string">Single-tone black</scheme>
     <block type="int">42</block>

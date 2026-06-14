@@ -6,7 +6,7 @@
    <livery>
     <name type="string">35FW, 14FS WW "PACAF Viper Demo"</name>
     <texture>Liveries/Block50/90-0817.png</texture>
-    <owner type="string">USAF</owner>
+    <owner type="string">USAF-PACAF</owner>
     <pilot type="string"></pilot>
     <scheme type="string">Two-tone gray, Airshow Special</scheme>
     <block type="int">50</block>
@@ -15,7 +15,7 @@
     <year type="string">2022</year>
    </livery>
    <livery-logo>
-    <texture>Liveries/standard.logos.black2.png</texture>
+    <texture>Liveries/standard.logos.grey.png</texture>
    </livery-logo>
 
    <livery-patch>

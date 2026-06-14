@@ -330,9 +330,9 @@ light: ecm lamp off
     <animation>
         <type>knob</type>
         <object-name>quiet-switch</object-name>
-        <property>instrumentation/radar/radar-enable</property>
-        <offset-deg>-30</offset-deg>
-        <factor>60</factor>
+        <property>f16/avionics/rf/rf-switch</property>
+        <offset-deg>40</offset-deg>
+        <factor>-40</factor>
         <drag-direction>vertical</drag-direction>
         <axis>
             <object-name>quiet-switch-axis</object-name>
@@ -340,10 +340,10 @@ light: ecm lamp off
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>instrumentation/radar/radar-enable</property>
-                <factor>1</factor>
+                <property>f16/avionics/rf/rf-switch</property>
+                <factor>-1</factor>
                 <min>0</min>
-                <max>1</max>
+                <max>2</max>
                 <wrap>false</wrap>
             </binding>
         </action>

@@ -6,7 +6,7 @@ OBJECT poly
 name "CATM9_Sphere"
 data 6
 Sphere
-texture "AIM-9L.png"
+texture "CATM-9L.png"
 crease 179.000000
 numvert 121
 -1.43964 0.017321 -0.009991
@@ -1432,7 +1432,7 @@ OBJECT poly
 name "CATM9_Rearwing"
 data 8
 backwing
-texture "AIM-9L.png"
+texture "CATM-9L.png"
 crease 179.000000
 numvert 165
 1.41591 0.0417 0.045213
@@ -3563,7 +3563,7 @@ name "CATM9_Mounts"
 loc -0.229782 0.1084 -3.00072e-06
 data 4
 blah
-texture "AIM-9L.png"
+texture "CATM-9L.png"
 crease 179.000000
 numvert 883
 -0.613675 0.037731 -0.004984
@@ -13695,7 +13695,7 @@ OBJECT poly
 name "CATM9_Frontwing"
 data 9
 frontwing
-texture "AIM-9L.png"
+texture "CATM-9L.png"
 crease 179.000000
 numvert 41
 -1.01405 -0.14419 0.147796
@@ -14214,7 +14214,7 @@ name "CATM-9L"
 loc 0.014824 0 9.0003e-06
 data 4
 tube
-texture "AIM-9L.png"
+texture "CATM-9L.png"
 crease 179.000000
 numvert 635
 1.38017 1.4e-05 -0.050018

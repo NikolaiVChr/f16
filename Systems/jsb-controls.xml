@@ -8,7 +8,7 @@
     AD-A055-417 - Main source.
         Pitch error gain = 3.0
     AD-A189-675 - Some parts of this used (except for in the YF-16).
-        Pitch error gain = 0.7
+        Pitch error gain = 1.0 (Not present in AD-A189-675. Scaling of all feedback paths restored)
         Made by LJQC
     TP-1538 - Used for high-alpha departure guards, such as spin,
         nose-slide and deep stall protection.
@@ -724,18 +724,36 @@
             </clipto>
         </summer>
 
+        <switch name="fcs/fly-by-wire/pitch/g-limit-product-base">
+            <default value="0.5"/>
+            <test logic="AND" value="1.0">
+                fcs/fly-by-wire/ada189675 == 1
+            </test>
+        </switch>
+
         <switch name="fcs/fly-by-wire/pitch/g-limit-product">
             <description>
                 The second test is for MPO switch enabled.
                 Source: The Israeli document.
             </description>
-            <default value="0.5"/>
+            <default value="fcs/fly-by-wire/pitch/g-limit-product-base"/>
             <test logic="AND" value="1.0">
                 fcs/fly-by-wire/MLG-GND == 1
+                fcs/fly-by-wire/ada189675 == 0
             </test>
             <test logic="AND" value="1.0">
                 fcs/fbw-override == 1
                 aero/alpha-deg   gt 29
+                fcs/fly-by-wire/ada189675 == 0
+            </test>
+            <test logic="AND" value="2.0">
+                fcs/fly-by-wire/MLG-GND == 1
+                fcs/fly-by-wire/ada189675 == 1
+            </test>
+            <test logic="AND" value="2.0">
+                fcs/fbw-override == 1
+                aero/alpha-deg   gt 29
+                fcs/fly-by-wire/ada189675 == 1
             </test>
         </switch>
 
@@ -948,6 +966,13 @@
             </function>
         </fcs_function>
 
+        <switch name="fcs/fly-by-wire/pitch/high-alpha-cmd-neutralizer-gain">
+            <default value="0.5"/>
+            <test logic="AND" value="1.0">
+                fcs/fly-by-wire/ada189675 == 1
+            </test>
+        </switch>
+
         <pure_gain name="fcs/fly-by-wire/pitch/high-alpha-cmd-neutralizer">
             <description>
                 On AD-A189-675, this is the alpha output below the other one, the one
@@ -956,7 +981,7 @@
                 scale to AD-A055-417 signal strengths.
             </description>
             <input>fcs/fly-by-wire/pitch/high-alpha-sum</input>
-            <gain> 0.5 </gain>
+            <gain> fcs/fly-by-wire/pitch/high-alpha-cmd-neutralizer-gain </gain>
             <clipto>
                 <min> 0 </min>
                 <max>10000</max>
@@ -1146,6 +1171,13 @@
             <input> -fcs/fly-by-wire/pitch/bias-final </input>
         </summer>
 
+        <switch name="fcs/fly-by-wire/pitch/pitch-rate-gain-sum-scale">
+            <default value="0.161"/>
+            <test logic="AND" value="0.322">
+                fcs/fly-by-wire/ada189675 == 1
+            </test>
+        </switch>
+
         <pure_gain name="fcs/fly-by-wire/pitch/pitch-rate-gain-sum-gain">
             <description>
                 On AD-A189-675, this is the alpha output above the other one, the one
@@ -1155,7 +1187,7 @@
                 in the sensor-input-mix.
             </description>
             <input>fcs/fly-by-wire/pitch/pitch-rate-gain-sum</input>
-            <gain> 0.161 </gain>
+            <gain> fcs/fly-by-wire/pitch/pitch-rate-gain-sum-scale </gain>
         </pure_gain>
 
         <pure_gain name="fcs/fly-by-wire/pitch/pitch-rate-upper">
@@ -1244,9 +1276,16 @@
             </test>
         </switch>
 
+        <switch name="fcs/fly-by-wire/pitch/normal-1-gain-scale">
+            <default value="0.5"/>
+            <test logic="AND" value="1.0">
+                fcs/fly-by-wire/ada189675 == 1
+            </test>
+        </switch>
+
         <pure_gain name="fcs/fly-by-wire/pitch/normal-1-gain-half">
             <input>fcs/fly-by-wire/pitch/normal-1-special</input>
-            <gain> 0.5 </gain>
+            <gain> fcs/fly-by-wire/pitch/normal-1-gain-scale </gain>
         </pure_gain>
 
         <switch name="fcs/fly-by-wire/pitch/q-product">
@@ -1257,18 +1296,32 @@
             </test>
         </switch>
 
+        <switch name="fcs/fly-by-wire/pitch/q-washout-gained-1987-scale">
+            <default value="0.167"/>
+            <test logic="AND" value="0.334">
+                fcs/fly-by-wire/ada189675 == 1
+            </test>
+        </switch>
+
         <pure_gain name="fcs/fly-by-wire/pitch/q-washout-gained-1987">
             <description>
             </description>
             <input>fcs/fly-by-wire/pitch/q-washout</input>
-            <gain> 0.167 </gain>
+            <gain> fcs/fly-by-wire/pitch/q-washout-gained-1987-scale </gain>
         </pure_gain>
+
+        <switch name="fcs/fly-by-wire/pitch/q-gained-1987-scale">
+            <default value="0.25"/>
+            <test logic="AND" value="0.5">
+                fcs/fly-by-wire/ada189675 == 1
+            </test>
+        </switch>
 
         <pure_gain name="fcs/fly-by-wire/pitch/q-gained-1987">
             <description>
             </description>
             <input>velocities/q-deg_sec</input>
-            <gain> 0.25 </gain>
+            <gain> fcs/fly-by-wire/pitch/q-gained-1987-scale </gain>
         </pure_gain>
 
         <fcs_function name="fcs/fly-by-wire/pitch/pitch-rate-cmd-sum-1987">
@@ -1283,13 +1336,20 @@
             </function>
         </fcs_function>
 
+        <switch name="fcs/fly-by-wire/pitch/pitch-rate-cmd-gained-1987-scale">
+            <default value="0.0525"/>
+            <test logic="AND" value="0.105">
+                fcs/fly-by-wire/ada189675 == 1
+            </test>
+        </switch>
+
         <pure_gain name="fcs/fly-by-wire/pitch/pitch-rate-cmd-gained-1987">
             <description>
                 LJQC: (AOA - 10)*0.105, take pos val, and adds to the pitch rate feedback path.
                       The gain is 0.105, cross checked with BMS developer mav-jp.
             </description>
             <input>fcs/fly-by-wire/pitch/pitch-rate-cmd-sum-1987</input>
-            <gain> 0.0525 </gain>
+            <gain> fcs/fly-by-wire/pitch/pitch-rate-cmd-gained-1987-scale </gain>
             <clipto>
                 <min> 0 </min>
                 <max>10000</max>
@@ -1441,25 +1501,30 @@
 
     <channel execrate="1" name="Pitch Integrator loop and surfaces">
 
+        <switch name="fcs/fly-by-wire/pitch/main-error-gain">
+            <default value="3.0"/>
+            <test logic="AND" value="1.0">
+                fcs/fly-by-wire/ada189675 == 1
+            </test>
+        </switch>
+
         <pure_gain name="fcs/fly-by-wire/pitch/main-error">
             <input>fcs/fly-by-wire/pitch/error</input>
-            <gain> 3.0 </gain>
+            <gain> fcs/fly-by-wire/pitch/main-error-gain </gain>
         </pure_gain>
 
-        <!--<switch name="fcs/fly-by-wire/pitch/loop-schedule">
-            <description>
-            </description>
+        <switch name="fcs/fly-by-wire/pitch/loop-schedule">
             <default value="fcs/fly-by-wire/pitch/F3"/>
-            <test logic="AND" value="fcs/fly-by-wire/pitch/F3-loop-alt">
-                fcs/fly-by-wire/prototype == 0
+            <test logic="AND" value="fcs/fly-by-wire/pitch/N3">
+                fcs/fly-by-wire/ada189675 == 1
             </test>
-        </switch>-->
+        </switch>
 
         <pure_gain name="fcs/fly-by-wire/pitch/main-error-scheduled">
             <description>
             </description>
             <input>fcs/fly-by-wire/pitch/main-error</input>
-            <gain> fcs/fly-by-wire/pitch/F3 </gain>
+            <gain> fcs/fly-by-wire/pitch/loop-schedule </gain>
         </pure_gain>
 
         <summer name="fcs/fly-by-wire/pitch/integrator-feed-air">
@@ -3771,8 +3836,8 @@
         elec/switches/main-pwr == 0
     </test>
     <test value="0">
-     velocities/u-fps gt 1.0
-    </test>
+     velocities/u-fps gt 118.1
+    </test><!-- 70kts -->
    </switch>
 
    <kinematic name="fcs/canopy-control-1">

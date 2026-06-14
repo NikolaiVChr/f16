@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<!-- this is the static non fired model on the aircraft -->
+
+<PropertyList>
+
+	<name>NATM-9M</name>
+	<path>NATM-9M.ac</path>
+
+	<effect>  
+    	<inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>  
+    	<object-name>NATM9_IRsphere</object-name> 
+  	</effect>
+
+	<effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-stores</inherits-from>
+      <object-name>NATM-9M</object-name>
+      <object-name>NATM9_Back</object-name>
+      <object-name>NATM9_Mounts</object-name>
+      <object-name>NATM9_Rearwing</object-name>
+      <object-name>NATM9_Frontwing</object-name>
+  </effect>
+
+</PropertyList>

@@ -23,7 +23,7 @@ MATERIAL "ac3dmat14.001" rgb 0.800 0.800 0.800  amb 0.800 0.800 0.800  emis 0.00
 MATERIAL "ac3dmat1.009" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 10 trans 0.000
 MATERIAL "baseMat" rgb 1 1 1  amb 0.7 0.7 0.7  emis 0 0 0  spec 0.5 0.5 0.5  shi 32  trans 0
 OBJECT world
-name "Blender_exporter_v2.26__panels_mlu_right-aux-console.ac"
+name "Blender_exporter_v7.2__panels_mlu_right-aux-console.ac"
 kids 1
 OBJECT group
 name "RIGHT_AUX_CONSOLE_GRP"
@@ -35,7 +35,7 @@ OBJECT poly
 name "CAB_PRESS_bkg"
 data 13
 CAB_PRESS_bkg
-crease 45.0
+crease 40.0
 numvert 4
 0.02806 0.00295 -0.36532
 -0.02992 0.00295 -0.36532
@@ -54,7 +54,7 @@ OBJECT poly
 name "CAB_PRESS_disk"
 data 14
 CAB_PRESS_disk
-crease 45.0
+crease 40.0
 numvert 9
 -0.00166 0.00521 -0.39401
 -0.00361 0.00521 -0.39197
@@ -69,59 +69,58 @@ numsurf 8
 SURF 0X10
 mat 1
 refs 3
-0 0.164383 0.888577
-8 0.139134 0.888577
-1 0.146529 0.863756
+0 0 0
+8 1 0
+1 1 1
 SURF 0X10
 mat 1
 refs 3
-0 0.164383 0.888577
-1 0.146529 0.863756
-2 0.164383 0.853475
+0 0 0
+1 1 0
+2 1 1
 SURF 0X10
 mat 1
 refs 3
-0 0.164383 0.888577
-2 0.164383 0.853475
-3 0.182236 0.863756
+0 0 0
+2 1 0
+3 1 1
 SURF 0X10
 mat 1
 refs 3
-0 0.164383 0.888577
-3 0.182236 0.863756
-4 0.189631 0.888577
+0 0 0
+3 1 0
+4 1 1
 SURF 0X10
 mat 1
 refs 3
-0 0.164383 0.888577
-4 0.189631 0.888577
-5 0.182236 0.913397
+0 0 0
+4 1 0
+5 1 1
 SURF 0X10
 mat 1
 refs 3
-0 0.164383 0.888577
-5 0.182236 0.913397
-6 0.164383 0.923678
+0 0 0
+5 1 0
+6 1 1
 SURF 0X10
 mat 1
 refs 3
-0 0.164383 0.888577
-6 0.164383 0.923678
-7 0.146529 0.913397
+0 0 0
+6 1 0
+7 1 1
 SURF 0X10
 mat 1
 refs 3
-0 0.164383 0.888577
-7 0.146529 0.913397
-8 0.139134 0.888577
+0 0 0
+7 1 0
+8 1 1
 kids 0
 OBJECT poly
 name "CAB_PRESS_face"
 data 17
 EPU_FUEL_disk.001
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 16
 -0.00136 0.00459 -0.3671
 -0.01252 0.00459 -0.36949
@@ -235,9 +234,8 @@ OBJECT poly
 name "CAB_PRESS_mount"
 data 15
 CAB_PRESS_mount
-crease 45.0
+crease 40.0
 texture "../Textures/chronometer-mount.png"
-texrep 1 1
 numvert 46
 0.02745 0.00192 -0.42401
 0.02884 0.00192 -0.42321
@@ -531,7 +529,7 @@ OBJECT poly
 name "CAB_PRESS_needle"
 data 16
 CAB_PRESS_needle
-crease 45.0
+crease 40.0
 numvert 5
 0.00978 0.00461 -0.38072
 0.01171 0.00461 -0.38265
@@ -543,15 +541,15 @@ SURF 0X10
 mat 1
 refs 3
 0 0 0
-4 0 0
-1 0 0
+4 1 0
+1 1 1
 SURF 0X10
 mat 1
 refs 4
 3 0 0
-0 0 0
-1 0 0
-2 0 0
+0 1 0
+1 1 1
+2 0 1
 kids 0
 OBJECT group
 name "CAUTION_PANEL"
@@ -563,7 +561,7 @@ OBJECT poly
 name "----.000"
 data 8
 ----.001
-crease 30.0
+crease 40.0
 numvert 12
 -0.07623 0.00815 -0.30145
 -0.08423 0.00815 -0.30146
@@ -595,31 +593,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -639,9 +637,8 @@ OBJECT poly
 name "----.001_lit"
 data 12
 ----.001_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.07623 0.00815 -0.30145
 -0.08423 0.00815 -0.30146
@@ -660,9 +657,8 @@ OBJECT poly
 name "----.001_unlit"
 data 14
 ----.001_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.08423 0.00815 -0.32413
 -0.07623 0.00815 -0.32412
@@ -684,9 +680,8 @@ OBJECT poly
 name "----.002_lit"
 data 12
 ----.002_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.07623 0.00815 -0.32642
 -0.08423 0.00815 -0.32643
@@ -705,9 +700,8 @@ OBJECT poly
 name "----.002_unlit"
 data 14
 ----.002_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.08423 0.00815 -0.3491
 -0.07623 0.00815 -0.34909
@@ -726,7 +720,7 @@ OBJECT poly
 name "----.003"
 data 8
 ----.002
-crease 30.0
+crease 40.0
 numvert 12
 -0.07623 0.00815 -0.32642
 -0.08423 0.00815 -0.32643
@@ -758,31 +752,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -805,9 +799,8 @@ OBJECT poly
 name "----.003_lit"
 data 12
 ----.003_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.07623 0.00815 -0.35136
 -0.08423 0.00815 -0.35137
@@ -826,9 +819,8 @@ OBJECT poly
 name "----.003_unlit"
 data 14
 ----.003_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.08423 0.00815 -0.37404
 -0.07623 0.00815 -0.37403
@@ -847,7 +839,7 @@ OBJECT poly
 name "----.005"
 data 8
 ----.003
-crease 30.0
+crease 40.0
 numvert 12
 -0.07623 0.00815 -0.35136
 -0.08423 0.00815 -0.35137
@@ -879,31 +871,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -926,7 +918,7 @@ OBJECT poly
 name "ADC.001"
 data 3
 ADC
-crease 30.0
+crease 40.0
 numvert 12
 -0.13334 0.00815 -0.27639
 -0.14135 0.00815 -0.2764
@@ -958,31 +950,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -1002,9 +994,8 @@ OBJECT poly
 name "ADC_lit"
 data 7
 ADC_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.13334 0.00815 -0.27639
 -0.14135 0.00815 -0.2764
@@ -1023,9 +1014,8 @@ OBJECT poly
 name "ADC_unlit"
 data 9
 ADC_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.14135 0.00815 -0.29907
 -0.13334 0.00815 -0.29906
@@ -1047,7 +1037,7 @@ OBJECT poly
 name "AFT_FUEL_LOW.001"
 data 12
 AFT_FUEL_LOW
-crease 30.0
+crease 40.0
 numvert 12
 -0.13334 0.00815 -0.30145
 -0.14135 0.00815 -0.30146
@@ -1079,31 +1069,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -1123,9 +1113,8 @@ OBJECT poly
 name "AFT_FUEL_LOW_lit"
 data 16
 AFT_FUEL_LOW_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.13334 0.00815 -0.30145
 -0.14135 0.00815 -0.30146
@@ -1144,9 +1133,8 @@ OBJECT poly
 name "AFT_FUEL_LOW_unlit"
 data 18
 AFT_FUEL_LOW_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.14135 0.00815 -0.32413
 -0.13334 0.00815 -0.32412
@@ -1168,7 +1156,7 @@ OBJECT poly
 name "AFT_NOT_ENGAGED.001"
 data 15
 AFT_NOT_ENGAGED
-crease 30.0
+crease 40.0
 numvert 12
 -0.13334 0.00815 -0.32642
 -0.14135 0.00815 -0.32643
@@ -1200,31 +1188,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -1244,9 +1232,8 @@ OBJECT poly
 name "AFT_NOT_ENGAGED_lit"
 data 19
 AFT_NOT_ENGAGED_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.13334 0.00815 -0.32642
 -0.14135 0.00815 -0.32643
@@ -1265,9 +1252,8 @@ OBJECT poly
 name "AFT_NOT_ENGAGED_unlit"
 data 21
 AFT_NOT_ENGAGED_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.14135 0.00815 -0.3491
 -0.13334 0.00815 -0.34909
@@ -1289,7 +1275,7 @@ OBJECT poly
 name "ANTI_SKID.001"
 data 9
 ANTI_SKID
-crease 30.0
+crease 40.0
 numvert 12
 -0.14278 0.00815 -0.35136
 -0.15079 0.00815 -0.35137
@@ -1321,31 +1307,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -1365,9 +1351,8 @@ OBJECT poly
 name "ANTI_SKID_lit"
 data 13
 ANTI_SKID_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.14278 0.00815 -0.35136
 -0.15079 0.00815 -0.35137
@@ -1386,9 +1371,8 @@ OBJECT poly
 name "ANTI_SKID_unlit"
 data 15
 ANTI_SKID_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.15079 0.00815 -0.37404
 -0.14278 0.00815 -0.37403
@@ -1410,7 +1394,7 @@ OBJECT poly
 name "AVIONICS.001"
 data 8
 AVIONICS
-crease 30.0
+crease 40.0
 numvert 12
 -0.14278 0.00815 -0.32642
 -0.15079 0.00815 -0.32643
@@ -1442,31 +1426,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -1486,9 +1470,8 @@ OBJECT poly
 name "AVIONICS_lit"
 data 12
 AVIONICS_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.14278 0.00815 -0.32642
 -0.15079 0.00815 -0.32643
@@ -1507,9 +1490,8 @@ OBJECT poly
 name "AVIONICS_unlit"
 data 14
 AVIONICS_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.15079 0.00815 -0.3491
 -0.14278 0.00815 -0.34909
@@ -1531,7 +1513,7 @@ OBJECT poly
 name "BUC.001"
 data 3
 BUC
-crease 30.0
+crease 40.0
 numvert 12
 -0.10458 0.00815 -0.30145
 -0.11259 0.00815 -0.30146
@@ -1563,31 +1545,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -1607,9 +1589,8 @@ OBJECT poly
 name "BUC_lit"
 data 7
 BUC_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.10458 0.00815 -0.30145
 -0.11259 0.00815 -0.30146
@@ -1628,9 +1609,8 @@ OBJECT poly
 name "BUC_unlit"
 data 9
 BUC_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.11259 0.00815 -0.32413
 -0.10458 0.00815 -0.32412
@@ -1652,7 +1632,7 @@ OBJECT poly
 name "C_ADC.001"
 data 5
 C_ADC
-crease 30.0
+crease 40.0
 numvert 12
 -0.11414 0.00815 -0.27639
 -0.12214 0.00815 -0.2764
@@ -1684,31 +1664,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -1728,9 +1708,8 @@ OBJECT poly
 name "C_ADC_lit"
 data 9
 C_ADC_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.11414 0.00815 -0.27639
 -0.12214 0.00815 -0.2764
@@ -1749,9 +1728,8 @@ OBJECT poly
 name "C_ADC_unlit"
 data 11
 C_ADC_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.12214 0.00815 -0.29907
 -0.11414 0.00815 -0.29906
@@ -1773,7 +1751,7 @@ OBJECT poly
 name "CABIN_PRESS.001"
 data 11
 CABIN_PRESS
-crease 30.0
+crease 40.0
 numvert 12
 -0.11414 0.00815 -0.35136
 -0.12214 0.00815 -0.35137
@@ -1805,31 +1783,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -1849,9 +1827,8 @@ OBJECT poly
 name "CABIN_PRESS_lit"
 data 15
 CABIN_PRESS_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.11414 0.00815 -0.35136
 -0.12214 0.00815 -0.35137
@@ -1870,9 +1847,8 @@ OBJECT poly
 name "CABIN_PRESS_unlit"
 data 17
 CABIN_PRESS_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.12214 0.00815 -0.37404
 -0.11414 0.00815 -0.37403
@@ -1894,7 +1870,7 @@ OBJECT poly
 name "CAUTION_PANEL_0"
 data 13
 CAUTION_PANEL
-crease 30.0
+crease 40.0
 numvert 62
 -0.06841 0.00201 -0.38029
 -0.06841 0.00563 -0.38029
@@ -1963,30 +1939,30 @@ SURF 0X10
 mat 5
 refs 4
 4 0 0
-5 0 1
+5 1 0
 36 1 1
-34 1 0
+34 0 1
 SURF 0X10
 mat 5
 refs 4
 34 0 0
-36 0 1
+36 1 0
 37 1 1
-35 1 0
+35 0 1
 SURF 0X10
 mat 5
 refs 4
 6 0 0
-7 0 1
+7 1 0
 35 1 1
-37 1 0
+37 0 1
 SURF 0X10
 mat 5
 refs 4
 0 0 0
-40 0 1
+40 1 0
 38 1 1
-1 1 0
+1 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -1998,16 +1974,16 @@ SURF 0X10
 mat 5
 refs 4
 2 0 0
-39 0 1
+39 1 0
 41 1 1
-3 1 0
+3 0 1
 SURF 0X10
 mat 5
 refs 4
 4 0 0
-46 0 1
+46 1 0
 47 1 1
-5 1 0
+5 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -2019,16 +1995,16 @@ SURF 0X10
 mat 5
 refs 4
 16 0 0
-17 0 1
+17 1 0
 19 1 1
-18 1 0
+18 0 1
 SURF 0X10
 mat 5
 refs 4
 12 0 0
-13 0 1
+13 1 0
 17 1 1
-16 1 0
+16 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -2040,16 +2016,16 @@ SURF 0X10
 mat 5
 refs 4
 8 0 0
-9 0 1
+9 1 0
 15 1 1
-14 1 0
+14 0 1
 SURF 0X10
 mat 5
 refs 4
 8 0 0
-10 0 1
+10 1 0
 11 1 1
-9 1 0
+9 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -2061,16 +2037,16 @@ SURF 0X10
 mat 5
 refs 4
 2 0 0
-3 0 1
+3 1 0
 45 1 1
-44 1 0
+44 0 1
 SURF 0X10
 mat 5
 refs 4
 0 0 0
-1 0 1
+1 1 0
 42 1 1
-43 1 0
+43 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -2082,16 +2058,16 @@ SURF 0X10
 mat 5
 refs 4
 21 0 0
-28 0 1
+28 1 0
 31 1 1
-23 1 0
+23 0 1
 SURF 0X10
 mat 5
 refs 4
 21 0 0
-24 0 1
+24 1 0
 30 1 1
-28 1 0
+28 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -2103,16 +2079,16 @@ SURF 0X10
 mat 5
 refs 4
 20 0 0
-26 0 1
+26 1 0
 32 1 1
-27 1 0
+27 0 1
 SURF 0X10
 mat 5
 refs 4
 22 0 0
-29 0 1
+29 1 0
 32 1 1
-26 1 0
+26 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -2124,9 +2100,9 @@ SURF 0X10
 mat 5
 refs 4
 6 0 0
-33 0 1
+33 1 0
 25 1 1
-7 1 0
+7 0 1
 SURF 0X10
 mat 8
 refs 4
@@ -2152,9 +2128,9 @@ SURF 0X10
 mat 8
 refs 4
 52 0 0
-55 0 1
+55 1 0
 56 1 1
-51 1 0
+51 0 1
 SURF 0X10
 mat 8
 refs 4
@@ -2186,18 +2162,17 @@ refs 4
 SURF 0X10
 mat 9
 refs 4
-61 0.592512 0.630198
-60 0.592512 0.419367
-59 0.868972 0.419367
-58 0.868972 0.630198
+61 0 0
+60 1 0
+59 1 1
+58 0 1
 kids 0
 OBJECT poly
 name "CAUTION_PANEL_1"
 data 17
 CAUTION_PANEL.001
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 32
 -0.06841 0.00563 -0.38029
 -0.1595 0.00563 -0.37981
@@ -2416,7 +2391,7 @@ OBJECT poly
 name "ECM.000"
 data 3
 ECM
-crease 30.0
+crease 40.0
 numvert 12
 -0.09539 0.00815 -0.32642
 -0.10339 0.00815 -0.32643
@@ -2448,31 +2423,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -2492,9 +2467,8 @@ OBJECT poly
 name "ECM_lit"
 data 7
 ECM_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.09539 0.00815 -0.32642
 -0.10339 0.00815 -0.32643
@@ -2513,9 +2487,8 @@ OBJECT poly
 name "ECM_unlit"
 data 9
 ECM_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.10339 0.00815 -0.3491
 -0.09539 0.00815 -0.34909
@@ -2537,7 +2510,7 @@ OBJECT poly
 name "EEC.001"
 data 3
 EEC
-crease 30.0
+crease 40.0
 numvert 12
 -0.11414 0.00815 -0.30145
 -0.12214 0.00815 -0.30146
@@ -2569,31 +2542,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -2613,9 +2586,8 @@ OBJECT poly
 name "EEC_lit"
 data 7
 EEC_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.11414 0.00815 -0.30145
 -0.12214 0.00815 -0.30146
@@ -2634,9 +2606,8 @@ OBJECT poly
 name "EEC_unlit"
 data 9
 EEC_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.12214 0.00815 -0.32413
 -0.11414 0.00815 -0.32412
@@ -2658,7 +2629,7 @@ OBJECT poly
 name "ELEC_SYS.001"
 data 8
 ELEC_SYS
-crease 30.0
+crease 40.0
 numvert 12
 -0.10458 0.00815 -0.27639
 -0.11259 0.00815 -0.2764
@@ -2690,31 +2661,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -2734,9 +2705,8 @@ OBJECT poly
 name "ELEC_SYS_lit"
 data 12
 ELEC_SYS_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.10458 0.00815 -0.27639
 -0.11259 0.00815 -0.2764
@@ -2755,9 +2725,8 @@ OBJECT poly
 name "ELEC_SYS_unlit"
 data 14
 ELEC_SYS_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.11259 0.00815 -0.29907
 -0.10458 0.00815 -0.29906
@@ -2779,7 +2748,7 @@ OBJECT poly
 name "ENGINE_FAULT.001"
 data 12
 ENGINE_FAULT
-crease 30.0
+crease 40.0
 numvert 12
 -0.08585 0.00815 -0.27639
 -0.09385 0.00815 -0.2764
@@ -2811,31 +2780,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -2855,9 +2824,8 @@ OBJECT poly
 name "ENGINE_FAULT_lit"
 data 16
 ENGINE_FAULT_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.08585 0.00815 -0.27639
 -0.09385 0.00815 -0.2764
@@ -2876,9 +2844,8 @@ OBJECT poly
 name "ENGINE_FAULT_unlit"
 data 18
 ENGINE_FAULT_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.09385 0.00815 -0.29907
 -0.08585 0.00815 -0.29906
@@ -2900,7 +2867,7 @@ OBJECT poly
 name "EQUIP_HOT.001"
 data 9
 EQUIP_HOT
-crease 30.0
+crease 40.0
 numvert 12
 -0.11414 0.00815 -0.32642
 -0.12214 0.00815 -0.32643
@@ -2932,31 +2899,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -2976,9 +2943,8 @@ OBJECT poly
 name "EQUIP_HOT_lit"
 data 13
 EQUIP_HOT_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.11414 0.00815 -0.32642
 -0.12214 0.00815 -0.32643
@@ -2997,9 +2963,8 @@ OBJECT poly
 name "EQUIP_HOT_unlit"
 data 15
 EQUIP_HOT_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.12214 0.00815 -0.3491
 -0.11414 0.00815 -0.34909
@@ -3021,7 +2986,7 @@ OBJECT poly
 name "FLT_CONT_SYS.001"
 data 12
 FLT_CONT_SYS
-crease 30.0
+crease 40.0
 numvert 12
 -0.14278 0.00815 -0.27639
 -0.15079 0.00815 -0.2764
@@ -3053,31 +3018,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -3097,9 +3062,8 @@ OBJECT poly
 name "FLT_CONT_SYS_lit"
 data 16
 FLT_CONT_SYS_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.14278 0.00815 -0.27639
 -0.15079 0.00815 -0.2764
@@ -3118,9 +3082,8 @@ OBJECT poly
 name "FLT_CONT_SYS_unlit"
 data 18
 FLT_CONT_SYS_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.15079 0.00815 -0.29907
 -0.14278 0.00815 -0.29906
@@ -3142,7 +3105,7 @@ OBJECT poly
 name "FUEL_OIL_HOT.001"
 data 12
 FUEL_OIL_HOT
-crease 30.0
+crease 40.0
 numvert 12
 -0.09539 0.00815 -0.30145
 -0.10339 0.00815 -0.30146
@@ -3174,31 +3137,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -3218,9 +3181,8 @@ OBJECT poly
 name "FUEL_OIL_HOT_lit"
 data 16
 FUEL_OIL_HOT_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.09539 0.00815 -0.30145
 -0.10339 0.00815 -0.30146
@@ -3239,9 +3201,8 @@ OBJECT poly
 name "FUEL_OIL_HOT_unlit"
 data 18
 FUEL_OIL_HOT_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.10339 0.00815 -0.32413
 -0.09539 0.00815 -0.32412
@@ -3263,7 +3224,7 @@ OBJECT poly
 name "FWD_FUEL_LOW.001"
 data 12
 FWD_FUEL_LOW
-crease 30.0
+crease 40.0
 numvert 12
 -0.14278 0.00815 -0.30145
 -0.15079 0.00815 -0.30146
@@ -3295,31 +3256,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -3339,9 +3300,8 @@ OBJECT poly
 name "FWD_FUEL_LOW_lit"
 data 16
 FWD_FUEL_LOW_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.14278 0.00815 -0.30145
 -0.15079 0.00815 -0.30146
@@ -3360,9 +3320,8 @@ OBJECT poly
 name "FWD_FUEL_LOW_unlit"
 data 18
 FWD_FUEL_LOW_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.15079 0.00815 -0.32413
 -0.14278 0.00815 -0.32412
@@ -3384,7 +3343,7 @@ OBJECT poly
 name "HOOK.001"
 data 4
 HOOK
-crease 30.0
+crease 40.0
 numvert 12
 -0.13334 0.00815 -0.35136
 -0.14135 0.00815 -0.35137
@@ -3416,31 +3375,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -3460,9 +3419,8 @@ OBJECT poly
 name "HOOK_lit"
 data 8
 HOOK_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.13334 0.00815 -0.35136
 -0.14135 0.00815 -0.35137
@@ -3481,9 +3439,8 @@ OBJECT poly
 name "HOOK_unlit"
 data 10
 HOOK_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.14135 0.00815 -0.37404
 -0.13334 0.00815 -0.37403
@@ -3505,7 +3462,7 @@ OBJECT poly
 name "IFF.001"
 data 3
 IFF
-crease 30.0
+crease 40.0
 numvert 12
 -0.10458 0.00815 -0.32642
 -0.11259 0.00815 -0.32643
@@ -3537,31 +3494,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -3581,9 +3538,8 @@ OBJECT poly
 name "IFF_lit"
 data 7
 IFF_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.10458 0.00815 -0.32642
 -0.11259 0.00815 -0.32643
@@ -3602,9 +3558,8 @@ OBJECT poly
 name "IFF_unlit"
 data 9
 IFF_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.11259 0.00815 -0.3491
 -0.10458 0.00815 -0.34909
@@ -3626,7 +3581,7 @@ OBJECT poly
 name "INLET_ICING.001"
 data 11
 INLET_ICING
-crease 30.0
+crease 40.0
 numvert 12
 -0.09539 0.00815 -0.27639
 -0.10339 0.00815 -0.2764
@@ -3658,31 +3613,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -3702,9 +3657,8 @@ OBJECT poly
 name "INLET_ICING_lit"
 data 15
 INLET_ICING_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.09539 0.00815 -0.27639
 -0.10339 0.00815 -0.2764
@@ -3723,9 +3677,8 @@ OBJECT poly
 name "INLET_ICING_unlit"
 data 17
 INLET_ICING_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.10339 0.00815 -0.29907
 -0.09539 0.00815 -0.29906
@@ -3747,7 +3700,7 @@ OBJECT poly
 name "LE_FLAPS.001"
 data 8
 LE_FLAPS
-crease 30.0
+crease 40.0
 numvert 12
 -0.12379 0.00815 -0.27639
 -0.1318 0.00815 -0.2764
@@ -3779,31 +3732,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -3823,9 +3776,8 @@ OBJECT poly
 name "LE_FLAPS_lit"
 data 12
 LE_FLAPS_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.12379 0.00815 -0.27639
 -0.1318 0.00815 -0.2764
@@ -3844,9 +3796,8 @@ OBJECT poly
 name "LE_FLAPS_unlit"
 data 14
 LE_FLAPS_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.1318 0.00815 -0.29907
 -0.12379 0.00815 -0.29906
@@ -3868,7 +3819,7 @@ OBJECT poly
 name "NUCLEAR.001"
 data 7
 NUCLEAR
-crease 30.0
+crease 40.0
 numvert 12
 -0.09539 0.00815 -0.35136
 -0.10339 0.00815 -0.35137
@@ -3900,31 +3851,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -3944,9 +3895,8 @@ OBJECT poly
 name "NUCLEAR_lit"
 data 11
 NUCLEAR_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.09539 0.00815 -0.35136
 -0.10339 0.00815 -0.35137
@@ -3965,9 +3915,8 @@ OBJECT poly
 name "NUCLEAR_unlit"
 data 13
 NUCLEAR_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.10339 0.00815 -0.37404
 -0.09539 0.00815 -0.37403
@@ -3989,7 +3938,7 @@ OBJECT poly
 name "NWS_FAIL.001"
 data 8
 NWS_FAIL
-crease 30.0
+crease 40.0
 numvert 12
 -0.12379 0.00815 -0.35136
 -0.1318 0.00815 -0.35137
@@ -4021,31 +3970,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -4065,9 +4014,8 @@ OBJECT poly
 name "NWS_FAIL_lit"
 data 12
 NWS_FAIL_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.12379 0.00815 -0.35136
 -0.1318 0.00815 -0.35137
@@ -4086,9 +4034,8 @@ OBJECT poly
 name "NWS_FAIL_unlit"
 data 14
 NWS_FAIL_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.1318 0.00815 -0.37404
 -0.12379 0.00815 -0.37403
@@ -4110,7 +4057,7 @@ OBJECT poly
 name "OVERHEAT.001"
 data 8
 OVERHEAT
-crease 30.0
+crease 40.0
 numvert 12
 -0.12379 0.00815 -0.30145
 -0.1318 0.00815 -0.30146
@@ -4142,31 +4089,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -4186,9 +4133,8 @@ OBJECT poly
 name "OVERHEAT_lit"
 data 12
 OVERHEAT_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.12379 0.00815 -0.30145
 -0.1318 0.00815 -0.30146
@@ -4207,9 +4153,8 @@ OBJECT poly
 name "OVERHEAT_unlit"
 data 14
 OVERHEAT_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.1318 0.00815 -0.32413
 -0.12379 0.00815 -0.32412
@@ -4231,7 +4176,7 @@ OBJECT poly
 name "OXY_LOW.001"
 data 7
 OXY_LOW
-crease 30.0
+crease 40.0
 numvert 12
 -0.10458 0.00815 -0.35136
 -0.11259 0.00815 -0.35137
@@ -4263,31 +4208,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -4307,9 +4252,8 @@ OBJECT poly
 name "OXY_LOW_lit"
 data 11
 OXY_LOW_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.10458 0.00815 -0.35136
 -0.11259 0.00815 -0.35137
@@ -4328,9 +4272,8 @@ OBJECT poly
 name "OXY_LOW_unlit"
 data 13
 OXY_LOW_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.11259 0.00815 -0.37404
 -0.10458 0.00815 -0.37403
@@ -4352,7 +4295,7 @@ OBJECT poly
 name "PROBE_HEAT.001"
 data 10
 PROBE_HEAT
-crease 30.0
+crease 40.0
 numvert 12
 -0.08585 0.00815 -0.35136
 -0.09385 0.00815 -0.35137
@@ -4384,31 +4327,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -4428,9 +4371,8 @@ OBJECT poly
 name "PROBE_HEAT_lit"
 data 14
 PROBE_HEAT_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.08585 0.00815 -0.35136
 -0.09385 0.00815 -0.35137
@@ -4449,9 +4391,8 @@ OBJECT poly
 name "PROBE_HEAT_unlit"
 data 16
 PROBE_HEAT_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.09385 0.00815 -0.37404
 -0.08585 0.00815 -0.37403
@@ -4473,7 +4414,7 @@ OBJECT poly
 name "RADAR_ALT.001"
 data 9
 RADAR_ALT
-crease 30.0
+crease 40.0
 numvert 12
 -0.12379 0.00815 -0.32642
 -0.1318 0.00815 -0.32643
@@ -4505,31 +4446,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -4549,9 +4490,8 @@ OBJECT poly
 name "RADAR_ALT_lit"
 data 13
 RADAR_ALT_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.12379 0.00815 -0.32642
 -0.1318 0.00815 -0.32643
@@ -4570,9 +4510,8 @@ OBJECT poly
 name "RADAR_ALT_unlit"
 data 15
 RADAR_ALT_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.1318 0.00815 -0.3491
 -0.12379 0.00815 -0.34909
@@ -4594,7 +4533,7 @@ OBJECT poly
 name "SEAT_NOT_ARMED.001"
 data 14
 SEAT_NOT_ARMED
-crease 30.0
+crease 40.0
 numvert 12
 -0.08585 0.00815 -0.30145
 -0.09385 0.00815 -0.30146
@@ -4626,31 +4565,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -4670,9 +4609,8 @@ OBJECT poly
 name "SEAT_NOT_ARMED_lit"
 data 18
 SEAT_NOT_ARMED_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.08585 0.00815 -0.30145
 -0.09385 0.00815 -0.30146
@@ -4691,9 +4629,8 @@ OBJECT poly
 name "SEAT_NOT_ARMED_unlit"
 data 20
 SEAT_NOT_ARMED_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.09385 0.00815 -0.32413
 -0.08585 0.00815 -0.32412
@@ -4715,7 +4652,7 @@ OBJECT poly
 name "SEC.001"
 data 3
 SEC
-crease 30.0
+crease 40.0
 numvert 12
 -0.07623 0.00815 -0.27639
 -0.08423 0.00815 -0.2764
@@ -4747,31 +4684,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -4791,9 +4728,8 @@ OBJECT poly
 name "SEC_lit"
 data 7
 SEC_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.07623 0.00815 -0.27639
 -0.08423 0.00815 -0.2764
@@ -4812,9 +4748,8 @@ OBJECT poly
 name "SEC_unlit"
 data 9
 SEC_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.08423 0.00815 -0.29907
 -0.07623 0.00815 -0.29906
@@ -4836,7 +4771,7 @@ OBJECT poly
 name "STORES_CONFIG.001"
 data 13
 STORES_CONFIG
-crease 30.0
+crease 40.0
 numvert 12
 -0.08585 0.00815 -0.32642
 -0.09385 0.00815 -0.32643
@@ -4868,31 +4803,31 @@ refs 4
 SURF 0X10
 mat 5
 refs 4
-2 1 1
-0 0 1
-5 0 0
-4 1 0
-SURF 0X10
-mat 5
-refs 4
-0 1 1
-1 0 1
-6 0 0
-5 1 0
-SURF 0X10
-mat 5
-refs 4
+2 0 0
+0 1 0
 5 1 1
-6 0 1
-8 0 0
-9 1 0
+4 0 1
 SURF 0X10
 mat 5
 refs 4
-4 1 1
+0 0 0
+1 1 0
+6 1 1
 5 0 1
-9 0 0
-10 1 0
+SURF 0X10
+mat 5
+refs 4
+5 0 0
+6 1 0
+8 1 1
+9 0 1
+SURF 0X10
+mat 5
+refs 4
+4 0 0
+5 1 0
+9 1 1
+10 0 1
 SURF 0X10
 mat 5
 refs 4
@@ -4912,9 +4847,8 @@ OBJECT poly
 name "STORES_CONFIG_lit"
 data 17
 STORES_CONFIG_lit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.08585 0.00815 -0.32642
 -0.09385 0.00815 -0.32643
@@ -4933,9 +4867,8 @@ OBJECT poly
 name "STORES_CONFIG_unlit"
 data 19
 STORES_CONFIG_unlit
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 4
 -0.09385 0.00815 -0.3491
 -0.08585 0.00815 -0.34909
@@ -4957,7 +4890,7 @@ OBJECT poly
 name "CLOCK_bkg"
 data 8
 Mesh.005
-crease 45.0
+crease 40.0
 numvert 4
 0.02889 0.00404 -0.49561
 0.02889 0.00404 -0.43824
@@ -4976,9 +4909,8 @@ OBJECT poly
 name "CLOCK_button"
 data 8
 Mesh.012
-crease 80.0
+crease 40.0
 texture "../Textures/chronometer-mount.png"
-texrep 1 1
 numvert 17
 -0.02596 0.01294 -0.48414
 -0.02722 0.01294 -0.48705
@@ -5107,9 +5039,8 @@ OBJECT poly
 name "CLOCK_disk"
 data 8
 Mesh.007
-crease 45.0
+crease 40.0
 texture "../Textures/chronometer-mount.png"
-texrep 1 1
 numvert 9
 -0.00153 0.00754 -0.46606
 0.00056 0.00754 -0.46413
@@ -5174,9 +5105,8 @@ OBJECT poly
 name "CLOCK_face"
 data 10
 CLOCK_face
-crease 45.0
+crease 40.0
 texture "../Textures/chronograph.png"
-texrep 1 1
 numvert 36
 0.00939 0.00636 -0.44219
 0.01809 0.00636 -0.4478
@@ -5342,14 +5272,14 @@ OBJECT poly
 name "chronometer-button"
 data 8
 Mesh.013
-crease 45.0
+crease 40.0
 numvert 4
 -0.01636 0.00893 -0.49295
 -0.01636 0.00893 -0.48101
 -0.02921 0.00893 -0.48101
 -0.02921 0.00893 -0.49295
 numsurf 1
-SURF 0X30
+SURF 0X10
 mat 11
 refs 4
 1 0 0
@@ -5361,14 +5291,14 @@ OBJECT poly
 name "time-offset-left"
 data 8
 Mesh.016
-crease 45.0
+crease 40.0
 numvert 4
 0.02815 0.00893 -0.4459
 0.02815 0.00893 -0.4367
 0.01531 0.00893 -0.4367
 0.01531 0.00893 -0.4459
 numsurf 1
-SURF 0X30
+SURF 0X10
 mat 11
 refs 4
 1 0 0
@@ -5380,28 +5310,27 @@ OBJECT poly
 name "time-offset-right"
 data 8
 Mesh.014
-crease 45.0
+crease 40.0
 numvert 4
 0.01531 0.00893 -0.45575
 0.01531 0.00893 -0.44655
 0.02815 0.00893 -0.44655
 0.02815 0.00893 -0.45575
 numsurf 1
-SURF 0X30
+SURF 0X10
 mat 11
 refs 4
-0 1 1
-1 0 1
-2 0 0
-3 1 0
+0 0 0
+1 1 0
+2 1 1
+3 0 1
 kids 0
 OBJECT poly
 name "CLOCK_knob"
 data 8
 Mesh.011
-crease 80.0
+crease 40.0
 texture "../Textures/chronometer-mount.png"
-texrep 1 1
 numvert 17
 0.02157 0.01694 -0.44625
 0.02157 0.00685 -0.44091
@@ -5530,9 +5459,8 @@ OBJECT poly
 name "CLOCK_mount"
 data 8
 Mesh.006
-crease 45.0
+crease 40.0
 texture "../Textures/chronometer-mount.png"
-texrep 1 1
 numvert 46
 -0.0315 0.00198 -0.49389
 -0.03068 0.00198 -0.49526
@@ -5832,7 +5760,7 @@ OBJECT poly
 name "ElapsedMinutesHand_0"
 data 8
 Mesh.001
-crease 45.0
+crease 40.0
 numvert 4
 -0.01433 0.00766 -0.46643
 -0.01433 0.00766 -0.46543
@@ -5851,9 +5779,8 @@ OBJECT poly
 name "ElapsedMinutesHand_1"
 data 8
 Mesh.000
-crease 45.0
+crease 40.0
 texture "../Textures/chronograph.png"
-texrep 1 1
 numvert 8
 -0.02063 0.00766 -0.46612
 -0.01711 0.00766 -0.46764
@@ -5905,9 +5832,8 @@ OBJECT poly
 name "HourHand"
 data 8
 Mesh.002
-crease 61.0
+crease 40.0
 texture "../Textures/chronograph.png"
-texrep 1 1
 numvert 6
 -0.00745 0.00766 -0.46434
 -0.00337 0.00766 -0.46476
@@ -5940,9 +5866,8 @@ OBJECT poly
 name "MinuteHand"
 data 8
 Mesh.003
-crease 61.0
+crease 40.0
 texture "../Textures/chronograph.png"
-texrep 1 1
 numvert 6
 -0.01481 0.00766 -0.46481
 -0.00259 0.00766 -0.46516
@@ -5975,9 +5900,8 @@ OBJECT poly
 name "SecondHand"
 data 8
 Mesh.004
-crease 61.0
+crease 40.0
 texture "../Textures/chronograph.png"
-texrep 1 1
 numvert 4
 -0.0021 0.00766 -0.46551
 -0.0021 0.00766 -0.4664
@@ -5996,7 +5920,7 @@ OBJECT poly
 name "EPU_FUEL_cylinder"
 data 17
 EPU_FUEL_cylinder
-crease 30.0
+crease 40.0
 numvert 128
 -0.091 0.00192 -0.45331
 -0.09005 0.00466 -0.45331
@@ -6130,1163 +6054,1162 @@ numsurf 192
 SURF 0X10
 mat 13
 refs 3
-5 24.09 0
-0 30.09 5
-4 30.09 0
+5 0 0
+0 1 0
+4 1 1
 SURF 0X10
 mat 13
 refs 3
-1 24.09 5
-0 30.09 5
-5 24.09 0
+1 0 0
+0 1 0
+5 1 1
 SURF 0X10
 mat 13
 refs 3
-5 24.09 0
-6 18.09 0
-1 24.09 5
+5 0 0
+6 1 0
+1 1 1
 SURF 0X10
 mat 13
 refs 3
-6 18.09 0
-2 18.09 5
-1 24.09 5
+6 0 0
+2 1 0
+1 1 1
 SURF 0X10
 mat 13
 refs 3
-6 18.09 0
-7 12.09 0
-2 18.09 5
+6 0 0
+7 1 0
+2 1 1
 SURF 0X10
 mat 13
 refs 3
-7 12.09 0
-3 12.09 5
-2 18.09 5
+7 0 0
+3 1 0
+2 1 1
 SURF 0X10
 mat 13
 refs 3
-8 30.09 0
-9 24.09 0
-4 30.09 5
+8 0 0
+9 1 0
+4 1 1
 SURF 0X10
 mat 13
 refs 3
-9 24.09 0
-5 24.09 5
-4 30.09 5
+9 0 0
+5 1 0
+4 1 1
 SURF 0X10
 mat 13
 refs 3
-9 24.09 0
-10 18.09 0
-5 24.09 5
+9 0 0
+10 1 0
+5 1 1
 SURF 0X10
 mat 13
 refs 3
-10 18.09 0
-6 18.09 5
-5 24.09 5
+10 0 0
+6 1 0
+5 1 1
 SURF 0X10
 mat 13
 refs 3
-10 18.09 0
-11 12.09 0
-6 18.09 5
+10 0 0
+11 1 0
+6 1 1
 SURF 0X10
 mat 13
 refs 3
-11 12.09 0
-7 12.09 5
-6 18.09 5
+11 0 0
+7 1 0
+6 1 1
 SURF 0X10
 mat 13
 refs 3
-12 30.09 0
-13 24.09 0
-8 30.09 5
+12 0 0
+13 1 0
+8 1 1
 SURF 0X10
 mat 13
 refs 3
-13 24.09 0
-9 24.09 5
-8 30.09 5
+13 0 0
+9 1 0
+8 1 1
 SURF 0X10
 mat 13
 refs 3
-13 24.09 0
-14 18.09 0
-9 24.09 5
+13 0 0
+14 1 0
+9 1 1
 SURF 0X10
 mat 13
 refs 3
-14 18.09 0
-10 18.09 5
-9 24.09 5
+14 0 0
+10 1 0
+9 1 1
 SURF 0X10
 mat 13
 refs 3
-14 18.09 0
-15 12.09 0
-10 18.09 5
+14 0 0
+15 1 0
+10 1 1
 SURF 0X10
 mat 13
 refs 3
-15 12.09 0
-11 12.09 5
-10 18.09 5
+15 0 0
+11 1 0
+10 1 1
 SURF 0X10
 mat 13
 refs 3
-16 30.09 0
-17 24.09 0
-12 30.09 5
+16 0 0
+17 1 0
+12 1 1
 SURF 0X10
 mat 13
 refs 3
-17 24.09 0
-13 24.09 5
-12 30.09 5
+17 0 0
+13 1 0
+12 1 1
 SURF 0X10
 mat 13
 refs 3
-17 24.09 0
-18 18.09 0
-13 24.09 5
+17 0 0
+18 1 0
+13 1 1
 SURF 0X10
 mat 13
 refs 3
-18 18.09 0
-14 18.09 5
-13 24.09 5
+18 0 0
+14 1 0
+13 1 1
 SURF 0X10
 mat 13
 refs 3
-18 18.09 0
-19 12.09 0
-14 18.09 5
+18 0 0
+19 1 0
+14 1 1
 SURF 0X10
 mat 13
 refs 3
-19 12.09 0
-15 12.09 5
-14 18.09 5
+19 0 0
+15 1 0
+14 1 1
 SURF 0X10
 mat 13
 refs 3
-20 30.09 0
-21 24.09 0
-16 30.09 5
+20 0 0
+21 1 0
+16 1 1
 SURF 0X10
 mat 13
 refs 3
-21 24.09 0
-17 24.09 5
-16 30.09 5
+21 0 0
+17 1 0
+16 1 1
 SURF 0X10
 mat 13
 refs 3
-21 24.09 0
-22 18.09 0
-17 24.09 5
+21 0 0
+22 1 0
+17 1 1
 SURF 0X10
 mat 13
 refs 3
-22 18.09 0
-18 18.09 5
-17 24.09 5
+22 0 0
+18 1 0
+17 1 1
 SURF 0X10
 mat 13
 refs 3
-22 18.09 0
-23 12.09 0
-18 18.09 5
+22 0 0
+23 1 0
+18 1 1
 SURF 0X10
 mat 13
 refs 3
-23 12.09 0
-19 12.09 5
-18 18.09 5
+23 0 0
+19 1 0
+18 1 1
 SURF 0X10
 mat 13
 refs 3
-24 30.09 0
-25 24.09 0
-20 30.09 5
+24 0 0
+25 1 0
+20 1 1
 SURF 0X10
 mat 13
 refs 3
-25 24.09 0
-21 24.09 5
-20 30.09 5
+25 0 0
+21 1 0
+20 1 1
 SURF 0X10
 mat 13
 refs 3
-25 24.09 0
-26 18.09 0
-21 24.09 5
+25 0 0
+26 1 0
+21 1 1
 SURF 0X10
 mat 13
 refs 3
-26 18.09 0
-22 18.09 5
-21 24.09 5
+26 0 0
+22 1 0
+21 1 1
 SURF 0X10
 mat 13
 refs 3
-26 18.09 0
-27 12.09 0
-22 18.09 5
+26 0 0
+27 1 0
+22 1 1
 SURF 0X10
 mat 13
 refs 3
-27 12.09 0
-23 12.09 5
-22 18.09 5
+27 0 0
+23 1 0
+22 1 1
 SURF 0X10
 mat 13
 refs 3
-28 30.09 0
-29 24.09 0
-24 30.09 5
+28 0 0
+29 1 0
+24 1 1
 SURF 0X10
 mat 13
 refs 3
-29 24.09 0
-25 24.09 5
-24 30.09 5
+29 0 0
+25 1 0
+24 1 1
 SURF 0X10
 mat 13
 refs 3
-29 24.09 0
-30 18.09 0
-25 24.09 5
+29 0 0
+30 1 0
+25 1 1
 SURF 0X10
 mat 13
 refs 3
-30 18.09 0
-26 18.09 5
-25 24.09 5
+30 0 0
+26 1 0
+25 1 1
 SURF 0X10
 mat 13
 refs 3
-30 18.09 0
-31 12.09 0
-26 18.09 5
+30 0 0
+31 1 0
+26 1 1
 SURF 0X10
 mat 13
 refs 3
-31 12.09 0
-27 12.09 5
-26 18.09 5
+31 0 0
+27 1 0
+26 1 1
 SURF 0X10
 mat 13
 refs 3
-32 30.09 0
-33 24.09 0
-28 30.09 5
+32 0 0
+33 1 0
+28 1 1
 SURF 0X10
 mat 13
 refs 3
-33 24.09 0
-29 24.09 5
-28 30.09 5
+33 0 0
+29 1 0
+28 1 1
 SURF 0X10
 mat 13
 refs 3
-33 24.09 0
-34 18.09 0
-29 24.09 5
+33 0 0
+34 1 0
+29 1 1
 SURF 0X10
 mat 13
 refs 3
-34 18.09 0
-30 18.09 5
-29 24.09 5
+34 0 0
+30 1 0
+29 1 1
 SURF 0X10
 mat 13
 refs 3
-34 18.09 0
-35 12.09 0
-30 18.09 5
+34 0 0
+35 1 0
+30 1 1
 SURF 0X10
 mat 13
 refs 3
-35 12.09 0
-31 12.09 5
-30 18.09 5
+35 0 0
+31 1 0
+30 1 1
 SURF 0X10
 mat 13
 refs 3
-36 30.09 0
-37 24.09 0
-32 30.09 5
+36 0 0
+37 1 0
+32 1 1
 SURF 0X10
 mat 13
 refs 3
-37 24.09 0
-33 24.09 5
-32 30.09 5
+37 0 0
+33 1 0
+32 1 1
 SURF 0X10
 mat 13
 refs 3
-37 24.09 0
-38 18.09 0
-33 24.09 5
+37 0 0
+38 1 0
+33 1 1
 SURF 0X10
 mat 13
 refs 3
-38 18.09 0
-34 18.09 5
-33 24.09 5
+38 0 0
+34 1 0
+33 1 1
 SURF 0X10
 mat 13
 refs 3
-38 18.09 0
-39 12.09 0
-34 18.09 5
+38 0 0
+39 1 0
+34 1 1
 SURF 0X10
 mat 13
 refs 3
-39 12.09 0
-35 12.09 5
-34 18.09 5
+39 0 0
+35 1 0
+34 1 1
 SURF 0X10
 mat 13
 refs 3
-40 30.09 0
-41 24.09 0
-36 30.09 5
+40 0 0
+41 1 0
+36 1 1
 SURF 0X10
 mat 13
 refs 3
-41 24.09 0
-37 24.09 5
-36 30.09 5
+41 0 0
+37 1 0
+36 1 1
 SURF 0X10
 mat 13
 refs 3
-41 24.09 0
-42 18.09 0
-37 24.09 5
+41 0 0
+42 1 0
+37 1 1
 SURF 0X10
 mat 13
 refs 3
-42 18.09 0
-38 18.09 5
-37 24.09 5
+42 0 0
+38 1 0
+37 1 1
 SURF 0X10
 mat 13
 refs 3
-42 18.09 0
-43 12.09 0
-38 18.09 5
+42 0 0
+43 1 0
+38 1 1
 SURF 0X10
 mat 13
 refs 3
-43 12.09 0
-39 12.09 5
-38 18.09 5
+43 0 0
+39 1 0
+38 1 1
 SURF 0X10
 mat 13
 refs 3
-44 30.09 0
-45 24.09 0
-40 30.09 5
+44 0 0
+45 1 0
+40 1 1
 SURF 0X10
 mat 13
 refs 3
-45 24.09 0
-41 24.09 5
-40 30.09 5
+45 0 0
+41 1 0
+40 1 1
 SURF 0X10
 mat 13
 refs 3
-45 24.09 0
-46 18.09 0
-41 24.09 5
+45 0 0
+46 1 0
+41 1 1
 SURF 0X10
 mat 13
 refs 3
-46 18.09 0
-42 18.09 5
-41 24.09 5
+46 0 0
+42 1 0
+41 1 1
 SURF 0X10
 mat 13
 refs 3
-46 18.09 0
-47 12.09 0
-42 18.09 5
+46 0 0
+47 1 0
+42 1 1
 SURF 0X10
 mat 13
 refs 3
-47 12.09 0
-43 12.09 5
-42 18.09 5
+47 0 0
+43 1 0
+42 1 1
 SURF 0X10
 mat 13
 refs 3
-48 30.09 0
-49 24.09 0
-44 30.09 5
+48 0 0
+49 1 0
+44 1 1
 SURF 0X10
 mat 13
 refs 3
-49 24.09 0
-45 24.09 5
-44 30.09 5
+49 0 0
+45 1 0
+44 1 1
 SURF 0X10
 mat 13
 refs 3
-49 24.09 0
-50 18.09 0
-45 24.09 5
+49 0 0
+50 1 0
+45 1 1
 SURF 0X10
 mat 13
 refs 3
-50 18.09 0
-46 18.09 5
-45 24.09 5
+50 0 0
+46 1 0
+45 1 1
 SURF 0X10
 mat 13
 refs 3
-50 18.09 0
-51 12.09 0
-46 18.09 5
+50 0 0
+51 1 0
+46 1 1
 SURF 0X10
 mat 13
 refs 3
-51 12.09 0
-47 12.09 5
-46 18.09 5
+51 0 0
+47 1 0
+46 1 1
 SURF 0X10
 mat 13
 refs 3
-52 30.09 0
-53 24.09 0
-48 30.09 5
+52 0 0
+53 1 0
+48 1 1
 SURF 0X10
 mat 13
 refs 3
-53 24.09 0
-49 24.09 5
-48 30.09 5
+53 0 0
+49 1 0
+48 1 1
 SURF 0X10
 mat 13
 refs 3
-53 24.09 0
-54 18.09 0
-49 24.09 5
+53 0 0
+54 1 0
+49 1 1
 SURF 0X10
 mat 13
 refs 3
-54 18.09 0
-50 18.09 5
-49 24.09 5
+54 0 0
+50 1 0
+49 1 1
 SURF 0X10
 mat 13
 refs 3
-54 18.09 0
-55 12.09 0
-50 18.09 5
+54 0 0
+55 1 0
+50 1 1
 SURF 0X10
 mat 13
 refs 3
-55 12.09 0
-51 12.09 5
-50 18.09 5
+55 0 0
+51 1 0
+50 1 1
 SURF 0X10
 mat 13
 refs 3
-56 30.09 0
-57 24.09 0
-52 30.09 5
+56 0 0
+57 1 0
+52 1 1
 SURF 0X10
 mat 13
 refs 3
-57 24.09 0
-53 24.09 5
-52 30.09 5
+57 0 0
+53 1 0
+52 1 1
 SURF 0X10
 mat 13
 refs 3
-57 24.09 0
-58 18.09 0
-53 24.09 5
+57 0 0
+58 1 0
+53 1 1
 SURF 0X10
 mat 13
 refs 3
-58 18.09 0
-54 18.09 5
-53 24.09 5
+58 0 0
+54 1 0
+53 1 1
 SURF 0X10
 mat 13
 refs 3
-58 18.09 0
-59 12.09 0
-54 18.09 5
+58 0 0
+59 1 0
+54 1 1
 SURF 0X10
 mat 13
 refs 3
-59 12.09 0
-55 12.09 5
-54 18.09 5
+59 0 0
+55 1 0
+54 1 1
 SURF 0X10
 mat 13
 refs 3
-60 30.09 0
-61 24.09 0
-56 30.09 5
+60 0 0
+61 1 0
+56 1 1
 SURF 0X10
 mat 13
 refs 3
-61 24.09 0
-57 24.09 5
-56 30.09 5
+61 0 0
+57 1 0
+56 1 1
 SURF 0X10
 mat 13
 refs 3
-61 24.09 0
-62 18.09 0
-57 24.09 5
+61 0 0
+62 1 0
+57 1 1
 SURF 0X10
 mat 13
 refs 3
-62 18.09 0
-58 18.09 5
-57 24.09 5
+62 0 0
+58 1 0
+57 1 1
 SURF 0X10
 mat 13
 refs 3
-62 18.09 0
-63 12.09 0
-58 18.09 5
+62 0 0
+63 1 0
+58 1 1
 SURF 0X10
 mat 13
 refs 3
-63 12.09 0
-59 12.09 5
-58 18.09 5
+63 0 0
+59 1 0
+58 1 1
 SURF 0X10
 mat 13
 refs 3
-64 30.09 0
-65 24.09 0
-60 30.09 5
+64 0 0
+65 1 0
+60 1 1
 SURF 0X10
 mat 13
 refs 3
-65 24.09 0
-61 24.09 5
-60 30.09 5
+65 0 0
+61 1 0
+60 1 1
 SURF 0X10
 mat 13
 refs 3
-65 24.09 0
-66 18.09 0
-61 24.09 5
+65 0 0
+66 1 0
+61 1 1
 SURF 0X10
 mat 13
 refs 3
-66 18.09 0
-62 18.09 5
-61 24.09 5
+66 0 0
+62 1 0
+61 1 1
 SURF 0X10
 mat 13
 refs 3
-66 18.09 0
-67 12.09 0
-62 18.09 5
+66 0 0
+67 1 0
+62 1 1
 SURF 0X10
 mat 13
 refs 3
-67 12.09 0
-63 12.09 5
-62 18.09 5
+67 0 0
+63 1 0
+62 1 1
 SURF 0X10
 mat 13
 refs 3
-68 30.09 0
-69 24.09 0
-64 30.09 5
+68 0 0
+69 1 0
+64 1 1
 SURF 0X10
 mat 13
 refs 3
-69 24.09 0
-65 24.09 5
-64 30.09 5
+69 0 0
+65 1 0
+64 1 1
 SURF 0X10
 mat 13
 refs 3
-69 24.09 0
-70 18.09 0
-65 24.09 5
+69 0 0
+70 1 0
+65 1 1
 SURF 0X10
 mat 13
 refs 3
-70 18.09 0
-66 18.09 5
-65 24.09 5
+70 0 0
+66 1 0
+65 1 1
 SURF 0X10
 mat 13
 refs 3
-70 18.09 0
-71 12.09 0
-66 18.09 5
+70 0 0
+71 1 0
+66 1 1
 SURF 0X10
 mat 13
 refs 3
-71 12.09 0
-67 12.09 5
-66 18.09 5
+71 0 0
+67 1 0
+66 1 1
 SURF 0X10
 mat 13
 refs 3
-72 30.09 0
-73 24.09 0
-68 30.09 5
+72 0 0
+73 1 0
+68 1 1
 SURF 0X10
 mat 13
 refs 3
-73 24.09 0
-69 24.09 5
-68 30.09 5
+73 0 0
+69 1 0
+68 1 1
 SURF 0X10
 mat 13
 refs 3
-73 24.09 0
-74 18.09 0
-69 24.09 5
+73 0 0
+74 1 0
+69 1 1
 SURF 0X10
 mat 13
 refs 3
-74 18.09 0
-70 18.09 5
-69 24.09 5
+74 0 0
+70 1 0
+69 1 1
 SURF 0X10
 mat 13
 refs 3
-74 18.09 0
-75 12.09 0
-70 18.09 5
+74 0 0
+75 1 0
+70 1 1
 SURF 0X10
 mat 13
 refs 3
-75 12.09 0
-71 12.09 5
-70 18.09 5
+75 0 0
+71 1 0
+70 1 1
 SURF 0X10
 mat 13
 refs 3
-76 30.09 0
-77 24.09 0
-72 30.09 5
+76 0 0
+77 1 0
+72 1 1
 SURF 0X10
 mat 13
 refs 3
-77 24.09 0
-73 24.09 5
-72 30.09 5
+77 0 0
+73 1 0
+72 1 1
 SURF 0X10
 mat 13
 refs 3
-77 24.09 0
-78 18.09 0
-73 24.09 5
+77 0 0
+78 1 0
+73 1 1
 SURF 0X10
 mat 13
 refs 3
-78 18.09 0
-74 18.09 5
-73 24.09 5
+78 0 0
+74 1 0
+73 1 1
 SURF 0X10
 mat 13
 refs 3
-78 18.09 0
-79 12.09 0
-74 18.09 5
+78 0 0
+79 1 0
+74 1 1
 SURF 0X10
 mat 13
 refs 3
-79 12.09 0
-75 12.09 5
-74 18.09 5
+79 0 0
+75 1 0
+74 1 1
 SURF 0X10
 mat 13
 refs 3
-80 30.09 0
-81 24.09 0
-76 30.09 5
+80 0 0
+81 1 0
+76 1 1
 SURF 0X10
 mat 13
 refs 3
-81 24.09 0
-77 24.09 5
-76 30.09 5
+81 0 0
+77 1 0
+76 1 1
 SURF 0X10
 mat 13
 refs 3
-81 24.09 0
-82 18.09 0
-77 24.09 5
+81 0 0
+82 1 0
+77 1 1
 SURF 0X10
 mat 13
 refs 3
-82 18.09 0
-78 18.09 5
-77 24.09 5
+82 0 0
+78 1 0
+77 1 1
 SURF 0X10
 mat 13
 refs 3
-82 18.09 0
-83 12.09 0
-78 18.09 5
+82 0 0
+83 1 0
+78 1 1
 SURF 0X10
 mat 13
 refs 3
-83 12.09 0
-79 12.09 5
-78 18.09 5
+83 0 0
+79 1 0
+78 1 1
 SURF 0X10
 mat 13
 refs 3
-84 30.09 0
-85 24.09 0
-80 30.09 5
+84 0 0
+85 1 0
+80 1 1
 SURF 0X10
 mat 13
 refs 3
-85 24.09 0
-81 24.09 5
-80 30.09 5
+85 0 0
+81 1 0
+80 1 1
 SURF 0X10
 mat 13
 refs 3
-85 24.09 0
-86 18.09 0
-81 24.09 5
+85 0 0
+86 1 0
+81 1 1
 SURF 0X10
 mat 13
 refs 3
-86 18.09 0
-82 18.09 5
-81 24.09 5
+86 0 0
+82 1 0
+81 1 1
 SURF 0X10
 mat 13
 refs 3
-86 18.09 0
-87 12.09 0
-82 18.09 5
+86 0 0
+87 1 0
+82 1 1
 SURF 0X10
 mat 13
 refs 3
-87 12.09 0
-83 12.09 5
-82 18.09 5
+87 0 0
+83 1 0
+82 1 1
 SURF 0X10
 mat 13
 refs 3
-88 30.09 0
-89 24.09 0
-84 30.09 5
+88 0 0
+89 1 0
+84 1 1
 SURF 0X10
 mat 13
 refs 3
-89 24.09 0
-85 24.09 5
-84 30.09 5
+89 0 0
+85 1 0
+84 1 1
 SURF 0X10
 mat 13
 refs 3
-89 24.09 0
-90 18.09 0
-85 24.09 5
+89 0 0
+90 1 0
+85 1 1
 SURF 0X10
 mat 13
 refs 3
-90 18.09 0
-86 18.09 5
-85 24.09 5
+90 0 0
+86 1 0
+85 1 1
 SURF 0X10
 mat 13
 refs 3
-90 18.09 0
-91 12.09 0
-86 18.09 5
+90 0 0
+91 1 0
+86 1 1
 SURF 0X10
 mat 13
 refs 3
-91 12.09 0
-87 12.09 5
-86 18.09 5
+91 0 0
+87 1 0
+86 1 1
 SURF 0X10
 mat 13
 refs 3
-92 30.09 0
-93 24.09 0
-88 30.09 5
+92 0 0
+93 1 0
+88 1 1
 SURF 0X10
 mat 13
 refs 3
-93 24.09 0
-89 24.09 5
-88 30.09 5
+93 0 0
+89 1 0
+88 1 1
 SURF 0X10
 mat 13
 refs 3
-93 24.09 0
-94 18.09 0
-89 24.09 5
+93 0 0
+94 1 0
+89 1 1
 SURF 0X10
 mat 13
 refs 3
-94 18.09 0
-90 18.09 5
-89 24.09 5
+94 0 0
+90 1 0
+89 1 1
 SURF 0X10
 mat 13
 refs 3
-94 18.09 0
-95 12.09 0
-90 18.09 5
+94 0 0
+95 1 0
+90 1 1
 SURF 0X10
 mat 13
 refs 3
-95 12.09 0
-91 12.09 5
-90 18.09 5
+95 0 0
+91 1 0
+90 1 1
 SURF 0X10
 mat 13
 refs 3
-96 30.09 0
-97 24.09 0
-92 30.09 5
+96 0 0
+97 1 0
+92 1 1
 SURF 0X10
 mat 13
 refs 3
-97 24.09 0
-93 24.09 5
-92 30.09 5
+97 0 0
+93 1 0
+92 1 1
 SURF 0X10
 mat 13
 refs 3
-97 24.09 0
-98 18.09 0
-93 24.09 5
+97 0 0
+98 1 0
+93 1 1
 SURF 0X10
 mat 13
 refs 3
-98 18.09 0
-94 18.09 5
-93 24.09 5
+98 0 0
+94 1 0
+93 1 1
 SURF 0X10
 mat 13
 refs 3
-98 18.09 0
-99 12.09 0
-94 18.09 5
+98 0 0
+99 1 0
+94 1 1
 SURF 0X10
 mat 13
 refs 3
-99 12.09 0
-95 12.09 5
-94 18.09 5
+99 0 0
+95 1 0
+94 1 1
 SURF 0X10
 mat 13
 refs 3
-100 30.09 0
-101 24.09 0
-96 30.09 5
+100 0 0
+101 1 0
+96 1 1
 SURF 0X10
 mat 13
 refs 3
-101 24.09 0
-97 24.09 5
-96 30.09 5
+101 0 0
+97 1 0
+96 1 1
 SURF 0X10
 mat 13
 refs 3
-101 24.09 0
-102 18.09 0
-97 24.09 5
+101 0 0
+102 1 0
+97 1 1
 SURF 0X10
 mat 13
 refs 3
-102 18.09 0
-98 18.09 5
-97 24.09 5
+102 0 0
+98 1 0
+97 1 1
 SURF 0X10
 mat 13
 refs 3
-102 18.09 0
-103 12.09 0
-98 18.09 5
+102 0 0
+103 1 0
+98 1 1
 SURF 0X10
 mat 13
 refs 3
-103 12.09 0
-99 12.09 5
-98 18.09 5
+103 0 0
+99 1 0
+98 1 1
 SURF 0X10
 mat 13
 refs 3
-104 30.09 0
-105 24.09 0
-100 30.09 5
+104 0 0
+105 1 0
+100 1 1
 SURF 0X10
 mat 13
 refs 3
-105 24.09 0
-101 24.09 5
-100 30.09 5
+105 0 0
+101 1 0
+100 1 1
 SURF 0X10
 mat 13
 refs 3
-105 24.09 0
-106 18.09 0
-101 24.09 5
+105 0 0
+106 1 0
+101 1 1
 SURF 0X10
 mat 13
 refs 3
-106 18.09 0
-102 18.09 5
-101 24.09 5
+106 0 0
+102 1 0
+101 1 1
 SURF 0X10
 mat 13
 refs 3
-106 18.09 0
-107 12.09 0
-102 18.09 5
+106 0 0
+107 1 0
+102 1 1
 SURF 0X10
 mat 13
 refs 3
-107 12.09 0
-103 12.09 5
-102 18.09 5
+107 0 0
+103 1 0
+102 1 1
 SURF 0X10
 mat 13
 refs 3
-108 30.09 0
-109 24.09 0
-104 30.09 5
+108 0 0
+109 1 0
+104 1 1
 SURF 0X10
 mat 13
 refs 3
-109 24.09 0
-105 24.09 5
-104 30.09 5
+109 0 0
+105 1 0
+104 1 1
 SURF 0X10
 mat 13
 refs 3
-109 24.09 0
-110 18.09 0
-105 24.09 5
+109 0 0
+110 1 0
+105 1 1
 SURF 0X10
 mat 13
 refs 3
-110 18.09 0
-106 18.09 5
-105 24.09 5
+110 0 0
+106 1 0
+105 1 1
 SURF 0X10
 mat 13
 refs 3
-110 18.09 0
-111 12.09 0
-106 18.09 5
+110 0 0
+111 1 0
+106 1 1
 SURF 0X10
 mat 13
 refs 3
-111 12.09 0
-107 12.09 5
-106 18.09 5
+111 0 0
+107 1 0
+106 1 1
 SURF 0X10
 mat 13
 refs 3
-112 30.09 0
-113 24.09 0
-108 30.09 5
+112 0 0
+113 1 0
+108 1 1
 SURF 0X10
 mat 13
 refs 3
-113 24.09 0
-109 24.09 5
-108 30.09 5
+113 0 0
+109 1 0
+108 1 1
 SURF 0X10
 mat 13
 refs 3
-113 24.09 0
-114 18.09 0
-109 24.09 5
+113 0 0
+114 1 0
+109 1 1
 SURF 0X10
 mat 13
 refs 3
-114 18.09 0
-110 18.09 5
-109 24.09 5
+114 0 0
+110 1 0
+109 1 1
 SURF 0X10
 mat 13
 refs 3
-114 18.09 0
-115 12.09 0
-110 18.09 5
+114 0 0
+115 1 0
+110 1 1
 SURF 0X10
 mat 13
 refs 3
-115 12.09 0
-111 12.09 5
-110 18.09 5
+115 0 0
+111 1 0
+110 1 1
 SURF 0X10
 mat 13
 refs 3
-116 30.09 0
-117 24.09 0
-112 30.09 5
+116 0 0
+117 1 0
+112 1 1
 SURF 0X10
 mat 13
 refs 3
-117 24.09 0
-113 24.09 5
-112 30.09 5
+117 0 0
+113 1 0
+112 1 1
 SURF 0X10
 mat 13
 refs 3
-117 24.09 0
-118 18.09 0
-113 24.09 5
+117 0 0
+118 1 0
+113 1 1
 SURF 0X10
 mat 13
 refs 3
-118 18.09 0
-114 18.09 5
-113 24.09 5
+118 0 0
+114 1 0
+113 1 1
 SURF 0X10
 mat 13
 refs 3
-118 18.09 0
-119 12.09 0
-114 18.09 5
+118 0 0
+119 1 0
+114 1 1
 SURF 0X10
 mat 13
 refs 3
-119 12.09 0
-115 12.09 5
-114 18.09 5
+119 0 0
+115 1 0
+114 1 1
 SURF 0X10
 mat 13
 refs 3
-120 30.09 0
-121 24.09 0
-116 30.09 5
+120 0 0
+121 1 0
+116 1 1
 SURF 0X10
 mat 13
 refs 3
-121 24.09 0
-117 24.09 5
-116 30.09 5
+121 0 0
+117 1 0
+116 1 1
 SURF 0X10
 mat 13
 refs 3
-121 24.09 0
-122 18.09 0
-117 24.09 5
+121 0 0
+122 1 0
+117 1 1
 SURF 0X10
 mat 13
 refs 3
-122 18.09 0
-118 18.09 5
-117 24.09 5
+122 0 0
+118 1 0
+117 1 1
 SURF 0X10
 mat 13
 refs 3
-122 18.09 0
-123 12.09 0
-118 18.09 5
+122 0 0
+123 1 0
+118 1 1
 SURF 0X10
 mat 13
 refs 3
-123 12.09 0
-119 12.09 5
-118 18.09 5
+123 0 0
+119 1 0
+118 1 1
 SURF 0X10
 mat 13
 refs 3
-124 30.09 0
-125 24.09 0
-120 30.09 5
+124 0 0
+125 1 0
+120 1 1
 SURF 0X10
 mat 13
 refs 3
-125 24.09 0
-121 24.09 5
-120 30.09 5
+125 0 0
+121 1 0
+120 1 1
 SURF 0X10
 mat 13
 refs 3
-125 24.09 0
-126 18.09 0
-121 24.09 5
+125 0 0
+126 1 0
+121 1 1
 SURF 0X10
 mat 13
 refs 3
-126 18.09 0
-122 18.09 5
-121 24.09 5
+126 0 0
+122 1 0
+121 1 1
 SURF 0X10
 mat 13
 refs 3
-126 18.09 0
-127 12.09 0
-122 18.09 5
+126 0 0
+127 1 0
+122 1 1
 SURF 0X10
 mat 13
 refs 3
-127 12.09 0
-123 12.09 5
-122 18.09 5
+127 0 0
+123 1 0
+122 1 1
 SURF 0X10
 mat 13
 refs 3
-0 30.09 0
-1 24.09 0
-124 30.09 5
+0 0 0
+1 1 0
+124 1 1
 SURF 0X10
 mat 13
 refs 3
-1 24.09 0
-125 24.09 5
-124 30.09 5
+1 0 0
+125 1 0
+124 1 1
 SURF 0X10
 mat 13
 refs 3
-1 24.09 0
-2 18.09 0
-125 24.09 5
+1 0 0
+2 1 0
+125 1 1
 SURF 0X10
 mat 13
 refs 3
-2 18.09 0
-126 18.09 5
-125 24.09 5
+2 0 0
+126 1 0
+125 1 1
 SURF 0X10
 mat 13
 refs 3
-2 18.09 0
-3 12.09 0
-126 18.09 5
+2 0 0
+3 1 0
+126 1 1
 SURF 0X10
 mat 13
 refs 3
-3 12.09 0
-127 12.09 5
-126 18.09 5
+3 0 0
+127 1 0
+126 1 1
 kids 0
 OBJECT poly
 name "EPU_FUEL_disk"
 data 13
 EPU_FUEL_disk
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 16
 -0.06673 0.00341 -0.4304
 -0.07603 0.00341 -0.43238
@@ -7400,7 +7323,7 @@ OBJECT poly
 name "EPU_FUEL_needle"
 data 15
 EPU_FUEL_needle
-crease 30.0
+crease 40.0
 numvert 30
 -0.06798 0.0046 -0.46
 -0.06253 0.0046 -0.45871
@@ -7436,273 +7359,273 @@ numsurf 45
 SURF 0X10
 mat 14
 refs 3
-0 1 1
-1 0.875 1
-9 0.875 0
+0 0 0
+1 1 0
+9 1 1
 SURF 0X10
 mat 14
 refs 3
-1 0.875 1
-10 0.75 0
-9 0.875 0
+1 0 0
+10 1 0
+9 1 1
 SURF 0X10
 mat 14
 refs 3
-1 0.875 1
-2 0.75 1
-10 0.75 0
+1 0 0
+2 1 0
+10 1 1
 SURF 0X10
 mat 14
 refs 3
-2 0.75 1
-11 0.625 0
-10 0.75 0
+2 0 0
+11 1 0
+10 1 1
 SURF 0X10
 mat 14
 refs 3
-2 0.75 1
-3 0.625 1
-11 0.625 0
+2 0 0
+3 1 0
+11 1 1
 SURF 0X10
 mat 14
 refs 3
-3 0.625 1
-12 0.5 0
-11 0.625 0
+3 0 0
+12 1 0
+11 1 1
 SURF 0X10
 mat 14
 refs 3
-3 0.625 1
-4 0.5 1
-12 0.5 0
+3 0 0
+4 1 0
+12 1 1
 SURF 0X10
 mat 14
 refs 3
-4 0.5 1
-13 0.375 0
-12 0.5 0
+4 0 0
+13 1 0
+12 1 1
 SURF 0X10
 mat 14
 refs 3
-4 0.5 1
-5 0.375 1
-13 0.375 0
+4 0 0
+5 1 0
+13 1 1
 SURF 0X10
 mat 14
 refs 3
-5 0.375 1
-14 0.25 0
-13 0.375 0
+5 0 0
+14 1 0
+13 1 1
 SURF 0X10
 mat 14
 refs 3
-5 0.375 1
-6 0.25 1
-14 0.25 0
+5 0 0
+6 1 0
+14 1 1
 SURF 0X10
 mat 14
 refs 3
-6 0.25 1
-15 0.125 0
-14 0.25 0
+6 0 0
+15 1 0
+14 1 1
 SURF 0X10
 mat 14
 refs 3
-6 0.25 1
-7 0.125 1
-15 0.125 0
+6 0 0
+7 1 0
+15 1 1
 SURF 0X10
 mat 14
 refs 3
-7 0.125 1
-8 0 0
-15 0.125 0
+7 0 0
+8 1 0
+15 1 1
 SURF 0X10
 mat 14
 refs 3
-7 0.125 1
-0 0 1
-8 0 0
+7 0 0
+0 1 0
+8 1 1
 SURF 0X10
 mat 14
 refs 3
-1 0.875 0
+1 0 0
 0 1 0
 16 1 1
 SURF 0X10
 mat 14
 refs 3
+16 0 0
+17 1 0
+1 1 1
+SURF 0X10
+mat 14
+refs 3
+16 0 0
+0 1 0
+23 1 1
+SURF 0X10
+mat 14
+refs 3
+17 0 0
+2 1 0
+1 1 1
+SURF 0X10
+mat 14
+refs 3
+17 0 0
+18 1 0
+2 1 1
+SURF 0X10
+mat 14
+refs 3
+18 0 0
+3 1 0
+2 1 1
+SURF 0X10
+mat 14
+refs 3
+18 0 0
+19 1 0
+3 1 1
+SURF 0X10
+mat 14
+refs 3
+19 0 0
+4 1 0
+3 1 1
+SURF 0X10
+mat 14
+refs 3
+19 0 0
+20 1 0
+4 1 1
+SURF 0X10
+mat 14
+refs 3
+20 0 0
+5 1 0
+4 1 1
+SURF 0X10
+mat 14
+refs 3
+20 0 0
+21 1 0
+5 1 1
+SURF 0X10
+mat 14
+refs 3
+21 0 0
+6 1 0
+5 1 1
+SURF 0X10
+mat 14
+refs 3
+21 0 0
+22 1 0
+6 1 1
+SURF 0X10
+mat 14
+refs 3
+22 0 0
+7 1 0
+6 1 1
+SURF 0X10
+mat 14
+refs 3
+22 0 0
+23 1 0
+7 1 1
+SURF 0X10
+mat 14
+refs 3
+23 0 0
+0 1 0
+7 1 1
+SURF 0X10
+mat 14
+refs 3
+24 0 0
+16 1 0
+23 1 1
+SURF 0X10
+mat 14
+refs 3
+24 0 0
+17 1 0
 16 1 1
-17 0.875 1
-1 0.875 0
 SURF 0X10
 mat 14
 refs 3
-16 0 1
-0 0 0
-23 0.125 1
+24 0 0
+18 1 0
+17 1 1
 SURF 0X10
 mat 14
 refs 3
-17 0.875 1
-2 0.75 0
-1 0.875 0
+24 0 0
+19 1 0
+18 1 1
 SURF 0X10
 mat 14
 refs 3
-17 0.875 1
-18 0.75 1
-2 0.75 0
+24 0 0
+20 1 0
+19 1 1
 SURF 0X10
 mat 14
 refs 3
-18 0.75 1
-3 0.625 0
-2 0.75 0
+24 0 0
+21 1 0
+20 1 1
 SURF 0X10
 mat 14
 refs 3
-18 0.75 1
-19 0.625 1
-3 0.625 0
+24 0 0
+22 1 0
+21 1 1
 SURF 0X10
 mat 14
 refs 3
-19 0.625 1
-4 0.5 0
-3 0.625 0
-SURF 0X10
-mat 14
-refs 3
-19 0.625 1
-20 0.5 1
-4 0.5 0
-SURF 0X10
-mat 14
-refs 3
-20 0.5 1
-5 0.375 0
-4 0.5 0
-SURF 0X10
-mat 14
-refs 3
-20 0.5 1
-21 0.375 1
-5 0.375 0
-SURF 0X10
-mat 14
-refs 3
-21 0.375 1
-6 0.25 0
-5 0.375 0
-SURF 0X10
-mat 14
-refs 3
-21 0.375 1
-22 0.25 1
-6 0.25 0
-SURF 0X10
-mat 14
-refs 3
-22 0.25 1
-7 0.125 0
-6 0.25 0
-SURF 0X10
-mat 14
-refs 3
-22 0.25 1
-23 0.125 1
-7 0.125 0
-SURF 0X10
-mat 14
-refs 3
-23 0.125 1
-0 0 0
-7 0.125 0
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-16 0.853553 0.853553
-23 1 0.5
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-17 0.5 1
-16 0.853553 0.853553
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-18 0.146447 0.853553
-17 0.5 1
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-19 0 0.5
-18 0.146447 0.853553
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-20 0.146447 0.146447
-19 0 0.5
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-21 0.5 0
-20 0.146447 0.146447
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-22 0.853553 0.146447
-21 0.5 0
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-23 1 0.5
-22 0.853553 0.146447
+24 0 0
+23 1 0
+22 1 1
 SURF 0X10
 mat 15
 refs 3
-25 0.5 0.5
-27 0.5 0.75
-26 0.676777 0.676777
-SURF 0X10
-mat 14
-refs 3
-28 0.9375 0
-0 1 1
-9 0.875 0
-SURF 0X10
-mat 15
-refs 3
-28 0.5 -0
+25 0 0
+27 1 0
 26 1 1
-27 0 1
 SURF 0X10
 mat 14
 refs 3
-29 0.96875 0
-0 1 1
-28 0.9375 0
-SURF 0X10
-mat 14
-refs 3
-8 1 0
-0 1 1
-29 0.96875 0
+28 0 0
+0 1 0
+9 1 1
 SURF 0X10
 mat 15
 refs 3
-29 0.25 -0
-28 0.5 -0
-27 0 1
+28 0 0
+26 1 0
+27 1 1
+SURF 0X10
+mat 14
+refs 3
+29 0 0
+0 1 0
+28 1 1
+SURF 0X10
+mat 14
+refs 3
+8 0 0
+0 1 0
+29 1 1
+SURF 0X10
+mat 15
+refs 3
+29 0 0
+28 1 0
+27 1 1
 kids 0
 OBJECT group
 name "FUEL.001"
@@ -7711,7 +7634,7 @@ OBJECT poly
 name "FUEL.000"
 data 4
 FUEL
-crease 30.0
+crease 40.0
 numvert 128
 -0.28869 0.00196 -0.36812
 -0.28754 0.00442 -0.36812
@@ -7845,1165 +7768,1165 @@ numsurf 192
 SURF 0X10
 mat 16
 refs 3
-5 24.09 0
-0 30.09 5
-4 30.09 0
+5 0 0
+0 1 0
+4 1 1
 SURF 0X10
 mat 16
 refs 3
-1 24.09 5
-0 30.09 5
-5 24.09 0
+1 0 0
+0 1 0
+5 1 1
 SURF 0X10
 mat 16
 refs 3
-5 24.09 0
-6 18.09 0
-1 24.09 5
+5 0 0
+6 1 0
+1 1 1
 SURF 0X10
 mat 16
 refs 3
-6 18.09 0
-2 18.09 5
-1 24.09 5
+6 0 0
+2 1 0
+1 1 1
 SURF 0X10
 mat 16
 refs 3
-6 18.09 0
-7 12.09 0
-2 18.09 5
+6 0 0
+7 1 0
+2 1 1
 SURF 0X10
 mat 16
 refs 3
-7 12.09 0
-3 12.09 5
-2 18.09 5
+7 0 0
+3 1 0
+2 1 1
 SURF 0X10
 mat 16
 refs 3
-8 30.09 0
-9 24.09 0
-4 30.09 5
+8 0 0
+9 1 0
+4 1 1
 SURF 0X10
 mat 16
 refs 3
-9 24.09 0
-5 24.09 5
-4 30.09 5
+9 0 0
+5 1 0
+4 1 1
 SURF 0X10
 mat 16
 refs 3
-9 24.09 0
-10 18.09 0
-5 24.09 5
+9 0 0
+10 1 0
+5 1 1
 SURF 0X10
 mat 16
 refs 3
-10 18.09 0
-6 18.09 5
-5 24.09 5
+10 0 0
+6 1 0
+5 1 1
 SURF 0X10
 mat 16
 refs 3
-10 18.09 0
-11 12.09 0
-6 18.09 5
+10 0 0
+11 1 0
+6 1 1
 SURF 0X10
 mat 16
 refs 3
-11 12.09 0
-7 12.09 5
-6 18.09 5
+11 0 0
+7 1 0
+6 1 1
 SURF 0X10
 mat 16
 refs 3
-12 30.09 0
-13 24.09 0
-8 30.09 5
+12 0 0
+13 1 0
+8 1 1
 SURF 0X10
 mat 16
 refs 3
-13 24.09 0
-9 24.09 5
-8 30.09 5
+13 0 0
+9 1 0
+8 1 1
 SURF 0X10
 mat 16
 refs 3
-13 24.09 0
-14 18.09 0
-9 24.09 5
+13 0 0
+14 1 0
+9 1 1
 SURF 0X10
 mat 16
 refs 3
-14 18.09 0
-10 18.09 5
-9 24.09 5
+14 0 0
+10 1 0
+9 1 1
 SURF 0X10
 mat 16
 refs 3
-14 18.09 0
-15 12.09 0
-10 18.09 5
+14 0 0
+15 1 0
+10 1 1
 SURF 0X10
 mat 16
 refs 3
-15 12.09 0
-11 12.09 5
-10 18.09 5
+15 0 0
+11 1 0
+10 1 1
 SURF 0X10
 mat 16
 refs 3
-16 30.09 0
-17 24.09 0
-12 30.09 5
+16 0 0
+17 1 0
+12 1 1
 SURF 0X10
 mat 16
 refs 3
-17 24.09 0
-13 24.09 5
-12 30.09 5
+17 0 0
+13 1 0
+12 1 1
 SURF 0X10
 mat 16
 refs 3
-17 24.09 0
-18 18.09 0
-13 24.09 5
+17 0 0
+18 1 0
+13 1 1
 SURF 0X10
 mat 16
 refs 3
-18 18.09 0
-14 18.09 5
-13 24.09 5
+18 0 0
+14 1 0
+13 1 1
 SURF 0X10
 mat 16
 refs 3
-18 18.09 0
-19 12.09 0
-14 18.09 5
+18 0 0
+19 1 0
+14 1 1
 SURF 0X10
 mat 16
 refs 3
-19 12.09 0
-15 12.09 5
-14 18.09 5
+19 0 0
+15 1 0
+14 1 1
 SURF 0X10
 mat 16
 refs 3
-20 30.09 0
-21 24.09 0
-16 30.09 5
+20 0 0
+21 1 0
+16 1 1
 SURF 0X10
 mat 16
 refs 3
-21 24.09 0
-17 24.09 5
-16 30.09 5
+21 0 0
+17 1 0
+16 1 1
 SURF 0X10
 mat 16
 refs 3
-21 24.09 0
-22 18.09 0
-17 24.09 5
+21 0 0
+22 1 0
+17 1 1
 SURF 0X10
 mat 16
 refs 3
-22 18.09 0
-18 18.09 5
-17 24.09 5
+22 0 0
+18 1 0
+17 1 1
 SURF 0X10
 mat 16
 refs 3
-22 18.09 0
-23 12.09 0
-18 18.09 5
+22 0 0
+23 1 0
+18 1 1
 SURF 0X10
 mat 16
 refs 3
-23 12.09 0
-19 12.09 5
-18 18.09 5
+23 0 0
+19 1 0
+18 1 1
 SURF 0X10
 mat 16
 refs 3
-24 30.09 0
-25 24.09 0
-20 30.09 5
+24 0 0
+25 1 0
+20 1 1
 SURF 0X10
 mat 16
 refs 3
-25 24.09 0
-21 24.09 5
-20 30.09 5
+25 0 0
+21 1 0
+20 1 1
 SURF 0X10
 mat 16
 refs 3
-25 24.09 0
-26 18.09 0
-21 24.09 5
+25 0 0
+26 1 0
+21 1 1
 SURF 0X10
 mat 16
 refs 3
-26 18.09 0
-22 18.09 5
-21 24.09 5
+26 0 0
+22 1 0
+21 1 1
 SURF 0X10
 mat 16
 refs 3
-26 18.09 0
-27 12.09 0
-22 18.09 5
+26 0 0
+27 1 0
+22 1 1
 SURF 0X10
 mat 16
 refs 3
-27 12.09 0
-23 12.09 5
-22 18.09 5
+27 0 0
+23 1 0
+22 1 1
 SURF 0X10
 mat 16
 refs 3
-28 30.09 0
-29 24.09 0
-24 30.09 5
+28 0 0
+29 1 0
+24 1 1
 SURF 0X10
 mat 16
 refs 3
-29 24.09 0
-25 24.09 5
-24 30.09 5
+29 0 0
+25 1 0
+24 1 1
 SURF 0X10
 mat 16
 refs 3
-29 24.09 0
-30 18.09 0
-25 24.09 5
+29 0 0
+30 1 0
+25 1 1
 SURF 0X10
 mat 16
 refs 3
-30 18.09 0
-26 18.09 5
-25 24.09 5
+30 0 0
+26 1 0
+25 1 1
 SURF 0X10
 mat 16
 refs 3
-30 18.09 0
-31 12.09 0
-26 18.09 5
+30 0 0
+31 1 0
+26 1 1
 SURF 0X10
 mat 16
 refs 3
-31 12.09 0
-27 12.09 5
-26 18.09 5
+31 0 0
+27 1 0
+26 1 1
 SURF 0X10
 mat 16
 refs 3
-32 30.09 0
-33 24.09 0
-28 30.09 5
+32 0 0
+33 1 0
+28 1 1
 SURF 0X10
 mat 16
 refs 3
-33 24.09 0
-29 24.09 5
-28 30.09 5
+33 0 0
+29 1 0
+28 1 1
 SURF 0X10
 mat 16
 refs 3
-33 24.09 0
-34 18.09 0
-29 24.09 5
+33 0 0
+34 1 0
+29 1 1
 SURF 0X10
 mat 16
 refs 3
-34 18.09 0
-30 18.09 5
-29 24.09 5
+34 0 0
+30 1 0
+29 1 1
 SURF 0X10
 mat 16
 refs 3
-34 18.09 0
-35 12.09 0
-30 18.09 5
+34 0 0
+35 1 0
+30 1 1
 SURF 0X10
 mat 16
 refs 3
-35 12.09 0
-31 12.09 5
-30 18.09 5
+35 0 0
+31 1 0
+30 1 1
 SURF 0X10
 mat 16
 refs 3
-36 30.09 0
-37 24.09 0
-32 30.09 5
+36 0 0
+37 1 0
+32 1 1
 SURF 0X10
 mat 16
 refs 3
-37 24.09 0
-33 24.09 5
-32 30.09 5
+37 0 0
+33 1 0
+32 1 1
 SURF 0X10
 mat 16
 refs 3
-37 24.09 0
-38 18.09 0
-33 24.09 5
+37 0 0
+38 1 0
+33 1 1
 SURF 0X10
 mat 16
 refs 3
-38 18.09 0
-34 18.09 5
-33 24.09 5
+38 0 0
+34 1 0
+33 1 1
 SURF 0X10
 mat 16
 refs 3
-38 18.09 0
-39 12.09 0
-34 18.09 5
+38 0 0
+39 1 0
+34 1 1
 SURF 0X10
 mat 16
 refs 3
-39 12.09 0
-35 12.09 5
-34 18.09 5
+39 0 0
+35 1 0
+34 1 1
 SURF 0X10
 mat 16
 refs 3
-40 30.09 0
-41 24.09 0
-36 30.09 5
+40 0 0
+41 1 0
+36 1 1
 SURF 0X10
 mat 16
 refs 3
-41 24.09 0
-37 24.09 5
-36 30.09 5
+41 0 0
+37 1 0
+36 1 1
 SURF 0X10
 mat 16
 refs 3
-41 24.09 0
-42 18.09 0
-37 24.09 5
+41 0 0
+42 1 0
+37 1 1
 SURF 0X10
 mat 16
 refs 3
-42 18.09 0
-38 18.09 5
-37 24.09 5
+42 0 0
+38 1 0
+37 1 1
 SURF 0X10
 mat 16
 refs 3
-42 18.09 0
-43 12.09 0
-38 18.09 5
+42 0 0
+43 1 0
+38 1 1
 SURF 0X10
 mat 16
 refs 3
-43 12.09 0
-39 12.09 5
-38 18.09 5
+43 0 0
+39 1 0
+38 1 1
 SURF 0X10
 mat 16
 refs 3
-44 30.09 0
-45 24.09 0
-40 30.09 5
+44 0 0
+45 1 0
+40 1 1
 SURF 0X10
 mat 16
 refs 3
-45 24.09 0
-41 24.09 5
-40 30.09 5
+45 0 0
+41 1 0
+40 1 1
 SURF 0X10
 mat 16
 refs 3
-45 24.09 0
-46 18.09 0
-41 24.09 5
+45 0 0
+46 1 0
+41 1 1
 SURF 0X10
 mat 16
 refs 3
-46 18.09 0
-42 18.09 5
-41 24.09 5
+46 0 0
+42 1 0
+41 1 1
 SURF 0X10
 mat 16
 refs 3
-46 18.09 0
-47 12.09 0
-42 18.09 5
+46 0 0
+47 1 0
+42 1 1
 SURF 0X10
 mat 16
 refs 3
-47 12.09 0
-43 12.09 5
-42 18.09 5
+47 0 0
+43 1 0
+42 1 1
 SURF 0X10
 mat 16
 refs 3
-48 30.09 0
-49 24.09 0
-44 30.09 5
+48 0 0
+49 1 0
+44 1 1
 SURF 0X10
 mat 16
 refs 3
-49 24.09 0
-45 24.09 5
-44 30.09 5
+49 0 0
+45 1 0
+44 1 1
 SURF 0X10
 mat 16
 refs 3
-49 24.09 0
-50 18.09 0
-45 24.09 5
+49 0 0
+50 1 0
+45 1 1
 SURF 0X10
 mat 16
 refs 3
-50 18.09 0
-46 18.09 5
-45 24.09 5
+50 0 0
+46 1 0
+45 1 1
 SURF 0X10
 mat 16
 refs 3
-50 18.09 0
-51 12.09 0
-46 18.09 5
+50 0 0
+51 1 0
+46 1 1
 SURF 0X10
 mat 16
 refs 3
-51 12.09 0
-47 12.09 5
-46 18.09 5
+51 0 0
+47 1 0
+46 1 1
 SURF 0X10
 mat 16
 refs 3
-52 30.09 0
-53 24.09 0
-48 30.09 5
+52 0 0
+53 1 0
+48 1 1
 SURF 0X10
 mat 16
 refs 3
-53 24.09 0
-49 24.09 5
-48 30.09 5
+53 0 0
+49 1 0
+48 1 1
 SURF 0X10
 mat 16
 refs 3
-53 24.09 0
-54 18.09 0
-49 24.09 5
+53 0 0
+54 1 0
+49 1 1
 SURF 0X10
 mat 16
 refs 3
-54 18.09 0
-50 18.09 5
-49 24.09 5
+54 0 0
+50 1 0
+49 1 1
 SURF 0X10
 mat 16
 refs 3
-54 18.09 0
-55 12.09 0
-50 18.09 5
+54 0 0
+55 1 0
+50 1 1
 SURF 0X10
 mat 16
 refs 3
-55 12.09 0
-51 12.09 5
-50 18.09 5
+55 0 0
+51 1 0
+50 1 1
 SURF 0X10
 mat 16
 refs 3
-56 30.09 0
-57 24.09 0
-52 30.09 5
+56 0 0
+57 1 0
+52 1 1
 SURF 0X10
 mat 16
 refs 3
-57 24.09 0
-53 24.09 5
-52 30.09 5
+57 0 0
+53 1 0
+52 1 1
 SURF 0X10
 mat 16
 refs 3
-57 24.09 0
-58 18.09 0
-53 24.09 5
+57 0 0
+58 1 0
+53 1 1
 SURF 0X10
 mat 16
 refs 3
-58 18.09 0
-54 18.09 5
-53 24.09 5
+58 0 0
+54 1 0
+53 1 1
 SURF 0X10
 mat 16
 refs 3
-58 18.09 0
-59 12.09 0
-54 18.09 5
+58 0 0
+59 1 0
+54 1 1
 SURF 0X10
 mat 16
 refs 3
-59 12.09 0
-55 12.09 5
-54 18.09 5
+59 0 0
+55 1 0
+54 1 1
 SURF 0X10
 mat 16
 refs 3
-60 30.09 0
-61 24.09 0
-56 30.09 5
+60 0 0
+61 1 0
+56 1 1
 SURF 0X10
 mat 16
 refs 3
-61 24.09 0
-57 24.09 5
-56 30.09 5
+61 0 0
+57 1 0
+56 1 1
 SURF 0X10
 mat 16
 refs 3
-61 24.09 0
-62 18.09 0
-57 24.09 5
+61 0 0
+62 1 0
+57 1 1
 SURF 0X10
 mat 16
 refs 3
-62 18.09 0
-58 18.09 5
-57 24.09 5
+62 0 0
+58 1 0
+57 1 1
 SURF 0X10
 mat 16
 refs 3
-62 18.09 0
-63 12.09 0
-58 18.09 5
+62 0 0
+63 1 0
+58 1 1
 SURF 0X10
 mat 16
 refs 3
-63 12.09 0
-59 12.09 5
-58 18.09 5
+63 0 0
+59 1 0
+58 1 1
 SURF 0X10
 mat 16
 refs 3
-64 30.09 0
-65 24.09 0
-60 30.09 5
+64 0 0
+65 1 0
+60 1 1
 SURF 0X10
 mat 16
 refs 3
-65 24.09 0
-61 24.09 5
-60 30.09 5
+65 0 0
+61 1 0
+60 1 1
 SURF 0X10
 mat 16
 refs 3
-65 24.09 0
-66 18.09 0
-61 24.09 5
+65 0 0
+66 1 0
+61 1 1
 SURF 0X10
 mat 16
 refs 3
-66 18.09 0
-62 18.09 5
-61 24.09 5
+66 0 0
+62 1 0
+61 1 1
 SURF 0X10
 mat 16
 refs 3
-66 18.09 0
-67 12.09 0
-62 18.09 5
+66 0 0
+67 1 0
+62 1 1
 SURF 0X10
 mat 16
 refs 3
-67 12.09 0
-63 12.09 5
-62 18.09 5
+67 0 0
+63 1 0
+62 1 1
 SURF 0X10
 mat 16
 refs 3
-68 30.09 0
-69 24.09 0
-64 30.09 5
+68 0 0
+69 1 0
+64 1 1
 SURF 0X10
 mat 16
 refs 3
-69 24.09 0
-65 24.09 5
-64 30.09 5
+69 0 0
+65 1 0
+64 1 1
 SURF 0X10
 mat 16
 refs 3
-69 24.09 0
-70 18.09 0
-65 24.09 5
+69 0 0
+70 1 0
+65 1 1
 SURF 0X10
 mat 16
 refs 3
-70 18.09 0
-66 18.09 5
-65 24.09 5
+70 0 0
+66 1 0
+65 1 1
 SURF 0X10
 mat 16
 refs 3
-70 18.09 0
-71 12.09 0
-66 18.09 5
+70 0 0
+71 1 0
+66 1 1
 SURF 0X10
 mat 16
 refs 3
-71 12.09 0
-67 12.09 5
-66 18.09 5
+71 0 0
+67 1 0
+66 1 1
 SURF 0X10
 mat 16
 refs 3
-72 30.09 0
-73 24.09 0
-68 30.09 5
+72 0 0
+73 1 0
+68 1 1
 SURF 0X10
 mat 16
 refs 3
-73 24.09 0
-69 24.09 5
-68 30.09 5
+73 0 0
+69 1 0
+68 1 1
 SURF 0X10
 mat 16
 refs 3
-73 24.09 0
-74 18.09 0
-69 24.09 5
+73 0 0
+74 1 0
+69 1 1
 SURF 0X10
 mat 16
 refs 3
-74 18.09 0
-70 18.09 5
-69 24.09 5
+74 0 0
+70 1 0
+69 1 1
 SURF 0X10
 mat 16
 refs 3
-74 18.09 0
-75 12.09 0
-70 18.09 5
+74 0 0
+75 1 0
+70 1 1
 SURF 0X10
 mat 16
 refs 3
-75 12.09 0
-71 12.09 5
-70 18.09 5
+75 0 0
+71 1 0
+70 1 1
 SURF 0X10
 mat 16
 refs 3
-76 30.09 0
-77 24.09 0
-72 30.09 5
+76 0 0
+77 1 0
+72 1 1
 SURF 0X10
 mat 16
 refs 3
-77 24.09 0
-73 24.09 5
-72 30.09 5
+77 0 0
+73 1 0
+72 1 1
 SURF 0X10
 mat 16
 refs 3
-77 24.09 0
-78 18.09 0
-73 24.09 5
+77 0 0
+78 1 0
+73 1 1
 SURF 0X10
 mat 16
 refs 3
-78 18.09 0
-74 18.09 5
-73 24.09 5
+78 0 0
+74 1 0
+73 1 1
 SURF 0X10
 mat 16
 refs 3
-78 18.09 0
-79 12.09 0
-74 18.09 5
+78 0 0
+79 1 0
+74 1 1
 SURF 0X10
 mat 16
 refs 3
-79 12.09 0
-75 12.09 5
-74 18.09 5
+79 0 0
+75 1 0
+74 1 1
 SURF 0X10
 mat 16
 refs 3
-80 30.09 0
-81 24.09 0
-76 30.09 5
+80 0 0
+81 1 0
+76 1 1
 SURF 0X10
 mat 16
 refs 3
-81 24.09 0
-77 24.09 5
-76 30.09 5
+81 0 0
+77 1 0
+76 1 1
 SURF 0X10
 mat 16
 refs 3
-81 24.09 0
-82 18.09 0
-77 24.09 5
+81 0 0
+82 1 0
+77 1 1
 SURF 0X10
 mat 16
 refs 3
-82 18.09 0
-78 18.09 5
-77 24.09 5
+82 0 0
+78 1 0
+77 1 1
 SURF 0X10
 mat 16
 refs 3
-82 18.09 0
-83 12.09 0
-78 18.09 5
+82 0 0
+83 1 0
+78 1 1
 SURF 0X10
 mat 16
 refs 3
-83 12.09 0
-79 12.09 5
-78 18.09 5
+83 0 0
+79 1 0
+78 1 1
 SURF 0X10
 mat 16
 refs 3
-84 30.09 0
-85 24.09 0
-80 30.09 5
+84 0 0
+85 1 0
+80 1 1
 SURF 0X10
 mat 16
 refs 3
-85 24.09 0
-81 24.09 5
-80 30.09 5
+85 0 0
+81 1 0
+80 1 1
 SURF 0X10
 mat 16
 refs 3
-85 24.09 0
-86 18.09 0
-81 24.09 5
+85 0 0
+86 1 0
+81 1 1
 SURF 0X10
 mat 16
 refs 3
-86 18.09 0
-82 18.09 5
-81 24.09 5
+86 0 0
+82 1 0
+81 1 1
 SURF 0X10
 mat 16
 refs 3
-86 18.09 0
-87 12.09 0
-82 18.09 5
+86 0 0
+87 1 0
+82 1 1
 SURF 0X10
 mat 16
 refs 3
-87 12.09 0
-83 12.09 5
-82 18.09 5
+87 0 0
+83 1 0
+82 1 1
 SURF 0X10
 mat 16
 refs 3
-88 30.09 0
-89 24.09 0
-84 30.09 5
+88 0 0
+89 1 0
+84 1 1
 SURF 0X10
 mat 16
 refs 3
-89 24.09 0
-85 24.09 5
-84 30.09 5
+89 0 0
+85 1 0
+84 1 1
 SURF 0X10
 mat 16
 refs 3
-89 24.09 0
-90 18.09 0
-85 24.09 5
+89 0 0
+90 1 0
+85 1 1
 SURF 0X10
 mat 16
 refs 3
-90 18.09 0
-86 18.09 5
-85 24.09 5
+90 0 0
+86 1 0
+85 1 1
 SURF 0X10
 mat 16
 refs 3
-90 18.09 0
-91 12.09 0
-86 18.09 5
+90 0 0
+91 1 0
+86 1 1
 SURF 0X10
 mat 16
 refs 3
-91 12.09 0
-87 12.09 5
-86 18.09 5
+91 0 0
+87 1 0
+86 1 1
 SURF 0X10
 mat 16
 refs 3
-92 30.09 0
-93 24.09 0
-88 30.09 5
+92 0 0
+93 1 0
+88 1 1
 SURF 0X10
 mat 16
 refs 3
-93 24.09 0
-89 24.09 5
-88 30.09 5
+93 0 0
+89 1 0
+88 1 1
 SURF 0X10
 mat 16
 refs 3
-93 24.09 0
-94 18.09 0
-89 24.09 5
+93 0 0
+94 1 0
+89 1 1
 SURF 0X10
 mat 16
 refs 3
-94 18.09 0
-90 18.09 5
-89 24.09 5
+94 0 0
+90 1 0
+89 1 1
 SURF 0X10
 mat 16
 refs 3
-94 18.09 0
-95 12.09 0
-90 18.09 5
+94 0 0
+95 1 0
+90 1 1
 SURF 0X10
 mat 16
 refs 3
-95 12.09 0
-91 12.09 5
-90 18.09 5
+95 0 0
+91 1 0
+90 1 1
 SURF 0X10
 mat 16
 refs 3
-96 30.09 0
-97 24.09 0
-92 30.09 5
+96 0 0
+97 1 0
+92 1 1
 SURF 0X10
 mat 16
 refs 3
-97 24.09 0
-93 24.09 5
-92 30.09 5
+97 0 0
+93 1 0
+92 1 1
 SURF 0X10
 mat 16
 refs 3
-97 24.09 0
-98 18.09 0
-93 24.09 5
+97 0 0
+98 1 0
+93 1 1
 SURF 0X10
 mat 16
 refs 3
-98 18.09 0
-94 18.09 5
-93 24.09 5
+98 0 0
+94 1 0
+93 1 1
 SURF 0X10
 mat 16
 refs 3
-98 18.09 0
-99 12.09 0
-94 18.09 5
+98 0 0
+99 1 0
+94 1 1
 SURF 0X10
 mat 16
 refs 3
-99 12.09 0
-95 12.09 5
-94 18.09 5
+99 0 0
+95 1 0
+94 1 1
 SURF 0X10
 mat 16
 refs 3
-100 30.09 0
-101 24.09 0
-96 30.09 5
+100 0 0
+101 1 0
+96 1 1
 SURF 0X10
 mat 16
 refs 3
-101 24.09 0
-97 24.09 5
-96 30.09 5
+101 0 0
+97 1 0
+96 1 1
 SURF 0X10
 mat 16
 refs 3
-101 24.09 0
-102 18.09 0
-97 24.09 5
+101 0 0
+102 1 0
+97 1 1
 SURF 0X10
 mat 16
 refs 3
-102 18.09 0
-98 18.09 5
-97 24.09 5
+102 0 0
+98 1 0
+97 1 1
 SURF 0X10
 mat 16
 refs 3
-102 18.09 0
-103 12.09 0
-98 18.09 5
+102 0 0
+103 1 0
+98 1 1
 SURF 0X10
 mat 16
 refs 3
-103 12.09 0
-99 12.09 5
-98 18.09 5
+103 0 0
+99 1 0
+98 1 1
 SURF 0X10
 mat 16
 refs 3
-104 30.09 0
-105 24.09 0
-100 30.09 5
+104 0 0
+105 1 0
+100 1 1
 SURF 0X10
 mat 16
 refs 3
-105 24.09 0
-101 24.09 5
-100 30.09 5
+105 0 0
+101 1 0
+100 1 1
 SURF 0X10
 mat 16
 refs 3
-105 24.09 0
-106 18.09 0
-101 24.09 5
+105 0 0
+106 1 0
+101 1 1
 SURF 0X10
 mat 16
 refs 3
-106 18.09 0
-102 18.09 5
-101 24.09 5
+106 0 0
+102 1 0
+101 1 1
 SURF 0X10
 mat 16
 refs 3
-106 18.09 0
-107 12.09 0
-102 18.09 5
+106 0 0
+107 1 0
+102 1 1
 SURF 0X10
 mat 16
 refs 3
-107 12.09 0
-103 12.09 5
-102 18.09 5
+107 0 0
+103 1 0
+102 1 1
 SURF 0X10
 mat 16
 refs 3
-108 30.09 0
-109 24.09 0
-104 30.09 5
+108 0 0
+109 1 0
+104 1 1
 SURF 0X10
 mat 16
 refs 3
-109 24.09 0
-105 24.09 5
-104 30.09 5
+109 0 0
+105 1 0
+104 1 1
 SURF 0X10
 mat 16
 refs 3
-109 24.09 0
-110 18.09 0
-105 24.09 5
+109 0 0
+110 1 0
+105 1 1
 SURF 0X10
 mat 16
 refs 3
-110 18.09 0
-106 18.09 5
-105 24.09 5
+110 0 0
+106 1 0
+105 1 1
 SURF 0X10
 mat 16
 refs 3
-110 18.09 0
-111 12.09 0
-106 18.09 5
+110 0 0
+111 1 0
+106 1 1
 SURF 0X10
 mat 16
 refs 3
-111 12.09 0
-107 12.09 5
-106 18.09 5
+111 0 0
+107 1 0
+106 1 1
 SURF 0X10
 mat 16
 refs 3
-112 30.09 0
-113 24.09 0
-108 30.09 5
+112 0 0
+113 1 0
+108 1 1
 SURF 0X10
 mat 16
 refs 3
-113 24.09 0
-109 24.09 5
-108 30.09 5
+113 0 0
+109 1 0
+108 1 1
 SURF 0X10
 mat 16
 refs 3
-113 24.09 0
-114 18.09 0
-109 24.09 5
+113 0 0
+114 1 0
+109 1 1
 SURF 0X10
 mat 16
 refs 3
-114 18.09 0
-110 18.09 5
-109 24.09 5
+114 0 0
+110 1 0
+109 1 1
 SURF 0X10
 mat 16
 refs 3
-114 18.09 0
-115 12.09 0
-110 18.09 5
+114 0 0
+115 1 0
+110 1 1
 SURF 0X10
 mat 16
 refs 3
-115 12.09 0
-111 12.09 5
-110 18.09 5
+115 0 0
+111 1 0
+110 1 1
 SURF 0X10
 mat 16
 refs 3
-116 30.09 0
-117 24.09 0
-112 30.09 5
+116 0 0
+117 1 0
+112 1 1
 SURF 0X10
 mat 16
 refs 3
-117 24.09 0
-113 24.09 5
-112 30.09 5
+117 0 0
+113 1 0
+112 1 1
 SURF 0X10
 mat 16
 refs 3
-117 24.09 0
-118 18.09 0
-113 24.09 5
+117 0 0
+118 1 0
+113 1 1
 SURF 0X10
 mat 16
 refs 3
-118 18.09 0
-114 18.09 5
-113 24.09 5
+118 0 0
+114 1 0
+113 1 1
 SURF 0X10
 mat 16
 refs 3
-118 18.09 0
-119 12.09 0
-114 18.09 5
+118 0 0
+119 1 0
+114 1 1
 SURF 0X10
 mat 16
 refs 3
-119 12.09 0
-115 12.09 5
-114 18.09 5
+119 0 0
+115 1 0
+114 1 1
 SURF 0X10
 mat 16
 refs 3
-120 30.09 0
-121 24.09 0
-116 30.09 5
+120 0 0
+121 1 0
+116 1 1
 SURF 0X10
 mat 16
 refs 3
-121 24.09 0
-117 24.09 5
-116 30.09 5
+121 0 0
+117 1 0
+116 1 1
 SURF 0X10
 mat 16
 refs 3
-121 24.09 0
-122 18.09 0
-117 24.09 5
+121 0 0
+122 1 0
+117 1 1
 SURF 0X10
 mat 16
 refs 3
-122 18.09 0
-118 18.09 5
-117 24.09 5
+122 0 0
+118 1 0
+117 1 1
 SURF 0X10
 mat 16
 refs 3
-122 18.09 0
-123 12.09 0
-118 18.09 5
+122 0 0
+123 1 0
+118 1 1
 SURF 0X10
 mat 16
 refs 3
-123 12.09 0
-119 12.09 5
-118 18.09 5
+123 0 0
+119 1 0
+118 1 1
 SURF 0X10
 mat 16
 refs 3
-124 30.09 0
-125 24.09 0
-120 30.09 5
+124 0 0
+125 1 0
+120 1 1
 SURF 0X10
 mat 16
 refs 3
-125 24.09 0
-121 24.09 5
-120 30.09 5
+125 0 0
+121 1 0
+120 1 1
 SURF 0X10
 mat 16
 refs 3
-125 24.09 0
-126 18.09 0
-121 24.09 5
+125 0 0
+126 1 0
+121 1 1
 SURF 0X10
 mat 16
 refs 3
-126 18.09 0
-122 18.09 5
-121 24.09 5
+126 0 0
+122 1 0
+121 1 1
 SURF 0X10
 mat 16
 refs 3
-126 18.09 0
-127 12.09 0
-122 18.09 5
+126 0 0
+127 1 0
+122 1 1
 SURF 0X10
 mat 16
 refs 3
-127 12.09 0
-123 12.09 5
-122 18.09 5
+127 0 0
+123 1 0
+122 1 1
 SURF 0X10
 mat 16
 refs 3
-0 30.09 0
-1 24.09 0
-124 30.09 5
+0 0 0
+1 1 0
+124 1 1
 SURF 0X10
 mat 16
 refs 3
-1 24.09 0
-125 24.09 5
-124 30.09 5
+1 0 0
+125 1 0
+124 1 1
 SURF 0X10
 mat 16
 refs 3
-1 24.09 0
-2 18.09 0
-125 24.09 5
+1 0 0
+2 1 0
+125 1 1
 SURF 0X10
 mat 16
 refs 3
-2 18.09 0
-126 18.09 5
-125 24.09 5
+2 0 0
+126 1 0
+125 1 1
 SURF 0X10
 mat 16
 refs 3
-2 18.09 0
-3 12.09 0
-126 18.09 5
+2 0 0
+3 1 0
+126 1 1
 SURF 0X10
 mat 16
 refs 3
-3 12.09 0
-127 12.09 5
-126 18.09 5
+3 0 0
+127 1 0
+126 1 1
 kids 0
 OBJECT group
 name "FUEL_AL_needle_grp"
 kids 2
 OBJECT poly
 name "FUEL_AL_needle1"
-texture "../Textures/fuelALneedleRed.png"
 data 15
 FUEL_AL_needle1
-crease 30.0
+crease 40.0
+texture "../Textures/fuelALneedleRed.png"
 numvert 6
 -0.25665 0.00398 -0.37106
 -0.24989 0.00398 -0.363
@@ -9041,9 +8964,8 @@ OBJECT poly
 name "FUEL_AL_needle2"
 data 15
 FUEL_AL_needle2
-crease 30.0
+crease 40.0
 texture "../Textures/instruments.png"
-texrep 1 1
 numvert 5
 -0.2517 0.00398 -0.36147
 -0.24646 0.00398 -0.35252
@@ -9074,9 +8996,8 @@ OBJECT poly
 name "FUEL_drum1"
 data 10
 FUEL_drum1
-crease 30.0
+crease 40.0
 texture "../Textures/faces1.png"
-texrep 1 1
 numvert 20
 -0.24327 0.00346 -0.36095
 -0.24328 0.00347 -0.36444
@@ -9102,81 +9023,80 @@ numsurf 10
 SURF 0X10
 mat 19
 refs 4
-1 0.572 0.473
-0 0.53 0.473
-3 0.53 0.426203
-2 0.572 0.426203
+1 0.537549 0.473
+0 0.495549 0.473
+3 0.495549 0.426203
+2 0.537549 0.426203
 SURF 0X10
 mat 19
 refs 4
-5 0.53 0.379409
-4 0.572 0.379409
-2 0.572 0.426203
-3 0.53 0.426203
+5 0.495549 0.379409
+4 0.537549 0.379409
+2 0.537549 0.426203
+3 0.495549 0.426203
 SURF 0X10
 mat 19
 refs 4
-9 0.53 0.285812
-8 0.572 0.285812
-7 0.572 0.332609
-6 0.53 0.332609
+9 0.495549 0.285812
+8 0.537549 0.285812
+7 0.537549 0.332609
+6 0.495549 0.332609
 SURF 0X10
 mat 19
 refs 4
-6 0.53 0.332609
-7 0.572 0.332609
-4 0.572 0.379409
-5 0.53 0.379409
+6 0.495549 0.332609
+7 0.537549 0.332609
+4 0.537549 0.379409
+5 0.495549 0.379409
 SURF 0X10
 mat 19
 refs 4
-13 0.53 0.098605
-12 0.572 0.098605
-11 0.572 0.145401
-10 0.53 0.145401
+13 0.495549 0.098605
+12 0.537549 0.098605
+11 0.537549 0.145401
+10 0.495549 0.145401
 SURF 0X10
 mat 19
 refs 4
-10 0.53 0.145401
-11 0.572 0.145401
-15 0.572 0.192215
-14 0.53 0.192215
+10 0.495549 0.145401
+11 0.537549 0.145401
+15 0.537549 0.192215
+14 0.495549 0.192215
 SURF 0X10
 mat 19
 refs 4
-17 0.53 0.23902
-16 0.572 0.23902
-8 0.572 0.285812
-9 0.53 0.285812
+17 0.495549 0.23902
+16 0.537549 0.23902
+8 0.537549 0.285812
+9 0.495549 0.285812
 SURF 0X10
 mat 19
 refs 4
-14 0.53 0.192215
-15 0.572 0.192215
-16 0.572 0.23902
-17 0.53 0.23902
+14 0.495549 0.192215
+15 0.537549 0.192215
+16 0.537549 0.23902
+17 0.495549 0.23902
 SURF 0X10
 mat 19
 refs 4
-0 0.53 0.005
-1 0.572 0.005
-19 0.572 0.051797
-18 0.53 0.051797
+0 0.495549 0.005
+1 0.537549 0.005
+19 0.537549 0.051797
+18 0.495549 0.051797
 SURF 0X10
 mat 19
 refs 4
-18 0.53 0.051797
-19 0.572 0.051797
-12 0.572 0.098605
-13 0.53 0.098605
+18 0.495549 0.051797
+19 0.537549 0.051797
+12 0.537549 0.098605
+13 0.495549 0.098605
 kids 0
 OBJECT poly
 name "FUEL_drum2"
 data 10
 FUEL_drum2
-crease 30.0
+crease 40.0
 texture "../Textures/faces1.png"
-texrep 1 1
 numvert 20
 -0.24327 0.00346 -0.36441
 -0.24328 0.00347 -0.3679
@@ -9202,81 +9122,80 @@ numsurf 10
 SURF 0X10
 mat 19
 refs 4
-1 0.572 0.473
-0 0.53 0.473
-3 0.53 0.426203
-2 0.572 0.426203
+1 0.537549 0.473
+0 0.495549 0.473
+3 0.495549 0.426203
+2 0.537549 0.426203
 SURF 0X10
 mat 19
 refs 4
-5 0.53 0.379409
-4 0.572 0.379409
-2 0.572 0.426203
-3 0.53 0.426203
+5 0.495549 0.379409
+4 0.537549 0.379409
+2 0.537549 0.426203
+3 0.495549 0.426203
 SURF 0X10
 mat 19
 refs 4
-9 0.53 0.285812
-8 0.572 0.285812
-7 0.572 0.332609
-6 0.53 0.332609
+9 0.495549 0.285812
+8 0.537549 0.285812
+7 0.537549 0.332609
+6 0.495549 0.332609
 SURF 0X10
 mat 19
 refs 4
-6 0.53 0.332609
-7 0.572 0.332609
-4 0.572 0.379409
-5 0.53 0.379409
+6 0.495549 0.332609
+7 0.537549 0.332609
+4 0.537549 0.379409
+5 0.495549 0.379409
 SURF 0X10
 mat 19
 refs 4
-13 0.53 0.098605
-12 0.572 0.098605
-11 0.572 0.145401
-10 0.53 0.145401
+13 0.495549 0.098605
+12 0.537549 0.098605
+11 0.537549 0.145401
+10 0.495549 0.145401
 SURF 0X10
 mat 19
 refs 4
-10 0.53 0.145401
-11 0.572 0.145401
-15 0.572 0.192215
-14 0.53 0.192215
+10 0.495549 0.145401
+11 0.537549 0.145401
+15 0.537549 0.192215
+14 0.495549 0.192215
 SURF 0X10
 mat 19
 refs 4
-17 0.53 0.23902
-16 0.572 0.23902
-8 0.572 0.285812
-9 0.53 0.285812
+17 0.495549 0.23902
+16 0.537549 0.23902
+8 0.537549 0.285812
+9 0.495549 0.285812
 SURF 0X10
 mat 19
 refs 4
-14 0.53 0.192215
-15 0.572 0.192215
-16 0.572 0.23902
-17 0.53 0.23902
+14 0.495549 0.192215
+15 0.537549 0.192215
+16 0.537549 0.23902
+17 0.495549 0.23902
 SURF 0X10
 mat 19
 refs 4
-0 0.53 0.005
-1 0.572 0.005
-19 0.572 0.051797
-18 0.53 0.051797
+0 0.495549 0.005
+1 0.537549 0.005
+19 0.537549 0.051797
+18 0.495549 0.051797
 SURF 0X10
 mat 19
 refs 4
-18 0.53 0.051797
-19 0.572 0.051797
-12 0.572 0.098605
-13 0.53 0.098605
+18 0.495549 0.051797
+19 0.537549 0.051797
+12 0.537549 0.098605
+13 0.495549 0.098605
 kids 0
 OBJECT poly
 name "FUEL_drum3"
 data 10
 FUEL_drum3
-crease 30.0
+crease 40.0
 texture "../Textures/faces1.png"
-texrep 1 1
 numvert 20
 -0.24327 0.00346 -0.36788
 -0.24328 0.00347 -0.37136
@@ -9302,81 +9221,80 @@ numsurf 10
 SURF 0X10
 mat 19
 refs 4
-1 0.572 0.473
-0 0.53 0.473
-3 0.53 0.426203
-2 0.572 0.426203
+1 0.537549 0.473
+0 0.495549 0.473
+3 0.495549 0.426203
+2 0.537549 0.426203
 SURF 0X10
 mat 19
 refs 4
-5 0.53 0.379409
-4 0.572 0.379409
-2 0.572 0.426203
-3 0.53 0.426203
+5 0.495549 0.379409
+4 0.537549 0.379409
+2 0.537549 0.426203
+3 0.495549 0.426203
 SURF 0X10
 mat 19
 refs 4
-9 0.53 0.285812
-8 0.572 0.285812
-7 0.572 0.332609
-6 0.53 0.332609
+9 0.495549 0.285812
+8 0.537549 0.285812
+7 0.537549 0.332609
+6 0.495549 0.332609
 SURF 0X10
 mat 19
 refs 4
-6 0.53 0.332609
-7 0.572 0.332609
-4 0.572 0.379409
-5 0.53 0.379409
+6 0.495549 0.332609
+7 0.537549 0.332609
+4 0.537549 0.379409
+5 0.495549 0.379409
 SURF 0X10
 mat 19
 refs 4
-13 0.53 0.098605
-12 0.572 0.098605
-11 0.572 0.145401
-10 0.53 0.145401
+13 0.495549 0.098605
+12 0.537549 0.098605
+11 0.537549 0.145401
+10 0.495549 0.145401
 SURF 0X10
 mat 19
 refs 4
-10 0.53 0.145401
-11 0.572 0.145401
-15 0.572 0.192215
-14 0.53 0.192215
+10 0.495549 0.145401
+11 0.537549 0.145401
+15 0.537549 0.192215
+14 0.495549 0.192215
 SURF 0X10
 mat 19
 refs 4
-17 0.53 0.23902
-16 0.572 0.23902
-8 0.572 0.285812
-9 0.53 0.285812
+17 0.495549 0.23902
+16 0.537549 0.23902
+8 0.537549 0.285812
+9 0.495549 0.285812
 SURF 0X10
 mat 19
 refs 4
-14 0.53 0.192215
-15 0.572 0.192215
-16 0.572 0.23902
-17 0.53 0.23902
+14 0.495549 0.192215
+15 0.537549 0.192215
+16 0.537549 0.23902
+17 0.495549 0.23902
 SURF 0X10
 mat 19
 refs 4
-0 0.53 0.005
-1 0.572 0.005
-19 0.572 0.051797
-18 0.53 0.051797
+0 0.495549 0.005
+1 0.537549 0.005
+19 0.537549 0.051797
+18 0.495549 0.051797
 SURF 0X10
 mat 19
 refs 4
-18 0.53 0.051797
-19 0.572 0.051797
-12 0.572 0.098605
-13 0.53 0.098605
+18 0.495549 0.051797
+19 0.537549 0.051797
+12 0.537549 0.098605
+13 0.495549 0.098605
 kids 0
 OBJECT poly
 name "FUEL_drum4"
 data 10
 FUEL_drum4
-crease 30.0
+crease 40.0
 texture "../Textures/faces1.png"
-texrep 1 1
 numvert 20
 -0.24328 0.00347 -0.37136
 -0.24327 0.00348 -0.37487
@@ -9402,81 +9320,80 @@ numsurf 10
 SURF 0X10
 mat 19
 refs 4
-1 0.572 0.473
-0 0.53 0.473
-3 0.53 0.426203
-2 0.572 0.426203
+1 0.536934 0.473
+0 0.494934 0.473
+3 0.494934 0.426203
+2 0.536934 0.426203
 SURF 0X10
 mat 19
 refs 4
-5 0.53 0.379409
-4 0.572 0.379409
-2 0.572 0.426203
-3 0.53 0.426203
+5 0.494934 0.379409
+4 0.536934 0.379409
+2 0.536934 0.426203
+3 0.494934 0.426203
 SURF 0X10
 mat 19
 refs 4
-9 0.53 0.285812
-8 0.572 0.285812
-7 0.572 0.332609
-6 0.53 0.332609
+9 0.494934 0.285812
+8 0.536934 0.285812
+7 0.536934 0.332609
+6 0.494934 0.332609
 SURF 0X10
 mat 19
 refs 4
-6 0.53 0.332609
-7 0.572 0.332609
-4 0.572 0.379409
-5 0.53 0.379409
+6 0.494934 0.332609
+7 0.536934 0.332609
+4 0.536934 0.379409
+5 0.494934 0.379409
 SURF 0X10
 mat 19
 refs 4
-13 0.53 0.098605
-12 0.572 0.098605
-11 0.572 0.145401
-10 0.53 0.145401
+13 0.494934 0.098605
+12 0.536934 0.098605
+11 0.536934 0.145401
+10 0.494934 0.145401
 SURF 0X10
 mat 19
 refs 4
-10 0.53 0.145401
-11 0.572 0.145401
-15 0.572 0.192215
-14 0.53 0.192215
+10 0.494934 0.145401
+11 0.536934 0.145401
+15 0.536934 0.192215
+14 0.494934 0.192215
 SURF 0X10
 mat 19
 refs 4
-17 0.53 0.23902
-16 0.572 0.23902
-8 0.572 0.285812
-9 0.53 0.285812
+17 0.494934 0.23902
+16 0.536934 0.23902
+8 0.536934 0.285812
+9 0.494934 0.285812
 SURF 0X10
 mat 19
 refs 4
-14 0.53 0.192215
-15 0.572 0.192215
-16 0.572 0.23902
-17 0.53 0.23902
+14 0.494934 0.192215
+15 0.536934 0.192215
+16 0.536934 0.23902
+17 0.494934 0.23902
 SURF 0X10
 mat 19
 refs 4
-0 0.53 0.005
-1 0.572 0.005
-19 0.572 0.051797
-18 0.53 0.051797
+0 0.494934 0.005
+1 0.536934 0.005
+19 0.536934 0.051797
+18 0.494934 0.051797
 SURF 0X10
 mat 19
 refs 4
-18 0.53 0.051797
-19 0.572 0.051797
-12 0.572 0.098605
-13 0.53 0.098605
+18 0.494934 0.051797
+19 0.536934 0.051797
+12 0.536934 0.098605
+13 0.494934 0.098605
 kids 0
 OBJECT poly
 name "FUEL_drum5"
 data 10
 FUEL_drum5
-crease 30.0
+crease 40.0
 texture "../Textures/faces1.png"
-texrep 1 1
 numvert 20
 -0.24327 0.00348 -0.37487
 -0.24326 0.00344 -0.37839
@@ -9502,73 +9419,73 @@ numsurf 10
 SURF 0X10
 mat 19
 refs 4
-1 0.572 0.473
-0 0.53 0.473
-3 0.53 0.426203
-2 0.572 0.426203
+1 0.537549 0.473
+0 0.495549 0.473
+3 0.495549 0.426203
+2 0.537549 0.426203
 SURF 0X10
 mat 19
 refs 4
-5 0.53 0.379409
-4 0.572 0.379409
-2 0.572 0.426203
-3 0.53 0.426203
+5 0.495549 0.379409
+4 0.537549 0.379409
+2 0.537549 0.426203
+3 0.495549 0.426203
 SURF 0X10
 mat 19
 refs 4
-9 0.53 0.285812
-8 0.572 0.285812
-7 0.572 0.332609
-6 0.53 0.332609
+9 0.495549 0.285812
+8 0.537549 0.285812
+7 0.537549 0.332609
+6 0.495549 0.332609
 SURF 0X10
 mat 19
 refs 4
-6 0.53 0.332609
-7 0.572 0.332609
-4 0.572 0.379409
-5 0.53 0.379409
+6 0.495549 0.332609
+7 0.537549 0.332609
+4 0.537549 0.379409
+5 0.495549 0.379409
 SURF 0X10
 mat 19
 refs 4
-13 0.53 0.098605
-12 0.572 0.098605
-11 0.572 0.145401
-10 0.53 0.145401
+13 0.495549 0.098605
+12 0.537549 0.098605
+11 0.537549 0.145401
+10 0.495549 0.145401
 SURF 0X10
 mat 19
 refs 4
-10 0.53 0.145401
-11 0.572 0.145401
-15 0.572 0.192215
-14 0.53 0.192215
+10 0.495549 0.145401
+11 0.537549 0.145401
+15 0.537549 0.192215
+14 0.495549 0.192215
 SURF 0X10
 mat 19
 refs 4
-17 0.53 0.23902
-16 0.572 0.23902
-8 0.572 0.285812
-9 0.53 0.285812
+17 0.495549 0.23902
+16 0.537549 0.23902
+8 0.537549 0.285812
+9 0.495549 0.285812
 SURF 0X10
 mat 19
 refs 4
-14 0.53 0.192215
-15 0.572 0.192215
-16 0.572 0.23902
-17 0.53 0.23902
+14 0.495549 0.192215
+15 0.537549 0.192215
+16 0.537549 0.23902
+17 0.495549 0.23902
 SURF 0X10
 mat 19
 refs 4
-0 0.53 0.005
-1 0.572 0.005
-19 0.572 0.051797
-18 0.53 0.051797
+0 0.495549 0.005
+1 0.537549 0.005
+19 0.537549 0.051797
+18 0.495549 0.051797
 SURF 0X10
 mat 19
 refs 4
-18 0.53 0.051797
-19 0.572 0.051797
-12 0.572 0.098605
-13 0.53 0.098605
+18 0.495549 0.051797
+19 0.537549 0.051797
+12 0.537549 0.098605
+13 0.495549 0.098605
 kids 0
 OBJECT group
 name "FUEL_FR_needle_grp"
@@ -9577,9 +9494,8 @@ OBJECT poly
 name "FUEL_FR_needle1"
 data 15
 FUEL_FR_needle1
-crease 30.0
+crease 40.0
 texture "../Textures/instruments.png"
-texrep 1 1
 numvert 5
 -0.25167 0.004 -0.36149
 -0.25787 0.004 -0.36351
@@ -9610,7 +9526,7 @@ OBJECT poly
 name "FUEL_FR_needle2"
 data 15
 FUEL_FR_needle2
-crease 30.0
+crease 40.0
 numvert 12
 -0.25167 0.004 -0.36149
 -0.25526 0.004 -0.36571
@@ -9628,77 +9544,76 @@ numsurf 11
 SURF 0X10
 mat 20
 refs 3
-1 0.33794 0.190821
-0 0.456187 0.631904
-5 0.589729 0.634544
+1 0 0
+0 1 0
+5 1 1
 SURF 0X10
 mat 20
 refs 3
-0 0.456187 0.631904
-1 0.33794 0.190821
-11 0.221986 0.372639
+0 0 0
+1 1 0
+11 1 1
 SURF 0X10
 mat 20
 refs 3
-1 0.33794 0.190821
-3 1 0.41447
-2 0.637534 0.26397
+1 0 0
+3 1 0
+2 1 1
 SURF 0X10
 mat 20
 refs 3
-1 0.33794 0.190821
-4 0.819107 0.555807
-3 1 0.41447
+1 0 0
+4 1 0
+3 1 1
 SURF 0X10
 mat 20
 refs 3
-1 0.33794 0.190821
-5 0.589729 0.634544
-4 0.819107 0.555807
+1 0 0
+5 1 0
+4 1 1
 SURF 0X10
 mat 20
 refs 3
-1 0.33794 0.190821
-7 0.001816 0.267772
-11 0.221986 0.372639
+1 0 0
+7 1 0
+11 1 1
 SURF 0X10
 mat 20
 refs 3
-1 0.33794 0.190821
-8 0 0.109617
-7 0.001816 0.267772
+1 0 0
+8 1 0
+7 1 1
 SURF 0X10
 mat 20
 refs 3
-1 0.33794 0.190821
-9 0.198287 0
-8 0 0.109617
+1 0 0
+9 1 0
+8 1 1
 SURF 0X10
 mat 20
 refs 3
-1 0.33794 0.190821
-10 0.47995 0.003717
-9 0.198287 0
+1 0 0
+10 1 0
+9 1 1
 SURF 0X10
 mat 20
 refs 3
-6 0.680232 0.118349
-1 0.33794 0.190821
-2 0.637534 0.26397
+6 0 0
+1 1 0
+2 1 1
 SURF 0X10
 mat 20
 refs 3
-1 0.33794 0.190821
-6 0.680232 0.118349
-10 0.47995 0.003717
+1 0 0
+6 1 0
+10 1 1
 kids 0
 OBJECT poly
 name "FUEL_rpm_disk"
 data 13
 FUEL_rpm_disk
-crease 30.0
+crease 40.0
 texture "../Textures/instruments.png"
-texrep 1 1
 numvert 20
 -0.2597 0.00313 -0.34034
 -0.27109 0.00313 -0.34277
@@ -9855,7 +9770,7 @@ OBJECT poly
 name "HYD_PRESS_0"
 data 9
 HYD_PRESS
-crease 30.0
+crease 40.0
 numvert 18
 -0.17322 0.00201 -0.43844
 -0.17322 0.00201 -0.41793
@@ -9880,16 +9795,16 @@ SURF 0X10
 mat 9
 refs 4
 2 0 0
-5 0 1
+5 1 0
 4 1 1
-3 1 0
+3 0 1
 SURF 0X10
 mat 9
 refs 4
 0 0 0
-7 0 1
+7 1 0
 6 1 1
-1 1 0
+1 0 1
 SURF 0X10
 mat 8
 refs 3
@@ -9906,16 +9821,16 @@ SURF 0X10
 mat 9
 refs 4
 3 0 0
-4 0 1
+4 1 0
 8 1 1
-9 1 0
+9 0 1
 SURF 0X10
 mat 9
 refs 4
 0 0 0
-9 0 1
+9 1 0
 8 1 1
-7 1 0
+7 0 1
 SURF 0X10
 mat 8
 refs 3
@@ -9926,23 +9841,23 @@ SURF 0X10
 mat 9
 refs 4
 12 0 0
-15 0 1
+15 1 0
 14 1 1
-13 1 0
+13 0 1
 SURF 0X10
 mat 9
 refs 4
 2 0 0
-14 0 1
+14 1 0
 15 1 1
-5 1 0
+5 0 1
 SURF 0X10
 mat 9
 refs 4
 1 0 0
-6 0 1
+6 1 0
 10 1 1
-11 1 0
+11 0 1
 SURF 0X10
 mat 8
 refs 3
@@ -9966,17 +9881,16 @@ SURF 0X10
 mat 9
 refs 4
 10 0 0
-16 0 1
+16 1 0
 17 1 1
-11 1 0
+11 0 1
 kids 0
 OBJECT poly
 name "HYD_PRESS_1"
 data 13
 HYD_PRESS.001
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 9
 -0.21123 0.00563 -0.42597
 -0.21123 0.00563 -0.38632
@@ -10030,7 +9944,7 @@ OBJECT poly
 name "HYD_PRESS_A_cylinder"
 data 20
 HYD_PRESS_A_cylinder
-crease 30.0
+crease 40.0
 numvert 128
 -0.18953 0.00188 -0.40049
 -0.18903 0.00435 -0.40049
@@ -10164,1163 +10078,1162 @@ numsurf 192
 SURF 0X10
 mat 13
 refs 3
-5 24.09 0
-0 30.09 5
-4 30.09 0
+5 0 0
+0 1 0
+4 1 1
 SURF 0X10
 mat 13
 refs 3
-1 24.09 5
-0 30.09 5
-5 24.09 0
+1 0 0
+0 1 0
+5 1 1
 SURF 0X10
 mat 13
 refs 3
-5 24.09 0
-6 18.09 0
-1 24.09 5
+5 0 0
+6 1 0
+1 1 1
 SURF 0X10
 mat 13
 refs 3
-6 18.09 0
-2 18.09 5
-1 24.09 5
+6 0 0
+2 1 0
+1 1 1
 SURF 0X10
 mat 13
 refs 3
-6 18.09 0
-7 12.09 0
-2 18.09 5
+6 0 0
+7 1 0
+2 1 1
 SURF 0X10
 mat 13
 refs 3
-7 12.09 0
-3 12.09 5
-2 18.09 5
+7 0 0
+3 1 0
+2 1 1
 SURF 0X10
 mat 13
 refs 3
-8 30.09 0
-9 24.09 0
-4 30.09 5
+8 0 0
+9 1 0
+4 1 1
 SURF 0X10
 mat 13
 refs 3
-9 24.09 0
-5 24.09 5
-4 30.09 5
+9 0 0
+5 1 0
+4 1 1
 SURF 0X10
 mat 13
 refs 3
-9 24.09 0
-10 18.09 0
-5 24.09 5
+9 0 0
+10 1 0
+5 1 1
 SURF 0X10
 mat 13
 refs 3
-10 18.09 0
-6 18.09 5
-5 24.09 5
+10 0 0
+6 1 0
+5 1 1
 SURF 0X10
 mat 13
 refs 3
-10 18.09 0
-11 12.09 0
-6 18.09 5
+10 0 0
+11 1 0
+6 1 1
 SURF 0X10
 mat 13
 refs 3
-11 12.09 0
-7 12.09 5
-6 18.09 5
+11 0 0
+7 1 0
+6 1 1
 SURF 0X10
 mat 13
 refs 3
-12 30.09 0
-13 24.09 0
-8 30.09 5
+12 0 0
+13 1 0
+8 1 1
 SURF 0X10
 mat 13
 refs 3
-13 24.09 0
-9 24.09 5
-8 30.09 5
+13 0 0
+9 1 0
+8 1 1
 SURF 0X10
 mat 13
 refs 3
-13 24.09 0
-14 18.09 0
-9 24.09 5
+13 0 0
+14 1 0
+9 1 1
 SURF 0X10
 mat 13
 refs 3
-14 18.09 0
-10 18.09 5
-9 24.09 5
+14 0 0
+10 1 0
+9 1 1
 SURF 0X10
 mat 13
 refs 3
-14 18.09 0
-15 12.09 0
-10 18.09 5
+14 0 0
+15 1 0
+10 1 1
 SURF 0X10
 mat 13
 refs 3
-15 12.09 0
-11 12.09 5
-10 18.09 5
+15 0 0
+11 1 0
+10 1 1
 SURF 0X10
 mat 13
 refs 3
-16 30.09 0
-17 24.09 0
-12 30.09 5
+16 0 0
+17 1 0
+12 1 1
 SURF 0X10
 mat 13
 refs 3
-17 24.09 0
-13 24.09 5
-12 30.09 5
+17 0 0
+13 1 0
+12 1 1
 SURF 0X10
 mat 13
 refs 3
-17 24.09 0
-18 18.09 0
-13 24.09 5
+17 0 0
+18 1 0
+13 1 1
 SURF 0X10
 mat 13
 refs 3
-18 18.09 0
-14 18.09 5
-13 24.09 5
+18 0 0
+14 1 0
+13 1 1
 SURF 0X10
 mat 13
 refs 3
-18 18.09 0
-19 12.09 0
-14 18.09 5
+18 0 0
+19 1 0
+14 1 1
 SURF 0X10
 mat 13
 refs 3
-19 12.09 0
-15 12.09 5
-14 18.09 5
+19 0 0
+15 1 0
+14 1 1
 SURF 0X10
 mat 13
 refs 3
-20 30.09 0
-21 24.09 0
-16 30.09 5
+20 0 0
+21 1 0
+16 1 1
 SURF 0X10
 mat 13
 refs 3
-21 24.09 0
-17 24.09 5
-16 30.09 5
+21 0 0
+17 1 0
+16 1 1
 SURF 0X10
 mat 13
 refs 3
-21 24.09 0
-22 18.09 0
-17 24.09 5
+21 0 0
+22 1 0
+17 1 1
 SURF 0X10
 mat 13
 refs 3
-22 18.09 0
-18 18.09 5
-17 24.09 5
+22 0 0
+18 1 0
+17 1 1
 SURF 0X10
 mat 13
 refs 3
-22 18.09 0
-23 12.09 0
-18 18.09 5
+22 0 0
+23 1 0
+18 1 1
 SURF 0X10
 mat 13
 refs 3
-23 12.09 0
-19 12.09 5
-18 18.09 5
+23 0 0
+19 1 0
+18 1 1
 SURF 0X10
 mat 13
 refs 3
-24 30.09 0
-25 24.09 0
-20 30.09 5
+24 0 0
+25 1 0
+20 1 1
 SURF 0X10
 mat 13
 refs 3
-25 24.09 0
-21 24.09 5
-20 30.09 5
+25 0 0
+21 1 0
+20 1 1
 SURF 0X10
 mat 13
 refs 3
-25 24.09 0
-26 18.09 0
-21 24.09 5
+25 0 0
+26 1 0
+21 1 1
 SURF 0X10
 mat 13
 refs 3
-26 18.09 0
-22 18.09 5
-21 24.09 5
+26 0 0
+22 1 0
+21 1 1
 SURF 0X10
 mat 13
 refs 3
-26 18.09 0
-27 12.09 0
-22 18.09 5
+26 0 0
+27 1 0
+22 1 1
 SURF 0X10
 mat 13
 refs 3
-27 12.09 0
-23 12.09 5
-22 18.09 5
+27 0 0
+23 1 0
+22 1 1
 SURF 0X10
 mat 13
 refs 3
-28 30.09 0
-29 24.09 0
-24 30.09 5
+28 0 0
+29 1 0
+24 1 1
 SURF 0X10
 mat 13
 refs 3
-29 24.09 0
-25 24.09 5
-24 30.09 5
+29 0 0
+25 1 0
+24 1 1
 SURF 0X10
 mat 13
 refs 3
-29 24.09 0
-30 18.09 0
-25 24.09 5
+29 0 0
+30 1 0
+25 1 1
 SURF 0X10
 mat 13
 refs 3
-30 18.09 0
-26 18.09 5
-25 24.09 5
+30 0 0
+26 1 0
+25 1 1
 SURF 0X10
 mat 13
 refs 3
-30 18.09 0
-31 12.09 0
-26 18.09 5
+30 0 0
+31 1 0
+26 1 1
 SURF 0X10
 mat 13
 refs 3
-31 12.09 0
-27 12.09 5
-26 18.09 5
+31 0 0
+27 1 0
+26 1 1
 SURF 0X10
 mat 13
 refs 3
-32 30.09 0
-33 24.09 0
-28 30.09 5
+32 0 0
+33 1 0
+28 1 1
 SURF 0X10
 mat 13
 refs 3
-33 24.09 0
-29 24.09 5
-28 30.09 5
+33 0 0
+29 1 0
+28 1 1
 SURF 0X10
 mat 13
 refs 3
-33 24.09 0
-34 18.09 0
-29 24.09 5
+33 0 0
+34 1 0
+29 1 1
 SURF 0X10
 mat 13
 refs 3
-34 18.09 0
-30 18.09 5
-29 24.09 5
+34 0 0
+30 1 0
+29 1 1
 SURF 0X10
 mat 13
 refs 3
-34 18.09 0
-35 12.09 0
-30 18.09 5
+34 0 0
+35 1 0
+30 1 1
 SURF 0X10
 mat 13
 refs 3
-35 12.09 0
-31 12.09 5
-30 18.09 5
+35 0 0
+31 1 0
+30 1 1
 SURF 0X10
 mat 13
 refs 3
-36 30.09 0
-37 24.09 0
-32 30.09 5
+36 0 0
+37 1 0
+32 1 1
 SURF 0X10
 mat 13
 refs 3
-37 24.09 0
-33 24.09 5
-32 30.09 5
+37 0 0
+33 1 0
+32 1 1
 SURF 0X10
 mat 13
 refs 3
-37 24.09 0
-38 18.09 0
-33 24.09 5
+37 0 0
+38 1 0
+33 1 1
 SURF 0X10
 mat 13
 refs 3
-38 18.09 0
-34 18.09 5
-33 24.09 5
+38 0 0
+34 1 0
+33 1 1
 SURF 0X10
 mat 13
 refs 3
-38 18.09 0
-39 12.09 0
-34 18.09 5
+38 0 0
+39 1 0
+34 1 1
 SURF 0X10
 mat 13
 refs 3
-39 12.09 0
-35 12.09 5
-34 18.09 5
+39 0 0
+35 1 0
+34 1 1
 SURF 0X10
 mat 13
 refs 3
-40 30.09 0
-41 24.09 0
-36 30.09 5
+40 0 0
+41 1 0
+36 1 1
 SURF 0X10
 mat 13
 refs 3
-41 24.09 0
-37 24.09 5
-36 30.09 5
+41 0 0
+37 1 0
+36 1 1
 SURF 0X10
 mat 13
 refs 3
-41 24.09 0
-42 18.09 0
-37 24.09 5
+41 0 0
+42 1 0
+37 1 1
 SURF 0X10
 mat 13
 refs 3
-42 18.09 0
-38 18.09 5
-37 24.09 5
+42 0 0
+38 1 0
+37 1 1
 SURF 0X10
 mat 13
 refs 3
-42 18.09 0
-43 12.09 0
-38 18.09 5
+42 0 0
+43 1 0
+38 1 1
 SURF 0X10
 mat 13
 refs 3
-43 12.09 0
-39 12.09 5
-38 18.09 5
+43 0 0
+39 1 0
+38 1 1
 SURF 0X10
 mat 13
 refs 3
-44 30.09 0
-45 24.09 0
-40 30.09 5
+44 0 0
+45 1 0
+40 1 1
 SURF 0X10
 mat 13
 refs 3
-45 24.09 0
-41 24.09 5
-40 30.09 5
+45 0 0
+41 1 0
+40 1 1
 SURF 0X10
 mat 13
 refs 3
-45 24.09 0
-46 18.09 0
-41 24.09 5
+45 0 0
+46 1 0
+41 1 1
 SURF 0X10
 mat 13
 refs 3
-46 18.09 0
-42 18.09 5
-41 24.09 5
+46 0 0
+42 1 0
+41 1 1
 SURF 0X10
 mat 13
 refs 3
-46 18.09 0
-47 12.09 0
-42 18.09 5
+46 0 0
+47 1 0
+42 1 1
 SURF 0X10
 mat 13
 refs 3
-47 12.09 0
-43 12.09 5
-42 18.09 5
+47 0 0
+43 1 0
+42 1 1
 SURF 0X10
 mat 13
 refs 3
-48 30.09 0
-49 24.09 0
-44 30.09 5
+48 0 0
+49 1 0
+44 1 1
 SURF 0X10
 mat 13
 refs 3
-49 24.09 0
-45 24.09 5
-44 30.09 5
+49 0 0
+45 1 0
+44 1 1
 SURF 0X10
 mat 13
 refs 3
-49 24.09 0
-50 18.09 0
-45 24.09 5
+49 0 0
+50 1 0
+45 1 1
 SURF 0X10
 mat 13
 refs 3
-50 18.09 0
-46 18.09 5
-45 24.09 5
+50 0 0
+46 1 0
+45 1 1
 SURF 0X10
 mat 13
 refs 3
-50 18.09 0
-51 12.09 0
-46 18.09 5
+50 0 0
+51 1 0
+46 1 1
 SURF 0X10
 mat 13
 refs 3
-51 12.09 0
-47 12.09 5
-46 18.09 5
+51 0 0
+47 1 0
+46 1 1
 SURF 0X10
 mat 13
 refs 3
-52 30.09 0
-53 24.09 0
-48 30.09 5
+52 0 0
+53 1 0
+48 1 1
 SURF 0X10
 mat 13
 refs 3
-53 24.09 0
-49 24.09 5
-48 30.09 5
+53 0 0
+49 1 0
+48 1 1
 SURF 0X10
 mat 13
 refs 3
-53 24.09 0
-54 18.09 0
-49 24.09 5
+53 0 0
+54 1 0
+49 1 1
 SURF 0X10
 mat 13
 refs 3
-54 18.09 0
-50 18.09 5
-49 24.09 5
+54 0 0
+50 1 0
+49 1 1
 SURF 0X10
 mat 13
 refs 3
-54 18.09 0
-55 12.09 0
-50 18.09 5
+54 0 0
+55 1 0
+50 1 1
 SURF 0X10
 mat 13
 refs 3
-55 12.09 0
-51 12.09 5
-50 18.09 5
+55 0 0
+51 1 0
+50 1 1
 SURF 0X10
 mat 13
 refs 3
-56 30.09 0
-57 24.09 0
-52 30.09 5
+56 0 0
+57 1 0
+52 1 1
 SURF 0X10
 mat 13
 refs 3
-57 24.09 0
-53 24.09 5
-52 30.09 5
+57 0 0
+53 1 0
+52 1 1
 SURF 0X10
 mat 13
 refs 3
-57 24.09 0
-58 18.09 0
-53 24.09 5
+57 0 0
+58 1 0
+53 1 1
 SURF 0X10
 mat 13
 refs 3
-58 18.09 0
-54 18.09 5
-53 24.09 5
+58 0 0
+54 1 0
+53 1 1
 SURF 0X10
 mat 13
 refs 3
-58 18.09 0
-59 12.09 0
-54 18.09 5
+58 0 0
+59 1 0
+54 1 1
 SURF 0X10
 mat 13
 refs 3
-59 12.09 0
-55 12.09 5
-54 18.09 5
+59 0 0
+55 1 0
+54 1 1
 SURF 0X10
 mat 13
 refs 3
-60 30.09 0
-61 24.09 0
-56 30.09 5
+60 0 0
+61 1 0
+56 1 1
 SURF 0X10
 mat 13
 refs 3
-61 24.09 0
-57 24.09 5
-56 30.09 5
+61 0 0
+57 1 0
+56 1 1
 SURF 0X10
 mat 13
 refs 3
-61 24.09 0
-62 18.09 0
-57 24.09 5
+61 0 0
+62 1 0
+57 1 1
 SURF 0X10
 mat 13
 refs 3
-62 18.09 0
-58 18.09 5
-57 24.09 5
+62 0 0
+58 1 0
+57 1 1
 SURF 0X10
 mat 13
 refs 3
-62 18.09 0
-63 12.09 0
-58 18.09 5
+62 0 0
+63 1 0
+58 1 1
 SURF 0X10
 mat 13
 refs 3
-63 12.09 0
-59 12.09 5
-58 18.09 5
+63 0 0
+59 1 0
+58 1 1
 SURF 0X10
 mat 13
 refs 3
-64 30.09 0
-65 24.09 0
-60 30.09 5
+64 0 0
+65 1 0
+60 1 1
 SURF 0X10
 mat 13
 refs 3
-65 24.09 0
-61 24.09 5
-60 30.09 5
+65 0 0
+61 1 0
+60 1 1
 SURF 0X10
 mat 13
 refs 3
-65 24.09 0
-66 18.09 0
-61 24.09 5
+65 0 0
+66 1 0
+61 1 1
 SURF 0X10
 mat 13
 refs 3
-66 18.09 0
-62 18.09 5
-61 24.09 5
+66 0 0
+62 1 0
+61 1 1
 SURF 0X10
 mat 13
 refs 3
-66 18.09 0
-67 12.09 0
-62 18.09 5
+66 0 0
+67 1 0
+62 1 1
 SURF 0X10
 mat 13
 refs 3
-67 12.09 0
-63 12.09 5
-62 18.09 5
+67 0 0
+63 1 0
+62 1 1
 SURF 0X10
 mat 13
 refs 3
-68 30.09 0
-69 24.09 0
-64 30.09 5
+68 0 0
+69 1 0
+64 1 1
 SURF 0X10
 mat 13
 refs 3
-69 24.09 0
-65 24.09 5
-64 30.09 5
+69 0 0
+65 1 0
+64 1 1
 SURF 0X10
 mat 13
 refs 3
-69 24.09 0
-70 18.09 0
-65 24.09 5
+69 0 0
+70 1 0
+65 1 1
 SURF 0X10
 mat 13
 refs 3
-70 18.09 0
-66 18.09 5
-65 24.09 5
+70 0 0
+66 1 0
+65 1 1
 SURF 0X10
 mat 13
 refs 3
-70 18.09 0
-71 12.09 0
-66 18.09 5
+70 0 0
+71 1 0
+66 1 1
 SURF 0X10
 mat 13
 refs 3
-71 12.09 0
-67 12.09 5
-66 18.09 5
+71 0 0
+67 1 0
+66 1 1
 SURF 0X10
 mat 13
 refs 3
-72 30.09 0
-73 24.09 0
-68 30.09 5
+72 0 0
+73 1 0
+68 1 1
 SURF 0X10
 mat 13
 refs 3
-73 24.09 0
-69 24.09 5
-68 30.09 5
+73 0 0
+69 1 0
+68 1 1
 SURF 0X10
 mat 13
 refs 3
-73 24.09 0
-74 18.09 0
-69 24.09 5
+73 0 0
+74 1 0
+69 1 1
 SURF 0X10
 mat 13
 refs 3
-74 18.09 0
-70 18.09 5
-69 24.09 5
+74 0 0
+70 1 0
+69 1 1
 SURF 0X10
 mat 13
 refs 3
-74 18.09 0
-75 12.09 0
-70 18.09 5
+74 0 0
+75 1 0
+70 1 1
 SURF 0X10
 mat 13
 refs 3
-75 12.09 0
-71 12.09 5
-70 18.09 5
+75 0 0
+71 1 0
+70 1 1
 SURF 0X10
 mat 13
 refs 3
-76 30.09 0
-77 24.09 0
-72 30.09 5
+76 0 0
+77 1 0
+72 1 1
 SURF 0X10
 mat 13
 refs 3
-77 24.09 0
-73 24.09 5
-72 30.09 5
+77 0 0
+73 1 0
+72 1 1
 SURF 0X10
 mat 13
 refs 3
-77 24.09 0
-78 18.09 0
-73 24.09 5
+77 0 0
+78 1 0
+73 1 1
 SURF 0X10
 mat 13
 refs 3
-78 18.09 0
-74 18.09 5
-73 24.09 5
+78 0 0
+74 1 0
+73 1 1
 SURF 0X10
 mat 13
 refs 3
-78 18.09 0
-79 12.09 0
-74 18.09 5
+78 0 0
+79 1 0
+74 1 1
 SURF 0X10
 mat 13
 refs 3
-79 12.09 0
-75 12.09 5
-74 18.09 5
+79 0 0
+75 1 0
+74 1 1
 SURF 0X10
 mat 13
 refs 3
-80 30.09 0
-81 24.09 0
-76 30.09 5
+80 0 0
+81 1 0
+76 1 1
 SURF 0X10
 mat 13
 refs 3
-81 24.09 0
-77 24.09 5
-76 30.09 5
+81 0 0
+77 1 0
+76 1 1
 SURF 0X10
 mat 13
 refs 3
-81 24.09 0
-82 18.09 0
-77 24.09 5
+81 0 0
+82 1 0
+77 1 1
 SURF 0X10
 mat 13
 refs 3
-82 18.09 0
-78 18.09 5
-77 24.09 5
+82 0 0
+78 1 0
+77 1 1
 SURF 0X10
 mat 13
 refs 3
-82 18.09 0
-83 12.09 0
-78 18.09 5
+82 0 0
+83 1 0
+78 1 1
 SURF 0X10
 mat 13
 refs 3
-83 12.09 0
-79 12.09 5
-78 18.09 5
+83 0 0
+79 1 0
+78 1 1
 SURF 0X10
 mat 13
 refs 3
-84 30.09 0
-85 24.09 0
-80 30.09 5
+84 0 0
+85 1 0
+80 1 1
 SURF 0X10
 mat 13
 refs 3
-85 24.09 0
-81 24.09 5
-80 30.09 5
+85 0 0
+81 1 0
+80 1 1
 SURF 0X10
 mat 13
 refs 3
-85 24.09 0
-86 18.09 0
-81 24.09 5
+85 0 0
+86 1 0
+81 1 1
 SURF 0X10
 mat 13
 refs 3
-86 18.09 0
-82 18.09 5
-81 24.09 5
+86 0 0
+82 1 0
+81 1 1
 SURF 0X10
 mat 13
 refs 3
-86 18.09 0
-87 12.09 0
-82 18.09 5
+86 0 0
+87 1 0
+82 1 1
 SURF 0X10
 mat 13
 refs 3
-87 12.09 0
-83 12.09 5
-82 18.09 5
+87 0 0
+83 1 0
+82 1 1
 SURF 0X10
 mat 13
 refs 3
-88 30.09 0
-89 24.09 0
-84 30.09 5
+88 0 0
+89 1 0
+84 1 1
 SURF 0X10
 mat 13
 refs 3
-89 24.09 0
-85 24.09 5
-84 30.09 5
+89 0 0
+85 1 0
+84 1 1
 SURF 0X10
 mat 13
 refs 3
-89 24.09 0
-90 18.09 0
-85 24.09 5
+89 0 0
+90 1 0
+85 1 1
 SURF 0X10
 mat 13
 refs 3
-90 18.09 0
-86 18.09 5
-85 24.09 5
+90 0 0
+86 1 0
+85 1 1
 SURF 0X10
 mat 13
 refs 3
-90 18.09 0
-91 12.09 0
-86 18.09 5
+90 0 0
+91 1 0
+86 1 1
 SURF 0X10
 mat 13
 refs 3
-91 12.09 0
-87 12.09 5
-86 18.09 5
+91 0 0
+87 1 0
+86 1 1
 SURF 0X10
 mat 13
 refs 3
-92 30.09 0
-93 24.09 0
-88 30.09 5
+92 0 0
+93 1 0
+88 1 1
 SURF 0X10
 mat 13
 refs 3
-93 24.09 0
-89 24.09 5
-88 30.09 5
+93 0 0
+89 1 0
+88 1 1
 SURF 0X10
 mat 13
 refs 3
-93 24.09 0
-94 18.09 0
-89 24.09 5
+93 0 0
+94 1 0
+89 1 1
 SURF 0X10
 mat 13
 refs 3
-94 18.09 0
-90 18.09 5
-89 24.09 5
+94 0 0
+90 1 0
+89 1 1
 SURF 0X10
 mat 13
 refs 3
-94 18.09 0
-95 12.09 0
-90 18.09 5
+94 0 0
+95 1 0
+90 1 1
 SURF 0X10
 mat 13
 refs 3
-95 12.09 0
-91 12.09 5
-90 18.09 5
+95 0 0
+91 1 0
+90 1 1
 SURF 0X10
 mat 13
 refs 3
-96 30.09 0
-97 24.09 0
-92 30.09 5
+96 0 0
+97 1 0
+92 1 1
 SURF 0X10
 mat 13
 refs 3
-97 24.09 0
-93 24.09 5
-92 30.09 5
+97 0 0
+93 1 0
+92 1 1
 SURF 0X10
 mat 13
 refs 3
-97 24.09 0
-98 18.09 0
-93 24.09 5
+97 0 0
+98 1 0
+93 1 1
 SURF 0X10
 mat 13
 refs 3
-98 18.09 0
-94 18.09 5
-93 24.09 5
+98 0 0
+94 1 0
+93 1 1
 SURF 0X10
 mat 13
 refs 3
-98 18.09 0
-99 12.09 0
-94 18.09 5
+98 0 0
+99 1 0
+94 1 1
 SURF 0X10
 mat 13
 refs 3
-99 12.09 0
-95 12.09 5
-94 18.09 5
+99 0 0
+95 1 0
+94 1 1
 SURF 0X10
 mat 13
 refs 3
-100 30.09 0
-101 24.09 0
-96 30.09 5
+100 0 0
+101 1 0
+96 1 1
 SURF 0X10
 mat 13
 refs 3
-101 24.09 0
-97 24.09 5
-96 30.09 5
+101 0 0
+97 1 0
+96 1 1
 SURF 0X10
 mat 13
 refs 3
-101 24.09 0
-102 18.09 0
-97 24.09 5
+101 0 0
+102 1 0
+97 1 1
 SURF 0X10
 mat 13
 refs 3
-102 18.09 0
-98 18.09 5
-97 24.09 5
+102 0 0
+98 1 0
+97 1 1
 SURF 0X10
 mat 13
 refs 3
-102 18.09 0
-103 12.09 0
-98 18.09 5
+102 0 0
+103 1 0
+98 1 1
 SURF 0X10
 mat 13
 refs 3
-103 12.09 0
-99 12.09 5
-98 18.09 5
+103 0 0
+99 1 0
+98 1 1
 SURF 0X10
 mat 13
 refs 3
-104 30.09 0
-105 24.09 0
-100 30.09 5
+104 0 0
+105 1 0
+100 1 1
 SURF 0X10
 mat 13
 refs 3
-105 24.09 0
-101 24.09 5
-100 30.09 5
+105 0 0
+101 1 0
+100 1 1
 SURF 0X10
 mat 13
 refs 3
-105 24.09 0
-106 18.09 0
-101 24.09 5
+105 0 0
+106 1 0
+101 1 1
 SURF 0X10
 mat 13
 refs 3
-106 18.09 0
-102 18.09 5
-101 24.09 5
+106 0 0
+102 1 0
+101 1 1
 SURF 0X10
 mat 13
 refs 3
-106 18.09 0
-107 12.09 0
-102 18.09 5
+106 0 0
+107 1 0
+102 1 1
 SURF 0X10
 mat 13
 refs 3
-107 12.09 0
-103 12.09 5
-102 18.09 5
+107 0 0
+103 1 0
+102 1 1
 SURF 0X10
 mat 13
 refs 3
-108 30.09 0
-109 24.09 0
-104 30.09 5
+108 0 0
+109 1 0
+104 1 1
 SURF 0X10
 mat 13
 refs 3
-109 24.09 0
-105 24.09 5
-104 30.09 5
+109 0 0
+105 1 0
+104 1 1
 SURF 0X10
 mat 13
 refs 3
-109 24.09 0
-110 18.09 0
-105 24.09 5
+109 0 0
+110 1 0
+105 1 1
 SURF 0X10
 mat 13
 refs 3
-110 18.09 0
-106 18.09 5
-105 24.09 5
+110 0 0
+106 1 0
+105 1 1
 SURF 0X10
 mat 13
 refs 3
-110 18.09 0
-111 12.09 0
-106 18.09 5
+110 0 0
+111 1 0
+106 1 1
 SURF 0X10
 mat 13
 refs 3
-111 12.09 0
-107 12.09 5
-106 18.09 5
+111 0 0
+107 1 0
+106 1 1
 SURF 0X10
 mat 13
 refs 3
-112 30.09 0
-113 24.09 0
-108 30.09 5
+112 0 0
+113 1 0
+108 1 1
 SURF 0X10
 mat 13
 refs 3
-113 24.09 0
-109 24.09 5
-108 30.09 5
+113 0 0
+109 1 0
+108 1 1
 SURF 0X10
 mat 13
 refs 3
-113 24.09 0
-114 18.09 0
-109 24.09 5
+113 0 0
+114 1 0
+109 1 1
 SURF 0X10
 mat 13
 refs 3
-114 18.09 0
-110 18.09 5
-109 24.09 5
+114 0 0
+110 1 0
+109 1 1
 SURF 0X10
 mat 13
 refs 3
-114 18.09 0
-115 12.09 0
-110 18.09 5
+114 0 0
+115 1 0
+110 1 1
 SURF 0X10
 mat 13
 refs 3
-115 12.09 0
-111 12.09 5
-110 18.09 5
+115 0 0
+111 1 0
+110 1 1
 SURF 0X10
 mat 13
 refs 3
-116 30.09 0
-117 24.09 0
-112 30.09 5
+116 0 0
+117 1 0
+112 1 1
 SURF 0X10
 mat 13
 refs 3
-117 24.09 0
-113 24.09 5
-112 30.09 5
+117 0 0
+113 1 0
+112 1 1
 SURF 0X10
 mat 13
 refs 3
-117 24.09 0
-118 18.09 0
-113 24.09 5
+117 0 0
+118 1 0
+113 1 1
 SURF 0X10
 mat 13
 refs 3
-118 18.09 0
-114 18.09 5
-113 24.09 5
+118 0 0
+114 1 0
+113 1 1
 SURF 0X10
 mat 13
 refs 3
-118 18.09 0
-119 12.09 0
-114 18.09 5
+118 0 0
+119 1 0
+114 1 1
 SURF 0X10
 mat 13
 refs 3
-119 12.09 0
-115 12.09 5
-114 18.09 5
+119 0 0
+115 1 0
+114 1 1
 SURF 0X10
 mat 13
 refs 3
-120 30.09 0
-121 24.09 0
-116 30.09 5
+120 0 0
+121 1 0
+116 1 1
 SURF 0X10
 mat 13
 refs 3
-121 24.09 0
-117 24.09 5
-116 30.09 5
+121 0 0
+117 1 0
+116 1 1
 SURF 0X10
 mat 13
 refs 3
-121 24.09 0
-122 18.09 0
-117 24.09 5
+121 0 0
+122 1 0
+117 1 1
 SURF 0X10
 mat 13
 refs 3
-122 18.09 0
-118 18.09 5
-117 24.09 5
+122 0 0
+118 1 0
+117 1 1
 SURF 0X10
 mat 13
 refs 3
-122 18.09 0
-123 12.09 0
-118 18.09 5
+122 0 0
+123 1 0
+118 1 1
 SURF 0X10
 mat 13
 refs 3
-123 12.09 0
-119 12.09 5
-118 18.09 5
+123 0 0
+119 1 0
+118 1 1
 SURF 0X10
 mat 13
 refs 3
-124 30.09 0
-125 24.09 0
-120 30.09 5
+124 0 0
+125 1 0
+120 1 1
 SURF 0X10
 mat 13
 refs 3
-125 24.09 0
-121 24.09 5
-120 30.09 5
+125 0 0
+121 1 0
+120 1 1
 SURF 0X10
 mat 13
 refs 3
-125 24.09 0
-126 18.09 0
-121 24.09 5
+125 0 0
+126 1 0
+121 1 1
 SURF 0X10
 mat 13
 refs 3
-126 18.09 0
-122 18.09 5
-121 24.09 5
+126 0 0
+122 1 0
+121 1 1
 SURF 0X10
 mat 13
 refs 3
-126 18.09 0
-127 12.09 0
-122 18.09 5
+126 0 0
+127 1 0
+122 1 1
 SURF 0X10
 mat 13
 refs 3
-127 12.09 0
-123 12.09 5
-122 18.09 5
+127 0 0
+123 1 0
+122 1 1
 SURF 0X10
 mat 13
 refs 3
-0 30.09 0
-1 24.09 0
-124 30.09 5
+0 0 0
+1 1 0
+124 1 1
 SURF 0X10
 mat 13
 refs 3
-1 24.09 0
-125 24.09 5
-124 30.09 5
+1 0 0
+125 1 0
+124 1 1
 SURF 0X10
 mat 13
 refs 3
-1 24.09 0
-2 18.09 0
-125 24.09 5
+1 0 0
+2 1 0
+125 1 1
 SURF 0X10
 mat 13
 refs 3
-2 18.09 0
-126 18.09 5
-125 24.09 5
+2 0 0
+126 1 0
+125 1 1
 SURF 0X10
 mat 13
 refs 3
-2 18.09 0
-3 12.09 0
-126 18.09 5
+2 0 0
+3 1 0
+126 1 1
 SURF 0X10
 mat 13
 refs 3
-3 12.09 0
-127 12.09 5
-126 18.09 5
+3 0 0
+127 1 0
+126 1 1
 kids 0
 OBJECT poly
 name "HYD_PRESS_A_disk"
 data 16
 HYD_PRESS_A_disk
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 16
 -0.17678 0.00319 -0.38874
 -0.18159 0.00319 -0.38977
@@ -11434,7 +11347,7 @@ OBJECT poly
 name "HYD_PRESS_A_needle"
 data 18
 HYD_PRESS_A_needle
-crease 30.0
+crease 40.0
 numvert 26
 -0.17771 0.00394 -0.40328
 -0.17546 0.00394 -0.40323
@@ -11466,255 +11379,255 @@ numsurf 41
 SURF 0X10
 mat 14
 refs 3
-0 1 1
-9 0.875 0
+0 0 0
+9 1 0
+8 1 1
+SURF 0X10
+mat 14
+refs 3
+0 0 0
+1 1 0
+9 1 1
+SURF 0X10
+mat 14
+refs 3
+1 0 0
+10 1 0
+9 1 1
+SURF 0X10
+mat 14
+refs 3
+1 0 0
+2 1 0
+10 1 1
+SURF 0X10
+mat 14
+refs 3
+2 0 0
+11 1 0
+10 1 1
+SURF 0X10
+mat 14
+refs 3
+2 0 0
+3 1 0
+11 1 1
+SURF 0X10
+mat 14
+refs 3
+3 0 0
+12 1 0
+11 1 1
+SURF 0X10
+mat 14
+refs 3
+3 0 0
+4 1 0
+12 1 1
+SURF 0X10
+mat 14
+refs 3
+4 0 0
+13 1 0
+12 1 1
+SURF 0X10
+mat 14
+refs 3
+4 0 0
+5 1 0
+13 1 1
+SURF 0X10
+mat 14
+refs 3
+5 0 0
+14 1 0
+13 1 1
+SURF 0X10
+mat 14
+refs 3
+5 0 0
+6 1 0
+14 1 1
+SURF 0X10
+mat 14
+refs 3
+6 0 0
+15 1 0
+14 1 1
+SURF 0X10
+mat 14
+refs 3
+6 0 0
+7 1 0
+15 1 1
+SURF 0X10
+mat 14
+refs 3
+7 0 0
 8 1 0
+15 1 1
 SURF 0X10
 mat 14
 refs 3
-0 1 1
-1 0.875 1
-9 0.875 0
+7 0 0
+0 1 0
+8 1 1
 SURF 0X10
 mat 14
 refs 3
-1 0.875 1
-10 0.75 0
-9 0.875 0
-SURF 0X10
-mat 14
-refs 3
-1 0.875 1
-2 0.75 1
-10 0.75 0
-SURF 0X10
-mat 14
-refs 3
-2 0.75 1
-11 0.625 0
-10 0.75 0
-SURF 0X10
-mat 14
-refs 3
-2 0.75 1
-3 0.625 1
-11 0.625 0
-SURF 0X10
-mat 14
-refs 3
-3 0.625 1
-12 0.5 0
-11 0.625 0
-SURF 0X10
-mat 14
-refs 3
-3 0.625 1
-4 0.5 1
-12 0.5 0
-SURF 0X10
-mat 14
-refs 3
-4 0.5 1
-13 0.375 0
-12 0.5 0
-SURF 0X10
-mat 14
-refs 3
-4 0.5 1
-5 0.375 1
-13 0.375 0
-SURF 0X10
-mat 14
-refs 3
-5 0.375 1
-14 0.25 0
-13 0.375 0
-SURF 0X10
-mat 14
-refs 3
-5 0.375 1
-6 0.25 1
-14 0.25 0
-SURF 0X10
-mat 14
-refs 3
-6 0.25 1
-15 0.125 0
-14 0.25 0
-SURF 0X10
-mat 14
-refs 3
-6 0.25 1
-7 0.125 1
-15 0.125 0
-SURF 0X10
-mat 14
-refs 3
-7 0.125 1
-8 0 0
-15 0.125 0
-SURF 0X10
-mat 14
-refs 3
-7 0.125 1
-0 0 1
-8 0 0
-SURF 0X10
-mat 14
-refs 3
-1 0.875 0
+1 0 0
 0 1 0
 16 1 1
 SURF 0X10
 mat 14
 refs 3
+16 0 0
+17 1 0
+1 1 1
+SURF 0X10
+mat 14
+refs 3
+16 0 0
+0 1 0
+23 1 1
+SURF 0X10
+mat 14
+refs 3
+17 0 0
+2 1 0
+1 1 1
+SURF 0X10
+mat 14
+refs 3
+17 0 0
+18 1 0
+2 1 1
+SURF 0X10
+mat 14
+refs 3
+18 0 0
+3 1 0
+2 1 1
+SURF 0X10
+mat 14
+refs 3
+18 0 0
+19 1 0
+3 1 1
+SURF 0X10
+mat 14
+refs 3
+19 0 0
+4 1 0
+3 1 1
+SURF 0X10
+mat 14
+refs 3
+19 0 0
+20 1 0
+4 1 1
+SURF 0X10
+mat 14
+refs 3
+20 0 0
+5 1 0
+4 1 1
+SURF 0X10
+mat 14
+refs 3
+20 0 0
+21 1 0
+5 1 1
+SURF 0X10
+mat 14
+refs 3
+21 0 0
+6 1 0
+5 1 1
+SURF 0X10
+mat 14
+refs 3
+21 0 0
+22 1 0
+6 1 1
+SURF 0X10
+mat 14
+refs 3
+22 0 0
+7 1 0
+6 1 1
+SURF 0X10
+mat 14
+refs 3
+22 0 0
+23 1 0
+7 1 1
+SURF 0X10
+mat 14
+refs 3
+23 0 0
+0 1 0
+7 1 1
+SURF 0X10
+mat 14
+refs 3
+24 0 0
+16 1 0
+23 1 1
+SURF 0X10
+mat 14
+refs 3
+24 0 0
+17 1 0
 16 1 1
-17 0.875 1
-1 0.875 0
 SURF 0X10
 mat 14
 refs 3
-16 0 1
-0 0 0
-23 0.125 1
+24 0 0
+18 1 0
+17 1 1
 SURF 0X10
 mat 14
 refs 3
-17 0.875 1
-2 0.75 0
-1 0.875 0
+24 0 0
+19 1 0
+18 1 1
 SURF 0X10
 mat 14
 refs 3
-17 0.875 1
-18 0.75 1
-2 0.75 0
+24 0 0
+20 1 0
+19 1 1
 SURF 0X10
 mat 14
 refs 3
-18 0.75 1
-3 0.625 0
-2 0.75 0
+24 0 0
+21 1 0
+20 1 1
 SURF 0X10
 mat 14
 refs 3
-18 0.75 1
-19 0.625 1
-3 0.625 0
+24 0 0
+22 1 0
+21 1 1
 SURF 0X10
 mat 14
 refs 3
-19 0.625 1
-4 0.5 0
-3 0.625 0
-SURF 0X10
-mat 14
-refs 3
-19 0.625 1
-20 0.5 1
-4 0.5 0
-SURF 0X10
-mat 14
-refs 3
-20 0.5 1
-5 0.375 0
-4 0.5 0
-SURF 0X10
-mat 14
-refs 3
-20 0.5 1
-21 0.375 1
-5 0.375 0
-SURF 0X10
-mat 14
-refs 3
-21 0.375 1
-6 0.25 0
-5 0.375 0
-SURF 0X10
-mat 14
-refs 3
-21 0.375 1
-22 0.25 1
-6 0.25 0
-SURF 0X10
-mat 14
-refs 3
-22 0.25 1
-7 0.125 0
-6 0.25 0
-SURF 0X10
-mat 14
-refs 3
-22 0.25 1
-23 0.125 1
-7 0.125 0
-SURF 0X10
-mat 14
-refs 3
-23 0.125 1
-0 0 0
-7 0.125 0
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-16 0.853553 0.853553
-23 1 0.5
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-17 0.5 1
-16 0.853553 0.853553
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-18 0.146447 0.853553
-17 0.5 1
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-19 0 0.5
-18 0.146447 0.853553
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-20 0.146447 0.146447
-19 0 0.5
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-21 0.5 0
-20 0.146447 0.146447
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-22 0.853553 0.146447
-21 0.5 0
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-23 1 0.5
-22 0.853553 0.146447
+24 0 0
+23 1 0
+22 1 1
 SURF 0X10
 mat 15
 refs 3
-25 0.5 0.5
-8 0.5 1
-9 0.853553 0.853553
+25 0 0
+8 1 0
+9 1 1
 kids 0
 OBJECT poly
 name "HYD_PRESS_B_cylinder"
 data 20
 HYD_PRESS_B_cylinder
-crease 30.0
+crease 40.0
 numvert 128
 -0.16677 0.00188 -0.42275
 -0.16626 0.00435 -0.42275
@@ -11848,1163 +11761,1162 @@ numsurf 192
 SURF 0X10
 mat 13
 refs 3
-5 24.09 0
-0 30.09 5
-4 30.09 0
+5 0 0
+0 1 0
+4 1 1
 SURF 0X10
 mat 13
 refs 3
-1 24.09 5
-0 30.09 5
-5 24.09 0
+1 0 0
+0 1 0
+5 1 1
 SURF 0X10
 mat 13
 refs 3
-5 24.09 0
-6 18.09 0
-1 24.09 5
+5 0 0
+6 1 0
+1 1 1
 SURF 0X10
 mat 13
 refs 3
-6 18.09 0
-2 18.09 5
-1 24.09 5
+6 0 0
+2 1 0
+1 1 1
 SURF 0X10
 mat 13
 refs 3
-6 18.09 0
-7 12.09 0
-2 18.09 5
+6 0 0
+7 1 0
+2 1 1
 SURF 0X10
 mat 13
 refs 3
-7 12.09 0
-3 12.09 5
-2 18.09 5
+7 0 0
+3 1 0
+2 1 1
 SURF 0X10
 mat 13
 refs 3
-8 30.09 0
-9 24.09 0
-4 30.09 5
+8 0 0
+9 1 0
+4 1 1
 SURF 0X10
 mat 13
 refs 3
-9 24.09 0
-5 24.09 5
-4 30.09 5
+9 0 0
+5 1 0
+4 1 1
 SURF 0X10
 mat 13
 refs 3
-9 24.09 0
-10 18.09 0
-5 24.09 5
+9 0 0
+10 1 0
+5 1 1
 SURF 0X10
 mat 13
 refs 3
-10 18.09 0
-6 18.09 5
-5 24.09 5
+10 0 0
+6 1 0
+5 1 1
 SURF 0X10
 mat 13
 refs 3
-10 18.09 0
-11 12.09 0
-6 18.09 5
+10 0 0
+11 1 0
+6 1 1
 SURF 0X10
 mat 13
 refs 3
-11 12.09 0
-7 12.09 5
-6 18.09 5
+11 0 0
+7 1 0
+6 1 1
 SURF 0X10
 mat 13
 refs 3
-12 30.09 0
-13 24.09 0
-8 30.09 5
+12 0 0
+13 1 0
+8 1 1
 SURF 0X10
 mat 13
 refs 3
-13 24.09 0
-9 24.09 5
-8 30.09 5
+13 0 0
+9 1 0
+8 1 1
 SURF 0X10
 mat 13
 refs 3
-13 24.09 0
-14 18.09 0
-9 24.09 5
+13 0 0
+14 1 0
+9 1 1
 SURF 0X10
 mat 13
 refs 3
-14 18.09 0
-10 18.09 5
-9 24.09 5
+14 0 0
+10 1 0
+9 1 1
 SURF 0X10
 mat 13
 refs 3
-14 18.09 0
-15 12.09 0
-10 18.09 5
+14 0 0
+15 1 0
+10 1 1
 SURF 0X10
 mat 13
 refs 3
-15 12.09 0
-11 12.09 5
-10 18.09 5
+15 0 0
+11 1 0
+10 1 1
 SURF 0X10
 mat 13
 refs 3
-16 30.09 0
-17 24.09 0
-12 30.09 5
+16 0 0
+17 1 0
+12 1 1
 SURF 0X10
 mat 13
 refs 3
-17 24.09 0
-13 24.09 5
-12 30.09 5
+17 0 0
+13 1 0
+12 1 1
 SURF 0X10
 mat 13
 refs 3
-17 24.09 0
-18 18.09 0
-13 24.09 5
+17 0 0
+18 1 0
+13 1 1
 SURF 0X10
 mat 13
 refs 3
-18 18.09 0
-14 18.09 5
-13 24.09 5
+18 0 0
+14 1 0
+13 1 1
 SURF 0X10
 mat 13
 refs 3
-18 18.09 0
-19 12.09 0
-14 18.09 5
+18 0 0
+19 1 0
+14 1 1
 SURF 0X10
 mat 13
 refs 3
-19 12.09 0
-15 12.09 5
-14 18.09 5
+19 0 0
+15 1 0
+14 1 1
 SURF 0X10
 mat 13
 refs 3
-20 30.09 0
-21 24.09 0
-16 30.09 5
+20 0 0
+21 1 0
+16 1 1
 SURF 0X10
 mat 13
 refs 3
-21 24.09 0
-17 24.09 5
-16 30.09 5
+21 0 0
+17 1 0
+16 1 1
 SURF 0X10
 mat 13
 refs 3
-21 24.09 0
-22 18.09 0
-17 24.09 5
+21 0 0
+22 1 0
+17 1 1
 SURF 0X10
 mat 13
 refs 3
-22 18.09 0
-18 18.09 5
-17 24.09 5
+22 0 0
+18 1 0
+17 1 1
 SURF 0X10
 mat 13
 refs 3
-22 18.09 0
-23 12.09 0
-18 18.09 5
+22 0 0
+23 1 0
+18 1 1
 SURF 0X10
 mat 13
 refs 3
-23 12.09 0
-19 12.09 5
-18 18.09 5
+23 0 0
+19 1 0
+18 1 1
 SURF 0X10
 mat 13
 refs 3
-24 30.09 0
-25 24.09 0
-20 30.09 5
+24 0 0
+25 1 0
+20 1 1
 SURF 0X10
 mat 13
 refs 3
-25 24.09 0
-21 24.09 5
-20 30.09 5
+25 0 0
+21 1 0
+20 1 1
 SURF 0X10
 mat 13
 refs 3
-25 24.09 0
-26 18.09 0
-21 24.09 5
+25 0 0
+26 1 0
+21 1 1
 SURF 0X10
 mat 13
 refs 3
-26 18.09 0
-22 18.09 5
-21 24.09 5
+26 0 0
+22 1 0
+21 1 1
 SURF 0X10
 mat 13
 refs 3
-26 18.09 0
-27 12.09 0
-22 18.09 5
+26 0 0
+27 1 0
+22 1 1
 SURF 0X10
 mat 13
 refs 3
-27 12.09 0
-23 12.09 5
-22 18.09 5
+27 0 0
+23 1 0
+22 1 1
 SURF 0X10
 mat 13
 refs 3
-28 30.09 0
-29 24.09 0
-24 30.09 5
+28 0 0
+29 1 0
+24 1 1
 SURF 0X10
 mat 13
 refs 3
-29 24.09 0
-25 24.09 5
-24 30.09 5
+29 0 0
+25 1 0
+24 1 1
 SURF 0X10
 mat 13
 refs 3
-29 24.09 0
-30 18.09 0
-25 24.09 5
+29 0 0
+30 1 0
+25 1 1
 SURF 0X10
 mat 13
 refs 3
-30 18.09 0
-26 18.09 5
-25 24.09 5
+30 0 0
+26 1 0
+25 1 1
 SURF 0X10
 mat 13
 refs 3
-30 18.09 0
-31 12.09 0
-26 18.09 5
+30 0 0
+31 1 0
+26 1 1
 SURF 0X10
 mat 13
 refs 3
-31 12.09 0
-27 12.09 5
-26 18.09 5
+31 0 0
+27 1 0
+26 1 1
 SURF 0X10
 mat 13
 refs 3
-32 30.09 0
-33 24.09 0
-28 30.09 5
+32 0 0
+33 1 0
+28 1 1
 SURF 0X10
 mat 13
 refs 3
-33 24.09 0
-29 24.09 5
-28 30.09 5
+33 0 0
+29 1 0
+28 1 1
 SURF 0X10
 mat 13
 refs 3
-33 24.09 0
-34 18.09 0
-29 24.09 5
+33 0 0
+34 1 0
+29 1 1
 SURF 0X10
 mat 13
 refs 3
-34 18.09 0
-30 18.09 5
-29 24.09 5
+34 0 0
+30 1 0
+29 1 1
 SURF 0X10
 mat 13
 refs 3
-34 18.09 0
-35 12.09 0
-30 18.09 5
+34 0 0
+35 1 0
+30 1 1
 SURF 0X10
 mat 13
 refs 3
-35 12.09 0
-31 12.09 5
-30 18.09 5
+35 0 0
+31 1 0
+30 1 1
 SURF 0X10
 mat 13
 refs 3
-36 30.09 0
-37 24.09 0
-32 30.09 5
+36 0 0
+37 1 0
+32 1 1
 SURF 0X10
 mat 13
 refs 3
-37 24.09 0
-33 24.09 5
-32 30.09 5
+37 0 0
+33 1 0
+32 1 1
 SURF 0X10
 mat 13
 refs 3
-37 24.09 0
-38 18.09 0
-33 24.09 5
+37 0 0
+38 1 0
+33 1 1
 SURF 0X10
 mat 13
 refs 3
-38 18.09 0
-34 18.09 5
-33 24.09 5
+38 0 0
+34 1 0
+33 1 1
 SURF 0X10
 mat 13
 refs 3
-38 18.09 0
-39 12.09 0
-34 18.09 5
+38 0 0
+39 1 0
+34 1 1
 SURF 0X10
 mat 13
 refs 3
-39 12.09 0
-35 12.09 5
-34 18.09 5
+39 0 0
+35 1 0
+34 1 1
 SURF 0X10
 mat 13
 refs 3
-40 30.09 0
-41 24.09 0
-36 30.09 5
+40 0 0
+41 1 0
+36 1 1
 SURF 0X10
 mat 13
 refs 3
-41 24.09 0
-37 24.09 5
-36 30.09 5
+41 0 0
+37 1 0
+36 1 1
 SURF 0X10
 mat 13
 refs 3
-41 24.09 0
-42 18.09 0
-37 24.09 5
+41 0 0
+42 1 0
+37 1 1
 SURF 0X10
 mat 13
 refs 3
-42 18.09 0
-38 18.09 5
-37 24.09 5
+42 0 0
+38 1 0
+37 1 1
 SURF 0X10
 mat 13
 refs 3
-42 18.09 0
-43 12.09 0
-38 18.09 5
+42 0 0
+43 1 0
+38 1 1
 SURF 0X10
 mat 13
 refs 3
-43 12.09 0
-39 12.09 5
-38 18.09 5
+43 0 0
+39 1 0
+38 1 1
 SURF 0X10
 mat 13
 refs 3
-44 30.09 0
-45 24.09 0
-40 30.09 5
+44 0 0
+45 1 0
+40 1 1
 SURF 0X10
 mat 13
 refs 3
-45 24.09 0
-41 24.09 5
-40 30.09 5
+45 0 0
+41 1 0
+40 1 1
 SURF 0X10
 mat 13
 refs 3
-45 24.09 0
-46 18.09 0
-41 24.09 5
+45 0 0
+46 1 0
+41 1 1
 SURF 0X10
 mat 13
 refs 3
-46 18.09 0
-42 18.09 5
-41 24.09 5
+46 0 0
+42 1 0
+41 1 1
 SURF 0X10
 mat 13
 refs 3
-46 18.09 0
-47 12.09 0
-42 18.09 5
+46 0 0
+47 1 0
+42 1 1
 SURF 0X10
 mat 13
 refs 3
-47 12.09 0
-43 12.09 5
-42 18.09 5
+47 0 0
+43 1 0
+42 1 1
 SURF 0X10
 mat 13
 refs 3
-48 30.09 0
-49 24.09 0
-44 30.09 5
+48 0 0
+49 1 0
+44 1 1
 SURF 0X10
 mat 13
 refs 3
-49 24.09 0
-45 24.09 5
-44 30.09 5
+49 0 0
+45 1 0
+44 1 1
 SURF 0X10
 mat 13
 refs 3
-49 24.09 0
-50 18.09 0
-45 24.09 5
+49 0 0
+50 1 0
+45 1 1
 SURF 0X10
 mat 13
 refs 3
-50 18.09 0
-46 18.09 5
-45 24.09 5
+50 0 0
+46 1 0
+45 1 1
 SURF 0X10
 mat 13
 refs 3
-50 18.09 0
-51 12.09 0
-46 18.09 5
+50 0 0
+51 1 0
+46 1 1
 SURF 0X10
 mat 13
 refs 3
-51 12.09 0
-47 12.09 5
-46 18.09 5
+51 0 0
+47 1 0
+46 1 1
 SURF 0X10
 mat 13
 refs 3
-52 30.09 0
-53 24.09 0
-48 30.09 5
+52 0 0
+53 1 0
+48 1 1
 SURF 0X10
 mat 13
 refs 3
-53 24.09 0
-49 24.09 5
-48 30.09 5
+53 0 0
+49 1 0
+48 1 1
 SURF 0X10
 mat 13
 refs 3
-53 24.09 0
-54 18.09 0
-49 24.09 5
+53 0 0
+54 1 0
+49 1 1
 SURF 0X10
 mat 13
 refs 3
-54 18.09 0
-50 18.09 5
-49 24.09 5
+54 0 0
+50 1 0
+49 1 1
 SURF 0X10
 mat 13
 refs 3
-54 18.09 0
-55 12.09 0
-50 18.09 5
+54 0 0
+55 1 0
+50 1 1
 SURF 0X10
 mat 13
 refs 3
-55 12.09 0
-51 12.09 5
-50 18.09 5
+55 0 0
+51 1 0
+50 1 1
 SURF 0X10
 mat 13
 refs 3
-56 30.09 0
-57 24.09 0
-52 30.09 5
+56 0 0
+57 1 0
+52 1 1
 SURF 0X10
 mat 13
 refs 3
-57 24.09 0
-53 24.09 5
-52 30.09 5
+57 0 0
+53 1 0
+52 1 1
 SURF 0X10
 mat 13
 refs 3
-57 24.09 0
-58 18.09 0
-53 24.09 5
+57 0 0
+58 1 0
+53 1 1
 SURF 0X10
 mat 13
 refs 3
-58 18.09 0
-54 18.09 5
-53 24.09 5
+58 0 0
+54 1 0
+53 1 1
 SURF 0X10
 mat 13
 refs 3
-58 18.09 0
-59 12.09 0
-54 18.09 5
+58 0 0
+59 1 0
+54 1 1
 SURF 0X10
 mat 13
 refs 3
-59 12.09 0
-55 12.09 5
-54 18.09 5
+59 0 0
+55 1 0
+54 1 1
 SURF 0X10
 mat 13
 refs 3
-60 30.09 0
-61 24.09 0
-56 30.09 5
+60 0 0
+61 1 0
+56 1 1
 SURF 0X10
 mat 13
 refs 3
-61 24.09 0
-57 24.09 5
-56 30.09 5
+61 0 0
+57 1 0
+56 1 1
 SURF 0X10
 mat 13
 refs 3
-61 24.09 0
-62 18.09 0
-57 24.09 5
+61 0 0
+62 1 0
+57 1 1
 SURF 0X10
 mat 13
 refs 3
-62 18.09 0
-58 18.09 5
-57 24.09 5
+62 0 0
+58 1 0
+57 1 1
 SURF 0X10
 mat 13
 refs 3
-62 18.09 0
-63 12.09 0
-58 18.09 5
+62 0 0
+63 1 0
+58 1 1
 SURF 0X10
 mat 13
 refs 3
-63 12.09 0
-59 12.09 5
-58 18.09 5
+63 0 0
+59 1 0
+58 1 1
 SURF 0X10
 mat 13
 refs 3
-64 30.09 0
-65 24.09 0
-60 30.09 5
+64 0 0
+65 1 0
+60 1 1
 SURF 0X10
 mat 13
 refs 3
-65 24.09 0
-61 24.09 5
-60 30.09 5
+65 0 0
+61 1 0
+60 1 1
 SURF 0X10
 mat 13
 refs 3
-65 24.09 0
-66 18.09 0
-61 24.09 5
+65 0 0
+66 1 0
+61 1 1
 SURF 0X10
 mat 13
 refs 3
-66 18.09 0
-62 18.09 5
-61 24.09 5
+66 0 0
+62 1 0
+61 1 1
 SURF 0X10
 mat 13
 refs 3
-66 18.09 0
-67 12.09 0
-62 18.09 5
+66 0 0
+67 1 0
+62 1 1
 SURF 0X10
 mat 13
 refs 3
-67 12.09 0
-63 12.09 5
-62 18.09 5
+67 0 0
+63 1 0
+62 1 1
 SURF 0X10
 mat 13
 refs 3
-68 30.09 0
-69 24.09 0
-64 30.09 5
+68 0 0
+69 1 0
+64 1 1
 SURF 0X10
 mat 13
 refs 3
-69 24.09 0
-65 24.09 5
-64 30.09 5
+69 0 0
+65 1 0
+64 1 1
 SURF 0X10
 mat 13
 refs 3
-69 24.09 0
-70 18.09 0
-65 24.09 5
+69 0 0
+70 1 0
+65 1 1
 SURF 0X10
 mat 13
 refs 3
-70 18.09 0
-66 18.09 5
-65 24.09 5
+70 0 0
+66 1 0
+65 1 1
 SURF 0X10
 mat 13
 refs 3
-70 18.09 0
-71 12.09 0
-66 18.09 5
+70 0 0
+71 1 0
+66 1 1
 SURF 0X10
 mat 13
 refs 3
-71 12.09 0
-67 12.09 5
-66 18.09 5
+71 0 0
+67 1 0
+66 1 1
 SURF 0X10
 mat 13
 refs 3
-72 30.09 0
-73 24.09 0
-68 30.09 5
+72 0 0
+73 1 0
+68 1 1
 SURF 0X10
 mat 13
 refs 3
-73 24.09 0
-69 24.09 5
-68 30.09 5
+73 0 0
+69 1 0
+68 1 1
 SURF 0X10
 mat 13
 refs 3
-73 24.09 0
-74 18.09 0
-69 24.09 5
+73 0 0
+74 1 0
+69 1 1
 SURF 0X10
 mat 13
 refs 3
-74 18.09 0
-70 18.09 5
-69 24.09 5
+74 0 0
+70 1 0
+69 1 1
 SURF 0X10
 mat 13
 refs 3
-74 18.09 0
-75 12.09 0
-70 18.09 5
+74 0 0
+75 1 0
+70 1 1
 SURF 0X10
 mat 13
 refs 3
-75 12.09 0
-71 12.09 5
-70 18.09 5
+75 0 0
+71 1 0
+70 1 1
 SURF 0X10
 mat 13
 refs 3
-76 30.09 0
-77 24.09 0
-72 30.09 5
+76 0 0
+77 1 0
+72 1 1
 SURF 0X10
 mat 13
 refs 3
-77 24.09 0
-73 24.09 5
-72 30.09 5
+77 0 0
+73 1 0
+72 1 1
 SURF 0X10
 mat 13
 refs 3
-77 24.09 0
-78 18.09 0
-73 24.09 5
+77 0 0
+78 1 0
+73 1 1
 SURF 0X10
 mat 13
 refs 3
-78 18.09 0
-74 18.09 5
-73 24.09 5
+78 0 0
+74 1 0
+73 1 1
 SURF 0X10
 mat 13
 refs 3
-78 18.09 0
-79 12.09 0
-74 18.09 5
+78 0 0
+79 1 0
+74 1 1
 SURF 0X10
 mat 13
 refs 3
-79 12.09 0
-75 12.09 5
-74 18.09 5
+79 0 0
+75 1 0
+74 1 1
 SURF 0X10
 mat 13
 refs 3
-80 30.09 0
-81 24.09 0
-76 30.09 5
+80 0 0
+81 1 0
+76 1 1
 SURF 0X10
 mat 13
 refs 3
-81 24.09 0
-77 24.09 5
-76 30.09 5
+81 0 0
+77 1 0
+76 1 1
 SURF 0X10
 mat 13
 refs 3
-81 24.09 0
-82 18.09 0
-77 24.09 5
+81 0 0
+82 1 0
+77 1 1
 SURF 0X10
 mat 13
 refs 3
-82 18.09 0
-78 18.09 5
-77 24.09 5
+82 0 0
+78 1 0
+77 1 1
 SURF 0X10
 mat 13
 refs 3
-82 18.09 0
-83 12.09 0
-78 18.09 5
+82 0 0
+83 1 0
+78 1 1
 SURF 0X10
 mat 13
 refs 3
-83 12.09 0
-79 12.09 5
-78 18.09 5
+83 0 0
+79 1 0
+78 1 1
 SURF 0X10
 mat 13
 refs 3
-84 30.09 0
-85 24.09 0
-80 30.09 5
+84 0 0
+85 1 0
+80 1 1
 SURF 0X10
 mat 13
 refs 3
-85 24.09 0
-81 24.09 5
-80 30.09 5
+85 0 0
+81 1 0
+80 1 1
 SURF 0X10
 mat 13
 refs 3
-85 24.09 0
-86 18.09 0
-81 24.09 5
+85 0 0
+86 1 0
+81 1 1
 SURF 0X10
 mat 13
 refs 3
-86 18.09 0
-82 18.09 5
-81 24.09 5
+86 0 0
+82 1 0
+81 1 1
 SURF 0X10
 mat 13
 refs 3
-86 18.09 0
-87 12.09 0
-82 18.09 5
+86 0 0
+87 1 0
+82 1 1
 SURF 0X10
 mat 13
 refs 3
-87 12.09 0
-83 12.09 5
-82 18.09 5
+87 0 0
+83 1 0
+82 1 1
 SURF 0X10
 mat 13
 refs 3
-88 30.09 0
-89 24.09 0
-84 30.09 5
+88 0 0
+89 1 0
+84 1 1
 SURF 0X10
 mat 13
 refs 3
-89 24.09 0
-85 24.09 5
-84 30.09 5
+89 0 0
+85 1 0
+84 1 1
 SURF 0X10
 mat 13
 refs 3
-89 24.09 0
-90 18.09 0
-85 24.09 5
+89 0 0
+90 1 0
+85 1 1
 SURF 0X10
 mat 13
 refs 3
-90 18.09 0
-86 18.09 5
-85 24.09 5
+90 0 0
+86 1 0
+85 1 1
 SURF 0X10
 mat 13
 refs 3
-90 18.09 0
-91 12.09 0
-86 18.09 5
+90 0 0
+91 1 0
+86 1 1
 SURF 0X10
 mat 13
 refs 3
-91 12.09 0
-87 12.09 5
-86 18.09 5
+91 0 0
+87 1 0
+86 1 1
 SURF 0X10
 mat 13
 refs 3
-92 30.09 0
-93 24.09 0
-88 30.09 5
+92 0 0
+93 1 0
+88 1 1
 SURF 0X10
 mat 13
 refs 3
-93 24.09 0
-89 24.09 5
-88 30.09 5
+93 0 0
+89 1 0
+88 1 1
 SURF 0X10
 mat 13
 refs 3
-93 24.09 0
-94 18.09 0
-89 24.09 5
+93 0 0
+94 1 0
+89 1 1
 SURF 0X10
 mat 13
 refs 3
-94 18.09 0
-90 18.09 5
-89 24.09 5
+94 0 0
+90 1 0
+89 1 1
 SURF 0X10
 mat 13
 refs 3
-94 18.09 0
-95 12.09 0
-90 18.09 5
+94 0 0
+95 1 0
+90 1 1
 SURF 0X10
 mat 13
 refs 3
-95 12.09 0
-91 12.09 5
-90 18.09 5
+95 0 0
+91 1 0
+90 1 1
 SURF 0X10
 mat 13
 refs 3
-96 30.09 0
-97 24.09 0
-92 30.09 5
+96 0 0
+97 1 0
+92 1 1
 SURF 0X10
 mat 13
 refs 3
-97 24.09 0
-93 24.09 5
-92 30.09 5
+97 0 0
+93 1 0
+92 1 1
 SURF 0X10
 mat 13
 refs 3
-97 24.09 0
-98 18.09 0
-93 24.09 5
+97 0 0
+98 1 0
+93 1 1
 SURF 0X10
 mat 13
 refs 3
-98 18.09 0
-94 18.09 5
-93 24.09 5
+98 0 0
+94 1 0
+93 1 1
 SURF 0X10
 mat 13
 refs 3
-98 18.09 0
-99 12.09 0
-94 18.09 5
+98 0 0
+99 1 0
+94 1 1
 SURF 0X10
 mat 13
 refs 3
-99 12.09 0
-95 12.09 5
-94 18.09 5
+99 0 0
+95 1 0
+94 1 1
 SURF 0X10
 mat 13
 refs 3
-100 30.09 0
-101 24.09 0
-96 30.09 5
+100 0 0
+101 1 0
+96 1 1
 SURF 0X10
 mat 13
 refs 3
-101 24.09 0
-97 24.09 5
-96 30.09 5
+101 0 0
+97 1 0
+96 1 1
 SURF 0X10
 mat 13
 refs 3
-101 24.09 0
-102 18.09 0
-97 24.09 5
+101 0 0
+102 1 0
+97 1 1
 SURF 0X10
 mat 13
 refs 3
-102 18.09 0
-98 18.09 5
-97 24.09 5
+102 0 0
+98 1 0
+97 1 1
 SURF 0X10
 mat 13
 refs 3
-102 18.09 0
-103 12.09 0
-98 18.09 5
+102 0 0
+103 1 0
+98 1 1
 SURF 0X10
 mat 13
 refs 3
-103 12.09 0
-99 12.09 5
-98 18.09 5
+103 0 0
+99 1 0
+98 1 1
 SURF 0X10
 mat 13
 refs 3
-104 30.09 0
-105 24.09 0
-100 30.09 5
+104 0 0
+105 1 0
+100 1 1
 SURF 0X10
 mat 13
 refs 3
-105 24.09 0
-101 24.09 5
-100 30.09 5
+105 0 0
+101 1 0
+100 1 1
 SURF 0X10
 mat 13
 refs 3
-105 24.09 0
-106 18.09 0
-101 24.09 5
+105 0 0
+106 1 0
+101 1 1
 SURF 0X10
 mat 13
 refs 3
-106 18.09 0
-102 18.09 5
-101 24.09 5
+106 0 0
+102 1 0
+101 1 1
 SURF 0X10
 mat 13
 refs 3
-106 18.09 0
-107 12.09 0
-102 18.09 5
+106 0 0
+107 1 0
+102 1 1
 SURF 0X10
 mat 13
 refs 3
-107 12.09 0
-103 12.09 5
-102 18.09 5
+107 0 0
+103 1 0
+102 1 1
 SURF 0X10
 mat 13
 refs 3
-108 30.09 0
-109 24.09 0
-104 30.09 5
+108 0 0
+109 1 0
+104 1 1
 SURF 0X10
 mat 13
 refs 3
-109 24.09 0
-105 24.09 5
-104 30.09 5
+109 0 0
+105 1 0
+104 1 1
 SURF 0X10
 mat 13
 refs 3
-109 24.09 0
-110 18.09 0
-105 24.09 5
+109 0 0
+110 1 0
+105 1 1
 SURF 0X10
 mat 13
 refs 3
-110 18.09 0
-106 18.09 5
-105 24.09 5
+110 0 0
+106 1 0
+105 1 1
 SURF 0X10
 mat 13
 refs 3
-110 18.09 0
-111 12.09 0
-106 18.09 5
+110 0 0
+111 1 0
+106 1 1
 SURF 0X10
 mat 13
 refs 3
-111 12.09 0
-107 12.09 5
-106 18.09 5
+111 0 0
+107 1 0
+106 1 1
 SURF 0X10
 mat 13
 refs 3
-112 30.09 0
-113 24.09 0
-108 30.09 5
+112 0 0
+113 1 0
+108 1 1
 SURF 0X10
 mat 13
 refs 3
-113 24.09 0
-109 24.09 5
-108 30.09 5
+113 0 0
+109 1 0
+108 1 1
 SURF 0X10
 mat 13
 refs 3
-113 24.09 0
-114 18.09 0
-109 24.09 5
+113 0 0
+114 1 0
+109 1 1
 SURF 0X10
 mat 13
 refs 3
-114 18.09 0
-110 18.09 5
-109 24.09 5
+114 0 0
+110 1 0
+109 1 1
 SURF 0X10
 mat 13
 refs 3
-114 18.09 0
-115 12.09 0
-110 18.09 5
+114 0 0
+115 1 0
+110 1 1
 SURF 0X10
 mat 13
 refs 3
-115 12.09 0
-111 12.09 5
-110 18.09 5
+115 0 0
+111 1 0
+110 1 1
 SURF 0X10
 mat 13
 refs 3
-116 30.09 0
-117 24.09 0
-112 30.09 5
+116 0 0
+117 1 0
+112 1 1
 SURF 0X10
 mat 13
 refs 3
-117 24.09 0
-113 24.09 5
-112 30.09 5
+117 0 0
+113 1 0
+112 1 1
 SURF 0X10
 mat 13
 refs 3
-117 24.09 0
-118 18.09 0
-113 24.09 5
+117 0 0
+118 1 0
+113 1 1
 SURF 0X10
 mat 13
 refs 3
-118 18.09 0
-114 18.09 5
-113 24.09 5
+118 0 0
+114 1 0
+113 1 1
 SURF 0X10
 mat 13
 refs 3
-118 18.09 0
-119 12.09 0
-114 18.09 5
+118 0 0
+119 1 0
+114 1 1
 SURF 0X10
 mat 13
 refs 3
-119 12.09 0
-115 12.09 5
-114 18.09 5
+119 0 0
+115 1 0
+114 1 1
 SURF 0X10
 mat 13
 refs 3
-120 30.09 0
-121 24.09 0
-116 30.09 5
+120 0 0
+121 1 0
+116 1 1
 SURF 0X10
 mat 13
 refs 3
-121 24.09 0
-117 24.09 5
-116 30.09 5
+121 0 0
+117 1 0
+116 1 1
 SURF 0X10
 mat 13
 refs 3
-121 24.09 0
-122 18.09 0
-117 24.09 5
+121 0 0
+122 1 0
+117 1 1
 SURF 0X10
 mat 13
 refs 3
-122 18.09 0
-118 18.09 5
-117 24.09 5
+122 0 0
+118 1 0
+117 1 1
 SURF 0X10
 mat 13
 refs 3
-122 18.09 0
-123 12.09 0
-118 18.09 5
+122 0 0
+123 1 0
+118 1 1
 SURF 0X10
 mat 13
 refs 3
-123 12.09 0
-119 12.09 5
-118 18.09 5
+123 0 0
+119 1 0
+118 1 1
 SURF 0X10
 mat 13
 refs 3
-124 30.09 0
-125 24.09 0
-120 30.09 5
+124 0 0
+125 1 0
+120 1 1
 SURF 0X10
 mat 13
 refs 3
-125 24.09 0
-121 24.09 5
-120 30.09 5
+125 0 0
+121 1 0
+120 1 1
 SURF 0X10
 mat 13
 refs 3
-125 24.09 0
-126 18.09 0
-121 24.09 5
+125 0 0
+126 1 0
+121 1 1
 SURF 0X10
 mat 13
 refs 3
-126 18.09 0
-122 18.09 5
-121 24.09 5
+126 0 0
+122 1 0
+121 1 1
 SURF 0X10
 mat 13
 refs 3
-126 18.09 0
-127 12.09 0
-122 18.09 5
+126 0 0
+127 1 0
+122 1 1
 SURF 0X10
 mat 13
 refs 3
-127 12.09 0
-123 12.09 5
-122 18.09 5
+127 0 0
+123 1 0
+122 1 1
 SURF 0X10
 mat 13
 refs 3
-0 30.09 0
-1 24.09 0
-124 30.09 5
+0 0 0
+1 1 0
+124 1 1
 SURF 0X10
 mat 13
 refs 3
-1 24.09 0
-125 24.09 5
-124 30.09 5
+1 0 0
+125 1 0
+124 1 1
 SURF 0X10
 mat 13
 refs 3
-1 24.09 0
-2 18.09 0
-125 24.09 5
+1 0 0
+2 1 0
+125 1 1
 SURF 0X10
 mat 13
 refs 3
-2 18.09 0
-126 18.09 5
-125 24.09 5
+2 0 0
+126 1 0
+125 1 1
 SURF 0X10
 mat 13
 refs 3
-2 18.09 0
-3 12.09 0
-126 18.09 5
+2 0 0
+3 1 0
+126 1 1
 SURF 0X10
 mat 13
 refs 3
-3 12.09 0
-127 12.09 5
-126 18.09 5
+3 0 0
+127 1 0
+126 1 1
 kids 0
 OBJECT poly
 name "HYD_PRESS_B_disk"
 data 16
 HYD_PRESS_B_disk
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 16
 -0.15401 0.00319 -0.411
 -0.15882 0.00319 -0.41203
@@ -13118,7 +13030,7 @@ OBJECT poly
 name "HYD_PRESS_B_needle"
 data 18
 HYD_PRESS_B_needle
-crease 30.0
+crease 40.0
 numvert 26
 -0.15496 0.00394 -0.42523
 -0.15271 0.00394 -0.42519
@@ -13150,255 +13062,255 @@ numsurf 41
 SURF 0X10
 mat 14
 refs 3
-0 1 1
-9 0.875 0
+0 0 0
+9 1 0
+8 1 1
+SURF 0X10
+mat 14
+refs 3
+0 0 0
+1 1 0
+9 1 1
+SURF 0X10
+mat 14
+refs 3
+1 0 0
+10 1 0
+9 1 1
+SURF 0X10
+mat 14
+refs 3
+1 0 0
+2 1 0
+10 1 1
+SURF 0X10
+mat 14
+refs 3
+2 0 0
+11 1 0
+10 1 1
+SURF 0X10
+mat 14
+refs 3
+2 0 0
+3 1 0
+11 1 1
+SURF 0X10
+mat 14
+refs 3
+3 0 0
+12 1 0
+11 1 1
+SURF 0X10
+mat 14
+refs 3
+3 0 0
+4 1 0
+12 1 1
+SURF 0X10
+mat 14
+refs 3
+4 0 0
+13 1 0
+12 1 1
+SURF 0X10
+mat 14
+refs 3
+4 0 0
+5 1 0
+13 1 1
+SURF 0X10
+mat 14
+refs 3
+5 0 0
+14 1 0
+13 1 1
+SURF 0X10
+mat 14
+refs 3
+5 0 0
+6 1 0
+14 1 1
+SURF 0X10
+mat 14
+refs 3
+6 0 0
+15 1 0
+14 1 1
+SURF 0X10
+mat 14
+refs 3
+6 0 0
+7 1 0
+15 1 1
+SURF 0X10
+mat 14
+refs 3
+7 0 0
 8 1 0
+15 1 1
 SURF 0X10
 mat 14
 refs 3
-0 1 1
-1 0.875 1
-9 0.875 0
+7 0 0
+0 1 0
+8 1 1
 SURF 0X10
 mat 14
 refs 3
-1 0.875 1
-10 0.75 0
-9 0.875 0
-SURF 0X10
-mat 14
-refs 3
-1 0.875 1
-2 0.75 1
-10 0.75 0
-SURF 0X10
-mat 14
-refs 3
-2 0.75 1
-11 0.625 0
-10 0.75 0
-SURF 0X10
-mat 14
-refs 3
-2 0.75 1
-3 0.625 1
-11 0.625 0
-SURF 0X10
-mat 14
-refs 3
-3 0.625 1
-12 0.5 0
-11 0.625 0
-SURF 0X10
-mat 14
-refs 3
-3 0.625 1
-4 0.5 1
-12 0.5 0
-SURF 0X10
-mat 14
-refs 3
-4 0.5 1
-13 0.375 0
-12 0.5 0
-SURF 0X10
-mat 14
-refs 3
-4 0.5 1
-5 0.375 1
-13 0.375 0
-SURF 0X10
-mat 14
-refs 3
-5 0.375 1
-14 0.25 0
-13 0.375 0
-SURF 0X10
-mat 14
-refs 3
-5 0.375 1
-6 0.25 1
-14 0.25 0
-SURF 0X10
-mat 14
-refs 3
-6 0.25 1
-15 0.125 0
-14 0.25 0
-SURF 0X10
-mat 14
-refs 3
-6 0.25 1
-7 0.125 1
-15 0.125 0
-SURF 0X10
-mat 14
-refs 3
-7 0.125 1
-8 0 0
-15 0.125 0
-SURF 0X10
-mat 14
-refs 3
-7 0.125 1
-0 0 1
-8 0 0
-SURF 0X10
-mat 14
-refs 3
-1 0.875 0
+1 0 0
 0 1 0
 16 1 1
 SURF 0X10
 mat 14
 refs 3
+16 0 0
+17 1 0
+1 1 1
+SURF 0X10
+mat 14
+refs 3
+16 0 0
+0 1 0
+23 1 1
+SURF 0X10
+mat 14
+refs 3
+17 0 0
+2 1 0
+1 1 1
+SURF 0X10
+mat 14
+refs 3
+17 0 0
+18 1 0
+2 1 1
+SURF 0X10
+mat 14
+refs 3
+18 0 0
+3 1 0
+2 1 1
+SURF 0X10
+mat 14
+refs 3
+18 0 0
+19 1 0
+3 1 1
+SURF 0X10
+mat 14
+refs 3
+19 0 0
+4 1 0
+3 1 1
+SURF 0X10
+mat 14
+refs 3
+19 0 0
+20 1 0
+4 1 1
+SURF 0X10
+mat 14
+refs 3
+20 0 0
+5 1 0
+4 1 1
+SURF 0X10
+mat 14
+refs 3
+20 0 0
+21 1 0
+5 1 1
+SURF 0X10
+mat 14
+refs 3
+21 0 0
+6 1 0
+5 1 1
+SURF 0X10
+mat 14
+refs 3
+21 0 0
+22 1 0
+6 1 1
+SURF 0X10
+mat 14
+refs 3
+22 0 0
+7 1 0
+6 1 1
+SURF 0X10
+mat 14
+refs 3
+22 0 0
+23 1 0
+7 1 1
+SURF 0X10
+mat 14
+refs 3
+23 0 0
+0 1 0
+7 1 1
+SURF 0X10
+mat 14
+refs 3
+24 0 0
+16 1 0
+23 1 1
+SURF 0X10
+mat 14
+refs 3
+24 0 0
+17 1 0
 16 1 1
-17 0.875 1
-1 0.875 0
 SURF 0X10
 mat 14
 refs 3
-16 0 1
-0 0 0
-23 0.125 1
+24 0 0
+18 1 0
+17 1 1
 SURF 0X10
 mat 14
 refs 3
-17 0.875 1
-2 0.75 0
-1 0.875 0
+24 0 0
+19 1 0
+18 1 1
 SURF 0X10
 mat 14
 refs 3
-17 0.875 1
-18 0.75 1
-2 0.75 0
+24 0 0
+20 1 0
+19 1 1
 SURF 0X10
 mat 14
 refs 3
-18 0.75 1
-3 0.625 0
-2 0.75 0
+24 0 0
+21 1 0
+20 1 1
 SURF 0X10
 mat 14
 refs 3
-18 0.75 1
-19 0.625 1
-3 0.625 0
+24 0 0
+22 1 0
+21 1 1
 SURF 0X10
 mat 14
 refs 3
-19 0.625 1
-4 0.5 0
-3 0.625 0
-SURF 0X10
-mat 14
-refs 3
-19 0.625 1
-20 0.5 1
-4 0.5 0
-SURF 0X10
-mat 14
-refs 3
-20 0.5 1
-5 0.375 0
-4 0.5 0
-SURF 0X10
-mat 14
-refs 3
-20 0.5 1
-21 0.375 1
-5 0.375 0
-SURF 0X10
-mat 14
-refs 3
-21 0.375 1
-6 0.25 0
-5 0.375 0
-SURF 0X10
-mat 14
-refs 3
-21 0.375 1
-22 0.25 1
-6 0.25 0
-SURF 0X10
-mat 14
-refs 3
-22 0.25 1
-7 0.125 0
-6 0.25 0
-SURF 0X10
-mat 14
-refs 3
-22 0.25 1
-23 0.125 1
-7 0.125 0
-SURF 0X10
-mat 14
-refs 3
-23 0.125 1
-0 0 0
-7 0.125 0
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-16 0.853553 0.853553
-23 1 0.5
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-17 0.5 1
-16 0.853553 0.853553
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-18 0.146447 0.853553
-17 0.5 1
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-19 0 0.5
-18 0.146447 0.853553
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-20 0.146447 0.146447
-19 0 0.5
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-21 0.5 0
-20 0.146447 0.146447
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-22 0.853553 0.146447
-21 0.5 0
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-23 1 0.5
-22 0.853553 0.146447
+24 0 0
+23 1 0
+22 1 1
 SURF 0X10
 mat 15
 refs 3
-25 0.5 0.5
-8 0.5 1
-9 0.853553 0.853553
+25 0 0
+8 1 0
+9 1 1
 kids 0
 OBJECT poly
 name "LIQ_OXY_cylinder"
 data 16
 LIQ_OXY_cylinder
-crease 30.0
+crease 40.0
 numvert 128
 -0.13642 0.00189 -0.41681
 -0.13547 0.00463 -0.41681
@@ -13532,1163 +13444,1162 @@ numsurf 192
 SURF 0X10
 mat 13
 refs 3
-5 24.09 0
-0 30.09 5
-4 30.09 0
+5 0 0
+0 1 0
+4 1 1
 SURF 0X10
 mat 13
 refs 3
-1 24.09 5
-0 30.09 5
-5 24.09 0
+1 0 0
+0 1 0
+5 1 1
 SURF 0X10
 mat 13
 refs 3
-5 24.09 0
-6 18.09 0
-1 24.09 5
+5 0 0
+6 1 0
+1 1 1
 SURF 0X10
 mat 13
 refs 3
-6 18.09 0
-2 18.09 5
-1 24.09 5
+6 0 0
+2 1 0
+1 1 1
 SURF 0X10
 mat 13
 refs 3
-6 18.09 0
-7 12.09 0
-2 18.09 5
+6 0 0
+7 1 0
+2 1 1
 SURF 0X10
 mat 13
 refs 3
-7 12.09 0
-3 12.09 5
-2 18.09 5
+7 0 0
+3 1 0
+2 1 1
 SURF 0X10
 mat 13
 refs 3
-8 30.09 0
-9 24.09 0
-4 30.09 5
+8 0 0
+9 1 0
+4 1 1
 SURF 0X10
 mat 13
 refs 3
-9 24.09 0
-5 24.09 5
-4 30.09 5
+9 0 0
+5 1 0
+4 1 1
 SURF 0X10
 mat 13
 refs 3
-9 24.09 0
-10 18.09 0
-5 24.09 5
+9 0 0
+10 1 0
+5 1 1
 SURF 0X10
 mat 13
 refs 3
-10 18.09 0
-6 18.09 5
-5 24.09 5
+10 0 0
+6 1 0
+5 1 1
 SURF 0X10
 mat 13
 refs 3
-10 18.09 0
-11 12.09 0
-6 18.09 5
+10 0 0
+11 1 0
+6 1 1
 SURF 0X10
 mat 13
 refs 3
-11 12.09 0
-7 12.09 5
-6 18.09 5
+11 0 0
+7 1 0
+6 1 1
 SURF 0X10
 mat 13
 refs 3
-12 30.09 0
-13 24.09 0
-8 30.09 5
+12 0 0
+13 1 0
+8 1 1
 SURF 0X10
 mat 13
 refs 3
-13 24.09 0
-9 24.09 5
-8 30.09 5
+13 0 0
+9 1 0
+8 1 1
 SURF 0X10
 mat 13
 refs 3
-13 24.09 0
-14 18.09 0
-9 24.09 5
+13 0 0
+14 1 0
+9 1 1
 SURF 0X10
 mat 13
 refs 3
-14 18.09 0
-10 18.09 5
-9 24.09 5
+14 0 0
+10 1 0
+9 1 1
 SURF 0X10
 mat 13
 refs 3
-14 18.09 0
-15 12.09 0
-10 18.09 5
+14 0 0
+15 1 0
+10 1 1
 SURF 0X10
 mat 13
 refs 3
-15 12.09 0
-11 12.09 5
-10 18.09 5
+15 0 0
+11 1 0
+10 1 1
 SURF 0X10
 mat 13
 refs 3
-16 30.09 0
-17 24.09 0
-12 30.09 5
+16 0 0
+17 1 0
+12 1 1
 SURF 0X10
 mat 13
 refs 3
-17 24.09 0
-13 24.09 5
-12 30.09 5
+17 0 0
+13 1 0
+12 1 1
 SURF 0X10
 mat 13
 refs 3
-17 24.09 0
-18 18.09 0
-13 24.09 5
+17 0 0
+18 1 0
+13 1 1
 SURF 0X10
 mat 13
 refs 3
-18 18.09 0
-14 18.09 5
-13 24.09 5
+18 0 0
+14 1 0
+13 1 1
 SURF 0X10
 mat 13
 refs 3
-18 18.09 0
-19 12.09 0
-14 18.09 5
+18 0 0
+19 1 0
+14 1 1
 SURF 0X10
 mat 13
 refs 3
-19 12.09 0
-15 12.09 5
-14 18.09 5
+19 0 0
+15 1 0
+14 1 1
 SURF 0X10
 mat 13
 refs 3
-20 30.09 0
-21 24.09 0
-16 30.09 5
+20 0 0
+21 1 0
+16 1 1
 SURF 0X10
 mat 13
 refs 3
-21 24.09 0
-17 24.09 5
-16 30.09 5
+21 0 0
+17 1 0
+16 1 1
 SURF 0X10
 mat 13
 refs 3
-21 24.09 0
-22 18.09 0
-17 24.09 5
+21 0 0
+22 1 0
+17 1 1
 SURF 0X10
 mat 13
 refs 3
-22 18.09 0
-18 18.09 5
-17 24.09 5
+22 0 0
+18 1 0
+17 1 1
 SURF 0X10
 mat 13
 refs 3
-22 18.09 0
-23 12.09 0
-18 18.09 5
+22 0 0
+23 1 0
+18 1 1
 SURF 0X10
 mat 13
 refs 3
-23 12.09 0
-19 12.09 5
-18 18.09 5
+23 0 0
+19 1 0
+18 1 1
 SURF 0X10
 mat 13
 refs 3
-24 30.09 0
-25 24.09 0
-20 30.09 5
+24 0 0
+25 1 0
+20 1 1
 SURF 0X10
 mat 13
 refs 3
-25 24.09 0
-21 24.09 5
-20 30.09 5
+25 0 0
+21 1 0
+20 1 1
 SURF 0X10
 mat 13
 refs 3
-25 24.09 0
-26 18.09 0
-21 24.09 5
+25 0 0
+26 1 0
+21 1 1
 SURF 0X10
 mat 13
 refs 3
-26 18.09 0
-22 18.09 5
-21 24.09 5
+26 0 0
+22 1 0
+21 1 1
 SURF 0X10
 mat 13
 refs 3
-26 18.09 0
-27 12.09 0
-22 18.09 5
+26 0 0
+27 1 0
+22 1 1
 SURF 0X10
 mat 13
 refs 3
-27 12.09 0
-23 12.09 5
-22 18.09 5
+27 0 0
+23 1 0
+22 1 1
 SURF 0X10
 mat 13
 refs 3
-28 30.09 0
-29 24.09 0
-24 30.09 5
+28 0 0
+29 1 0
+24 1 1
 SURF 0X10
 mat 13
 refs 3
-29 24.09 0
-25 24.09 5
-24 30.09 5
+29 0 0
+25 1 0
+24 1 1
 SURF 0X10
 mat 13
 refs 3
-29 24.09 0
-30 18.09 0
-25 24.09 5
+29 0 0
+30 1 0
+25 1 1
 SURF 0X10
 mat 13
 refs 3
-30 18.09 0
-26 18.09 5
-25 24.09 5
+30 0 0
+26 1 0
+25 1 1
 SURF 0X10
 mat 13
 refs 3
-30 18.09 0
-31 12.09 0
-26 18.09 5
+30 0 0
+31 1 0
+26 1 1
 SURF 0X10
 mat 13
 refs 3
-31 12.09 0
-27 12.09 5
-26 18.09 5
+31 0 0
+27 1 0
+26 1 1
 SURF 0X10
 mat 13
 refs 3
-32 30.09 0
-33 24.09 0
-28 30.09 5
+32 0 0
+33 1 0
+28 1 1
 SURF 0X10
 mat 13
 refs 3
-33 24.09 0
-29 24.09 5
-28 30.09 5
+33 0 0
+29 1 0
+28 1 1
 SURF 0X10
 mat 13
 refs 3
-33 24.09 0
-34 18.09 0
-29 24.09 5
+33 0 0
+34 1 0
+29 1 1
 SURF 0X10
 mat 13
 refs 3
-34 18.09 0
-30 18.09 5
-29 24.09 5
+34 0 0
+30 1 0
+29 1 1
 SURF 0X10
 mat 13
 refs 3
-34 18.09 0
-35 12.09 0
-30 18.09 5
+34 0 0
+35 1 0
+30 1 1
 SURF 0X10
 mat 13
 refs 3
-35 12.09 0
-31 12.09 5
-30 18.09 5
+35 0 0
+31 1 0
+30 1 1
 SURF 0X10
 mat 13
 refs 3
-36 30.09 0
-37 24.09 0
-32 30.09 5
+36 0 0
+37 1 0
+32 1 1
 SURF 0X10
 mat 13
 refs 3
-37 24.09 0
-33 24.09 5
-32 30.09 5
+37 0 0
+33 1 0
+32 1 1
 SURF 0X10
 mat 13
 refs 3
-37 24.09 0
-38 18.09 0
-33 24.09 5
+37 0 0
+38 1 0
+33 1 1
 SURF 0X10
 mat 13
 refs 3
-38 18.09 0
-34 18.09 5
-33 24.09 5
+38 0 0
+34 1 0
+33 1 1
 SURF 0X10
 mat 13
 refs 3
-38 18.09 0
-39 12.09 0
-34 18.09 5
+38 0 0
+39 1 0
+34 1 1
 SURF 0X10
 mat 13
 refs 3
-39 12.09 0
-35 12.09 5
-34 18.09 5
+39 0 0
+35 1 0
+34 1 1
 SURF 0X10
 mat 13
 refs 3
-40 30.09 0
-41 24.09 0
-36 30.09 5
+40 0 0
+41 1 0
+36 1 1
 SURF 0X10
 mat 13
 refs 3
-41 24.09 0
-37 24.09 5
-36 30.09 5
+41 0 0
+37 1 0
+36 1 1
 SURF 0X10
 mat 13
 refs 3
-41 24.09 0
-42 18.09 0
-37 24.09 5
+41 0 0
+42 1 0
+37 1 1
 SURF 0X10
 mat 13
 refs 3
-42 18.09 0
-38 18.09 5
-37 24.09 5
+42 0 0
+38 1 0
+37 1 1
 SURF 0X10
 mat 13
 refs 3
-42 18.09 0
-43 12.09 0
-38 18.09 5
+42 0 0
+43 1 0
+38 1 1
 SURF 0X10
 mat 13
 refs 3
-43 12.09 0
-39 12.09 5
-38 18.09 5
+43 0 0
+39 1 0
+38 1 1
 SURF 0X10
 mat 13
 refs 3
-44 30.09 0
-45 24.09 0
-40 30.09 5
+44 0 0
+45 1 0
+40 1 1
 SURF 0X10
 mat 13
 refs 3
-45 24.09 0
-41 24.09 5
-40 30.09 5
+45 0 0
+41 1 0
+40 1 1
 SURF 0X10
 mat 13
 refs 3
-45 24.09 0
-46 18.09 0
-41 24.09 5
+45 0 0
+46 1 0
+41 1 1
 SURF 0X10
 mat 13
 refs 3
-46 18.09 0
-42 18.09 5
-41 24.09 5
+46 0 0
+42 1 0
+41 1 1
 SURF 0X10
 mat 13
 refs 3
-46 18.09 0
-47 12.09 0
-42 18.09 5
+46 0 0
+47 1 0
+42 1 1
 SURF 0X10
 mat 13
 refs 3
-47 12.09 0
-43 12.09 5
-42 18.09 5
+47 0 0
+43 1 0
+42 1 1
 SURF 0X10
 mat 13
 refs 3
-48 30.09 0
-49 24.09 0
-44 30.09 5
+48 0 0
+49 1 0
+44 1 1
 SURF 0X10
 mat 13
 refs 3
-49 24.09 0
-45 24.09 5
-44 30.09 5
+49 0 0
+45 1 0
+44 1 1
 SURF 0X10
 mat 13
 refs 3
-49 24.09 0
-50 18.09 0
-45 24.09 5
+49 0 0
+50 1 0
+45 1 1
 SURF 0X10
 mat 13
 refs 3
-50 18.09 0
-46 18.09 5
-45 24.09 5
+50 0 0
+46 1 0
+45 1 1
 SURF 0X10
 mat 13
 refs 3
-50 18.09 0
-51 12.09 0
-46 18.09 5
+50 0 0
+51 1 0
+46 1 1
 SURF 0X10
 mat 13
 refs 3
-51 12.09 0
-47 12.09 5
-46 18.09 5
+51 0 0
+47 1 0
+46 1 1
 SURF 0X10
 mat 13
 refs 3
-52 30.09 0
-53 24.09 0
-48 30.09 5
+52 0 0
+53 1 0
+48 1 1
 SURF 0X10
 mat 13
 refs 3
-53 24.09 0
-49 24.09 5
-48 30.09 5
+53 0 0
+49 1 0
+48 1 1
 SURF 0X10
 mat 13
 refs 3
-53 24.09 0
-54 18.09 0
-49 24.09 5
+53 0 0
+54 1 0
+49 1 1
 SURF 0X10
 mat 13
 refs 3
-54 18.09 0
-50 18.09 5
-49 24.09 5
+54 0 0
+50 1 0
+49 1 1
 SURF 0X10
 mat 13
 refs 3
-54 18.09 0
-55 12.09 0
-50 18.09 5
+54 0 0
+55 1 0
+50 1 1
 SURF 0X10
 mat 13
 refs 3
-55 12.09 0
-51 12.09 5
-50 18.09 5
+55 0 0
+51 1 0
+50 1 1
 SURF 0X10
 mat 13
 refs 3
-56 30.09 0
-57 24.09 0
-52 30.09 5
+56 0 0
+57 1 0
+52 1 1
 SURF 0X10
 mat 13
 refs 3
-57 24.09 0
-53 24.09 5
-52 30.09 5
+57 0 0
+53 1 0
+52 1 1
 SURF 0X10
 mat 13
 refs 3
-57 24.09 0
-58 18.09 0
-53 24.09 5
+57 0 0
+58 1 0
+53 1 1
 SURF 0X10
 mat 13
 refs 3
-58 18.09 0
-54 18.09 5
-53 24.09 5
+58 0 0
+54 1 0
+53 1 1
 SURF 0X10
 mat 13
 refs 3
-58 18.09 0
-59 12.09 0
-54 18.09 5
+58 0 0
+59 1 0
+54 1 1
 SURF 0X10
 mat 13
 refs 3
-59 12.09 0
-55 12.09 5
-54 18.09 5
+59 0 0
+55 1 0
+54 1 1
 SURF 0X10
 mat 13
 refs 3
-60 30.09 0
-61 24.09 0
-56 30.09 5
+60 0 0
+61 1 0
+56 1 1
 SURF 0X10
 mat 13
 refs 3
-61 24.09 0
-57 24.09 5
-56 30.09 5
+61 0 0
+57 1 0
+56 1 1
 SURF 0X10
 mat 13
 refs 3
-61 24.09 0
-62 18.09 0
-57 24.09 5
+61 0 0
+62 1 0
+57 1 1
 SURF 0X10
 mat 13
 refs 3
-62 18.09 0
-58 18.09 5
-57 24.09 5
+62 0 0
+58 1 0
+57 1 1
 SURF 0X10
 mat 13
 refs 3
-62 18.09 0
-63 12.09 0
-58 18.09 5
+62 0 0
+63 1 0
+58 1 1
 SURF 0X10
 mat 13
 refs 3
-63 12.09 0
-59 12.09 5
-58 18.09 5
+63 0 0
+59 1 0
+58 1 1
 SURF 0X10
 mat 13
 refs 3
-64 30.09 0
-65 24.09 0
-60 30.09 5
+64 0 0
+65 1 0
+60 1 1
 SURF 0X10
 mat 13
 refs 3
-65 24.09 0
-61 24.09 5
-60 30.09 5
+65 0 0
+61 1 0
+60 1 1
 SURF 0X10
 mat 13
 refs 3
-65 24.09 0
-66 18.09 0
-61 24.09 5
+65 0 0
+66 1 0
+61 1 1
 SURF 0X10
 mat 13
 refs 3
-66 18.09 0
-62 18.09 5
-61 24.09 5
+66 0 0
+62 1 0
+61 1 1
 SURF 0X10
 mat 13
 refs 3
-66 18.09 0
-67 12.09 0
-62 18.09 5
+66 0 0
+67 1 0
+62 1 1
 SURF 0X10
 mat 13
 refs 3
-67 12.09 0
-63 12.09 5
-62 18.09 5
+67 0 0
+63 1 0
+62 1 1
 SURF 0X10
 mat 13
 refs 3
-68 30.09 0
-69 24.09 0
-64 30.09 5
+68 0 0
+69 1 0
+64 1 1
 SURF 0X10
 mat 13
 refs 3
-69 24.09 0
-65 24.09 5
-64 30.09 5
+69 0 0
+65 1 0
+64 1 1
 SURF 0X10
 mat 13
 refs 3
-69 24.09 0
-70 18.09 0
-65 24.09 5
+69 0 0
+70 1 0
+65 1 1
 SURF 0X10
 mat 13
 refs 3
-70 18.09 0
-66 18.09 5
-65 24.09 5
+70 0 0
+66 1 0
+65 1 1
 SURF 0X10
 mat 13
 refs 3
-70 18.09 0
-71 12.09 0
-66 18.09 5
+70 0 0
+71 1 0
+66 1 1
 SURF 0X10
 mat 13
 refs 3
-71 12.09 0
-67 12.09 5
-66 18.09 5
+71 0 0
+67 1 0
+66 1 1
 SURF 0X10
 mat 13
 refs 3
-72 30.09 0
-73 24.09 0
-68 30.09 5
+72 0 0
+73 1 0
+68 1 1
 SURF 0X10
 mat 13
 refs 3
-73 24.09 0
-69 24.09 5
-68 30.09 5
+73 0 0
+69 1 0
+68 1 1
 SURF 0X10
 mat 13
 refs 3
-73 24.09 0
-74 18.09 0
-69 24.09 5
+73 0 0
+74 1 0
+69 1 1
 SURF 0X10
 mat 13
 refs 3
-74 18.09 0
-70 18.09 5
-69 24.09 5
+74 0 0
+70 1 0
+69 1 1
 SURF 0X10
 mat 13
 refs 3
-74 18.09 0
-75 12.09 0
-70 18.09 5
+74 0 0
+75 1 0
+70 1 1
 SURF 0X10
 mat 13
 refs 3
-75 12.09 0
-71 12.09 5
-70 18.09 5
+75 0 0
+71 1 0
+70 1 1
 SURF 0X10
 mat 13
 refs 3
-76 30.09 0
-77 24.09 0
-72 30.09 5
+76 0 0
+77 1 0
+72 1 1
 SURF 0X10
 mat 13
 refs 3
-77 24.09 0
-73 24.09 5
-72 30.09 5
+77 0 0
+73 1 0
+72 1 1
 SURF 0X10
 mat 13
 refs 3
-77 24.09 0
-78 18.09 0
-73 24.09 5
+77 0 0
+78 1 0
+73 1 1
 SURF 0X10
 mat 13
 refs 3
-78 18.09 0
-74 18.09 5
-73 24.09 5
+78 0 0
+74 1 0
+73 1 1
 SURF 0X10
 mat 13
 refs 3
-78 18.09 0
-79 12.09 0
-74 18.09 5
+78 0 0
+79 1 0
+74 1 1
 SURF 0X10
 mat 13
 refs 3
-79 12.09 0
-75 12.09 5
-74 18.09 5
+79 0 0
+75 1 0
+74 1 1
 SURF 0X10
 mat 13
 refs 3
-80 30.09 0
-81 24.09 0
-76 30.09 5
+80 0 0
+81 1 0
+76 1 1
 SURF 0X10
 mat 13
 refs 3
-81 24.09 0
-77 24.09 5
-76 30.09 5
+81 0 0
+77 1 0
+76 1 1
 SURF 0X10
 mat 13
 refs 3
-81 24.09 0
-82 18.09 0
-77 24.09 5
+81 0 0
+82 1 0
+77 1 1
 SURF 0X10
 mat 13
 refs 3
-82 18.09 0
-78 18.09 5
-77 24.09 5
+82 0 0
+78 1 0
+77 1 1
 SURF 0X10
 mat 13
 refs 3
-82 18.09 0
-83 12.09 0
-78 18.09 5
+82 0 0
+83 1 0
+78 1 1
 SURF 0X10
 mat 13
 refs 3
-83 12.09 0
-79 12.09 5
-78 18.09 5
+83 0 0
+79 1 0
+78 1 1
 SURF 0X10
 mat 13
 refs 3
-84 30.09 0
-85 24.09 0
-80 30.09 5
+84 0 0
+85 1 0
+80 1 1
 SURF 0X10
 mat 13
 refs 3
-85 24.09 0
-81 24.09 5
-80 30.09 5
+85 0 0
+81 1 0
+80 1 1
 SURF 0X10
 mat 13
 refs 3
-85 24.09 0
-86 18.09 0
-81 24.09 5
+85 0 0
+86 1 0
+81 1 1
 SURF 0X10
 mat 13
 refs 3
-86 18.09 0
-82 18.09 5
-81 24.09 5
+86 0 0
+82 1 0
+81 1 1
 SURF 0X10
 mat 13
 refs 3
-86 18.09 0
-87 12.09 0
-82 18.09 5
+86 0 0
+87 1 0
+82 1 1
 SURF 0X10
 mat 13
 refs 3
-87 12.09 0
-83 12.09 5
-82 18.09 5
+87 0 0
+83 1 0
+82 1 1
 SURF 0X10
 mat 13
 refs 3
-88 30.09 0
-89 24.09 0
-84 30.09 5
+88 0 0
+89 1 0
+84 1 1
 SURF 0X10
 mat 13
 refs 3
-89 24.09 0
-85 24.09 5
-84 30.09 5
+89 0 0
+85 1 0
+84 1 1
 SURF 0X10
 mat 13
 refs 3
-89 24.09 0
-90 18.09 0
-85 24.09 5
+89 0 0
+90 1 0
+85 1 1
 SURF 0X10
 mat 13
 refs 3
-90 18.09 0
-86 18.09 5
-85 24.09 5
+90 0 0
+86 1 0
+85 1 1
 SURF 0X10
 mat 13
 refs 3
-90 18.09 0
-91 12.09 0
-86 18.09 5
+90 0 0
+91 1 0
+86 1 1
 SURF 0X10
 mat 13
 refs 3
-91 12.09 0
-87 12.09 5
-86 18.09 5
+91 0 0
+87 1 0
+86 1 1
 SURF 0X10
 mat 13
 refs 3
-92 30.09 0
-93 24.09 0
-88 30.09 5
+92 0 0
+93 1 0
+88 1 1
 SURF 0X10
 mat 13
 refs 3
-93 24.09 0
-89 24.09 5
-88 30.09 5
+93 0 0
+89 1 0
+88 1 1
 SURF 0X10
 mat 13
 refs 3
-93 24.09 0
-94 18.09 0
-89 24.09 5
+93 0 0
+94 1 0
+89 1 1
 SURF 0X10
 mat 13
 refs 3
-94 18.09 0
-90 18.09 5
-89 24.09 5
+94 0 0
+90 1 0
+89 1 1
 SURF 0X10
 mat 13
 refs 3
-94 18.09 0
-95 12.09 0
-90 18.09 5
+94 0 0
+95 1 0
+90 1 1
 SURF 0X10
 mat 13
 refs 3
-95 12.09 0
-91 12.09 5
-90 18.09 5
+95 0 0
+91 1 0
+90 1 1
 SURF 0X10
 mat 13
 refs 3
-96 30.09 0
-97 24.09 0
-92 30.09 5
+96 0 0
+97 1 0
+92 1 1
 SURF 0X10
 mat 13
 refs 3
-97 24.09 0
-93 24.09 5
-92 30.09 5
+97 0 0
+93 1 0
+92 1 1
 SURF 0X10
 mat 13
 refs 3
-97 24.09 0
-98 18.09 0
-93 24.09 5
+97 0 0
+98 1 0
+93 1 1
 SURF 0X10
 mat 13
 refs 3
-98 18.09 0
-94 18.09 5
-93 24.09 5
+98 0 0
+94 1 0
+93 1 1
 SURF 0X10
 mat 13
 refs 3
-98 18.09 0
-99 12.09 0
-94 18.09 5
+98 0 0
+99 1 0
+94 1 1
 SURF 0X10
 mat 13
 refs 3
-99 12.09 0
-95 12.09 5
-94 18.09 5
+99 0 0
+95 1 0
+94 1 1
 SURF 0X10
 mat 13
 refs 3
-100 30.09 0
-101 24.09 0
-96 30.09 5
+100 0 0
+101 1 0
+96 1 1
 SURF 0X10
 mat 13
 refs 3
-101 24.09 0
-97 24.09 5
-96 30.09 5
+101 0 0
+97 1 0
+96 1 1
 SURF 0X10
 mat 13
 refs 3
-101 24.09 0
-102 18.09 0
-97 24.09 5
+101 0 0
+102 1 0
+97 1 1
 SURF 0X10
 mat 13
 refs 3
-102 18.09 0
-98 18.09 5
-97 24.09 5
+102 0 0
+98 1 0
+97 1 1
 SURF 0X10
 mat 13
 refs 3
-102 18.09 0
-103 12.09 0
-98 18.09 5
+102 0 0
+103 1 0
+98 1 1
 SURF 0X10
 mat 13
 refs 3
-103 12.09 0
-99 12.09 5
-98 18.09 5
+103 0 0
+99 1 0
+98 1 1
 SURF 0X10
 mat 13
 refs 3
-104 30.09 0
-105 24.09 0
-100 30.09 5
+104 0 0
+105 1 0
+100 1 1
 SURF 0X10
 mat 13
 refs 3
-105 24.09 0
-101 24.09 5
-100 30.09 5
+105 0 0
+101 1 0
+100 1 1
 SURF 0X10
 mat 13
 refs 3
-105 24.09 0
-106 18.09 0
-101 24.09 5
+105 0 0
+106 1 0
+101 1 1
 SURF 0X10
 mat 13
 refs 3
-106 18.09 0
-102 18.09 5
-101 24.09 5
+106 0 0
+102 1 0
+101 1 1
 SURF 0X10
 mat 13
 refs 3
-106 18.09 0
-107 12.09 0
-102 18.09 5
+106 0 0
+107 1 0
+102 1 1
 SURF 0X10
 mat 13
 refs 3
-107 12.09 0
-103 12.09 5
-102 18.09 5
+107 0 0
+103 1 0
+102 1 1
 SURF 0X10
 mat 13
 refs 3
-108 30.09 0
-109 24.09 0
-104 30.09 5
+108 0 0
+109 1 0
+104 1 1
 SURF 0X10
 mat 13
 refs 3
-109 24.09 0
-105 24.09 5
-104 30.09 5
+109 0 0
+105 1 0
+104 1 1
 SURF 0X10
 mat 13
 refs 3
-109 24.09 0
-110 18.09 0
-105 24.09 5
+109 0 0
+110 1 0
+105 1 1
 SURF 0X10
 mat 13
 refs 3
-110 18.09 0
-106 18.09 5
-105 24.09 5
+110 0 0
+106 1 0
+105 1 1
 SURF 0X10
 mat 13
 refs 3
-110 18.09 0
-111 12.09 0
-106 18.09 5
+110 0 0
+111 1 0
+106 1 1
 SURF 0X10
 mat 13
 refs 3
-111 12.09 0
-107 12.09 5
-106 18.09 5
+111 0 0
+107 1 0
+106 1 1
 SURF 0X10
 mat 13
 refs 3
-112 30.09 0
-113 24.09 0
-108 30.09 5
+112 0 0
+113 1 0
+108 1 1
 SURF 0X10
 mat 13
 refs 3
-113 24.09 0
-109 24.09 5
-108 30.09 5
+113 0 0
+109 1 0
+108 1 1
 SURF 0X10
 mat 13
 refs 3
-113 24.09 0
-114 18.09 0
-109 24.09 5
+113 0 0
+114 1 0
+109 1 1
 SURF 0X10
 mat 13
 refs 3
-114 18.09 0
-110 18.09 5
-109 24.09 5
+114 0 0
+110 1 0
+109 1 1
 SURF 0X10
 mat 13
 refs 3
-114 18.09 0
-115 12.09 0
-110 18.09 5
+114 0 0
+115 1 0
+110 1 1
 SURF 0X10
 mat 13
 refs 3
-115 12.09 0
-111 12.09 5
-110 18.09 5
+115 0 0
+111 1 0
+110 1 1
 SURF 0X10
 mat 13
 refs 3
-116 30.09 0
-117 24.09 0
-112 30.09 5
+116 0 0
+117 1 0
+112 1 1
 SURF 0X10
 mat 13
 refs 3
-117 24.09 0
-113 24.09 5
-112 30.09 5
+117 0 0
+113 1 0
+112 1 1
 SURF 0X10
 mat 13
 refs 3
-117 24.09 0
-118 18.09 0
-113 24.09 5
+117 0 0
+118 1 0
+113 1 1
 SURF 0X10
 mat 13
 refs 3
-118 18.09 0
-114 18.09 5
-113 24.09 5
+118 0 0
+114 1 0
+113 1 1
 SURF 0X10
 mat 13
 refs 3
-118 18.09 0
-119 12.09 0
-114 18.09 5
+118 0 0
+119 1 0
+114 1 1
 SURF 0X10
 mat 13
 refs 3
-119 12.09 0
-115 12.09 5
-114 18.09 5
+119 0 0
+115 1 0
+114 1 1
 SURF 0X10
 mat 13
 refs 3
-120 30.09 0
-121 24.09 0
-116 30.09 5
+120 0 0
+121 1 0
+116 1 1
 SURF 0X10
 mat 13
 refs 3
-121 24.09 0
-117 24.09 5
-116 30.09 5
+121 0 0
+117 1 0
+116 1 1
 SURF 0X10
 mat 13
 refs 3
-121 24.09 0
-122 18.09 0
-117 24.09 5
+121 0 0
+122 1 0
+117 1 1
 SURF 0X10
 mat 13
 refs 3
-122 18.09 0
-118 18.09 5
-117 24.09 5
+122 0 0
+118 1 0
+117 1 1
 SURF 0X10
 mat 13
 refs 3
-122 18.09 0
-123 12.09 0
-118 18.09 5
+122 0 0
+123 1 0
+118 1 1
 SURF 0X10
 mat 13
 refs 3
-123 12.09 0
-119 12.09 5
-118 18.09 5
+123 0 0
+119 1 0
+118 1 1
 SURF 0X10
 mat 13
 refs 3
-124 30.09 0
-125 24.09 0
-120 30.09 5
+124 0 0
+125 1 0
+120 1 1
 SURF 0X10
 mat 13
 refs 3
-125 24.09 0
-121 24.09 5
-120 30.09 5
+125 0 0
+121 1 0
+120 1 1
 SURF 0X10
 mat 13
 refs 3
-125 24.09 0
-126 18.09 0
-121 24.09 5
+125 0 0
+126 1 0
+121 1 1
 SURF 0X10
 mat 13
 refs 3
-126 18.09 0
-122 18.09 5
-121 24.09 5
+126 0 0
+122 1 0
+121 1 1
 SURF 0X10
 mat 13
 refs 3
-126 18.09 0
-127 12.09 0
-122 18.09 5
+126 0 0
+127 1 0
+122 1 1
 SURF 0X10
 mat 13
 refs 3
-127 12.09 0
-123 12.09 5
-122 18.09 5
+127 0 0
+123 1 0
+122 1 1
 SURF 0X10
 mat 13
 refs 3
-0 30.09 0
-1 24.09 0
-124 30.09 5
+0 0 0
+1 1 0
+124 1 1
 SURF 0X10
 mat 13
 refs 3
-1 24.09 0
-125 24.09 5
-124 30.09 5
+1 0 0
+125 1 0
+124 1 1
 SURF 0X10
 mat 13
 refs 3
-1 24.09 0
-2 18.09 0
-125 24.09 5
+1 0 0
+2 1 0
+125 1 1
 SURF 0X10
 mat 13
 refs 3
-2 18.09 0
-126 18.09 5
-125 24.09 5
+2 0 0
+126 1 0
+125 1 1
 SURF 0X10
 mat 13
 refs 3
-2 18.09 0
-3 12.09 0
-126 18.09 5
+2 0 0
+3 1 0
+126 1 1
 SURF 0X10
 mat 13
 refs 3
-3 12.09 0
-127 12.09 5
-126 18.09 5
+3 0 0
+127 1 0
+126 1 1
 kids 0
 OBJECT poly
 name "LIQ_OXY_disk"
 data 12
 LIQ_OXY_disk
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
-texrep 1 1
 numvert 16
 -0.11212 0.00332 -0.39381
 -0.12148 0.00332 -0.39581
@@ -14802,7 +14713,7 @@ OBJECT poly
 name "LIQ_OXY_needle"
 data 14
 LIQ_OXY_needle
-crease 30.0
+crease 40.0
 numvert 28
 -0.11558 0.00427 -0.41994
 -0.11202 0.00427 -0.42118
@@ -14836,269 +14747,268 @@ numsurf 43
 SURF 0X10
 mat 14
 refs 3
-0 1 1
-9 0.875 0
+0 0 0
+9 1 0
+8 1 1
+SURF 0X10
+mat 14
+refs 3
+0 0 0
+1 1 0
+9 1 1
+SURF 0X10
+mat 14
+refs 3
+1 0 0
+10 1 0
+9 1 1
+SURF 0X10
+mat 14
+refs 3
+1 0 0
+2 1 0
+10 1 1
+SURF 0X10
+mat 14
+refs 3
+2 0 0
+11 1 0
+10 1 1
+SURF 0X10
+mat 14
+refs 3
+2 0 0
+3 1 0
+11 1 1
+SURF 0X10
+mat 14
+refs 3
+3 0 0
+12 1 0
+11 1 1
+SURF 0X10
+mat 14
+refs 3
+3 0 0
+4 1 0
+12 1 1
+SURF 0X10
+mat 14
+refs 3
+4 0 0
+13 1 0
+12 1 1
+SURF 0X10
+mat 14
+refs 3
+4 0 0
+5 1 0
+13 1 1
+SURF 0X10
+mat 14
+refs 3
+5 0 0
+14 1 0
+13 1 1
+SURF 0X10
+mat 14
+refs 3
+5 0 0
+6 1 0
+14 1 1
+SURF 0X10
+mat 14
+refs 3
+6 0 0
+15 1 0
+14 1 1
+SURF 0X10
+mat 14
+refs 3
+6 0 0
+7 1 0
+15 1 1
+SURF 0X10
+mat 14
+refs 3
+7 0 0
 8 1 0
+15 1 1
 SURF 0X10
 mat 14
 refs 3
-0 1 1
-1 0.875 1
-9 0.875 0
+7 0 0
+0 1 0
+8 1 1
 SURF 0X10
 mat 14
 refs 3
-1 0.875 1
-10 0.75 0
-9 0.875 0
-SURF 0X10
-mat 14
-refs 3
-1 0.875 1
-2 0.75 1
-10 0.75 0
-SURF 0X10
-mat 14
-refs 3
-2 0.75 1
-11 0.625 0
-10 0.75 0
-SURF 0X10
-mat 14
-refs 3
-2 0.75 1
-3 0.625 1
-11 0.625 0
-SURF 0X10
-mat 14
-refs 3
-3 0.625 1
-12 0.5 0
-11 0.625 0
-SURF 0X10
-mat 14
-refs 3
-3 0.625 1
-4 0.5 1
-12 0.5 0
-SURF 0X10
-mat 14
-refs 3
-4 0.5 1
-13 0.375 0
-12 0.5 0
-SURF 0X10
-mat 14
-refs 3
-4 0.5 1
-5 0.375 1
-13 0.375 0
-SURF 0X10
-mat 14
-refs 3
-5 0.375 1
-14 0.25 0
-13 0.375 0
-SURF 0X10
-mat 14
-refs 3
-5 0.375 1
-6 0.25 1
-14 0.25 0
-SURF 0X10
-mat 14
-refs 3
-6 0.25 1
-15 0.125 0
-14 0.25 0
-SURF 0X10
-mat 14
-refs 3
-6 0.25 1
-7 0.125 1
-15 0.125 0
-SURF 0X10
-mat 14
-refs 3
-7 0.125 1
-8 0 0
-15 0.125 0
-SURF 0X10
-mat 14
-refs 3
-7 0.125 1
-0 0 1
-8 0 0
-SURF 0X10
-mat 14
-refs 3
-1 0.875 0
+1 0 0
 0 1 0
 16 1 1
 SURF 0X10
 mat 14
 refs 3
+16 0 0
+17 1 0
+1 1 1
+SURF 0X10
+mat 14
+refs 3
+16 0 0
+0 1 0
+23 1 1
+SURF 0X10
+mat 14
+refs 3
+17 0 0
+2 1 0
+1 1 1
+SURF 0X10
+mat 14
+refs 3
+17 0 0
+18 1 0
+2 1 1
+SURF 0X10
+mat 14
+refs 3
+18 0 0
+3 1 0
+2 1 1
+SURF 0X10
+mat 14
+refs 3
+18 0 0
+19 1 0
+3 1 1
+SURF 0X10
+mat 14
+refs 3
+19 0 0
+4 1 0
+3 1 1
+SURF 0X10
+mat 14
+refs 3
+19 0 0
+20 1 0
+4 1 1
+SURF 0X10
+mat 14
+refs 3
+20 0 0
+5 1 0
+4 1 1
+SURF 0X10
+mat 14
+refs 3
+20 0 0
+21 1 0
+5 1 1
+SURF 0X10
+mat 14
+refs 3
+21 0 0
+6 1 0
+5 1 1
+SURF 0X10
+mat 14
+refs 3
+21 0 0
+22 1 0
+6 1 1
+SURF 0X10
+mat 14
+refs 3
+22 0 0
+7 1 0
+6 1 1
+SURF 0X10
+mat 14
+refs 3
+22 0 0
+23 1 0
+7 1 1
+SURF 0X10
+mat 14
+refs 3
+23 0 0
+0 1 0
+7 1 1
+SURF 0X10
+mat 14
+refs 3
+24 0 0
+16 1 0
+23 1 1
+SURF 0X10
+mat 14
+refs 3
+24 0 0
+17 1 0
 16 1 1
-17 0.875 1
-1 0.875 0
 SURF 0X10
 mat 14
 refs 3
-16 0 1
-0 0 0
-23 0.125 1
+24 0 0
+18 1 0
+17 1 1
 SURF 0X10
 mat 14
 refs 3
-17 0.875 1
-2 0.75 0
-1 0.875 0
+24 0 0
+19 1 0
+18 1 1
 SURF 0X10
 mat 14
 refs 3
-17 0.875 1
-18 0.75 1
-2 0.75 0
+24 0 0
+20 1 0
+19 1 1
 SURF 0X10
 mat 14
 refs 3
-18 0.75 1
-3 0.625 0
-2 0.75 0
+24 0 0
+21 1 0
+20 1 1
 SURF 0X10
 mat 14
 refs 3
-18 0.75 1
-19 0.625 1
-3 0.625 0
+24 0 0
+22 1 0
+21 1 1
 SURF 0X10
 mat 14
 refs 3
-19 0.625 1
-4 0.5 0
-3 0.625 0
-SURF 0X10
-mat 14
-refs 3
-19 0.625 1
-20 0.5 1
-4 0.5 0
-SURF 0X10
-mat 14
-refs 3
-20 0.5 1
-5 0.375 0
-4 0.5 0
-SURF 0X10
-mat 14
-refs 3
-20 0.5 1
-21 0.375 1
-5 0.375 0
-SURF 0X10
-mat 14
-refs 3
-21 0.375 1
-6 0.25 0
-5 0.375 0
-SURF 0X10
-mat 14
-refs 3
-21 0.375 1
-22 0.25 1
-6 0.25 0
-SURF 0X10
-mat 14
-refs 3
-22 0.25 1
-7 0.125 0
-6 0.25 0
-SURF 0X10
-mat 14
-refs 3
-22 0.25 1
-23 0.125 1
-7 0.125 0
-SURF 0X10
-mat 14
-refs 3
-23 0.125 1
-0 0 0
-7 0.125 0
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-16 0.853553 0.853553
-23 1 0.5
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-17 0.5 1
-16 0.853553 0.853553
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-18 0.146447 0.853553
-17 0.5 1
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-19 0 0.5
-18 0.146447 0.853553
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-20 0.146447 0.146447
-19 0 0.5
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-21 0.5 0
-20 0.146447 0.146447
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-22 0.853553 0.146447
-21 0.5 0
-SURF 0X10
-mat 14
-refs 3
-24 0.5 0.5
-23 1 0.5
-22 0.853553 0.146447
+24 0 0
+23 1 0
+22 1 1
 SURF 0X10
 mat 15
 refs 3
-9 0.853553 0.853553
-26 0.676777 0.676777
-8 0.5 1
+9 0 0
+26 1 0
+8 1 1
 SURF 0X10
 mat 15
 refs 3
-25 0.5 0.5
-27 0.5 0.75
-26 0.676777 0.676777
+25 0 0
+27 1 0
+26 1 1
 SURF 0X10
 mat 15
 refs 3
-27 0.5 0.75
-8 0.5 1
-26 0.676777 0.676777
+27 0 0
+8 1 0
+26 1 1
 kids 0
 OBJECT poly
 name "RIGHT_AUX_CONSOLE"
 data 22
 RIGHT_AUX_CONSOLE_mesh
-crease 30.0
+crease 40.0
 texture "../Textures/panels-MLU-right_aux_console.png"
-texrep 1 1
 numvert 28
 -0.234 -0.00191 -0.26534
 0.04626 -0.00191 -0.2653
@@ -15129,242 +15039,242 @@ numvert 28
 0.04864 0.00192 -0.32979
 0.04864 -0.00191 -0.32979
 numsurf 38
-SURF 0X30
+SURF 0X10
 mat 22
 refs 4
 0 0.18069 0.732266
 1 0.17527 0.158047
 2 0.17527 0.158047
 3 0.18069 0.732266
-SURF 0X30
+SURF 0X10
 mat 22
 refs 4
 10 0.568072 0.753196
 12 0.60028 0.75162
 13 0.60028 0.75162
 11 0.568072 0.753196
-SURF 0X30
+SURF 0X10
 mat 22
 refs 4
 4 0.169048 0.879
 16 0.167875 0.769989
 17 0.167875 0.769989
 5 0.169048 0.879
-SURF 0X30
+SURF 0X10
 mat 22
 refs 4
 16 0.167875 0.769989
 0 0.18069 0.732266
 3 0.18069 0.732266
 17 0.167875 0.769989
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 0 0.18069 0.732266
 16 0.167875 0.769989
 4 0.169048 0.879
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 0 0.18069 0.732266
 7 0.555168 0.828194
 8 0.554229 0.764022
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 0 0.18069 0.732266
 8 0.554229 0.764022
 11 0.568072 0.753196
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 0 0.18069 0.732266
 11 0.568072 0.753196
 14 0.894625 0.180619
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 3 0.18069 0.732266
 15 0.894625 0.180619
 10 0.568072 0.753196
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 3 0.18069 0.732266
 10 0.568072 0.753196
 9 0.554229 0.764022
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 3 0.18069 0.732266
 9 0.554229 0.764022
 6 0.555168 0.828194
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 3 0.18069 0.732266
 5 0.169048 0.879
 17 0.167875 0.769989
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 14 0.894625 0.180619
 11 0.568072 0.753196
 18 0.792669 0.420342
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 19 0.792669 0.420342
 10 0.568072 0.753196
 15 0.894625 0.180619
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 18 0.792669 0.420342
 11 0.568072 0.753196
 20 0.721396 0.563829
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 20 0.721396 0.563829
 11 0.568072 0.753196
 13 0.60028 0.75162
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 12 0.60028 0.75162
 10 0.568072 0.753196
 21 0.721396 0.563829
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 21 0.721396 0.563829
 10 0.568072 0.753196
 19 0.792669 0.420342
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 22 0.364418 0.877694
 0 0.18069 0.732266
 4 0.169048 0.879
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 5 0.169048 0.879
 3 0.18069 0.732266
 23 0.364418 0.877694
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 23 0.364418 0.877694
 3 0.18069 0.732266
 24 0.53183 0.854682
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 24 0.53183 0.854682
 3 0.18069 0.732266
 6 0.555168 0.828194
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 7 0.555168 0.828194
 0 0.18069 0.732266
 25 0.53183 0.854682
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 25 0.53183 0.854682
 0 0.18069 0.732266
 22 0.364418 0.877694
-SURF 0X30
+SURF 0X10
 mat 22
 refs 4
 6 0.555168 0.828194
 7 0.555168 0.828194
 25 0.53183 0.854682
 24 0.53183 0.854682
-SURF 0X30
+SURF 0X10
 mat 22
 refs 4
 7 0.555168 0.828194
 6 0.555168 0.828194
 9 0.554229 0.764022
 8 0.554229 0.764022
-SURF 0X30
+SURF 0X10
 mat 22
 refs 4
 8 0.554229 0.764022
 9 0.554229 0.764022
 10 0.568072 0.753196
 11 0.568072 0.753196
-SURF 0X30
+SURF 0X10
 mat 22
 refs 4
 22 0.364418 0.877694
 23 0.364418 0.877694
 24 0.53183 0.854682
 25 0.53183 0.854682
-SURF 0X30
+SURF 0X10
 mat 22
 refs 4
 4 0.169048 0.879
 5 0.169048 0.879
 23 0.364418 0.877694
 22 0.364418 0.877694
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 15 0.894625 0.180619
 3 0.18069 0.732266
 26 0.349753 0.15225
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 26 0.349753 0.15225
 3 0.18069 0.732266
 2 0.17527 0.158047
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 27 0.349753 0.15225
 0 0.18069 0.732266
 14 0.894625 0.180619
-SURF 0X30
+SURF 0X10
 mat 22
 refs 3
 1 0.17527 0.158047
 0 0.18069 0.732266
 27 0.349753 0.15225
-SURF 0X30
+SURF 0X10
 mat 22
 refs 4
 1 0.17527 0.158047
 27 0.349753 0.15225
 26 0.349753 0.15225
 2 0.17527 0.158047
-SURF 0X30
+SURF 0X10
 mat 22
 refs 4
 14 0.894625 0.180619
 15 0.894625 0.180619
 26 0.349753 0.15225
 27 0.349753 0.15225
-SURF 0X30
+SURF 0X10
 mat 22
 refs 4
 14 0.894625 0.180619
 18 0.792669 0.420342
 19 0.792669 0.420342
 15 0.894625 0.180619
-SURF 0X30
+SURF 0X10
 mat 22
 refs 4
 18 0.792669 0.420342
 20 0.721396 0.563829
 21 0.721396 0.563829
 19 0.792669 0.420342
-SURF 0X30
+SURF 0X10
 mat 22
 refs 4
 12 0.60028 0.75162

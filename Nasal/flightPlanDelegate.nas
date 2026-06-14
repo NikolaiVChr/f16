@@ -175,7 +175,7 @@ var F16GPSDeleagte = {
 
     _landingCheckTimeout: func
     {
-        var wow = getprop('gear/gear[0]/wow');
+        var wow = getprop('fdm/jsbsim/gear/unit[0]/WOW');
         var gs = getprop('velocities/groundspeed-kt');
         if (wow and (gs < 25))  {
           logprint(LOG_INFO, 'GPS saw speed < 25kts on destination runway, end of route.');
@@ -308,7 +308,7 @@ var F16GPSDeleagte = {
         # this check is needed to avoid problems with circular routes; when
         # activating the FP we end up here, and without this check, immediately
         # detect that we've 'landed' and finish the FP again.
-        var wow = getprop('gear/gear[0]/wow');
+        var wow = getprop('fdm/jsbsim/gear/unit[0]/WOW');
 
         if (!wow and
             (activeRunway != nil) and

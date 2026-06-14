@@ -11,6 +11,7 @@
         <object-name>ALT_GEAR_1</object-name>
         <object-name>DN-LOCK-REL</object-name>
         <object-name>EMER_JETT</object-name>
+        <object-name>EMER_JETT-RECESS</object-name>
         <!--<object-name>alt-gear</object-name>-->
         <object-name>ew-run</object-name>
         <object-name>ew-set1</object-name>
@@ -354,14 +355,24 @@
       <command>nasal</command>
       <script>
               setprop("f16/avionics/emer-jett-switch",1);
-              if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1") >= 20 and pylons.fcs != nil and (getprop("f16/avionics/gnd-jett") or !getprop("gear/gear[0]/wow"))) {
+              if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1") >= 20 and pylons.fcs != nil and (getprop("f16/avionics/gnd-jett") or !getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
                 pylons.fcs.jettisonFuelAndAG([0,1,7,8]);#drop all fueltanks, dummies and A/G weapons. Except wingtips.
               }
       </script>
      </binding>
     </action>
    </animation>
-
+   <animation>
+    <type>translate</type>
+    <object-name>EMER_JETT</object-name>
+    <property>f16/avionics/emer-jett-switch</property>
+    <factor>0.01</factor>
+    <axis>
+     <x>0</x>
+     <y>0</y>
+     <z>-1</z>
+    </axis>
+   </animation>
 
 <animation>
     <type>pick</type>
@@ -394,7 +405,7 @@
         <type>knob</type>
         <object-name>SW_HOOK</object-name>
         <visible>true</visible>
-        <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
+        <property>f16/cockpit/tailhook-handle</property>
         <drag-direction>vertical</drag-direction>
         <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
         <repeatable>true</repeatable>
@@ -416,7 +427,7 @@
         <increase>
             <binding>
                 <command>property-adjust</command>
-                <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
+                <property>f16/cockpit/tailhook-handle</property>
                 <step>-1</step>
                 <min>0</min>
                 <max>1</max>
@@ -426,7 +437,7 @@
         <decrease>
             <binding>
                 <command>property-adjust</command>
-                <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
+                <property>f16/cockpit/tailhook-handle</property>
                 <step>1</step>
                 <min>0</min>
                 <max>1</max>
@@ -514,12 +525,14 @@
         </axis>
         <increase>
             <binding>
-                <command>property-adjust</command>
-                <property>controls/gear/gear-down</property>
-                <step>-1</step>
-                <min>0</min>
-                <max>1</max>
-                <wrap>false</wrap>
+                <command>nasal</command>
+                <script>
+                    <!-- T.O. GR1F-16CJ-1 page 1-104 and page 1-107:
+                         Left MLG WOW prevents LG handle movement -->
+                    if (!getprop("fdm/jsbsim/gear/unit[2]/WOW")) {
+                        setprop("controls/gear/gear-down", 0);
+                    }
+                </script>
            </binding>
         </increase>
         <decrease>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery>
+    <name type="string">31FW, 555FS AV "Unit Heritage Flagship"</name>
+    <texture>Liveries/Block40/87-0350.png</texture>
+    <owner type="string">USAF-USAFE</owner>
+    <pilot type="string"></pilot>
+    <scheme type="string">Two-tone gray, Flagship</scheme>
+    <block type="int">40</block>
+    <serial type="string">87-0350</serial>
+    <squad type="string">555th FS "Triple Nickel"</squad>
+    <year type="string">2024</year>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/standard.logos.grey.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block40/patch.triple_nickel.png</texture>
+  </livery-patch>
+
+  <livery-pod>
+        <texture>Liveries/Block40/pod.2035.png</texture>
+  </livery-pod>
+
+  <f16>
+     <dragchute type="bool">false</dragchute>
+     <link16 type="bool">false</link16>
+     <cft type="bool">false</cft>
+  </f16>
+  <livery-specular type="double">0.30</livery-specular>
+  </model>
+ </sim>
+</PropertyList>

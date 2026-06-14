@@ -404,7 +404,7 @@ var medium_fast = {
                     me.aar_disc_timer.stop();
                 } else {
                     if (getprop("controls/lighting/ar-nws") == 2) {
-                        setprop("controls/lighting/ar-nws", !getprop("gear/gear[0]/wow"));  # DISC / Off
+                        setprop("controls/lighting/ar-nws", !getprop("fdm/jsbsim/gear/unit[0]/WOW"));  # DISC / Off
                     }
                     if ((getprop("controls/lighting/ar-nws") != 3) and (me.aar_disc_timer.isRunning == 0)) {
                         me.aar_disc_timer.start();  # RDY
@@ -413,7 +413,7 @@ var medium_fast = {
             } else {
                 me.aar_disc_timer.stop();
                 if ((getprop("controls/gear/nose-wheel-steering") == 1) and
-                   (getprop("gear/gear[0]/wow") == 1)) {
+                   (getprop("fdm/jsbsim/gear/unit[0]/WOW") == 1)) {
                     setprop("controls/lighting/ar-nws", 2); # AR/NWS
                 } else {
                     setprop("controls/lighting/ar-nws", 0); # Off
@@ -426,6 +426,8 @@ var medium_fast = {
         setprop("f16/external", !getprop("sim/current-view/internal"));
 
         setprop("sim/multiplay/generic/float[19]",  getprop("controls/engines/engine/throttle"));
+
+        sendTireSpeedToMP();
     },
 };
 
@@ -517,6 +519,20 @@ var medium = {
     },
 };
 
+var tire_0_mp = props.globals.getNode("rotors/main/blade[0]/position-deg",1);
+var tire_1_mp = props.globals.getNode("rotors/main/blade[1]/position-deg",1);
+var tire_2_mp = props.globals.getNode("rotors/main/blade[2]/position-deg",1);
+
+var tire_0_local = props.globals.getNode("gear/gear[0]/rollspeed-ms",1);
+var tire_1_local = props.globals.getNode("gear/gear[1]/rollspeed-ms",1);
+var tire_2_local = props.globals.getNode("gear/gear[2]/rollspeed-ms",1);
+
+var sendTireSpeedToMP = func {
+    tire_0_mp.setDoubleValue(getprop("fdm/jsbsim/gear/unit[0]/WOW")*tire_0_local.getValue());
+    tire_1_mp.setDoubleValue(getprop("fdm/jsbsim/gear/unit[1]/WOW")*tire_1_local.getValue());
+    tire_2_mp.setDoubleValue(getprop("fdm/jsbsim/gear/unit[2]/WOW")*tire_2_local.getValue());
+};
+
 var LOOP_SLOW_RATE = 5;
 var slow = {
     init: func {
@@ -538,7 +554,6 @@ var slow = {
         } else {
             setprop("fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains", 0);
         }
-        setprop("f16/avionics/emer-jett-switch",0);
     },
 };
 
@@ -777,7 +792,23 @@ setlistener("/fdm/jsbsim/fcs/fly-by-wire/digital-backup", func(node) {
 });
 
 
+var emer_jett_switch = {
+    init : func {
+        me.timer = maketimer(1, me, me.done);
+        setlistener("f16/avionics/emer-jett-switch", func(switch) {
+            if (switch.getValue() == 1) {
+                me.timer.start();
+            } else {
+                me.timer.stop();
+            }
+        }, 0, 0);
+    },
 
+    done : func {
+        setprop("f16/avionics/emer-jett-switch", 0);
+    },
+};
+emer_jett_switch.init();
 
 
 var cockpit_temperature_control = {
@@ -969,7 +1000,8 @@ var CARA = func {
     }
 
     # Tri-service combined altitude radar altimeter
-    if ((getprop("f16/avionics/power-rdr-alt-warm")<1) or (getprop("f16/avionics/power-rdr-alt")<2)) {
+    if ((getprop("f16/avionics/power-rdr-alt-warm")<1) or (getprop("f16/avionics/power-rdr-alt")<2) or
+        ((getprop("sim/variant-id") >= 3) and (getprop("f16/avionics/rf/rf-switch") == 2))) {
         setprop("f16/avionics/cara-on",0);
         return;
     }
@@ -1630,7 +1662,7 @@ var flcs_bit = {
                 setprop("/f16/fcs/bit-run", 0);
             } else {
                 # Expression MUST match panels_mlu_left-console.xml:SW_FLCS_BIT knob animation
-                if ((getprop("/gear/gear[1]/wow") == 0) or
+                if ((getprop("/fdm/jsbsim/gear/unit[1]/WOW") == 0) or
                     (getprop("/gear/gear[1]/rollspeed-ms") * MPS2KT >= 28)) {
                     setprop("/f16/fcs/bit-run", 0);
                 } else {
@@ -1643,7 +1675,7 @@ var flcs_bit = {
 
     count : func {
         # Expression MUST match panels_mlu_left-console.xml:SW_FLCS_BIT knob animation
-        if (((getprop("/gear/gear[1]/wow") == 0) or
+        if (((getprop("/fdm/jsbsim/gear/unit[1]/WOW") == 0) or
             (getprop("/gear/gear[1]/rollspeed-ms") * MPS2KT >= 28)) or
             (me.counter == 45)) {  # GR1F-16CJ-1, page 1-135: the BIT runs for approx. 45 seconds
             setprop("/f16/fcs/bit", 0);
@@ -1831,7 +1863,6 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
             props.globals.getNode("/sim/version/compositor-support", 1).setBoolValue(1);
         } elsif (left(getprop("sim/version/flightgear"),6) == "2020.3") {
             props.globals.getNode("/sim/version/compositor-support", 1).setBoolValue(0);
-            lm.light_manager.init();
         }
 
         hack.init();

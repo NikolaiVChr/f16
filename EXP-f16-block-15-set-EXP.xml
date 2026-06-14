@@ -1,0 +1,220 @@
+<?xml version="1.0"?>
+
+<PropertyList include="f16-base.xml">
+
+ <sim>
+  <description>General Dynamics F-16A Block 15OCU (ADF)</description>
+  <long-description>
+   The General Dynamics F-16A Fighting Falcon is a single-engine supersonic multirole fighter aircraft by General Dynamics, exported to many countries. Powered by F100-PW-220. Designed as an air superiority day fighter, it evolved into a successful all-weather multirole aircraft.
+   The Fighting Falcon has key features including a frameless bubble canopy for better visibility, side-mounted control stick to ease control while maneuvering, a seat reclined 30 degrees to reduce the effect of g-forces on the pilot, and the first use of a relaxed static stability/fly-by-wire flight control system which helps to make it a nimble aircraft.
+  </long-description>
+  <author>Erik Hofman, Martin "Pegasus" Schmitt, Pensacola, Nikolai V. Chr., J Maverick 16, Richard Harrison, Josh Davidson, Martien Van Der P., Jonathan Redpath, Gary Brown, Justin Nicholson, Enrico Castaldi, Timi, Barszczisbad, PH-JAKE, Bat Campion, LJQCN101</author>
+  <status>production</status>
+  <rating>
+    <FDM type="int">5</FDM>
+    <systems type="int">4</systems>
+    <cockpit type="int">4</cockpit>
+    <model type="int">4</model>
+  </rating>
+  <flight-model>jsb</flight-model>
+  <aero>f16b20</aero>
+  <variant-id type="int">1</variant-id>
+  <variant-engine type="int">2</variant-engine>
+  <variant-of>f16-block-52</variant-of>
+  <tags>
+      <tag>fighter</tag>
+      <tag>general-dynamics</tag>
+      <tag>1970s</tag>
+      <tag>1980s</tag>
+      <tag>1990s</tag>
+      <tag>coldwar</tag>
+      <tag>gulfwar1</tag>
+      <tag>combat</tag>
+      <tag>low-wing</tag>
+      <tag>hud</tag>
+      <tag>ifr</tag>
+      <tag>refuel</tag>
+      <tag>retractable-gear</tag>
+      <tag>supersonic</tag>
+      <tag>tricycle</tag>
+      <tag>afterburner</tag>
+      <tag>jet</tag>
+      <tag>single-engine</tag>
+      <tag>tail-hook</tag>
+      <tag>f-16</tag>
+    </tags>
+
+  <startup>
+   <splash-texture>Aircraft/f16/f16-splash.png</splash-texture>
+  </startup>
+
+  <previews>
+            <preview>
+                <type>exterior</type>
+                <splash type="bool">true</splash>
+                <path>gui/splash/f16_b10_1.png</path>
+            </preview>
+            <preview>
+                <type>exterior</type>
+                <splash type="bool">true</splash>
+                <path>gui/splash/f16_b10_2.png</path>
+            </preview>
+            <preview>
+                <type>exterior</type>
+                <splash type="bool">true</splash>
+                <path>gui/splash/f16_b10_3.png</path>
+            </preview>
+  </previews>
+
+
+  <model>
+    <f16>
+    <dragchute type="bool">false</dragchute>
+    <link16 type="bool">false</link16>
+    <cft type="bool">false</cft>
+  </f16>
+   <path archive="y">Aircraft/f16/Models/F-16.xml</path>
+   <livery>
+    <file type="string"/>
+    <name type="string">5° Stormo, 23° Gruppo "Diana farewell"</name>
+    <folder type="string">Aircraft/f16/Models/Liveries/Block20</folder>
+   </livery>
+   <MFD-color>
+    <text1><!--Main text color-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </text1>
+    <text2><!--BIT/SILENT color-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </text2>
+    <line1><!--CRM scan lines + lat range + HSD acft, rdr scope color -->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </line1>
+    <line2><!--CRM horizon color-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </line2>
+    <line3><!--CRM DLZ path + cursor + wpt + lock info + data-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </line3>
+    <line4><!--CRM EXP color-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </line4>
+    <line5><!--HSD radius color-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </line5>
+    <bullseye><!--Bullseye color-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </bullseye>
+    <betxt><!--Bullseye cursor color-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </betxt>
+    <lines><!--HSD lines color-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </lines>
+    <lines2><!--Pull Up cue color-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </lines2>
+    <circle1><!--HSD red circles + GM Pic color-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </circle1>
+    <circle2><!--HSD yellow circles + Lock 2 color-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </circle2>
+    <circle3><!--HSD green circles + CRM IFF + WPN RDY color-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </circle3>
+    <dot1><!--Lock 1 + cntct blep color-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </dot1>
+    <dot2><!-- Radar search targets -->
+      <red type="double">0.50</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.50</blue>
+    </dot2>
+    <dot3><!--Lock 2 color-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </dot3>
+    <dot4><!--HSD DL cntct color-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </dot4>
+   </MFD-color>
+  </model>
+
+  <menubar>
+   <default>
+    <menu n="101">
+     <label>F-16A Block 15OCU (ADF)</label>
+     <item n="8">
+          <label>--- Block options ---</label>
+          <enabled>false</enabled>
+        </item>
+      <item n="9">
+          <label>Payload presets</label>
+          <binding>
+            <command>dialog-show</command>
+            <dialog-name>payload-b10</dialog-name>
+          </binding>
+      </item>
+    </menu>
+   </default>
+  </menubar>
+<!--
+  <help>
+   <title>General Dynamics F-16 Fighting Falcon</title>
+  </help>-->
+
+  <checklists include="gui/checklists-b20.xml"/>
+
+ </sim>
+
+ <fdm>
+  <jsbsim>
+   <fcs>
+    <fly-by-wire>
+      <prototype type="bool">false</prototype>
+      <ada189675 type="bool">true</ada189675>
+    </fly-by-wire>
+   </fcs>
+  </jsbsim>
+ </fdm>
+
+<engines>
+    <engine>
+      <rated-mil-dry type="double">14670</rated-mil-dry>
+    </engine>
+  </engines>
+
+</PropertyList>

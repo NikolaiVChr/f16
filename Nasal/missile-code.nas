@@ -159,6 +159,7 @@ var major = num(version[0]);
 var minor = num(version[1]);
 var pica  = num(version[2]);
 
+var preAlphaKey = "ABC";# for hash keys that could start with number, which is not allowed.
 var sep_thread = getprop("payload/threading") != nil or !((major == 2020 and minor == 4) or (major > 2020));#Bug in 2024.4 threadsafe properties makes this needed.
 
 var wingedGuideFactor = 0.1;
@@ -189,7 +190,7 @@ var contactPoint = nil;
 # isValid()       - If this target is valid
 # getElevation()  - Pitch to target from launch vehicle
 # get_bearing()   - Bearing to target from launch vehicle
-# get_Callsign() 
+# get_Callsign()
 # get_range()     - NM
 # get_Coord()
 # get_altitude()  - FT
@@ -214,7 +215,7 @@ var AIM = {
 	lowestETA: nil,
 	#done
 	new : func (p, type = "AIM-9L", sign = "Sidewinder", midFlightFunction = nil, nasalPosition = nil) {
-		if(AIM.active[p] != nil) {
+		if(AIM.active[preAlphaKey ~ p] != nil) {
 			#do not make new missile logic if one exist for this pylon.
 			return -1;
 		} elsif (AcModel.getNode("armament/"~string.lc(type)~"/") == nil) {
@@ -234,7 +235,6 @@ var AIM = {
 
 		m.status            = MISSILE_STANDBY; # -1 = stand-by, 0 = searching, 1 = locked, 2 = fired.
 		m.free              = 0; # 0 = status fired with lock, 1 = status fired but having lost lock.
-		m.prop              = AcModel.getNode("armament/"~m.type_lc~"/").getChild("msl", 0, 1);
 		m.SwSoundOnOff      = AcModel.getNode("armament/"~m.type_lc~"/sound-on-off",1);
 		m.launchSoundProp  = AcModel.getNode("armament/"~m.type_lc~"/sound-fire-on-off",1);
         m.SwSoundVol        = AcModel.getNode("armament/"~m.type_lc~"/sound-volume",1);
@@ -919,7 +919,7 @@ var AIM = {
 		if (sep_thread) m.frameToggle = thread.newsem();
 		m.myMath = {parents:[vector.Math],};#personal vector library, to avoid using a mutex on it.
 
-		return AIM.active[m.ID] = m;
+		return AIM.active[preAlphaKey ~ m.ID] = m;
 	},
 
 	del: func {
@@ -943,7 +943,7 @@ var AIM = {
 		me.model.remove();
 		me.ai.remove();
 		if (me.status == MISSILE_FLYING) {
-			delete(AIM.flying, me.flyID);
+			delete(AIM.flying, preAlphaKey ~ me.flyID);
 			if (me.tacview_support) {
 				if (tacview.starttime) {
 					lockMutex(tacview.mutexWrite);
@@ -959,7 +959,7 @@ var AIM = {
 				unlockMutex(mutexTimer);
 			}
 		} else {
-			delete(AIM.active, me.ID);
+			delete(AIM.active, preAlphaKey ~ me.ID);
 		}
 		AIM.setETA(nil);
 		me.SwSoundVol.setDoubleValue(0);
@@ -1362,7 +1362,7 @@ var AIM = {
 		# do NOT call this after launch
 		# see also release(vect)
 		if (me.status == MISSILE_FLYING) return;
-		me.contacts = vect;		
+		me.contacts = vect;
 	},
 
 	clearTgt: func {
@@ -1550,8 +1550,8 @@ var AIM = {
 		}
 
 		me.flyID = rand();
-		AIM.flying[me.flyID] = me;
-		delete(AIM.active, me.ID);
+		AIM.flying[preAlphaKey ~ me.flyID] = me;
+		delete(AIM.active, preAlphaKey ~ me.ID);
 		me.animation_flags_props();
 
 		# Get the A/C position and orientation values.
@@ -1630,8 +1630,7 @@ var AIM = {
 		me.model.getNode("heading-deg-prop", 1).setValue(me.hdgN.getPath());
 		me.model.getNode("pitch-deg-prop", 1).setValue(me.pitchN.getPath());
 		me.model.getNode("roll-deg-prop", 1).setValue(me.rollN.getPath());
-		var loadNode = me.model.getNode("load", 1);
-		loadNode.setBoolValue(1);
+
 
 		# Get initial velocity vector (aircraft):
 		me.speed_down_fps = getprop("velocities/speed-down-fps");
@@ -1718,7 +1717,7 @@ var AIM = {
 		me.SwSoundVol.setDoubleValue(0);
 		#me.trackWeak = 1;
 		if (use_fg_default_hud) {
-		  settimer(func { HudReticleDeg.setValue(0) }, 2);
+		  makesettimer(func { HudReticleDeg.setDoubleValue(0) }, 2);
 		  interpolate(HudReticleDev, 0, 2);
 		}
 
@@ -1764,7 +1763,7 @@ var AIM = {
 
 		me.lock_on_sun = 0;
 
-		loadNode.remove();
+
 
 		if(!sep_thread) {
 			me.flightTimer = maketimer(0, me, me.flight);
@@ -2130,6 +2129,13 @@ var AIM = {
 		#############################################################################################################
 		me.counter += 1;#main counter for which number of loop we are in.
 
+		if (me.counter == 1) {
+			me.loadNode = me.model.getNode("load", 1);
+			me.loadNode.setBoolValue(1);
+			me.loadNode.remove();
+			me.loadNode = nil;
+		}
+
 		if (me.pendingLaunchSound > -1 and me.life_time >= me.pendingLaunchSound and me.counter >= 5) {
 			# For some reason, sound needs some time to see that the property is false, so we let counter go to 5 before we set it to true.
 			me.launchSoundProp.setBoolValue(1);
@@ -2235,7 +2241,7 @@ var AIM = {
 		me.deploy_prop.setDoubleValue(me.deploy);
 
 		me.thrust_lbf = me.thrust();# pounds force (lbf)
-		
+
 
 		# Jmav remove the # from the line below for cruise missile adjustment:
 		#me.printAlways("guiding=%d  time=%d:  mach=%.3f  alt=%d  %s",me.guiding, me.life_time, me.speed_m, me.alt_ft, me.observing);
@@ -2679,7 +2685,7 @@ var AIM = {
 		# telemetry
 		me.sendTelemetry();
 
-        if (me.life_time - me.last_noti > me.noti_time and getprop("payload/armament/msg")) {
+        if (me.life_time - me.last_noti > me.noti_time and props.globals.getNode("payload/armament/msg").getValue()) {
             # notify in flight using Emesary.
             me.last_noti = me.life_time;
         	lockMutex(mutexTimer);
@@ -2745,7 +2751,7 @@ var AIM = {
 				me.loft_alt = me.settings.altitude;
 			}
 			if (me.settings["altitude_at"] != nil) {
-				# Altitude above target				
+				# Altitude above target
 				me.settings.altitude_at+=me.Tgt.get_altitude();
 				if (me.loft_alt != me.settings.altitude_at) me.printStats("Loft altitude switched to %d", me.settings.altitude_at);
 				me.loft_alt = me.settings.altitude_at;
@@ -2834,8 +2840,8 @@ var AIM = {
 			me.ai.getNode("hit").setIntValue(me.hit);
 
 			if (me.gnd_launch) {
-				setprop("sam/impact"~me.ID,me.eta);
-				setprop("sam/hit"~me.ID,me.hit);
+				props.globals.getNode("sam/impact"~me.ID,1).setDoubleValue(me.eta);
+				props.globals.getNode("sam/hit"~me.ID,1).setDoubleValue(me.hit);
 			}
 
 			if (me["prevETA"] != nil) {
@@ -3215,7 +3221,7 @@ var AIM = {
 			me.blep = me.Tgt.getLastGroundTrackBlep();
 			if (me.blep == nil and me.newTargetAssigned) {
 				# TODO: Do not remember what this is for
-				me.t_coord_sampled = me.t_coord;	
+				me.t_coord_sampled = me.t_coord;
 			} elsif (me.blep == nil) {
 				me.free = 1;
 				me.guiding = 0;
@@ -3385,7 +3391,7 @@ var AIM = {
 	},
 
 	checkForSun: func () {
-		if (me.fovLost != 1 and me.guidance == "heat" and me.sun_enabled and getprop("/rendering/scene/diffuse/red") > 0.6) {
+		if (me.fovLost != 1 and me.guidance == "heat" and me.sun_enabled and props.globals.getNode("/rendering/scene/diffuse/red").getValue() > 0.6) {
 			# test for heat seeker locked on to sun
 			me.sun_dev_e = me.getPitch(me.coord, me.sun) - me.pitch;
 			me.sun_dev_h = me.coord.course_to(me.sun) - me.hdg;
@@ -4001,11 +4007,11 @@ var AIM = {
 			me.t_go = me.myMath.dotProduct(me.R_tm,me.R_tm)/me.myMath.dotProduct(me.R_tm, me.V_tm);
 			#printf("time_to_go %.1f, closing %d",me.t_go,me.vert_closing_rate_fps);
 
-			
+
 
 			# Horizontal homing:
 			if (me.guidanceLaw == "LOS") {
-				
+
 				me.K1 =    2.5;
 				me.K2 =   10.0;
 
@@ -4428,7 +4434,7 @@ var AIM = {
 
 		me.coord = coordinates;  # Set the current missile coordinates at the explosion point.
 
-		if(getprop("payload/armament/msg")) {
+		if(props.globals.getNode("payload/armament/msg").getValue()) {
 			lockMutex(mutexTimer);
 			appendTimer(AIM.timerQueue, [AIM, AIM.notifyInFlight, [me.coord.lat(), me.coord.lon(), me.coord.alt(),0,0,me.typeID,me.type,me.unique_id,0,"", me.hdg, me.pitch, 0, 0], -1]);
 			unlockMutex(mutexTimer);
@@ -4462,7 +4468,7 @@ var AIM = {
 			}
 			if (phrase != nil) {
 				me.printStats("%s  time %.1f", phrase, me.life_time);
-				if(getprop("payload/armament/msg") and hitPrimaryTarget and wh_mass > 0){
+				if(props.globals.getNode("payload/armament/msg").getValue() and hitPrimaryTarget and wh_mass > 0){
 					lockMutex(mutexTimer);
 					appendTimer(AIM.timerQueue, [AIM, AIM.notifyHit, [coordinates.alt() - me.t_coord.alt(),range,me.callsign,coordinates.course_to(me.t_coord),reason,me.typeID, me.typeLong, 0], -1]);
 					unlockMutex(mutexTimer);
@@ -4508,7 +4514,7 @@ var AIM = {
 				var phrase = sprintf("%s %s: %.1f meters from: %s", me.type,event, min_distance, me.testMe.get_Callsign());
 				me.printStats(phrase);
 
- 				if(getprop("payload/armament/msg") and wh_mass > 0){
+ 				if(props.globals.getNode("payload/armament/msg").getValue() and wh_mass > 0){
  					var cs = damage.processCallsign(me.testMe.get_Callsign());
  					var cc = me.testMe.get_Coord();
  					lockMutex(mutexTimer);
@@ -4527,7 +4533,7 @@ var AIM = {
 		var min_distance = geo.aircraft_position().direct_distance_to(explode_coord);
 		if (min_distance < me.reportDist) {
 			# hitting oneself :)
-			var cs = damage.processCallsign(getprop("sim/multiplay/callsign"));
+			var cs = damage.processCallsign(props.globals.getNode("sim/multiplay/callsign").getValue());
 			var phrase = sprintf("%s %s: %.1f meters from: %s", me.type,event, min_distance, cs);# if we mention ourself then we need to explicit add ourself as author.
 			me.printStats(phrase);
 			if (wh_mass > 0) {
@@ -4541,10 +4547,10 @@ var AIM = {
 	},
 
 	sendMessage: func (str) {
-		if (getprop("payload/armament/msg")) {
+		if (props.globals.getNode("payload/armament/msg").getValue()) {
 			defeatSpamFilter(str);
-		} else {
-			setprop("/sim/messages/atc", str);
+		} elsif (str != nil) {
+			props.globals.getNode("/sim/messages/atc",1).setValue(str);
 		}
 	},
 
@@ -4602,7 +4608,7 @@ var AIM = {
 		# looping in standby mode
 		if (deltaSec.getValue()==0) {
 			# paused
-			settimer(func me.standby(), 0.5);
+			makesettimer(func me.standby(), 0.5);
 			return;
 		}
 		me.printCode("In standby(%d)",me.status);
@@ -4623,7 +4629,7 @@ var AIM = {
 		me.reset_seeker();
 		#print(me.type~" standby "~me.ID);
 
-		settimer(func me.standby(), deltaSec.getValue()==0?0.5:0.25);
+		makesettimer(func me.standby(), deltaSec.getValue()==0?0.5:0.25);
 	},
 
 	startup: func {
@@ -4631,7 +4637,7 @@ var AIM = {
 		#print("startup");
 		if (deltaSec.getValue()==0) {
 			# Paused
-			settimer(func me.startup(), 0.5);
+			makesettimer(func me.startup(), 0.5);
 			return;
 		}
 		me.printCode("In startup()");
@@ -4654,7 +4660,7 @@ var AIM = {
 		#print("Starting up");
 		me.coolingSyst();
 		me.reset_seeker();
-		settimer(func me.startup(), deltaSec.getValue()==0?0.5:0.25);
+		makesettimer(func me.startup(), deltaSec.getValue()==0?0.5:0.25);
 	},
 
 	coolingSyst: func {
@@ -4714,10 +4720,14 @@ var AIM = {
 				me.geodPos = aircraftToCart({x:-me.radarX, y:me.radarY, z: -me.radarZ});
 				me.launchCoord.set_xyz(me.geodPos.x, me.geodPos.y, me.geodPos.z);
 			}
-
-			me.potentialCoord = me.tagt.get_Coord();
+			me.potentialCoord = nil;
+			if (contains(me.tagt, "get_coord_for_view")) {
+				me.potentialCoord = me.tagt.get_coord_for_view(me.guidance == "radiation");
+			} else {
+				me.potentialCoord = me.tagt.get_Coord();
+			}
 			me.xyz          = {"x":me.launchCoord.x(),                  "y":me.launchCoord.y(),                 "z":me.launchCoord.z()};
-		    me.directionLOS = {"x":me.potentialCoord.x()-me.launchCoord.x(),   "y":me.potentialCoord.y()-me.launchCoord.y(),  "z":me.potentialCoord.z()-me.launchCoord.z()};
+			me.directionLOS = {"x":me.potentialCoord.x()-me.launchCoord.x(),   "y":me.potentialCoord.y()-me.launchCoord.y(),  "z":me.potentialCoord.z()-me.launchCoord.z()};
 
 			# Check for terrain between own weapon and target:
 			me.terrainGeod = get_cart_ground_intersection(me.xyz, me.directionLOS);
@@ -4740,9 +4750,14 @@ var AIM = {
 	checkForViewInFlight: func (tagt) {
 		if (me.guidance != "gps-laser" and me.guidance != "gps" and me.guidance != "inertial" and me.guidance != "sample") {
 			me.launchCoord = me.coord;
-			me.potentialCoord = tagt.get_Coord();
+			me.potentialCoord = nil;
+			if (contains(me.tagt, "get_coord_for_view")) {
+				me.potentialCoord = me.tagt.get_coord_for_view(me.guidance == "radiation");
+			} else {
+				me.potentialCoord = me.tagt.get_Coord();
+			}
 			me.xyz          = {"x":me.launchCoord.x(),                  "y":me.launchCoord.y(),                 "z":me.launchCoord.z()};
-		    me.directionLOS = {"x":me.potentialCoord.x()-me.launchCoord.x(),   "y":me.potentialCoord.y()-me.launchCoord.y(),  "z":me.potentialCoord.z()-me.launchCoord.z()};
+			me.directionLOS = {"x":me.potentialCoord.x()-me.launchCoord.x(),   "y":me.potentialCoord.y()-me.launchCoord.y(),  "z":me.potentialCoord.z()-me.launchCoord.z()};
 
 			# Check for terrain between own weapon and target:
 			me.terrainGeod = get_cart_ground_intersection(me.xyz, me.directionLOS);
@@ -4846,7 +4861,7 @@ var AIM = {
 	search: func {
 		# looping in search mode
 		if (deltaSec.getValue()==0) {
-			settimer(func me.search(), 0.5);
+			makesettimer(func me.search(), 0.5);
 		}
 		me.printCode("In search()");
 		if (me.deleted) {
@@ -4923,7 +4938,7 @@ var AIM = {
 			me.Tgt = nil;
 			me.SwSoundVol.setDoubleValue(me.vol_search);
 			me.SwSoundOnOff.setBoolValue(1);
-			settimer(func me.search(), 0.05);# this mode needs to be a bit faster.
+			makesettimer(func me.search(), 0.05);# this mode needs to be a bit faster.
 			return;
 		} elsif (me.slave_to_radar) {
 			me.slaveContact = nil;
@@ -5032,15 +5047,15 @@ var AIM = {
 		me.Tgt = nil;
 		me.SwSoundVol.setDoubleValue(me.vol_search);
 		me.SwSoundOnOff.setBoolValue(1);
-		settimer(func me.search(), 0.05);
+		makesettimer(func me.search(), 0.05);
 	},
 
 	goToLock: func {
         me.callsign = damage.processCallsign(me.tagt.get_Callsign());
-        if (multiplayer.ignore[me.callsign] == 1) {
+		if (damage.isIgnoredCallsign(me.callsign)) {
         	me.callsign = "Unknown";
         	if (me.tagt == contact) contact = nil;
-        	settimer(func me.search(), 0.1);
+        	makesettimer(func me.search(), 0.1);
         	return;
         }
         me.status = MISSILE_LOCK;
@@ -5048,7 +5063,7 @@ var AIM = {
 		me.SwSoundVol.setDoubleValue(me.vol_track);
 
 		me.Tgt = me.tagt;
-		settimer(func me.update_lock(), 0.1);
+		makesettimer(func me.update_lock(), 0.1);
 	},
 
 	convertGlobalToSeekerViewDirection: func  (bearing, elevation, heading, pitch, roll) {
@@ -5216,7 +5231,7 @@ var AIM = {
 		# Missile locked on target
 		#
 		if (deltaSec.getValue()==0) {
-			settimer(func me.update_lock(), 0.5);
+			makesettimer(func me.update_lock(), 0.5);
 		}
 		if (me.status == MISSILE_FLYING) {
 			return;
@@ -5313,7 +5328,7 @@ var AIM = {
 				me.Tgt = nil;
 				me.SwSoundOnOff.setBoolValue(1);
 				me.SwSoundVol.setDoubleValue(me.vol_search);
-				settimer(func me.search(), 0.1);
+				makesettimer(func me.search(), 0.1);
 				return;
 			}
 
@@ -5336,7 +5351,7 @@ var AIM = {
 				}
 			}
 
-			settimer(func me.update_lock(), deltaSec.getValue()==0?0.5:0.1);
+			makesettimer(func me.update_lock(), deltaSec.getValue()==0?0.5:0.1);
 			return;
 		}
 		me.standby();
@@ -5350,7 +5365,7 @@ var AIM = {
 		me.SwSoundVol.setDoubleValue(me.vol_search);
 		#me.trackWeak = 1;
 		me.reset_seeker();
-		settimer(func me.search(), 0.1);
+		makesettimer(func me.search(), 0.1);
 	},
 
 	###################################################################
@@ -5493,24 +5508,30 @@ var AIM = {
 
 		if (hitGround) {
 			if (info == nil) {
+				me.printStatsDetails("Hit terrasunk");
 				me.explode_water_prop.setBoolValue(0);
 			} elsif (info[1] == nil) {
+				me.printStatsDetails("Hit building");
 				#print ("Building hit!");
 			} elsif (!info[1].solid) {
+				me.printStatsDetails("Hit water");
 			 	me.explode_water_prop.setBoolValue(1);
 			} else {
+				me.printStatsDetails("Hit ground");
 				me.explode_water_prop.setBoolValue(0);
 			}
 		} else {
+			me.printStatsDetails("Did not hit terrain");
 			me.explode_water_prop.setBoolValue(0);
 		}
 
 		#print (me.typeShort);
 
 		me.explode_prop.setBoolValue(1);
+
 		me.explode_angle_prop.setDoubleValue((rand() - 0.5) * 50);
 		lockMutex(mutexTimer);
-		appendTimer(AIM.timerQueue, [me, func me.explode_prop.setBoolValue(0), [], 0.5]);
+		appendTimer(AIM.timerQueue, [me, func {me.explode_prop.setBoolValue(0);}, [], 0.5]);
 		appendTimer(AIM.timerQueue, [me, func me.explode_smoke_prop.setBoolValue(1), [], 0.5]);
 		appendTimer(AIM.timerQueue, [me, func {me.explode_smoke_prop.setBoolValue(0);if (me.first and size(keys(AIM.flying))>1) {me.resetFirst();}}, [], 3]);
 		unlockMutex(mutexTimer);
@@ -5567,7 +5588,7 @@ var AIM = {
 		var dt = deltaSec.getValue();
 		if (dt == 0) {
 			#FG is likely paused
-			settimer(func me.sndPropagate(), 0.01);
+			makesettimer(func me.sndPropagate(), 0.01);
 			return;
 		}
 		#dt = update_loop_time;
@@ -5586,14 +5607,14 @@ var AIM = {
 			me.printStats(me.type~": Explosion heard "~distance~"m vol:"~volume);
 			me.explode_sound_vol_prop.setDoubleValue(volume);
 			me.explode_sound_prop.setBoolValue(1);
-			settimer( func me.explode_sound_prop.setBoolValue(0), 3);
-			settimer( func me.del(), 4);
+			makesettimer( func me.explode_sound_prop.setBoolValue(0), 3);
+			makesettimer( func me.del(), 4);
 			return;
 		} elsif (me.sndDistance > 5000) {
-			settimer(func { me.del(); }, 4 );
+			makesettimer(func { me.del(); }, 4 );
 			return;#TODO: I added this return recently, but not sure why it wasn't there..
 		} else {
-			settimer(func me.sndPropagate(), 0.05);
+			makesettimer(func me.sndPropagate(), 0.05);
 			return;
 		}
 	},
@@ -5889,11 +5910,11 @@ var AIM = {
 	},
 
 	setModelAdded: func {
-		setprop("ai/models/model-added", me.ai.getPath());
+		props.globals.getNode("ai/models/model-added",1).setValue(me.ai.getPath());
 	},
 
 	setModelRemoved: func {
-		setprop("ai/models/model-removed", me.ai.getPath());
+		props.globals.getNode("ai/models/model-removed",1).setValue(me.ai.getPath());
 	},
 };
 
@@ -5901,8 +5922,7 @@ var appendTimer = func (queue, cmd) {
 	if (sep_thread) {
 		append(AIM.timerQueue, cmd);
 	} else {
-		call(cmd[1], cmd[2], cmd[0], nil, var err = []);
-		debug.printerror(err);
+		AIM.timerCall(cmd);
 	}
 }
 var lockMutex = func (m) {
@@ -5957,7 +5977,7 @@ var impact_report = func(pos, mass, string, name, speed_mps) {
 	impact.getNode("name", 1).setValue(name);
 
 	var impact_str = "/ai/models/" ~ string ~ "[" ~ i ~ "]";
-	setprop("ai/models/model-impact", impact_str);
+	props.globals.getNode("ai/models/model-impact",1).setValue(impact_str);
 }
 
 # HUD clamped target blinker
@@ -6028,7 +6048,7 @@ var defeatSpamFilter = func (str) {
   for (var i = 1; i <= spams; i+=1) {
     str = str~".";
   }
-  var myCallsign = getprop("sim/multiplay/callsign");
+  var myCallsign = props.globals.getNode("sim/multiplay/callsign",1).getValue();
   if (myCallsign != nil and find(myCallsign, str) != -1) {
   	str = myCallsign~": "~str;
   }
@@ -6045,15 +6065,24 @@ var spamLoop = func {
   var spam = pop(spamList);
   unlockMutex(mutexMsg);
   if (spam != nil) {
-    setprop("/sim/multiplay/chat", spam);
+    props.globals.getNode("/sim/multiplay/chat").setValue( spam);
   }
-  settimer(spamLoop, 1.20);
+  makesettimer(spamLoop, 1.20);
 }
 
 var printff = func{
 	var str = call(sprintf, arg,nil,nil,var err = []);#call to printf directly sometimes crashes FG
 	debug.printerror(err);
 	print(str);
+}
+
+var makesettimer = func {
+	var code = "timer_"~rand();
+	var funct = arg[0];
+	var t = maketimer(arg[1], func {funct();delete(AIM.timers, code);});
+	AIM.timers[code] = t;
+	t.singleShot = 1;
+	t.start();
 }
 
 spamLoop();

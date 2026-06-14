@@ -13,6 +13,8 @@
 var fdm = getprop("/sim/flight-model");
 var baseGui = fdm=="jsb"?"payload":"sim";
 
+var preAlphaKey = "ABC";# for hash keys that could start with number, which is not allowed.
+
 var reload_payload_dialog = func {
 	# Touching payload-reload reloads the fuel and payload dialog (duh).
 	# This function might be called (through Pylon.guiChanged) inside the update function of said dialog.
@@ -611,15 +613,15 @@ var Pylon = {
 			foreach(me.weapon;me.weapons) {
 				if(me.weapon != nil) {
 					me.type = me.weapon.type;
-					if (me.calcName[me.type]==nil) {
-						me.calcName[me.type]=1;
+					if (me.calcName[preAlphaKey ~ me.type]==nil) {
+						me.calcName[preAlphaKey ~ me.type]=1;
 					} else {
-						me.calcName[me.type] += 1;
+						me.calcName[preAlphaKey ~ me.type] += 1;
 					}
 				}
 			}
 			foreach(key;keys(me.calcName)) {
-				me.nameGUI = me.nameGUI~", "~me.calcName[key]~" x "~key;
+				me.nameGUI = me.nameGUI~", "~me.calcName[key]~" x "~substr(key,size(preAlphaKey));
 			}
 			me.nameGUI = right(me.nameGUI, size(me.nameGUI)-2);#remove initial comma
 		}
@@ -665,15 +667,15 @@ var Pylon = {
 			foreach(me.weapon;me.weapons) {
 				if(me.weapon != nil) {
 					me.type = me.weapon.typeShort;
-					if (me.calcName[me.type]==nil) {
-						me.calcName[me.type]=1;
+					if (me.calcName[preAlphaKey ~ me.type]==nil) {
+						me.calcName[preAlphaKey ~ me.type]=1;
 					} else {
-						me.calcName[me.type] += 1;
+						me.calcName[preAlphaKey ~ me.type] += 1;
 					}
 				}
 			}
 			foreach(key;keys(me.calcName)) {
-				me.nameS = me.nameS~", "~me.calcName[key]~"x"~key;
+				me.nameS = me.nameS~", "~me.calcName[key]~"x"~substr(key,size(preAlphaKey));
 			}
 			me.nameS = right(me.nameS, size(me.nameS)-2);#remove initial comma
 		}
@@ -705,15 +707,15 @@ var Pylon = {
 			foreach(me.weapon;me.weapons) {
 				if(me.weapon != nil) {
 					me.type = me.weapon.typeShort;
-					if (me.calcName[me.type] == nil) {
-						me.calcName[me.type] = 1;
+					if (me.calcName[preAlphaKey ~ me.type] == nil) {
+						me.calcName[preAlphaKey ~ me.type] = 1;
 					} else {
-						me.calcName[me.type] += 1;
+						me.calcName[preAlphaKey ~ me.type] += 1;
 					}
 				}
 			}
 			foreach(key;keys(me.calcName)) {
-				me.nameS = me.nameS~", "~me.calcName[key]~" "~key;
+				me.nameS = me.nameS~", "~me.calcName[key]~" "~substr(key,size(preAlphaKey));
 			}
 			me.nameS = right(me.nameS, size(me.nameS)-2);#remove initial comma
 		}
@@ -878,15 +880,15 @@ var WPylon = {
 			foreach(me.weapon;me.weapons) {
 				if(me.weapon != nil) {
 					me.type = me.weapon.typeShort;
-					if (me.calcName[me.type]==nil) {
-						me.calcName[me.type]=1;
+					if (me.calcName[preAlphaKey ~ me.type]==nil) {
+						me.calcName[preAlphaKey ~ me.type]=1;
 					} else {
-						me.calcName[me.type] += 1;
+						me.calcName[preAlphaKey ~ me.type] += 1;
 					}
 				}
 			}
 			foreach(key;keys(me.calcName)) {
-				me.nameS = me.nameS~", "~me.calcName[key]~"x"~key;
+				me.nameS = me.nameS~", "~me.calcName[key]~"x"~substr(key,size(preAlphaKey));
 			}
 			me.nameS = right(me.nameS, size(me.nameS)-2);#remove initial comma
 		}
@@ -914,15 +916,15 @@ var WPylon = {
 			foreach(me.weapon;me.weapons) {
 				if(me.weapon != nil) {
 					me.type = me.weapon.typeShort;
-					if (me.calcName[me.type]==nil) {
-						me.calcName[me.type]=1;
+					if (me.calcName[preAlphaKey ~ me.type]==nil) {
+						me.calcName[preAlphaKey ~ me.type]=1;
 					} else {
-						me.calcName[me.type] += 1;
+						me.calcName[preAlphaKey ~ me.type] += 1;
 					}
 				}
 			}
 			foreach(key;keys(me.calcName)) {
-				me.nameS = me.nameS~", "~me.calcName[key]~" "~key;
+				me.nameS = me.nameS~", "~me.calcName[key]~" "~substr(key,size(preAlphaKey));
 			}
 			me.nameS = right(me.nameS, size(me.nameS)-2);#remove initial comma
 		}

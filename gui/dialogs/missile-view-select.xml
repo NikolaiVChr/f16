@@ -39,7 +39,7 @@
 
       var select = func {
         var e = dlg.initNode("choice", "").getValue();
-        if (e == myself or contains(view.myModel.callsign, entries[e]))
+        if (e == myself or contains(viewMissile.myModel.callsign, entries[e]))
           viewMissile.missile_view_handler.select(which: entries[e], by_callsign: 1);
         else
           settimer(func fgcommand("dialog-show", self), 0);

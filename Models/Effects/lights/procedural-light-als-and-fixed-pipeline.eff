@@ -94,6 +94,7 @@
         <fragment-shader>Shaders/light-ALS.frag</fragment-shader>
         <fragment-shader>Shaders/noise.frag</fragment-shader>
         <fragment-shader>Shaders/hazes.frag</fragment-shader>
+	      <fragment-shader>Shaders/filters-ALS.frag</fragment-shader>
       </program>
 
     

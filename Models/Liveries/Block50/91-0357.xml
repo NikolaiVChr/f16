@@ -6,7 +6,7 @@
    <livery>
     <name type="string">35FW, 14FS WW "Wing Flagship"</name>
     <texture>Liveries/Block50/91-0357.png</texture>
-    <owner type="string">USAF</owner>
+    <owner type="string">USAF-PACAF</owner>
     <pilot type="string"></pilot>
     <scheme type="string"></scheme>
     <block type="int">50</block>
@@ -16,7 +16,7 @@
    </livery>
 
    <livery-logo>
-    <texture>Liveries/standard.logos.black2.png</texture>
+    <texture>Liveries/standard.logos.grey.png</texture>
    </livery-logo>
    
 
