@@ -47,7 +47,7 @@
             </key>
             <key>
                 <name>r</name>
-                <desc>Toggles Radar Standby Mode</desc>
+                <desc>Toggle RF switch</desc>
             </key>
             <key>
                 <name>Ctrl-s</name>
