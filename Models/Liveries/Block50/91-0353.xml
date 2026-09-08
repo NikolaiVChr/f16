@@ -4,23 +4,23 @@
  <sim>
   <model>
    <livery>
-    <name type="string">20FW, 55FS SW "15AF Flagship"</name>
-    <texture>Liveries/Block50/94-0049.png</texture>
+    <name type="string">20FW, 77FS SW "Unit Flagship"</name>
+    <texture>Liveries/Block50/91-0353.png</texture>
     <owner type="string">USAF-ACC</owner>
     <pilot type="string"></pilot>
     <scheme type="string">Have Glass V, Flagship</scheme>
     <block type="int">50</block>
-    <serial type="string">94-0049</serial>
-    <squad type="string">55th FS "Fightin' Fifty Fifth"</squad>
-    <year type="string">2022</year>
+    <serial type="string">91-0353</serial>
+    <squad type="string">77th FS "Gamblers"</squad>
+    <year type="string">2021</year>
    </livery>
    
    <livery-logo>
-    <texture>Liveries/standard.logos.black.png</texture>
+    <texture>Liveries/Block50/gamblers.logos.png</texture>
    </livery-logo>
 
    <livery-patch>
-      <texture>Liveries/Block50/patch.shooters.png</texture>
+      <texture>Liveries/Block50/patch.gamblers.png</texture>
   </livery-patch>
 
   <livery-pod>
